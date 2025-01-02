@@ -1,44 +1,47 @@
-import 'package:news_hub/domain/extension/interactor/list_available_extensions.dart';
-import 'package:news_hub/domain/extension/interactor/list_installed_extensions.dart';
-import 'package:news_hub/domain/extension/model/index.dart';
-import 'package:news_hub/app/extension/service/preferences_impl.dart';
-import 'package:rxdart/rxdart.dart';
+part of '../index.dart';
 
+@lazySingleton
 class ListExtensions {
-  final ExtensionPreferences _extensionPreferences;
+  final ExtensionPreferencesService _prefService;
   final ListInstalledExtensions _listInstalledExtensions;
-  final ListAvailableExtensions _listAvailableExtensions;
+  final ListRemoteExtensions _listRemoteExtensions;
   ListExtensions({
-    required ExtensionPreferences extensionPreferences,
+    required ExtensionPreferencesService prefService,
     required ListInstalledExtensions listInstalledExtensions,
-    required ListAvailableExtensions listAvailableExtensions,
-  }): _extensionPreferences = extensionPreferences,
+    required ListRemoteExtensions listRemoteExtensions,
+  }): _prefService = prefService,
         _listInstalledExtensions = listInstalledExtensions,
-        _listAvailableExtensions = listAvailableExtensions;
+        _listRemoteExtensions = listRemoteExtensions;
 
   Stream<Extensions> call() {
     return CombineLatestStream.combine3(
-      _extensionPreferences.enabledLanguages().changes(),
+      _prefService.enabledLanguages().changes(),
       _listInstalledExtensions.call().asStream(),
-      _listAvailableExtensions.call().asStream(),
-      (enabledLanguages, installed, available) =>
-        Extensions(
-          updates: [],
-          installed: installed,
-          available: available,
-        )
+      _listRemoteExtensions.call().asStream(),
+      (enabledLanguages, installed, remote) {
+        final installedSet = installed.where((element) => enabledLanguages.contains(element.lang)).toSet();
+        final remoteSet = remote.filter((element) => installedSet.none((e) => e.pkgName == element.pkgName)).toSet();
+        return Extensions(
+            updates: installedSet.where((element) => remote.any((e) => e.pkgName == element.pkgName && e.version > element.version)).toSet(),
+            deprecated: installedSet.difference(remoteSet),
+            installed: installedSet,
+            remote: remoteSet,
+          );
+        }
     );
   }
 }
 
 class Extensions {
-  final List<InstalledExtension> updates;
-  final List<InstalledExtension> installed;
-  final List<AvailableExtension> available;
+  final Set<Extension> updates;
+  final Set<Extension> deprecated;
+  final Set<Extension> installed;
+  final Set<RemoteExtension> remote;
 
   Extensions({
     required this.updates,
+    required this.deprecated,
     required this.installed,
-    required this.available,
+    required this.remote,
   });
 }

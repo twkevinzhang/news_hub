@@ -1,17 +1,14 @@
-import 'package:news_hub/domain/extension_repo/model/index.dart';
-import 'package:news_hub/domain/extension_repo/service/extension_repo_service.dart';
-import 'package:news_hub/domain/extension_repo/repo/extension_repo_repository.dart';
-import 'package:news_hub/infra/logger.dart';
+part of '../index.dart';
 
 class CreateExtensionRepo {
     CreateExtensionRepo({
         required ExtensionRepoRepository repository,
-        required ExtensionRepoService service,
+        required ExtensionRepoApiService service,
     })  : _repository = repository,
             _service = service;
 
     final ExtensionRepoRepository _repository;
-    final ExtensionRepoService _service;
+    final ExtensionRepoApiService _service;
 
     final _repoRegex = RegExp(r'^https://.*/index\.min\.json$');
 
@@ -33,16 +30,12 @@ class CreateExtensionRepo {
         try {
             await _repository.insertRepo(
                 baseUrl: repo.baseUrl,
-                name: repo.name,
+                displayName: repo.displayName,
                 website: repo.website,
                 signingKeyFingerprint: repo.signingKeyFingerprint,
             );
             return const Result.success();
         } catch (e) {
-            log.w(
-                'SQL Conflict attempting to add new repository ${repo.baseUrl}',
-                error: e,
-            );
             return _handleInsertionError(repo);
         }
     }

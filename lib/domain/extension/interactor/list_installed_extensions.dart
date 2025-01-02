@@ -1,17 +1,13 @@
-import 'package:news_hub/domain/extension/model/index.dart';
-import 'package:news_hub/domain/extension/service/extension_installer.dart';
-import 'package:news_hub/domain/extension_repo/repo/extension_repo_repository.dart';
-import 'package:news_hub/domain/extension_repo/service/extension_repo_service.dart';
-import 'package:collection/collection.dart';
+part of '../index.dart';
 
+@lazySingleton
 class ListInstalledExtensions {
-  final ExtensionInstaller _service;
+  final ExtensionInstallService _installService;
   ListInstalledExtensions({
-    required ExtensionInstaller service,
-  }): _service = service;
+    required ExtensionInstallService installService,
+  }): _installService = installService;
 
-  Future<List<InstalledExtension>> call() async {
-    final list = await _service.listInstalledExtensions();
-    return list.whereType<LoadResultSuccess>().map((e) => e.extension).toList();
+  Future<List<Extension>> call() {
+    return _installService.listInstalledExtensions();
   }
 }

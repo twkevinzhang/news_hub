@@ -3,34 +3,46 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:news_hub/app/extension/service/extension_installer_impl.dart';
-import 'package:news_hub/domain/extension/model/index.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_hub/app/extension/index.dart';
+import 'package:news_hub/domain/extension/index.dart';
+import 'package:news_hub/domain/extension_repo/index.dart';
+import 'package:news_hub/domain/model/index.dart';
 import 'package:news_hub/presentation/app.dart';
+import 'package:news_hub/locator.dart';
+import 'package:news_hub/presentation/pages/search_step/index.dart';
+import 'package:news_hub/presentation/pages/threads/index.dart';
 import 'package:news_hub/shared/constants.dart';
 import 'package:path_provider/path_provider.dart';
 
-import 'app/api/service/api_service_impl.dart';
-
 void main() async {
-  testApiService();
-  runApp(const App());
+  // testApiService();
+  WidgetsFlutterBinding.ensureInitialized();
+  await configureDependencies();
+  
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => ThreadsCubit(
+            listThreads: sl<ListThreads>(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => SearchStepCubit(
+            listExtensions: sl<ListExtensions>(),
+          ),
+        ),
+      ],
+      child: const App(),
+    ),
+  );
 }
 
 void testApiService() async {
-  final mockException = AvailableExtension(
-    name: 'beeceptor',
-    zipName: 'beeceptor.zip',
-    address: 'http://127.0.0.1:55001',
-    versionName: 'v1',
-    versionCode: 1,
-    libVersion: 1.0,
-    isNsfw: false,
-    lang: 'zh-tw',
-    iconUrl: '',
-    repoUrl: '',
-  );
-  final service = await ExtensionInstallerImpl.create();
-  final api = ApiServiceImpl(dio: Dio());
+  final mockException = RemoteExtension.mock();
+  final service = await ExtensionInstallServiceImpl.create();
+  final api = ExtensionApiServiceImpl(dio: Dio());
   service.uninstall(mockException);
   await copyFile();
   await service.install(mockException).last;
