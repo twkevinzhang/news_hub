@@ -1,30 +1,20 @@
-import 'dart:convert';
+part of 'index.dart';
 
-import 'package:dartx/dartx.dart';
-import 'package:flutter/widgets.dart';
-import 'package:news_hub/domain/extension/model/index.dart';
-import 'package:news_hub/domain/extension/service/extension_installer.dart';
-import 'package:news_hub/shared/constants.dart';
-import 'package:news_hub/shared/extensions.dart';
-import 'dart:async';
-import 'dart:io';
-import 'package:archive/archive_io.dart';
-
-import 'package:flutter_downloader/flutter_downloader.dart';
-import 'package:path_provider/path_provider.dart';
-
-/// [ExtensionInstallerImpl] download and install flask extension from _installFolder.
-class ExtensionInstallerImpl extends ExtensionInstaller {
+/// [ExtensionInstallServiceImpl] download and install flask extension from _installFolder.
+// @preResolve
+// @LazySingleton(as: ExtensionInstallService)
+class ExtensionInstallServiceImpl extends ExtensionInstallService {
   final String _downloadFolder;
   final String _installFolder;
 
-  ExtensionInstallerImpl._(this._downloadFolder, this._installFolder);
-  static Future<ExtensionInstaller> create() async {
+  ExtensionInstallServiceImpl._(this._downloadFolder, this._installFolder);
+  @factoryMethod
+  static Future<ExtensionInstallService> create() async {
     WidgetsFlutterBinding.ensureInitialized();
     final directory = await getApplicationSupportDirectory();
     final d = [directory.path, downloadedFileFolder].toUrl();
     final i = [directory.path, installedFileFolder].toUrl();
-    return ExtensionInstallerImpl._(d, i);
+    return ExtensionInstallServiceImpl._(d, i);
   }
 
   @override
@@ -103,7 +93,7 @@ class ExtensionInstallerImpl extends ExtensionInstaller {
     final archive = ZipDecoder().decodeBytes(bytes);
 
     // Extract the contents of the Zip archive to disk.
-    final folder = [_installFolder, extension.name].toUrl();
+    final folder = [_installFolder, extension.pkgName].toUrl();
 
     for (final file in archive) {
       final url = [folder, file.name].toUrl();
@@ -122,7 +112,7 @@ class ExtensionInstallerImpl extends ExtensionInstaller {
 
   @override
   Future<void> uninstall(Extension extension) async {
-    final folder = [_installFolder, extension.name].toUrl();
+    final folder = [_installFolder, extension.pkgName].toUrl();
     try {
       await Directory(folder).delete(recursive: true);
     } on PathNotFoundException catch (e) {
@@ -131,33 +121,35 @@ class ExtensionInstallerImpl extends ExtensionInstaller {
   }
 
   @override
-  Future<List<LoadResult>> listInstalledExtensions() async {
-    List<LoadResult> result = [];
+  Future<List<Extension>> listInstalledExtensions() async {
+    List<Extension> result = [];
     final directory = Directory(_installFolder);
     final subdirectories = directory.listSync().whereType<Directory>();
     for (var subdirectory in subdirectories) {
       final manifestFile = File('${subdirectory.path}/manifest.json');
       if (manifestFile.existsSync()) {
-        final name = Uri.parse(subdirectory.path).pathSegments.last;
-        result.add(await _load(name));
+        final pkgName = Uri.parse(subdirectory.path).pathSegments.last;
+        result.add(await _load(pkgName));
       }
     }
+    print("ExtensionInstallServiceImpl listInstalledExtensions");
     return result;
   }
 
-  Future<LoadResult> _load(String name) async {
-    final jsonStr = await File([_installFolder, name, "metadata.json"].toUrl()).readAsString();
+  Future<Extension> _load(String pkgName) async {
+    final jsonStr = await File([_installFolder, pkgName, "metadata.json"].toUrl()).readAsString();
     final j = json.decode(jsonStr);
-    final extension = InstalledExtension(
-      name: name,
-      zipName: j["zipName"],
+    return Extension(
+      pkgName: pkgName,
+      displayName: j["display_name"],
+      zipName: j["zip_name"],
       address : j["address"],
-      versionName : j["versionName"],
-      versionCode : j["versionCode"],
-      libVersion : j["libVersion"],
+      version : j["version"],
+      pythonVersion : j["python_version"],
       lang : j["lang"],
-      isNsfw: j["isNsfw"],
+      isNsfw: j["is_nsfw"],
+      site: SiteDto.fromJson(j["site"]).toSite(),
+      boards: (j["boards"] as Iterable).map((e) => BoardDto.fromJson(e).toBoard()).toList(),
     );
-    return LoadResultSuccess(extension);
   }
 }
