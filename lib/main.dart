@@ -10,8 +10,9 @@ import 'package:news_hub/domain/extension_repo/index.dart';
 import 'package:news_hub/domain/model/index.dart';
 import 'package:news_hub/presentation/app.dart';
 import 'package:news_hub/locator.dart';
-import 'package:news_hub/presentation/pages/search_step/index.dart';
+import 'package:news_hub/presentation/pages/search/index.dart';
 import 'package:news_hub/presentation/pages/threads/index.dart';
+import 'package:news_hub/presentation/router.dart';
 import 'package:news_hub/shared/constants.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -20,23 +21,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
   
-  runApp(
-    MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (_) => ThreadsCubit(
-            listThreads: sl<ListThreads>(),
-          ),
-        ),
-        BlocProvider(
-          create: (_) => SearchStepCubit(
-            listExtensions: sl<ListExtensions>(),
-          ),
-        ),
-      ],
-      child: const App(),
-    ),
-  );
+  runApp(App());
 }
 
 void testApiService() async {

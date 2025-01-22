@@ -22,7 +22,7 @@ class SiteDto with _$SiteDto {
   factory SiteDto.fromJson(Map<String, dynamic> json) => _$SiteDtoFromJson(json);
 }
 
-extension SiteDtoExtension on SiteDto {
+extension SiteDtoEx on SiteDto {
   Site toSite() {
     return Site(
       extensionPkgName: extensionPkgName,

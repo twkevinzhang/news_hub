@@ -1,3 +1,4 @@
+// dart format width=80
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
 // **************************************************************************
@@ -11,14 +12,19 @@
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:news_hub/app/condition/index.dart' as _i280;
 import 'package:news_hub/app/extension/index.dart' as _i509;
 import 'package:news_hub/app/extension_repo/index.dart' as _i1027;
 import 'package:news_hub/app/service/database.dart' as _i1042;
 import 'package:news_hub/app/service/preferences/store.dart' as _i365;
 import 'package:news_hub/app/service/preferences/store_impl.dart' as _i842;
+import 'package:news_hub/domain/condition/index.dart' as _i174;
 import 'package:news_hub/domain/extension/index.dart' as _i135;
 import 'package:news_hub/domain/extension_repo/index.dart' as _i381;
 import 'package:news_hub/locator.dart' as _i56;
+import 'package:news_hub/presentation/pages/search/index.dart' as _i928;
+import 'package:news_hub/presentation/pages/threads/index.dart' as _i62;
+import 'package:news_hub/presentation/router.dart' as _i217;
 import 'package:rx_shared_preferences/rx_shared_preferences.dart' as _i579;
 
 extension GetItInjectableX on _i174.GetIt {
@@ -39,6 +45,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i361.Dio>(() => appProvider.dio);
     gh.lazySingleton<_i1042.DatabaseService>(() => _i1042.DatabaseService());
+    gh.lazySingleton<_i217.AppRouter>(() => _i217.AppRouter());
     await gh.lazySingletonAsync<_i135.ExtensionInstallService>(
       () => _i509.MockExtensionInstallServiceImpl.create(),
       preResolve: true,
@@ -47,6 +54,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i509.MockExtensionApiServiceImpl());
     gh.lazySingleton<_i381.ExtensionRepoApiService>(
         () => _i1027.MockExtensionRepoApiServiceImpl());
+    gh.lazySingleton<_i174.ConditionRepository>(() =>
+        _i280.ConditionRepositoryImpl(service: gh<_i1042.DatabaseService>()));
     gh.lazySingleton<_i381.ExtensionRepoRepository>(() =>
         _i1027.ExtensionRepoRepositoryImpl(
             service: gh<_i1042.DatabaseService>()));
@@ -59,6 +68,8 @@ extension GetItInjectableX on _i174.GetIt {
           apiService: gh<_i135.ExtensionApiService>(),
           listInstalledExtensions: gh<_i135.ListInstalledExtensions>(),
         ));
+    gh.lazySingleton<_i174.ListConditions>(
+        () => _i174.ListConditions(repo: gh<_i174.ConditionRepository>()));
     gh.lazySingleton<_i135.ListRemoteExtensions>(
         () => _i135.ListRemoteExtensions(
               extensionRepoRepository: gh<_i381.ExtensionRepoRepository>(),
@@ -71,6 +82,12 @@ extension GetItInjectableX on _i174.GetIt {
           prefService: gh<_i135.ExtensionPreferencesService>(),
           listInstalledExtensions: gh<_i135.ListInstalledExtensions>(),
           listRemoteExtensions: gh<_i135.ListRemoteExtensions>(),
+        ));
+    gh.lazySingleton<_i62.ThreadsCubit>(
+        () => _i62.ThreadsCubit(listThreads: gh<_i135.ListThreads>()));
+    gh.lazySingleton<_i928.SearchCubit>(() => _i928.SearchCubit(
+          listConditions: gh<_i174.ListConditions>(),
+          listExtensions: gh<_i135.ListInstalledExtensions>(),
         ));
     return this;
   }

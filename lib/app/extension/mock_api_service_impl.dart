@@ -13,31 +13,38 @@ class MockExtensionApiServiceImpl extends ExtensionApiService {
   }
 
   @override
-  Future<List<Thread>> threads(Extension extension) async {
+  Future<List<Board>> boards(Extension extension, String siteId) async {
+    await Future.delayed(const Duration(seconds: 1));
+    return List<Board>.generate(3, (index) => Board.mock());
+  }
+
+  @override
+  Future<List<Thread>> threads(Extension extension, String siteId, String boardId) async {
     await Future.delayed(const Duration(seconds: 1));
     return List<Thread>.generate(3, (index) => Thread.mock());
   }
 
   @override
-  Future<Thread> thread(Extension extension, String threadId) async {
+  Future<Thread> thread(Extension extension, String siteId, String boardId, String threadId) async {
     await Future.delayed(const Duration(seconds: 1));
     return Thread.mock();
   }
 
   @override
-  Future<List<Post>> slavePosts(Extension extension, String threadId) async {
+  Future<List<Post>> slavePosts(Extension extension, String siteId, String boardId, String threadId) async {
     await Future.delayed(const Duration(seconds: 1));
     return List<Post>.generate(3, (index) => Post.mock());
   }
 
   @override
-  Future<Post> post(Extension extension, String postId) async {
+  Future<Post> post(Extension extension, String siteId, String boardId, String threadId, String postId) async {
     await Future.delayed(const Duration(seconds: 1));
     return Post.mock();
   }
 
   @override
-  Future<List<Comment>> comments(Extension extension, String postId) async {
-    throw UnimplementedError();
+  Future<List<Comment>> comments(Extension extension, String siteId, String boardId, String threadId, String postId) async {
+    await Future.delayed(const Duration(seconds: 1));
+    return List<Comment>.generate(3, (index) => Comment.mock());
   }
 }

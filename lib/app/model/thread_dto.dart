@@ -43,7 +43,7 @@ class ThreadDto with _$ThreadDto {
       _$ThreadDtoFromJson(json);
 }
 
-extension ThreadDtoExtension on ThreadDto {
+extension ThreadDtoEx on ThreadDto {
  Thread toThread() {
    return Thread(
      extensionPkgName: extensionPkgName,

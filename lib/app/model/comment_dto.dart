@@ -29,7 +29,7 @@ class CommentDto with _$CommentDto {
   factory CommentDto.fromJson(Map<String, dynamic> json) => _$CommentDtoFromJson(json);
 }
 
-extension CommentDtoExtension on CommentDto {
+extension CommentDtoEx on CommentDto {
   Comment toComment() {
     return Comment(
       id: id,

@@ -6,86 +6,6 @@ part of 'index.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-BoardDto _$BoardDtoFromJson(Map<String, dynamic> json) {
-  $checkKeys(
-    json,
-    requiredKeys: const [
-      'extension_pkg_name',
-      'site_id',
-      'id',
-      'name',
-      'icon',
-      'large_welcome_image',
-      'url'
-    ],
-  );
-  return BoardDto(
-    json['extension_pkg_name'] as String,
-    json['site_id'] as String,
-    json['id'] as String,
-    json['name'] as String,
-    json['icon'] as String,
-    json['large_welcome_image'] as String,
-    json['url'] as String,
-  );
-}
-
-Map<String, dynamic> _$BoardDtoToJson(BoardDto instance) => <String, dynamic>{
-      'extension_pkg_name': instance.extensionPkgName,
-      'site_id': instance.siteId,
-      'id': instance.id,
-      'name': instance.name,
-      'icon': instance.icon,
-      'large_welcome_image': instance.largeWelcomeImage,
-      'url': instance.url,
-    };
-
-ExtensionDto _$ExtensionDtoFromJson(Map<String, dynamic> json) {
-  $checkKeys(
-    json,
-    requiredKeys: const [
-      'pkg_name',
-      'display_name',
-      'zip_name',
-      'address',
-      'version',
-      'python_version',
-      'lang',
-      'is_nsfw',
-      'site',
-      'boards'
-    ],
-  );
-  return ExtensionDto(
-    json['pkg_name'] as String,
-    json['display_name'] as String,
-    json['zip_name'] as String,
-    json['address'] as String,
-    (json['version'] as num).toInt(),
-    (json['python_version'] as num).toInt(),
-    json['lang'] as String,
-    json['is_nsfw'] as bool,
-    SiteDto.fromJson(json['site'] as Map<String, dynamic>),
-    (json['boards'] as List<dynamic>)
-        .map((e) => BoardDto.fromJson(e as Map<String, dynamic>))
-        .toList(),
-  );
-}
-
-Map<String, dynamic> _$ExtensionDtoToJson(ExtensionDto instance) =>
-    <String, dynamic>{
-      'pkg_name': instance.pkgName,
-      'display_name': instance.displayName,
-      'zip_name': instance.zipName,
-      'address': instance.address,
-      'version': instance.version,
-      'python_version': instance.pythonVersion,
-      'lang': instance.lang,
-      'is_nsfw': instance.isNsfw,
-      'site': instance.site.toJson(),
-      'boards': instance.boards.map((e) => e.toJson()).toList(),
-    };
-
 ImageInfoDto _$ImageInfoDtoFromJson(Map<String, dynamic> json) => ImageInfoDto(
       json['thumb'] as String?,
       json['raw'] as String,
@@ -141,30 +61,65 @@ Map<String, dynamic> _$LinkDtoToJson(LinkDto instance) => <String, dynamic>{
       'content': instance.content,
     };
 
-ExtensionRepoDto _$ExtensionRepoDtoFromJson(Map<String, dynamic> json) {
+_$BoardsDtoImpl _$$BoardsDtoImplFromJson(Map<String, dynamic> json) {
   $checkKeys(
     json,
-    requiredKeys: const [
-      'base_url',
-      'name',
-      'website',
-      'signing_key_fingerprint'
-    ],
+    requiredKeys: const ['total_page', 'current_page', 'boards'],
   );
-  return ExtensionRepoDto(
-    json['base_url'] as String,
-    json['name'] as String,
-    json['website'] as String,
-    json['signing_key_fingerprint'] as String,
+  return _$BoardsDtoImpl(
+    totalPage: (json['total_page'] as num).toInt(),
+    currentPage: (json['current_page'] as num).toInt(),
+    boards: (json['boards'] as List<dynamic>)
+        .map((e) => BoardDto.fromJson(e as Map<String, dynamic>))
+        .toList(),
   );
 }
 
-Map<String, dynamic> _$ExtensionRepoDtoToJson(ExtensionRepoDto instance) =>
+Map<String, dynamic> _$$BoardsDtoImplToJson(_$BoardsDtoImpl instance) =>
     <String, dynamic>{
-      'base_url': instance.baseUrl,
+      'total_page': instance.totalPage,
+      'current_page': instance.currentPage,
+      'boards': instance.boards,
+    };
+
+_$BoardDtoImpl _$$BoardDtoImplFromJson(Map<String, dynamic> json) {
+  $checkKeys(
+    json,
+    requiredKeys: const [
+      'extension_pkg_name',
+      'site_id',
+      'id',
+      'name',
+      'icon',
+      'large_welcome_image',
+      'url',
+      'supported_sorting'
+    ],
+  );
+  return _$BoardDtoImpl(
+    extensionPkgName: json['extension_pkg_name'] as String,
+    siteId: json['site_id'] as String,
+    id: json['id'] as String,
+    name: json['name'] as String,
+    icon: json['icon'] as String,
+    largeWelcomeImage: json['large_welcome_image'] as String,
+    url: json['url'] as String,
+    supportedSorting: (json['supported_sorting'] as List<dynamic>)
+        .map((e) => e as String)
+        .toSet(),
+  );
+}
+
+Map<String, dynamic> _$$BoardDtoImplToJson(_$BoardDtoImpl instance) =>
+    <String, dynamic>{
+      'extension_pkg_name': instance.extensionPkgName,
+      'site_id': instance.siteId,
+      'id': instance.id,
       'name': instance.name,
-      'website': instance.website,
-      'signing_key_fingerprint': instance.signingKeyFingerprint,
+      'icon': instance.icon,
+      'large_welcome_image': instance.largeWelcomeImage,
+      'url': instance.url,
+      'supported_sorting': instance.supportedSorting.toList(),
     };
 
 _$CommentsDtoImpl _$$CommentsDtoImplFromJson(Map<String, dynamic> json) {
@@ -205,6 +160,52 @@ Map<String, dynamic> _$$CommentDtoImplToJson(_$CommentDtoImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
       'contents': instance.contents,
+    };
+
+_$ExtensionDtoImpl _$$ExtensionDtoImplFromJson(Map<String, dynamic> json) {
+  $checkKeys(
+    json,
+    requiredKeys: const [
+      'pkg_name',
+      'display_name',
+      'zip_name',
+      'address',
+      'version',
+      'python_version',
+      'lang',
+      'is_nsfw',
+      'site',
+      'boards'
+    ],
+  );
+  return _$ExtensionDtoImpl(
+    pkgName: json['pkg_name'] as String,
+    displayName: json['display_name'] as String,
+    zipName: json['zip_name'] as String,
+    address: json['address'] as String,
+    version: (json['version'] as num).toInt(),
+    pythonVersion: (json['python_version'] as num).toInt(),
+    lang: json['lang'] as String,
+    isNsfw: json['is_nsfw'] as bool,
+    site: SiteDto.fromJson(json['site'] as Map<String, dynamic>),
+    boards: (json['boards'] as List<dynamic>)
+        .map((e) => BoardDto.fromJson(e as Map<String, dynamic>))
+        .toList(),
+  );
+}
+
+Map<String, dynamic> _$$ExtensionDtoImplToJson(_$ExtensionDtoImpl instance) =>
+    <String, dynamic>{
+      'pkg_name': instance.pkgName,
+      'display_name': instance.displayName,
+      'zip_name': instance.zipName,
+      'address': instance.address,
+      'version': instance.version,
+      'python_version': instance.pythonVersion,
+      'lang': instance.lang,
+      'is_nsfw': instance.isNsfw,
+      'site': instance.site,
+      'boards': instance.boards,
     };
 
 _$PostDtoImpl _$$PostDtoImplFromJson(Map<String, dynamic> json) {
@@ -363,14 +364,30 @@ Map<String, dynamic> _$$SlavePostsDtoImplToJson(_$SlavePostsDtoImpl instance) =>
       'slave_posts': instance.slavePosts,
     };
 
-_$ExtensionRepoResDtoImpl _$$ExtensionRepoResDtoImplFromJson(
-        Map<String, dynamic> json) =>
-    _$ExtensionRepoResDtoImpl(
-      meta: ExtensionRepoDto.fromJson(json['meta'] as Map<String, dynamic>),
-    );
+_$ExtensionRepoDtoImpl _$$ExtensionRepoDtoImplFromJson(
+    Map<String, dynamic> json) {
+  $checkKeys(
+    json,
+    requiredKeys: const [
+      'base_url',
+      'name',
+      'website',
+      'signing_key_fingerprint'
+    ],
+  );
+  return _$ExtensionRepoDtoImpl(
+    baseUrl: json['base_url'] as String,
+    name: json['name'] as String,
+    website: json['website'] as String,
+    signingKeyFingerprint: json['signing_key_fingerprint'] as String,
+  );
+}
 
-Map<String, dynamic> _$$ExtensionRepoResDtoImplToJson(
-        _$ExtensionRepoResDtoImpl instance) =>
+Map<String, dynamic> _$$ExtensionRepoDtoImplToJson(
+        _$ExtensionRepoDtoImpl instance) =>
     <String, dynamic>{
-      'meta': instance.meta,
+      'base_url': instance.baseUrl,
+      'name': instance.name,
+      'website': instance.website,
+      'signing_key_fingerprint': instance.signingKeyFingerprint,
     };

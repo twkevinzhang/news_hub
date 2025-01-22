@@ -12,8 +12,7 @@ class ListThreads {
 
   Future<List<Thread>> call() async {
     final extensions = await _listInstalledExtensions.call();
-    print("extensions $extensions");
-    final threads = await Future.wait(extensions.map((e) => _apiService.threads(e)));
+    final threads = await Future.wait(extensions.map((e) => _apiService.threads(e, "", "")));
     return threads.expand((element) => element).toList();
   }
 }

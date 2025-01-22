@@ -52,7 +52,7 @@ class PostDto with _$PostDto {
   factory PostDto.fromJson(Map<String, dynamic> json) => _$PostDtoFromJson(json);
 }
 
-extension PostDtoExtension on PostDto {
+extension PostDtoEx on PostDto {
   Post toPost() {
     return Post(
       extensionPkgName: extensionPkgName,
@@ -102,7 +102,7 @@ abstract class ParagraphDto {
   Map<String, dynamic> toJson();
 }
 
-extension ParagraphDtoExtension on ParagraphDto {
+extension ParagraphDtoEx on ParagraphDto {
   Paragraph toParagraph() {
     switch (type) {
       case ParagraphType.IMAGE:

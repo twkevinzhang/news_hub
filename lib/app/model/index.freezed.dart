@@ -14,6 +14,566 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
+BoardsDto _$BoardsDtoFromJson(Map<String, dynamic> json) {
+  return _BoardsDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$BoardsDto {
+  @JsonKey(name: 'total_page', required: true)
+  int get totalPage => throw _privateConstructorUsedError;
+  @JsonKey(name: 'current_page', required: true)
+  int get currentPage => throw _privateConstructorUsedError;
+  @JsonKey(name: 'boards', required: true)
+  List<BoardDto> get boards => throw _privateConstructorUsedError;
+
+  /// Serializes this BoardsDto to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of BoardsDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $BoardsDtoCopyWith<BoardsDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $BoardsDtoCopyWith<$Res> {
+  factory $BoardsDtoCopyWith(BoardsDto value, $Res Function(BoardsDto) then) =
+      _$BoardsDtoCopyWithImpl<$Res, BoardsDto>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'total_page', required: true) int totalPage,
+      @JsonKey(name: 'current_page', required: true) int currentPage,
+      @JsonKey(name: 'boards', required: true) List<BoardDto> boards});
+}
+
+/// @nodoc
+class _$BoardsDtoCopyWithImpl<$Res, $Val extends BoardsDto>
+    implements $BoardsDtoCopyWith<$Res> {
+  _$BoardsDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of BoardsDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? totalPage = null,
+    Object? currentPage = null,
+    Object? boards = null,
+  }) {
+    return _then(_value.copyWith(
+      totalPage: null == totalPage
+          ? _value.totalPage
+          : totalPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      boards: null == boards
+          ? _value.boards
+          : boards // ignore: cast_nullable_to_non_nullable
+              as List<BoardDto>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$BoardsDtoImplCopyWith<$Res>
+    implements $BoardsDtoCopyWith<$Res> {
+  factory _$$BoardsDtoImplCopyWith(
+          _$BoardsDtoImpl value, $Res Function(_$BoardsDtoImpl) then) =
+      __$$BoardsDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'total_page', required: true) int totalPage,
+      @JsonKey(name: 'current_page', required: true) int currentPage,
+      @JsonKey(name: 'boards', required: true) List<BoardDto> boards});
+}
+
+/// @nodoc
+class __$$BoardsDtoImplCopyWithImpl<$Res>
+    extends _$BoardsDtoCopyWithImpl<$Res, _$BoardsDtoImpl>
+    implements _$$BoardsDtoImplCopyWith<$Res> {
+  __$$BoardsDtoImplCopyWithImpl(
+      _$BoardsDtoImpl _value, $Res Function(_$BoardsDtoImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of BoardsDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? totalPage = null,
+    Object? currentPage = null,
+    Object? boards = null,
+  }) {
+    return _then(_$BoardsDtoImpl(
+      totalPage: null == totalPage
+          ? _value.totalPage
+          : totalPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      currentPage: null == currentPage
+          ? _value.currentPage
+          : currentPage // ignore: cast_nullable_to_non_nullable
+              as int,
+      boards: null == boards
+          ? _value._boards
+          : boards // ignore: cast_nullable_to_non_nullable
+              as List<BoardDto>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$BoardsDtoImpl implements _BoardsDto {
+  const _$BoardsDtoImpl(
+      {@JsonKey(name: 'total_page', required: true) required this.totalPage,
+      @JsonKey(name: 'current_page', required: true) required this.currentPage,
+      @JsonKey(name: 'boards', required: true)
+      required final List<BoardDto> boards})
+      : _boards = boards;
+
+  factory _$BoardsDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BoardsDtoImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'total_page', required: true)
+  final int totalPage;
+  @override
+  @JsonKey(name: 'current_page', required: true)
+  final int currentPage;
+  final List<BoardDto> _boards;
+  @override
+  @JsonKey(name: 'boards', required: true)
+  List<BoardDto> get boards {
+    if (_boards is EqualUnmodifiableListView) return _boards;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_boards);
+  }
+
+  @override
+  String toString() {
+    return 'BoardsDto(totalPage: $totalPage, currentPage: $currentPage, boards: $boards)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BoardsDtoImpl &&
+            (identical(other.totalPage, totalPage) ||
+                other.totalPage == totalPage) &&
+            (identical(other.currentPage, currentPage) ||
+                other.currentPage == currentPage) &&
+            const DeepCollectionEquality().equals(other._boards, _boards));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, totalPage, currentPage,
+      const DeepCollectionEquality().hash(_boards));
+
+  /// Create a copy of BoardsDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BoardsDtoImplCopyWith<_$BoardsDtoImpl> get copyWith =>
+      __$$BoardsDtoImplCopyWithImpl<_$BoardsDtoImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$BoardsDtoImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _BoardsDto implements BoardsDto {
+  const factory _BoardsDto(
+      {@JsonKey(name: 'total_page', required: true)
+      required final int totalPage,
+      @JsonKey(name: 'current_page', required: true)
+      required final int currentPage,
+      @JsonKey(name: 'boards', required: true)
+      required final List<BoardDto> boards}) = _$BoardsDtoImpl;
+
+  factory _BoardsDto.fromJson(Map<String, dynamic> json) =
+      _$BoardsDtoImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'total_page', required: true)
+  int get totalPage;
+  @override
+  @JsonKey(name: 'current_page', required: true)
+  int get currentPage;
+  @override
+  @JsonKey(name: 'boards', required: true)
+  List<BoardDto> get boards;
+
+  /// Create a copy of BoardsDto
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$BoardsDtoImplCopyWith<_$BoardsDtoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+BoardDto _$BoardDtoFromJson(Map<String, dynamic> json) {
+  return _BoardDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$BoardDto {
+  @JsonKey(name: 'extension_pkg_name', required: true)
+  String get extensionPkgName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'site_id', required: true)
+  String get siteId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'id', required: true)
+  String get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'name', required: true)
+  String get name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'icon', required: true)
+  String get icon => throw _privateConstructorUsedError;
+  @JsonKey(name: 'large_welcome_image', required: true)
+  String get largeWelcomeImage => throw _privateConstructorUsedError;
+  @JsonKey(name: 'url', required: true)
+  String get url => throw _privateConstructorUsedError;
+  @JsonKey(name: 'supported_sorting', required: true)
+  Set<String> get supportedSorting => throw _privateConstructorUsedError;
+
+  /// Serializes this BoardDto to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of BoardDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $BoardDtoCopyWith<BoardDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $BoardDtoCopyWith<$Res> {
+  factory $BoardDtoCopyWith(BoardDto value, $Res Function(BoardDto) then) =
+      _$BoardDtoCopyWithImpl<$Res, BoardDto>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'extension_pkg_name', required: true)
+      String extensionPkgName,
+      @JsonKey(name: 'site_id', required: true) String siteId,
+      @JsonKey(name: 'id', required: true) String id,
+      @JsonKey(name: 'name', required: true) String name,
+      @JsonKey(name: 'icon', required: true) String icon,
+      @JsonKey(name: 'large_welcome_image', required: true)
+      String largeWelcomeImage,
+      @JsonKey(name: 'url', required: true) String url,
+      @JsonKey(name: 'supported_sorting', required: true)
+      Set<String> supportedSorting});
+}
+
+/// @nodoc
+class _$BoardDtoCopyWithImpl<$Res, $Val extends BoardDto>
+    implements $BoardDtoCopyWith<$Res> {
+  _$BoardDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of BoardDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? extensionPkgName = null,
+    Object? siteId = null,
+    Object? id = null,
+    Object? name = null,
+    Object? icon = null,
+    Object? largeWelcomeImage = null,
+    Object? url = null,
+    Object? supportedSorting = null,
+  }) {
+    return _then(_value.copyWith(
+      extensionPkgName: null == extensionPkgName
+          ? _value.extensionPkgName
+          : extensionPkgName // ignore: cast_nullable_to_non_nullable
+              as String,
+      siteId: null == siteId
+          ? _value.siteId
+          : siteId // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      icon: null == icon
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
+              as String,
+      largeWelcomeImage: null == largeWelcomeImage
+          ? _value.largeWelcomeImage
+          : largeWelcomeImage // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      supportedSorting: null == supportedSorting
+          ? _value.supportedSorting
+          : supportedSorting // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$BoardDtoImplCopyWith<$Res>
+    implements $BoardDtoCopyWith<$Res> {
+  factory _$$BoardDtoImplCopyWith(
+          _$BoardDtoImpl value, $Res Function(_$BoardDtoImpl) then) =
+      __$$BoardDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'extension_pkg_name', required: true)
+      String extensionPkgName,
+      @JsonKey(name: 'site_id', required: true) String siteId,
+      @JsonKey(name: 'id', required: true) String id,
+      @JsonKey(name: 'name', required: true) String name,
+      @JsonKey(name: 'icon', required: true) String icon,
+      @JsonKey(name: 'large_welcome_image', required: true)
+      String largeWelcomeImage,
+      @JsonKey(name: 'url', required: true) String url,
+      @JsonKey(name: 'supported_sorting', required: true)
+      Set<String> supportedSorting});
+}
+
+/// @nodoc
+class __$$BoardDtoImplCopyWithImpl<$Res>
+    extends _$BoardDtoCopyWithImpl<$Res, _$BoardDtoImpl>
+    implements _$$BoardDtoImplCopyWith<$Res> {
+  __$$BoardDtoImplCopyWithImpl(
+      _$BoardDtoImpl _value, $Res Function(_$BoardDtoImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of BoardDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? extensionPkgName = null,
+    Object? siteId = null,
+    Object? id = null,
+    Object? name = null,
+    Object? icon = null,
+    Object? largeWelcomeImage = null,
+    Object? url = null,
+    Object? supportedSorting = null,
+  }) {
+    return _then(_$BoardDtoImpl(
+      extensionPkgName: null == extensionPkgName
+          ? _value.extensionPkgName
+          : extensionPkgName // ignore: cast_nullable_to_non_nullable
+              as String,
+      siteId: null == siteId
+          ? _value.siteId
+          : siteId // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      icon: null == icon
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
+              as String,
+      largeWelcomeImage: null == largeWelcomeImage
+          ? _value.largeWelcomeImage
+          : largeWelcomeImage // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      supportedSorting: null == supportedSorting
+          ? _value._supportedSorting
+          : supportedSorting // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$BoardDtoImpl implements _BoardDto {
+  const _$BoardDtoImpl(
+      {@JsonKey(name: 'extension_pkg_name', required: true)
+      required this.extensionPkgName,
+      @JsonKey(name: 'site_id', required: true) required this.siteId,
+      @JsonKey(name: 'id', required: true) required this.id,
+      @JsonKey(name: 'name', required: true) required this.name,
+      @JsonKey(name: 'icon', required: true) required this.icon,
+      @JsonKey(name: 'large_welcome_image', required: true)
+      required this.largeWelcomeImage,
+      @JsonKey(name: 'url', required: true) required this.url,
+      @JsonKey(name: 'supported_sorting', required: true)
+      required final Set<String> supportedSorting})
+      : _supportedSorting = supportedSorting;
+
+  factory _$BoardDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BoardDtoImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'extension_pkg_name', required: true)
+  final String extensionPkgName;
+  @override
+  @JsonKey(name: 'site_id', required: true)
+  final String siteId;
+  @override
+  @JsonKey(name: 'id', required: true)
+  final String id;
+  @override
+  @JsonKey(name: 'name', required: true)
+  final String name;
+  @override
+  @JsonKey(name: 'icon', required: true)
+  final String icon;
+  @override
+  @JsonKey(name: 'large_welcome_image', required: true)
+  final String largeWelcomeImage;
+  @override
+  @JsonKey(name: 'url', required: true)
+  final String url;
+  final Set<String> _supportedSorting;
+  @override
+  @JsonKey(name: 'supported_sorting', required: true)
+  Set<String> get supportedSorting {
+    if (_supportedSorting is EqualUnmodifiableSetView) return _supportedSorting;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableSetView(_supportedSorting);
+  }
+
+  @override
+  String toString() {
+    return 'BoardDto(extensionPkgName: $extensionPkgName, siteId: $siteId, id: $id, name: $name, icon: $icon, largeWelcomeImage: $largeWelcomeImage, url: $url, supportedSorting: $supportedSorting)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BoardDtoImpl &&
+            (identical(other.extensionPkgName, extensionPkgName) ||
+                other.extensionPkgName == extensionPkgName) &&
+            (identical(other.siteId, siteId) || other.siteId == siteId) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.icon, icon) || other.icon == icon) &&
+            (identical(other.largeWelcomeImage, largeWelcomeImage) ||
+                other.largeWelcomeImage == largeWelcomeImage) &&
+            (identical(other.url, url) || other.url == url) &&
+            const DeepCollectionEquality()
+                .equals(other._supportedSorting, _supportedSorting));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      extensionPkgName,
+      siteId,
+      id,
+      name,
+      icon,
+      largeWelcomeImage,
+      url,
+      const DeepCollectionEquality().hash(_supportedSorting));
+
+  /// Create a copy of BoardDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BoardDtoImplCopyWith<_$BoardDtoImpl> get copyWith =>
+      __$$BoardDtoImplCopyWithImpl<_$BoardDtoImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$BoardDtoImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _BoardDto implements BoardDto {
+  const factory _BoardDto(
+      {@JsonKey(name: 'extension_pkg_name', required: true)
+      required final String extensionPkgName,
+      @JsonKey(name: 'site_id', required: true) required final String siteId,
+      @JsonKey(name: 'id', required: true) required final String id,
+      @JsonKey(name: 'name', required: true) required final String name,
+      @JsonKey(name: 'icon', required: true) required final String icon,
+      @JsonKey(name: 'large_welcome_image', required: true)
+      required final String largeWelcomeImage,
+      @JsonKey(name: 'url', required: true) required final String url,
+      @JsonKey(name: 'supported_sorting', required: true)
+      required final Set<String> supportedSorting}) = _$BoardDtoImpl;
+
+  factory _BoardDto.fromJson(Map<String, dynamic> json) =
+      _$BoardDtoImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'extension_pkg_name', required: true)
+  String get extensionPkgName;
+  @override
+  @JsonKey(name: 'site_id', required: true)
+  String get siteId;
+  @override
+  @JsonKey(name: 'id', required: true)
+  String get id;
+  @override
+  @JsonKey(name: 'name', required: true)
+  String get name;
+  @override
+  @JsonKey(name: 'icon', required: true)
+  String get icon;
+  @override
+  @JsonKey(name: 'large_welcome_image', required: true)
+  String get largeWelcomeImage;
+  @override
+  @JsonKey(name: 'url', required: true)
+  String get url;
+  @override
+  @JsonKey(name: 'supported_sorting', required: true)
+  Set<String> get supportedSorting;
+
+  /// Create a copy of BoardDto
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$BoardDtoImplCopyWith<_$BoardDtoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
 CommentsDto _$CommentsDtoFromJson(Map<String, dynamic> json) {
   return _CommentsDto.fromJson(json);
 }
@@ -414,6 +974,408 @@ abstract class _CommentDto implements CommentDto {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$CommentDtoImplCopyWith<_$CommentDtoImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+ExtensionDto _$ExtensionDtoFromJson(Map<String, dynamic> json) {
+  return _ExtensionDto.fromJson(json);
+}
+
+/// @nodoc
+mixin _$ExtensionDto {
+  @JsonKey(name: 'pkg_name', required: true)
+  String get pkgName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'display_name', required: true)
+  String get displayName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'zip_name', required: true)
+  String get zipName => throw _privateConstructorUsedError;
+  @JsonKey(name: 'address', required: true)
+  String get address => throw _privateConstructorUsedError;
+  @JsonKey(name: 'version', required: true)
+  int get version => throw _privateConstructorUsedError;
+  @JsonKey(name: 'python_version', required: true)
+  int get pythonVersion => throw _privateConstructorUsedError;
+  @JsonKey(name: 'lang', required: true)
+  String get lang => throw _privateConstructorUsedError;
+  @JsonKey(name: 'is_nsfw', required: true)
+  bool get isNsfw => throw _privateConstructorUsedError;
+  @JsonKey(name: 'site', required: true)
+  SiteDto get site => throw _privateConstructorUsedError;
+  @JsonKey(name: 'boards', required: true)
+  List<BoardDto> get boards => throw _privateConstructorUsedError;
+
+  /// Serializes this ExtensionDto to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of ExtensionDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $ExtensionDtoCopyWith<ExtensionDto> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ExtensionDtoCopyWith<$Res> {
+  factory $ExtensionDtoCopyWith(
+          ExtensionDto value, $Res Function(ExtensionDto) then) =
+      _$ExtensionDtoCopyWithImpl<$Res, ExtensionDto>;
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'pkg_name', required: true) String pkgName,
+      @JsonKey(name: 'display_name', required: true) String displayName,
+      @JsonKey(name: 'zip_name', required: true) String zipName,
+      @JsonKey(name: 'address', required: true) String address,
+      @JsonKey(name: 'version', required: true) int version,
+      @JsonKey(name: 'python_version', required: true) int pythonVersion,
+      @JsonKey(name: 'lang', required: true) String lang,
+      @JsonKey(name: 'is_nsfw', required: true) bool isNsfw,
+      @JsonKey(name: 'site', required: true) SiteDto site,
+      @JsonKey(name: 'boards', required: true) List<BoardDto> boards});
+
+  $SiteDtoCopyWith<$Res> get site;
+}
+
+/// @nodoc
+class _$ExtensionDtoCopyWithImpl<$Res, $Val extends ExtensionDto>
+    implements $ExtensionDtoCopyWith<$Res> {
+  _$ExtensionDtoCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of ExtensionDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pkgName = null,
+    Object? displayName = null,
+    Object? zipName = null,
+    Object? address = null,
+    Object? version = null,
+    Object? pythonVersion = null,
+    Object? lang = null,
+    Object? isNsfw = null,
+    Object? site = null,
+    Object? boards = null,
+  }) {
+    return _then(_value.copyWith(
+      pkgName: null == pkgName
+          ? _value.pkgName
+          : pkgName // ignore: cast_nullable_to_non_nullable
+              as String,
+      displayName: null == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
+              as String,
+      zipName: null == zipName
+          ? _value.zipName
+          : zipName // ignore: cast_nullable_to_non_nullable
+              as String,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      version: null == version
+          ? _value.version
+          : version // ignore: cast_nullable_to_non_nullable
+              as int,
+      pythonVersion: null == pythonVersion
+          ? _value.pythonVersion
+          : pythonVersion // ignore: cast_nullable_to_non_nullable
+              as int,
+      lang: null == lang
+          ? _value.lang
+          : lang // ignore: cast_nullable_to_non_nullable
+              as String,
+      isNsfw: null == isNsfw
+          ? _value.isNsfw
+          : isNsfw // ignore: cast_nullable_to_non_nullable
+              as bool,
+      site: null == site
+          ? _value.site
+          : site // ignore: cast_nullable_to_non_nullable
+              as SiteDto,
+      boards: null == boards
+          ? _value.boards
+          : boards // ignore: cast_nullable_to_non_nullable
+              as List<BoardDto>,
+    ) as $Val);
+  }
+
+  /// Create a copy of ExtensionDto
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $SiteDtoCopyWith<$Res> get site {
+    return $SiteDtoCopyWith<$Res>(_value.site, (value) {
+      return _then(_value.copyWith(site: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$ExtensionDtoImplCopyWith<$Res>
+    implements $ExtensionDtoCopyWith<$Res> {
+  factory _$$ExtensionDtoImplCopyWith(
+          _$ExtensionDtoImpl value, $Res Function(_$ExtensionDtoImpl) then) =
+      __$$ExtensionDtoImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {@JsonKey(name: 'pkg_name', required: true) String pkgName,
+      @JsonKey(name: 'display_name', required: true) String displayName,
+      @JsonKey(name: 'zip_name', required: true) String zipName,
+      @JsonKey(name: 'address', required: true) String address,
+      @JsonKey(name: 'version', required: true) int version,
+      @JsonKey(name: 'python_version', required: true) int pythonVersion,
+      @JsonKey(name: 'lang', required: true) String lang,
+      @JsonKey(name: 'is_nsfw', required: true) bool isNsfw,
+      @JsonKey(name: 'site', required: true) SiteDto site,
+      @JsonKey(name: 'boards', required: true) List<BoardDto> boards});
+
+  @override
+  $SiteDtoCopyWith<$Res> get site;
+}
+
+/// @nodoc
+class __$$ExtensionDtoImplCopyWithImpl<$Res>
+    extends _$ExtensionDtoCopyWithImpl<$Res, _$ExtensionDtoImpl>
+    implements _$$ExtensionDtoImplCopyWith<$Res> {
+  __$$ExtensionDtoImplCopyWithImpl(
+      _$ExtensionDtoImpl _value, $Res Function(_$ExtensionDtoImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ExtensionDto
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? pkgName = null,
+    Object? displayName = null,
+    Object? zipName = null,
+    Object? address = null,
+    Object? version = null,
+    Object? pythonVersion = null,
+    Object? lang = null,
+    Object? isNsfw = null,
+    Object? site = null,
+    Object? boards = null,
+  }) {
+    return _then(_$ExtensionDtoImpl(
+      pkgName: null == pkgName
+          ? _value.pkgName
+          : pkgName // ignore: cast_nullable_to_non_nullable
+              as String,
+      displayName: null == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
+              as String,
+      zipName: null == zipName
+          ? _value.zipName
+          : zipName // ignore: cast_nullable_to_non_nullable
+              as String,
+      address: null == address
+          ? _value.address
+          : address // ignore: cast_nullable_to_non_nullable
+              as String,
+      version: null == version
+          ? _value.version
+          : version // ignore: cast_nullable_to_non_nullable
+              as int,
+      pythonVersion: null == pythonVersion
+          ? _value.pythonVersion
+          : pythonVersion // ignore: cast_nullable_to_non_nullable
+              as int,
+      lang: null == lang
+          ? _value.lang
+          : lang // ignore: cast_nullable_to_non_nullable
+              as String,
+      isNsfw: null == isNsfw
+          ? _value.isNsfw
+          : isNsfw // ignore: cast_nullable_to_non_nullable
+              as bool,
+      site: null == site
+          ? _value.site
+          : site // ignore: cast_nullable_to_non_nullable
+              as SiteDto,
+      boards: null == boards
+          ? _value._boards
+          : boards // ignore: cast_nullable_to_non_nullable
+              as List<BoardDto>,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _$ExtensionDtoImpl implements _ExtensionDto {
+  const _$ExtensionDtoImpl(
+      {@JsonKey(name: 'pkg_name', required: true) required this.pkgName,
+      @JsonKey(name: 'display_name', required: true) required this.displayName,
+      @JsonKey(name: 'zip_name', required: true) required this.zipName,
+      @JsonKey(name: 'address', required: true) required this.address,
+      @JsonKey(name: 'version', required: true) required this.version,
+      @JsonKey(name: 'python_version', required: true)
+      required this.pythonVersion,
+      @JsonKey(name: 'lang', required: true) required this.lang,
+      @JsonKey(name: 'is_nsfw', required: true) required this.isNsfw,
+      @JsonKey(name: 'site', required: true) required this.site,
+      @JsonKey(name: 'boards', required: true)
+      required final List<BoardDto> boards})
+      : _boards = boards;
+
+  factory _$ExtensionDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ExtensionDtoImplFromJson(json);
+
+  @override
+  @JsonKey(name: 'pkg_name', required: true)
+  final String pkgName;
+  @override
+  @JsonKey(name: 'display_name', required: true)
+  final String displayName;
+  @override
+  @JsonKey(name: 'zip_name', required: true)
+  final String zipName;
+  @override
+  @JsonKey(name: 'address', required: true)
+  final String address;
+  @override
+  @JsonKey(name: 'version', required: true)
+  final int version;
+  @override
+  @JsonKey(name: 'python_version', required: true)
+  final int pythonVersion;
+  @override
+  @JsonKey(name: 'lang', required: true)
+  final String lang;
+  @override
+  @JsonKey(name: 'is_nsfw', required: true)
+  final bool isNsfw;
+  @override
+  @JsonKey(name: 'site', required: true)
+  final SiteDto site;
+  final List<BoardDto> _boards;
+  @override
+  @JsonKey(name: 'boards', required: true)
+  List<BoardDto> get boards {
+    if (_boards is EqualUnmodifiableListView) return _boards;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_boards);
+  }
+
+  @override
+  String toString() {
+    return 'ExtensionDto(pkgName: $pkgName, displayName: $displayName, zipName: $zipName, address: $address, version: $version, pythonVersion: $pythonVersion, lang: $lang, isNsfw: $isNsfw, site: $site, boards: $boards)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ExtensionDtoImpl &&
+            (identical(other.pkgName, pkgName) || other.pkgName == pkgName) &&
+            (identical(other.displayName, displayName) ||
+                other.displayName == displayName) &&
+            (identical(other.zipName, zipName) || other.zipName == zipName) &&
+            (identical(other.address, address) || other.address == address) &&
+            (identical(other.version, version) || other.version == version) &&
+            (identical(other.pythonVersion, pythonVersion) ||
+                other.pythonVersion == pythonVersion) &&
+            (identical(other.lang, lang) || other.lang == lang) &&
+            (identical(other.isNsfw, isNsfw) || other.isNsfw == isNsfw) &&
+            (identical(other.site, site) || other.site == site) &&
+            const DeepCollectionEquality().equals(other._boards, _boards));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      pkgName,
+      displayName,
+      zipName,
+      address,
+      version,
+      pythonVersion,
+      lang,
+      isNsfw,
+      site,
+      const DeepCollectionEquality().hash(_boards));
+
+  /// Create a copy of ExtensionDto
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ExtensionDtoImplCopyWith<_$ExtensionDtoImpl> get copyWith =>
+      __$$ExtensionDtoImplCopyWithImpl<_$ExtensionDtoImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ExtensionDtoImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _ExtensionDto implements ExtensionDto {
+  const factory _ExtensionDto(
+      {@JsonKey(name: 'pkg_name', required: true) required final String pkgName,
+      @JsonKey(name: 'display_name', required: true)
+      required final String displayName,
+      @JsonKey(name: 'zip_name', required: true) required final String zipName,
+      @JsonKey(name: 'address', required: true) required final String address,
+      @JsonKey(name: 'version', required: true) required final int version,
+      @JsonKey(name: 'python_version', required: true)
+      required final int pythonVersion,
+      @JsonKey(name: 'lang', required: true) required final String lang,
+      @JsonKey(name: 'is_nsfw', required: true) required final bool isNsfw,
+      @JsonKey(name: 'site', required: true) required final SiteDto site,
+      @JsonKey(name: 'boards', required: true)
+      required final List<BoardDto> boards}) = _$ExtensionDtoImpl;
+
+  factory _ExtensionDto.fromJson(Map<String, dynamic> json) =
+      _$ExtensionDtoImpl.fromJson;
+
+  @override
+  @JsonKey(name: 'pkg_name', required: true)
+  String get pkgName;
+  @override
+  @JsonKey(name: 'display_name', required: true)
+  String get displayName;
+  @override
+  @JsonKey(name: 'zip_name', required: true)
+  String get zipName;
+  @override
+  @JsonKey(name: 'address', required: true)
+  String get address;
+  @override
+  @JsonKey(name: 'version', required: true)
+  int get version;
+  @override
+  @JsonKey(name: 'python_version', required: true)
+  int get pythonVersion;
+  @override
+  @JsonKey(name: 'lang', required: true)
+  String get lang;
+  @override
+  @JsonKey(name: 'is_nsfw', required: true)
+  bool get isNsfw;
+  @override
+  @JsonKey(name: 'site', required: true)
+  SiteDto get site;
+  @override
+  @JsonKey(name: 'boards', required: true)
+  List<BoardDto> get boards;
+
+  /// Create a copy of ExtensionDto
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ExtensionDtoImplCopyWith<_$ExtensionDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -1905,153 +2867,234 @@ abstract class _SlavePostsDto implements SlavePostsDto {
       throw _privateConstructorUsedError;
 }
 
-ExtensionRepoResDto _$ExtensionRepoResDtoFromJson(Map<String, dynamic> json) {
-  return _ExtensionRepoResDto.fromJson(json);
+ExtensionRepoDto _$ExtensionRepoDtoFromJson(Map<String, dynamic> json) {
+  return _ExtensionRepoDto.fromJson(json);
 }
 
 /// @nodoc
-mixin _$ExtensionRepoResDto {
-  ExtensionRepoDto get meta => throw _privateConstructorUsedError;
+mixin _$ExtensionRepoDto {
+  @JsonKey(name: 'base_url', required: true)
+  String get baseUrl => throw _privateConstructorUsedError;
+  @JsonKey(name: 'name', required: true)
+  String get name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'website', required: true)
+  String get website => throw _privateConstructorUsedError;
+  @JsonKey(name: 'signing_key_fingerprint', required: true)
+  String get signingKeyFingerprint => throw _privateConstructorUsedError;
 
-  /// Serializes this ExtensionRepoResDto to a JSON map.
+  /// Serializes this ExtensionRepoDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of ExtensionRepoResDto
+  /// Create a copy of ExtensionRepoDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ExtensionRepoResDtoCopyWith<ExtensionRepoResDto> get copyWith =>
+  $ExtensionRepoDtoCopyWith<ExtensionRepoDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ExtensionRepoResDtoCopyWith<$Res> {
-  factory $ExtensionRepoResDtoCopyWith(
-          ExtensionRepoResDto value, $Res Function(ExtensionRepoResDto) then) =
-      _$ExtensionRepoResDtoCopyWithImpl<$Res, ExtensionRepoResDto>;
+abstract class $ExtensionRepoDtoCopyWith<$Res> {
+  factory $ExtensionRepoDtoCopyWith(
+          ExtensionRepoDto value, $Res Function(ExtensionRepoDto) then) =
+      _$ExtensionRepoDtoCopyWithImpl<$Res, ExtensionRepoDto>;
   @useResult
-  $Res call({ExtensionRepoDto meta});
+  $Res call(
+      {@JsonKey(name: 'base_url', required: true) String baseUrl,
+      @JsonKey(name: 'name', required: true) String name,
+      @JsonKey(name: 'website', required: true) String website,
+      @JsonKey(name: 'signing_key_fingerprint', required: true)
+      String signingKeyFingerprint});
 }
 
 /// @nodoc
-class _$ExtensionRepoResDtoCopyWithImpl<$Res, $Val extends ExtensionRepoResDto>
-    implements $ExtensionRepoResDtoCopyWith<$Res> {
-  _$ExtensionRepoResDtoCopyWithImpl(this._value, this._then);
+class _$ExtensionRepoDtoCopyWithImpl<$Res, $Val extends ExtensionRepoDto>
+    implements $ExtensionRepoDtoCopyWith<$Res> {
+  _$ExtensionRepoDtoCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ExtensionRepoResDto
+  /// Create a copy of ExtensionRepoDto
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? meta = null,
+    Object? baseUrl = null,
+    Object? name = null,
+    Object? website = null,
+    Object? signingKeyFingerprint = null,
   }) {
     return _then(_value.copyWith(
-      meta: null == meta
-          ? _value.meta
-          : meta // ignore: cast_nullable_to_non_nullable
-              as ExtensionRepoDto,
+      baseUrl: null == baseUrl
+          ? _value.baseUrl
+          : baseUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      website: null == website
+          ? _value.website
+          : website // ignore: cast_nullable_to_non_nullable
+              as String,
+      signingKeyFingerprint: null == signingKeyFingerprint
+          ? _value.signingKeyFingerprint
+          : signingKeyFingerprint // ignore: cast_nullable_to_non_nullable
+              as String,
     ) as $Val);
   }
 }
 
 /// @nodoc
-abstract class _$$ExtensionRepoResDtoImplCopyWith<$Res>
-    implements $ExtensionRepoResDtoCopyWith<$Res> {
-  factory _$$ExtensionRepoResDtoImplCopyWith(_$ExtensionRepoResDtoImpl value,
-          $Res Function(_$ExtensionRepoResDtoImpl) then) =
-      __$$ExtensionRepoResDtoImplCopyWithImpl<$Res>;
+abstract class _$$ExtensionRepoDtoImplCopyWith<$Res>
+    implements $ExtensionRepoDtoCopyWith<$Res> {
+  factory _$$ExtensionRepoDtoImplCopyWith(_$ExtensionRepoDtoImpl value,
+          $Res Function(_$ExtensionRepoDtoImpl) then) =
+      __$$ExtensionRepoDtoImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ExtensionRepoDto meta});
+  $Res call(
+      {@JsonKey(name: 'base_url', required: true) String baseUrl,
+      @JsonKey(name: 'name', required: true) String name,
+      @JsonKey(name: 'website', required: true) String website,
+      @JsonKey(name: 'signing_key_fingerprint', required: true)
+      String signingKeyFingerprint});
 }
 
 /// @nodoc
-class __$$ExtensionRepoResDtoImplCopyWithImpl<$Res>
-    extends _$ExtensionRepoResDtoCopyWithImpl<$Res, _$ExtensionRepoResDtoImpl>
-    implements _$$ExtensionRepoResDtoImplCopyWith<$Res> {
-  __$$ExtensionRepoResDtoImplCopyWithImpl(_$ExtensionRepoResDtoImpl _value,
-      $Res Function(_$ExtensionRepoResDtoImpl) _then)
+class __$$ExtensionRepoDtoImplCopyWithImpl<$Res>
+    extends _$ExtensionRepoDtoCopyWithImpl<$Res, _$ExtensionRepoDtoImpl>
+    implements _$$ExtensionRepoDtoImplCopyWith<$Res> {
+  __$$ExtensionRepoDtoImplCopyWithImpl(_$ExtensionRepoDtoImpl _value,
+      $Res Function(_$ExtensionRepoDtoImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ExtensionRepoResDto
+  /// Create a copy of ExtensionRepoDto
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? meta = null,
+    Object? baseUrl = null,
+    Object? name = null,
+    Object? website = null,
+    Object? signingKeyFingerprint = null,
   }) {
-    return _then(_$ExtensionRepoResDtoImpl(
-      meta: null == meta
-          ? _value.meta
-          : meta // ignore: cast_nullable_to_non_nullable
-              as ExtensionRepoDto,
+    return _then(_$ExtensionRepoDtoImpl(
+      baseUrl: null == baseUrl
+          ? _value.baseUrl
+          : baseUrl // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      website: null == website
+          ? _value.website
+          : website // ignore: cast_nullable_to_non_nullable
+              as String,
+      signingKeyFingerprint: null == signingKeyFingerprint
+          ? _value.signingKeyFingerprint
+          : signingKeyFingerprint // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$ExtensionRepoResDtoImpl implements _ExtensionRepoResDto {
-  const _$ExtensionRepoResDtoImpl({required this.meta});
+class _$ExtensionRepoDtoImpl implements _ExtensionRepoDto {
+  const _$ExtensionRepoDtoImpl(
+      {@JsonKey(name: 'base_url', required: true) required this.baseUrl,
+      @JsonKey(name: 'name', required: true) required this.name,
+      @JsonKey(name: 'website', required: true) required this.website,
+      @JsonKey(name: 'signing_key_fingerprint', required: true)
+      required this.signingKeyFingerprint});
 
-  factory _$ExtensionRepoResDtoImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ExtensionRepoResDtoImplFromJson(json);
+  factory _$ExtensionRepoDtoImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ExtensionRepoDtoImplFromJson(json);
 
   @override
-  final ExtensionRepoDto meta;
+  @JsonKey(name: 'base_url', required: true)
+  final String baseUrl;
+  @override
+  @JsonKey(name: 'name', required: true)
+  final String name;
+  @override
+  @JsonKey(name: 'website', required: true)
+  final String website;
+  @override
+  @JsonKey(name: 'signing_key_fingerprint', required: true)
+  final String signingKeyFingerprint;
 
   @override
   String toString() {
-    return 'ExtensionRepoResDto(meta: $meta)';
+    return 'ExtensionRepoDto(baseUrl: $baseUrl, name: $name, website: $website, signingKeyFingerprint: $signingKeyFingerprint)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ExtensionRepoResDtoImpl &&
-            (identical(other.meta, meta) || other.meta == meta));
+            other is _$ExtensionRepoDtoImpl &&
+            (identical(other.baseUrl, baseUrl) || other.baseUrl == baseUrl) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.website, website) || other.website == website) &&
+            (identical(other.signingKeyFingerprint, signingKeyFingerprint) ||
+                other.signingKeyFingerprint == signingKeyFingerprint));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, meta);
+  int get hashCode =>
+      Object.hash(runtimeType, baseUrl, name, website, signingKeyFingerprint);
 
-  /// Create a copy of ExtensionRepoResDto
+  /// Create a copy of ExtensionRepoDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$ExtensionRepoResDtoImplCopyWith<_$ExtensionRepoResDtoImpl> get copyWith =>
-      __$$ExtensionRepoResDtoImplCopyWithImpl<_$ExtensionRepoResDtoImpl>(
+  _$$ExtensionRepoDtoImplCopyWith<_$ExtensionRepoDtoImpl> get copyWith =>
+      __$$ExtensionRepoDtoImplCopyWithImpl<_$ExtensionRepoDtoImpl>(
           this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ExtensionRepoResDtoImplToJson(
+    return _$$ExtensionRepoDtoImplToJson(
       this,
     );
   }
 }
 
-abstract class _ExtensionRepoResDto implements ExtensionRepoResDto {
-  const factory _ExtensionRepoResDto({required final ExtensionRepoDto meta}) =
-      _$ExtensionRepoResDtoImpl;
+abstract class _ExtensionRepoDto implements ExtensionRepoDto {
+  const factory _ExtensionRepoDto(
+      {@JsonKey(name: 'base_url', required: true) required final String baseUrl,
+      @JsonKey(name: 'name', required: true) required final String name,
+      @JsonKey(name: 'website', required: true) required final String website,
+      @JsonKey(name: 'signing_key_fingerprint', required: true)
+      required final String signingKeyFingerprint}) = _$ExtensionRepoDtoImpl;
 
-  factory _ExtensionRepoResDto.fromJson(Map<String, dynamic> json) =
-      _$ExtensionRepoResDtoImpl.fromJson;
+  factory _ExtensionRepoDto.fromJson(Map<String, dynamic> json) =
+      _$ExtensionRepoDtoImpl.fromJson;
 
   @override
-  ExtensionRepoDto get meta;
+  @JsonKey(name: 'base_url', required: true)
+  String get baseUrl;
+  @override
+  @JsonKey(name: 'name', required: true)
+  String get name;
+  @override
+  @JsonKey(name: 'website', required: true)
+  String get website;
+  @override
+  @JsonKey(name: 'signing_key_fingerprint', required: true)
+  String get signingKeyFingerprint;
 
-  /// Create a copy of ExtensionRepoResDto
+  /// Create a copy of ExtensionRepoDto
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ExtensionRepoResDtoImplCopyWith<_$ExtensionRepoResDtoImpl> get copyWith =>
+  _$$ExtensionRepoDtoImplCopyWith<_$ExtensionRepoDtoImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

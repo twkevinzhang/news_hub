@@ -1,3 +1,7 @@
+import 'dart:math';
+
+import 'package:dartx/dartx.dart';
+
 class ExtensionRepo {
   final String baseUrl;
   final String displayName;
@@ -11,12 +15,12 @@ class ExtensionRepo {
     required this.signingKeyFingerprint,
   });
 
-  static mock () {
+  static mock() {
     return ExtensionRepo(
-        baseUrl: 'https://example.com',
-        displayName: 'Mock Extension Repo',
-        website: 'https://example.com',
-        signingKeyFingerprint: "signingKeyFingerprint",
+      baseUrl: 'https://example.com',
+      displayName: 'Mock Extension Repo',
+      website: 'https://example.com',
+      signingKeyFingerprint: "signingKeyFingerprint",
     );
   }
 }
@@ -31,7 +35,7 @@ class Extension {
   final String? lang;
   final bool isNsfw;
   final Site site;
-  final List<Board> boards;
+  final Set<Board> boards;
 
   Extension({
     required this.pkgName,
@@ -47,9 +51,10 @@ class Extension {
   });
 
   static Extension mock() {
+    final id = Random().nextInt(100);
     return Extension(
-      pkgName: 'twkevinzhan_beeceptor',
-      displayName: 'beeceptor',
+      pkgName: 'twkevinzhan_beeceptor$id',
+      displayName: 'beeceptor$id',
       zipName: 'beeceptor.zip',
       address: 'http://127.0.0.1:55001',
       version: 1,
@@ -57,7 +62,9 @@ class Extension {
       isNsfw: false,
       lang: 'zh_tw',
       site: Site.mock(),
-      boards: [],
+      boards: {
+        Board.mock(),
+      },
     );
   }
 }
@@ -94,12 +101,12 @@ class RemoteExtension extends Extension {
       iconUrl: '',
       repoUrl: '',
       site: Site.mock(),
-      boards: [],
+      boards: {},
     );
   }
 }
 
-extension RemoteExtensionExtension on RemoteExtension {
+extension RemoteExtensionEx on RemoteExtension {
   RemoteExtension copyWith({
     String? pkgName,
     String? displayName,
@@ -112,7 +119,7 @@ extension RemoteExtensionExtension on RemoteExtension {
     String? iconUrl,
     String? repoUrl,
     Site? site,
-    List<Board> boards = const [],
+    Set<Board> boards = const {},
   }) {
     return RemoteExtension(
       pkgName: pkgName ?? this.pkgName,
@@ -147,9 +154,10 @@ class Site {
   });
 
   static mock() {
+    final id = Random().nextInt(100);
     return Site(
-      extensionPkgName: 'twkevinzhan_beeceptor',
-      id: '1',
+      extensionPkgName: 'twkevinzhan_beeceptor$id',
+      id: '$id',
       name: 'Beeceptor',
       icon: 'beeceptor.png',
       url: 'https://beeceptor.com/',
@@ -165,6 +173,7 @@ class Board {
   final String icon;
   final String largeWelcomeImage;
   final String url;
+  final Set<String> supportedSorting;
 
   Board({
     required this.extensionPkgName,
@@ -174,7 +183,22 @@ class Board {
     required this.icon,
     required this.largeWelcomeImage,
     required this.url,
+    required this.supportedSorting,
   });
+
+  static Board mock() {
+    final id = Random().nextInt(100);
+    return Board(
+      extensionPkgName: 'twkevinzhan_beeceptor$id',
+      siteId: '${Random().nextInt(100)}',
+      id: '$id',
+      name: 'Beeceptor$id',
+      icon: 'beeceptor.png',
+      largeWelcomeImage: 'https://dummyimage.com/200x300/000/fff',
+      url: 'https://beeceptor.com/',
+      supportedSorting: {'newest', 'popular'},
+    );
+  }
 }
 
 class Thread {
@@ -194,7 +218,7 @@ class Thread {
     required this.masterPost,
   });
 
-  static mock() {
+  static Thread mock() {
     return Thread(
       extensionPkgName: 'twkevinzhan_beeceptor',
       siteId: '1',
@@ -241,7 +265,7 @@ class Post {
     required this.contents,
   });
 
-  static mock() {
+  static Post mock() {
     return Post(
       extensionPkgName: 'twkevinzhan_beeceptor',
       siteId: '1',
@@ -257,7 +281,8 @@ class Post {
       contents: [
         ApiText('Text Content Maybe'),
         ApiVideo(null, 'https://www.youtube.com/watch?v=_m7lYMTNQg8'),
-        ApiImage('https://dummyimage.com/200x300/000/fff', 'https://picsum.photos/200/300'),
+        ApiImage('https://dummyimage.com/200x300/000/fff',
+            'https://picsum.photos/200/300'),
         Quote('i m quote'),
         ReplyTo('first-respondent'),
         Link('https://pub.dev/packages/better_player'),
@@ -326,4 +351,57 @@ class Comment {
     required this.id,
     required this.contents,
   });
+
+  static mock() {
+    return Comment(id: "comment-1", contents: [ApiText("this is a comment")]);
+  }
+}
+
+class Condition {
+  late final String id;
+  late final Set<String> enabledExtensionPkgNames;
+  late final Set<String> enabledBoardIds;
+  late final Map<String, String> threadsSorting; // boardId -> sorting
+  late final String? keywords;
+
+  Condition(
+      {required this.id,
+      required this.enabledExtensionPkgNames,
+      required this.enabledBoardIds,
+      required this.threadsSorting,
+      required this.keywords});
+
+  static Condition empty() {
+    return Condition(
+        id: "",
+        enabledExtensionPkgNames: {},
+        enabledBoardIds: {},
+        threadsSorting: {},
+        keywords: null,
+    );
+  }
+
+  Condition.mock() {
+    id = "mockid";
+    enabledExtensionPkgNames = {
+      Extension.mock().pkgName,
+    };
+    enabledBoardIds = {
+      Board.mock().id,
+    };
+    threadsSorting = {
+      Board.mock().id: 'newest',
+    };
+    keywords = null;
+  }
+
+  // static mock() {
+  //   return Condition(
+  //     enabledBoards: {Board.mock()},
+  //     threadsSorting: {
+  //       Pair(Board.mock(), 'newest'),
+  //     },
+  //     keywords: '', id: 'mockid',
+  //   );
+  // }
 }

@@ -33,7 +33,6 @@ class MockExtensionInstallServiceImpl extends ExtensionInstallService {
 
   @override
   Future<List<Extension>> listInstalledExtensions() async {
-    print("MockExtensionInstallServiceImpl listInstalledExtensions");
     return List<Extension>.generate(3, (index) => Extension.mock());
   }
 }

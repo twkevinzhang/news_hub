@@ -4,13 +4,13 @@ import 'package:dartx/dartx.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 
-extension StringListExtension on List<String> {
+extension StringListEx on List<String> {
   String toUrl() {
     return join("/");
   }
 }
 
-extension FileExtension on File {
+extension FileEx on File {
   Stream<Pair<int, Uint8List?>> readAsProgress() async* {
     final fileSize = await length(); // 獲取文件總大小
     const chunkSize = 8192; // 每次讀取的塊大小

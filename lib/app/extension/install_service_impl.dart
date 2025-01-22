@@ -132,7 +132,6 @@ class ExtensionInstallServiceImpl extends ExtensionInstallService {
         result.add(await _load(pkgName));
       }
     }
-    print("ExtensionInstallServiceImpl listInstalledExtensions");
     return result;
   }
 
@@ -149,7 +148,7 @@ class ExtensionInstallServiceImpl extends ExtensionInstallService {
       lang : j["lang"],
       isNsfw: j["is_nsfw"],
       site: SiteDto.fromJson(j["site"]).toSite(),
-      boards: (j["boards"] as Iterable).map((e) => BoardDto.fromJson(e).toBoard()).toList(),
+      boards: (j["boards"] as Iterable).map((e) => BoardDto.fromJson(e).toBoard()).toSet(),
     );
   }
 }

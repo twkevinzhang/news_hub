@@ -12,7 +12,7 @@ class ExtensionRepoApiServiceImpl implements ExtensionRepoApiService {
     try {
       final res = await _dio.get('$baseUrl/detail.json');
       final decodedResponse = jsonDecode(res.data);
-      return ExtensionRepoResDto.fromJson(decodedResponse).meta.toExtensionRepo(baseUrl: baseUrl);
+      return ExtensionRepoDto.fromJson(decodedResponse).toExtensionRepo(baseUrl: baseUrl);
     } catch (e) {
       log.e('Failed to fetch repo details', error: e);
       return null;

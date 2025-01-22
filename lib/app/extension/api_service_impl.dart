@@ -3,6 +3,7 @@ part of 'index.dart';
 // @LazySingleton(as: ExtensionApiService)
 class ExtensionApiServiceImpl extends ExtensionApiService {
   final Dio _dio;
+
   ExtensionApiServiceImpl({
     required Dio dio,
   }) : _dio = dio;
@@ -24,40 +25,48 @@ class ExtensionApiServiceImpl extends ExtensionApiService {
   }
 
   @override
-  Future<List<Thread>> threads(Extension extension) async {
-    final path = "threads";
+  Future<List<Board>> boards(Extension extension, String siteId) async {
+    final path = "sites/$siteId/boards";
+    final res = await _dio.get([extension.address, path].toUrl());
+    final decodedResponse = jsonDecode(res.data);
+    return BoardsDto.fromJson(decodedResponse).boards.map((e) => e.toBoard()).toList();
+  }
+
+  @override
+  Future<List<Thread>> threads(Extension extension, String siteId, String boardId) async {
+    final path = "sites/$siteId/boards/$boardId/threads";
     final res = await _dio.get([extension.address, path].toUrl());
     final decodedResponse = jsonDecode(res.data);
     return ThreadsDto.fromJson(decodedResponse).threads.map((e) => e.toThread()).toList();
   }
 
   @override
-  Future<Thread> thread(Extension extension, String threadId) async {
-    final path = "threads/$threadId";
+  Future<Thread> thread(Extension extension, String siteId, String boardId, String threadId) async {
+    final path = "sites/$siteId/boards/$boardId/threads/$threadId";
     final res = await _dio.get([extension.address, path].toUrl());
     final decodedResponse = jsonDecode(res.data);
     return ThreadDto.fromJson(decodedResponse).toThread();
   }
 
   @override
-  Future<List<Post>> slavePosts(Extension extension, String threadId) async {
-    final path = "threads/$threadId/slave_posts";
+  Future<List<Post>> slavePosts(Extension extension, String siteId, String boardId, String threadId) async {
+    final path = "sites/$siteId/boards/$boardId/threads/$threadId/slave_posts";
     final res = await _dio.get([extension.address, path].toUrl());
     final decodedResponse = jsonDecode(res.data);
     return SlavePostsDto.fromJson(decodedResponse).slavePosts.map((e) => e.toPost()).toList();
   }
 
   @override
-  Future<Post> post(Extension extension, String postId) async {
-    final path = "posts/$postId";
+  Future<Post> post(Extension extension, String siteId, String boardId, String threadId, String postId) async {
+    final path = "sites/$siteId/boards/$boardId/threads/$threadId/posts/$postId";
     final res = await _dio.get([extension.address, path].toUrl());
     final decodedResponse = jsonDecode(res.data);
     return PostDto.fromJson(decodedResponse).toPost();
   }
 
   @override
-  Future<List<Comment>> comments(Extension extension, String postId) async {
-    final path = "posts/$postId/comments";
+  Future<List<Comment>> comments(Extension extension, String siteId, String boardId, String threadId, String postId) async {
+    final path = "sites/$siteId/boards/$boardId/threads/$threadId/posts/$postId/comments";
     final res = await _dio.get([extension.address, path].toUrl());
     final decodedResponse = jsonDecode(res.data);
     return CommentsDto.fromJson(decodedResponse).comments.map((e) => e.toComment()).toList();
