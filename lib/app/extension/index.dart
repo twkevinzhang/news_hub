@@ -3,6 +3,7 @@ library app.extension;
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:archive/archive.dart';
 import 'package:dartx/dartx.dart';
@@ -10,6 +11,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
+import 'package:news_hub/shared/model.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:news_hub/app/model/index.dart';
 import 'package:news_hub/app/service/preferences/preference.dart';

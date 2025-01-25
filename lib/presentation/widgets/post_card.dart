@@ -16,21 +16,22 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 2,
-      margin: EdgeInsets.fromLTRB(0, 8, 0, 8),
-      child: Padding(
-        padding: EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            _PostHeader(author: post.posterName, category: boardName),
-            SizedBox(height: 10),
-            _PostContent(contents: post.contents),
-            SizedBox(height: 10),
-            _PostActions(createdAt: post.createdAt),
-          ],
-        ),
+    return Padding(
+      padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          _PostHeader(author: post.posterName, category: boardName),
+          SizedBox(height: 10),
+          _PostContent(contents: post.contents),
+          SizedBox(height: 10),
+          _PostActions(
+            liked: post.like,
+            threads: 0,
+            comments: post.comments,
+            createdAt: post.createdAt,
+          ),
+        ],
       ),
     );
   }
@@ -61,7 +62,7 @@ class _PostHeader extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(author),
-                SubText(category),
+                GreyText(category),
               ],
             ),
           ],
@@ -121,10 +122,12 @@ class _PostContent extends StatelessWidget {
 }
 
 class _PostActions extends StatelessWidget {
+  final int liked;
+  final int threads;
+  final int comments;
   final DateTime createdAt;
   const _PostActions({
-    super.key,
-    required this.createdAt,
+    required this.createdAt, required this.liked, required this.threads, required this.comments,
   });
 
   @override
@@ -135,16 +138,22 @@ class _PostActions extends StatelessWidget {
         Row(
           children: [
             GreyIcon(Icons.thumb_up_alt_outlined),
+            SizedBox(width: 4),
+            GreyText(liked.toString()),
             SizedBox(width: 8),
-            GreyIcon(Icons.fork_left_outlined),
+            GreyIcon(Icons.fork_right_rounded),
+            SizedBox(width: 4),
+            GreyText(threads.toString()),
             SizedBox(width: 8),
             GreyIcon(Icons.chat_bubble_outline),
+            SizedBox(width: 4),
+            GreyText(comments.toString()),
           ],
         ),
         Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-            SubText(timeago.format(createdAt)),
+            GreyText(timeago.format(createdAt)),
           ],
         ),
       ],

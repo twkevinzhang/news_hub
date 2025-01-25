@@ -10,7 +10,7 @@ class ThreadsDto with _$ThreadsDto {
     required int currentPage,
 
     @JsonKey(name: 'threads', required: true)
-    required List<ThreadDto> threads
+    required List<ThreadDto> threads,
   }) = _ThreadsDto;
 
   factory ThreadsDto.fromJson(Map<String, Object?> json) =>
@@ -28,6 +28,9 @@ class ThreadDto with _$ThreadDto {
 
     @JsonKey(name: 'board_id', required: true)
     required String boardId,
+
+    @JsonKey(name: 'board_name', required: true)
+    required String boardName,
 
     @JsonKey(name: 'id', required: true)
     required String id,
@@ -49,6 +52,7 @@ extension ThreadDtoEx on ThreadDto {
      extensionPkgName: extensionPkgName,
      siteId: siteId,
      boardId: boardId,
+     boardName: boardName,
      id: id,
      url: url,
      masterPost: masterPost.toPost(),

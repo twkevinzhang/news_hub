@@ -5,6 +5,8 @@ import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/extension_repo/index.dart';
 import 'package:news_hub/domain/model/index.dart';
 import 'package:news_hub/app/service/preferences/preference.dart';
+import 'package:news_hub/presentation/pages/search/index.dart';
+import 'package:news_hub/shared/model.dart';
 import 'package:rxdart/rxdart.dart';
 
 part 'install_service.dart';

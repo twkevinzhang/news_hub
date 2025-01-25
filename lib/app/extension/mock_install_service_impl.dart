@@ -33,6 +33,56 @@ class MockExtensionInstallServiceImpl extends ExtensionInstallService {
 
   @override
   Future<List<Extension>> listInstalledExtensions() async {
-    return List<Extension>.generate(3, (index) => Extension.mock());
+    return [
+      Extension(
+        pkgName: 'twkevinzhan_beeceptor',
+        displayName: 'beeceptor',
+        zipName: 'beeceptor.zip',
+        address: 'http://127.0.0.1:55001',
+        version: 1,
+        pythonVersion: 1,
+        isNsfw: false,
+        lang: 'zh_tw',
+        site: Site(
+          extensionPkgName: 'twkevinzhan_beeceptor',
+          id: '1',
+          name: 'Beeceptor',
+          icon: 'beeceptor.png',
+          url: 'https://beeceptor.com/',
+        ),
+        boards: {
+          Board(
+            extensionPkgName: 'twkevinzhan_beeceptor',
+            siteId: '1',
+            id: '1',
+            name: '八卦版',
+            icon: 'beeceptor.png',
+            largeWelcomeImage: 'https://dummyimage.com/200x300/000/fff',
+            url: 'https://beeceptor.com/goss',
+            supportedThreadsSorting: {'newest', 'popular'},
+          ),
+          Board(
+            extensionPkgName: 'twkevinzhan_beeceptor',
+            siteId: '1',
+            id: '2',
+            name: '遊戲版',
+            icon: 'beeceptor.png',
+            largeWelcomeImage: 'https://dummyimage.com/200x300/000/fff',
+            url: 'https://beeceptor.com/game',
+            supportedThreadsSorting: {'newest', 'popular'},
+          ),
+          Board(
+            extensionPkgName: 'twkevinzhan_beeceptor',
+            siteId: '1',
+            id: '3',
+            name: '電蝦版',
+            icon: 'beeceptor.png',
+            largeWelcomeImage: 'https://dummyimage.com/200x300/000/fff',
+            url: 'https://beeceptor.com/work',
+            supportedThreadsSorting: {'newest', 'popular'},
+          ),
+        },
+      )
+    ];
   }
 }

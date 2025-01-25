@@ -1,48 +1,61 @@
 part of 'index.dart';
 
-abstract class ThreadsState extends Equatable {
-  @override
-  List<Object?> get props => [];
-}
+@immutable
+@CopyWith()
+class ThreadsState extends Equatable {
+  final SearchConfigForm? searchConfigForm;
 
-class ThreadsInitial extends ThreadsState {}
-
-class ThreadsLoading extends ThreadsState {}
-
-class ThreadsSuccess extends ThreadsState {
-  final List<Thread> threads;
-
-  ThreadsSuccess(this.threads);
+  const ThreadsState({this.searchConfigForm});
 
   @override
-  List<Object?> get props => [threads];
-}
-
-class ThreadsError extends ThreadsState {
-  final String error;
-
-  ThreadsError(this.error);
-
-  @override
-  List<Object?> get props => [error];
+  List<Object?> get props => [searchConfigForm];
 }
 
 @lazySingleton
 class ThreadsCubit extends Cubit<ThreadsState> {
   final ListThreads _listThreads;
+  final PagingController<int, ThreadWithExtension> _pagingController;
+  PagingController<int, ThreadWithExtension> get pagingController => _pagingController;
+
+  static const _pageSize = 10;
 
   ThreadsCubit({
     required ListThreads listThreads,
   })  : _listThreads = listThreads,
-        super(ThreadsInitial());
+        _pagingController = PagingController(firstPageKey: 1),
+        super(const ThreadsState()) {
+    _pagingController.addPageRequestListener(_loadThreads);
+  }
 
-  Future<void> loadThreads() async {
-    emit(ThreadsLoading());
+  set searchConfigForm(SearchConfigForm? searchConfigForm) {
+    emit(state.copyWith(searchConfigForm: searchConfigForm));
+  }
+
+  void _loadThreads(int pageKey) async {
     try {
-      final result = await _listThreads.call();
-      emit(ThreadsSuccess(result));
+      final result = await _listThreads.call(
+        searchConfigForm: state.searchConfigForm,
+        pagination: Pagination(
+          page: pageKey,
+          pageSize: _pageSize,
+        ),
+      );
+
+      final isLastPage = result.length < _pageSize;
+      if (isLastPage) {
+        _pagingController.appendLastPage(result);
+      } else {
+        final nextPageKey = pageKey + result.length;
+        _pagingController.appendPage(result, nextPageKey);
+      }
     } catch (e) {
-      emit(ThreadsError(e.toString()));
+      _pagingController.error = e;
     }
+  }
+
+  @override
+  Future<void> close() {
+    _pagingController.dispose();
+    return super.close();
   }
 }

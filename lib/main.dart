@@ -24,16 +24,16 @@ void main() async {
   runApp(App());
 }
 
-void testApiService() async {
-  final mockException = RemoteExtension.mock();
-  final service = await ExtensionInstallServiceImpl.create();
-  final api = ExtensionApiServiceImpl(dio: Dio());
-  service.uninstall(mockException);
-  await copyFile();
-  await service.install(mockException).last;
-  await api.run(mockException);
-  await api.ping(mockException);
-}
+// void testApiService() async {
+//   final mockException = RemoteExtension.mock();
+//   final service = await ExtensionInstallServiceImpl.create();
+//   final api = ExtensionApiServiceImpl(dio: Dio());
+//   service.uninstall(mockException);
+//   await copyFile();
+//   await service.install(mockException).last;
+//   await api.run(mockException);
+//   await api.ping(mockException);
+// }
 
 Future<void> copyFile() async {
   WidgetsFlutterBinding.ensureInitialized();

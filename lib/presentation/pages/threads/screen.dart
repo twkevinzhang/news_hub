@@ -2,64 +2,77 @@ part of 'index.dart';
 
 @RoutePage()
 class ThreadsScreen extends StatefulWidget {
-  ThreadsScreen({super.key});
+  const ThreadsScreen({super.key});
 
+  @override
+  State<ThreadsScreen> createState() => _ThreadsScreenState();
+}
+
+class _ThreadsScreenState extends State<ThreadsScreen> {
   final router = sl<AppRouter>();
 
   @override
-  State<ThreadsScreen> createState() => _State();
+  Widget build(BuildContext context) {
+    return BlocBuilder<ThreadsCubit, ThreadsState>(
+        builder: (context, state) {
+          final cubit = context.read<ThreadsCubit>();
+          return Scaffold(
+              appBar: AppBar(
+                title: const Text('Threads'),
+                actions: [
+                  IconButton(
+                    icon: const Icon(Icons.search),
+                    onPressed: () async {
+                      final result = await router.push<SearchConfigForm?>(SearchRoute());
+                      if (!context.mounted) return;
+                      if (result != null) {
+                        cubit.searchConfigForm = result;
+                        cubit.pagingController.refresh();
+                      }
+                    },
+                  ),
+                ],
+              ),
+            body: PagedListView<int, ThreadWithExtension>(
+              pagingController: cubit.pagingController,
+              builderDelegate: PagedChildBuilderDelegate<ThreadWithExtension>(
+                itemBuilder: (context, thread, index) => GestureDetector(
+                  onTap: () {
+
+                  },
+                  child: Column(
+                    children: [
+                      PostCard(post: thread.masterPost, boardName: "[${thread.extension.displayName}] ${thread.boardName}"),
+                      const Divider(),
+                    ],
+                  ),
+                ),
+                noItemsFoundIndicatorBuilder: (context) => Center(
+                  child: Text("找不到"),
+                ),
+                firstPageProgressIndicatorBuilder: (context) =>
+                const LoadingIndicator(),
+                newPageProgressIndicatorBuilder: (context) =>
+                const LoadingIndicator(),
+                noMoreItemsIndicatorBuilder: (context) => Center(
+                  child: Text("沒有了"),
+                ),
+                transitionDuration: const Duration(seconds: 1),
+                animateTransitions: true,
+              ),
+            ),
+          );
+        });
+  }
 }
 
-class _State extends State<ThreadsScreen> {
-  ThreadsCubit get cubit  => context.read<ThreadsCubit>();
-
-  @override
-  void initState() {
-    super.initState();
-    cubit.loadThreads();
-  }
+class LoadingIndicator extends StatelessWidget {
+  const LoadingIndicator({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("Threads"),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search),
-            onPressed: () => widget.router.push(SearchRoute()),
-          ),
-        ],
-      ),
-      body: BlocBuilder<ThreadsCubit, ThreadsState>(builder: (context, state) {
-        switch (state) {
-          case ThreadsLoading _:
-            return const Center(child: CircularProgressIndicator());
-          case ThreadsError _:
-            return Center(
-              child: Text(
-                state.error,
-                style: const TextStyle(color: Colors.red),
-              ),
-            );
-          case ThreadsSuccess _:
-            final threads = state.threads.map((t) => t.masterPost).toList();
-            return Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: ListView.builder(
-                itemCount: threads.length,
-                itemBuilder: (context, index) {
-                  return PostCard(
-                    boardName: 'Board Name',
-                    post: threads[index],
-                  );
-                },
-              ),
-            );
-          default:
-            return const Center(child: Text('No threads remote.'));
-        }
-      }),
+    return const Center(
+      child: CircularProgressIndicator(),
     );
   }
 }

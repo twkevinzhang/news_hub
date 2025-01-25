@@ -249,7 +249,7 @@ mixin _$BoardDto {
   @JsonKey(name: 'url', required: true)
   String get url => throw _privateConstructorUsedError;
   @JsonKey(name: 'supported_sorting', required: true)
-  Set<String> get supportedSorting => throw _privateConstructorUsedError;
+  Set<String> get supportedThreadsSorting => throw _privateConstructorUsedError;
 
   /// Serializes this BoardDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -277,7 +277,7 @@ abstract class $BoardDtoCopyWith<$Res> {
       String largeWelcomeImage,
       @JsonKey(name: 'url', required: true) String url,
       @JsonKey(name: 'supported_sorting', required: true)
-      Set<String> supportedSorting});
+      Set<String> supportedThreadsSorting});
 }
 
 /// @nodoc
@@ -302,7 +302,7 @@ class _$BoardDtoCopyWithImpl<$Res, $Val extends BoardDto>
     Object? icon = null,
     Object? largeWelcomeImage = null,
     Object? url = null,
-    Object? supportedSorting = null,
+    Object? supportedThreadsSorting = null,
   }) {
     return _then(_value.copyWith(
       extensionPkgName: null == extensionPkgName
@@ -333,9 +333,9 @@ class _$BoardDtoCopyWithImpl<$Res, $Val extends BoardDto>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      supportedSorting: null == supportedSorting
-          ? _value.supportedSorting
-          : supportedSorting // ignore: cast_nullable_to_non_nullable
+      supportedThreadsSorting: null == supportedThreadsSorting
+          ? _value.supportedThreadsSorting
+          : supportedThreadsSorting // ignore: cast_nullable_to_non_nullable
               as Set<String>,
     ) as $Val);
   }
@@ -360,7 +360,7 @@ abstract class _$$BoardDtoImplCopyWith<$Res>
       String largeWelcomeImage,
       @JsonKey(name: 'url', required: true) String url,
       @JsonKey(name: 'supported_sorting', required: true)
-      Set<String> supportedSorting});
+      Set<String> supportedThreadsSorting});
 }
 
 /// @nodoc
@@ -383,7 +383,7 @@ class __$$BoardDtoImplCopyWithImpl<$Res>
     Object? icon = null,
     Object? largeWelcomeImage = null,
     Object? url = null,
-    Object? supportedSorting = null,
+    Object? supportedThreadsSorting = null,
   }) {
     return _then(_$BoardDtoImpl(
       extensionPkgName: null == extensionPkgName
@@ -414,9 +414,9 @@ class __$$BoardDtoImplCopyWithImpl<$Res>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      supportedSorting: null == supportedSorting
-          ? _value._supportedSorting
-          : supportedSorting // ignore: cast_nullable_to_non_nullable
+      supportedThreadsSorting: null == supportedThreadsSorting
+          ? _value._supportedThreadsSorting
+          : supportedThreadsSorting // ignore: cast_nullable_to_non_nullable
               as Set<String>,
     ));
   }
@@ -436,8 +436,8 @@ class _$BoardDtoImpl implements _BoardDto {
       required this.largeWelcomeImage,
       @JsonKey(name: 'url', required: true) required this.url,
       @JsonKey(name: 'supported_sorting', required: true)
-      required final Set<String> supportedSorting})
-      : _supportedSorting = supportedSorting;
+      required final Set<String> supportedThreadsSorting})
+      : _supportedThreadsSorting = supportedThreadsSorting;
 
   factory _$BoardDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$BoardDtoImplFromJson(json);
@@ -463,18 +463,19 @@ class _$BoardDtoImpl implements _BoardDto {
   @override
   @JsonKey(name: 'url', required: true)
   final String url;
-  final Set<String> _supportedSorting;
+  final Set<String> _supportedThreadsSorting;
   @override
   @JsonKey(name: 'supported_sorting', required: true)
-  Set<String> get supportedSorting {
-    if (_supportedSorting is EqualUnmodifiableSetView) return _supportedSorting;
+  Set<String> get supportedThreadsSorting {
+    if (_supportedThreadsSorting is EqualUnmodifiableSetView)
+      return _supportedThreadsSorting;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableSetView(_supportedSorting);
+    return EqualUnmodifiableSetView(_supportedThreadsSorting);
   }
 
   @override
   String toString() {
-    return 'BoardDto(extensionPkgName: $extensionPkgName, siteId: $siteId, id: $id, name: $name, icon: $icon, largeWelcomeImage: $largeWelcomeImage, url: $url, supportedSorting: $supportedSorting)';
+    return 'BoardDto(extensionPkgName: $extensionPkgName, siteId: $siteId, id: $id, name: $name, icon: $icon, largeWelcomeImage: $largeWelcomeImage, url: $url, supportedThreadsSorting: $supportedThreadsSorting)';
   }
 
   @override
@@ -491,8 +492,8 @@ class _$BoardDtoImpl implements _BoardDto {
             (identical(other.largeWelcomeImage, largeWelcomeImage) ||
                 other.largeWelcomeImage == largeWelcomeImage) &&
             (identical(other.url, url) || other.url == url) &&
-            const DeepCollectionEquality()
-                .equals(other._supportedSorting, _supportedSorting));
+            const DeepCollectionEquality().equals(
+                other._supportedThreadsSorting, _supportedThreadsSorting));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -506,7 +507,7 @@ class _$BoardDtoImpl implements _BoardDto {
       icon,
       largeWelcomeImage,
       url,
-      const DeepCollectionEquality().hash(_supportedSorting));
+      const DeepCollectionEquality().hash(_supportedThreadsSorting));
 
   /// Create a copy of BoardDto
   /// with the given fields replaced by the non-null parameter values.
@@ -536,7 +537,7 @@ abstract class _BoardDto implements BoardDto {
       required final String largeWelcomeImage,
       @JsonKey(name: 'url', required: true) required final String url,
       @JsonKey(name: 'supported_sorting', required: true)
-      required final Set<String> supportedSorting}) = _$BoardDtoImpl;
+      required final Set<String> supportedThreadsSorting}) = _$BoardDtoImpl;
 
   factory _BoardDto.fromJson(Map<String, dynamic> json) =
       _$BoardDtoImpl.fromJson;
@@ -564,7 +565,7 @@ abstract class _BoardDto implements BoardDto {
   String get url;
   @override
   @JsonKey(name: 'supported_sorting', required: true)
-  Set<String> get supportedSorting;
+  Set<String> get supportedThreadsSorting;
 
   /// Create a copy of BoardDto
   /// with the given fields replaced by the non-null parameter values.
@@ -2370,6 +2371,8 @@ mixin _$ThreadDto {
   String get siteId => throw _privateConstructorUsedError;
   @JsonKey(name: 'board_id', required: true)
   String get boardId => throw _privateConstructorUsedError;
+  @JsonKey(name: 'board_name', required: true)
+  String get boardName => throw _privateConstructorUsedError;
   @JsonKey(name: 'id', required: true)
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'url', required: true)
@@ -2397,6 +2400,7 @@ abstract class $ThreadDtoCopyWith<$Res> {
       String extensionPkgName,
       @JsonKey(name: 'site_id', required: true) String siteId,
       @JsonKey(name: 'board_id', required: true) String boardId,
+      @JsonKey(name: 'board_name', required: true) String boardName,
       @JsonKey(name: 'id', required: true) String id,
       @JsonKey(name: 'url', required: true) String url,
       @JsonKey(name: 'master_post', required: true) PostDto masterPost});
@@ -2422,6 +2426,7 @@ class _$ThreadDtoCopyWithImpl<$Res, $Val extends ThreadDto>
     Object? extensionPkgName = null,
     Object? siteId = null,
     Object? boardId = null,
+    Object? boardName = null,
     Object? id = null,
     Object? url = null,
     Object? masterPost = null,
@@ -2438,6 +2443,10 @@ class _$ThreadDtoCopyWithImpl<$Res, $Val extends ThreadDto>
       boardId: null == boardId
           ? _value.boardId
           : boardId // ignore: cast_nullable_to_non_nullable
+              as String,
+      boardName: null == boardName
+          ? _value.boardName
+          : boardName // ignore: cast_nullable_to_non_nullable
               as String,
       id: null == id
           ? _value.id
@@ -2478,6 +2487,7 @@ abstract class _$$ThreadDtoImplCopyWith<$Res>
       String extensionPkgName,
       @JsonKey(name: 'site_id', required: true) String siteId,
       @JsonKey(name: 'board_id', required: true) String boardId,
+      @JsonKey(name: 'board_name', required: true) String boardName,
       @JsonKey(name: 'id', required: true) String id,
       @JsonKey(name: 'url', required: true) String url,
       @JsonKey(name: 'master_post', required: true) PostDto masterPost});
@@ -2502,6 +2512,7 @@ class __$$ThreadDtoImplCopyWithImpl<$Res>
     Object? extensionPkgName = null,
     Object? siteId = null,
     Object? boardId = null,
+    Object? boardName = null,
     Object? id = null,
     Object? url = null,
     Object? masterPost = null,
@@ -2518,6 +2529,10 @@ class __$$ThreadDtoImplCopyWithImpl<$Res>
       boardId: null == boardId
           ? _value.boardId
           : boardId // ignore: cast_nullable_to_non_nullable
+              as String,
+      boardName: null == boardName
+          ? _value.boardName
+          : boardName // ignore: cast_nullable_to_non_nullable
               as String,
       id: null == id
           ? _value.id
@@ -2543,6 +2558,7 @@ class _$ThreadDtoImpl implements _ThreadDto {
       required this.extensionPkgName,
       @JsonKey(name: 'site_id', required: true) required this.siteId,
       @JsonKey(name: 'board_id', required: true) required this.boardId,
+      @JsonKey(name: 'board_name', required: true) required this.boardName,
       @JsonKey(name: 'id', required: true) required this.id,
       @JsonKey(name: 'url', required: true) required this.url,
       @JsonKey(name: 'master_post', required: true) required this.masterPost});
@@ -2560,6 +2576,9 @@ class _$ThreadDtoImpl implements _ThreadDto {
   @JsonKey(name: 'board_id', required: true)
   final String boardId;
   @override
+  @JsonKey(name: 'board_name', required: true)
+  final String boardName;
+  @override
   @JsonKey(name: 'id', required: true)
   final String id;
   @override
@@ -2571,7 +2590,7 @@ class _$ThreadDtoImpl implements _ThreadDto {
 
   @override
   String toString() {
-    return 'ThreadDto(extensionPkgName: $extensionPkgName, siteId: $siteId, boardId: $boardId, id: $id, url: $url, masterPost: $masterPost)';
+    return 'ThreadDto(extensionPkgName: $extensionPkgName, siteId: $siteId, boardId: $boardId, boardName: $boardName, id: $id, url: $url, masterPost: $masterPost)';
   }
 
   @override
@@ -2583,6 +2602,8 @@ class _$ThreadDtoImpl implements _ThreadDto {
                 other.extensionPkgName == extensionPkgName) &&
             (identical(other.siteId, siteId) || other.siteId == siteId) &&
             (identical(other.boardId, boardId) || other.boardId == boardId) &&
+            (identical(other.boardName, boardName) ||
+                other.boardName == boardName) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.url, url) || other.url == url) &&
             (identical(other.masterPost, masterPost) ||
@@ -2591,8 +2612,8 @@ class _$ThreadDtoImpl implements _ThreadDto {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType, extensionPkgName, siteId, boardId, id, url, masterPost);
+  int get hashCode => Object.hash(runtimeType, extensionPkgName, siteId,
+      boardId, boardName, id, url, masterPost);
 
   /// Create a copy of ThreadDto
   /// with the given fields replaced by the non-null parameter values.
@@ -2616,6 +2637,8 @@ abstract class _ThreadDto implements ThreadDto {
       required final String extensionPkgName,
       @JsonKey(name: 'site_id', required: true) required final String siteId,
       @JsonKey(name: 'board_id', required: true) required final String boardId,
+      @JsonKey(name: 'board_name', required: true)
+      required final String boardName,
       @JsonKey(name: 'id', required: true) required final String id,
       @JsonKey(name: 'url', required: true) required final String url,
       @JsonKey(name: 'master_post', required: true)
@@ -2633,6 +2656,9 @@ abstract class _ThreadDto implements ThreadDto {
   @override
   @JsonKey(name: 'board_id', required: true)
   String get boardId;
+  @override
+  @JsonKey(name: 'board_name', required: true)
+  String get boardName;
   @override
   @JsonKey(name: 'id', required: true)
   String get id;

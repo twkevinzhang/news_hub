@@ -14,15 +14,6 @@ class ExtensionRepo {
     required this.website,
     required this.signingKeyFingerprint,
   });
-
-  static mock() {
-    return ExtensionRepo(
-      baseUrl: 'https://example.com',
-      displayName: 'Mock Extension Repo',
-      website: 'https://example.com',
-      signingKeyFingerprint: "signingKeyFingerprint",
-    );
-  }
 }
 
 class Extension {
@@ -49,24 +40,6 @@ class Extension {
     required this.site,
     required this.boards,
   });
-
-  static Extension mock() {
-    final id = Random().nextInt(100);
-    return Extension(
-      pkgName: 'twkevinzhan_beeceptor$id',
-      displayName: 'beeceptor$id',
-      zipName: 'beeceptor.zip',
-      address: 'http://127.0.0.1:55001',
-      version: 1,
-      pythonVersion: 1,
-      isNsfw: false,
-      lang: 'zh_tw',
-      site: Site.mock(),
-      boards: {
-        Board.mock(),
-      },
-    );
-  }
 }
 
 class RemoteExtension extends Extension {
@@ -87,23 +60,6 @@ class RemoteExtension extends Extension {
     required super.site,
     required super.boards,
   });
-
-  static RemoteExtension mock() {
-    return RemoteExtension(
-      pkgName: 'twkevinzhan_beeceptor',
-      displayName: 'beeceptor',
-      zipName: 'beeceptor.zip',
-      address: 'http://127.0.0.1:55001',
-      version: 1,
-      pythonVersion: 1,
-      isNsfw: false,
-      lang: 'zh_tw',
-      iconUrl: '',
-      repoUrl: '',
-      site: Site.mock(),
-      boards: {},
-    );
-  }
 }
 
 extension RemoteExtensionEx on RemoteExtension {
@@ -152,17 +108,6 @@ class Site {
     required this.icon,
     required this.url,
   });
-
-  static mock() {
-    final id = Random().nextInt(100);
-    return Site(
-      extensionPkgName: 'twkevinzhan_beeceptor$id',
-      id: '$id',
-      name: 'Beeceptor',
-      icon: 'beeceptor.png',
-      url: 'https://beeceptor.com/',
-    );
-  }
 }
 
 class Board {
@@ -173,7 +118,7 @@ class Board {
   final String icon;
   final String largeWelcomeImage;
   final String url;
-  final Set<String> supportedSorting;
+  final Set<String> supportedThreadsSorting;
 
   Board({
     required this.extensionPkgName,
@@ -183,28 +128,15 @@ class Board {
     required this.icon,
     required this.largeWelcomeImage,
     required this.url,
-    required this.supportedSorting,
+    required this.supportedThreadsSorting,
   });
-
-  static Board mock() {
-    final id = Random().nextInt(100);
-    return Board(
-      extensionPkgName: 'twkevinzhan_beeceptor$id',
-      siteId: '${Random().nextInt(100)}',
-      id: '$id',
-      name: 'Beeceptor$id',
-      icon: 'beeceptor.png',
-      largeWelcomeImage: 'https://dummyimage.com/200x300/000/fff',
-      url: 'https://beeceptor.com/',
-      supportedSorting: {'newest', 'popular'},
-    );
-  }
 }
 
 class Thread {
   final String extensionPkgName;
   final String siteId;
   final String boardId;
+  final String boardName;
   final String id;
   final String url;
   final Post masterPost;
@@ -213,21 +145,11 @@ class Thread {
     required this.extensionPkgName,
     required this.siteId,
     required this.boardId,
+    required this.boardName,
     required this.id,
     required this.url,
     required this.masterPost,
   });
-
-  static Thread mock() {
-    return Thread(
-      extensionPkgName: 'twkevinzhan_beeceptor',
-      siteId: '1',
-      boardId: '1',
-      id: '1',
-      url: 'https://beeceptor.com/',
-      masterPost: Post.mock(),
-    );
-  }
 }
 
 class Post {
@@ -264,34 +186,9 @@ class Post {
     required this.comments,
     required this.contents,
   });
-
-  static Post mock() {
-    return Post(
-      extensionPkgName: 'twkevinzhan_beeceptor',
-      siteId: '1',
-      boardId: '1',
-      threadId: '1',
-      id: '1',
-      createdAt: DateTime.now(),
-      posterId: '1',
-      posterName: '無名',
-      like: 0,
-      dislike: 0,
-      comments: 0,
-      contents: [
-        ApiText('Text Content Maybe'),
-        ApiVideo(null, 'https://www.youtube.com/watch?v=_m7lYMTNQg8'),
-        ApiImage('https://dummyimage.com/200x300/000/fff',
-            'https://picsum.photos/200/300'),
-        Quote('i m quote'),
-        ReplyTo('first-respondent'),
-        Link('https://pub.dev/packages/better_player'),
-      ],
-    );
-  }
 }
 
-enum ParagraphType { QUOTE, REPLY_TO, TEXT, IMAGE, LINK, VIDEO }
+enum ParagraphType { quote, replyTo, text, image, link, video }
 
 abstract class Paragraph {
   final ParagraphType type;
@@ -305,7 +202,7 @@ class ApiImage extends Paragraph {
   ApiImage(
     this._thumb,
     this.raw,
-  ) : super(ParagraphType.IMAGE);
+  ) : super(ParagraphType.image);
 
   thumb() {
     return _thumb ?? raw;
@@ -316,31 +213,31 @@ class ApiVideo extends Paragraph {
   final String? thumb;
   final String url;
 
-  ApiVideo(this.thumb, this.url) : super(ParagraphType.VIDEO);
+  ApiVideo(this.thumb, this.url) : super(ParagraphType.video);
 }
 
 class ApiText extends Paragraph {
   final String content;
 
-  ApiText(this.content) : super(ParagraphType.TEXT);
+  ApiText(this.content) : super(ParagraphType.text);
 }
 
 class Quote extends Paragraph {
   final String content;
 
-  Quote(this.content) : super(ParagraphType.QUOTE);
+  Quote(this.content) : super(ParagraphType.quote);
 }
 
 class ReplyTo extends Paragraph {
   final String id;
 
-  ReplyTo(this.id) : super(ParagraphType.REPLY_TO);
+  ReplyTo(this.id) : super(ParagraphType.replyTo);
 }
 
 class Link extends Paragraph {
   final String content;
 
-  Link(this.content) : super(ParagraphType.LINK);
+  Link(this.content) : super(ParagraphType.link);
 }
 
 class Comment {
@@ -351,57 +248,22 @@ class Comment {
     required this.id,
     required this.contents,
   });
-
-  static mock() {
-    return Comment(id: "comment-1", contents: [ApiText("this is a comment")]);
-  }
 }
 
-class Condition {
+/// 搜尋條件、排序
+class SearchConfig {
   late final String id;
   late final Set<String> enabledExtensionPkgNames;
   late final Set<String> enabledBoardIds;
+  late final List<String> boardsOrder;
   late final Map<String, String> threadsSorting; // boardId -> sorting
   late final String? keywords;
 
-  Condition(
+  SearchConfig(
       {required this.id,
       required this.enabledExtensionPkgNames,
       required this.enabledBoardIds,
+      required this.boardsOrder,
       required this.threadsSorting,
       required this.keywords});
-
-  static Condition empty() {
-    return Condition(
-        id: "",
-        enabledExtensionPkgNames: {},
-        enabledBoardIds: {},
-        threadsSorting: {},
-        keywords: null,
-    );
-  }
-
-  Condition.mock() {
-    id = "mockid";
-    enabledExtensionPkgNames = {
-      Extension.mock().pkgName,
-    };
-    enabledBoardIds = {
-      Board.mock().id,
-    };
-    threadsSorting = {
-      Board.mock().id: 'newest',
-    };
-    keywords = null;
-  }
-
-  // static mock() {
-  //   return Condition(
-  //     enabledBoards: {Board.mock()},
-  //     threadsSorting: {
-  //       Pair(Board.mock(), 'newest'),
-  //     },
-  //     keywords: '', id: 'mockid',
-  //   );
-  // }
 }

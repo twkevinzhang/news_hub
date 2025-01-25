@@ -18,9 +18,9 @@ import 'package:news_hub/app/extension_repo/index.dart' as _i1027;
 import 'package:news_hub/app/service/database.dart' as _i1042;
 import 'package:news_hub/app/service/preferences/store.dart' as _i365;
 import 'package:news_hub/app/service/preferences/store_impl.dart' as _i842;
-import 'package:news_hub/domain/condition/index.dart' as _i174;
 import 'package:news_hub/domain/extension/index.dart' as _i135;
 import 'package:news_hub/domain/extension_repo/index.dart' as _i381;
+import 'package:news_hub/domain/search_config/index.dart' as _i768;
 import 'package:news_hub/locator.dart' as _i56;
 import 'package:news_hub/presentation/pages/search/index.dart' as _i928;
 import 'package:news_hub/presentation/pages/threads/index.dart' as _i62;
@@ -54,8 +54,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i509.MockExtensionApiServiceImpl());
     gh.lazySingleton<_i381.ExtensionRepoApiService>(
         () => _i1027.MockExtensionRepoApiServiceImpl());
-    gh.lazySingleton<_i174.ConditionRepository>(() =>
-        _i280.ConditionRepositoryImpl(service: gh<_i1042.DatabaseService>()));
     gh.lazySingleton<_i381.ExtensionRepoRepository>(() =>
         _i1027.ExtensionRepoRepositoryImpl(
             service: gh<_i1042.DatabaseService>()));
@@ -64,12 +62,15 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i135.ListInstalledExtensions>(() =>
         _i135.ListInstalledExtensions(
             installService: gh<_i135.ExtensionInstallService>()));
+    gh.lazySingleton<_i768.SearchConfigRepository>(() =>
+        _i280.SearchConfigRepositoryImpl(
+            service: gh<_i1042.DatabaseService>()));
+    gh.lazySingleton<_i768.ListSearchConfigs>(() =>
+        _i768.ListSearchConfigs(repo: gh<_i768.SearchConfigRepository>()));
     gh.lazySingleton<_i135.ListThreads>(() => _i135.ListThreads(
           apiService: gh<_i135.ExtensionApiService>(),
           listInstalledExtensions: gh<_i135.ListInstalledExtensions>(),
         ));
-    gh.lazySingleton<_i174.ListConditions>(
-        () => _i174.ListConditions(repo: gh<_i174.ConditionRepository>()));
     gh.lazySingleton<_i135.ListRemoteExtensions>(
         () => _i135.ListRemoteExtensions(
               extensionRepoRepository: gh<_i381.ExtensionRepoRepository>(),
@@ -86,7 +87,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i62.ThreadsCubit>(
         () => _i62.ThreadsCubit(listThreads: gh<_i135.ListThreads>()));
     gh.lazySingleton<_i928.SearchCubit>(() => _i928.SearchCubit(
-          listConditions: gh<_i174.ListConditions>(),
+          listSearchConfigs: gh<_i768.ListSearchConfigs>(),
           listExtensions: gh<_i135.ListInstalledExtensions>(),
         ));
     return this;

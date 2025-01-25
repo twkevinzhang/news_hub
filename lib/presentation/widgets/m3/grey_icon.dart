@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
 
 class GreyIcon extends Icon {
-  const GreyIcon(IconData? icon) : super(icon, color: Colors.grey);
+  const GreyIcon(super.icon, {super.key}) : super(color: Colors.grey);
 }

@@ -85,17 +85,17 @@ abstract class ParagraphDto {
     );
 
     switch (type) {
-      case ParagraphType.IMAGE:
+      case ParagraphType.image:
         return ImageInfoDto.fromJson(json);
-      case ParagraphType.VIDEO:
+      case ParagraphType.video:
         return VideoInfoDto.fromJson(json);
-      case ParagraphType.TEXT:
+      case ParagraphType.text:
         return TextDto.fromJson(json);
-      case ParagraphType.QUOTE:
+      case ParagraphType.quote:
         return QuoteDto.fromJson(json);
-      case ParagraphType.REPLY_TO:
+      case ParagraphType.replyTo:
         return ReplyToDto.fromJson(json);
-      case ParagraphType.LINK:
+      case ParagraphType.link:
         return LinkDto.fromJson(json);
     }
   }
@@ -105,22 +105,22 @@ abstract class ParagraphDto {
 extension ParagraphDtoEx on ParagraphDto {
   Paragraph toParagraph() {
     switch (type) {
-      case ParagraphType.IMAGE:
+      case ParagraphType.image:
         final img = this as ImageInfoDto;
         return ApiImage(img.thumb, img.raw);
-      case ParagraphType.VIDEO:
+      case ParagraphType.video:
         final vid = this as VideoInfoDto;
         return ApiVideo(vid.thumb, vid.url);
-      case ParagraphType.TEXT:
+      case ParagraphType.text:
         final txt = this as TextDto;
         return ApiText(txt.content);
-      case ParagraphType.QUOTE:
+      case ParagraphType.quote:
         final quote = this as QuoteDto;
         return Quote(quote.content);
-      case ParagraphType.REPLY_TO:
+      case ParagraphType.replyTo:
         final reply = this as ReplyToDto;
         return ReplyTo(reply.id);
-      case ParagraphType.LINK:
+      case ParagraphType.link:
         final link = this as LinkDto;
         return Link(link.content);
     }
@@ -135,7 +135,7 @@ class ImageInfoDto extends ParagraphDto {
   ImageInfoDto(
       this.thumb,
       this.raw,
-      ) : super(ParagraphType.IMAGE);
+      ) : super(ParagraphType.image);
 
   factory ImageInfoDto.fromJson(Map<String, dynamic> json) =>
       _$ImageInfoDtoFromJson(json);
@@ -149,7 +149,7 @@ class VideoInfoDto extends ParagraphDto {
   final String thumb;
   final String url;
 
-  VideoInfoDto(this.thumb, this.url) : super(ParagraphType.VIDEO);
+  VideoInfoDto(this.thumb, this.url) : super(ParagraphType.video);
 
   factory VideoInfoDto.fromJson(Map<String, dynamic> json) =>
       _$VideoInfoDtoFromJson(json);
@@ -162,7 +162,7 @@ class VideoInfoDto extends ParagraphDto {
 class TextDto extends ParagraphDto {
   final String content;
 
-  TextDto(this.content) : super(ParagraphType.TEXT);
+  TextDto(this.content) : super(ParagraphType.text);
 
   factory TextDto.fromJson(Map<String, dynamic> json) => _$TextDtoFromJson(json);
 
@@ -174,7 +174,7 @@ class TextDto extends ParagraphDto {
 class QuoteDto extends ParagraphDto {
   final String content;
 
-  QuoteDto(this.content) : super(ParagraphType.QUOTE);
+  QuoteDto(this.content) : super(ParagraphType.quote);
 
   factory QuoteDto.fromJson(Map<String, dynamic> json) => _$QuoteDtoFromJson(json);
 
@@ -186,7 +186,7 @@ class QuoteDto extends ParagraphDto {
 class ReplyToDto extends ParagraphDto {
   final String id;
 
-  ReplyToDto(this.id) : super(ParagraphType.REPLY_TO);
+  ReplyToDto(this.id) : super(ParagraphType.replyTo);
 
   factory ReplyToDto.fromJson(Map<String, dynamic> json) =>
       _$ReplyToDtoFromJson(json);
@@ -199,7 +199,7 @@ class ReplyToDto extends ParagraphDto {
 class LinkDto extends ParagraphDto {
   final String content;
 
-  LinkDto(this.content) : super(ParagraphType.LINK);
+  LinkDto(this.content) : super(ParagraphType.link);
 
   factory LinkDto.fromJson(Map<String, dynamic> json) => _$LinkDtoFromJson(json);
 

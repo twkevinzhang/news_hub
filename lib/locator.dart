@@ -13,6 +13,8 @@ final sl = GetIt.instance;
 )
 Future<void> configureDependencies() => sl.init();
 
+// TODO: implement to microPackages, like https://github.com/ashishrawat2911/firekart_app/blob/7ca3fe0a7e7348595c4308274c04b84c0b9ae877/modules/analytics/lib/di/di.dart
+
 @module
 abstract class AppProvider {
   @preResolve

@@ -104,7 +104,7 @@ _$BoardDtoImpl _$$BoardDtoImplFromJson(Map<String, dynamic> json) {
     icon: json['icon'] as String,
     largeWelcomeImage: json['large_welcome_image'] as String,
     url: json['url'] as String,
-    supportedSorting: (json['supported_sorting'] as List<dynamic>)
+    supportedThreadsSorting: (json['supported_sorting'] as List<dynamic>)
         .map((e) => e as String)
         .toSet(),
   );
@@ -119,7 +119,7 @@ Map<String, dynamic> _$$BoardDtoImplToJson(_$BoardDtoImpl instance) =>
       'icon': instance.icon,
       'large_welcome_image': instance.largeWelcomeImage,
       'url': instance.url,
-      'supported_sorting': instance.supportedSorting.toList(),
+      'supported_sorting': instance.supportedThreadsSorting.toList(),
     };
 
 _$CommentsDtoImpl _$$CommentsDtoImplFromJson(Map<String, dynamic> json) {
@@ -318,6 +318,7 @@ _$ThreadDtoImpl _$$ThreadDtoImplFromJson(Map<String, dynamic> json) {
       'extension_pkg_name',
       'site_id',
       'board_id',
+      'board_name',
       'id',
       'url',
       'master_post'
@@ -327,6 +328,7 @@ _$ThreadDtoImpl _$$ThreadDtoImplFromJson(Map<String, dynamic> json) {
     extensionPkgName: json['extension_pkg_name'] as String,
     siteId: json['site_id'] as String,
     boardId: json['board_id'] as String,
+    boardName: json['board_name'] as String,
     id: json['id'] as String,
     url: json['url'] as String,
     masterPost: PostDto.fromJson(json['master_post'] as Map<String, dynamic>),
@@ -338,6 +340,7 @@ Map<String, dynamic> _$$ThreadDtoImplToJson(_$ThreadDtoImpl instance) =>
       'extension_pkg_name': instance.extensionPkgName,
       'site_id': instance.siteId,
       'board_id': instance.boardId,
+      'board_name': instance.boardName,
       'id': instance.id,
       'url': instance.url,
       'master_post': instance.masterPost,

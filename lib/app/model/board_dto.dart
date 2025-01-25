@@ -42,7 +42,7 @@ class BoardDto with _$BoardDto {
     required String url,
 
     @JsonKey(name: 'supported_sorting', required: true)
-    required Set<String> supportedSorting,
+    required Set<String> supportedThreadsSorting,
   }) = _BoardDto;
 
   factory BoardDto.fromJson(Map<String, dynamic> json) => _$BoardDtoFromJson(json);
@@ -58,7 +58,7 @@ extension BoardDtoEx on BoardDto {
       icon: icon,
       largeWelcomeImage: largeWelcomeImage,
       url: url,
-      supportedSorting: supportedSorting,
+      supportedThreadsSorting: supportedThreadsSorting,
     );
   }
 }

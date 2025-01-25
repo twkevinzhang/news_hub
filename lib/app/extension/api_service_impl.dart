@@ -1,5 +1,6 @@
 part of 'index.dart';
 
+// TODO: replace with Chopper library
 // @LazySingleton(as: ExtensionApiService)
 class ExtensionApiServiceImpl extends ExtensionApiService {
   final Dio _dio;
@@ -25,7 +26,11 @@ class ExtensionApiServiceImpl extends ExtensionApiService {
   }
 
   @override
-  Future<List<Board>> boards(Extension extension, String siteId) async {
+  Future<List<Board>> boards({
+    Pagination? page,
+    required Extension extension,
+    required String siteId,
+  }) async {
     final path = "sites/$siteId/boards";
     final res = await _dio.get([extension.address, path].toUrl());
     final decodedResponse = jsonDecode(res.data);
@@ -33,15 +38,32 @@ class ExtensionApiServiceImpl extends ExtensionApiService {
   }
 
   @override
-  Future<List<Thread>> threads(Extension extension, String siteId, String boardId) async {
+  Future<List<Thread>> threads({
+    Pagination? pagination,
+    String? sortBy,
+    String? keywords,
+    required Extension extension,
+    required String siteId,
+    required String boardId,
+  }) async {
     final path = "sites/$siteId/boards/$boardId/threads";
-    final res = await _dio.get([extension.address, path].toUrl());
+    final queryParameters = {
+      if (sortBy != null) "sort_by": sortBy,
+      if (keywords != null) "keywords": keywords,
+    };
+    final res = await _dio.get([extension.address, path].toUrl(), queryParameters: queryParameters);
     final decodedResponse = jsonDecode(res.data);
     return ThreadsDto.fromJson(decodedResponse).threads.map((e) => e.toThread()).toList();
   }
 
   @override
-  Future<Thread> thread(Extension extension, String siteId, String boardId, String threadId) async {
+  Future<Thread> thread({
+    Pagination? page,
+    required Extension extension,
+    required String siteId,
+    required String boardId,
+    required String threadId,
+  }) async {
     final path = "sites/$siteId/boards/$boardId/threads/$threadId";
     final res = await _dio.get([extension.address, path].toUrl());
     final decodedResponse = jsonDecode(res.data);
@@ -49,7 +71,13 @@ class ExtensionApiServiceImpl extends ExtensionApiService {
   }
 
   @override
-  Future<List<Post>> slavePosts(Extension extension, String siteId, String boardId, String threadId) async {
+  Future<List<Post>> slavePosts({
+    Pagination? page,
+    required Extension extension,
+    required String siteId,
+    required String boardId,
+    required String threadId,
+  }) async {
     final path = "sites/$siteId/boards/$boardId/threads/$threadId/slave_posts";
     final res = await _dio.get([extension.address, path].toUrl());
     final decodedResponse = jsonDecode(res.data);
@@ -57,7 +85,14 @@ class ExtensionApiServiceImpl extends ExtensionApiService {
   }
 
   @override
-  Future<Post> post(Extension extension, String siteId, String boardId, String threadId, String postId) async {
+  Future<Post> post({
+    Pagination? page,
+    required Extension extension,
+    required String siteId,
+    required String boardId,
+    required String threadId,
+    required String postId,
+  }) async {
     final path = "sites/$siteId/boards/$boardId/threads/$threadId/posts/$postId";
     final res = await _dio.get([extension.address, path].toUrl());
     final decodedResponse = jsonDecode(res.data);
@@ -65,7 +100,14 @@ class ExtensionApiServiceImpl extends ExtensionApiService {
   }
 
   @override
-  Future<List<Comment>> comments(Extension extension, String siteId, String boardId, String threadId, String postId) async {
+  Future<List<Comment>> comments({
+    Pagination? page,
+    required Extension extension,
+    required String siteId,
+    required String boardId,
+    required String threadId,
+    required String postId,
+  }) async {
     final path = "sites/$siteId/boards/$boardId/threads/$threadId/posts/$postId/comments";
     final res = await _dio.get([extension.address, path].toUrl());
     final decodedResponse = jsonDecode(res.data);
