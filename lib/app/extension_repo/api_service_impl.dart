@@ -1,4 +1,10 @@
-part of 'index.dart';
+import 'dart:convert';
+
+import 'package:dio/dio.dart';
+import 'package:news_hub/app/model/index.dart';
+import 'package:news_hub/domain/extension_repo/index.dart';
+import 'package:news_hub/domain/model/index.dart';
+import 'package:news_hub/app/service/logger.dart';
 
 // @LazySingleton(as: ExtensionRepoApiService)
 class ExtensionRepoApiServiceImpl implements ExtensionRepoApiService {

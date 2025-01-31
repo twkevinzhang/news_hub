@@ -1,4 +1,6 @@
-part of 'index.dart';
+import 'package:injectable/injectable.dart';
+import 'package:news_hub/domain/extension_repo/index.dart';
+import 'package:news_hub/domain/model/index.dart';
 
 @LazySingleton(as: ExtensionRepoRepository)
 class MockExtensionRepoRepositoryImpl implements ExtensionRepoRepository {

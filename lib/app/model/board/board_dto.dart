@@ -1,4 +1,8 @@
-part of 'index.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:news_hub/domain/model/index.dart';
+
+part 'board_dto.freezed.dart';
+part 'board_dto.g.dart';
 
 @Freezed(toJson: true)
 class BoardsDto with _$BoardsDto {

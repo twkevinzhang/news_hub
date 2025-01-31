@@ -1,4 +1,10 @@
-part of 'index.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:news_hub/domain/model/index.dart';
+
+import '../post/post_dto.dart';
+
+part 'comment_dto.freezed.dart';
+part 'comment_dto.g.dart';
 
 @Freezed(toJson: true)
 class CommentsDto with _$CommentsDto {

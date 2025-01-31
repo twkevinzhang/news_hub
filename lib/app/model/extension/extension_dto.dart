@@ -1,4 +1,11 @@
-part of 'index.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:news_hub/domain/model/index.dart';
+
+import '../board/board_dto.dart';
+import '../site/site_dto.dart';
+
+part 'extension_dto.freezed.dart';
+part 'extension_dto.g.dart';
 
 @Freezed(toJson: true)
 class ExtensionDto with _$ExtensionDto {

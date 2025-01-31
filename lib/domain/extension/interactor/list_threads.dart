@@ -1,4 +1,12 @@
-part of '../index.dart';
+import 'package:dartx/dartx.dart';
+import 'package:injectable/injectable.dart';
+import 'package:news_hub/domain/extension_repo/index.dart';
+import 'package:news_hub/domain/model/index.dart';
+import 'package:news_hub/presentation/pages/search/index.dart';
+import 'package:news_hub/shared/model.dart';
+
+import '../api_service.dart';
+import 'list_installed_extensions.dart';
 
 @lazySingleton
 class ListThreads {

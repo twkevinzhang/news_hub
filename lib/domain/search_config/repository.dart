@@ -1,4 +1,5 @@
-part of 'index.dart';
+import 'package:dartx/dartx.dart';
+import 'package:news_hub/domain/model/index.dart';
 
 abstract class SearchConfigRepository {
   Stream<List<SearchConfig>> subscribeAll();

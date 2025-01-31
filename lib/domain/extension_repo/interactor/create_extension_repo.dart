@@ -1,4 +1,7 @@
-part of '../index.dart';
+import 'package:news_hub/domain/model/index.dart';
+
+import '../api_service.dart';
+import '../repository.dart';
 
 class CreateExtensionRepo {
     CreateExtensionRepo({

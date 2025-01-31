@@ -1,4 +1,7 @@
-part of 'index.dart';
+import 'package:news_hub/domain/extension_repo/index.dart';
+import 'package:news_hub/domain/model/index.dart';
+import 'package:news_hub/app/service/database.dart';
+import 'package:sqflite/sqflite.dart';
 
 // @LazySingleton(as: ExtensionRepoRepository)
 class ExtensionRepoRepositoryImpl implements ExtensionRepoRepository {

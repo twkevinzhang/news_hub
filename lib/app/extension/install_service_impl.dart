@@ -1,4 +1,17 @@
-part of 'index.dart';
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'package:archive/archive.dart';
+import 'package:dartx/dartx.dart';
+import 'package:flutter_downloader/flutter_downloader.dart';
+import 'package:flutter/material.dart';
+import 'package:injectable/injectable.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:news_hub/app/model/index.dart';
+import 'package:news_hub/domain/extension/index.dart';
+import 'package:news_hub/domain/model/index.dart';
+import 'package:news_hub/shared/constants.dart';
+import 'package:news_hub/shared/extensions.dart';
 
 /// [ExtensionInstallServiceImpl] download and install flask extension from _installFolder.
 // @preResolve

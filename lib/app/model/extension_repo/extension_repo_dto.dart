@@ -1,4 +1,8 @@
-part of 'index.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:news_hub/domain/model/index.dart';
+
+part 'extension_repo_dto.freezed.dart';
+part 'extension_repo_dto.g.dart';
 
 @Freezed(toJson: true)
 class ExtensionRepoDto with _$ExtensionRepoDto {

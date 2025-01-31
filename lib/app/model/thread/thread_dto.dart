@@ -1,4 +1,10 @@
-part of 'index.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:news_hub/domain/model/index.dart';
+
+import '../post/post_dto.dart';
+
+part 'thread_dto.freezed.dart';
+part 'thread_dto.g.dart';
 
 @Freezed(toJson: true)
 class ThreadsDto with _$ThreadsDto {

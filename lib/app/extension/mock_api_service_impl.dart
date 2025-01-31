@@ -1,4 +1,8 @@
-part of 'index.dart';
+import 'dart:async';
+import 'package:injectable/injectable.dart';
+import 'package:news_hub/shared/model.dart';
+import 'package:news_hub/domain/extension/index.dart';
+import 'package:news_hub/domain/model/index.dart';
 
 final _mockPost = Post(
   extensionPkgName: 'twkevinzhan_beeceptor',

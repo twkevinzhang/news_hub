@@ -11,11 +11,11 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i6;
 import 'package:flutter/material.dart' as _i7;
-import 'package:news_hub/presentation/pages/extensions/index.dart' as _i1;
+import 'package:news_hub/presentation/pages/extensions/screen.dart' as _i1;
 import 'package:news_hub/presentation/pages/home_screen.dart' as _i2;
-import 'package:news_hub/presentation/pages/search/index.dart' as _i3;
+import 'package:news_hub/presentation/pages/search/screen.dart' as _i3;
 import 'package:news_hub/presentation/pages/settings/screen.dart' as _i4;
-import 'package:news_hub/presentation/pages/threads/index.dart' as _i5;
+import 'package:news_hub/presentation/pages/threads/screen.dart' as _i5;
 
 /// generated route for
 /// [_i1.ExtensionsScreen]
