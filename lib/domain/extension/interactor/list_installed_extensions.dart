@@ -8,6 +8,25 @@ class ListInstalledExtensions {
   }): _installService = installService;
 
   Future<List<Extension>> call() {
-    return _installService.listInstalledExtensions();
+    return Future.value([
+      Extension(
+        pkgName: 'twkevinzhan_beeceptor',
+        displayName: 'beeceptor',
+        zipName: 'beeceptor.zip',
+        address: 'http://127.0.0.1:55001',
+        version: 1,
+        pythonVersion: 1,
+        isNsfw: false,
+        lang: 'zh_tw',
+        site: Site(
+          extensionPkgName: 'twkevinzhan_beeceptor',
+          id: '1',
+          name: 'Beeceptor',
+          icon: 'beeceptor.png',
+          url: 'https://beeceptor.com/',
+        ),
+        boards: {},
+      ),
+    ]);
   }
 }

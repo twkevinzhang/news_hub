@@ -22,6 +22,7 @@ import 'package:news_hub/domain/extension/index.dart' as _i135;
 import 'package:news_hub/domain/extension_repo/index.dart' as _i381;
 import 'package:news_hub/domain/search_config/index.dart' as _i768;
 import 'package:news_hub/locator.dart' as _i56;
+import 'package:news_hub/presentation/pages/extensions/index.dart' as _i983;
 import 'package:news_hub/presentation/pages/search/index.dart' as _i928;
 import 'package:news_hub/presentation/pages/threads/index.dart' as _i62;
 import 'package:news_hub/presentation/router.dart' as _i217;
@@ -50,13 +51,17 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i509.MockExtensionInstallServiceImpl.create(),
       preResolve: true,
     );
+    gh.lazySingleton<_i381.ExtensionRepoRepository>(
+        () => _i1027.MockExtensionRepoRepositoryImpl());
     gh.lazySingleton<_i135.ExtensionApiService>(
         () => _i509.MockExtensionApiServiceImpl());
     gh.lazySingleton<_i381.ExtensionRepoApiService>(
         () => _i1027.MockExtensionRepoApiServiceImpl());
-    gh.lazySingleton<_i381.ExtensionRepoRepository>(() =>
-        _i1027.ExtensionRepoRepositoryImpl(
-            service: gh<_i1042.DatabaseService>()));
+    gh.lazySingleton<_i135.ListRemoteExtensions>(
+        () => _i135.ListRemoteExtensions(
+              extensionRepoRepository: gh<_i381.ExtensionRepoRepository>(),
+              extensionApiService: gh<_i381.ExtensionRepoApiService>(),
+            ));
     gh.lazySingleton<_i365.PreferenceStore>(
         () => _i842.PreferenceStoreImpl(prefs: gh<_i579.SharedPreferences>()));
     gh.lazySingleton<_i135.ListInstalledExtensions>(() =>
@@ -71,11 +76,6 @@ extension GetItInjectableX on _i174.GetIt {
           apiService: gh<_i135.ExtensionApiService>(),
           listInstalledExtensions: gh<_i135.ListInstalledExtensions>(),
         ));
-    gh.lazySingleton<_i135.ListRemoteExtensions>(
-        () => _i135.ListRemoteExtensions(
-              extensionRepoRepository: gh<_i381.ExtensionRepoRepository>(),
-              extensionApiService: gh<_i381.ExtensionRepoApiService>(),
-            ));
     gh.lazySingleton<_i135.ExtensionPreferencesService>(() =>
         _i509.ExtensionPreferencesServiceImpl(
             store: gh<_i365.PreferenceStore>()));
@@ -90,6 +90,8 @@ extension GetItInjectableX on _i174.GetIt {
           listSearchConfigs: gh<_i768.ListSearchConfigs>(),
           listExtensions: gh<_i135.ListInstalledExtensions>(),
         ));
+    gh.lazySingleton<_i983.ExtensionsCubit>(() =>
+        _i983.ExtensionsCubit(listExtensions: gh<_i135.ListExtensions>()));
     return this;
   }
 }

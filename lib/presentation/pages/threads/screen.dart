@@ -1,14 +1,21 @@
 part of 'index.dart';
 
 @RoutePage()
-class ThreadsScreen extends StatefulWidget {
-  const ThreadsScreen({super.key});
+class ThreadsScreen extends StatelessWidget {
+  ThreadsScreen({super.key});
 
   @override
-  State<ThreadsScreen> createState() => _ThreadsScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => sl<ThreadsCubit>(),
+      child: _ThreadsView(),
+    );
+  }
 }
 
-class _ThreadsScreenState extends State<ThreadsScreen> {
+class _ThreadsView extends StatelessWidget {
+  _ThreadsView({super.key});
+
   final router = sl<AppRouter>();
 
   @override
@@ -16,12 +23,13 @@ class _ThreadsScreenState extends State<ThreadsScreen> {
     return BlocBuilder<ThreadsCubit, ThreadsState>(
         builder: (context, state) {
           final cubit = context.read<ThreadsCubit>();
+
           return Scaffold(
               appBar: AppBar(
                 title: const Text('Threads'),
                 actions: [
                   IconButton(
-                    icon: const Icon(Icons.search),
+                    icon: const Icon(Icons.search_outlined),
                     onPressed: () async {
                       final result = await router.push<SearchConfigForm?>(SearchRoute());
                       if (!context.mounted) return;

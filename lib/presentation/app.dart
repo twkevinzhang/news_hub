@@ -14,18 +14,8 @@ class App extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(
-          create: (context) => sl<ThreadsCubit>(),
-        ),
-        BlocProvider(
-          create: (context) => sl<SearchCubit>(),
-        ),
-      ],
-      child: MaterialApp.router(
-        routerConfig: router.config(),
-      ),
+    return MaterialApp.router(
+      routerConfig: router.config(),
     );
   }
 }

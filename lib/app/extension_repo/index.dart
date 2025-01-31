@@ -14,3 +14,4 @@ import 'package:sqflite/sqflite.dart';
 part 'api_service_impl.dart';
 part 'mock_api_service_impl.dart';
 part 'repository_impl.dart';
+part 'mock_repository_impl.dart';

@@ -15,7 +15,7 @@ class ThreadsState extends Equatable {
 class ThreadsCubit extends Cubit<ThreadsState> {
   final ListThreads _listThreads;
   final PagingController<int, ThreadWithExtension> _pagingController;
-  PagingController<int, ThreadWithExtension> get pagingController => _pagingController;
+  get pagingController => _pagingController;
 
   static const _pageSize = 10;
 

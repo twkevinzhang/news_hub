@@ -13,19 +13,28 @@ class ListExtensions {
         _listInstalledExtensions = listInstalledExtensions,
         _listRemoteExtensions = listRemoteExtensions;
 
-  Stream<Extensions> call() {
+  Stream<Extensions> call(String? keyword) {
     return CombineLatestStream.combine3(
       _prefService.enabledLanguages().changes(),
       _listInstalledExtensions.call().asStream(),
       _listRemoteExtensions.call().asStream(),
-      (enabledLanguages, installed, remote) {
-        final installedSet = installed.where((element) => enabledLanguages.contains(element.lang)).toSet();
-        final remoteSet = remote.filter((element) => installedSet.none((e) => e.pkgName == element.pkgName)).toSet();
+      (enabledLanguages, installed, remotes) {
+        // final filtered = installed.where((element) => enabledLanguages.contains(element.lang));
+        var filtered = installed.toIterable();
+        var updates = filtered.where((element) => remotes.any((e) => e.pkgName == element.pkgName && e.version > element.version));
+        var deprecated = filtered.toSet().difference(remotes.toSet());
+        var notInstalled = remotes.filter((element) => filtered.none((e) => e.pkgName == element.pkgName));
+        if (keyword != null) {
+          filtered = filtered.filter((element) => element.displayName.contains(keyword));
+          updates = updates.filter((element) => element.displayName.contains(keyword));
+          deprecated = deprecated.filter((element) => element.displayName.contains(keyword)).toSet();
+          notInstalled = notInstalled.filter((element) => element.displayName.contains(keyword));
+        }
         return Extensions(
-            updates: installedSet.where((element) => remote.any((e) => e.pkgName == element.pkgName && e.version > element.version)).toSet(),
-            deprecated: installedSet.difference(remoteSet),
-            installed: installedSet,
-            remote: remoteSet,
+            updates: updates.toSet(),
+            deprecated: deprecated,
+            installed: filtered.toSet(),
+            notInstalled: notInstalled.toSet(),
           );
         }
     );
@@ -36,12 +45,12 @@ class Extensions {
   final Set<Extension> updates;
   final Set<Extension> deprecated;
   final Set<Extension> installed;
-  final Set<RemoteExtension> remote;
+  final Set<RemoteExtension> notInstalled;
 
   Extensions({
     required this.updates,
     required this.deprecated,
     required this.installed,
-    required this.remote,
+    required this.notInstalled,
   });
 }

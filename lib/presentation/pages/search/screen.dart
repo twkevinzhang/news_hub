@@ -1,21 +1,20 @@
 part of 'index.dart';
 
 @RoutePage()
-class SearchScreen extends StatefulWidget {
+class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
 
   @override
-  State<SearchScreen> createState() => _SearchScreenState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => sl<SearchCubit>(),
+      child: _SearchView(),
+    );
+  }
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class _SearchView extends StatelessWidget {
   final router = sl<AppRouter>();
-
-  @override
-  void initState() {
-    super.initState();
-    context.read<SearchCubit>().loadExtensions();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -197,4 +196,5 @@ class _SearchScreenState extends State<SearchScreen> {
         ),
       );
     });
+  }
 }

@@ -1,6 +1,6 @@
 part of 'index.dart';
 
-@LazySingleton(as: ExtensionRepoRepository)
+// @LazySingleton(as: ExtensionRepoRepository)
 class ExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
   final DatabaseService _service;
 

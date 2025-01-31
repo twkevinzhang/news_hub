@@ -1,5 +1,6 @@
 part of 'index.dart';
 
+// TODO: replace with mocktail library
 @LazySingleton(as: ExtensionRepoApiService)
 class MockExtensionRepoApiServiceImpl implements ExtensionRepoApiService {
   @override
