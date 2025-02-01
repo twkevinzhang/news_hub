@@ -5,7 +5,7 @@ import 'package:news_hub/domain/extension/index.dart';
 import 'package:news_hub/domain/model/index.dart';
 
 final _mockPost = Post(
-  extensionPkgName: 'twkevinzhan_beeceptor',
+  extensionPkgName: 'twkevinzhang_beeceptor',
   siteId: '1',
   boardId: '1',
   threadId: '1',
@@ -48,7 +48,7 @@ class MockExtensionApiServiceImpl extends ExtensionApiService {
     await Future.delayed(const Duration(seconds: 1));
     return [
       Board(
-        extensionPkgName: 'twkevinzhan_beeceptor',
+        extensionPkgName: 'twkevinzhang_beeceptor',
         siteId: '1',
         id: '1',
         name: '八卦版',
@@ -58,7 +58,7 @@ class MockExtensionApiServiceImpl extends ExtensionApiService {
         supportedThreadsSorting: {'newest', 'popular'},
       ),
       Board(
-        extensionPkgName: 'twkevinzhan_beeceptor',
+        extensionPkgName: 'twkevinzhang_beeceptor',
         siteId: '1',
         id: '2',
         name: '遊戲版',
@@ -68,7 +68,7 @@ class MockExtensionApiServiceImpl extends ExtensionApiService {
         supportedThreadsSorting: {'newest', 'popular'},
       ),
       Board(
-        extensionPkgName: 'twkevinzhan_beeceptor',
+        extensionPkgName: 'twkevinzhang_beeceptor',
         siteId: '1',
         id: '3',
         name: '電蝦版',
@@ -93,7 +93,7 @@ class MockExtensionApiServiceImpl extends ExtensionApiService {
     if (boardId == '1') {
       return [
         Thread(
-          extensionPkgName: 'twkevinzhan_beeceptor',
+          extensionPkgName: 'twkevinzhang_beeceptor',
           siteId: '1',
           boardId: '1',
           boardName: '八卦版',
@@ -117,7 +117,7 @@ class MockExtensionApiServiceImpl extends ExtensionApiService {
   }) async {
     await Future.delayed(const Duration(seconds: 1));
     return Thread(
-      extensionPkgName: 'twkevinzhan_beeceptor',
+      extensionPkgName: 'twkevinzhang_beeceptor',
       siteId: '1',
       boardId: '1',
       boardName: '八卦版',

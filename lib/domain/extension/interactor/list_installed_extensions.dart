@@ -13,7 +13,8 @@ class ListInstalledExtensions {
   Future<List<Extension>> call() {
     return Future.value([
       Extension(
-        pkgName: 'twkevinzhan_beeceptor',
+        repoBaseUrl: 'github.com/twkevinzhang/beeceptor',
+        pkgName: 'twkevinzhang_beeceptor',
         displayName: 'beeceptor',
         zipName: 'beeceptor.zip',
         address: 'http://127.0.0.1:55001',
@@ -22,7 +23,7 @@ class ListInstalledExtensions {
         isNsfw: false,
         lang: 'zh_tw',
         site: Site(
-          extensionPkgName: 'twkevinzhan_beeceptor',
+          extensionPkgName: 'twkevinzhang_beeceptor',
           id: '1',
           name: 'Beeceptor',
           icon: 'beeceptor.png',

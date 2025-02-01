@@ -19,7 +19,8 @@ class MockExtensionRepoApiServiceImpl implements ExtensionRepoApiService {
   Future<List<RemoteExtension>> extensions(String baseUrl) async {
     return [
       RemoteExtension(
-        pkgName: 'twkevinzhan_beeceptor',
+        repoBaseUrl: 'github.com/twkevinzhang/beeceptor',
+        pkgName: 'twkevinzhang_beeceptor',
         displayName: 'beeceptor',
         zipName: 'beeceptor.zip',
         address: 'http://127.0.0.1:55001',
@@ -30,7 +31,7 @@ class MockExtensionRepoApiServiceImpl implements ExtensionRepoApiService {
         iconUrl: '',
         repoUrl: '',
         site: Site(
-          extensionPkgName: 'twkevinzhan_beeceptor',
+          extensionPkgName: 'twkevinzhang_beeceptor',
           id: '1',
           name: 'Beeceptor',
           icon: 'beeceptor.png',
