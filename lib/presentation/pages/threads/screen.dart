@@ -7,8 +7,8 @@ import 'package:news_hub/domain/model/index.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/search/cubit.dart';
 import 'package:news_hub/presentation/pages/search/index.dart';
-import 'package:news_hub/presentation/router.dart';
-import 'package:news_hub/presentation/router.gr.dart';
+import 'package:news_hub/presentation/router/router.dart';
+import 'package:news_hub/presentation/router/router.gr.dart';
 import 'package:news_hub/presentation/widgets/index.dart';
 import 'package:news_hub/presentation/widgets/post_card.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
@@ -34,8 +34,6 @@ class ThreadsScreen extends StatelessWidget {
 class _ThreadsView extends StatelessWidget {
   _ThreadsView({super.key});
 
-  final router = sl<AppRouter>();
-
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ThreadsCubit, ThreadsState>(
@@ -49,7 +47,7 @@ class _ThreadsView extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Icons.search_outlined),
                     onPressed: () async {
-                      final result = await router.push<SearchConfigForm?>(SearchRoute());
+                      final result = await AutoRouter.of(context).push<SearchConfigForm?>(SearchRoute());
                       if (!context.mounted) return;
                       if (result != null) {
                         cubit.searchConfigForm = result;
@@ -68,7 +66,10 @@ class _ThreadsView extends StatelessWidget {
                   },
                   child: Column(
                     children: [
-                      PostCard(post: thread.masterPost, boardName: "[${thread.extension.displayName}] ${thread.boardName}"),
+                      Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: PostCard(post: thread.masterPost, boardName: "[${thread.extension.displayName}] ${thread.boardName}"),
+                      ),
                       const Divider(),
                     ],
                   ),

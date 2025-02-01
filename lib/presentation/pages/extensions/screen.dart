@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:news_hub/locator.dart';
-import 'package:news_hub/presentation/router.dart';
+import 'package:news_hub/presentation/router/router.gr.dart';
 import 'package:news_hub/presentation/widgets/index.dart';
 import 'package:news_hub/presentation/widgets/text_divider.dart';
 
@@ -24,8 +24,6 @@ class ExtensionsScreen extends StatelessWidget {
 
 class _ExtensionsView extends StatefulWidget {
   _ExtensionsView({super.key});
-
-  final router = sl<AppRouter>();
 
   @override
   State<_ExtensionsView> createState() => _ExtensionsViewState();
@@ -79,7 +77,9 @@ class _ExtensionsViewState extends State<_ExtensionsView> {
                 }),
             IconButton(
               icon: const Icon(Icons.add_outlined),
-              onPressed: () {},
+              onPressed: () async {
+                await AutoRouter.of(context).push(ExtensionReposRoute());
+              },
             ),
           ],
         ),
@@ -129,7 +129,9 @@ class _ExtensionsViewState extends State<_ExtensionsView> {
               ],
             ],
           ),
-          onErrorStatus: const SizedBox(),
+          onErrorStatus: (context, message) => Center(
+            child: Text(message),
+          ),
           onInitialStatus: const SizedBox(),
           onLoadingStatus: LoadingIndicator(),
         ),

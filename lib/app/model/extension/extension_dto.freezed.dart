@@ -20,6 +20,8 @@ ExtensionDto _$ExtensionDtoFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$ExtensionDto {
+  @JsonKey(name: 'repo_base_url', required: true)
+  String get repoBaseUrl => throw _privateConstructorUsedError;
   @JsonKey(name: 'pkg_name', required: true)
   String get pkgName => throw _privateConstructorUsedError;
   @JsonKey(name: 'display_name', required: true)
@@ -58,7 +60,8 @@ abstract class $ExtensionDtoCopyWith<$Res> {
       _$ExtensionDtoCopyWithImpl<$Res, ExtensionDto>;
   @useResult
   $Res call(
-      {@JsonKey(name: 'pkg_name', required: true) String pkgName,
+      {@JsonKey(name: 'repo_base_url', required: true) String repoBaseUrl,
+      @JsonKey(name: 'pkg_name', required: true) String pkgName,
       @JsonKey(name: 'display_name', required: true) String displayName,
       @JsonKey(name: 'zip_name', required: true) String zipName,
       @JsonKey(name: 'address', required: true) String address,
@@ -87,6 +90,7 @@ class _$ExtensionDtoCopyWithImpl<$Res, $Val extends ExtensionDto>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? repoBaseUrl = null,
     Object? pkgName = null,
     Object? displayName = null,
     Object? zipName = null,
@@ -99,6 +103,10 @@ class _$ExtensionDtoCopyWithImpl<$Res, $Val extends ExtensionDto>
     Object? boards = null,
   }) {
     return _then(_value.copyWith(
+      repoBaseUrl: null == repoBaseUrl
+          ? _value.repoBaseUrl
+          : repoBaseUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       pkgName: null == pkgName
           ? _value.pkgName
           : pkgName // ignore: cast_nullable_to_non_nullable
@@ -162,7 +170,8 @@ abstract class _$$ExtensionDtoImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {@JsonKey(name: 'pkg_name', required: true) String pkgName,
+      {@JsonKey(name: 'repo_base_url', required: true) String repoBaseUrl,
+      @JsonKey(name: 'pkg_name', required: true) String pkgName,
       @JsonKey(name: 'display_name', required: true) String displayName,
       @JsonKey(name: 'zip_name', required: true) String zipName,
       @JsonKey(name: 'address', required: true) String address,
@@ -190,6 +199,7 @@ class __$$ExtensionDtoImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? repoBaseUrl = null,
     Object? pkgName = null,
     Object? displayName = null,
     Object? zipName = null,
@@ -202,6 +212,10 @@ class __$$ExtensionDtoImplCopyWithImpl<$Res>
     Object? boards = null,
   }) {
     return _then(_$ExtensionDtoImpl(
+      repoBaseUrl: null == repoBaseUrl
+          ? _value.repoBaseUrl
+          : repoBaseUrl // ignore: cast_nullable_to_non_nullable
+              as String,
       pkgName: null == pkgName
           ? _value.pkgName
           : pkgName // ignore: cast_nullable_to_non_nullable
@@ -250,7 +264,9 @@ class __$$ExtensionDtoImplCopyWithImpl<$Res>
 @JsonSerializable()
 class _$ExtensionDtoImpl implements _ExtensionDto {
   const _$ExtensionDtoImpl(
-      {@JsonKey(name: 'pkg_name', required: true) required this.pkgName,
+      {@JsonKey(name: 'repo_base_url', required: true)
+      required this.repoBaseUrl,
+      @JsonKey(name: 'pkg_name', required: true) required this.pkgName,
       @JsonKey(name: 'display_name', required: true) required this.displayName,
       @JsonKey(name: 'zip_name', required: true) required this.zipName,
       @JsonKey(name: 'address', required: true) required this.address,
@@ -267,6 +283,9 @@ class _$ExtensionDtoImpl implements _ExtensionDto {
   factory _$ExtensionDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$ExtensionDtoImplFromJson(json);
 
+  @override
+  @JsonKey(name: 'repo_base_url', required: true)
+  final String repoBaseUrl;
   @override
   @JsonKey(name: 'pkg_name', required: true)
   final String pkgName;
@@ -305,7 +324,7 @@ class _$ExtensionDtoImpl implements _ExtensionDto {
 
   @override
   String toString() {
-    return 'ExtensionDto(pkgName: $pkgName, displayName: $displayName, zipName: $zipName, address: $address, version: $version, pythonVersion: $pythonVersion, lang: $lang, isNsfw: $isNsfw, site: $site, boards: $boards)';
+    return 'ExtensionDto(repoBaseUrl: $repoBaseUrl, pkgName: $pkgName, displayName: $displayName, zipName: $zipName, address: $address, version: $version, pythonVersion: $pythonVersion, lang: $lang, isNsfw: $isNsfw, site: $site, boards: $boards)';
   }
 
   @override
@@ -313,6 +332,8 @@ class _$ExtensionDtoImpl implements _ExtensionDto {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ExtensionDtoImpl &&
+            (identical(other.repoBaseUrl, repoBaseUrl) ||
+                other.repoBaseUrl == repoBaseUrl) &&
             (identical(other.pkgName, pkgName) || other.pkgName == pkgName) &&
             (identical(other.displayName, displayName) ||
                 other.displayName == displayName) &&
@@ -331,6 +352,7 @@ class _$ExtensionDtoImpl implements _ExtensionDto {
   @override
   int get hashCode => Object.hash(
       runtimeType,
+      repoBaseUrl,
       pkgName,
       displayName,
       zipName,
@@ -360,7 +382,9 @@ class _$ExtensionDtoImpl implements _ExtensionDto {
 
 abstract class _ExtensionDto implements ExtensionDto {
   const factory _ExtensionDto(
-      {@JsonKey(name: 'pkg_name', required: true) required final String pkgName,
+      {@JsonKey(name: 'repo_base_url', required: true)
+      required final String repoBaseUrl,
+      @JsonKey(name: 'pkg_name', required: true) required final String pkgName,
       @JsonKey(name: 'display_name', required: true)
       required final String displayName,
       @JsonKey(name: 'zip_name', required: true) required final String zipName,
@@ -377,6 +401,9 @@ abstract class _ExtensionDto implements ExtensionDto {
   factory _ExtensionDto.fromJson(Map<String, dynamic> json) =
       _$ExtensionDtoImpl.fromJson;
 
+  @override
+  @JsonKey(name: 'repo_base_url', required: true)
+  String get repoBaseUrl;
   @override
   @JsonKey(name: 'pkg_name', required: true)
   String get pkgName;

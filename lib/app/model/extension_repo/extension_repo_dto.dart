@@ -7,6 +7,7 @@ part 'extension_repo_dto.g.dart';
 @Freezed(toJson: true)
 class ExtensionRepoDto with _$ExtensionRepoDto {
   const factory ExtensionRepoDto({
+    @JsonKey(name: 'icon', required: true) required String icon,
     @JsonKey(name: 'base_url', required: true) required String baseUrl,
     @JsonKey(name: 'name', required: true) required String name,
     @JsonKey(name: 'website', required: true) required String website,
@@ -18,6 +19,7 @@ class ExtensionRepoDto with _$ExtensionRepoDto {
 extension ExtensionRepoDtoEx on ExtensionRepoDto {
   ExtensionRepo toExtensionRepo({required String baseUrl}) {
     return ExtensionRepo(
+      icon: icon,
       baseUrl: baseUrl,
       displayName: name,
       website: website,

@@ -10,6 +10,7 @@ _$ExtensionDtoImpl _$$ExtensionDtoImplFromJson(Map<String, dynamic> json) {
   $checkKeys(
     json,
     requiredKeys: const [
+      'repo_base_url',
       'pkg_name',
       'display_name',
       'zip_name',
@@ -23,6 +24,7 @@ _$ExtensionDtoImpl _$$ExtensionDtoImplFromJson(Map<String, dynamic> json) {
     ],
   );
   return _$ExtensionDtoImpl(
+    repoBaseUrl: json['repo_base_url'] as String,
     pkgName: json['pkg_name'] as String,
     displayName: json['display_name'] as String,
     zipName: json['zip_name'] as String,
@@ -40,6 +42,7 @@ _$ExtensionDtoImpl _$$ExtensionDtoImplFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$$ExtensionDtoImplToJson(_$ExtensionDtoImpl instance) =>
     <String, dynamic>{
+      'repo_base_url': instance.repoBaseUrl,
       'pkg_name': instance.pkgName,
       'display_name': instance.displayName,
       'zip_name': instance.zipName,

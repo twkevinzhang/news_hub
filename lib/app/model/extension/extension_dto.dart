@@ -10,6 +10,9 @@ part 'extension_dto.g.dart';
 @Freezed(toJson: true)
 class ExtensionDto with _$ExtensionDto {
   const factory ExtensionDto({
+    @JsonKey(name: 'repo_base_url', required: true)
+    required String repoBaseUrl,
+
     @JsonKey(name: 'pkg_name', required: true)
     required String pkgName,
 
@@ -48,6 +51,7 @@ class ExtensionDto with _$ExtensionDto {
 extension ExtensionDtoEx on ExtensionDto {
   RemoteExtension toRemoteExtension() {
     return RemoteExtension(
+      repoBaseUrl: repoBaseUrl,
       pkgName: pkgName,
       displayName: displayName,
       zipName: zipName,

@@ -12,7 +12,7 @@ import 'package:news_hub/presentation/app.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/search/index.dart';
 import 'package:news_hub/presentation/pages/threads/index.dart';
-import 'package:news_hub/presentation/router.dart';
+import 'package:news_hub/presentation/router/router.dart';
 import 'package:news_hub/shared/constants.dart';
 import 'package:path_provider/path_provider.dart';
 

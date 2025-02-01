@@ -1,10 +1,12 @@
 class ExtensionRepo {
+  final String icon;
   final String baseUrl;
   final String displayName;
   final String website;
   final String signingKeyFingerprint;
 
   ExtensionRepo({
+    required this.icon,
     required this.baseUrl,
     required this.displayName,
     required this.website,
@@ -13,6 +15,7 @@ class ExtensionRepo {
 }
 
 class Extension {
+  final String repoBaseUrl;
   final String pkgName;
   final String displayName;
   final String zipName;
@@ -25,6 +28,7 @@ class Extension {
   final Set<Board> boards;
 
   Extension({
+    required this.repoBaseUrl,
     required this.pkgName,
     required this.displayName,
     required this.zipName,
@@ -43,6 +47,7 @@ class RemoteExtension extends Extension {
   final String repoUrl;
 
   RemoteExtension({
+    required super.repoBaseUrl,
     required super.pkgName,
     required super.displayName,
     required super.zipName,
@@ -60,6 +65,7 @@ class RemoteExtension extends Extension {
 
 extension RemoteExtensionEx on RemoteExtension {
   RemoteExtension copyWith({
+    String? repoBaseUrl,
     String? pkgName,
     String? displayName,
     String? zipName,
@@ -74,6 +80,7 @@ extension RemoteExtensionEx on RemoteExtension {
     Set<Board> boards = const {},
   }) {
     return RemoteExtension(
+      repoBaseUrl: repoBaseUrl ?? this.repoBaseUrl,
       pkgName: pkgName ?? this.pkgName,
       displayName: displayName ?? this.displayName,
       zipName: zipName ?? this.zipName,

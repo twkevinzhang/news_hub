@@ -11,11 +11,12 @@ import 'package:news_hub/domain/search_config/index.dart';
 import 'package:news_hub/domain/extension/index.dart';
 import 'package:news_hub/domain/model/index.dart';
 import 'package:news_hub/locator.dart';
-import 'package:news_hub/presentation/router.dart';
+import 'package:news_hub/presentation/router/router.dart';
 import 'package:news_hub/presentation/widgets/text_divider.dart';
 
 import 'cubit.dart';
 
+// TODO: implement Declarative Navigation https://github.com/Milad-Akarie/auto_route_library/blob/master/auto_route/example/lib/declarative/declarative.router.dart
 @RoutePage()
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
@@ -30,7 +31,6 @@ class SearchScreen extends StatelessWidget {
 }
 
 class _SearchView extends StatelessWidget {
-  final router = sl<AppRouter>();
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +84,7 @@ class _SearchView extends StatelessWidget {
             child: isLatest ? Icon(Icons.search) : Icon(Icons.arrow_forward),
             onPressed: () {
               isLatest
-                  ? router.popForced(state.searchConfig)
+                  ? AutoRouter.of(context).popForced(state.searchConfig)
                   : cubit.nextStep();
             }),
       );
@@ -177,12 +177,12 @@ class _SearchView extends StatelessWidget {
     return BlocBuilder<SearchCubit, SearchState>(builder: (context, state) {
       final cubit = context.read<SearchCubit>();
       return Padding(
-        padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(
           children: [
             SearchAnchor(
                 viewOnChanged: (text) => cubit.changeKeywords(text),
-                viewOnSubmitted: (text) => router.popForced(state.searchConfig),
+                viewOnSubmitted: (text) => AutoRouter.of(context).popForced(state.searchConfig),
                 builder: (BuildContext context, SearchController controller) =>
                     SearchBar(
                       controller: controller,

@@ -5,9 +5,9 @@ abstract class ExtensionRepoRepository {
 
   Future<List<ExtensionRepo>> getAll();
 
-  Future<ExtensionRepo?> getRepo(String baseUrl);
+  Future<ExtensionRepo> getRepo(String baseUrl);
 
-  Future<ExtensionRepo?> getRepoBySigningKeyFingerprint(String fingerprint);
+  Future<ExtensionRepo> getRepoBySigningKeyFingerprint(String fingerprint);
 
   Stream<int> getCount();
 

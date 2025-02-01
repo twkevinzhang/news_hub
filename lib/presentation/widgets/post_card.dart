@@ -16,23 +16,20 @@ class PostCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: EdgeInsets.fromLTRB(16, 8, 16, 8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          _PostHeader(author: post.posterName, category: boardName),
-          SizedBox(height: 10),
-          _PostContent(contents: post.contents),
-          SizedBox(height: 10),
-          _PostActions(
-            liked: post.like,
-            threads: 0,
-            comments: post.comments,
-            createdAt: post.createdAt,
-          ),
-        ],
-      ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _PostHeader(author: post.posterName, category: boardName),
+        SizedBox(height: 10),
+        _PostContent(contents: post.contents),
+        SizedBox(height: 10),
+        _PostActions(
+          liked: post.like,
+          threads: 0,
+          comments: post.comments,
+          createdAt: post.createdAt,
+        ),
+      ],
     );
   }
 }

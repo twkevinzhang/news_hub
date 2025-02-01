@@ -11,6 +11,7 @@ _$ExtensionRepoDtoImpl _$$ExtensionRepoDtoImplFromJson(
   $checkKeys(
     json,
     requiredKeys: const [
+      'icon',
       'base_url',
       'name',
       'website',
@@ -18,6 +19,7 @@ _$ExtensionRepoDtoImpl _$$ExtensionRepoDtoImplFromJson(
     ],
   );
   return _$ExtensionRepoDtoImpl(
+    icon: json['icon'] as String,
     baseUrl: json['base_url'] as String,
     name: json['name'] as String,
     website: json['website'] as String,
@@ -28,6 +30,7 @@ _$ExtensionRepoDtoImpl _$$ExtensionRepoDtoImplFromJson(
 Map<String, dynamic> _$$ExtensionRepoDtoImplToJson(
         _$ExtensionRepoDtoImpl instance) =>
     <String, dynamic>{
+      'icon': instance.icon,
       'base_url': instance.baseUrl,
       'name': instance.name,
       'website': instance.website,

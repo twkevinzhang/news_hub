@@ -29,8 +29,7 @@ class StateError<T> extends StateStatus<T> {
 
 class StateStatusLayout<T> extends StatelessWidget {
   final StateStatus<T> status;
-  final Widget onErrorStatus;
-  final void Function(String error)? onErrorListener;
+  final Widget Function(BuildContext context, String message) onErrorStatus;
   final Widget Function(BuildContext context, T data) onCompletedStatus;
   final Widget onInitialStatus;
   final Widget onLoadingStatus;
@@ -41,16 +40,10 @@ class StateStatusLayout<T> extends StatelessWidget {
     required this.onErrorStatus,
     required this.onInitialStatus,
     required this.onLoadingStatus,
-    this.onErrorListener,
   });
 
   @override
   Widget build(BuildContext context) {
-    if (status is StateError) {
-      if (onErrorListener != null) {
-        onErrorListener!(status.message!);
-      }
-    }
     if (status is StateCompleted) {
       return StreamBuilder(
         stream: Stream.value(status),
@@ -60,7 +53,7 @@ class StateStatusLayout<T> extends StatelessWidget {
       );
     }
     if (status is StateError) {
-      return onErrorStatus;
+      return onErrorStatus(context, status.message!);
     }
     if (status is StateInitial) {
       return onInitialStatus;

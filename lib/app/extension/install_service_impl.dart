@@ -140,6 +140,7 @@ class ExtensionInstallServiceImpl extends ExtensionInstallService {
     final jsonStr = await File([_installFolder, pkgName, "metadata.json"].toUrl()).readAsString();
     final j = json.decode(jsonStr);
     return Extension(
+      repoBaseUrl: j["repoBaseUrl"],
       pkgName: pkgName,
       displayName: j["display_name"],
       zipName: j["zip_name"],

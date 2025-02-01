@@ -11,7 +11,7 @@ import 'package:news_hub/domain/search_config/index.dart';
 import 'package:news_hub/domain/extension/index.dart';
 import 'package:news_hub/domain/model/index.dart';
 import 'package:news_hub/locator.dart';
-import 'package:news_hub/presentation/router.dart';
+import 'package:news_hub/presentation/router/router.dart';
 import 'package:news_hub/presentation/widgets/text_divider.dart';
 
 part 'cubit.g.dart';

@@ -47,6 +47,7 @@ class ExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
     final List<Map<String, dynamic>> maps = await db.query('extension_repo');
     return List.generate(maps.length, (i) {
       return ExtensionRepo(
+        icon: maps[i]['icon'],
         baseUrl: maps[i]['baseUrl'],
         displayName: maps[i]['displayName'],
         website: maps[i]['website'],
@@ -68,7 +69,7 @@ class ExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
   }
 
   @override
-  Future<ExtensionRepo?> getRepo(String baseUrl) async {
+  Future<ExtensionRepo> getRepo(String baseUrl) async {
     final db = await _service.database();
     final List<Map<String, dynamic>> maps = await db.query(
       'extension_repo',
@@ -77,17 +78,18 @@ class ExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
     );
     if (maps.isNotEmpty) {
       return ExtensionRepo(
+        icon: maps[0]['icon'],
         baseUrl: maps[0]['baseUrl'],
         displayName: maps[0]['displayName'],
         website: maps[0]['website'],
         signingKeyFingerprint: maps[0]['signingKeyFingerprint'],
       );
     }
-    return null;
+    throw Exception('No repo found for $baseUrl');
   }
 
   @override
-  Future<ExtensionRepo?> getRepoBySigningKeyFingerprint(String fingerprint) async {
+  Future<ExtensionRepo> getRepoBySigningKeyFingerprint(String fingerprint) async {
     final db = await _service.database();
     final List<Map<String, dynamic>> maps = await db.query(
       'extension_repo',
@@ -96,13 +98,14 @@ class ExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
     );
     if (maps.isNotEmpty) {
       return ExtensionRepo(
+        icon: maps[0]['icon'],
         baseUrl: maps[0]['baseUrl'],
         displayName: maps[0]['displayName'],
         website: maps[0]['website'],
         signingKeyFingerprint: maps[0]['signingKeyFingerprint'],
       );
     }
-    return null;
+    throw Exception('No repo found for $fingerprint');
   }
 
   @override

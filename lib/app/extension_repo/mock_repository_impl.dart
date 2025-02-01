@@ -22,6 +22,7 @@ class MockExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
   Future<List<ExtensionRepo>> getAll() async {
     return [
       ExtensionRepo(
+        icon: 'https://cdn-icons-png.flaticon.com/512/809/809103.png',
         baseUrl: 'https://example.com',
         displayName: 'Example',
         website: 'https://example.com',
@@ -36,8 +37,9 @@ class MockExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
   }
 
   @override
-  Future<ExtensionRepo?> getRepo(String baseUrl) async {
+  Future<ExtensionRepo> getRepo(String baseUrl) async {
     return ExtensionRepo(
+      icon: 'https://cdn-icons-png.flaticon.com/512/809/809103.png',
       baseUrl: 'https://example.com',
       displayName: 'Example',
       website: 'https://example.com',
@@ -46,8 +48,9 @@ class MockExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
   }
 
   @override
-  Future<ExtensionRepo?> getRepoBySigningKeyFingerprint(String fingerprint) async {
+  Future<ExtensionRepo> getRepoBySigningKeyFingerprint(String fingerprint) async {
     return ExtensionRepo(
+      icon: 'https://cdn-icons-png.flaticon.com/512/809/809103.png',
       baseUrl: 'https://example.com',
       displayName: 'Example',
       website: 'https://example.com',
