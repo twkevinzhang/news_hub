@@ -33,6 +33,7 @@ import 'package:news_hub/domain/extension/interactor/list_remote_extensions.dart
     as _i915;
 import 'package:news_hub/domain/extension/interactor/list_threads.dart' as _i73;
 import 'package:news_hub/domain/extension/preferences_service.dart' as _i739;
+import 'package:news_hub/domain/extension_repo/api_service.dart' as _i692;
 import 'package:news_hub/domain/extension_repo/index.dart' as _i381;
 import 'package:news_hub/domain/search_config/index.dart' as _i768;
 import 'package:news_hub/domain/search_config/interactor/list_search_configs.dart'
@@ -107,8 +108,11 @@ extension GetItInjectableX on _i174.GetIt {
           listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
           listRemoteExtensions: gh<_i915.ListRemoteExtensions>(),
         ));
-    gh.lazySingleton<_i830.ExtensionsCubit>(() =>
-        _i830.ExtensionsCubit(listExtensions: gh<_i135.ListExtensions>()));
+    gh.lazySingleton<_i830.ExtensionsCubit>(() => _i830.ExtensionsCubit(
+          listExtensions: gh<_i135.ListExtensions>(),
+          extensionInstallService: gh<_i135.ExtensionInstallService>(),
+          extensionRepoApiService: gh<_i692.ExtensionRepoApiService>(),
+        ));
     return this;
   }
 }

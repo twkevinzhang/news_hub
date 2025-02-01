@@ -9,7 +9,10 @@ part of 'cubit.dart';
 abstract class _$ExtensionsStateCWProxy {
   ExtensionsState keyword(String? keyword);
 
-  ExtensionsState extensions(Extensions? extensions);
+  ExtensionsState extensions(StateStatus<Extensions> extensions);
+
+  ExtensionsState installingExtensions(
+      Map<String, Pair<InstallStatus, double>> installingExtensions);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `ExtensionsState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -19,7 +22,8 @@ abstract class _$ExtensionsStateCWProxy {
   /// ````
   ExtensionsState call({
     String? keyword,
-    Extensions? extensions,
+    StateStatus<Extensions> extensions,
+    Map<String, Pair<InstallStatus, double>> installingExtensions,
   });
 }
 
@@ -33,8 +37,13 @@ class _$ExtensionsStateCWProxyImpl implements _$ExtensionsStateCWProxy {
   ExtensionsState keyword(String? keyword) => this(keyword: keyword);
 
   @override
-  ExtensionsState extensions(Extensions? extensions) =>
+  ExtensionsState extensions(StateStatus<Extensions> extensions) =>
       this(extensions: extensions);
+
+  @override
+  ExtensionsState installingExtensions(
+          Map<String, Pair<InstallStatus, double>> installingExtensions) =>
+      this(installingExtensions: installingExtensions);
 
   @override
 
@@ -47,6 +56,7 @@ class _$ExtensionsStateCWProxyImpl implements _$ExtensionsStateCWProxy {
   ExtensionsState call({
     Object? keyword = const $CopyWithPlaceholder(),
     Object? extensions = const $CopyWithPlaceholder(),
+    Object? installingExtensions = const $CopyWithPlaceholder(),
   }) {
     return ExtensionsState(
       keyword: keyword == const $CopyWithPlaceholder()
@@ -56,7 +66,11 @@ class _$ExtensionsStateCWProxyImpl implements _$ExtensionsStateCWProxy {
       extensions: extensions == const $CopyWithPlaceholder()
           ? _value.extensions
           // ignore: cast_nullable_to_non_nullable
-          : extensions as Extensions?,
+          : extensions as StateStatus<Extensions>,
+      installingExtensions: installingExtensions == const $CopyWithPlaceholder()
+          ? _value.installingExtensions
+          // ignore: cast_nullable_to_non_nullable
+          : installingExtensions as Map<String, Pair<InstallStatus, double>>,
     );
   }
 }

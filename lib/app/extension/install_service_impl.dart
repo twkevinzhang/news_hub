@@ -31,7 +31,22 @@ class ExtensionInstallServiceImpl extends ExtensionInstallService {
   }
 
   @override
-  Stream<Pair<String, int>> download(String zipUrl, Extension extension) async* {
+  Stream<Pair<InstallStatus, double>> downloadAndInstall(String zipUrl, Extension extension) {
+    return _download(zipUrl, extension).asyncMap((pair) async {
+      if (pair.first == DownloadTaskStatus.enqueued) {
+        return Pair(InstallStatus.downloading, pair.second.toDouble());
+      } else {
+        return Pair(InstallStatus.installing, 0.0);
+      }
+    }).asyncExpand((status) async* {
+      if (status.first == InstallStatus.installing) {
+        yield Pair(InstallStatus.installing, 0.0);
+        yield* _install(extension).map((e) => Pair(InstallStatus.installing, 100.0));
+      }
+    });
+  }
+
+  Stream<Pair<DownloadTaskStatus, int>> _download(String zipUrl, Extension extension) async* {
     // 初始化 FlutterDownloader
     if (!FlutterDownloader.initialized) {
       await FlutterDownloader.initialize(
@@ -58,37 +73,11 @@ class ExtensionInstallServiceImpl extends ExtensionInstallService {
     }
 
     // 監聽下載進度
-    final sub = StreamController<Pair<String, int>>();
-
+    final sub = StreamController<Pair<DownloadTaskStatus, int>>();
     FlutterDownloader.registerCallback((String id, int statusCode, int progress) {
       if (id == taskId) {
-        // 更新進度
         if (!sub.isClosed) {
-          switch (DownloadTaskStatus.fromInt(statusCode)) {
-            case DownloadTaskStatus.enqueued:
-              sub.add(Pair('enqueued', progress));
-              break;
-            case DownloadTaskStatus.running:
-              sub.add(Pair('running', progress));
-              break;
-            case DownloadTaskStatus.complete:
-              sub.add(Pair('complete', progress));
-              sub.close();
-              break;
-            case DownloadTaskStatus.canceled:
-              sub.add(Pair('canceled', progress));
-              sub.close();
-              break;
-            case DownloadTaskStatus.paused:
-              sub.add(Pair('paused', progress));
-              break;
-            case DownloadTaskStatus.failed:
-              sub.addError("failed");
-              break;
-            default:
-            // DownloadTaskStatus.undefined
-              sub.addError("undefined");
-          }
+          sub.add(Pair(DownloadTaskStatus.enqueued, progress));
         }
       }
     });
@@ -96,8 +85,7 @@ class ExtensionInstallServiceImpl extends ExtensionInstallService {
     yield* sub.stream;
   }
 
-  @override
-  Stream<String> install(Extension extension) async* {
+  Stream<String> _install(Extension extension) async* {
     // Read the Zip file from disk.
     final downloadedFile = [_downloadFolder, extension.zipName].toUrl();
     final bytes = File(downloadedFile).readAsBytesSync();

@@ -22,7 +22,7 @@ part 'cubit.g.dart';
 class ThreadsState extends Equatable {
   final SearchConfigForm? searchConfigForm;
 
-  const ThreadsState({this.searchConfigForm});
+  const ThreadsState({required this.searchConfigForm});
 
   @override
   List<Object?> get props => [searchConfigForm];
@@ -40,7 +40,9 @@ class ThreadsCubit extends Cubit<ThreadsState> {
     required ListThreads listThreads,
   })  : _listThreads = listThreads,
         _pagingController = PagingController(firstPageKey: 1),
-        super(const ThreadsState()) {
+        super(const ThreadsState(
+          searchConfigForm: null,
+        )) {
     _pagingController.addPageRequestListener(_loadThreads);
   }
 

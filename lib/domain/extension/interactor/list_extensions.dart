@@ -20,7 +20,7 @@ class ListExtensions {
         _listInstalledExtensions = listInstalledExtensions,
         _listRemoteExtensions = listRemoteExtensions;
 
-  Stream<Extensions> call(String? keyword) {
+  Stream<Extensions> asStream(String? keyword) {
     return CombineLatestStream.combine3(
       _prefService.enabledLanguages().changes(),
       _listInstalledExtensions.call().asStream(),
@@ -45,6 +45,10 @@ class ListExtensions {
           );
         }
     );
+  }
+
+  Future<Extensions> asFuture(String? keyword) {
+    return asStream(keyword).single;
   }
 }
 

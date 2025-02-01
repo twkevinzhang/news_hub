@@ -9,6 +9,7 @@ import 'package:news_hub/presentation/pages/search/cubit.dart';
 import 'package:news_hub/presentation/pages/search/index.dart';
 import 'package:news_hub/presentation/router.dart';
 import 'package:news_hub/presentation/router.gr.dart';
+import 'package:news_hub/presentation/widgets/index.dart';
 import 'package:news_hub/presentation/widgets/post_card.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:injectable/injectable.dart';
@@ -88,16 +89,5 @@ class _ThreadsView extends StatelessWidget {
             ),
           );
         });
-  }
-}
-
-class LoadingIndicator extends StatelessWidget {
-  const LoadingIndicator({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: CircularProgressIndicator(),
-    );
   }
 }

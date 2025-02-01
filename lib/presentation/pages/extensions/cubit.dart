@@ -1,19 +1,16 @@
-import 'package:auto_route/auto_route.dart';
+import 'dart:async';
+
 import 'package:dartx/dartx.dart';
 import 'package:copy_with_extension/copy_with_extension.dart';
-import 'package:easy_stepper/easy_stepper.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:news_hub/domain/extension_repo/api_service.dart';
 
-import 'package:news_hub/domain/search_config/index.dart';
 import 'package:news_hub/domain/extension/index.dart';
 import 'package:news_hub/domain/model/index.dart';
-import 'package:news_hub/locator.dart';
-import 'package:news_hub/presentation/router.dart';
-import 'package:news_hub/presentation/widgets/text_divider.dart';
+import 'package:news_hub/presentation/widgets/index.dart';
 
 part 'cubit.g.dart';
 
@@ -21,38 +18,61 @@ part 'cubit.g.dart';
 @CopyWith()
 class ExtensionsState extends Equatable {
   final String? keyword;
-  final Extensions extensions;
+  final StateStatus<Extensions> extensions;
+  final Map<String, Pair<InstallStatus, double>> installingExtensions;
 
-  ExtensionsState({
-    this.keyword,
-    Extensions? extensions,
-  })  : extensions = extensions ??
-            Extensions(
-              updates: {},
-              deprecated: {},
-              installed: {},
-              notInstalled: {},
-            );
+  const ExtensionsState({
+    required this.keyword,
+    required this.extensions,
+    required this.installingExtensions,
+  });
 
   @override
-  List<Object?> get props => [extensions, keyword];
+  List<Object?> get props => [extensions, keyword, installingExtensions];
 }
 
 @lazySingleton
 class ExtensionsCubit extends Cubit<ExtensionsState> {
   final ListExtensions _listExtensions;
+  final ExtensionInstallService _extensionInstallService;
+  final ExtensionRepoApiService _extensionRepoApiService;
   final SearchController _searchController;
   get searchController => _searchController;
+  StreamSubscription? _subListExtensions;
+  final List<StreamSubscription> _subInstallExtensions;
 
   ExtensionsCubit({
     required ListExtensions listExtensions,
+    required ExtensionInstallService extensionInstallService,
+    required ExtensionRepoApiService extensionRepoApiService,
   })  : _listExtensions = listExtensions,
+        _extensionInstallService = extensionInstallService,
+        _extensionRepoApiService = extensionRepoApiService,
+        _subInstallExtensions = [],
         _searchController = SearchController(),
-        super(ExtensionsState());
+        super(ExtensionsState(
+          keyword: null,
+          extensions: StateInitial(),
+          installingExtensions: {},
+      ));
 
-  void loadExtensions() async {
-    _listExtensions.call(state.keyword).listen((result) {
-      emit(state.copyWith(extensions: result));
+  @override
+  Future<void> close() async {
+    await _subListExtensions?.cancel();
+    for (final sub in _subInstallExtensions) {
+      await sub.cancel();
+    }
+    return super.close();
+  }
+
+  Future<void> loadExtensions() async {
+    await _subListExtensions?.cancel();
+    _subListExtensions =
+        _listExtensions.asStream(state.keyword).listen((result) {
+      emit(state.copyWith(extensions: StateCompleted(data: result)));
+    }, onError: (error) {
+      emit(state.copyWith(extensions: StateError(message: error.toString())));
+      print(error);
     });
   }
 
@@ -60,12 +80,33 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
     emit(state.copyWith(keyword: keyword));
   }
 
-  void updateExtension(Extension extension) {
-    // ...
+  Future<void> updateExtension(Extension extension) async {
+    final zipUrl = await _extensionRepoApiService.zipUrl(extension);
+    await _extensionInstallService.uninstall(extension);
+    _subInstallExtensions.add(_extensionInstallService
+        .downloadAndInstall(zipUrl, extension)
+        .listen((pair) {
+      emit(state.copyWith(installingExtensions: {
+        ...state.installingExtensions,
+        extension.pkgName: pair,
+      }));
+    }, onError: (error) {
+      print(error);
+    }));
   }
 
-  void installExtension(Extension extension) {
-    // ...
+  Future<void> installExtension(Extension extension) async {
+    final zipUrl = await _extensionRepoApiService.zipUrl(extension);
+    _subInstallExtensions.add(_extensionInstallService
+        .downloadAndInstall(zipUrl, extension)
+        .listen((pair) {
+      emit(state.copyWith(installingExtensions: {
+        ...state.installingExtensions,
+        extension.pkgName: pair,
+      }));
+    }, onError: (error) {
+      print(error);
+    }));
   }
 
   void validateRepoUrl(String url) {

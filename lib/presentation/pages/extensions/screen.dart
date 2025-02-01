@@ -1,18 +1,10 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dartx/dartx.dart';
-import 'package:copy_with_extension/copy_with_extension.dart';
-import 'package:easy_stepper/easy_stepper.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:injectable/injectable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
 
-import 'package:news_hub/domain/search_config/index.dart';
-import 'package:news_hub/domain/extension/index.dart';
-import 'package:news_hub/domain/model/index.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/router.dart';
+import 'package:news_hub/presentation/widgets/index.dart';
 import 'package:news_hub/presentation/widgets/text_divider.dart';
 
 import 'cubit.dart';
@@ -80,6 +72,7 @@ class _ExtensionsViewState extends State<_ExtensionsView> {
                       onTap: () {
                         cubit.changeKeywords(item);
                         controller.closeView(item);
+                        cubit.loadExtensions();
                       },
                     );
                   });
@@ -90,39 +83,55 @@ class _ExtensionsViewState extends State<_ExtensionsView> {
             ),
           ],
         ),
-        body: ListView(
-          children: [
-            if (state.extensions.updates.isNotEmpty) ...[
-              ListTile(title: TextDivider("等待更新")),
-              ...state.extensions.updates.map((e) => ListTile(
-                    title: Text("${e.displayName}"),
-                    trailing: IconButton(
-                      icon: Icon(Icons.update),
-                      onPressed: () => {
-                        cubit.updateExtension(e),
-                      },
-                    ),
-                  ))
+        body: StateStatusLayout(
+          status: state.extensions,
+          onCompletedStatus: (context, data) => ListView(
+            children: [
+              if (data.updates.isNotEmpty) ...[
+                ListTile(title: TextDivider("等待更新")),
+                ...data.updates.map((e) => ListTile(
+                      title: Text("${e.displayName}"),
+                      trailing: state.installingExtensions
+                              .containsKey(e.pkgName)
+                          ? CircularProgressIndicator(
+                              value:
+                                  state.installingExtensions[e.pkgName]!.second)
+                          : IconButton(
+                              icon: Icon(Icons.update),
+                              onPressed: () => {
+                                cubit.updateExtension(e),
+                              },
+                            ),
+                    ))
+              ],
+              if (data.installed.isNotEmpty) ...[
+                ListTile(title: TextDivider("已安裝")),
+                ...data.installed.map((e) => ListTile(
+                      title: Text("${e.displayName}"),
+                    ))
+              ],
+              if (data.notInstalled.isNotEmpty) ...[
+                ListTile(title: TextDivider("未安裝")),
+                ...data.notInstalled.map((e) => ListTile(
+                      title: Text("${e.displayName}"),
+                      trailing: state.installingExtensions
+                              .containsKey(e.pkgName)
+                          ? CircularProgressIndicator(
+                              value:
+                                  state.installingExtensions[e.pkgName]!.second)
+                          : IconButton(
+                              icon: Icon(Icons.download),
+                              onPressed: () => {
+                                cubit.installExtension(e),
+                              },
+                            ),
+                    ))
+              ],
             ],
-            if (state.extensions.installed.isNotEmpty) ...[
-              ListTile(title: TextDivider("已安裝")),
-              ...state.extensions.installed.map((e) => ListTile(
-                    title: Text("${e.displayName}"),
-                  ))
-            ],
-            if (state.extensions.notInstalled.isNotEmpty) ...[
-              ListTile(title: TextDivider("未安裝")),
-              ...state.extensions.notInstalled.map((e) => ListTile(
-                    title: Text("${e.displayName}"),
-                    trailing: IconButton(
-                      icon: Icon(Icons.download),
-                      onPressed: () => {
-                        cubit.installExtension(e),
-                      },
-                    ),
-                  ))
-            ],
-          ],
+          ),
+          onErrorStatus: const SizedBox(),
+          onInitialStatus: const SizedBox(),
+          onLoadingStatus: LoadingIndicator(),
         ),
       );
     });

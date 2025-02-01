@@ -26,12 +26,11 @@ class SearchConfigForm {
   final String? keywords;
 
   const SearchConfigForm(
-      {
-        required this.enabledExtensionPkgNames,
-        required this.enabledBoardIds,
-        required this.boardsOrder,
-        required this.threadsSorting,
-        required this.keywords});
+      {required this.enabledExtensionPkgNames,
+      required this.enabledBoardIds,
+      required this.boardsOrder,
+      required this.threadsSorting,
+      required this.keywords});
 }
 
 extension SearchConfigFormEx on SearchConfigForm {
@@ -41,8 +40,7 @@ extension SearchConfigFormEx on SearchConfigForm {
         enabledBoardIds: c.enabledBoardIds,
         boardsOrder: c.boardsOrder,
         threadsSorting: c.threadsSorting,
-        keywords: c.keywords
-    );
+        keywords: c.keywords);
   }
 }
 
@@ -54,21 +52,16 @@ class SearchState extends Equatable {
   final List<Extension> allExtensions;
   final SearchConfigForm searchConfig;
 
-  SearchState({
-    this.currentStep = 0,
-    this.allSearchConfigs = const [],
-    this.allExtensions = const [],
-    SearchConfigForm? searchConfig,
-  }): searchConfig = searchConfig ?? SearchConfigForm(
-    enabledExtensionPkgNames: {},
-    enabledBoardIds: {},
-    boardsOrder: [],
-    threadsSorting: {},
-    keywords: '',
-  );
+  const SearchState({
+    required this.currentStep,
+    required this.allSearchConfigs,
+    required this.allExtensions,
+    required this.searchConfig,
+  });
 
   @override
-  List<Object?> get props => [currentStep, allSearchConfigs, allExtensions, searchConfig];
+  List<Object?> get props =>
+      [currentStep, allSearchConfigs, allExtensions, searchConfig];
 }
 
 @lazySingleton
@@ -80,10 +73,20 @@ class SearchCubit extends Cubit<SearchState> {
   SearchCubit({
     required ListSearchConfigs listSearchConfigs,
     required ListInstalledExtensions listExtensions,
-  })  :
-        _listExtensions = listExtensions,
+  })  : _listExtensions = listExtensions,
         _pageController = PageController(),
-        super(SearchState());
+        super(SearchState(
+          currentStep: 0,
+          allSearchConfigs: [],
+          allExtensions: [],
+          searchConfig: SearchConfigForm(
+            enabledExtensionPkgNames: {},
+            enabledBoardIds: {},
+            boardsOrder: [],
+            threadsSorting: {},
+            keywords: null,
+          ),
+        ));
 
   @override
   Future<void> close() {
@@ -115,31 +118,53 @@ class SearchCubit extends Cubit<SearchState> {
   }
 
   void chooseExtension(Extension extension) {
-    final newEnabledExtensionPkgNames = {...state.searchConfig.enabledExtensionPkgNames, extension.pkgName};
-    emit(state.copyWith(searchConfig: state.searchConfig.copyWith(enabledExtensionPkgNames: newEnabledExtensionPkgNames)));
+    final newEnabledExtensionPkgNames = {
+      ...state.searchConfig.enabledExtensionPkgNames,
+      extension.pkgName
+    };
+    emit(state.copyWith(
+        searchConfig: state.searchConfig
+            .copyWith(enabledExtensionPkgNames: newEnabledExtensionPkgNames)));
   }
 
   void unChooseExtension(Extension extension) {
-    final newEnabledExtensionPkgNames = {...state.searchConfig.enabledExtensionPkgNames}..remove(extension.pkgName);
-    emit(state.copyWith(searchConfig: state.searchConfig.copyWith(enabledExtensionPkgNames: newEnabledExtensionPkgNames)));
+    final newEnabledExtensionPkgNames = {
+      ...state.searchConfig.enabledExtensionPkgNames
+    }..remove(extension.pkgName);
+    emit(state.copyWith(
+        searchConfig: state.searchConfig
+            .copyWith(enabledExtensionPkgNames: newEnabledExtensionPkgNames)));
   }
 
   void chooseBoard(Board board) {
-    final newEnabledBoardIds = {...state.searchConfig.enabledBoardIds, board.id};
-    emit(state.copyWith(searchConfig: state.searchConfig.copyWith(enabledBoardIds: newEnabledBoardIds)));
+    final newEnabledBoardIds = {
+      ...state.searchConfig.enabledBoardIds,
+      board.id
+    };
+    emit(state.copyWith(
+        searchConfig:
+            state.searchConfig.copyWith(enabledBoardIds: newEnabledBoardIds)));
   }
 
   void unChooseBoard(Board board) {
-    final newEnabledBoardIds = {...state.searchConfig.enabledBoardIds}..remove(board.id);
-    emit(state.copyWith(searchConfig: state.searchConfig.copyWith(enabledBoardIds: newEnabledBoardIds)));
+    final newEnabledBoardIds = {...state.searchConfig.enabledBoardIds}
+      ..remove(board.id);
+    emit(state.copyWith(
+        searchConfig:
+            state.searchConfig.copyWith(enabledBoardIds: newEnabledBoardIds)));
   }
 
   /// =====
   /// 貼文排序頁面
   /// =====
   void changeThreadsSorting(String boardId, String sorting) {
-    final newThreadsSorting = {...state.searchConfig.threadsSorting, boardId: sorting};
-    emit(state.copyWith(searchConfig: state.searchConfig.copyWith(threadsSorting: newThreadsSorting)));
+    final newThreadsSorting = {
+      ...state.searchConfig.threadsSorting,
+      boardId: sorting
+    };
+    emit(state.copyWith(
+        searchConfig:
+            state.searchConfig.copyWith(threadsSorting: newThreadsSorting)));
   }
 
   /// =====
@@ -147,6 +172,7 @@ class SearchCubit extends Cubit<SearchState> {
   /// =====
   void changeKeywords(String? keywords) {
     final k = (keywords?.trim().isEmpty ?? true) ? null : keywords?.trim();
-    emit(state.copyWith(searchConfig: state.searchConfig.copyWith(keywords: k)));
+    emit(
+        state.copyWith(searchConfig: state.searchConfig.copyWith(keywords: k)));
   }
 }

@@ -113,7 +113,7 @@ abstract class _$SearchStateCWProxy {
 
   SearchState allExtensions(List<Extension> allExtensions);
 
-  SearchState searchConfig(SearchConfigForm? searchConfig);
+  SearchState searchConfig(SearchConfigForm searchConfig);
 
   /// This function **does support** nullification of nullable fields. All `null` values passed to `non-nullable` fields will be ignored. You can also use `SearchState(...).copyWith.fieldName(...)` to override fields one at a time with nullification support.
   ///
@@ -125,7 +125,7 @@ abstract class _$SearchStateCWProxy {
     int currentStep,
     List<SearchConfig> allSearchConfigs,
     List<Extension> allExtensions,
-    SearchConfigForm? searchConfig,
+    SearchConfigForm searchConfig,
   });
 }
 
@@ -147,7 +147,7 @@ class _$SearchStateCWProxyImpl implements _$SearchStateCWProxy {
       this(allExtensions: allExtensions);
 
   @override
-  SearchState searchConfig(SearchConfigForm? searchConfig) =>
+  SearchState searchConfig(SearchConfigForm searchConfig) =>
       this(searchConfig: searchConfig);
 
   @override
@@ -180,7 +180,7 @@ class _$SearchStateCWProxyImpl implements _$SearchStateCWProxy {
       searchConfig: searchConfig == const $CopyWithPlaceholder()
           ? _value.searchConfig
           // ignore: cast_nullable_to_non_nullable
-          : searchConfig as SearchConfigForm?,
+          : searchConfig as SearchConfigForm,
     );
   }
 }
