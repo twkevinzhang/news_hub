@@ -3,6 +3,7 @@ import 'package:news_hub/domain/extension_repo/index.dart';
 import 'package:news_hub/domain/model/index.dart';
 
 // TODO: replace with mocktail library
+@test
 @LazySingleton(as: ExtensionRepoApiService)
 class MockExtensionRepoApiServiceImpl implements ExtensionRepoApiService {
   @override

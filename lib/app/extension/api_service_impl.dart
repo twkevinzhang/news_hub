@@ -11,9 +11,11 @@ import 'package:news_hub/shared/constants.dart';
 import 'package:news_hub/shared/extensions.dart';
 import 'package:path/path.dart' as path;
 import 'package:serious_python/serious_python.dart';
+import 'package:injectable/injectable.dart';
 
 // TODO: replace with Chopper library
-// @LazySingleton(as: ExtensionApiService)
+@dev
+@LazySingleton(as: ExtensionApiService)
 class ExtensionApiServiceImpl extends ExtensionApiService {
   final Dio _dio;
 

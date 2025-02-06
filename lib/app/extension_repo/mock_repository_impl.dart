@@ -2,6 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/extension_repo/index.dart';
 import 'package:news_hub/domain/model/index.dart';
 
+@test
 @LazySingleton(as: ExtensionRepoRepository)
 class MockExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
 

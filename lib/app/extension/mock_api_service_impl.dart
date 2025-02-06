@@ -27,6 +27,7 @@ final _mockPost = Post(
   ],
 );
 
+@test
 @LazySingleton(as: ExtensionApiService)
 class MockExtensionApiServiceImpl extends ExtensionApiService {
   @override
