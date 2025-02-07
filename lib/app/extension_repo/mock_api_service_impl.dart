@@ -32,14 +32,6 @@ class MockExtensionRepoApiServiceImpl implements ExtensionRepoApiService {
         lang: 'zh_tw',
         iconUrl: '',
         repoUrl: '',
-        site: Site(
-          extensionPkgName: 'twkevinzhang_beeceptor',
-          id: '1',
-          name: 'Beeceptor',
-          icon: 'https://cdn-icons-png.flaticon.com/512/809/809103.png',
-          url: 'https://beeceptor.com/',
-        ),
-        boards: {},
       ),
     ];
   }

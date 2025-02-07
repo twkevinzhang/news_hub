@@ -9,9 +9,9 @@ class ListInstalledExtensions {
     required ExtensionInstallService installService,
   }): _installService = installService;
 
-  Future<List<Extension>> call() {
+  Future<List<ExtensionWithBoards>> call() {
     return Future.value([
-      Extension(
+      ExtensionWithBoards(
         repoBaseUrl: 'github.com/twkevinzhang/beeceptor',
         pkgName: 'twkevinzhang_beeceptor',
         displayName: 'Beeceptor Ex',
@@ -32,4 +32,22 @@ class ListInstalledExtensions {
       ),
     ]);
   }
+}
+
+class ExtensionWithBoards extends Extension {
+  final Site site;
+  final Set<Board> boards;
+  ExtensionWithBoards({
+    required super.repoBaseUrl,
+    required super.pkgName,
+    required super.displayName,
+    required super.zipName,
+    required super.address,
+    required super.version,
+    required super.pythonVersion,
+    required super.lang,
+    required super.isNsfw,
+    required this.site,
+    required this.boards,
+  });
 }

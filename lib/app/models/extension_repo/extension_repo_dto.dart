@@ -9,7 +9,7 @@ class ExtensionRepoDto with _$ExtensionRepoDto {
   const factory ExtensionRepoDto({
     @JsonKey(name: 'icon', required: true) required String icon,
     @JsonKey(name: 'base_url', required: true) required String baseUrl,
-    @JsonKey(name: 'name', required: true) required String name,
+    @JsonKey(name: 'display_name', required: true) required String displayName,
     @JsonKey(name: 'website', required: true) required String website,
     @JsonKey(name: 'signing_key_fingerprint', required: true) required String signingKeyFingerprint,
   }) = _ExtensionRepoDto;
@@ -21,7 +21,7 @@ extension ExtensionRepoDtoEx on ExtensionRepoDto {
     return ExtensionRepo(
       icon: icon,
       baseUrl: baseUrl,
-      displayName: name,
+      displayName: displayName,
       website: website,
       signingKeyFingerprint: signingKeyFingerprint,
     );

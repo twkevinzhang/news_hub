@@ -16,7 +16,7 @@ class ExtensionRepoApiServiceImpl implements ExtensionRepoApiService {
 
   @override
   Future<ExtensionRepo> detail(String baseUrl) async {
-    final res = await _dio.get('$baseUrl/detail.json');
+    final res = await _dio.get('$baseUrl/repo.json');
     final decodedResponse = jsonDecode(res.data);
     return ExtensionRepoDto.fromJson(decodedResponse).toExtensionRepo(baseUrl: baseUrl);
   }
@@ -30,6 +30,6 @@ class ExtensionRepoApiServiceImpl implements ExtensionRepoApiService {
 
   @override
   Future<String> zipUrl(Extension extension) {
-    return Future.value("${extension.repoBaseUrl}/apk/${extension.pkgName}");
+    return Future.value("${extension.repoBaseUrl}/zip/${extension.pkgName}");
   }
 }

@@ -15,11 +15,15 @@ import 'package:news_hub/presentation/pages/add_extension_repo/widgets/add_exten
     as _i1;
 import 'package:news_hub/presentation/pages/extension_repos/view/extension_repos_screen.dart'
     as _i2;
-import 'package:news_hub/presentation/pages/extensions/view/extensions_screen.dart' as _i3;
+import 'package:news_hub/presentation/pages/extensions/view/extensions_screen.dart'
+    as _i3;
 import 'package:news_hub/presentation/pages/home_screen.dart' as _i4;
-import 'package:news_hub/presentation/pages/search/view/search_screen.dart' as _i5;
-import 'package:news_hub/presentation/pages/settings/view/settings_screen.dart' as _i6;
-import 'package:news_hub/presentation/pages/threads/view/threads_screen.dart' as _i7;
+import 'package:news_hub/presentation/pages/search/view/search_screen.dart'
+    as _i5;
+import 'package:news_hub/presentation/pages/settings/view/settings_screen.dart'
+    as _i6;
+import 'package:news_hub/presentation/pages/threads/view/threads_screen.dart'
+    as _i7;
 
 /// generated route for
 /// [_i1.AddExtensionRepoDialog]

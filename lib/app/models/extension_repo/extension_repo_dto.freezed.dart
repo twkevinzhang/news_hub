@@ -24,8 +24,8 @@ mixin _$ExtensionRepoDto {
   String get icon => throw _privateConstructorUsedError;
   @JsonKey(name: 'base_url', required: true)
   String get baseUrl => throw _privateConstructorUsedError;
-  @JsonKey(name: 'name', required: true)
-  String get name => throw _privateConstructorUsedError;
+  @JsonKey(name: 'display_name', required: true)
+  String get displayName => throw _privateConstructorUsedError;
   @JsonKey(name: 'website', required: true)
   String get website => throw _privateConstructorUsedError;
   @JsonKey(name: 'signing_key_fingerprint', required: true)
@@ -50,7 +50,7 @@ abstract class $ExtensionRepoDtoCopyWith<$Res> {
   $Res call(
       {@JsonKey(name: 'icon', required: true) String icon,
       @JsonKey(name: 'base_url', required: true) String baseUrl,
-      @JsonKey(name: 'name', required: true) String name,
+      @JsonKey(name: 'display_name', required: true) String displayName,
       @JsonKey(name: 'website', required: true) String website,
       @JsonKey(name: 'signing_key_fingerprint', required: true)
       String signingKeyFingerprint});
@@ -73,7 +73,7 @@ class _$ExtensionRepoDtoCopyWithImpl<$Res, $Val extends ExtensionRepoDto>
   $Res call({
     Object? icon = null,
     Object? baseUrl = null,
-    Object? name = null,
+    Object? displayName = null,
     Object? website = null,
     Object? signingKeyFingerprint = null,
   }) {
@@ -86,9 +86,9 @@ class _$ExtensionRepoDtoCopyWithImpl<$Res, $Val extends ExtensionRepoDto>
           ? _value.baseUrl
           : baseUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      displayName: null == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
               as String,
       website: null == website
           ? _value.website
@@ -113,7 +113,7 @@ abstract class _$$ExtensionRepoDtoImplCopyWith<$Res>
   $Res call(
       {@JsonKey(name: 'icon', required: true) String icon,
       @JsonKey(name: 'base_url', required: true) String baseUrl,
-      @JsonKey(name: 'name', required: true) String name,
+      @JsonKey(name: 'display_name', required: true) String displayName,
       @JsonKey(name: 'website', required: true) String website,
       @JsonKey(name: 'signing_key_fingerprint', required: true)
       String signingKeyFingerprint});
@@ -134,7 +134,7 @@ class __$$ExtensionRepoDtoImplCopyWithImpl<$Res>
   $Res call({
     Object? icon = null,
     Object? baseUrl = null,
-    Object? name = null,
+    Object? displayName = null,
     Object? website = null,
     Object? signingKeyFingerprint = null,
   }) {
@@ -147,9 +147,9 @@ class __$$ExtensionRepoDtoImplCopyWithImpl<$Res>
           ? _value.baseUrl
           : baseUrl // ignore: cast_nullable_to_non_nullable
               as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
+      displayName: null == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
               as String,
       website: null == website
           ? _value.website
@@ -169,7 +169,7 @@ class _$ExtensionRepoDtoImpl implements _ExtensionRepoDto {
   const _$ExtensionRepoDtoImpl(
       {@JsonKey(name: 'icon', required: true) required this.icon,
       @JsonKey(name: 'base_url', required: true) required this.baseUrl,
-      @JsonKey(name: 'name', required: true) required this.name,
+      @JsonKey(name: 'display_name', required: true) required this.displayName,
       @JsonKey(name: 'website', required: true) required this.website,
       @JsonKey(name: 'signing_key_fingerprint', required: true)
       required this.signingKeyFingerprint});
@@ -184,8 +184,8 @@ class _$ExtensionRepoDtoImpl implements _ExtensionRepoDto {
   @JsonKey(name: 'base_url', required: true)
   final String baseUrl;
   @override
-  @JsonKey(name: 'name', required: true)
-  final String name;
+  @JsonKey(name: 'display_name', required: true)
+  final String displayName;
   @override
   @JsonKey(name: 'website', required: true)
   final String website;
@@ -195,7 +195,7 @@ class _$ExtensionRepoDtoImpl implements _ExtensionRepoDto {
 
   @override
   String toString() {
-    return 'ExtensionRepoDto(icon: $icon, baseUrl: $baseUrl, name: $name, website: $website, signingKeyFingerprint: $signingKeyFingerprint)';
+    return 'ExtensionRepoDto(icon: $icon, baseUrl: $baseUrl, displayName: $displayName, website: $website, signingKeyFingerprint: $signingKeyFingerprint)';
   }
 
   @override
@@ -205,7 +205,8 @@ class _$ExtensionRepoDtoImpl implements _ExtensionRepoDto {
             other is _$ExtensionRepoDtoImpl &&
             (identical(other.icon, icon) || other.icon == icon) &&
             (identical(other.baseUrl, baseUrl) || other.baseUrl == baseUrl) &&
-            (identical(other.name, name) || other.name == name) &&
+            (identical(other.displayName, displayName) ||
+                other.displayName == displayName) &&
             (identical(other.website, website) || other.website == website) &&
             (identical(other.signingKeyFingerprint, signingKeyFingerprint) ||
                 other.signingKeyFingerprint == signingKeyFingerprint));
@@ -214,7 +215,7 @@ class _$ExtensionRepoDtoImpl implements _ExtensionRepoDto {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, icon, baseUrl, name, website, signingKeyFingerprint);
+      runtimeType, icon, baseUrl, displayName, website, signingKeyFingerprint);
 
   /// Create a copy of ExtensionRepoDto
   /// with the given fields replaced by the non-null parameter values.
@@ -237,7 +238,8 @@ abstract class _ExtensionRepoDto implements ExtensionRepoDto {
   const factory _ExtensionRepoDto(
       {@JsonKey(name: 'icon', required: true) required final String icon,
       @JsonKey(name: 'base_url', required: true) required final String baseUrl,
-      @JsonKey(name: 'name', required: true) required final String name,
+      @JsonKey(name: 'display_name', required: true)
+      required final String displayName,
       @JsonKey(name: 'website', required: true) required final String website,
       @JsonKey(name: 'signing_key_fingerprint', required: true)
       required final String signingKeyFingerprint}) = _$ExtensionRepoDtoImpl;
@@ -252,8 +254,8 @@ abstract class _ExtensionRepoDto implements ExtensionRepoDto {
   @JsonKey(name: 'base_url', required: true)
   String get baseUrl;
   @override
-  @JsonKey(name: 'name', required: true)
-  String get name;
+  @JsonKey(name: 'display_name', required: true)
+  String get displayName;
   @override
   @JsonKey(name: 'website', required: true)
   String get website;

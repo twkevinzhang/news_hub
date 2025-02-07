@@ -150,8 +150,6 @@ class ExtensionInstallServiceImpl implements ExtensionInstallService {
       pythonVersion : j["python_version"],
       lang : j["lang"],
       isNsfw: j["is_nsfw"],
-      site: SiteDto.fromJson(j["site"]).toSite(),
-      boards: (j["boards"] as Iterable).map((e) => BoardDto.fromJson(e).toBoard()).toSet(),
     );
   }
 }

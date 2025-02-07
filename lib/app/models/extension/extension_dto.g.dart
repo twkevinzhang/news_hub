@@ -18,9 +18,7 @@ _$ExtensionDtoImpl _$$ExtensionDtoImplFromJson(Map<String, dynamic> json) {
       'version',
       'python_version',
       'lang',
-      'is_nsfw',
-      'site',
-      'boards'
+      'is_nsfw'
     ],
   );
   return _$ExtensionDtoImpl(
@@ -33,10 +31,6 @@ _$ExtensionDtoImpl _$$ExtensionDtoImplFromJson(Map<String, dynamic> json) {
     pythonVersion: (json['python_version'] as num).toInt(),
     lang: json['lang'] as String,
     isNsfw: json['is_nsfw'] as bool,
-    site: SiteDto.fromJson(json['site'] as Map<String, dynamic>),
-    boards: (json['boards'] as List<dynamic>)
-        .map((e) => BoardDto.fromJson(e as Map<String, dynamic>))
-        .toList(),
   );
 }
 
@@ -51,6 +45,4 @@ Map<String, dynamic> _$$ExtensionDtoImplToJson(_$ExtensionDtoImpl instance) =>
       'python_version': instance.pythonVersion,
       'lang': instance.lang,
       'is_nsfw': instance.isNsfw,
-      'site': instance.site,
-      'boards': instance.boards,
     };

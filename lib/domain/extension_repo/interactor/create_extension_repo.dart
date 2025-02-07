@@ -16,7 +16,7 @@ class CreateExtensionRepo {
     final ExtensionRepoRepository _repository;
     final ExtensionRepoApiService _service;
 
-    final _repoRegex = RegExp(r'^https://.*/index\.min\.json$');
+    final _repoRegex = RegExp(r'^https://.*/repo\.json$');
 
     Future<void> call(String indexUrl) async {
         final formattedIndexUrl = Uri.tryParse(indexUrl)?.toString();
@@ -24,7 +24,7 @@ class CreateExtensionRepo {
             throw InvalidUrlException();
         }
 
-        final baseUrl = formattedIndexUrl.replaceAll('/index.min.json', '');
+        final baseUrl = formattedIndexUrl.replaceAll('/repo.json', '');
         try {
             final repo = await _service.detail(baseUrl);
             return _insert(repo);

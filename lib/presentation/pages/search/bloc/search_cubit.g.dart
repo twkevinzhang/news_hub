@@ -111,7 +111,7 @@ abstract class _$SearchStateCWProxy {
 
   SearchState allSearchConfigs(List<SearchConfig> allSearchConfigs);
 
-  SearchState allExtensions(List<Extension> allExtensions);
+  SearchState allExtensions(List<ExtensionWithBoards> allExtensions);
 
   SearchState searchConfig(SearchConfigForm searchConfig);
 
@@ -124,7 +124,7 @@ abstract class _$SearchStateCWProxy {
   SearchState call({
     int currentStep,
     List<SearchConfig> allSearchConfigs,
-    List<Extension> allExtensions,
+    List<ExtensionWithBoards> allExtensions,
     SearchConfigForm searchConfig,
   });
 }
@@ -143,7 +143,7 @@ class _$SearchStateCWProxyImpl implements _$SearchStateCWProxy {
       this(allSearchConfigs: allSearchConfigs);
 
   @override
-  SearchState allExtensions(List<Extension> allExtensions) =>
+  SearchState allExtensions(List<ExtensionWithBoards> allExtensions) =>
       this(allExtensions: allExtensions);
 
   @override
@@ -176,7 +176,7 @@ class _$SearchStateCWProxyImpl implements _$SearchStateCWProxy {
       allExtensions: allExtensions == const $CopyWithPlaceholder()
           ? _value.allExtensions
           // ignore: cast_nullable_to_non_nullable
-          : allExtensions as List<Extension>,
+          : allExtensions as List<ExtensionWithBoards>,
       searchConfig: searchConfig == const $CopyWithPlaceholder()
           ? _value.searchConfig
           // ignore: cast_nullable_to_non_nullable

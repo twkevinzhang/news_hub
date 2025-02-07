@@ -13,7 +13,7 @@ _$ExtensionRepoDtoImpl _$$ExtensionRepoDtoImplFromJson(
     requiredKeys: const [
       'icon',
       'base_url',
-      'name',
+      'display_name',
       'website',
       'signing_key_fingerprint'
     ],
@@ -21,7 +21,7 @@ _$ExtensionRepoDtoImpl _$$ExtensionRepoDtoImplFromJson(
   return _$ExtensionRepoDtoImpl(
     icon: json['icon'] as String,
     baseUrl: json['base_url'] as String,
-    name: json['name'] as String,
+    displayName: json['display_name'] as String,
     website: json['website'] as String,
     signingKeyFingerprint: json['signing_key_fingerprint'] as String,
   );
@@ -32,7 +32,7 @@ Map<String, dynamic> _$$ExtensionRepoDtoImplToJson(
     <String, dynamic>{
       'icon': instance.icon,
       'base_url': instance.baseUrl,
-      'name': instance.name,
+      'display_name': instance.displayName,
       'website': instance.website,
       'signing_key_fingerprint': instance.signingKeyFingerprint,
     };

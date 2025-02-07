@@ -38,10 +38,6 @@ mixin _$ExtensionDto {
   String get lang => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_nsfw', required: true)
   bool get isNsfw => throw _privateConstructorUsedError;
-  @JsonKey(name: 'site', required: true)
-  SiteDto get site => throw _privateConstructorUsedError;
-  @JsonKey(name: 'boards', required: true)
-  List<BoardDto> get boards => throw _privateConstructorUsedError;
 
   /// Serializes this ExtensionDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -68,11 +64,7 @@ abstract class $ExtensionDtoCopyWith<$Res> {
       @JsonKey(name: 'version', required: true) int version,
       @JsonKey(name: 'python_version', required: true) int pythonVersion,
       @JsonKey(name: 'lang', required: true) String lang,
-      @JsonKey(name: 'is_nsfw', required: true) bool isNsfw,
-      @JsonKey(name: 'site', required: true) SiteDto site,
-      @JsonKey(name: 'boards', required: true) List<BoardDto> boards});
-
-  $SiteDtoCopyWith<$Res> get site;
+      @JsonKey(name: 'is_nsfw', required: true) bool isNsfw});
 }
 
 /// @nodoc
@@ -99,8 +91,6 @@ class _$ExtensionDtoCopyWithImpl<$Res, $Val extends ExtensionDto>
     Object? pythonVersion = null,
     Object? lang = null,
     Object? isNsfw = null,
-    Object? site = null,
-    Object? boards = null,
   }) {
     return _then(_value.copyWith(
       repoBaseUrl: null == repoBaseUrl
@@ -139,25 +129,7 @@ class _$ExtensionDtoCopyWithImpl<$Res, $Val extends ExtensionDto>
           ? _value.isNsfw
           : isNsfw // ignore: cast_nullable_to_non_nullable
               as bool,
-      site: null == site
-          ? _value.site
-          : site // ignore: cast_nullable_to_non_nullable
-              as SiteDto,
-      boards: null == boards
-          ? _value.boards
-          : boards // ignore: cast_nullable_to_non_nullable
-              as List<BoardDto>,
     ) as $Val);
-  }
-
-  /// Create a copy of ExtensionDto
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $SiteDtoCopyWith<$Res> get site {
-    return $SiteDtoCopyWith<$Res>(_value.site, (value) {
-      return _then(_value.copyWith(site: value) as $Val);
-    });
   }
 }
 
@@ -178,12 +150,7 @@ abstract class _$$ExtensionDtoImplCopyWith<$Res>
       @JsonKey(name: 'version', required: true) int version,
       @JsonKey(name: 'python_version', required: true) int pythonVersion,
       @JsonKey(name: 'lang', required: true) String lang,
-      @JsonKey(name: 'is_nsfw', required: true) bool isNsfw,
-      @JsonKey(name: 'site', required: true) SiteDto site,
-      @JsonKey(name: 'boards', required: true) List<BoardDto> boards});
-
-  @override
-  $SiteDtoCopyWith<$Res> get site;
+      @JsonKey(name: 'is_nsfw', required: true) bool isNsfw});
 }
 
 /// @nodoc
@@ -208,8 +175,6 @@ class __$$ExtensionDtoImplCopyWithImpl<$Res>
     Object? pythonVersion = null,
     Object? lang = null,
     Object? isNsfw = null,
-    Object? site = null,
-    Object? boards = null,
   }) {
     return _then(_$ExtensionDtoImpl(
       repoBaseUrl: null == repoBaseUrl
@@ -248,14 +213,6 @@ class __$$ExtensionDtoImplCopyWithImpl<$Res>
           ? _value.isNsfw
           : isNsfw // ignore: cast_nullable_to_non_nullable
               as bool,
-      site: null == site
-          ? _value.site
-          : site // ignore: cast_nullable_to_non_nullable
-              as SiteDto,
-      boards: null == boards
-          ? _value._boards
-          : boards // ignore: cast_nullable_to_non_nullable
-              as List<BoardDto>,
     ));
   }
 }
@@ -274,11 +231,7 @@ class _$ExtensionDtoImpl implements _ExtensionDto {
       @JsonKey(name: 'python_version', required: true)
       required this.pythonVersion,
       @JsonKey(name: 'lang', required: true) required this.lang,
-      @JsonKey(name: 'is_nsfw', required: true) required this.isNsfw,
-      @JsonKey(name: 'site', required: true) required this.site,
-      @JsonKey(name: 'boards', required: true)
-      required final List<BoardDto> boards})
-      : _boards = boards;
+      @JsonKey(name: 'is_nsfw', required: true) required this.isNsfw});
 
   factory _$ExtensionDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$ExtensionDtoImplFromJson(json);
@@ -310,21 +263,10 @@ class _$ExtensionDtoImpl implements _ExtensionDto {
   @override
   @JsonKey(name: 'is_nsfw', required: true)
   final bool isNsfw;
-  @override
-  @JsonKey(name: 'site', required: true)
-  final SiteDto site;
-  final List<BoardDto> _boards;
-  @override
-  @JsonKey(name: 'boards', required: true)
-  List<BoardDto> get boards {
-    if (_boards is EqualUnmodifiableListView) return _boards;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_boards);
-  }
 
   @override
   String toString() {
-    return 'ExtensionDto(repoBaseUrl: $repoBaseUrl, pkgName: $pkgName, displayName: $displayName, zipName: $zipName, address: $address, version: $version, pythonVersion: $pythonVersion, lang: $lang, isNsfw: $isNsfw, site: $site, boards: $boards)';
+    return 'ExtensionDto(repoBaseUrl: $repoBaseUrl, pkgName: $pkgName, displayName: $displayName, zipName: $zipName, address: $address, version: $version, pythonVersion: $pythonVersion, lang: $lang, isNsfw: $isNsfw)';
   }
 
   @override
@@ -343,26 +285,13 @@ class _$ExtensionDtoImpl implements _ExtensionDto {
             (identical(other.pythonVersion, pythonVersion) ||
                 other.pythonVersion == pythonVersion) &&
             (identical(other.lang, lang) || other.lang == lang) &&
-            (identical(other.isNsfw, isNsfw) || other.isNsfw == isNsfw) &&
-            (identical(other.site, site) || other.site == site) &&
-            const DeepCollectionEquality().equals(other._boards, _boards));
+            (identical(other.isNsfw, isNsfw) || other.isNsfw == isNsfw));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      repoBaseUrl,
-      pkgName,
-      displayName,
-      zipName,
-      address,
-      version,
-      pythonVersion,
-      lang,
-      isNsfw,
-      site,
-      const DeepCollectionEquality().hash(_boards));
+  int get hashCode => Object.hash(runtimeType, repoBaseUrl, pkgName,
+      displayName, zipName, address, version, pythonVersion, lang, isNsfw);
 
   /// Create a copy of ExtensionDto
   /// with the given fields replaced by the non-null parameter values.
@@ -393,10 +322,8 @@ abstract class _ExtensionDto implements ExtensionDto {
       @JsonKey(name: 'python_version', required: true)
       required final int pythonVersion,
       @JsonKey(name: 'lang', required: true) required final String lang,
-      @JsonKey(name: 'is_nsfw', required: true) required final bool isNsfw,
-      @JsonKey(name: 'site', required: true) required final SiteDto site,
-      @JsonKey(name: 'boards', required: true)
-      required final List<BoardDto> boards}) = _$ExtensionDtoImpl;
+      @JsonKey(name: 'is_nsfw', required: true)
+      required final bool isNsfw}) = _$ExtensionDtoImpl;
 
   factory _ExtensionDto.fromJson(Map<String, dynamic> json) =
       _$ExtensionDtoImpl.fromJson;
@@ -428,12 +355,6 @@ abstract class _ExtensionDto implements ExtensionDto {
   @override
   @JsonKey(name: 'is_nsfw', required: true)
   bool get isNsfw;
-  @override
-  @JsonKey(name: 'site', required: true)
-  SiteDto get site;
-  @override
-  @JsonKey(name: 'boards', required: true)
-  List<BoardDto> get boards;
 
   /// Create a copy of ExtensionDto
   /// with the given fields replaced by the non-null parameter values.

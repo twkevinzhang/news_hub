@@ -36,12 +36,6 @@ class ExtensionDto with _$ExtensionDto {
 
     @JsonKey(name: 'is_nsfw', required: true)
     required bool isNsfw,
-
-    @JsonKey(name: 'site', required: true)
-    required SiteDto site,
-
-    @JsonKey(name: 'boards', required: true)
-    required List<BoardDto> boards,
   }) = _ExtensionDto;
 
   factory ExtensionDto.fromJson(Map<String, dynamic> json) =>
@@ -62,8 +56,6 @@ extension ExtensionDtoEx on ExtensionDto {
       isNsfw: isNsfw,
       iconUrl: '',
       repoUrl: '',
-      site: site.toSite(),
-      boards: boards.map((e) => e.toBoard()).toSet(),
     );
   }
 }

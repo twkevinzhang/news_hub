@@ -43,7 +43,7 @@ extension SearchConfigFormEx on SearchConfigForm {
 class SearchState extends Equatable {
   final int currentStep;
   final List<SearchConfig> allSearchConfigs;
-  final List<Extension> allExtensions;
+  final List<ExtensionWithBoards> allExtensions;
   final SearchConfigForm searchConfig;
 
   const SearchState({

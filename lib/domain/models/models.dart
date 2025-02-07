@@ -24,8 +24,6 @@ class Extension {
   final int pythonVersion;
   final String? lang;
   final bool isNsfw;
-  final Site site;
-  final Set<Board> boards;
 
   Extension({
     required this.repoBaseUrl,
@@ -37,8 +35,6 @@ class Extension {
     required this.pythonVersion,
     this.lang,
     required this.isNsfw,
-    required this.site,
-    required this.boards,
   });
 }
 
@@ -58,8 +54,6 @@ class RemoteExtension extends Extension {
     required super.isNsfw,
     required this.iconUrl,
     required this.repoUrl,
-    required super.site,
-    required super.boards,
   });
 }
 
@@ -91,8 +85,6 @@ extension RemoteExtensionEx on RemoteExtension {
       isNsfw: isNsfw ?? this.isNsfw,
       iconUrl: iconUrl ?? this.iconUrl,
       repoUrl: repoUrl ?? this.repoUrl,
-      site: site ?? this.site,
-      boards: boards.isNotEmpty ? boards : this.boards,
     );
   }
 }

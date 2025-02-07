@@ -48,45 +48,6 @@ class MockExtensionInstallServiceImpl implements ExtensionInstallService {
         pythonVersion: 1,
         isNsfw: false,
         lang: 'zh_tw',
-        site: Site(
-          extensionPkgName: 'twkevinzhang_beeceptor',
-          id: '1',
-          name: 'Beeceptor',
-          icon: 'https://cdn-icons-png.flaticon.com/512/809/809103.png',
-          url: 'https://beeceptor.com/',
-        ),
-        boards: {
-          Board(
-            extensionPkgName: 'twkevinzhang_beeceptor',
-            siteId: '1',
-            id: '1',
-            name: '八卦版',
-            icon: 'https://cdn-icons-png.flaticon.com/512/809/809103.png',
-            largeWelcomeImage: 'https://dummyimage.com/200x300/000/fff',
-            url: 'https://beeceptor.com/goss',
-            supportedThreadsSorting: {'newest', 'popular'},
-          ),
-          Board(
-            extensionPkgName: 'twkevinzhang_beeceptor',
-            siteId: '1',
-            id: '2',
-            name: '遊戲版',
-            icon: 'https://cdn-icons-png.flaticon.com/512/809/809103.png',
-            largeWelcomeImage: 'https://dummyimage.com/200x300/000/fff',
-            url: 'https://beeceptor.com/game',
-            supportedThreadsSorting: {'newest', 'popular'},
-          ),
-          Board(
-            extensionPkgName: 'twkevinzhang_beeceptor',
-            siteId: '1',
-            id: '3',
-            name: '電蝦版',
-            icon: 'https://cdn-icons-png.flaticon.com/512/809/809103.png',
-            largeWelcomeImage: 'https://dummyimage.com/200x300/000/fff',
-            url: 'https://beeceptor.com/work',
-            supportedThreadsSorting: {'newest', 'popular'},
-          ),
-        },
       )
     ];
   }
