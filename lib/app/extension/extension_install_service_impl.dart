@@ -7,7 +7,6 @@ import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:news_hub/app/models/models.dart';
 import 'package:news_hub/domain/extension/extension.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/shared/constants.dart';
@@ -42,7 +41,7 @@ class ExtensionInstallServiceImpl implements ExtensionInstallService {
     }).asyncExpand((status) async* {
       if (status.first == InstallStatus.installing) {
         yield Pair(InstallStatus.installing, 0.0);
-        yield* _install(extension).map((e) => Pair(InstallStatus.installing, 100.0));
+        yield* install(extension).map((e) => Pair(InstallStatus.installing, 100.0));
       }
     });
   }
@@ -86,7 +85,8 @@ class ExtensionInstallServiceImpl implements ExtensionInstallService {
     yield* sub.stream;
   }
 
-  Stream<String> _install(Extension extension) async* {
+  @override
+  Stream<String> install(Extension extension) async* {
     // Read the Zip file from disk.
     final downloadedFile = [_downloadFolder, extension.zipName].toUrl();
     final bytes = File(downloadedFile).readAsBytesSync();

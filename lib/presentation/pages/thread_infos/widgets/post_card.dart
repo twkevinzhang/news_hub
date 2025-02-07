@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:news_hub/presentation/pages/threads/widgets/post_paragraph.dart' as view;
+import 'package:news_hub/presentation/pages/thread_infos/widgets/post_paragraph.dart';
 import 'package:news_hub/presentation/widgets/atoms/atoms.dart';
 import 'package:timeago/timeago.dart' as timeago;
-import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/domain/models/models.dart' as domain;
 
 class PostCard extends StatelessWidget {
-  final Post post;
+  final domain.Post post;
   final String boardName;
   const PostCard({
     super.key,
@@ -70,7 +70,7 @@ class _PostHeader extends StatelessWidget {
 }
 
 class _PostContent extends StatelessWidget {
-  final List<Paragraph> contents;
+  final List<domain.Paragraph> contents;
   const _PostContent({
     super.key,
     required this.contents,
@@ -81,33 +81,33 @@ class _PostContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: contents.map((paragraph) {
-        if (paragraph is TextParagraph) {
-          return view.TextParagraph(
+        if (paragraph is domain.TextParagraph) {
+          return TextParagraph(
             content: paragraph.content,
           );
-        } else if (paragraph is ImageParagraph) {
-          return view.ImageParagraph(
+        } else if (paragraph is domain.ImageParagraph) {
+          return ImageParagraph(
             imageUrl: paragraph.thumb(),
             onClick: () => {},
           );
-        } else if (paragraph is VideoParagraph) {
-          return view.VideoParagraph(
+        } else if (paragraph is domain.VideoParagraph) {
+          return VideoParagraph(
             thumb: paragraph.thumb,
             onClick: () => {},
           );
-        } else if (paragraph is LinkParagraph) {
-          return view.LinkParagraph(
+        } else if (paragraph is domain.LinkParagraph) {
+          return LinkParagraph(
             text: paragraph.content,
             onClick: () => {},
           );
-        } else if (paragraph is ReplyToParagraph) {
-          return view.ReplyToParagraph(
+        } else if (paragraph is domain.ReplyToParagraph) {
+          return ReplyToParagraph(
             id: paragraph.id,
             onPreviewReplyTo: (id) => 'mock id',
             onClick: () => {},
           );
-        } else if (paragraph is QuoteParagraph) {
-          return view.QuoteParagraph(
+        } else if (paragraph is domain.QuoteParagraph) {
+          return QuoteParagraph(
             content: paragraph.content,
           );
         }

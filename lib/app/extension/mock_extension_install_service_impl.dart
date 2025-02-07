@@ -31,6 +31,12 @@ class MockExtensionInstallServiceImpl implements ExtensionInstallService {
   }
 
   @override
+  Stream<String> install(Extension extension) {
+    // TODO: implement install
+    throw UnimplementedError();
+  }
+
+  @override
   Future<void> uninstall(Extension extension) async {
     throw UnimplementedError();
   }
@@ -39,7 +45,7 @@ class MockExtensionInstallServiceImpl implements ExtensionInstallService {
   Future<List<Extension>> listInstalledExtensions() async {
     return [
       Extension(
-        repoBaseUrl: 'github.com/twkevinzhang/beeceptor',
+        repoBaseUrl: 'https://raw.githubusercontent.com/twkevinzhang/news_hub_extensions/master',
         pkgName: 'twkevinzhang_beeceptor',
         displayName: 'Beeceptor Ex',
         zipName: 'beeceptor.zip',

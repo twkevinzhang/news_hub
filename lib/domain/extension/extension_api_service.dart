@@ -3,13 +3,16 @@ import 'package:news_hub/shared/models.dart';
 
 abstract class ExtensionApiService {
   Future<void> run(Extension extension);
-  Future<void> ping(Extension extension);
-  Future<List<Board>> boards({
-    Pagination? page,
+  Future<Site> site({
     required Extension extension,
     required String siteId,
   });
-  Future<List<Thread>> threadInfos({
+  Future<List<Board>> boards({
+    Pagination? pagination,
+    required Extension extension,
+    required String siteId,
+  });
+  Future<List<ThreadInfo>> threadInfos({
     Pagination? pagination,
     String? sortBy,
     String? keywords,
@@ -18,29 +21,28 @@ abstract class ExtensionApiService {
     required String boardId,
   });
   Future<Thread> thread({
-    Pagination? page,
     required Extension extension,
     required String siteId,
     required String boardId,
-    required String threadId,
+    required String id,
   });
-  Future<List<Post>> slavePosts({
-    Pagination? page,
+  Future<List<Post>> regardingPosts({
+    Pagination? pagination,
     required Extension extension,
     required String siteId,
     required String boardId,
     required String threadId,
+    required String originalPostId,
   });
   Future<Post> post({
-    Pagination? page,
     required Extension extension,
     required String siteId,
     required String boardId,
     required String threadId,
-    required String postId,
+    required String id,
   });
   Future<List<Comment>> comments({
-    Pagination? page,
+    Pagination? pagination,
     required Extension extension,
     required String siteId,
     required String boardId,

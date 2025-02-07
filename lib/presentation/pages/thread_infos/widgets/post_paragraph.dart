@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/domain/models/models.dart' as domain;
 
 class ParagraphWidget extends StatelessWidget {
-  final List<Paragraph> article;
+  final List<domain.Paragraph> article;
   final int? textLengthMax;
-  final void Function(Paragraph paragraph) onParagraphClick;
+  final void Function(domain.Paragraph paragraph) onParagraphClick;
   final String Function(String id) onPreviewReplyTo;
 
   const ParagraphWidget({
@@ -20,32 +20,32 @@ class ParagraphWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: article.map((paragraph) {
-        if (paragraph is TextParagraph) {
+        if (paragraph is domain.TextParagraph) {
           return TextParagraph(
             content: paragraph.content,
           );
-        } else if (paragraph is ImageParagraph) {
+        } else if (paragraph is domain.ImageParagraph) {
           return ImageParagraph(
             imageUrl: paragraph.thumb(),
             onClick: () => onParagraphClick(paragraph),
           );
-        } else if (paragraph is VideoParagraph) {
+        } else if (paragraph is domain.VideoParagraph) {
           return VideoParagraph(
             thumb: paragraph.thumb,
             onClick: () => onParagraphClick(paragraph),
           );
-        } else if (paragraph is LinkParagraph) {
+        } else if (paragraph is domain.LinkParagraph) {
           return LinkParagraph(
             text: paragraph.content,
             onClick: () => onParagraphClick(paragraph),
           );
-        } else if (paragraph is ReplyToParagraph) {
+        } else if (paragraph is domain.ReplyToParagraph) {
           return ReplyToParagraph(
             id: paragraph.id,
             onPreviewReplyTo: onPreviewReplyTo,
             onClick: () => onParagraphClick(paragraph),
           );
-        } else if (paragraph is QuoteParagraph) {
+        } else if (paragraph is domain.QuoteParagraph) {
           return QuoteParagraph(
             content: paragraph.content,
           );

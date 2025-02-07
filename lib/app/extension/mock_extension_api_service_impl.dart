@@ -11,19 +11,18 @@ final _mockPost = Post(
   threadId: '1',
   id: '1',
   createdAt: DateTime.now(),
-  posterId: '1',
-  posterName: '無名',
+  authorId: '1',
+  authorName: '無名',
   like: 0,
   dislike: 0,
   comments: 0,
   contents: [
-    ApiText('Text Content Maybe'),
-    ApiVideo(null, 'https://www.youtube.com/watch?v=_m7lYMTNQg8'),
-    ApiImage('https://dummyimage.com/200x300/000/fff',
-        'https://picsum.photos/200/300'),
-    Quote('i m quote'),
-    ReplyTo('first-respondent'),
-    Link('https://pub.dev/packages/better_player'),
+    TextParagraph(content: 'Text Content Maybe'),
+    VideoParagraph(thumb: null, url: 'https://www.youtube.com/watch?v=_m7lYMTNQg8'),
+    ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
+    QuoteParagraph(content: 'i m quote'),
+    ReplyToParagraph(id: 'first-respondent'),
+    LinkParagraph(content: 'https://pub.dev/packages/better_player'),
   ],
 );
 
@@ -36,13 +35,20 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   }
 
   @override
-  Future<void> ping(Extension extension) async {
+  Future<Site> site({required Extension extension, required String siteId}) async {
     await Future.delayed(const Duration(seconds: 1));
+    return Site(
+      extensionPkgName: 'twkevinzhang_komica',
+      id: '1',
+      name: 'Komica',
+      icon: 'komica',
+      url: 'komica.org',
+    );
   }
 
   @override
   Future<List<Board>> boards({
-    Pagination? page,
+    Pagination? pagination,
     required Extension extension,
     required String siteId,
   }) async {
@@ -82,7 +88,7 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   }
 
   @override
-  Future<List<Thread>> threadInfos({
+  Future<List<ThreadInfo>> threadInfos({
     Pagination? pagination,
     String? sortBy,
     String? keywords,
@@ -93,15 +99,18 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
     await Future.delayed(const Duration(seconds: 1));
     if (boardId == '1') {
       return [
-        Thread(
+        ThreadInfo(
           extensionPkgName: 'twkevinzhang_beeceptor',
           siteId: '1',
           boardId: '1',
           id: '1',
           url: 'https://beeceptor.com/threads/1',
-          masterPost: _mockPost,
-          lastSlavePostCreatedAt: 1,
-          slavePostCount: 1,
+          title: 'Thread Title',
+          authorName: 'Author',
+          createdAt: DateTime.now().millisecondsSinceEpoch,
+          latestRegardingPostCreatedAt: DateTime.now().millisecondsSinceEpoch,
+          regardingPostCount: 1,
+          previewContent: 'Preview Content',
           tags: [],
         ),
       ];
@@ -112,11 +121,10 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
 
   @override
   Future<Thread> thread({
-    Pagination? page,
     required Extension extension,
     required String siteId,
     required String boardId,
-    required String threadId,
+    required String id,
   }) async {
     await Future.delayed(const Duration(seconds: 1));
     return Thread(
@@ -125,20 +133,21 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
       boardId: '1',
       id: '1',
       url: 'https://beeceptor.com/',
-      masterPost: _mockPost,
-      lastSlavePostCreatedAt: 1,
-      slavePostCount: 1,
+      originalPost: _mockPost,
+      latestRegardingPostCreatedAt: DateTime.now().millisecondsSinceEpoch,
+      regardingPostCount: 1,
       tags: [],
     );
   }
 
   @override
-  Future<List<Post>> slavePosts({
-    Pagination? page,
+  Future<List<Post>> regardingPosts({
+    Pagination? pagination,
     required Extension extension,
     required String siteId,
     required String boardId,
     required String threadId,
+    required String originalPostId,
   }) async {
     await Future.delayed(const Duration(seconds: 1));
     return List<Post>.generate(3, (index) => _mockPost);
@@ -146,12 +155,12 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
 
   @override
   Future<Post> post({
-    Pagination? page,
+    Pagination? pagination,
     required Extension extension,
     required String siteId,
     required String boardId,
     required String threadId,
-    required String postId,
+    required String id,
   }) async {
     await Future.delayed(const Duration(seconds: 1));
     return _mockPost;
@@ -159,7 +168,7 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
 
   @override
   Future<List<Comment>> comments({
-    Pagination? page,
+    Pagination? pagination,
     required Extension extension,
     required String siteId,
     required String boardId,
@@ -168,9 +177,39 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   }) async {
     await Future.delayed(const Duration(seconds: 1));
     return [
-      Comment(id: "1", contents: [ApiText("this is a comment")]),
-      Comment(id: "2", contents: [ApiText("this is a comment")]),
-      Comment(id: "3", contents: [ApiText("this is a comment")]),
+      Comment(
+        extensionPkgName: 'twkevinzhang_beeceptor',
+        siteId: '1',
+        boardId: '1',
+        threadId: '1',
+        postId: '1',
+        id: '1',
+        authorId: '1',
+        authorName: 'Author',
+        contents: [TextParagraph(content: 'this is a comment')],
+      ),
+      Comment(
+        extensionPkgName: 'twkevinzhang_beeceptor',
+        siteId: '1',
+        boardId: '1',
+        threadId: '1',
+        postId: '1',
+        id: '2',
+        authorId: '1',
+        authorName: 'Author',
+        contents: [TextParagraph(content: 'this is a comment')],
+      ),
+      Comment(
+        extensionPkgName: 'twkevinzhang_beeceptor',
+        siteId: '1',
+        boardId: '1',
+        threadId: '1',
+        postId: '1',
+        id: '3',
+        authorId: '1',
+        authorName: 'Author',
+        contents: [TextParagraph(content: 'this is a comment')],
+      ),
     ];
   }
 }

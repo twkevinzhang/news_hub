@@ -11,39 +11,54 @@ import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/presentation/app.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/search/search.dart';
-import 'package:news_hub/presentation/pages/threads/threads.dart';
 import 'package:news_hub/presentation/router/router.dart';
 import 'package:news_hub/shared/constants.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() async {
-  // testApiService();
+  testApiService();
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
   
-  runApp(App());
+  // runApp(App());
 }
 
-// void testApiService() async {
-//   final mockException = RemoteExtension.mock();
-//   final service = await ExtensionInstallServiceImpl.create();
-//   final api = ExtensionApiServiceImpl(dio: Dio());
-//   service.uninstall(mockException);
-//   await copyFile();
-//   await service.install(mockException).last;
-//   await api.run(mockException);
-//   await api.ping(mockException);
-// }
+void testApiService() async {
+  final extension = Extension(
+    repoBaseUrl: 'https://raw.githubusercontent.com/twkevinzhang/news_hub_extensions/master',
+    pkgName: 'twkevinzhang_komica',
+    displayName: 'Komica Ex',
+    zipName: 'twkevinzhang_komica.zip',
+    address: 'http://127.0.0.1:55001',
+    version: 1,
+    pythonVersion: 1,
+    isNsfw: false,
+    lang: 'zh_tw',
+  );
+  final site = Site(
+    extensionPkgName: 'twkevinzhang_komica',
+    id: '1',
+    name: 'Komica',
+    icon: 'komica',
+    url: 'komica.org',
+  );
+  final service = await ExtensionInstallServiceImpl.create();
+  final api = ExtensionApiServiceImpl(dio: Dio());
+  service.uninstall(extension);
+  await copyFile(extension.zipName);
+  await service.install(extension).last;
+  await api.run(extension);
+}
 
-Future<void> copyFile() async {
+Future<void> copyFile(String filename) async {
   WidgetsFlutterBinding.ensureInitialized();
   final directory = await getApplicationSupportDirectory();
   final docPath = directory.path;
   // 原始檔案路徑
-  final sourcePath = 'beeceptor/dist/beeceptor.zip';
+  final sourcePath = 'demo_extension/$filename';
 
   // 目標檔案路徑
-  final destinationPath = '$docPath/$downloadedFileFolder/beeceptor.zip';
+  final destinationPath = '$docPath/$downloadedFileFolder/$filename';
 
   try {
     // 確保目標目錄存在

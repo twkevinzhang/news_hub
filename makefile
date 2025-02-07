@@ -1,4 +1,5 @@
-export SERIOUS_PYTHON_SITE_PACKAGES := $(PWD)/build/site-packages
+export SERIOUS_PYTHON_SITE_PACKAGES := /Users/zhangzhenlong/Projects/news_hub_extensions/twkevinzhang_komica/build/site-packages
+export PATH := $(PATH):$(HOME)/.pub-cache/bin
 
 run:
 	flutter run
@@ -6,6 +7,7 @@ run:
 build:
 	dart run build_runner build --delete-conflicting-outputs
 
-.PHONY: run build
+proto:
+	protoc --dart_out=grpc:lib/app/extension/models -Inews_hub_protos news_hub_protos/*.proto
 
-# serious_python 筆記: https://www.notion.so/twkevinzhang/build-so-to-Android-154dd3030be3807ba569e2cdead52dbe
+.PHONY: run build proto

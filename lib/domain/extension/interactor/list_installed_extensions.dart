@@ -12,7 +12,7 @@ class ListInstalledExtensions {
   Future<List<ExtensionWithBoards>> call() {
     return Future.value([
       ExtensionWithBoards(
-        repoBaseUrl: 'github.com/twkevinzhang/beeceptor',
+        repoBaseUrl: 'https://raw.githubusercontent.com/twkevinzhang/news_hub_extensions/master',
         pkgName: 'twkevinzhang_beeceptor',
         displayName: 'Beeceptor Ex',
         zipName: 'beeceptor.zip',
