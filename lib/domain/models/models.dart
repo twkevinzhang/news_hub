@@ -127,22 +127,56 @@ class Board {
   });
 }
 
+class ThreadInfo {
+  final String extensionPkgName;
+  final String siteId;
+  final String boardId;
+  final String id;
+  final String url;
+  final String title;
+  final String author;
+  final int createdAt;
+  final int lastSlavePostCreatedAt;
+  final int slavePostCount;
+  final String previewContent;
+  final List<String> tags;
+
+  ThreadInfo({
+    required this.extensionPkgName,
+    required this.siteId,
+    required this.boardId,
+    required this.id,
+    required this.url,
+    required this.title,
+    required this.author,
+    required this.createdAt,
+    required this.lastSlavePostCreatedAt,
+    required this.slavePostCount,
+    required this.previewContent,
+    required this.tags,
+  });
+}
+
 class Thread {
   final String extensionPkgName;
   final String siteId;
   final String boardId;
-  final String boardName;
   final String id;
   final String url;
+  final int lastSlavePostCreatedAt;
+  final int slavePostCount;
+  final List<String> tags;
   final Post masterPost;
 
   Thread({
     required this.extensionPkgName,
     required this.siteId,
     required this.boardId,
-    required this.boardName,
     required this.id,
     required this.url,
+    required this.lastSlavePostCreatedAt,
+    required this.slavePostCount,
+    required this.tags,
     required this.masterPost,
   });
 }

@@ -82,7 +82,7 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   }
 
   @override
-  Future<List<Thread>> threads({
+  Future<List<Thread>> threadInfos({
     Pagination? pagination,
     String? sortBy,
     String? keywords,
@@ -97,10 +97,12 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
           extensionPkgName: 'twkevinzhang_beeceptor',
           siteId: '1',
           boardId: '1',
-          boardName: '八卦版',
           id: '1',
           url: 'https://beeceptor.com/threads/1',
           masterPost: _mockPost,
+          lastSlavePostCreatedAt: 1,
+          slavePostCount: 1,
+          tags: [],
         ),
       ];
     } else {
@@ -121,10 +123,12 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
       extensionPkgName: 'twkevinzhang_beeceptor',
       siteId: '1',
       boardId: '1',
-      boardName: '八卦版',
       id: '1',
       url: 'https://beeceptor.com/',
       masterPost: _mockPost,
+      lastSlavePostCreatedAt: 1,
+      slavePostCount: 1,
+      tags: [],
     );
   }
 

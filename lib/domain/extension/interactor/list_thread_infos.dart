@@ -7,10 +7,10 @@ import 'package:news_hub/presentation/pages/search/search.dart';
 import 'package:news_hub/shared/models.dart';
 
 @lazySingleton
-class ListThreads {
+class ListThreadInfos {
   final ExtensionApiService _apiService;
   final ListInstalledExtensions _listInstalledExtensions;
-  ListThreads({
+  ListThreadInfos({
     required ExtensionApiService apiService,
     required ListInstalledExtensions listInstalledExtensions,
   })  : _apiService = apiService,
@@ -29,7 +29,7 @@ class ListThreads {
     final threads = (await Future.wait(boards.map((b) {
       final e = extensions
           .firstWhere((element) => element.pkgName == b.extensionPkgName);
-      return _apiService.threads(
+      return _apiService.threadInfos(
         extension: e,
         siteId: e.site.id,
         boardId: b.id,
@@ -49,21 +49,23 @@ class ListThreads {
   }
 }
 
-class ThreadWithExtension extends Thread {
+class ThreadWithExtension extends ThreadInfo {
   final Board board;
   final Extension extension;
 
   ThreadWithExtension({
-    required Thread thread,
+    required ThreadInfo thread,
     required this.board,
     required this.extension,
   }) : super(
           extensionPkgName: thread.extensionPkgName,
           siteId: thread.siteId,
           boardId: thread.boardId,
-          boardName: thread.boardName,
           id: thread.id,
           url: thread.url,
           masterPost: thread.masterPost,
+          lastSlavePostCreatedAt: thread.lastSlavePostCreatedAt,
+          slavePostCount: thread.slavePostCount,
+          tags: thread.tags,
         );
 }

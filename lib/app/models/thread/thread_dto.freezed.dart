@@ -241,14 +241,18 @@ mixin _$ThreadDto {
   String get siteId => throw _privateConstructorUsedError;
   @JsonKey(name: 'board_id', required: true)
   String get boardId => throw _privateConstructorUsedError;
-  @JsonKey(name: 'board_name', required: true)
-  String get boardName => throw _privateConstructorUsedError;
   @JsonKey(name: 'id', required: true)
   String get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'url', required: true)
   String get url => throw _privateConstructorUsedError;
   @JsonKey(name: 'master_post', required: true)
   PostDto get masterPost => throw _privateConstructorUsedError;
+  @JsonKey(name: 'last_slave_post_created_at', required: true)
+  int get lastSlavePostCreatedAt => throw _privateConstructorUsedError;
+  @JsonKey(name: 'slave_post_count', required: true)
+  int get slavePostCount => throw _privateConstructorUsedError;
+  @JsonKey(name: 'tags', required: true)
+  List<String> get tags => throw _privateConstructorUsedError;
 
   /// Serializes this ThreadDto to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -270,10 +274,13 @@ abstract class $ThreadDtoCopyWith<$Res> {
       String extensionPkgName,
       @JsonKey(name: 'site_id', required: true) String siteId,
       @JsonKey(name: 'board_id', required: true) String boardId,
-      @JsonKey(name: 'board_name', required: true) String boardName,
       @JsonKey(name: 'id', required: true) String id,
       @JsonKey(name: 'url', required: true) String url,
-      @JsonKey(name: 'master_post', required: true) PostDto masterPost});
+      @JsonKey(name: 'master_post', required: true) PostDto masterPost,
+      @JsonKey(name: 'last_slave_post_created_at', required: true)
+      int lastSlavePostCreatedAt,
+      @JsonKey(name: 'slave_post_count', required: true) int slavePostCount,
+      @JsonKey(name: 'tags', required: true) List<String> tags});
 
   $PostDtoCopyWith<$Res> get masterPost;
 }
@@ -296,10 +303,12 @@ class _$ThreadDtoCopyWithImpl<$Res, $Val extends ThreadDto>
     Object? extensionPkgName = null,
     Object? siteId = null,
     Object? boardId = null,
-    Object? boardName = null,
     Object? id = null,
     Object? url = null,
     Object? masterPost = null,
+    Object? lastSlavePostCreatedAt = null,
+    Object? slavePostCount = null,
+    Object? tags = null,
   }) {
     return _then(_value.copyWith(
       extensionPkgName: null == extensionPkgName
@@ -314,10 +323,6 @@ class _$ThreadDtoCopyWithImpl<$Res, $Val extends ThreadDto>
           ? _value.boardId
           : boardId // ignore: cast_nullable_to_non_nullable
               as String,
-      boardName: null == boardName
-          ? _value.boardName
-          : boardName // ignore: cast_nullable_to_non_nullable
-              as String,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -330,6 +335,18 @@ class _$ThreadDtoCopyWithImpl<$Res, $Val extends ThreadDto>
           ? _value.masterPost
           : masterPost // ignore: cast_nullable_to_non_nullable
               as PostDto,
+      lastSlavePostCreatedAt: null == lastSlavePostCreatedAt
+          ? _value.lastSlavePostCreatedAt
+          : lastSlavePostCreatedAt // ignore: cast_nullable_to_non_nullable
+              as int,
+      slavePostCount: null == slavePostCount
+          ? _value.slavePostCount
+          : slavePostCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      tags: null == tags
+          ? _value.tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ) as $Val);
   }
 
@@ -357,10 +374,13 @@ abstract class _$$ThreadDtoImplCopyWith<$Res>
       String extensionPkgName,
       @JsonKey(name: 'site_id', required: true) String siteId,
       @JsonKey(name: 'board_id', required: true) String boardId,
-      @JsonKey(name: 'board_name', required: true) String boardName,
       @JsonKey(name: 'id', required: true) String id,
       @JsonKey(name: 'url', required: true) String url,
-      @JsonKey(name: 'master_post', required: true) PostDto masterPost});
+      @JsonKey(name: 'master_post', required: true) PostDto masterPost,
+      @JsonKey(name: 'last_slave_post_created_at', required: true)
+      int lastSlavePostCreatedAt,
+      @JsonKey(name: 'slave_post_count', required: true) int slavePostCount,
+      @JsonKey(name: 'tags', required: true) List<String> tags});
 
   @override
   $PostDtoCopyWith<$Res> get masterPost;
@@ -382,10 +402,12 @@ class __$$ThreadDtoImplCopyWithImpl<$Res>
     Object? extensionPkgName = null,
     Object? siteId = null,
     Object? boardId = null,
-    Object? boardName = null,
     Object? id = null,
     Object? url = null,
     Object? masterPost = null,
+    Object? lastSlavePostCreatedAt = null,
+    Object? slavePostCount = null,
+    Object? tags = null,
   }) {
     return _then(_$ThreadDtoImpl(
       extensionPkgName: null == extensionPkgName
@@ -400,10 +422,6 @@ class __$$ThreadDtoImplCopyWithImpl<$Res>
           ? _value.boardId
           : boardId // ignore: cast_nullable_to_non_nullable
               as String,
-      boardName: null == boardName
-          ? _value.boardName
-          : boardName // ignore: cast_nullable_to_non_nullable
-              as String,
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
@@ -416,6 +434,18 @@ class __$$ThreadDtoImplCopyWithImpl<$Res>
           ? _value.masterPost
           : masterPost // ignore: cast_nullable_to_non_nullable
               as PostDto,
+      lastSlavePostCreatedAt: null == lastSlavePostCreatedAt
+          ? _value.lastSlavePostCreatedAt
+          : lastSlavePostCreatedAt // ignore: cast_nullable_to_non_nullable
+              as int,
+      slavePostCount: null == slavePostCount
+          ? _value.slavePostCount
+          : slavePostCount // ignore: cast_nullable_to_non_nullable
+              as int,
+      tags: null == tags
+          ? _value._tags
+          : tags // ignore: cast_nullable_to_non_nullable
+              as List<String>,
     ));
   }
 }
@@ -428,10 +458,15 @@ class _$ThreadDtoImpl implements _ThreadDto {
       required this.extensionPkgName,
       @JsonKey(name: 'site_id', required: true) required this.siteId,
       @JsonKey(name: 'board_id', required: true) required this.boardId,
-      @JsonKey(name: 'board_name', required: true) required this.boardName,
       @JsonKey(name: 'id', required: true) required this.id,
       @JsonKey(name: 'url', required: true) required this.url,
-      @JsonKey(name: 'master_post', required: true) required this.masterPost});
+      @JsonKey(name: 'master_post', required: true) required this.masterPost,
+      @JsonKey(name: 'last_slave_post_created_at', required: true)
+      required this.lastSlavePostCreatedAt,
+      @JsonKey(name: 'slave_post_count', required: true)
+      required this.slavePostCount,
+      @JsonKey(name: 'tags', required: true) required final List<String> tags})
+      : _tags = tags;
 
   factory _$ThreadDtoImpl.fromJson(Map<String, dynamic> json) =>
       _$$ThreadDtoImplFromJson(json);
@@ -446,9 +481,6 @@ class _$ThreadDtoImpl implements _ThreadDto {
   @JsonKey(name: 'board_id', required: true)
   final String boardId;
   @override
-  @JsonKey(name: 'board_name', required: true)
-  final String boardName;
-  @override
   @JsonKey(name: 'id', required: true)
   final String id;
   @override
@@ -457,10 +489,24 @@ class _$ThreadDtoImpl implements _ThreadDto {
   @override
   @JsonKey(name: 'master_post', required: true)
   final PostDto masterPost;
+  @override
+  @JsonKey(name: 'last_slave_post_created_at', required: true)
+  final int lastSlavePostCreatedAt;
+  @override
+  @JsonKey(name: 'slave_post_count', required: true)
+  final int slavePostCount;
+  final List<String> _tags;
+  @override
+  @JsonKey(name: 'tags', required: true)
+  List<String> get tags {
+    if (_tags is EqualUnmodifiableListView) return _tags;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_tags);
+  }
 
   @override
   String toString() {
-    return 'ThreadDto(extensionPkgName: $extensionPkgName, siteId: $siteId, boardId: $boardId, boardName: $boardName, id: $id, url: $url, masterPost: $masterPost)';
+    return 'ThreadDto(extensionPkgName: $extensionPkgName, siteId: $siteId, boardId: $boardId, id: $id, url: $url, masterPost: $masterPost, lastSlavePostCreatedAt: $lastSlavePostCreatedAt, slavePostCount: $slavePostCount, tags: $tags)';
   }
 
   @override
@@ -472,18 +518,30 @@ class _$ThreadDtoImpl implements _ThreadDto {
                 other.extensionPkgName == extensionPkgName) &&
             (identical(other.siteId, siteId) || other.siteId == siteId) &&
             (identical(other.boardId, boardId) || other.boardId == boardId) &&
-            (identical(other.boardName, boardName) ||
-                other.boardName == boardName) &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.url, url) || other.url == url) &&
             (identical(other.masterPost, masterPost) ||
-                other.masterPost == masterPost));
+                other.masterPost == masterPost) &&
+            (identical(other.lastSlavePostCreatedAt, lastSlavePostCreatedAt) ||
+                other.lastSlavePostCreatedAt == lastSlavePostCreatedAt) &&
+            (identical(other.slavePostCount, slavePostCount) ||
+                other.slavePostCount == slavePostCount) &&
+            const DeepCollectionEquality().equals(other._tags, _tags));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, extensionPkgName, siteId,
-      boardId, boardName, id, url, masterPost);
+  int get hashCode => Object.hash(
+      runtimeType,
+      extensionPkgName,
+      siteId,
+      boardId,
+      id,
+      url,
+      masterPost,
+      lastSlavePostCreatedAt,
+      slavePostCount,
+      const DeepCollectionEquality().hash(_tags));
 
   /// Create a copy of ThreadDto
   /// with the given fields replaced by the non-null parameter values.
@@ -507,12 +565,16 @@ abstract class _ThreadDto implements ThreadDto {
       required final String extensionPkgName,
       @JsonKey(name: 'site_id', required: true) required final String siteId,
       @JsonKey(name: 'board_id', required: true) required final String boardId,
-      @JsonKey(name: 'board_name', required: true)
-      required final String boardName,
       @JsonKey(name: 'id', required: true) required final String id,
       @JsonKey(name: 'url', required: true) required final String url,
       @JsonKey(name: 'master_post', required: true)
-      required final PostDto masterPost}) = _$ThreadDtoImpl;
+      required final PostDto masterPost,
+      @JsonKey(name: 'last_slave_post_created_at', required: true)
+      required final int lastSlavePostCreatedAt,
+      @JsonKey(name: 'slave_post_count', required: true)
+      required final int slavePostCount,
+      @JsonKey(name: 'tags', required: true)
+      required final List<String> tags}) = _$ThreadDtoImpl;
 
   factory _ThreadDto.fromJson(Map<String, dynamic> json) =
       _$ThreadDtoImpl.fromJson;
@@ -527,9 +589,6 @@ abstract class _ThreadDto implements ThreadDto {
   @JsonKey(name: 'board_id', required: true)
   String get boardId;
   @override
-  @JsonKey(name: 'board_name', required: true)
-  String get boardName;
-  @override
   @JsonKey(name: 'id', required: true)
   String get id;
   @override
@@ -538,6 +597,15 @@ abstract class _ThreadDto implements ThreadDto {
   @override
   @JsonKey(name: 'master_post', required: true)
   PostDto get masterPost;
+  @override
+  @JsonKey(name: 'last_slave_post_created_at', required: true)
+  int get lastSlavePostCreatedAt;
+  @override
+  @JsonKey(name: 'slave_post_count', required: true)
+  int get slavePostCount;
+  @override
+  @JsonKey(name: 'tags', required: true)
+  List<String> get tags;
 
   /// Create a copy of ThreadDto
   /// with the given fields replaced by the non-null parameter values.

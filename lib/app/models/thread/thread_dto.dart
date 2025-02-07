@@ -35,9 +35,6 @@ class ThreadDto with _$ThreadDto {
     @JsonKey(name: 'board_id', required: true)
     required String boardId,
 
-    @JsonKey(name: 'board_name', required: true)
-    required String boardName,
-
     @JsonKey(name: 'id', required: true)
     required String id,
 
@@ -45,7 +42,16 @@ class ThreadDto with _$ThreadDto {
     required String url,
 
     @JsonKey(name: 'master_post', required: true)
-    required PostDto masterPost
+    required PostDto masterPost,
+
+    @JsonKey(name: 'last_slave_post_created_at', required: true)
+    required int lastSlavePostCreatedAt,
+
+    @JsonKey(name: 'slave_post_count', required: true)
+    required int slavePostCount,
+
+    @JsonKey(name: 'tags', required: true)
+    required List<String> tags,
   }) = _ThreadDto;
 
   factory ThreadDto.fromJson(Map<String, Object?> json) =>
@@ -58,10 +64,12 @@ extension ThreadDtoEx on ThreadDto {
      extensionPkgName: extensionPkgName,
      siteId: siteId,
      boardId: boardId,
-     boardName: boardName,
      id: id,
      url: url,
      masterPost: masterPost.toPost(),
+     lastSlavePostCreatedAt: lastSlavePostCreatedAt,
+     slavePostCount: slavePostCount,
+     tags: tags,
    );
  }
 }

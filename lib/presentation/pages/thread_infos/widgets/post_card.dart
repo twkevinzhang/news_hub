@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_hub/presentation/pages/threads/widgets/post_paragraph.dart';
+import 'package:news_hub/presentation/pages/threads/widgets/post_paragraph.dart' as view;
 import 'package:news_hub/presentation/widgets/atoms/atoms.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:news_hub/domain/models/models.dart';
@@ -18,7 +18,7 @@ class PostCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        _PostHeader(author: post.posterName, category: boardName),
+        _PostHeader(author: post.authorName, category: boardName),
         SizedBox(height: 10),
         _PostContent(contents: post.contents),
         SizedBox(height: 10),
@@ -81,33 +81,33 @@ class _PostContent extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: contents.map((paragraph) {
-        if (paragraph is ApiText) {
-          return TextParagraph(
+        if (paragraph is TextParagraph) {
+          return view.TextParagraph(
             content: paragraph.content,
           );
-        } else if (paragraph is ApiImage) {
-          return ImageParagraph(
+        } else if (paragraph is ImageParagraph) {
+          return view.ImageParagraph(
             imageUrl: paragraph.thumb(),
             onClick: () => {},
           );
-        } else if (paragraph is ApiVideo) {
-          return VideoParagraph(
+        } else if (paragraph is VideoParagraph) {
+          return view.VideoParagraph(
             thumb: paragraph.thumb,
             onClick: () => {},
           );
-        } else if (paragraph is Link) {
-          return LinkParagraph(
+        } else if (paragraph is LinkParagraph) {
+          return view.LinkParagraph(
             text: paragraph.content,
             onClick: () => {},
           );
-        } else if (paragraph is ReplyTo) {
-          return ReplyToParagraph(
+        } else if (paragraph is ReplyToParagraph) {
+          return view.ReplyToParagraph(
             id: paragraph.id,
             onPreviewReplyTo: (id) => 'mock id',
             onClick: () => {},
           );
-        } else if (paragraph is Quote) {
-          return QuoteParagraph(
+        } else if (paragraph is QuoteParagraph) {
+          return view.QuoteParagraph(
             content: paragraph.content,
           );
         }

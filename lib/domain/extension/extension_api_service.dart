@@ -9,7 +9,7 @@ abstract class ExtensionApiService {
     required Extension extension,
     required String siteId,
   });
-  Future<List<Thread>> threads({
+  Future<List<Thread>> threadInfos({
     Pagination? pagination,
     String? sortBy,
     String? keywords,

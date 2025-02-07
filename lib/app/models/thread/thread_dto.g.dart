@@ -34,20 +34,24 @@ _$ThreadDtoImpl _$$ThreadDtoImplFromJson(Map<String, dynamic> json) {
       'extension_pkg_name',
       'site_id',
       'board_id',
-      'board_name',
       'id',
       'url',
-      'master_post'
+      'master_post',
+      'last_slave_post_created_at',
+      'slave_post_count',
+      'tags'
     ],
   );
   return _$ThreadDtoImpl(
     extensionPkgName: json['extension_pkg_name'] as String,
     siteId: json['site_id'] as String,
     boardId: json['board_id'] as String,
-    boardName: json['board_name'] as String,
     id: json['id'] as String,
     url: json['url'] as String,
     masterPost: PostDto.fromJson(json['master_post'] as Map<String, dynamic>),
+    lastSlavePostCreatedAt: (json['last_slave_post_created_at'] as num).toInt(),
+    slavePostCount: (json['slave_post_count'] as num).toInt(),
+    tags: (json['tags'] as List<dynamic>).map((e) => e as String).toList(),
   );
 }
 
@@ -56,10 +60,12 @@ Map<String, dynamic> _$$ThreadDtoImplToJson(_$ThreadDtoImpl instance) =>
       'extension_pkg_name': instance.extensionPkgName,
       'site_id': instance.siteId,
       'board_id': instance.boardId,
-      'board_name': instance.boardName,
       'id': instance.id,
       'url': instance.url,
       'master_post': instance.masterPost,
+      'last_slave_post_created_at': instance.lastSlavePostCreatedAt,
+      'slave_post_count': instance.slavePostCount,
+      'tags': instance.tags,
     };
 
 _$SlavePostsDtoImpl _$$SlavePostsDtoImplFromJson(Map<String, dynamic> json) {

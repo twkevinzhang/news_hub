@@ -20,32 +20,32 @@ class ParagraphWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: article.map((paragraph) {
-        if (paragraph is ApiText) {
+        if (paragraph is TextParagraph) {
           return TextParagraph(
             content: paragraph.content,
           );
-        } else if (paragraph is ApiImage) {
+        } else if (paragraph is ImageParagraph) {
           return ImageParagraph(
             imageUrl: paragraph.thumb(),
             onClick: () => onParagraphClick(paragraph),
           );
-        } else if (paragraph is ApiVideo) {
+        } else if (paragraph is VideoParagraph) {
           return VideoParagraph(
             thumb: paragraph.thumb,
             onClick: () => onParagraphClick(paragraph),
           );
-        } else if (paragraph is Link) {
+        } else if (paragraph is LinkParagraph) {
           return LinkParagraph(
             text: paragraph.content,
             onClick: () => onParagraphClick(paragraph),
           );
-        } else if (paragraph is ReplyTo) {
+        } else if (paragraph is ReplyToParagraph) {
           return ReplyToParagraph(
             id: paragraph.id,
             onPreviewReplyTo: onPreviewReplyTo,
             onClick: () => onParagraphClick(paragraph),
           );
-        } else if (paragraph is Quote) {
+        } else if (paragraph is QuoteParagraph) {
           return QuoteParagraph(
             content: paragraph.content,
           );

@@ -9,44 +9,44 @@ import 'package:injectable/injectable.dart';
 import 'package:news_hub/shared/models.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-part 'threads_cubit.g.dart';
+part 'thread_infos_cubit.g.dart';
 
 @immutable
 @CopyWith()
-class ThreadsState extends Equatable {
+class ThreadInfosState extends Equatable {
   final SearchConfigForm? searchConfigForm;
 
-  const ThreadsState({required this.searchConfigForm});
+  const ThreadInfosState({required this.searchConfigForm});
 
   @override
   List<Object?> get props => [searchConfigForm];
 }
 
 @lazySingleton
-class ThreadsCubit extends Cubit<ThreadsState> {
-  final ListThreads _listThreads;
+class ThreadInfosCubit extends Cubit<ThreadInfosState> {
+  final ListThreadInfos _listThreadInfos;
   final PagingController<int, ThreadWithExtension> _pagingController;
   get pagingController => _pagingController;
 
   static const _pageSize = 10;
 
-  ThreadsCubit({
-    required ListThreads listThreads,
-  })  : _listThreads = listThreads,
+  ThreadInfosCubit({
+    required ListThreadInfos listThreadInfos,
+  })  : _listThreadInfos = listThreadInfos,
         _pagingController = PagingController(firstPageKey: 1),
-        super(const ThreadsState(
+        super(const ThreadInfosState(
           searchConfigForm: null,
         )) {
-    _pagingController.addPageRequestListener(_loadThreads);
+    _pagingController.addPageRequestListener(_loadThreadInfos);
   }
 
   set searchConfigForm(SearchConfigForm? searchConfigForm) {
     emit(state.copyWith(searchConfigForm: searchConfigForm));
   }
 
-  void _loadThreads(int pageKey) async {
+  void _loadThreadInfos(int pageKey) async {
     try {
-      final result = await _listThreads.call(
+      final result = await _listThreadInfos.call(
         searchConfigForm: state.searchConfigForm,
         pagination: Pagination(
           page: pageKey,

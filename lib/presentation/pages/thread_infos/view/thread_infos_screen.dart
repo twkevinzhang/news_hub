@@ -5,38 +5,38 @@ import 'package:news_hub/domain/extension/extension.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/search/bloc/search_cubit.dart';
 import 'package:news_hub/presentation/pages/search/search.dart';
-import 'package:news_hub/presentation/pages/threads/widgets/post_card.dart';
+import 'package:news_hub/presentation/pages/thread_infos/widgets/post_card.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
 import 'package:news_hub/presentation/widgets/widgets.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-import '../bloc/threads_cubit.dart';
+import '../bloc/thread_infos_cubit.dart';
 
 @RoutePage()
-class ThreadsScreen extends StatelessWidget {
-  ThreadsScreen({super.key});
+class ThreadInfosScreen extends StatelessWidget {
+  ThreadInfosScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<ThreadsCubit>(),
-      child: _ThreadsView(),
+      create: (context) => sl<ThreadInfosCubit>(),
+      child: _ThreadInfosView(),
     );
   }
 }
 
-class _ThreadsView extends StatelessWidget {
-  _ThreadsView({super.key});
+class _ThreadInfosView extends StatelessWidget {
+  _ThreadInfosView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThreadsCubit, ThreadsState>(
+    return BlocBuilder<ThreadInfosCubit, ThreadInfosState>(
         builder: (context, state) {
-          final cubit = context.read<ThreadsCubit>();
+          final cubit = context.read<ThreadInfosCubit>();
 
           return Scaffold(
               appBar: AppBar(
-                title: const Text('Threads'),
+                title: const Text('ThreadInfos'),
                 actions: [
                   IconButton(
                     icon: const Icon(Icons.search_outlined),
@@ -62,7 +62,7 @@ class _ThreadsView extends StatelessWidget {
                     children: [
                       Padding(
                         padding: const EdgeInsets.all(16),
-                        child: PostCard(post: thread.masterPost, boardName: "[${thread.extension.displayName}] ${thread.boardName}"),
+                        child: PostCard(post: thread.originalPost, boardName: "[${thread.extension.displayName}] ${thread.board.name}"),
                       ),
                       const Divider(),
                     ],
