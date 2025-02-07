@@ -1,4 +1,4 @@
-import 'package:news_hub/domain/extension_repo/repository.dart';
+import 'package:news_hub/domain/extension_repo/extension_repo_repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:injectable/injectable.dart';
 

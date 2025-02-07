@@ -12,23 +12,23 @@
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
-import 'package:news_hub/app/condition/repository_impl.dart' as _i393;
-import 'package:news_hub/app/extension/api_service_impl.dart' as _i588;
-import 'package:news_hub/app/extension/install_service_impl.dart' as _i324;
-import 'package:news_hub/app/extension/mock_api_service_impl.dart' as _i223;
-import 'package:news_hub/app/extension/mock_install_service_impl.dart' as _i642;
-import 'package:news_hub/app/extension/preferences_service_impl.dart' as _i677;
-import 'package:news_hub/app/extension_repo/api_service_impl.dart' as _i115;
-import 'package:news_hub/app/extension_repo/mock_api_service_impl.dart'
+import 'package:news_hub/app/condition/condition_repository_impl.dart' as _i393;
+import 'package:news_hub/app/extension/extension_api_service_impl.dart' as _i588;
+import 'package:news_hub/app/extension/extension_install_service_impl.dart' as _i324;
+import 'package:news_hub/app/extension/mock_extension_api_service_impl.dart' as _i223;
+import 'package:news_hub/app/extension/mock_extension_install_service_impl.dart' as _i642;
+import 'package:news_hub/app/extension/extension_preferences_service_impl.dart' as _i677;
+import 'package:news_hub/app/extension_repo/extension_repo_api_service_impl.dart' as _i115;
+import 'package:news_hub/app/extension_repo/mock_extension_repo_api_service_impl.dart'
     as _i594;
-import 'package:news_hub/app/extension_repo/mock_repository_impl.dart' as _i145;
-import 'package:news_hub/app/extension_repo/repository_impl.dart' as _i730;
+import 'package:news_hub/app/extension_repo/mock_extension_repo_repository_impl.dart' as _i145;
+import 'package:news_hub/app/extension_repo/extension_repo_repository_impl.dart' as _i730;
 import 'package:news_hub/app/service/database.dart' as _i1042;
 import 'package:news_hub/app/service/preferences/store.dart' as _i365;
 import 'package:news_hub/app/service/preferences/store_impl.dart' as _i842;
-import 'package:news_hub/domain/extension/api_service.dart' as _i211;
+import 'package:news_hub/domain/extension/extension_api_service.dart' as _i211;
 import 'package:news_hub/domain/extension/extension.dart' as _i315;
-import 'package:news_hub/domain/extension/install_service.dart' as _i953;
+import 'package:news_hub/domain/extension/extension_install_service.dart' as _i953;
 import 'package:news_hub/domain/extension/interactor/list_extensions.dart'
     as _i214;
 import 'package:news_hub/domain/extension/interactor/list_installed_extensions.dart'
@@ -36,8 +36,8 @@ import 'package:news_hub/domain/extension/interactor/list_installed_extensions.d
 import 'package:news_hub/domain/extension/interactor/list_remote_extensions.dart'
     as _i915;
 import 'package:news_hub/domain/extension/interactor/list_threads.dart' as _i73;
-import 'package:news_hub/domain/extension/preferences_service.dart' as _i739;
-import 'package:news_hub/domain/extension_repo/api_service.dart' as _i692;
+import 'package:news_hub/domain/extension/extension_preferences_service.dart' as _i739;
+import 'package:news_hub/domain/extension_repo/extension_repo_api_service.dart' as _i692;
 import 'package:news_hub/domain/extension_repo/extension_repo.dart' as _i623;
 import 'package:news_hub/domain/extension_repo/interactor/create_extension_repo.dart'
     as _i460;
@@ -47,10 +47,10 @@ import 'package:news_hub/domain/extension_repo/interactor/get_remote_extension_r
     as _i872;
 import 'package:news_hub/domain/extension_repo/interactor/list_extension_repos.dart'
     as _i25;
-import 'package:news_hub/domain/extension_repo/repository.dart' as _i1033;
+import 'package:news_hub/domain/extension_repo/extension_repo_repository.dart' as _i1033;
 import 'package:news_hub/domain/search_config/interactor/list_search_configs.dart'
     as _i433;
-import 'package:news_hub/domain/search_config/repository.dart' as _i1027;
+import 'package:news_hub/domain/search_config/search_config_repository.dart' as _i1027;
 import 'package:news_hub/domain/search_config/search_config.dart' as _i1064;
 import 'package:news_hub/locator.dart' as _i56;
 import 'package:news_hub/presentation/pages/add_extension_repo/bloc/add_extension_repo_cubit.dart'

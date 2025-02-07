@@ -2,7 +2,7 @@ import 'package:dartx/dartx.dart';
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/extension/interactor/list_installed_extensions.dart';
 import 'package:news_hub/domain/extension/interactor/list_remote_extensions.dart';
-import 'package:news_hub/domain/extension/preferences_service.dart';
+import 'package:news_hub/domain/extension/extension_preferences_service.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:rxdart/rxdart.dart';
 

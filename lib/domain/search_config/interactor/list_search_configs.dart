@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/domain/search_config/repository.dart';
+import 'package:news_hub/domain/search_config/search_config_repository.dart';
 
 @lazySingleton
 class ListSearchConfigs {

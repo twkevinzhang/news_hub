@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:news_hub/domain/extension_repo/api_service.dart';
+import 'package:news_hub/domain/extension_repo/extension_repo_api_service.dart';
 
 import 'package:news_hub/domain/extension/extension.dart';
 import 'package:news_hub/domain/models/models.dart';
