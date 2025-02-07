@@ -63,9 +63,12 @@ class ThreadWithExtension extends ThreadInfo {
           boardId: thread.boardId,
           id: thread.id,
           url: thread.url,
-          masterPost: thread.masterPost,
-          lastSlavePostCreatedAt: thread.lastSlavePostCreatedAt,
-          slavePostCount: thread.slavePostCount,
+          title: thread.title,
+          authorName: thread.authorName,
+          createdAt: thread.createdAt,
+          latestRegardingPostCreatedAt: thread.latestRegardingPostCreatedAt,
+          regardingPostCount: thread.regardingPostCount,
+          previewContent: thread.previewContent,
           tags: thread.tags,
         );
 }

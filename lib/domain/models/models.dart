@@ -134,10 +134,10 @@ class ThreadInfo {
   final String id;
   final String url;
   final String title;
-  final String author;
+  final String authorName;
   final int createdAt;
-  final int lastSlavePostCreatedAt;
-  final int slavePostCount;
+  final int latestRegardingPostCreatedAt;
+  final int regardingPostCount;
   final String previewContent;
   final List<String> tags;
 
@@ -148,10 +148,10 @@ class ThreadInfo {
     required this.id,
     required this.url,
     required this.title,
-    required this.author,
+    required this.authorName,
     required this.createdAt,
-    required this.lastSlavePostCreatedAt,
-    required this.slavePostCount,
+    required this.latestRegardingPostCreatedAt,
+    required this.regardingPostCount,
     required this.previewContent,
     required this.tags,
   });
@@ -163,10 +163,10 @@ class Thread {
   final String boardId;
   final String id;
   final String url;
-  final int lastSlavePostCreatedAt;
-  final int slavePostCount;
+  final int latestRegardingPostCreatedAt;
+  final int regardingPostCount;
   final List<String> tags;
-  final Post masterPost;
+  final Post originalPost; // OP
 
   Thread({
     required this.extensionPkgName,
@@ -174,10 +174,10 @@ class Thread {
     required this.boardId,
     required this.id,
     required this.url,
-    required this.lastSlavePostCreatedAt,
-    required this.slavePostCount,
+    required this.latestRegardingPostCreatedAt,
+    required this.regardingPostCount,
     required this.tags,
-    required this.masterPost,
+    required this.originalPost,
   });
 }
 
@@ -186,13 +186,13 @@ class Post {
   final String siteId;
   final String boardId;
   final String threadId;
+  final String? originPostId;
   final String id;
-  final String? masterId;
   final String? title;
   final String? url;
   final DateTime createdAt;
-  final String posterId;
-  final String posterName;
+  final String authorId;
+  final String authorName;
   final int like;
   final int dislike;
   final int comments;
@@ -203,13 +203,13 @@ class Post {
     required this.siteId,
     required this.boardId,
     required this.threadId,
+    this.originPostId,
     required this.id,
-    this.masterId,
     this.title,
     this.url,
     required this.createdAt,
-    required this.posterId,
-    required this.posterName,
+    required this.authorId,
+    required this.authorName,
     required this.like,
     required this.dislike,
     required this.comments,
@@ -224,58 +224,72 @@ abstract class Paragraph {
   Paragraph(this.type);
 }
 
-class ApiImage extends Paragraph {
+class ImageParagraph extends Paragraph {
   final String? _thumb;
   final String raw;
 
-  ApiImage(
-    this._thumb,
-    this.raw,
-  ) : super(ParagraphType.image);
+  ImageParagraph({
+    String? thumb,
+    required this.raw,
+  }) : _thumb = thumb, super(ParagraphType.image);
 
   thumb() {
     return _thumb ?? raw;
   }
 }
 
-class ApiVideo extends Paragraph {
+class VideoParagraph extends Paragraph {
   final String? thumb;
   final String url;
 
-  ApiVideo(this.thumb, this.url) : super(ParagraphType.video);
+  VideoParagraph({ this.thumb, required this.url }) : super(ParagraphType.video);
 }
 
-class ApiText extends Paragraph {
+class TextParagraph extends Paragraph {
   final String content;
 
-  ApiText(this.content) : super(ParagraphType.text);
+  TextParagraph({required this.content}) : super(ParagraphType.text);
 }
 
-class Quote extends Paragraph {
+class QuoteParagraph extends Paragraph {
   final String content;
 
-  Quote(this.content) : super(ParagraphType.quote);
+  QuoteParagraph({required this.content}) : super(ParagraphType.quote);
 }
 
-class ReplyTo extends Paragraph {
+class ReplyToParagraph extends Paragraph {
   final String id;
 
-  ReplyTo(this.id) : super(ParagraphType.replyTo);
+  ReplyToParagraph({required this.id}) : super(ParagraphType.replyTo);
 }
 
-class Link extends Paragraph {
+class LinkParagraph extends Paragraph {
   final String content;
 
-  Link(this.content) : super(ParagraphType.link);
+  LinkParagraph({required this.content}) : super(ParagraphType.link);
 }
 
 class Comment {
+  final String extensionPkgName;
+  final String siteId;
+  final String boardId;
+  final String threadId;
+  final String postId;
   final String id;
+  final String authorId;
+  final String authorName;
   final List<Paragraph> contents;
 
   Comment({
+    required this.extensionPkgName,
+    required this.siteId,
+    required this.boardId,
+    required this.threadId,
+    required this.postId,
     required this.id,
     required this.contents,
+    required this.authorId,
+    required this.authorName,
   });
 }
 

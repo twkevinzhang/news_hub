@@ -1,7 +1,9 @@
 class Pagination {
+  // for offset-based pagination
   final int? page;
-  final int? limit;
   final int? pageSize;
+  // for cursor-based pagination
+  final int? limit;
   final String? prevCursor;
   final String? nextCursor;
 

@@ -1,5 +1,7 @@
+import 'dart:ffi';
 import 'dart:io';
 
+import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:dartx/dartx.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
@@ -35,5 +37,11 @@ extension FileEx on File {
     } finally {
       raf.closeSync(); // 確保文件關閉
     }
+  }
+}
+
+extension Int64Ex on $fixnum.Int64 {
+  DateTime toDateTime() {
+    return DateTime.fromMillisecondsSinceEpoch(toInt());
   }
 }

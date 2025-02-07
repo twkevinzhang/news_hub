@@ -22,7 +22,7 @@ import 'package:news_hub/presentation/pages/search/view/search_screen.dart'
     as _i5;
 import 'package:news_hub/presentation/pages/settings/view/settings_screen.dart'
     as _i6;
-import 'package:news_hub/presentation/pages/threads/view/threads_screen.dart'
+import 'package:news_hub/presentation/pages/thread_infos/view/thread_infos_screen.dart'
     as _i7;
 
 /// generated route for
@@ -122,35 +122,35 @@ class SettingsRoute extends _i8.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i7.ThreadsScreen]
-class ThreadsRoute extends _i8.PageRouteInfo<ThreadsRouteArgs> {
-  ThreadsRoute({_i9.Key? key, List<_i8.PageRouteInfo>? children})
+/// [_i7.ThreadInfosScreen]
+class ThreadInfosRoute extends _i8.PageRouteInfo<ThreadInfosRouteArgs> {
+  ThreadInfosRoute({_i9.Key? key, List<_i8.PageRouteInfo>? children})
     : super(
-        ThreadsRoute.name,
-        args: ThreadsRouteArgs(key: key),
+        ThreadInfosRoute.name,
+        args: ThreadInfosRouteArgs(key: key),
         initialChildren: children,
       );
 
-  static const String name = 'ThreadsRoute';
+  static const String name = 'ThreadInfosRoute';
 
   static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<ThreadsRouteArgs>(
-        orElse: () => const ThreadsRouteArgs(),
+      final args = data.argsAs<ThreadInfosRouteArgs>(
+        orElse: () => const ThreadInfosRouteArgs(),
       );
-      return _i7.ThreadsScreen(key: args.key);
+      return _i7.ThreadInfosScreen(key: args.key);
     },
   );
 }
 
-class ThreadsRouteArgs {
-  const ThreadsRouteArgs({this.key});
+class ThreadInfosRouteArgs {
+  const ThreadInfosRouteArgs({this.key});
 
   final _i9.Key? key;
 
   @override
   String toString() {
-    return 'ThreadsRouteArgs{key: $key}';
+    return 'ThreadInfosRouteArgs{key: $key}';
   }
 }

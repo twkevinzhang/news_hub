@@ -5,12 +5,11 @@ import 'package:news_hub/domain/extension/extension.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/search/bloc/search_cubit.dart';
 import 'package:news_hub/presentation/pages/search/search.dart';
+import 'package:news_hub/presentation/pages/thread_infos/bloc/thread_infos_cubit.dart';
 import 'package:news_hub/presentation/pages/thread_infos/widgets/post_card.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
 import 'package:news_hub/presentation/widgets/widgets.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-
-import '../bloc/thread_infos_cubit.dart';
 
 @RoutePage()
 class ThreadInfosScreen extends StatelessWidget {
