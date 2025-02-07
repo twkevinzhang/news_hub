@@ -1,5 +1,5 @@
-import 'package:news_hub/domain/model/index.dart';
-import 'package:news_hub/shared/model.dart';
+import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/shared/models.dart';
 
 abstract class ExtensionApiService {
   Future<void> run(Extension extension);

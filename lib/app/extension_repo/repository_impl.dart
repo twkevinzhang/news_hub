@@ -1,5 +1,5 @@
-import 'package:news_hub/domain/extension_repo/index.dart';
-import 'package:news_hub/domain/model/index.dart';
+import 'package:news_hub/domain/extension_repo/extension_repo.dart';
+import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/app/service/database.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:injectable/injectable.dart';

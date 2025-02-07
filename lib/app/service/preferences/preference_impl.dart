@@ -2,7 +2,7 @@ import 'package:news_hub/app/service/preferences/preference.dart';
 import 'package:news_hub/app/service/logger.dart';
 import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 
-abstract class PreferenceImpl<T> extends Preference<T> {
+abstract class PreferenceImpl<T> implements Preference<T> {
   final SharedPreferences _prefs;
   final RxSharedPreferences _rxPrefs;
   final String _key;

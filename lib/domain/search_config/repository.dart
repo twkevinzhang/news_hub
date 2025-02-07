@@ -1,5 +1,5 @@
 import 'package:dartx/dartx.dart';
-import 'package:news_hub/domain/model/index.dart';
+import 'package:news_hub/domain/models/models.dart';
 
 abstract class SearchConfigRepository {
   Stream<List<SearchConfig>> subscribeAll();

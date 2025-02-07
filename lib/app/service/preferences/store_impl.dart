@@ -5,7 +5,7 @@ import 'package:news_hub/app/service/preferences/store.dart';
 import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 
 @LazySingleton(as: PreferenceStore)
-class PreferenceStoreImpl extends PreferenceStore {
+class PreferenceStoreImpl implements PreferenceStore {
   final SharedPreferences _prefs;
 
   PreferenceStoreImpl({

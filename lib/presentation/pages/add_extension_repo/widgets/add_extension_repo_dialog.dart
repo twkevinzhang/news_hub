@@ -5,8 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/add_extension_repo/bloc/add_extension_repo_cubit.dart';
-import 'package:news_hub/presentation/router/router.dart';
-import 'package:news_hub/presentation/widgets/index.dart';
+import 'package:news_hub/presentation/widgets/widgets.dart';
 
 @RoutePage()
 class AddExtensionRepoDialog extends StatelessWidget {

@@ -9,8 +9,8 @@ import 'package:equatable/equatable.dart';
 import 'package:news_hub/domain/extension_repo/interactor/create_extension_repo.dart';
 import 'package:news_hub/domain/extension_repo/interactor/get_extension_repo.dart';
 import 'package:news_hub/domain/extension_repo/interactor/get_remote_extension_repo.dart';
-import 'package:news_hub/domain/model/index.dart';
-import 'package:news_hub/presentation/widgets/index.dart';
+import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/presentation/widgets/widgets.dart';
 import 'package:news_hub/shared/exceptions.dart';
 
 part 'add_extension_repo_cubit.g.dart';

@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/extension_repos/bloc/extension_repos_cubit.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
-import 'package:news_hub/presentation/widgets/index.dart';
+import 'package:news_hub/presentation/widgets/widgets.dart';
 
 @RoutePage()
 class ExtensionReposScreen extends StatelessWidget {

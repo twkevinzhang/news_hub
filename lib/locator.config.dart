@@ -27,7 +27,7 @@ import 'package:news_hub/app/service/database.dart' as _i1042;
 import 'package:news_hub/app/service/preferences/store.dart' as _i365;
 import 'package:news_hub/app/service/preferences/store_impl.dart' as _i842;
 import 'package:news_hub/domain/extension/api_service.dart' as _i211;
-import 'package:news_hub/domain/extension/index.dart' as _i135;
+import 'package:news_hub/domain/extension/extension.dart' as _i135;
 import 'package:news_hub/domain/extension/install_service.dart' as _i953;
 import 'package:news_hub/domain/extension/interactor/list_extensions.dart'
     as _i214;
@@ -38,7 +38,7 @@ import 'package:news_hub/domain/extension/interactor/list_remote_extensions.dart
 import 'package:news_hub/domain/extension/interactor/list_threads.dart' as _i73;
 import 'package:news_hub/domain/extension/preferences_service.dart' as _i739;
 import 'package:news_hub/domain/extension_repo/api_service.dart' as _i692;
-import 'package:news_hub/domain/extension_repo/index.dart' as _i381;
+import 'package:news_hub/domain/extension_repo/extension_repo.dart' as _i381;
 import 'package:news_hub/domain/extension_repo/interactor/create_extension_repo.dart'
     as _i460;
 import 'package:news_hub/domain/extension_repo/interactor/get_extension_repo.dart'
@@ -48,7 +48,7 @@ import 'package:news_hub/domain/extension_repo/interactor/get_remote_extension_r
 import 'package:news_hub/domain/extension_repo/interactor/list_extension_repos.dart'
     as _i25;
 import 'package:news_hub/domain/extension_repo/repository.dart' as _i1033;
-import 'package:news_hub/domain/search_config/index.dart' as _i768;
+import 'package:news_hub/domain/search_config/search_config.dart' as _i768;
 import 'package:news_hub/domain/search_config/interactor/list_search_configs.dart'
     as _i433;
 import 'package:news_hub/domain/search_config/repository.dart' as _i1027;
@@ -57,9 +57,9 @@ import 'package:news_hub/presentation/pages/add_extension_repo/bloc/add_extensio
     as _i229;
 import 'package:news_hub/presentation/pages/extension_repos/bloc/extension_repos_cubit.dart'
     as _i235;
-import 'package:news_hub/presentation/pages/extensions/cubit.dart' as _i830;
-import 'package:news_hub/presentation/pages/search/cubit.dart' as _i320;
-import 'package:news_hub/presentation/pages/threads/cubit.dart' as _i218;
+import 'package:news_hub/presentation/pages/extensions/bloc/extensions_cubit.dart' as _i830;
+import 'package:news_hub/presentation/pages/search/bloc/search_cubit.dart' as _i320;
+import 'package:news_hub/presentation/pages/threads/bloc/threads_cubit.dart' as _i218;
 import 'package:news_hub/presentation/router/router.dart' as _i762;
 import 'package:rx_shared_preferences/rx_shared_preferences.dart' as _i579;
 

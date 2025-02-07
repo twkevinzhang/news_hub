@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
-import 'package:news_hub/shared/model.dart';
+import 'package:news_hub/shared/models.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:news_hub/app/model/index.dart';
-import 'package:news_hub/domain/extension/index.dart';
-import 'package:news_hub/domain/model/index.dart';
+import 'package:news_hub/app/models/models.dart';
+import 'package:news_hub/domain/extension/extension.dart';
+import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/shared/constants.dart';
 import 'package:news_hub/shared/extensions.dart';
 import 'package:path/path.dart' as path;
@@ -16,7 +16,7 @@ import 'package:injectable/injectable.dart';
 // TODO: replace with Chopper library
 @dev
 @LazySingleton(as: ExtensionApiService)
-class ExtensionApiServiceImpl extends ExtensionApiService {
+class ExtensionApiServiceImpl implements ExtensionApiService {
   final Dio _dio;
 
   ExtensionApiServiceImpl({

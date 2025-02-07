@@ -1,7 +1,6 @@
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/domain/model/index.dart';
-
-import '../install_service.dart';
+import 'package:news_hub/domain/extension/install_service.dart';
+import 'package:news_hub/domain/models/models.dart';
 
 @lazySingleton
 class ListInstalledExtensions {

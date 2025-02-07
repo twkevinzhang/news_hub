@@ -1,9 +1,9 @@
-import 'package:news_hub/domain/model/index.dart';
+import 'package:news_hub/domain/extension_repo/api_service.dart';
+import 'package:news_hub/domain/extension_repo/repository.dart';
+import 'package:news_hub/domain/models/models.dart';
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/shared/exceptions.dart';
 
-import '../api_service.dart';
-import '../repository.dart';
 
 @lazySingleton
 class CreateExtensionRepo {

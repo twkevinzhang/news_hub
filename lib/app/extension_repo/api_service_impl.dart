@@ -2,10 +2,9 @@ import 'dart:convert';
 import 'package:injectable/injectable.dart';
 
 import 'package:dio/dio.dart';
-import 'package:news_hub/app/model/index.dart';
-import 'package:news_hub/domain/extension_repo/index.dart';
-import 'package:news_hub/domain/model/index.dart';
-import 'package:news_hub/app/service/logger.dart';
+import 'package:news_hub/app/models/models.dart';
+import 'package:news_hub/domain/extension_repo/extension_repo.dart';
+import 'package:news_hub/domain/models/models.dart';
 
 @dev
 @LazySingleton(as: ExtensionRepoApiService)

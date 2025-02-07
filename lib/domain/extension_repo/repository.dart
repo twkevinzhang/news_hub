@@ -1,4 +1,4 @@
-import 'package:news_hub/domain/model/index.dart';
+import 'package:news_hub/domain/models/models.dart';
 
 abstract class ExtensionRepoRepository {
   Stream<List<ExtensionRepo>> subscribeAll();

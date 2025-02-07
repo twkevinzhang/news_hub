@@ -1,7 +1,6 @@
-import 'package:news_hub/domain/model/index.dart';
+import 'package:news_hub/domain/extension_repo/repository.dart';
+import 'package:news_hub/domain/models/models.dart';
 import 'package:injectable/injectable.dart';
-
-import '../repository.dart';
 
 @lazySingleton
 class ListExtensionRepo {

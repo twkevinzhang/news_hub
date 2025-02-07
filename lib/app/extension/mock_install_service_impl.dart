@@ -3,15 +3,15 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:news_hub/domain/extension/index.dart';
-import 'package:news_hub/domain/model/index.dart';
+import 'package:news_hub/domain/extension/extension.dart';
+import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/shared/constants.dart';
 import 'package:news_hub/shared/extensions.dart';
 
 @test
 @preResolve
 @LazySingleton(as: ExtensionInstallService)
-class MockExtensionInstallServiceImpl extends ExtensionInstallService {
+class MockExtensionInstallServiceImpl implements ExtensionInstallService {
   final String _downloadFolder;
   final String _installFolder;
 

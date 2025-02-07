@@ -1,11 +1,11 @@
 import 'package:dartx/dartx.dart';
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/domain/model/index.dart';
+import 'package:news_hub/domain/extension/interactor/list_installed_extensions.dart';
+import 'package:news_hub/domain/extension/interactor/list_remote_extensions.dart';
+import 'package:news_hub/domain/extension/preferences_service.dart';
+import 'package:news_hub/domain/models/models.dart';
 import 'package:rxdart/rxdart.dart';
 
-import '../preferences_service.dart';
-import 'list_installed_extensions.dart';
-import 'list_remote_extensions.dart';
 
 @lazySingleton
 class ListExtensions {

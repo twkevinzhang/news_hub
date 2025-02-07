@@ -1,12 +1,10 @@
 import 'package:dartx/dartx.dart';
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/domain/extension_repo/index.dart';
-import 'package:news_hub/domain/model/index.dart';
-import 'package:news_hub/presentation/pages/search/index.dart';
-import 'package:news_hub/shared/model.dart';
-
-import '../api_service.dart';
-import 'list_installed_extensions.dart';
+import 'package:news_hub/domain/extension/api_service.dart';
+import 'package:news_hub/domain/extension/interactor/list_installed_extensions.dart';
+import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/presentation/pages/search/search.dart';
+import 'package:news_hub/shared/models.dart';
 
 @lazySingleton
 class ListThreads {

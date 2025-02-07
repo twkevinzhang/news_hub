@@ -8,8 +8,8 @@ import 'package:equatable/equatable.dart';
 
 import 'package:news_hub/domain/extension_repo/interactor/create_extension_repo.dart';
 import 'package:news_hub/domain/extension_repo/interactor/list_extension_repos.dart';
-import 'package:news_hub/domain/model/index.dart';
-import 'package:news_hub/presentation/widgets/index.dart';
+import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/presentation/widgets/widgets.dart';
 
 part 'extension_repos_cubit.g.dart';
 

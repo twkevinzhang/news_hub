@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/shared/model.dart';
-import 'package:news_hub/domain/extension/index.dart';
-import 'package:news_hub/domain/model/index.dart';
+import 'package:news_hub/shared/models.dart';
+import 'package:news_hub/domain/extension/extension.dart';
+import 'package:news_hub/domain/models/models.dart';
 
 final _mockPost = Post(
   extensionPkgName: 'twkevinzhang_beeceptor',
@@ -29,7 +29,7 @@ final _mockPost = Post(
 
 @test
 @LazySingleton(as: ExtensionApiService)
-class MockExtensionApiServiceImpl extends ExtensionApiService {
+class MockExtensionApiServiceImpl implements ExtensionApiService {
   @override
   Future<void> run(Extension extension) async {
     await Future.delayed(const Duration(seconds: 1));
