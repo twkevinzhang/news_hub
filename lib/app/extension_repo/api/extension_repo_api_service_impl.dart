@@ -2,8 +2,8 @@ import 'dart:convert';
 import 'package:injectable/injectable.dart';
 
 import 'package:dio/dio.dart';
-import 'package:news_hub/app/extension_repo/models/extension/extension_dto.dart';
-import 'package:news_hub/app/extension_repo/models/extension_repo/extension_repo_dto.dart';
+import 'package:news_hub/app/extension_repo/api/models/extension/extension_dto.dart';
+import 'package:news_hub/app/extension_repo/api/models/extension_repo/extension_repo_dto.dart';
 import 'package:news_hub/domain/extension_repo/extension_repo.dart';
 import 'package:news_hub/domain/models/models.dart';
 

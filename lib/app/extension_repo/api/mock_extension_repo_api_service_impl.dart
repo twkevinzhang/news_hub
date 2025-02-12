@@ -2,7 +2,6 @@ import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/extension_repo/extension_repo.dart';
 import 'package:news_hub/domain/models/models.dart';
 
-// TODO: replace with mocktail library
 @test
 @LazySingleton(as: ExtensionRepoApiService)
 class MockExtensionRepoApiServiceImpl implements ExtensionRepoApiService {

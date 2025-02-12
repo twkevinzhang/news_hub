@@ -7,7 +7,7 @@ import 'package:news_hub/domain/models/models.dart';
 class MockExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
 
   @override
-  Future<void> insertRepo({
+  Future<void> insert({
     required String baseUrl,
     required String displayName,
     required String website,
@@ -16,11 +16,12 @@ class MockExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
   }
 
   @override
-  Future<void> deleteRepo(String baseUrl) async {
+  Future<void> delete(String baseUrl) async {
+    throw UnimplementedError();
   }
 
   @override
-  Future<List<ExtensionRepo>> getAll() async {
+  Future<List<ExtensionRepo>> list() async {
     return [
       ExtensionRepo(
         icon: 'https://cdn-icons-png.flaticon.com/512/809/809103.png',
@@ -33,12 +34,12 @@ class MockExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
   }
 
   @override
-  Stream<int> getCount() async* {
-    yield 1;
+  Stream<int> count() async* {
+    throw UnimplementedError();
   }
 
   @override
-  Future<ExtensionRepo> getRepo(String baseUrl) async {
+  Future<ExtensionRepo> get(String baseUrl) async {
     return ExtensionRepo(
       icon: 'https://cdn-icons-png.flaticon.com/512/809/809103.png',
       baseUrl: 'https://example.com',
@@ -49,7 +50,7 @@ class MockExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
   }
 
   @override
-  Future<ExtensionRepo> getRepoBySigningKeyFingerprint(String fingerprint) async {
+  Future<ExtensionRepo> getBySigningKeyFingerprint(String fingerprint) async {
     return ExtensionRepo(
       icon: 'https://cdn-icons-png.flaticon.com/512/809/809103.png',
       baseUrl: 'https://example.com',
@@ -60,30 +61,31 @@ class MockExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
   }
 
   @override
-  Future<void> replaceRepo(ExtensionRepo newRepo) async {
-
+  Future<void> replace(ExtensionRepo newRepo) async {
+    throw UnimplementedError();
   }
 
   @override
-  Stream<List<ExtensionRepo>> subscribeAll() async* {
+  Stream<List<ExtensionRepo>> subscribeList() async* {
     while (true) {
-      final repos = await getAll();
+      final repos = await list();
       yield repos;
       await Future.delayed(const Duration(seconds: 1));
     }
   }
 
   @override
-  Future<void> upsertRepo({
+  Future<ExtensionRepo> upsert({
     required String baseUrl,
     required String displayName,
     required String website,
     required String signingKeyFingerprint,
   }) async {
+    throw UnimplementedError();
   }
 
   @override
-  Future<void> upsertRepoWithObject(ExtensionRepo repo) async {
-
+  Future<ExtensionRepo> upsertWithObject(ExtensionRepo repo) async {
+    throw UnimplementedError();
   }
 }

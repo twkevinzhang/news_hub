@@ -106,7 +106,7 @@ class SearchCubit extends Cubit<SearchState> {
   /// 啟用擴充功能頁面
   /// =====
   void loadExtensions() {
-    _listExtensions.call().then((list) {
+    _listExtensions.withBoards().then((list) {
       emit(state.copyWith(allExtensions: list));
     });
   }

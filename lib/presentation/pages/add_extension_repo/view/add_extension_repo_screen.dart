@@ -8,8 +8,8 @@ import 'package:news_hub/presentation/pages/add_extension_repo/bloc/add_extensio
 import 'package:news_hub/presentation/widgets/widgets.dart';
 
 @RoutePage()
-class AddExtensionRepoDialog extends StatelessWidget {
-  const AddExtensionRepoDialog({super.key});
+class AddExtensionRepoScreen extends StatelessWidget {
+  const AddExtensionRepoScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +69,7 @@ class _AddExtensionRepoView extends StatelessWidget {
                 onErrorStatus: (context, message) =>
                     ElevatedButton(onPressed: null, child: const Text('請重新輸入')),
                 onCompletedStatus: (context, data) =>
-                    ElevatedButton(onPressed: null, child: const Text('已完成')),
+                    ElevatedButton(onPressed: null, child: const Text('已完成載入')),
                 onLoadingStatus: ElevatedButton(
                     onPressed: null, child: CircularProgressIndicator()),
               ),
@@ -80,7 +80,7 @@ class _AddExtensionRepoView extends StatelessWidget {
                 child: StateStatusLayout(
                   status: state.remoteRepo,
                   onInitialStatus: const SizedBox(),
-                  onLoadingStatus: const CircularProgressIndicator(),
+                  onLoadingStatus: const SizedBox(),
                   onCompletedStatus: (context, data) {
                     return Column(
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -89,20 +89,23 @@ class _AddExtensionRepoView extends StatelessWidget {
                         ListTile(
                           title: Row(
                             children: [
-                              Text("icon: "),
-                              CachedNetworkImage(
-                                imageUrl: data.icon,
-                                width: 32,
-                                height: 32,
-                                placeholder: (context, url) =>
-                                    CircularProgressIndicator(),
-                                errorWidget: (context, url, error) => Row(
-                                  children: [
-                                    Icon(Icons.error),
-                                    Text('Error loading image on $url: $error')
-                                  ],
-                                ),
-                              ),
+                              if (data.icon != null)
+                                ...[
+                                  Text("icon: "),
+                                  CachedNetworkImage(
+                                    imageUrl: data.icon!,
+                                    width: 32,
+                                    height: 32,
+                                    placeholder: (context, url) =>
+                                        CircularProgressIndicator(),
+                                    errorWidget: (context, url, error) => Row(
+                                      children: [
+                                        Icon(Icons.error),
+                                        Text('Error loading image on $url: $error')
+                                      ],
+                                    ),
+                                  )
+                                ]
                             ],
                           ),
                         ),
@@ -129,7 +132,7 @@ class _AddExtensionRepoView extends StatelessWidget {
                   onErrorStatus: (context, message) =>
                       ElevatedButton(onPressed: null, child: Text(message)),
                   onCompletedStatus: (context, data) =>
-                      ElevatedButton(onPressed: null, child: const Text('已完成')),
+                      ElevatedButton(onPressed: null, child: const Text('已完成加入')),
                   onLoadingStatus: ElevatedButton(
                       onPressed: null, child: CircularProgressIndicator()),
                 ),

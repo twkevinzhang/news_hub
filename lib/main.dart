@@ -16,11 +16,11 @@ import 'package:news_hub/shared/constants.dart';
 import 'package:path_provider/path_provider.dart';
 
 void main() async {
-  testApiService();
+  // testApiService();
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
   
-  // runApp(App());
+  runApp(App());
 }
 
 void testApiService() async {

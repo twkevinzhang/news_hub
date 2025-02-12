@@ -1,4 +1,4 @@
-export SERIOUS_PYTHON_SITE_PACKAGES := /Users/zhangzhenlong/Projects/news_hub_extensions/twkevinzhang_komica/build/site-packages
+export SERIOUS_PYTHON_SITE_PACKAGES := {{ NEED_TO_SET }}/Projects/news_hub_extensions/twkevinzhang_komica/build/site-packages
 export PATH := $(PATH):$(HOME)/.pub-cache/bin
 
 run:

@@ -1,7 +1,7 @@
 library;
 
-export 'extension_install_service_impl.dart';
-export 'extension_preferences_service_impl.dart';
-export 'extension_api_service_impl.dart';
-export 'mock_extension_api_service_impl.dart';
-export 'mock_extension_install_service_impl.dart';
+export 'installer/extension_install_service_impl.dart';
+export 'preferences/extension_preferences_service_impl.dart';
+export 'api/extension_api_service_impl.dart';
+export 'api/mock_extension_api_service_impl.dart';
+export 'installer/mock_extension_install_service_impl.dart';

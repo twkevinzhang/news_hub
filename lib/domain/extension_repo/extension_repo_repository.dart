@@ -1,32 +1,32 @@
 import 'package:news_hub/domain/models/models.dart';
 
 abstract class ExtensionRepoRepository {
-  Stream<List<ExtensionRepo>> subscribeAll();
+  Stream<List<ExtensionRepo>> subscribeList();
 
-  Future<List<ExtensionRepo>> getAll();
+  Future<List<ExtensionRepo>> list();
 
-  Future<ExtensionRepo> getRepo(String baseUrl);
+  Future<ExtensionRepo> get(String baseUrl);
 
-  Future<ExtensionRepo> getRepoBySigningKeyFingerprint(String fingerprint);
+  Future<ExtensionRepo> getBySigningKeyFingerprint(String fingerprint);
 
-  Stream<int> getCount();
+  Stream<int> count();
 
-  Future<void> insertRepo({
+  Future<void> insert({
     required String baseUrl,
     required String displayName,
     required String website,
     required String signingKeyFingerprint,
   });
 
-  Future<void> upsertRepo({
+  Future<ExtensionRepo> upsert({
     required String baseUrl,
     required String displayName,
     required String website,
     required String signingKeyFingerprint,
   });
 
-  Future<void> upsertRepoWithObject(ExtensionRepo repo) {
-    return upsertRepo(
+  Future<ExtensionRepo> upsertWithObject(ExtensionRepo repo) {
+    return upsert(
       baseUrl: repo.baseUrl,
       displayName: repo.displayName,
       website: repo.website,
@@ -34,7 +34,7 @@ abstract class ExtensionRepoRepository {
     );
   }
 
-  Future<void> replaceRepo(ExtensionRepo newRepo);
+  Future<void> replace(ExtensionRepo newRepo);
 
-  Future<void> deleteRepo(String baseUrl);
+  Future<void> delete(String baseUrl);
 }

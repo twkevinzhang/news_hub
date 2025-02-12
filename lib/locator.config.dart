@@ -12,26 +12,29 @@
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
-import 'package:news_hub/app/condition/condition_repository_impl.dart' as _i436;
-import 'package:news_hub/app/extension/extension_api_service_impl.dart'
-    as _i51;
-import 'package:news_hub/app/extension/extension_install_service_impl.dart'
-    as _i278;
-import 'package:news_hub/app/extension/extension_preferences_service_impl.dart'
-    as _i986;
-import 'package:news_hub/app/extension/mock_extension_api_service_impl.dart'
-    as _i458;
-import 'package:news_hub/app/extension/mock_extension_install_service_impl.dart'
-    as _i969;
-import 'package:news_hub/app/extension_repo/extension_repo_api_service_impl.dart'
-    as _i427;
-import 'package:news_hub/app/extension_repo/extension_repo_repository_impl.dart'
-    as _i21;
-import 'package:news_hub/app/extension_repo/mock_extension_repo_api_service_impl.dart'
-    as _i405;
-import 'package:news_hub/app/extension_repo/mock_extension_repo_repository_impl.dart'
-    as _i450;
-import 'package:news_hub/app/service/database.dart' as _i1042;
+import 'package:news_hub/app/extension/api/extension_api_service_impl.dart'
+    as _i516;
+import 'package:news_hub/app/extension/api/mock_extension_api_service_impl.dart'
+    as _i511;
+import 'package:news_hub/app/extension/installer/extension_install_service_impl.dart'
+    as _i1036;
+import 'package:news_hub/app/extension/installer/mock_extension_install_service_impl.dart'
+    as _i863;
+import 'package:news_hub/app/extension/preferences/extension_preferences_service_impl.dart'
+    as _i29;
+import 'package:news_hub/app/extension/repository/extension_repository_impl.dart'
+    as _i657;
+import 'package:news_hub/app/extension_repo/api/extension_repo_api_service_impl.dart'
+    as _i999;
+import 'package:news_hub/app/extension_repo/api/mock_extension_repo_api_service_impl.dart'
+    as _i681;
+import 'package:news_hub/app/extension_repo/repository/extension_repo_repository_impl.dart'
+    as _i374;
+import 'package:news_hub/app/extension_repo/repository/mock_extension_repo_repository_impl.dart'
+    as _i178;
+import 'package:news_hub/app/search_config/search_config_repository_impl.dart'
+    as _i374;
+import 'package:news_hub/app/service/database/database.dart' as _i539;
 import 'package:news_hub/app/service/preferences/store.dart' as _i365;
 import 'package:news_hub/app/service/preferences/store_impl.dart' as _i842;
 import 'package:news_hub/domain/extension/extension.dart' as _i315;
@@ -40,6 +43,9 @@ import 'package:news_hub/domain/extension/extension_install_service.dart'
     as _i103;
 import 'package:news_hub/domain/extension/extension_preferences_service.dart'
     as _i515;
+import 'package:news_hub/domain/extension/extension_repository.dart' as _i981;
+import 'package:news_hub/domain/extension/interactor/install_extension.dart'
+    as _i783;
 import 'package:news_hub/domain/extension/interactor/list_extensions.dart'
     as _i214;
 import 'package:news_hub/domain/extension/interactor/list_installed_extensions.dart'
@@ -48,6 +54,8 @@ import 'package:news_hub/domain/extension/interactor/list_remote_extensions.dart
     as _i915;
 import 'package:news_hub/domain/extension/interactor/list_thread_infos.dart'
     as _i719;
+import 'package:news_hub/domain/extension/interactor/uninstall_extension.dart'
+    as _i517;
 import 'package:news_hub/domain/extension_repo/extension_repo.dart' as _i623;
 import 'package:news_hub/domain/extension_repo/extension_repo_api_service.dart'
     as _i1021;
@@ -55,6 +63,8 @@ import 'package:news_hub/domain/extension_repo/extension_repo_repository.dart'
     as _i525;
 import 'package:news_hub/domain/extension_repo/interactor/create_extension_repo.dart'
     as _i460;
+import 'package:news_hub/domain/extension_repo/interactor/delete_extension_repo.dart'
+    as _i1062;
 import 'package:news_hub/domain/extension_repo/interactor/get_extension_repo.dart'
     as _i581;
 import 'package:news_hub/domain/extension_repo/interactor/get_remote_extension_repo.dart'
@@ -80,8 +90,8 @@ import 'package:news_hub/presentation/pages/thread_infos/bloc/thread_infos_cubit
 import 'package:news_hub/presentation/router/router.dart' as _i762;
 import 'package:rx_shared_preferences/rx_shared_preferences.dart' as _i579;
 
-const String _test = 'test';
 const String _dev = 'dev';
+const String _test = 'test';
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -100,44 +110,62 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.singleton<_i361.Dio>(() => appProvider.dio);
-    gh.lazySingleton<_i1042.DatabaseService>(() => _i1042.DatabaseService());
     gh.lazySingleton<_i762.AppRouter>(() => _i762.AppRouter());
-    gh.lazySingleton<_i623.ExtensionRepoRepository>(
-      () => _i450.MockExtensionRepoRepositoryImpl(),
-      registerFor: {_test},
-    );
+    gh.lazySingleton<_i539.AppDatabase>(() => _i539.AppDatabase());
+    gh.lazySingleton<_i1064.SearchConfigRepository>(
+        () => _i374.SearchConfigRepositoryImpl());
     await gh.lazySingletonAsync<_i315.ExtensionInstallService>(
-      () => _i969.MockExtensionInstallServiceImpl.create(),
-      registerFor: {_test},
-      preResolve: true,
-    );
-    await gh.lazySingletonAsync<_i315.ExtensionInstallService>(
-      () => _i278.ExtensionInstallServiceImpl.create(),
+      () => _i1036.ExtensionInstallServiceImpl.create(),
       registerFor: {_dev},
       preResolve: true,
     );
-    gh.lazySingleton<_i623.ExtensionRepoApiService>(
-      () => _i405.MockExtensionRepoApiServiceImpl(),
+    gh.lazySingleton<_i623.ExtensionRepoRepository>(
+      () => _i374.ExtensionRepoRepositoryImpl(db: gh<_i539.AppDatabase>()),
+      registerFor: {_dev},
+    );
+    gh.lazySingleton<_i623.ExtensionRepoRepository>(
+      () => _i178.MockExtensionRepoRepositoryImpl(),
       registerFor: {_test},
     );
-    gh.lazySingleton<_i315.ExtensionApiService>(
-      () => _i458.MockExtensionApiServiceImpl(),
+    await gh.lazySingletonAsync<_i315.ExtensionInstallService>(
+      () => _i863.MockExtensionInstallServiceImpl.create(),
       registerFor: {_test},
+      preResolve: true,
+    );
+    gh.lazySingleton<_i315.ExtensionApiService>(
+      () => _i511.MockExtensionApiServiceImpl(),
+      registerFor: {_test},
+    );
+    gh.lazySingleton<_i981.ExtensionRepository>(
+      () => _i657.ExtensionRepositoryImpl(db: gh<_i539.AppDatabase>()),
+      registerFor: {_dev},
     );
     gh.lazySingleton<_i581.GetExtensionRepo>(() =>
         _i581.GetExtensionRepo(repo: gh<_i623.ExtensionRepoRepository>()));
-    gh.lazySingleton<_i351.ListInstalledExtensions>(() =>
-        _i351.ListInstalledExtensions(
-            installService: gh<_i103.ExtensionInstallService>()));
-    gh.lazySingleton<_i1064.SearchConfigRepository>(() =>
-        _i436.SearchConfigRepositoryImpl(
-            service: gh<_i1042.DatabaseService>()));
-    gh.lazySingleton<_i719.ListThreadInfos>(() => _i719.ListThreadInfos(
-          apiService: gh<_i892.ExtensionApiService>(),
-          listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
-        ));
+    gh.lazySingleton<_i623.ExtensionRepoApiService>(
+      () => _i681.MockExtensionRepoApiServiceImpl(),
+      registerFor: {_test},
+    );
+    gh.lazySingleton<_i517.UninstallExtension>(() => _i517.UninstallExtension(
+        installService: gh<_i103.ExtensionInstallService>()));
     gh.lazySingleton<_i25.ListExtensionRepo>(() => _i25.ListExtensionRepo(
         repository: gh<_i525.ExtensionRepoRepository>()));
+    gh.lazySingleton<_i1062.DeleteExtensionRepo>(() =>
+        _i1062.DeleteExtensionRepo(
+            repository: gh<_i525.ExtensionRepoRepository>()));
+    gh.lazySingleton<_i315.ExtensionApiService>(
+      () => _i516.ExtensionApiServiceImpl(dio: gh<_i361.Dio>()),
+      registerFor: {_dev},
+    );
+    gh.lazySingleton<_i351.ListInstalledExtensions>(
+        () => _i351.ListInstalledExtensions(
+              installService: gh<_i103.ExtensionInstallService>(),
+              apiService: gh<_i892.ExtensionApiService>(),
+            ));
+    gh.lazySingleton<_i623.ExtensionRepoApiService>(
+      () => _i999.ExtensionRepoApiServiceImpl(dio: gh<_i361.Dio>()),
+      registerFor: {_dev},
+    );
     gh.lazySingleton<_i365.PreferenceStore>(
         () => _i842.PreferenceStoreImpl(prefs: gh<_i579.SharedPreferences>()));
     gh.lazySingleton<_i433.ListSearchConfigs>(() =>
@@ -149,38 +177,15 @@ extension GetItInjectableX on _i174.GetIt {
           repository: gh<_i525.ExtensionRepoRepository>(),
           service: gh<_i1021.ExtensionRepoApiService>(),
         ));
-    gh.lazySingleton<_i623.ExtensionRepoRepository>(
-      () => _i21.ExtensionRepoRepositoryImpl(
-          service: gh<_i1042.DatabaseService>()),
-      registerFor: {_dev},
-    );
-    gh.lazySingleton<_i315.ExtensionApiService>(
-      () => _i51.ExtensionApiServiceImpl(dio: gh<_i361.Dio>()),
-      registerFor: {_dev},
-    );
-    gh.lazySingleton<_i623.ExtensionRepoApiService>(
-      () => _i427.ExtensionRepoApiServiceImpl(dio: gh<_i361.Dio>()),
-      registerFor: {_dev},
-    );
-    gh.lazySingleton<_i315.ExtensionPreferencesService>(() =>
-        _i986.ExtensionPreferencesServiceImpl(
-            store: gh<_i365.PreferenceStore>()));
-    gh.lazySingleton<_i235.ExtensionReposCubit>(() => _i235.ExtensionReposCubit(
-          createExtensionRepo: gh<_i460.CreateExtensionRepo>(),
-          listExtensionRepo: gh<_i25.ListExtensionRepo>(),
+    gh.lazySingleton<_i783.InstallExtension>(() => _i783.InstallExtension(
+          installService: gh<_i103.ExtensionInstallService>(),
+          extensionRepository: gh<_i981.ExtensionRepository>(),
         ));
     gh.lazySingleton<_i915.ListRemoteExtensions>(
         () => _i915.ListRemoteExtensions(
               extensionRepoRepository: gh<_i623.ExtensionRepoRepository>(),
               extensionApiService: gh<_i623.ExtensionRepoApiService>(),
             ));
-    gh.lazySingleton<_i181.ThreadInfosCubit>(() =>
-        _i181.ThreadInfosCubit(listThreadInfos: gh<_i315.ListThreadInfos>()));
-    gh.lazySingleton<_i214.ListExtensions>(() => _i214.ListExtensions(
-          prefService: gh<_i515.ExtensionPreferencesService>(),
-          listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
-          listRemoteExtensions: gh<_i915.ListRemoteExtensions>(),
-        ));
     gh.lazySingleton<_i21.SearchCubit>(() => _i21.SearchCubit(
           listSearchConfigs: gh<_i1064.ListSearchConfigs>(),
           listExtensions: gh<_i315.ListInstalledExtensions>(),
@@ -191,9 +196,29 @@ extension GetItInjectableX on _i174.GetIt {
               getRemoteExtensionRepo: gh<_i872.GetRemoteExtensionRepo>(),
               createExtensionRepo: gh<_i460.CreateExtensionRepo>(),
             ));
+    gh.lazySingleton<_i719.ListThreadInfos>(() => _i719.ListThreadInfos(
+          apiService: gh<_i892.ExtensionApiService>(),
+          listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
+        ));
+    gh.lazySingleton<_i315.ExtensionPreferencesService>(() =>
+        _i29.ExtensionPreferencesServiceImpl(
+            store: gh<_i365.PreferenceStore>()));
+    gh.lazySingleton<_i235.ExtensionReposCubit>(() => _i235.ExtensionReposCubit(
+          createExtensionRepo: gh<_i460.CreateExtensionRepo>(),
+          listExtensionRepo: gh<_i25.ListExtensionRepo>(),
+          deleteExtensionRepo: gh<_i1062.DeleteExtensionRepo>(),
+        ));
+    gh.lazySingleton<_i181.ThreadInfosCubit>(() =>
+        _i181.ThreadInfosCubit(listThreadInfos: gh<_i315.ListThreadInfos>()));
+    gh.lazySingleton<_i214.ListExtensions>(() => _i214.ListExtensions(
+          prefService: gh<_i515.ExtensionPreferencesService>(),
+          listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
+          listRemoteExtensions: gh<_i915.ListRemoteExtensions>(),
+        ));
     gh.lazySingleton<_i945.ExtensionsCubit>(() => _i945.ExtensionsCubit(
           listExtensions: gh<_i315.ListExtensions>(),
-          extensionInstallService: gh<_i315.ExtensionInstallService>(),
+          installExtension: gh<_i783.InstallExtension>(),
+          uninstallExtension: gh<_i517.UninstallExtension>(),
           extensionRepoApiService: gh<_i1021.ExtensionRepoApiService>(),
         ));
     return this;
