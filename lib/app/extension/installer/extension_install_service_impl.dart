@@ -31,22 +31,7 @@ class ExtensionInstallServiceImpl implements ExtensionInstallService {
   }
 
   @override
-  Stream<Pair<InstallStatus, double>> downloadAndInstall(String zipUrl, Extension extension) {
-    return _download(zipUrl, extension).asyncMap((pair) async {
-      if (pair.first == DownloadTaskStatus.enqueued) {
-        return Pair(InstallStatus.downloading, pair.second.toDouble());
-      } else {
-        return Pair(InstallStatus.installing, 0.0);
-      }
-    }).asyncExpand((status) async* {
-      if (status.first == InstallStatus.installing) {
-        yield Pair(InstallStatus.installing, 0.0);
-        yield* install(extension).map((e) => Pair(InstallStatus.installing, 100.0));
-      }
-    });
-  }
-
-  Stream<Pair<DownloadTaskStatus, int>> _download(String zipUrl, Extension extension) async* {
+  Stream<int> download(String zipUrl, Extension extension) async* {
     // 初始化 FlutterDownloader
     if (!FlutterDownloader.initialized) {
       await FlutterDownloader.initialize(
@@ -73,11 +58,11 @@ class ExtensionInstallServiceImpl implements ExtensionInstallService {
     }
 
     // 監聽下載進度
-    final sub = StreamController<Pair<DownloadTaskStatus, int>>();
+    final sub = StreamController<int>();
     FlutterDownloader.registerCallback((String id, int statusCode, int progress) {
       if (id == taskId) {
         if (!sub.isClosed) {
-          sub.add(Pair(DownloadTaskStatus.enqueued, progress));
+          sub.add(progress);
         }
       }
     });

@@ -14,7 +14,7 @@ class ListRemoteExtensions {
         _extensionApiService = extensionApiService;
 
   Future<List<RemoteExtension>> call() async {
-    final repos = await _extensionRepoRepository.getAll();
+    final repos = await _extensionRepoRepository.list();
     final list = await Future.wait(repos.map((repo) => _extensionApiService.extensions(repo.baseUrl)));
     return list.flatten();
   }

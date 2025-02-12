@@ -1,12 +1,12 @@
 class ExtensionRepo {
-  final String icon;
+  final String? icon;
   final String baseUrl;
   final String displayName;
   final String website;
   final String signingKeyFingerprint;
 
   ExtensionRepo({
-    required this.icon,
+    this.icon,
     required this.baseUrl,
     required this.displayName,
     required this.website,

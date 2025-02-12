@@ -11,6 +11,6 @@ class GetExtensionRepo {
   final ExtensionRepoRepository _repo;
 
   Future<ExtensionRepo> call(String baseUrl) {
-    return _repo.getRepo(baseUrl);
+    return _repo.get(baseUrl);
   }
 }

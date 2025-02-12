@@ -26,13 +26,12 @@ class MockExtensionInstallServiceImpl implements ExtensionInstallService {
   }
 
   @override
-  Stream<Pair<InstallStatus, double>> downloadAndInstall(String zipUrl, Extension extension) {
+  Stream<int> download(String zipUrl, Extension extension) {
     throw UnimplementedError();
   }
 
   @override
   Stream<String> install(Extension extension) {
-    // TODO: implement install
     throw UnimplementedError();
   }
 

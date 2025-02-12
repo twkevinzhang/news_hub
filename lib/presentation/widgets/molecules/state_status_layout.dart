@@ -48,7 +48,7 @@ class StateStatusLayout<T> extends StatelessWidget {
       return StreamBuilder(
         stream: Stream.value(status),
         builder: (context, snapshot) {
-          return onCompletedStatus(context, status.data!);
+          return onCompletedStatus(context, status.data as T);
         },
       );
     }

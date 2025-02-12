@@ -18,10 +18,8 @@ class ListThreadInfos {
 
   Future<List<ThreadWithExtension>> call(
       {Pagination? pagination, SearchConfigForm? searchConfigForm}) async {
-    final extensions = await _listInstalledExtensions.call();
-    List<Board> boards = (await Future.wait(extensions
-            .map((e) => _apiService.boards(extension: e, siteId: e.site.id))))
-        .flatten();
+    final extensions = await _listInstalledExtensions.withBoards();
+    List<Board> boards = extensions.map((e) => e.boards).flatten().toList();
     if (searchConfigForm != null) {
       boards =
           boards.sortedBy((b) => searchConfigForm.boardsOrder.indexOf(b.id));

@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
 
 import 'package:news_hub/domain/extension_repo/interactor/create_extension_repo.dart';
+import 'package:news_hub/domain/extension_repo/interactor/delete_extension_repo.dart';
 import 'package:news_hub/domain/extension_repo/interactor/list_extension_repos.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/presentation/widgets/widgets.dart';
@@ -30,13 +31,16 @@ class ExtensionReposState extends Equatable {
 class ExtensionReposCubit extends Cubit<ExtensionReposState> {
   final CreateExtensionRepo _createExtensionRepo;
   final ListExtensionRepo _listExtensionRepo;
+  final DeleteExtensionRepo _deleteExtensionRepo;
   StreamSubscription? _subListExtensionRepos;
 
   ExtensionReposCubit({
     required CreateExtensionRepo createExtensionRepo,
     required ListExtensionRepo listExtensionRepo,
+    required DeleteExtensionRepo deleteExtensionRepo,
   })  : _listExtensionRepo = listExtensionRepo,
         _createExtensionRepo = createExtensionRepo,
+        _deleteExtensionRepo = deleteExtensionRepo,
         super(ExtensionReposState(repos: StateInitial()));
 
   @override
@@ -56,7 +60,8 @@ class ExtensionReposCubit extends Cubit<ExtensionReposState> {
         });
   }
 
-  Future<void> addExtensionRepos(String indexUrl) async {
-    await _createExtensionRepo.call(indexUrl);
+  Future<void> deleteExtensionRepo(String baseUrl) async {
+    await _deleteExtensionRepo.call(baseUrl);
+    loadExtensionRepos();
   }
 }

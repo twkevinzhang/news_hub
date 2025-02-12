@@ -1,36 +1,41 @@
 import 'package:injectable/injectable.dart';
+import 'package:news_hub/domain/extension/extension_api_service.dart';
 import 'package:news_hub/domain/extension/extension_install_service.dart';
 import 'package:news_hub/domain/models/models.dart';
 
 @lazySingleton
 class ListInstalledExtensions {
+  final ExtensionApiService _apiService;
   final ExtensionInstallService _installService;
   ListInstalledExtensions({
     required ExtensionInstallService installService,
-  }): _installService = installService;
+    required ExtensionApiService apiService,
+  }): _installService = installService, _apiService = apiService;
 
-  Future<List<ExtensionWithBoards>> call() {
-    return Future.value([
-      ExtensionWithBoards(
-        repoBaseUrl: 'https://raw.githubusercontent.com/twkevinzhang/news_hub_extensions/master',
-        pkgName: 'twkevinzhang_beeceptor',
-        displayName: 'Beeceptor Ex',
-        zipName: 'beeceptor.zip',
-        address: 'http://127.0.0.1:55001',
-        version: 1,
-        pythonVersion: 1,
-        isNsfw: false,
-        lang: 'zh_tw',
-        site: Site(
-          extensionPkgName: 'twkevinzhang_beeceptor',
-          id: '1',
-          name: 'Beeceptor',
-          icon: 'https://cdn-icons-png.flaticon.com/512/809/809103.png',
-          url: 'https://beeceptor.com/',
-        ),
-        boards: {},
-      ),
-    ]);
+  Future<List<Extension>> call() {
+    return _installService.listInstalledExtensions();
+  }
+
+  Future<List<ExtensionWithBoards>> withBoards() async {
+    final extensions = await call();
+    final promises = extensions.map((e) async {
+      final site = await _apiService.site(extension: e, siteId: "1");
+      final boards = await _apiService.boards(extension: e, siteId: site.id);
+      return ExtensionWithBoards(
+        repoBaseUrl: e.repoBaseUrl,
+        pkgName: e.pkgName,
+        displayName: e.displayName,
+        zipName: e.zipName,
+        address: e.address,
+        version: e.version,
+        pythonVersion: e.pythonVersion,
+        lang: e.lang,
+        isNsfw: e.isNsfw,
+        site: site,
+        boards: boards.toSet(),
+      );
+    });
+    return await Future.wait(promises);
   }
 }
 

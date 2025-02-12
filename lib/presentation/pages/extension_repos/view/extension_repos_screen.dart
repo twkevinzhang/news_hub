@@ -52,7 +52,9 @@ class _ExtensionReposViewState extends State<_ExtensionReposView> {
                       subtitle: Text(repo.baseUrl),
                       trailing: IconButton(
                         icon: const Icon(Icons.delete_outline),
-                        onPressed: () => {},
+                        onPressed: () => {
+                          cubit.deleteExtensionRepo(repo.baseUrl),
+                        },
                       ),
                     ))
                 .toList(),

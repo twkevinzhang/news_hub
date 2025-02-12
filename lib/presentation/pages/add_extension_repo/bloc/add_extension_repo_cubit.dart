@@ -76,13 +76,23 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
       return;
     }
 
+    final String baseUrl;
+    try {
+      baseUrl = _parseToBaseUrl(indexUrl);
+    } catch (e) {
+      emit(state.copyWith(
+        remoteRepo: StateError(message: e.toString()),
+      ));
+      return;
+    }
+
     emit(state.copyWith(
       remoteRepo: StateLoading(),
     ));
 
     var repoExists = false;
     try {
-      final localRepo = await _getExtensionRepo.call(indexUrl);
+      final localRepo = await _getExtensionRepo.call(baseUrl);
       repoExists = true;
     } on NotFoundException catch (e) {
       // pass
@@ -98,24 +108,35 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
       ));
     } else {
       try {
-        final remoteRepo = await _getRemoteExtensionRepo.call(indexUrl);
+        final remoteRepo = await _getRemoteExtensionRepo.call(baseUrl);
         emit(state.copyWith(
           remoteRepo: StateCompleted(data: remoteRepo),
         ));
       } catch (e) {
+        print(e);
         emit(state.copyWith(
-          remoteRepo: StateError(message: 'Failed to fetch repo'),
+          remoteRepo: StateError(message: e.toString()),
         ));
       }
     }
   }
 
   Future<void> addExtensionRepo() async {
+    final String baseUrl;
+    try {
+      baseUrl = _parseToBaseUrl(state.form.indexUrl!);
+    } catch (e) {
+      emit(state.copyWith(
+        remoteRepo: StateError(message: e.toString()),
+      ));
+      return;
+    }
+
     emit(state.copyWith(
       addResult: StateLoading(),
     ));
     try {
-      await _createExtensionRepo.call(state.form.indexUrl!);
+      await _createExtensionRepo.call(baseUrl);
       emit(state.copyWith(
         addResult: StateCompleted(data: null),
       ));
@@ -124,6 +145,16 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
         addResult: StateError(message: 'Failed to add repo'),
       ));
     }
+  }
+
+  String _parseToBaseUrl(String indexUrl) {
+    final formattedIndexUrl = Uri.tryParse(indexUrl)?.toString();
+    final repoRegex = RegExp(r'^https://.*/repo\.json$');
+    if (formattedIndexUrl == null || !repoRegex.hasMatch(formattedIndexUrl)) {
+      throw Exception('Invalid index URL');
+    }
+    final baseUrl = formattedIndexUrl.replaceAll('/repo.json', '');
+    return baseUrl;
   }
 
   void clearForm() {
