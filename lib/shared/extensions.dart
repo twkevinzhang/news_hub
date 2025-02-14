@@ -45,3 +45,9 @@ extension Int64Ex on $fixnum.Int64 {
     return DateTime.fromMillisecondsSinceEpoch(toInt());
   }
 }
+
+extension StringEx on String {
+  String remove(String s) {
+    return replaceAll(s, '');
+  }
+}
