@@ -6,6 +6,3 @@ class AlreadyExistsException implements Exception {
   AlreadyExistsException();
 }
 
-class InvalidUrlException implements Exception {
-  InvalidUrlException();
-}

@@ -71,6 +71,8 @@ import 'package:news_hub/domain/extension_repo/interactor/get_remote_extension_r
     as _i872;
 import 'package:news_hub/domain/extension_repo/interactor/list_extension_repos.dart'
     as _i25;
+import 'package:news_hub/domain/extension_repo/interactor/valid_extension_repo_url.dart'
+    as _i475;
 import 'package:news_hub/domain/search_config/interactor/list_search_configs.dart'
     as _i433;
 import 'package:news_hub/domain/search_config/search_config.dart' as _i1064;
@@ -110,8 +112,10 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.singleton<_i361.Dio>(() => appProvider.dio);
-    gh.lazySingleton<_i762.AppRouter>(() => _i762.AppRouter());
     gh.lazySingleton<_i539.AppDatabase>(() => _i539.AppDatabase());
+    gh.lazySingleton<_i475.ValidExtensionRepoUrl>(
+        () => _i475.ValidExtensionRepoUrl());
+    gh.lazySingleton<_i762.AppRouter>(() => _i762.AppRouter());
     gh.lazySingleton<_i1064.SearchConfigRepository>(
         () => _i374.SearchConfigRepositoryImpl());
     await gh.lazySingletonAsync<_i315.ExtensionInstallService>(

@@ -17,12 +17,8 @@ class CreateExtensionRepo {
     final ExtensionRepoApiService _service;
 
     Future<void> call(String baseUrl) async {
-        try {
-            final repo = await _service.detail(baseUrl);
-            return _insert(repo);
-        } catch(e) {
-            throw InvalidUrlException();
-        }
+        final repo = await _service.detail(baseUrl);
+        return _insert(repo);
     }
 
     Future<void> _insert(ExtensionRepo repo) async {

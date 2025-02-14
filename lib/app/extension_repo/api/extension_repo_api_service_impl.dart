@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:injectable/injectable.dart';
 
 import 'package:dio/dio.dart';
+import 'package:news_hub/app/extension_repo/api/models/detail_res/detail_res_dto.dart';
 import 'package:news_hub/app/extension_repo/api/models/extension/extension_dto.dart';
 import 'package:news_hub/app/extension_repo/api/models/extension_repo/extension_repo_dto.dart';
 import 'package:news_hub/domain/extension_repo/extension_repo.dart';
@@ -17,20 +18,20 @@ class ExtensionRepoApiServiceImpl implements ExtensionRepoApiService {
 
   @override
   Future<ExtensionRepo> detail(String baseUrl) async {
-    final res = await _dio.get('$baseUrl/repo.json');
-    final decodedResponse = jsonDecode(res.data);
-    return ExtensionRepoDto.fromJson(decodedResponse).toExtensionRepo(baseUrl: baseUrl);
+    final res = await _dio.get('https://api.github.com/repos/$baseUrl/contents/repo.json');
+    return DetailResDto.fromJson(res.data).mapContent((json) => ExtensionRepoDto.fromJson(json).toExtensionRepo(baseUrl: baseUrl));
   }
 
   @override
   Future<List<RemoteExtension>> extensions(String baseUrl) async {
-    final res = await _dio.get('$baseUrl/extensions.json');
-    final decodedResponse = jsonDecode(res.data) as Iterable;
-    return List<RemoteExtension>.from(decodedResponse.map((e) => ExtensionDto.fromJson(e).toRemoteExtension()));
+    final res = await _dio.get('https://api.github.com/repos/$baseUrl/contents/extensions.json');
+    return DetailResDto.fromJson(res.data).mapIterableContent((json) => ExtensionDto.fromJson(json).toRemoteExtension()).toList();
   }
 
   @override
-  Future<String> zipUrl(Extension extension) {
-    return Future.value("${extension.repoBaseUrl}/zip/${extension.pkgName}");
+  Future<String> zipUrl(Extension extension) async {
+    final res = await _dio.get('https://api.github.com/repos/${extension.repoBaseUrl}/contents/zip/${extension.pkgName}');
+    final dto = DetailResDto.fromJson(res.data);
+    return dto.downloadUrl;
   }
 }
