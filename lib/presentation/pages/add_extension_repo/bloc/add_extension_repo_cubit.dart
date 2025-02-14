@@ -9,6 +9,7 @@ import 'package:equatable/equatable.dart';
 import 'package:news_hub/domain/extension_repo/interactor/create_extension_repo.dart';
 import 'package:news_hub/domain/extension_repo/interactor/get_extension_repo.dart';
 import 'package:news_hub/domain/extension_repo/interactor/get_remote_extension_repo.dart';
+import 'package:news_hub/domain/extension_repo/interactor/valid_extension_repo_url.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/presentation/widgets/widgets.dart';
 import 'package:news_hub/shared/exceptions.dart';
@@ -44,6 +45,7 @@ class AddExtensionRepoState extends Equatable {
 class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
   final GetExtensionRepo _getExtensionRepo;
   final GetRemoteExtensionRepo _getRemoteExtensionRepo;
+  final ValidExtensionRepoUrl _validExtensionRepoUrl;
   final CreateExtensionRepo _createExtensionRepo;
   final TextEditingController _textFieldController;
   final FocusNode _focusNode;
@@ -51,12 +53,14 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
   get focusNode => _focusNode;
 
   AddExtensionRepoCubit({
+    required ValidExtensionRepoUrl validExtensionRepoUrl,
     required GetExtensionRepo getExtensionRepo,
     required GetRemoteExtensionRepo getRemoteExtensionRepo,
     required CreateExtensionRepo createExtensionRepo,
   })  : _getExtensionRepo = getExtensionRepo,
         _getRemoteExtensionRepo = getRemoteExtensionRepo,
         _createExtensionRepo = createExtensionRepo,
+        _validExtensionRepoUrl = validExtensionRepoUrl,
         _textFieldController = TextEditingController(),
         _focusNode = FocusNode(),
         super(AddExtensionRepoState(
@@ -70,26 +74,19 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
   Future<void> fetchExtensionRepo() async {
     final indexUrl = state.form.indexUrl;
     if (indexUrl == null) {
-      emit(state.copyWith(
-        remoteRepo: StateError(message: 'Index URL is required'),
-      ));
-      return;
-    }
-
-    final String baseUrl;
-    try {
-      baseUrl = _parseToBaseUrl(indexUrl);
-    } catch (e) {
-      emit(state.copyWith(
-        remoteRepo: StateError(message: e.toString()),
-      ));
-      return;
+      return _errorState('Index URL is required');
     }
 
     emit(state.copyWith(
       remoteRepo: StateLoading(),
     ));
 
+    final String baseUrl;
+    try {
+      baseUrl = await _validExtensionRepoUrl.call(indexUrl);
+    } catch (e) {
+      return _errorState(e.toString());
+    }
     var repoExists = false;
     try {
       final localRepo = await _getExtensionRepo.call(baseUrl);
@@ -97,15 +94,10 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
     } on NotFoundException catch (e) {
       // pass
     } catch (e) {
-      emit(state.copyWith(
-        remoteRepo: StateError(message: 'Failed to check local repo'),
-      ));
-      return;
+      return _errorState( 'Failed to check local repo');
     }
     if (repoExists) {
-      emit(state.copyWith(
-        remoteRepo: StateError(message: 'Repo already exists'),
-      ));
+      return _errorState('Repo already exists');
     } else {
       try {
         final remoteRepo = await _getRemoteExtensionRepo.call(baseUrl);
@@ -113,48 +105,31 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
           remoteRepo: StateCompleted(data: remoteRepo),
         ));
       } catch (e) {
-        print(e);
-        emit(state.copyWith(
-          remoteRepo: StateError(message: e.toString()),
-        ));
+        return _errorState(e.toString());
       }
     }
   }
 
   Future<void> addExtensionRepo() async {
-    final String baseUrl;
-    try {
-      baseUrl = _parseToBaseUrl(state.form.indexUrl!);
-    } catch (e) {
-      emit(state.copyWith(
-        remoteRepo: StateError(message: e.toString()),
-      ));
-      return;
-    }
-
     emit(state.copyWith(
       addResult: StateLoading(),
     ));
     try {
+      final baseUrl = await _validExtensionRepoUrl.call(state.form.indexUrl!);
       await _createExtensionRepo.call(baseUrl);
       emit(state.copyWith(
         addResult: StateCompleted(data: null),
       ));
+      return;
     } catch (e) {
-      emit(state.copyWith(
-        addResult: StateError(message: 'Failed to add repo'),
-      ));
+      return _errorState(e.toString());
     }
   }
 
-  String _parseToBaseUrl(String indexUrl) {
-    final formattedIndexUrl = Uri.tryParse(indexUrl)?.toString();
-    final repoRegex = RegExp(r'^https://.*/repo\.json$');
-    if (formattedIndexUrl == null || !repoRegex.hasMatch(formattedIndexUrl)) {
-      throw Exception('Invalid index URL');
-    }
-    final baseUrl = formattedIndexUrl.replaceAll('/repo.json', '');
-    return baseUrl;
+  void _errorState(String message) {
+    emit(state.copyWith(
+      remoteRepo: StateError(message: message),
+    ));
   }
 
   void clearForm() {

@@ -16,7 +16,7 @@ class ExtensionRepos extends Table {
   Set<Column> get primaryKey => {baseUrl};
 }
 
-class Extensions extends Table {
+class InstalledExtensions extends Table {
   TextColumn get id => text()();
   TextColumn get repoBaseUrl => text()();
   TextColumn get pkgName => text()();
@@ -33,7 +33,7 @@ class Extensions extends Table {
 }
 
 @lazySingleton
-@DriftDatabase(tables: [ExtensionRepos, Extensions])
+@DriftDatabase(tables: [ExtensionRepos, InstalledExtensions])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 

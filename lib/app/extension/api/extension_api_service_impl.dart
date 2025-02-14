@@ -45,6 +45,12 @@ class ExtensionApiServiceImpl implements ExtensionApiService {
   }
 
   @override
+  Future<void> close(domain.Extension extension) async {
+    SeriousPython.terminate();
+    await Future.delayed(const Duration(seconds: 5));
+  }
+
+  @override
   Future<domain.Site> site({required domain.Extension extension, required String siteId}) async {
     final res = await get(extension, 'sites/$siteId');
     return pb.GetSiteRes.fromBuffer(res.data as Uint8List).site.toDomain(extension.pkgName);

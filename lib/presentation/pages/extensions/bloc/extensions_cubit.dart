@@ -6,11 +6,10 @@ import 'package:injectable/injectable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:news_hub/domain/extension/interactor/install_extension.dart';
-import 'package:news_hub/domain/extension/interactor/uninstall_extension.dart';
-import 'package:news_hub/domain/extension_repo/extension_repo_api_service.dart';
 
 import 'package:news_hub/domain/extension/extension.dart';
+import 'package:news_hub/domain/extension/interactor/install_extension.dart';
+import 'package:news_hub/domain/extension_repo/extension_repo.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/presentation/widgets/widgets.dart';
 
@@ -112,13 +111,5 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
     }, onError: (error) {
       print(error);
     }));
-  }
-
-  void validateRepoUrl(String url) {
-    // ...
-  }
-
-  void createRepo(ExtensionRepo repo) {
-    // ...
   }
 }

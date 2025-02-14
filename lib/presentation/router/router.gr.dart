@@ -10,7 +10,6 @@
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i8;
-import 'package:flutter/material.dart' as _i9;
 import 'package:news_hub/presentation/pages/add_extension_repo/view/add_extension_repo_screen.dart'
     as _i1;
 import 'package:news_hub/presentation/pages/extension_repos/view/extension_repos_screen.dart'
@@ -123,34 +122,16 @@ class SettingsRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i7.ThreadInfosScreen]
-class ThreadInfosRoute extends _i8.PageRouteInfo<ThreadInfosRouteArgs> {
-  ThreadInfosRoute({_i9.Key? key, List<_i8.PageRouteInfo>? children})
-    : super(
-        ThreadInfosRoute.name,
-        args: ThreadInfosRouteArgs(key: key),
-        initialChildren: children,
-      );
+class ThreadInfosRoute extends _i8.PageRouteInfo<void> {
+  const ThreadInfosRoute({List<_i8.PageRouteInfo>? children})
+    : super(ThreadInfosRoute.name, initialChildren: children);
 
   static const String name = 'ThreadInfosRoute';
 
   static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<ThreadInfosRouteArgs>(
-        orElse: () => const ThreadInfosRouteArgs(),
-      );
-      return _i7.ThreadInfosScreen(key: args.key);
+      return const _i7.ThreadInfosScreen();
     },
   );
-}
-
-class ThreadInfosRouteArgs {
-  const ThreadInfosRouteArgs({this.key});
-
-  final _i9.Key? key;
-
-  @override
-  String toString() {
-    return 'ThreadInfosRouteArgs{key: $key}';
-  }
 }

@@ -31,29 +31,19 @@ class MockExtensionInstallServiceImpl implements ExtensionInstallService {
   }
 
   @override
-  Stream<String> install(Extension extension) {
-    throw UnimplementedError();
-  }
-
-  @override
   Future<void> uninstall(Extension extension) async {
     throw UnimplementedError();
   }
 
   @override
-  Future<List<Extension>> listInstalledExtensions() async {
-    return [
-      Extension(
-        repoBaseUrl: 'https://raw.githubusercontent.com/twkevinzhang/news_hub_extensions/master',
-        pkgName: 'twkevinzhang_beeceptor',
-        displayName: 'Beeceptor Ex',
-        zipName: 'beeceptor.zip',
-        address: 'http://127.0.0.1:55001',
-        version: 1,
-        pythonVersion: 1,
-        isNsfw: false,
-        lang: 'zh_tw',
-      )
-    ];
+  Future<void> removeZip(Extension extension) {
+    // TODO: implement removeZip
+    throw UnimplementedError();
+  }
+
+  @override
+  Stream<ZipStatus> install(Extension extension) {
+    // TODO: implement install
+    throw UnimplementedError();
   }
 }

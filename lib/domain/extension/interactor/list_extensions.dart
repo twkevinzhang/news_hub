@@ -23,10 +23,9 @@ class ListExtensions {
   Stream<Extensions> asStream(String? keyword) {
     return CombineLatestStream.combine3(
       _prefService.enabledLanguages().changes(),
-      _listInstalledExtensions.call().asStream(),
+      _listInstalledExtensions.asStream(),
       _listRemoteExtensions.call().asStream(),
       (enabledLanguages, installed, remotes) {
-        // final filtered = installed.where((element) => enabledLanguages.contains(element.lang));
         var filtered = installed.toIterable();
         var updates = filtered.where((element) => remotes.any((e) => e.pkgName == element.pkgName && e.version > element.version));
         var deprecated = filtered.toSet().difference(remotes.toSet());
