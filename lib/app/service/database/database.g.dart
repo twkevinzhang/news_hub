@@ -326,12 +326,12 @@ class ExtensionReposCompanion extends UpdateCompanion<ExtensionRepo> {
   }
 }
 
-class $ExtensionsTable extends Extensions
-    with TableInfo<$ExtensionsTable, Extension> {
+class $InstalledExtensionsTable extends InstalledExtensions
+    with TableInfo<$InstalledExtensionsTable, InstalledExtension> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ExtensionsTable(this.attachedDatabase, [this._alias]);
+  $InstalledExtensionsTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _idMeta = const VerificationMeta('id');
   @override
   late final GeneratedColumn<String> id = GeneratedColumn<String>(
@@ -409,9 +409,9 @@ class $ExtensionsTable extends Extensions
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'extensions';
+  static const String $name = 'installed_extensions';
   @override
-  VerificationContext validateIntegrity(Insertable<Extension> instance,
+  VerificationContext validateIntegrity(Insertable<InstalledExtension> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -484,9 +484,9 @@ class $ExtensionsTable extends Extensions
   @override
   Set<GeneratedColumn> get $primaryKey => {id};
   @override
-  Extension map(Map<String, dynamic> data, {String? tablePrefix}) {
+  InstalledExtension map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return Extension(
+    return InstalledExtension(
       id: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
       repoBaseUrl: attachedDatabase.typeMapping
@@ -511,12 +511,13 @@ class $ExtensionsTable extends Extensions
   }
 
   @override
-  $ExtensionsTable createAlias(String alias) {
-    return $ExtensionsTable(attachedDatabase, alias);
+  $InstalledExtensionsTable createAlias(String alias) {
+    return $InstalledExtensionsTable(attachedDatabase, alias);
   }
 }
 
-class Extension extends DataClass implements Insertable<Extension> {
+class InstalledExtension extends DataClass
+    implements Insertable<InstalledExtension> {
   final String id;
   final String repoBaseUrl;
   final String pkgName;
@@ -527,7 +528,7 @@ class Extension extends DataClass implements Insertable<Extension> {
   final int pythonVersion;
   final String? lang;
   final bool isNsfw;
-  const Extension(
+  const InstalledExtension(
       {required this.id,
       required this.repoBaseUrl,
       required this.pkgName,
@@ -556,8 +557,8 @@ class Extension extends DataClass implements Insertable<Extension> {
     return map;
   }
 
-  ExtensionsCompanion toCompanion(bool nullToAbsent) {
-    return ExtensionsCompanion(
+  InstalledExtensionsCompanion toCompanion(bool nullToAbsent) {
+    return InstalledExtensionsCompanion(
       id: Value(id),
       repoBaseUrl: Value(repoBaseUrl),
       pkgName: Value(pkgName),
@@ -571,10 +572,10 @@ class Extension extends DataClass implements Insertable<Extension> {
     );
   }
 
-  factory Extension.fromJson(Map<String, dynamic> json,
+  factory InstalledExtension.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return Extension(
+    return InstalledExtension(
       id: serializer.fromJson<String>(json['id']),
       repoBaseUrl: serializer.fromJson<String>(json['repoBaseUrl']),
       pkgName: serializer.fromJson<String>(json['pkgName']),
@@ -604,7 +605,7 @@ class Extension extends DataClass implements Insertable<Extension> {
     };
   }
 
-  Extension copyWith(
+  InstalledExtension copyWith(
           {String? id,
           String? repoBaseUrl,
           String? pkgName,
@@ -615,7 +616,7 @@ class Extension extends DataClass implements Insertable<Extension> {
           int? pythonVersion,
           Value<String?> lang = const Value.absent(),
           bool? isNsfw}) =>
-      Extension(
+      InstalledExtension(
         id: id ?? this.id,
         repoBaseUrl: repoBaseUrl ?? this.repoBaseUrl,
         pkgName: pkgName ?? this.pkgName,
@@ -627,8 +628,8 @@ class Extension extends DataClass implements Insertable<Extension> {
         lang: lang.present ? lang.value : this.lang,
         isNsfw: isNsfw ?? this.isNsfw,
       );
-  Extension copyWithCompanion(ExtensionsCompanion data) {
-    return Extension(
+  InstalledExtension copyWithCompanion(InstalledExtensionsCompanion data) {
+    return InstalledExtension(
       id: data.id.present ? data.id.value : this.id,
       repoBaseUrl:
           data.repoBaseUrl.present ? data.repoBaseUrl.value : this.repoBaseUrl,
@@ -648,7 +649,7 @@ class Extension extends DataClass implements Insertable<Extension> {
 
   @override
   String toString() {
-    return (StringBuffer('Extension(')
+    return (StringBuffer('InstalledExtension(')
           ..write('id: $id, ')
           ..write('repoBaseUrl: $repoBaseUrl, ')
           ..write('pkgName: $pkgName, ')
@@ -669,7 +670,7 @@ class Extension extends DataClass implements Insertable<Extension> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Extension &&
+      (other is InstalledExtension &&
           other.id == this.id &&
           other.repoBaseUrl == this.repoBaseUrl &&
           other.pkgName == this.pkgName &&
@@ -682,7 +683,7 @@ class Extension extends DataClass implements Insertable<Extension> {
           other.isNsfw == this.isNsfw);
 }
 
-class ExtensionsCompanion extends UpdateCompanion<Extension> {
+class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
   final Value<String> id;
   final Value<String> repoBaseUrl;
   final Value<String> pkgName;
@@ -694,7 +695,7 @@ class ExtensionsCompanion extends UpdateCompanion<Extension> {
   final Value<String?> lang;
   final Value<bool> isNsfw;
   final Value<int> rowid;
-  const ExtensionsCompanion({
+  const InstalledExtensionsCompanion({
     this.id = const Value.absent(),
     this.repoBaseUrl = const Value.absent(),
     this.pkgName = const Value.absent(),
@@ -707,7 +708,7 @@ class ExtensionsCompanion extends UpdateCompanion<Extension> {
     this.isNsfw = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  ExtensionsCompanion.insert({
+  InstalledExtensionsCompanion.insert({
     required String id,
     required String repoBaseUrl,
     required String pkgName,
@@ -728,7 +729,7 @@ class ExtensionsCompanion extends UpdateCompanion<Extension> {
         version = Value(version),
         pythonVersion = Value(pythonVersion),
         isNsfw = Value(isNsfw);
-  static Insertable<Extension> custom({
+  static Insertable<InstalledExtension> custom({
     Expression<String>? id,
     Expression<String>? repoBaseUrl,
     Expression<String>? pkgName,
@@ -756,7 +757,7 @@ class ExtensionsCompanion extends UpdateCompanion<Extension> {
     });
   }
 
-  ExtensionsCompanion copyWith(
+  InstalledExtensionsCompanion copyWith(
       {Value<String>? id,
       Value<String>? repoBaseUrl,
       Value<String>? pkgName,
@@ -768,7 +769,7 @@ class ExtensionsCompanion extends UpdateCompanion<Extension> {
       Value<String?>? lang,
       Value<bool>? isNsfw,
       Value<int>? rowid}) {
-    return ExtensionsCompanion(
+    return InstalledExtensionsCompanion(
       id: id ?? this.id,
       repoBaseUrl: repoBaseUrl ?? this.repoBaseUrl,
       pkgName: pkgName ?? this.pkgName,
@@ -824,7 +825,7 @@ class ExtensionsCompanion extends UpdateCompanion<Extension> {
 
   @override
   String toString() {
-    return (StringBuffer('ExtensionsCompanion(')
+    return (StringBuffer('InstalledExtensionsCompanion(')
           ..write('id: $id, ')
           ..write('repoBaseUrl: $repoBaseUrl, ')
           ..write('pkgName: $pkgName, ')
@@ -845,13 +846,14 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $ExtensionReposTable extensionRepos = $ExtensionReposTable(this);
-  late final $ExtensionsTable extensions = $ExtensionsTable(this);
+  late final $InstalledExtensionsTable installedExtensions =
+      $InstalledExtensionsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [extensionRepos, extensions];
+      [extensionRepos, installedExtensions];
 }
 
 typedef $$ExtensionReposTableCreateCompanionBuilder = ExtensionReposCompanion
@@ -1030,7 +1032,8 @@ typedef $$ExtensionReposTableProcessedTableManager = ProcessedTableManager<
     ),
     ExtensionRepo,
     PrefetchHooks Function()>;
-typedef $$ExtensionsTableCreateCompanionBuilder = ExtensionsCompanion Function({
+typedef $$InstalledExtensionsTableCreateCompanionBuilder
+    = InstalledExtensionsCompanion Function({
   required String id,
   required String repoBaseUrl,
   required String pkgName,
@@ -1043,7 +1046,8 @@ typedef $$ExtensionsTableCreateCompanionBuilder = ExtensionsCompanion Function({
   required bool isNsfw,
   Value<int> rowid,
 });
-typedef $$ExtensionsTableUpdateCompanionBuilder = ExtensionsCompanion Function({
+typedef $$InstalledExtensionsTableUpdateCompanionBuilder
+    = InstalledExtensionsCompanion Function({
   Value<String> id,
   Value<String> repoBaseUrl,
   Value<String> pkgName,
@@ -1057,9 +1061,9 @@ typedef $$ExtensionsTableUpdateCompanionBuilder = ExtensionsCompanion Function({
   Value<int> rowid,
 });
 
-class $$ExtensionsTableFilterComposer
-    extends Composer<_$AppDatabase, $ExtensionsTable> {
-  $$ExtensionsTableFilterComposer({
+class $$InstalledExtensionsTableFilterComposer
+    extends Composer<_$AppDatabase, $InstalledExtensionsTable> {
+  $$InstalledExtensionsTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1097,9 +1101,9 @@ class $$ExtensionsTableFilterComposer
       column: $table.isNsfw, builder: (column) => ColumnFilters(column));
 }
 
-class $$ExtensionsTableOrderingComposer
-    extends Composer<_$AppDatabase, $ExtensionsTable> {
-  $$ExtensionsTableOrderingComposer({
+class $$InstalledExtensionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $InstalledExtensionsTable> {
+  $$InstalledExtensionsTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1138,9 +1142,9 @@ class $$ExtensionsTableOrderingComposer
       column: $table.isNsfw, builder: (column) => ColumnOrderings(column));
 }
 
-class $$ExtensionsTableAnnotationComposer
-    extends Composer<_$AppDatabase, $ExtensionsTable> {
-  $$ExtensionsTableAnnotationComposer({
+class $$InstalledExtensionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $InstalledExtensionsTable> {
+  $$InstalledExtensionsTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1178,28 +1182,35 @@ class $$ExtensionsTableAnnotationComposer
       $composableBuilder(column: $table.isNsfw, builder: (column) => column);
 }
 
-class $$ExtensionsTableTableManager extends RootTableManager<
+class $$InstalledExtensionsTableTableManager extends RootTableManager<
     _$AppDatabase,
-    $ExtensionsTable,
-    Extension,
-    $$ExtensionsTableFilterComposer,
-    $$ExtensionsTableOrderingComposer,
-    $$ExtensionsTableAnnotationComposer,
-    $$ExtensionsTableCreateCompanionBuilder,
-    $$ExtensionsTableUpdateCompanionBuilder,
-    (Extension, BaseReferences<_$AppDatabase, $ExtensionsTable, Extension>),
-    Extension,
+    $InstalledExtensionsTable,
+    InstalledExtension,
+    $$InstalledExtensionsTableFilterComposer,
+    $$InstalledExtensionsTableOrderingComposer,
+    $$InstalledExtensionsTableAnnotationComposer,
+    $$InstalledExtensionsTableCreateCompanionBuilder,
+    $$InstalledExtensionsTableUpdateCompanionBuilder,
+    (
+      InstalledExtension,
+      BaseReferences<_$AppDatabase, $InstalledExtensionsTable,
+          InstalledExtension>
+    ),
+    InstalledExtension,
     PrefetchHooks Function()> {
-  $$ExtensionsTableTableManager(_$AppDatabase db, $ExtensionsTable table)
+  $$InstalledExtensionsTableTableManager(
+      _$AppDatabase db, $InstalledExtensionsTable table)
       : super(TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$ExtensionsTableFilterComposer($db: db, $table: table),
+              $$InstalledExtensionsTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$ExtensionsTableOrderingComposer($db: db, $table: table),
+              $$InstalledExtensionsTableOrderingComposer(
+                  $db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$ExtensionsTableAnnotationComposer($db: db, $table: table),
+              $$InstalledExtensionsTableAnnotationComposer(
+                  $db: db, $table: table),
           updateCompanionCallback: ({
             Value<String> id = const Value.absent(),
             Value<String> repoBaseUrl = const Value.absent(),
@@ -1213,7 +1224,7 @@ class $$ExtensionsTableTableManager extends RootTableManager<
             Value<bool> isNsfw = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
-              ExtensionsCompanion(
+              InstalledExtensionsCompanion(
             id: id,
             repoBaseUrl: repoBaseUrl,
             pkgName: pkgName,
@@ -1239,7 +1250,7 @@ class $$ExtensionsTableTableManager extends RootTableManager<
             required bool isNsfw,
             Value<int> rowid = const Value.absent(),
           }) =>
-              ExtensionsCompanion.insert(
+              InstalledExtensionsCompanion.insert(
             id: id,
             repoBaseUrl: repoBaseUrl,
             pkgName: pkgName,
@@ -1259,17 +1270,21 @@ class $$ExtensionsTableTableManager extends RootTableManager<
         ));
 }
 
-typedef $$ExtensionsTableProcessedTableManager = ProcessedTableManager<
+typedef $$InstalledExtensionsTableProcessedTableManager = ProcessedTableManager<
     _$AppDatabase,
-    $ExtensionsTable,
-    Extension,
-    $$ExtensionsTableFilterComposer,
-    $$ExtensionsTableOrderingComposer,
-    $$ExtensionsTableAnnotationComposer,
-    $$ExtensionsTableCreateCompanionBuilder,
-    $$ExtensionsTableUpdateCompanionBuilder,
-    (Extension, BaseReferences<_$AppDatabase, $ExtensionsTable, Extension>),
-    Extension,
+    $InstalledExtensionsTable,
+    InstalledExtension,
+    $$InstalledExtensionsTableFilterComposer,
+    $$InstalledExtensionsTableOrderingComposer,
+    $$InstalledExtensionsTableAnnotationComposer,
+    $$InstalledExtensionsTableCreateCompanionBuilder,
+    $$InstalledExtensionsTableUpdateCompanionBuilder,
+    (
+      InstalledExtension,
+      BaseReferences<_$AppDatabase, $InstalledExtensionsTable,
+          InstalledExtension>
+    ),
+    InstalledExtension,
     PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
@@ -1277,6 +1292,6 @@ class $AppDatabaseManager {
   $AppDatabaseManager(this._db);
   $$ExtensionReposTableTableManager get extensionRepos =>
       $$ExtensionReposTableTableManager(_db, _db.extensionRepos);
-  $$ExtensionsTableTableManager get extensions =>
-      $$ExtensionsTableTableManager(_db, _db.extensions);
+  $$InstalledExtensionsTableTableManager get installedExtensions =>
+      $$InstalledExtensionsTableTableManager(_db, _db.installedExtensions);
 }

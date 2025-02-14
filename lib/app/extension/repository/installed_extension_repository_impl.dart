@@ -8,23 +8,28 @@ import 'package:news_hub/shared/exceptions.dart';
 import 'package:uuid/uuid.dart';
 
 @dev
-@LazySingleton(as: ExtensionRepository)
-class ExtensionRepositoryImpl implements ExtensionRepository {
+@LazySingleton(as: InstalledExtensionRepository)
+class InstalledExtensionRepositoryImpl implements InstalledExtensionRepository {
   final AppDatabase _db;
 
-  ExtensionRepositoryImpl({
+  InstalledExtensionRepositoryImpl({
     required AppDatabase db,
   }) : _db = db;
 
   @override
   Future<List<domain.Extension>> list() async {
-    final extensions = await _db.select(_db.extensions).get();
+    final extensions = await _db.select(_db.installedExtensions).get();
     return extensions.map((e) => e.toDomain()).toList();
   }
 
   @override
+  Stream<List<domain.Extension>> stream() {
+    return _db.select(_db.installedExtensions).watch().map((l) => l.map((e) => e.toDomain()).toList());
+  }
+
+  @override
   Future<domain.Extension> get(String pkgName) async {
-    final extension = await (_db.select(_db.extensions)
+    final extension = await (_db.select(_db.installedExtensions)
           ..where((tbl) => tbl.pkgName.equals(pkgName)))
         .getSingleOrNull();
     if (extension == null) throw NotFoundException();
@@ -43,7 +48,7 @@ class ExtensionRepositoryImpl implements ExtensionRepository {
     required String? lang,
     required bool isNsfw,
   }) async {
-    final extension = ExtensionsCompanion.insert(
+    final extension = InstalledExtensionsCompanion.insert(
       id: const Uuid().v4(),
       repoBaseUrl: repoBaseUrl,
       pkgName: pkgName,
@@ -55,13 +60,13 @@ class ExtensionRepositoryImpl implements ExtensionRepository {
       lang: Value(lang),
       isNsfw: isNsfw,
     );
-    final res = await _db.into(_db.extensions).insertReturning(extension);
+    final res = await _db.into(_db.installedExtensions).insertReturning(extension);
     return res.toDomain();
   }
 
   @override
   Future<void> delete(String pkgName) async {
-    await (_db.delete(_db.extensions)
+    await (_db.delete(_db.installedExtensions)
           ..where((tbl) => tbl.pkgName.equals(pkgName)))
         .go();
   }
@@ -78,7 +83,7 @@ class ExtensionRepositoryImpl implements ExtensionRepository {
     required String? lang,
     required bool isNsfw,
   }) async {
-    final extension = ExtensionsCompanion(
+    final extension = InstalledExtensionsCompanion(
       id: Value(const Uuid().v4()),
       repoBaseUrl: Value(repoBaseUrl),
       pkgName: Value(pkgName),
@@ -90,7 +95,7 @@ class ExtensionRepositoryImpl implements ExtensionRepository {
       lang: Value(lang),
       isNsfw: Value(isNsfw),
     );
-    await _db.into(_db.extensions).insertOnConflictUpdate(extension);
+    await _db.into(_db.installedExtensions).insertOnConflictUpdate(extension);
     return get(pkgName);
   }
 }

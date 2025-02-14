@@ -1,7 +1,7 @@
 import 'package:news_hub/app/service/database/database.dart' as database;
 import 'package:news_hub/domain/models/models.dart' as domain;
 
-extension ExtensionTransform on database.Extension {
+extension ExtensionTransform on database.InstalledExtension {
   domain.Extension toDomain() {
     return domain.Extension(
       repoBaseUrl: repoBaseUrl,

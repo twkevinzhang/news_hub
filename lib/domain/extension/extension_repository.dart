@@ -1,7 +1,8 @@
 import 'package:news_hub/domain/models/models.dart';
 
-abstract class ExtensionRepository {
+abstract class InstalledExtensionRepository {
   Future<List<Extension>> list();
+  Stream<List<Extension>> stream();
   Future<Extension> get(String pkgName);
   Future<Extension> insert({
     required String repoBaseUrl,

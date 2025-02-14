@@ -13,7 +13,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 @RoutePage()
 class ThreadInfosScreen extends StatelessWidget {
-  ThreadInfosScreen({super.key});
+  const ThreadInfosScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -25,7 +25,7 @@ class ThreadInfosScreen extends StatelessWidget {
 }
 
 class _ThreadInfosView extends StatelessWidget {
-  _ThreadInfosView({super.key});
+  const _ThreadInfosView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +35,7 @@ class _ThreadInfosView extends StatelessWidget {
 
           return Scaffold(
               appBar: AppBar(
-                title: const Text('ThreadInfos'),
+                title: const Text('Threads'),
                 actions: [
                   IconButton(
                     icon: const Icon(Icons.search_outlined),
@@ -68,15 +68,13 @@ class _ThreadInfosView extends StatelessWidget {
                   ),
                 ),
                 noItemsFoundIndicatorBuilder: (context) => Center(
-                  child: Text("找不到"),
+                  child: Text("空"),
                 ),
                 firstPageProgressIndicatorBuilder: (context) =>
                 const LoadingIndicator(),
                 newPageProgressIndicatorBuilder: (context) =>
                 const LoadingIndicator(),
-                noMoreItemsIndicatorBuilder: (context) => Center(
-                  child: Text("沒有了"),
-                ),
+                noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
                 transitionDuration: const Duration(seconds: 1),
                 animateTransitions: true,
               ),

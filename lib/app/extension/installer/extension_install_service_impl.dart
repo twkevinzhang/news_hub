@@ -1,8 +1,6 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
-import 'package:archive/archive.dart';
-import 'package:dartx/dartx.dart';
+import 'package:archive/archive_io.dart';
 import 'package:flutter_downloader/flutter_downloader.dart';
 import 'package:flutter/material.dart';
 import 'package:injectable/injectable.dart';
@@ -40,9 +38,6 @@ class ExtensionInstallServiceImpl implements ExtensionInstallService {
       );
     }
 
-    // 清除舊資料
-    uninstall(extension);
-
     // 開始下載任務
     Directory(_downloadFolder).createSync(recursive: true);
     final taskId = await FlutterDownloader.enqueue(
@@ -71,21 +66,18 @@ class ExtensionInstallServiceImpl implements ExtensionInstallService {
   }
 
   @override
-  Stream<String> install(Extension extension) async* {
+  Stream<ZipStatus> install(Extension extension) async* {
     // Read the Zip file from disk.
     final downloadedFile = [_downloadFolder, extension.zipName].toUrl();
-    final bytes = File(downloadedFile).readAsBytesSync();
+    yield ZipStatus.reading;
+    final bytes = await File(downloadedFile).readAsBytes();
 
     // Decode the Zip file
+    yield ZipStatus.extracting;
     final archive = ZipDecoder().decodeBytes(bytes);
-
-    // Extract the contents of the Zip archive to disk.
-    final folder = [_installFolder, extension.pkgName].toUrl();
-
     for (final file in archive) {
-      final url = [folder, file.name].toUrl();
+      final url = [_installFolder, extension.pkgName, file.name].toUrl();
       if (file.isFile) {
-        yield "extraing";
         final data = file.content as List<int>;
         File(url)
           ..createSync(recursive: true)
@@ -94,7 +86,8 @@ class ExtensionInstallServiceImpl implements ExtensionInstallService {
         Directory(url).createSync(recursive: true);
       }
     }
-    yield "completed";
+
+    return;
   }
 
   @override
@@ -108,33 +101,12 @@ class ExtensionInstallServiceImpl implements ExtensionInstallService {
   }
 
   @override
-  Future<List<Extension>> listInstalledExtensions() async {
-    List<Extension> result = [];
-    final directory = Directory(_installFolder);
-    final subdirectories = directory.listSync().whereType<Directory>();
-    for (var subdirectory in subdirectories) {
-      final manifestFile = File('${subdirectory.path}/manifest.json');
-      if (manifestFile.existsSync()) {
-        final pkgName = Uri.parse(subdirectory.path).pathSegments.last;
-        result.add(await _load(pkgName));
-      }
+  Future<void> removeZip(Extension extension) async {
+    final folder = [_downloadFolder, extension.zipName].toUrl();
+    try {
+      await Directory(folder).delete(recursive: true);
+    } on PathNotFoundException catch (e) {
+      // pass
     }
-    return result;
-  }
-
-  Future<Extension> _load(String pkgName) async {
-    final jsonStr = await File([_installFolder, pkgName, "metadata.json"].toUrl()).readAsString();
-    final j = json.decode(jsonStr);
-    return Extension(
-      repoBaseUrl: j["repoBaseUrl"],
-      pkgName: pkgName,
-      displayName: j["display_name"],
-      zipName: j["zip_name"],
-      address : j["address"],
-      version : j["version"],
-      pythonVersion : j["python_version"],
-      lang : j["lang"],
-      isNsfw: j["is_nsfw"],
-    );
   }
 }

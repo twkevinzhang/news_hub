@@ -29,17 +29,14 @@ class ExtensionReposState extends Equatable {
 
 @lazySingleton
 class ExtensionReposCubit extends Cubit<ExtensionReposState> {
-  final CreateExtensionRepo _createExtensionRepo;
   final ListExtensionRepo _listExtensionRepo;
   final DeleteExtensionRepo _deleteExtensionRepo;
   StreamSubscription? _subListExtensionRepos;
 
   ExtensionReposCubit({
-    required CreateExtensionRepo createExtensionRepo,
     required ListExtensionRepo listExtensionRepo,
     required DeleteExtensionRepo deleteExtensionRepo,
   })  : _listExtensionRepo = listExtensionRepo,
-        _createExtensionRepo = createExtensionRepo,
         _deleteExtensionRepo = deleteExtensionRepo,
         super(ExtensionReposState(repos: StateInitial()));
 
