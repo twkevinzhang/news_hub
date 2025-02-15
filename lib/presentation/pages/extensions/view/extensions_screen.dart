@@ -14,7 +14,7 @@ class ExtensionsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<ExtensionsCubit>()..loadExtensions(),
+      create: (context) => sl<ExtensionsCubit>()..init(),
       child: _ExtensionsView(),
     );
   }
@@ -70,9 +70,8 @@ class _ExtensionsView extends StatelessWidget {
                 ),
               ],
             ),
-            body: StateStatusLayout(
-              status: state.extensions,
-              onCompletedStatus: (context, data) => ListView(
+            body: state.extensions.when(
+              completed: (data) => ListView(
                 children: [
                   if (data.updates.isNotEmpty) ...[
                     ListTile(title: TextDivider("等待更新")),
@@ -116,11 +115,11 @@ class _ExtensionsView extends StatelessWidget {
                   ],
                 ],
               ),
-              onErrorStatus: (context, message) => Center(
-                child: Text(message),
+              error: (exception) => Center(
+                child: Text(exception.toString()),
               ),
-              onInitialStatus: const SizedBox(),
-              onLoadingStatus: LoadingIndicator(),
+              initial: () => const SizedBox(),
+              loading: () => const LoadingIndicator(),
             ),
           );
         });

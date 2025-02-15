@@ -1,45 +1,30 @@
 import 'dart:async';
 
-import 'package:copy_with_extension/copy_with_extension.dart';
+
 import 'package:dio/dio.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:equatable/equatable.dart';
+
 
 import 'package:news_hub/domain/extension_repo/interactor/create_extension_repo.dart';
 import 'package:news_hub/domain/extension_repo/interactor/get_extension_repo.dart';
 import 'package:news_hub/domain/extension_repo/interactor/get_remote_extension_repo.dart';
 import 'package:news_hub/domain/extension_repo/interactor/valid_extension_repo_url.dart';
 import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/presentation/widgets/widgets.dart';
 import 'package:news_hub/shared/exceptions.dart';
+import 'package:news_hub/shared/models.dart';
 
-part 'add_extension_repo_cubit.g.dart';
+part 'add_extension_repo_cubit.freezed.dart';
 
-@immutable
-@CopyWith()
-class AddExtensionRepoForm {
-  final String? indexUrl;
-
-  const AddExtensionRepoForm({required this.indexUrl});
-}
-
-@immutable
-@CopyWith()
-class AddExtensionRepoState extends Equatable {
-  final AddExtensionRepoForm form;
-  final StateStatus<ExtensionRepo> remoteRepo;
-  final StateStatus<void> addResult;
-
-  const AddExtensionRepoState({
-    required this.form,
-    required this.remoteRepo,
-    required this.addResult,
-  });
-
-  @override
-  List<Object?> get props => [form, remoteRepo, addResult];
+@freezed
+class AddExtensionRepoState with _$AddExtensionRepoState {
+  const factory AddExtensionRepoState({
+    String? indexUrl,
+    required Result<ExtensionRepo> remoteRepo,
+    required Result<void> addResult,
+  }) = _AddExtensionRepoState;
 }
 
 @injectable
@@ -63,28 +48,26 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
         textEditingController = TextEditingController(),
         focusNode = FocusNode(),
         super(AddExtensionRepoState(
-          form: AddExtensionRepoForm(
-            indexUrl: null,
-          ),
-          remoteRepo: StateInitial(),
-          addResult: StateInitial(),
+          indexUrl: null,
+          remoteRepo: Result.initial(),
+          addResult: Result.initial(),
         ));
 
   Future<void> fetchExtensionRepo() async {
-    final indexUrl = state.form.indexUrl;
+    final indexUrl = state.indexUrl;
     if (indexUrl == null) {
-      return _errorState('Index URL is required');
+      return _errorState(Exception('Index URL is required'));
     }
 
     emit(state.copyWith(
-      remoteRepo: StateLoading(),
+      remoteRepo: Result.loading(),
     ));
 
     final String baseUrl;
     try {
       baseUrl = await _validExtensionRepoUrl.call(indexUrl);
-    } catch (e) {
-      return _errorState(e.toString());
+    } on Exception catch (e) {
+      return _errorState(e);
     }
     var repoExists = false;
     try {
@@ -92,69 +75,61 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
       repoExists = true;
     } on NotFoundException catch (e) {
       // pass
-    } catch (e) {
-      return _errorState( 'Failed to check local repo');
+    } on Exception catch (e) {
+      return _errorState(Exception('Failed to fetch local repo'));
     }
     if (repoExists) {
-      return _errorState('Repo already exists');
+      return _errorState(Exception('Repo already exists'));
     } else {
       try {
         final remoteRepo = await _getRemoteExtensionRepo.call(baseUrl);
         emit(state.copyWith(
-          remoteRepo: StateCompleted(data: remoteRepo),
+          remoteRepo: Result.completed(remoteRepo),
         ));
       } on DioException catch (e) {
         if (e.response?.statusCode == 404) {
-          return _errorState('Repo not found');
+          return _errorState(Exception('Remote repo not found'));
         } else {
           rethrow;
         }
-      } catch (e) {
-        return _errorState(e.toString());
+      } on Exception catch (e) {
+        return _errorState(e);
       }
     }
   }
 
   Future<void> addExtensionRepo() async {
     emit(state.copyWith(
-      addResult: StateLoading(),
+      addResult: Result.loading(),
     ));
     try {
-      final baseUrl = await _validExtensionRepoUrl.call(state.form.indexUrl!);
+      final baseUrl = await _validExtensionRepoUrl.call(state.indexUrl!);
       await _createExtensionRepo.call(baseUrl);
       emit(state.copyWith(
-        addResult: StateCompleted(data: null),
+        addResult: Result.completed(null),
       ));
       return;
-    } catch (e) {
-      return _errorState(e.toString());
+    } on Exception catch (e) {
+      return _errorState(e);
     }
   }
 
-  void _errorState(String message) {
+  void _errorState(Exception e) {
     emit(state.copyWith(
-      remoteRepo: StateError(message: message),
+      remoteRepo: Result.error(e),
     ));
   }
 
   void clearForm() {
-    emit(state.copyWith(
-      form: AddExtensionRepoForm(
-        indexUrl: null,
-      ),
-      remoteRepo: StateInitial(),
-      addResult: StateInitial(),
-    ));
+    updateForm(indexUrl: null);
     textEditingController.clear();
   }
 
   void updateForm({String? indexUrl}) {
     emit(state.copyWith(
-      form: AddExtensionRepoForm(
-        indexUrl: indexUrl,
-      ),
-      remoteRepo: StateInitial(),
-      addResult: StateInitial(),
+      indexUrl: indexUrl,
+      remoteRepo: Result.initial(),
+      addResult: Result.initial(),
     ));
   }
 }

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/domain/extension/extension.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/search/bloc/search_cubit.dart';
+import 'package:news_hub/presentation/pages/search/models/models.dart';
 import 'package:news_hub/presentation/pages/search/search.dart';
 import 'package:news_hub/presentation/pages/thread_infos/bloc/thread_infos_cubit.dart';
 import 'package:news_hub/presentation/pages/thread_infos/widgets/post_card.dart';
@@ -18,7 +19,7 @@ class ThreadInfosScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<ThreadInfosCubit>(),
+      create: (context) => sl<ThreadInfosCubit>()..init(),
       child: _ThreadInfosView(),
     );
   }
@@ -40,10 +41,11 @@ class _ThreadInfosView extends StatelessWidget {
                   IconButton(
                     icon: const Icon(Icons.search_outlined),
                     onPressed: () async {
-                      final result = await AutoRouter.of(context).push<SearchConfigForm?>(SearchRoute());
+                      final filter = await AutoRouter.of(context).push<ThreadsFilter?>(SearchRoute());
                       if (!context.mounted) return;
-                      if (result != null) {
-                        cubit.searchConfigForm = result;
+                      if (filter != null) {
+                        cubit.filter = filter;
+                        cubit.sorting = null;
                         cubit.refresh();
                       }
                     },
@@ -55,7 +57,6 @@ class _ThreadInfosView extends StatelessWidget {
               builderDelegate: PagedChildBuilderDelegate<ThreadWithExtension>(
                 itemBuilder: (context, thread, index) => GestureDetector(
                   onTap: () {
-
                   },
                   child: Column(
                     children: [

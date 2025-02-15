@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/extension/extension_api_service.dart';
 import 'package:news_hub/domain/extension/interactor/list_installed_extensions.dart';
 import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/presentation/pages/search/models/models.dart';
 import 'package:news_hub/presentation/pages/search/search.dart';
 import 'package:news_hub/shared/models.dart';
 
@@ -17,7 +18,7 @@ class ListThreadInfos {
         _listInstalledExtensions = listInstalledExtensions;
 
   Future<List<ThreadWithExtension>> call(
-      {Pagination? pagination, SearchConfigForm? searchConfigForm}) async {
+      {Pagination? pagination, ThreadsFilter? filter, ThreadsSorting? sorting}) async {
     final extensions = await _listInstalledExtensions.withBoards();
     List<Board> boards = extensions.map((e) => e.boards).flatten().toList();
     if (searchConfigForm != null) {

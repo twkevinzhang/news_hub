@@ -14,7 +14,7 @@ class ExtensionReposScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<ExtensionReposCubit>()..loadExtensionRepos(),
+      create: (context) => sl<ExtensionReposCubit>()..init(),
       child: _ExtensionReposView(),
     );
   }
@@ -32,27 +32,28 @@ class _ExtensionReposView extends StatelessWidget {
             appBar: AppBar(
               title: const Text('Extension Repos'),
             ),
-            body: StateStatusLayout(
-              status: state.repos,
-              onCompletedStatus: (context, data) => ListView(
-                children: data
-                    .map((repo) => ListTile(
-                  title: Text(repo.displayName),
-                  subtitle: Text(repo.baseUrl),
-                  trailing: IconButton(
-                    icon: const Icon(Icons.delete_outline),
-                    onPressed: () => {
-                      cubit.deleteExtensionRepo(repo.baseUrl),
-                    },
-                  ),
-                ))
-                    .toList(),
+            body: state.repos.when(
+              initial: () => const LoadingIndicator(),
+              loading: () => const LoadingIndicator(),
+              error: (exception) => Center(
+                child: Text(exception.toString()),
               ),
-              onErrorStatus: (context, message) => Center(
-                child: Text(message),
+              completed: (repos) => ListView.builder(
+                itemCount: repos.length,
+                itemBuilder: (context, index) {
+                  final repo = repos[index];
+                  return ListTile(
+                    title: Text(repo.displayName),
+                    subtitle: Text(repo.baseUrl),
+                    trailing: IconButton(
+                      icon: const Icon(Icons.delete_outline),
+                      onPressed: () {
+                        cubit.deleteExtensionRepo(repo.baseUrl);
+                      },
+                    ),
+                  );
+                },
               ),
-              onInitialStatus: const SizedBox(),
-              onLoadingStatus: LoadingIndicator(),
             ),
             floatingActionButton: FloatingActionButton(
               child: const Icon(Icons.add_outlined),
