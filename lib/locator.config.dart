@@ -186,7 +186,7 @@ extension GetItInjectableX on _i174.GetIt {
           repository: gh<_i525.ExtensionRepoRepository>(),
           service: gh<_i1021.ExtensionRepoApiService>(),
         ));
-    gh.lazySingleton<_i235.ExtensionReposCubit>(() => _i235.ExtensionReposCubit(
+    gh.factory<_i235.ExtensionReposCubit>(() => _i235.ExtensionReposCubit(
           listExtensionRepo: gh<_i25.ListExtensionRepo>(),
           deleteExtensionRepo: gh<_i1062.DeleteExtensionRepo>(),
         ));
@@ -195,17 +195,16 @@ extension GetItInjectableX on _i174.GetIt {
               extensionRepoRepository: gh<_i623.ExtensionRepoRepository>(),
               extensionApiService: gh<_i623.ExtensionRepoApiService>(),
             ));
-    gh.lazySingleton<_i21.SearchCubit>(() => _i21.SearchCubit(
+    gh.factory<_i21.SearchCubit>(() => _i21.SearchCubit(
           listSearchConfigs: gh<_i1064.ListSearchConfigs>(),
           listExtensions: gh<_i315.ListInstalledExtensions>(),
         ));
-    gh.lazySingleton<_i229.AddExtensionRepoCubit>(
-        () => _i229.AddExtensionRepoCubit(
-              validExtensionRepoUrl: gh<_i475.ValidExtensionRepoUrl>(),
-              getExtensionRepo: gh<_i581.GetExtensionRepo>(),
-              getRemoteExtensionRepo: gh<_i872.GetRemoteExtensionRepo>(),
-              createExtensionRepo: gh<_i460.CreateExtensionRepo>(),
-            ));
+    gh.factory<_i229.AddExtensionRepoCubit>(() => _i229.AddExtensionRepoCubit(
+          validExtensionRepoUrl: gh<_i475.ValidExtensionRepoUrl>(),
+          getExtensionRepo: gh<_i581.GetExtensionRepo>(),
+          getRemoteExtensionRepo: gh<_i872.GetRemoteExtensionRepo>(),
+          createExtensionRepo: gh<_i460.CreateExtensionRepo>(),
+        ));
     gh.lazySingleton<_i719.ListThreadInfos>(() => _i719.ListThreadInfos(
           apiService: gh<_i892.ExtensionApiService>(),
           listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
@@ -213,14 +212,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i315.ExtensionPreferencesService>(() =>
         _i29.ExtensionPreferencesServiceImpl(
             store: gh<_i365.PreferenceStore>()));
-    gh.lazySingleton<_i181.ThreadInfosCubit>(() =>
+    gh.factory<_i181.ThreadInfosCubit>(() =>
         _i181.ThreadInfosCubit(listThreadInfos: gh<_i315.ListThreadInfos>()));
     gh.lazySingleton<_i214.ListExtensions>(() => _i214.ListExtensions(
           prefService: gh<_i515.ExtensionPreferencesService>(),
           listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
           listRemoteExtensions: gh<_i915.ListRemoteExtensions>(),
         ));
-    gh.lazySingleton<_i945.ExtensionsCubit>(() => _i945.ExtensionsCubit(
+    gh.factory<_i945.ExtensionsCubit>(() => _i945.ExtensionsCubit(
           listExtensions: gh<_i315.ListExtensions>(),
           installExtension: gh<_i783.InstallExtension>(),
           uninstallExtension: gh<_i315.UninstallExtension>(),
