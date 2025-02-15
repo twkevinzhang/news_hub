@@ -17,6 +17,10 @@ class ListInstalledExtensions {
     return _extensionRepo.stream();
   }
 
+  Future<List<Extension>> asFuture() {
+    return _extensionRepo.list();
+  }
+
   Future<List<ExtensionWithBoards>> withBoards() async {
     final extensions = await _extensionRepo.list();
     final promises = extensions.map((e) async {

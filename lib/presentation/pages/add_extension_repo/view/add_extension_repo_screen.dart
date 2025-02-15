@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/add_extension_repo/bloc/add_extension_repo_cubit.dart';
 import 'package:news_hub/presentation/widgets/widgets.dart';
+import 'package:news_hub/shared/models.dart';
 
 @RoutePage()
 class AddExtensionRepoScreen extends StatelessWidget {
@@ -48,9 +49,10 @@ class _AddExtensionRepoView extends StatelessWidget {
                       },
                       icon: const Icon(Icons.clear),
                     ),
-                    errorText: state.remoteRepo is StateError
-                        ? state.remoteRepo.message
-                        : null),
+                    errorText: switch (state.remoteRepo) {
+                      ResultError error => error.exception.toString(),
+                      _ => null
+                    }),
                 onChanged: (value) {
                   cubit.updateForm(indexUrl: value);
                 },
@@ -59,41 +61,28 @@ class _AddExtensionRepoView extends StatelessWidget {
                 },
               ),
             ),
-            _buildButtonTile(
-              context,
-              StateStatusLayout(
-                status: state.remoteRepo,
-                onInitialStatus: ElevatedButton(
-                    onPressed: cubit.fetchExtensionRepo,
-                    child: const Text('Check it')),
-                onErrorStatus: (context, message) =>
-                    ElevatedButton(onPressed: null, child: const Text('請重新輸入')),
-                onCompletedStatus: (context, data) =>
-                    ElevatedButton(onPressed: null, child: const Text('已完成載入')),
-                onLoadingStatus: ElevatedButton(
-                    onPressed: null, child: CircularProgressIndicator()),
-              ),
-            ),
-            Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: StateStatusLayout(
-                  status: state.remoteRepo,
-                  onInitialStatus: const SizedBox(),
-                  onLoadingStatus: const SizedBox(),
-                  onCompletedStatus: (context, data) {
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ListTile(
-                          title: Row(
-                            children: [
-                              if (data.icon != null)
-                                ...[
+            state.remoteRepo.when(
+              initial: () => _buildElevatedButtonTile(
+                  context, cubit.fetchExtensionRepo, const Text('Check it')),
+              loading: () => _buildElevatedButtonTile(
+                  context, null, const CircularProgressIndicator()),
+              error: (exception) => _buildElevatedButtonTile(
+                  context, null, Text(exception.toString())),
+              completed: (repo) {
+                return Column(
+                  children: [
+                    _buildElevatedButtonTile(
+                        context, null, const Text('已完成載入')),
+                    Card(
+                      child: Column(
+                        children: [
+                          ListTile(
+                            title: Row(
+                              children: [
+                                if (repo.icon != null) ...[
                                   Text("icon: "),
                                   CachedNetworkImage(
-                                    imageUrl: data.icon!,
+                                    imageUrl: repo.icon!,
                                     width: 32,
                                     height: 32,
                                     placeholder: (context, url) =>
@@ -101,54 +90,51 @@ class _AddExtensionRepoView extends StatelessWidget {
                                     errorWidget: (context, url, error) => Row(
                                       children: [
                                         Icon(Icons.error),
-                                        Text('Error loading image on $url: $error')
+                                        Text(
+                                            'Error loading image on $url: $error')
                                       ],
                                     ),
                                   )
                                 ]
-                            ],
+                              ],
+                            ),
                           ),
-                        ),
-                        ListTile(title: Text("baseUrl: ${data.baseUrl}")),
-                        ListTile(
-                            title: Text("displayName: ${data.displayName}")),
-                        ListTile(title: Text("website: ${data.website}")),
-                        ListTile(
-                            title: Text(
-                                "signingKeyFingerprint: ${data.signingKeyFingerprint}")),
-                      ],
-                    );
-                  },
-                  onErrorStatus: (context, message) => SizedBox(),
-                )),
-            if (state.remoteRepo is StateCompleted)
-              _buildButtonTile(
-                context,
-                StateStatusLayout(
-                  status: state.addResult,
-                  onInitialStatus: ElevatedButton(
-                      onPressed: cubit.addExtensionRepo,
-                      child: const Text('Add Repo')),
-                  onErrorStatus: (context, message) =>
-                      ElevatedButton(onPressed: null, child: Text(message)),
-                  onCompletedStatus: (context, data) =>
-                      ElevatedButton(onPressed: null, child: const Text('已完成加入')),
-                  onLoadingStatus: ElevatedButton(
-                      onPressed: null, child: CircularProgressIndicator()),
-                ),
-              ),
+                          ListTile(
+                              title: Text("baseUrl: ${repo.baseUrl}")),
+                          ListTile(
+                              title: Text(
+                                  "displayName: ${repo.displayName}")),
+                          ListTile(
+                              title: Text("website: ${repo.website}")),
+                          ListTile(
+                              title: Text(
+                                  "signingKeyFingerprint: ${repo.signingKeyFingerprint}")),
+                        ],
+                      ),
+                    ),
+                    state.addResult.when(
+                      initial: () => _buildElevatedButtonTile(context, cubit.addExtensionRepo, const Text('Add Repo')),
+                      loading: () => _buildElevatedButtonTile(context, null, const CircularProgressIndicator()),
+                      completed: (r) => _buildElevatedButtonTile(context, null, const Text('已完成加入')),
+                      error: (exception) => _buildElevatedButtonTile(context, null, Text(exception.toString())),
+                    )
+                  ],
+                );
+              },
+            )
           ],
         ),
       );
     });
   }
 
-  Widget _buildButtonTile(BuildContext context, Widget button) {
+  Widget _buildElevatedButtonTile(
+      BuildContext context, VoidCallback? onPressed, Widget? child) {
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         child: SizedBox(
           width: double.infinity,
-          child: button,
+          child: ElevatedButton(onPressed: onPressed, child: child),
         ));
   }
 }

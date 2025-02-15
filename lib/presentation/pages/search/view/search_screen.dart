@@ -9,7 +9,8 @@ import 'package:news_hub/presentation/pages/search/bloc/search_cubit.dart';
 import 'package:news_hub/presentation/widgets/widgets.dart';
 
 
-// TODO: implement Declarative Navigation https://github.com/Milad-Akarie/auto_route_library/blob/master/auto_route/example/lib/declarative/declarative.router.dart
+// TODO: implement Declarative Navigation to replace 'final result = await AutoRouter.of(context).push<T>()'
+// https://github.com/Milad-Akarie/auto_route_library/blob/master/auto_route/example/lib/declarative/declarative.router.dart
 @RoutePage()
 class SearchScreen extends StatelessWidget {
   const SearchScreen({super.key});
@@ -51,12 +52,12 @@ class _SearchView extends StatelessWidget {
                   title: 'Enable\nExtensions',
                 ),
                 EasyStep(
-                  icon: Icon(Icons.sort),
-                  title: 'Threads\nSorting',
-                ),
-                EasyStep(
                   icon: Icon(Icons.search),
                   title: 'Keywords',
+                ),
+                EasyStep(
+                  icon: Icon(Icons.sort),
+                  title: 'Threads\nSorting',
                 ),
               ],
               onStepReached: (index) {
@@ -90,11 +91,11 @@ class _SearchView extends StatelessWidget {
       return ListView(
         children: [
           ...state.allExtensions
-              .filter((e) => state.searchConfig.enabledExtensionPkgNames
+              .filter((e) => state.searchConfig.extensionPkgNames
               .contains(e.pkgName))
               .flatMap((e) => e.boards
               .filter(
-                  (b) => state.searchConfig.enabledBoardIds.contains(b.id))
+                  (b) => state.searchConfig.boardIds.contains(b.id))
               .map((b) => ListTile(
             title: Text("[${e.displayName}] ${b.name}"),
             trailing: DropdownButton(
@@ -115,7 +116,7 @@ class _SearchView extends StatelessWidget {
           ))),
           ListTile(title: TextDivider("未啟用")),
           ...state.allExtensions
-              .filter((e) => !state.searchConfig.enabledExtensionPkgNames
+              .filter((e) => !state.searchConfig.extensionPkgNames
               .contains(e.pkgName))
               .map((e) => ListTile(
             title: Text("[${e.displayName}]"),
@@ -130,12 +131,12 @@ class _SearchView extends StatelessWidget {
       final cubit = context.read<SearchCubit>();
       return ListView(
         children: [
-          ...state.allExtensions
-              .filter((e) => state.searchConfig.enabledExtensionPkgNames
+          ...state.installedExtensions
+              .filter((e) => state.searchConfig.extensionPkgNames
               .contains(e.pkgName))
               .flatMap((e) => e.boards
               .filter(
-                  (b) => state.searchConfig.enabledBoardIds.contains(b.id))
+                  (b) => state.searchConfig.boardIds.contains(b.id))
               .map((b) => ListTile(
             title: Text("[${e.displayName}] ${b.name}"),
             trailing: DropdownButton(
@@ -156,7 +157,7 @@ class _SearchView extends StatelessWidget {
           ))),
           ListTile(title: TextDivider("未啟用")),
           ...state.allExtensions
-              .filter((e) => !state.searchConfig.enabledExtensionPkgNames
+              .filter((e) => !state.searchConfig.extensionPkgNames
               .contains(e.pkgName))
               .map((e) => ListTile(
             title: Text("[${e.displayName}]"),

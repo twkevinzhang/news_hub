@@ -13,4 +13,8 @@ class ListExtensionRepo {
     Stream<List<ExtensionRepo>> asStream() {
         return _repository.subscribeList();
     }
+
+    Future<List<ExtensionRepo>> asFuture() {
+        return _repository.list();
+    }
 }

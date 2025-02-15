@@ -1,25 +1,24 @@
-import 'package:equatable/equatable.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:news_hub/domain/extension/extension.dart';
 import 'package:news_hub/presentation/pages/search/bloc/search_cubit.dart';
+import 'package:news_hub/presentation/pages/search/models/models.dart';
 import 'package:news_hub/presentation/pages/search/search.dart';
-import 'package:copy_with_extension/copy_with_extension.dart';
 import 'package:injectable/injectable.dart';
+import 'package:news_hub/presentation/widgets/molecules/molecules.dart';
 import 'package:news_hub/shared/models.dart';
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
-part 'thread_infos_cubit.g.dart';
+part 'thread_infos_cubit.freezed.dart';
 
-@immutable
-@CopyWith()
-class ThreadInfosState extends Equatable {
-  final SearchConfigForm? searchConfigForm;
-
-  const ThreadInfosState({required this.searchConfigForm});
-
-  @override
-  List<Object?> get props => [searchConfigForm];
+@freezed
+class ThreadInfosState with _$ThreadInfosState {
+  const factory ThreadInfosState({
+    ThreadsFilter? filter,
+    ThreadsSorting? sorting,
+  }) = _ThreadInfosState;
 }
 
 @injectable
@@ -33,20 +32,30 @@ class ThreadInfosCubit extends Cubit<ThreadInfosState> {
     required ListThreadInfos listThreadInfos,
   })  : _listThreadInfos = listThreadInfos,
         pagingController = PagingController(firstPageKey: 1),
-        super(const ThreadInfosState(
-          searchConfigForm: null,
+        super(ThreadInfosState(
+          filter: null,
+          sorting: null,
         )) {
     pagingController.addPageRequestListener(_loadThreadInfos);
   }
 
-  set searchConfigForm(SearchConfigForm? searchConfigForm) {
-    emit(state.copyWith(searchConfigForm: searchConfigForm));
+  set filter(ThreadsFilter? filter) {
+    emit(state.copyWith(filter: filter));
+  }
+
+  set sorting(ThreadsSorting? sorting) {
+    emit(state.copyWith(sorting: sorting));
+  }
+
+  void init() {
+    _loadThreadInfos(1);
   }
 
   void _loadThreadInfos(int pageKey) async {
     try {
       final result = await _listThreadInfos.call(
-        searchConfigForm: state.searchConfigForm,
+        filter: state.filter,
+        sorting: state.sorting,
         pagination: Pagination(
           page: pageKey,
           pageSize: _pageSize,
