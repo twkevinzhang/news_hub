@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:copy_with_extension/copy_with_extension.dart';
+import 'package:dio/dio.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -41,7 +42,7 @@ class AddExtensionRepoState extends Equatable {
   List<Object?> get props => [form, remoteRepo, addResult];
 }
 
-@lazySingleton
+@injectable
 class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
   final GetExtensionRepo _getExtensionRepo;
   final GetRemoteExtensionRepo _getRemoteExtensionRepo;
@@ -104,6 +105,12 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
         emit(state.copyWith(
           remoteRepo: StateCompleted(data: remoteRepo),
         ));
+      } on DioException catch (e) {
+        if (e.response?.statusCode == 404) {
+          return _errorState('Repo not found');
+        } else {
+          rethrow;
+        }
       } catch (e) {
         return _errorState(e.toString());
       }

@@ -58,7 +58,7 @@ class SearchState extends Equatable {
       [currentStep, allSearchConfigs, allExtensions, searchConfig];
 }
 
-@lazySingleton
+@injectable
 class SearchCubit extends Cubit<SearchState> {
   late final ListInstalledExtensions _listExtensions;
   late final PageController _pageController;

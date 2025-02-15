@@ -22,7 +22,7 @@ class ThreadInfosState extends Equatable {
   List<Object?> get props => [searchConfigForm];
 }
 
-@lazySingleton
+@injectable
 class ThreadInfosCubit extends Cubit<ThreadInfosState> {
   final ListThreadInfos _listThreadInfos;
   final PagingController<int, ThreadWithExtension> _pagingController;

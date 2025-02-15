@@ -32,7 +32,7 @@ class ExtensionsState extends Equatable {
   List<Object?> get props => [extensions, keyword, installingExtensions];
 }
 
-@lazySingleton
+@injectable
 class ExtensionsCubit extends Cubit<ExtensionsState> {
   final ListExtensions _listExtensions;
   final InstallExtension _installExtension;
