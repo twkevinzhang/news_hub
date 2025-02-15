@@ -215,7 +215,6 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
 
   @override
   Future<void> close(Extension extension) {
-    // TODO: implement close
     throw UnimplementedError();
   }
 }

@@ -48,9 +48,9 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
   final GetRemoteExtensionRepo _getRemoteExtensionRepo;
   final ValidExtensionRepoUrl _validExtensionRepoUrl;
   final CreateExtensionRepo _createExtensionRepo;
-  final TextEditingController _textFieldController;
+  final TextEditingController _textEditingController;
   final FocusNode _focusNode;
-  get textFieldController => _textFieldController;
+  get textEditingController => _textEditingController;
   get focusNode => _focusNode;
 
   AddExtensionRepoCubit({
@@ -62,7 +62,7 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
         _getRemoteExtensionRepo = getRemoteExtensionRepo,
         _createExtensionRepo = createExtensionRepo,
         _validExtensionRepoUrl = validExtensionRepoUrl,
-        _textFieldController = TextEditingController(),
+        _textEditingController = TextEditingController(),
         _focusNode = FocusNode(),
         super(AddExtensionRepoState(
           form: AddExtensionRepoForm(
@@ -147,7 +147,7 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
       remoteRepo: StateInitial(),
       addResult: StateInitial(),
     ));
-    textFieldController.clear();
+    textEditingController.clear();
   }
 
   void updateForm({String? indexUrl}) {

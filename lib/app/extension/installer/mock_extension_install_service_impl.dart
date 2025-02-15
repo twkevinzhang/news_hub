@@ -37,13 +37,11 @@ class MockExtensionInstallServiceImpl implements ExtensionInstallService {
 
   @override
   Future<void> removeZip(Extension extension) {
-    // TODO: implement removeZip
     throw UnimplementedError();
   }
 
   @override
   Stream<ZipStatus> install(Extension extension) {
-    // TODO: implement install
     throw UnimplementedError();
   }
 }

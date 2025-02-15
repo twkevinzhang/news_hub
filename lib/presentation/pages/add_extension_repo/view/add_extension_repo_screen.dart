@@ -37,7 +37,7 @@ class _AddExtensionRepoView extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
               child: TextField(
-                controller: cubit.textFieldController,
+                controller: cubit.textEditingController,
                 focusNode: cubit.focusNode,
                 decoration: InputDecoration(
                     labelText: 'index url',
