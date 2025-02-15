@@ -295,12 +295,12 @@ class Comment {
 
 /// 搜尋條件、排序
 class SearchConfig {
-  late final String id;
-  late final Set<String> enabledExtensionPkgNames;
-  late final Set<String> enabledBoardIds;
-  late final List<String> boardsOrder;
-  late final Map<String, String> threadsSorting; // boardId -> sorting
-  late final String? keywords;
+  final String id;
+  final Set<String> enabledExtensionPkgNames;
+  final Set<String> enabledBoardIds;
+  final List<String> boardsOrder;
+  final Map<String, String> threadsSorting; // boardId -> sorting
+  final String? keywords;
 
   SearchConfig(
       {required this.id,

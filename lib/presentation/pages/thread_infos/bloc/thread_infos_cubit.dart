@@ -25,19 +25,18 @@ class ThreadInfosState extends Equatable {
 @injectable
 class ThreadInfosCubit extends Cubit<ThreadInfosState> {
   final ListThreadInfos _listThreadInfos;
-  final PagingController<int, ThreadWithExtension> _pagingController;
-  get pagingController => _pagingController;
+  final PagingController<int, ThreadWithExtension> pagingController;
 
   static const _pageSize = 10;
 
   ThreadInfosCubit({
     required ListThreadInfos listThreadInfos,
   })  : _listThreadInfos = listThreadInfos,
-        _pagingController = PagingController(firstPageKey: 1),
+        pagingController = PagingController(firstPageKey: 1),
         super(const ThreadInfosState(
           searchConfigForm: null,
         )) {
-    _pagingController.addPageRequestListener(_loadThreadInfos);
+    pagingController.addPageRequestListener(_loadThreadInfos);
   }
 
   set searchConfigForm(SearchConfigForm? searchConfigForm) {
@@ -56,19 +55,23 @@ class ThreadInfosCubit extends Cubit<ThreadInfosState> {
 
       final isLastPage = result.length < _pageSize;
       if (isLastPage) {
-        _pagingController.appendLastPage(result);
+        pagingController.appendLastPage(result);
       } else {
         final nextPageKey = pageKey + result.length;
-        _pagingController.appendPage(result, nextPageKey);
+        pagingController.appendPage(result, nextPageKey);
       }
     } catch (e) {
-      _pagingController.error = e;
+      pagingController.error = e;
     }
+  }
+
+  void refresh() {
+    pagingController.refresh();
   }
 
   @override
   Future<void> close() {
-    _pagingController.dispose();
+    pagingController.dispose();
     return super.close();
   }
 }

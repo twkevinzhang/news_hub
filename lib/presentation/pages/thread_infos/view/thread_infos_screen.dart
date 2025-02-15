@@ -44,7 +44,7 @@ class _ThreadInfosView extends StatelessWidget {
                       if (!context.mounted) return;
                       if (result != null) {
                         cubit.searchConfigForm = result;
-                        cubit.pagingController.refresh();
+                        cubit.refresh();
                       }
                     },
                   ),

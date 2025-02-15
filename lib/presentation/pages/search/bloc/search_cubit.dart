@@ -60,15 +60,14 @@ class SearchState extends Equatable {
 
 @injectable
 class SearchCubit extends Cubit<SearchState> {
-  late final ListInstalledExtensions _listExtensions;
-  late final PageController _pageController;
-  get pageController => _pageController;
+  final ListInstalledExtensions _listExtensions;
+  final PageController pageController;
 
   SearchCubit({
     required ListSearchConfigs listSearchConfigs,
     required ListInstalledExtensions listExtensions,
   })  : _listExtensions = listExtensions,
-        _pageController = PageController(),
+        pageController = PageController(),
         super(SearchState(
           currentStep: 0,
           allSearchConfigs: [],
@@ -84,7 +83,7 @@ class SearchCubit extends Cubit<SearchState> {
 
   @override
   Future<void> close() {
-    _pageController.dispose();
+    pageController.dispose();
     return super.close();
   }
 
@@ -96,7 +95,7 @@ class SearchCubit extends Cubit<SearchState> {
   }
 
   void nextStep() {
-    _pageController.nextPage(
+    pageController.nextPage(
       duration: const Duration(milliseconds: 300),
       curve: Curves.easeInOut,
     );

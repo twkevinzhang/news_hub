@@ -38,8 +38,7 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
   final InstallExtension _installExtension;
   final UninstallExtension _uninstallExtension;
   final ExtensionRepoApiService _extensionRepoApiService;
-  final SearchController _searchController;
-  get searchController => _searchController;
+  final SearchController searchController;
   StreamSubscription? _subListExtensions;
   final List<StreamSubscription> _subInstallExtensions;
 
@@ -53,7 +52,7 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
         _uninstallExtension = uninstallExtension,
         _extensionRepoApiService = extensionRepoApiService,
         _subInstallExtensions = [],
-        _searchController = SearchController(),
+        searchController = SearchController(),
         super(ExtensionsState(
           keyword: null,
           extensions: StateInitial(),
@@ -78,6 +77,10 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
       emit(state.copyWith(extensions: StateError(message: error.toString())));
       print(error);
     });
+  }
+
+  void closeView(String? selectedText) {
+    searchController.closeView(selectedText);
   }
 
   void changeKeywords(String keyword) {
