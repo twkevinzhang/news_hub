@@ -27,7 +27,7 @@ class ExtensionReposState extends Equatable {
   List<Object?> get props => [repos];
 }
 
-@lazySingleton
+@injectable
 class ExtensionReposCubit extends Cubit<ExtensionReposState> {
   final ListExtensionRepo _listExtensionRepo;
   final DeleteExtensionRepo _deleteExtensionRepo;
