@@ -36,7 +36,7 @@ class _ExtensionsView extends StatelessWidget {
                     viewOnChanged: (text) => cubit.changeKeywords(text),
                     viewOnSubmitted: (text) {
                       cubit.loadExtensions();
-                      cubit.searchController.closeView(text);
+                      cubit.closeView(text);
                     },
                     isFullScreen: true,
                     searchController: cubit.searchController,

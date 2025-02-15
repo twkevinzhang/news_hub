@@ -48,10 +48,8 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
   final GetRemoteExtensionRepo _getRemoteExtensionRepo;
   final ValidExtensionRepoUrl _validExtensionRepoUrl;
   final CreateExtensionRepo _createExtensionRepo;
-  final TextEditingController _textEditingController;
-  final FocusNode _focusNode;
-  get textEditingController => _textEditingController;
-  get focusNode => _focusNode;
+  final TextEditingController textEditingController;
+  final FocusNode focusNode;
 
   AddExtensionRepoCubit({
     required ValidExtensionRepoUrl validExtensionRepoUrl,
@@ -62,8 +60,8 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
         _getRemoteExtensionRepo = getRemoteExtensionRepo,
         _createExtensionRepo = createExtensionRepo,
         _validExtensionRepoUrl = validExtensionRepoUrl,
-        _textEditingController = TextEditingController(),
-        _focusNode = FocusNode(),
+        textEditingController = TextEditingController(),
+        focusNode = FocusNode(),
         super(AddExtensionRepoState(
           form: AddExtensionRepoForm(
             indexUrl: null,
