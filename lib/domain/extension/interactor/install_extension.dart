@@ -27,6 +27,7 @@ class InstallExtension {
         _extensionApiService = extensionApiService,
         _extensionRepository = extensionRepository;
 
+  // TODO: return broadcast stream
   Stream<Pair<InstallStatus, double>> downloadAndInstall(
       String zipUrl, Extension extension) async* {
     yield Pair(InstallStatus.downloading, 0.0);

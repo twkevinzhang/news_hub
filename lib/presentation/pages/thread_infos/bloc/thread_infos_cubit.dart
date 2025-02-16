@@ -3,15 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:news_hub/domain/extension/extension.dart';
-import 'package:news_hub/presentation/pages/search/bloc/search_cubit.dart';
-import 'package:news_hub/presentation/pages/search/models/models.dart';
-import 'package:news_hub/presentation/pages/search/search.dart';
 import 'package:injectable/injectable.dart';
+import 'package:news_hub/domain/extension/models/models.dart';
 import 'package:news_hub/presentation/widgets/molecules/molecules.dart';
 import 'package:news_hub/shared/models.dart';
 
 part 'thread_infos_cubit.freezed.dart';
-
 
 @freezed
 class ThreadInfosState with _$ThreadInfosState {
@@ -19,6 +16,12 @@ class ThreadInfosState with _$ThreadInfosState {
     ThreadsFilter? filter,
     ThreadsSorting? sorting,
   }) = _ThreadInfosState;
+}
+
+extension ThreadInfosStateEx on ThreadInfosState {
+  int filteredBoardsCount() {
+    return filter?.boardIds?.length ?? 0;
+  }
 }
 
 @injectable
@@ -39,11 +42,56 @@ class ThreadInfosCubit extends Cubit<ThreadInfosState> {
     pagingController.addPageRequestListener(_loadThreadInfos);
   }
 
-  set filter(ThreadsFilter? filter) {
-    emit(state.copyWith(filter: filter));
+  /// 如果傳入 null, 則表示不過濾
+  void setExtensionPkgNamesInFilter({
+    Set<String>? extensionPkgNames,
+  }) {
+    if (state.filter == null) {
+      emit(state.copyWith(
+        filter: ThreadsFilter(
+          extensionPkgNames: extensionPkgNames,
+          boardIds: null,
+          keywords: null,
+        ),
+      ));
+    } else {
+      emit(state.copyWith.filter!.call(extensionPkgNames: extensionPkgNames));
+    }
   }
 
-  get filtered => state.filter != null;
+  /// 如果傳入 null, 則表示不過濾
+  void setBoardIdsInFilter({
+    Set<String>? boardIds,
+  }) {
+    if (state.filter == null) {
+      emit(state.copyWith(
+        filter: ThreadsFilter(
+          extensionPkgNames: null,
+          boardIds: boardIds,
+          keywords: null,
+        ),
+      ));
+    } else {
+      emit(state.copyWith.filter!.call(boardIds: boardIds));
+    }
+  }
+
+  /// 如果傳入 null, 則表示不過濾
+  void setKeywordsInFilter({
+    String? keywords,
+  }) {
+    if (state.filter == null) {
+      emit(state.copyWith(
+        filter: ThreadsFilter(
+          extensionPkgNames: null,
+          boardIds: null,
+          keywords: keywords,
+        ),
+      ));
+    } else {
+      emit(state.copyWith.filter!.call(keywords: keywords));
+    }
+  }
 
   set sorting(ThreadsSorting? sorting) {
     emit(state.copyWith(sorting: sorting));
@@ -55,10 +103,6 @@ class ThreadInfosCubit extends Cubit<ThreadInfosState> {
 
   void refresh() {
     pagingController.refresh();
-  }
-
-  void updateVisibilityFactor(double factor) {
-    emit(state.copyWith(visibilityFactor: factor));
   }
 
   void _loadThreadInfos(int pageKey) async {

@@ -52,7 +52,7 @@ class ListExtensions {
   }
 
   Future<Extensions> asFuture(String? keyword) {
-    return asStream(keyword).single;
+    return asStream(keyword).first;
   }
 }
 

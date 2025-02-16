@@ -16,8 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ThreadsFilter {
-  Set<String> get extensionPkgNames => throw _privateConstructorUsedError;
-  Set<String> get boardIds => throw _privateConstructorUsedError;
+  Set<String>? get extensionPkgNames => throw _privateConstructorUsedError;
+  Set<String>? get boardIds => throw _privateConstructorUsedError;
   String? get keywords => throw _privateConstructorUsedError;
 
   /// Create a copy of ThreadsFilter
@@ -34,7 +34,9 @@ abstract class $ThreadsFilterCopyWith<$Res> {
       _$ThreadsFilterCopyWithImpl<$Res, ThreadsFilter>;
   @useResult
   $Res call(
-      {Set<String> extensionPkgNames, Set<String> boardIds, String? keywords});
+      {Set<String>? extensionPkgNames,
+      Set<String>? boardIds,
+      String? keywords});
 }
 
 /// @nodoc
@@ -52,19 +54,19 @@ class _$ThreadsFilterCopyWithImpl<$Res, $Val extends ThreadsFilter>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? extensionPkgNames = null,
-    Object? boardIds = null,
+    Object? extensionPkgNames = freezed,
+    Object? boardIds = freezed,
     Object? keywords = freezed,
   }) {
     return _then(_value.copyWith(
-      extensionPkgNames: null == extensionPkgNames
+      extensionPkgNames: freezed == extensionPkgNames
           ? _value.extensionPkgNames
           : extensionPkgNames // ignore: cast_nullable_to_non_nullable
-              as Set<String>,
-      boardIds: null == boardIds
+              as Set<String>?,
+      boardIds: freezed == boardIds
           ? _value.boardIds
           : boardIds // ignore: cast_nullable_to_non_nullable
-              as Set<String>,
+              as Set<String>?,
       keywords: freezed == keywords
           ? _value.keywords
           : keywords // ignore: cast_nullable_to_non_nullable
@@ -82,7 +84,9 @@ abstract class _$$ThreadsFilterImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {Set<String> extensionPkgNames, Set<String> boardIds, String? keywords});
+      {Set<String>? extensionPkgNames,
+      Set<String>? boardIds,
+      String? keywords});
 }
 
 /// @nodoc
@@ -98,19 +102,19 @@ class __$$ThreadsFilterImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? extensionPkgNames = null,
-    Object? boardIds = null,
+    Object? extensionPkgNames = freezed,
+    Object? boardIds = freezed,
     Object? keywords = freezed,
   }) {
     return _then(_$ThreadsFilterImpl(
-      extensionPkgNames: null == extensionPkgNames
+      extensionPkgNames: freezed == extensionPkgNames
           ? _value._extensionPkgNames
           : extensionPkgNames // ignore: cast_nullable_to_non_nullable
-              as Set<String>,
-      boardIds: null == boardIds
+              as Set<String>?,
+      boardIds: freezed == boardIds
           ? _value._boardIds
           : boardIds // ignore: cast_nullable_to_non_nullable
-              as Set<String>,
+              as Set<String>?,
       keywords: freezed == keywords
           ? _value.keywords
           : keywords // ignore: cast_nullable_to_non_nullable
@@ -125,27 +129,31 @@ class _$ThreadsFilterImpl
     with DiagnosticableTreeMixin
     implements _ThreadsFilter {
   const _$ThreadsFilterImpl(
-      {required final Set<String> extensionPkgNames,
-      required final Set<String> boardIds,
+      {required final Set<String>? extensionPkgNames,
+      required final Set<String>? boardIds,
       required this.keywords})
       : _extensionPkgNames = extensionPkgNames,
         _boardIds = boardIds;
 
-  final Set<String> _extensionPkgNames;
+  final Set<String>? _extensionPkgNames;
   @override
-  Set<String> get extensionPkgNames {
+  Set<String>? get extensionPkgNames {
+    final value = _extensionPkgNames;
+    if (value == null) return null;
     if (_extensionPkgNames is EqualUnmodifiableSetView)
       return _extensionPkgNames;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableSetView(_extensionPkgNames);
+    return EqualUnmodifiableSetView(value);
   }
 
-  final Set<String> _boardIds;
+  final Set<String>? _boardIds;
   @override
-  Set<String> get boardIds {
+  Set<String>? get boardIds {
+    final value = _boardIds;
+    if (value == null) return null;
     if (_boardIds is EqualUnmodifiableSetView) return _boardIds;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableSetView(_boardIds);
+    return EqualUnmodifiableSetView(value);
   }
 
   @override
@@ -196,14 +204,14 @@ class _$ThreadsFilterImpl
 
 abstract class _ThreadsFilter implements ThreadsFilter {
   const factory _ThreadsFilter(
-      {required final Set<String> extensionPkgNames,
-      required final Set<String> boardIds,
+      {required final Set<String>? extensionPkgNames,
+      required final Set<String>? boardIds,
       required final String? keywords}) = _$ThreadsFilterImpl;
 
   @override
-  Set<String> get extensionPkgNames;
+  Set<String>? get extensionPkgNames;
   @override
-  Set<String> get boardIds;
+  Set<String>? get boardIds;
   @override
   String? get keywords;
 
@@ -217,8 +225,8 @@ abstract class _ThreadsFilter implements ThreadsFilter {
 
 /// @nodoc
 mixin _$ThreadsSorting {
-  List<String> get boardsOrder => throw _privateConstructorUsedError;
-  Map<String, String> get threadsSorting => throw _privateConstructorUsedError;
+  List<String>? get boardsOrder => throw _privateConstructorUsedError;
+  Map<String, String>? get threadsSorting => throw _privateConstructorUsedError;
 
   /// Create a copy of ThreadsSorting
   /// with the given fields replaced by the non-null parameter values.
@@ -233,7 +241,7 @@ abstract class $ThreadsSortingCopyWith<$Res> {
           ThreadsSorting value, $Res Function(ThreadsSorting) then) =
       _$ThreadsSortingCopyWithImpl<$Res, ThreadsSorting>;
   @useResult
-  $Res call({List<String> boardsOrder, Map<String, String> threadsSorting});
+  $Res call({List<String>? boardsOrder, Map<String, String>? threadsSorting});
 }
 
 /// @nodoc
@@ -251,18 +259,18 @@ class _$ThreadsSortingCopyWithImpl<$Res, $Val extends ThreadsSorting>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? boardsOrder = null,
-    Object? threadsSorting = null,
+    Object? boardsOrder = freezed,
+    Object? threadsSorting = freezed,
   }) {
     return _then(_value.copyWith(
-      boardsOrder: null == boardsOrder
+      boardsOrder: freezed == boardsOrder
           ? _value.boardsOrder
           : boardsOrder // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      threadsSorting: null == threadsSorting
+              as List<String>?,
+      threadsSorting: freezed == threadsSorting
           ? _value.threadsSorting
           : threadsSorting // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>,
+              as Map<String, String>?,
     ) as $Val);
   }
 }
@@ -275,7 +283,7 @@ abstract class _$$ThreadsSortingImplCopyWith<$Res>
       __$$ThreadsSortingImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({List<String> boardsOrder, Map<String, String> threadsSorting});
+  $Res call({List<String>? boardsOrder, Map<String, String>? threadsSorting});
 }
 
 /// @nodoc
@@ -291,18 +299,18 @@ class __$$ThreadsSortingImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? boardsOrder = null,
-    Object? threadsSorting = null,
+    Object? boardsOrder = freezed,
+    Object? threadsSorting = freezed,
   }) {
     return _then(_$ThreadsSortingImpl(
-      boardsOrder: null == boardsOrder
+      boardsOrder: freezed == boardsOrder
           ? _value._boardsOrder
           : boardsOrder // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-      threadsSorting: null == threadsSorting
+              as List<String>?,
+      threadsSorting: freezed == threadsSorting
           ? _value._threadsSorting
           : threadsSorting // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>,
+              as Map<String, String>?,
     ));
   }
 }
@@ -313,25 +321,29 @@ class _$ThreadsSortingImpl
     with DiagnosticableTreeMixin
     implements _ThreadsSorting {
   const _$ThreadsSortingImpl(
-      {required final List<String> boardsOrder,
-      required final Map<String, String> threadsSorting})
+      {required final List<String>? boardsOrder,
+      required final Map<String, String>? threadsSorting})
       : _boardsOrder = boardsOrder,
         _threadsSorting = threadsSorting;
 
-  final List<String> _boardsOrder;
+  final List<String>? _boardsOrder;
   @override
-  List<String> get boardsOrder {
+  List<String>? get boardsOrder {
+    final value = _boardsOrder;
+    if (value == null) return null;
     if (_boardsOrder is EqualUnmodifiableListView) return _boardsOrder;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_boardsOrder);
+    return EqualUnmodifiableListView(value);
   }
 
-  final Map<String, String> _threadsSorting;
+  final Map<String, String>? _threadsSorting;
   @override
-  Map<String, String> get threadsSorting {
+  Map<String, String>? get threadsSorting {
+    final value = _threadsSorting;
+    if (value == null) return null;
     if (_threadsSorting is EqualUnmodifiableMapView) return _threadsSorting;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_threadsSorting);
+    return EqualUnmodifiableMapView(value);
   }
 
   @override
@@ -377,14 +389,14 @@ class _$ThreadsSortingImpl
 
 abstract class _ThreadsSorting implements ThreadsSorting {
   const factory _ThreadsSorting(
-          {required final List<String> boardsOrder,
-          required final Map<String, String> threadsSorting}) =
+          {required final List<String>? boardsOrder,
+          required final Map<String, String>? threadsSorting}) =
       _$ThreadsSortingImpl;
 
   @override
-  List<String> get boardsOrder;
+  List<String>? get boardsOrder;
   @override
-  Map<String, String> get threadsSorting;
+  Map<String, String>? get threadsSorting;
 
   /// Create a copy of ThreadsSorting
   /// with the given fields replaced by the non-null parameter values.

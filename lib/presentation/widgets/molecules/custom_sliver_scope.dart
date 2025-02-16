@@ -8,7 +8,7 @@ class CustomSliverScope extends StatefulWidget {
   @override
   State<CustomSliverScope> createState() => _State();
 
-  /// 取得最近的 ScrollControllerProvider
+  /// 取得最近的 _InheritedData
   static _InheritedData of(BuildContext context) {
     final _InheritedData? result = context.dependOnInheritedWidgetOfExactType<_InheritedData>();
     assert(result != null, 'No ScrollControllerProvider found in context');

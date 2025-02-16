@@ -87,8 +87,8 @@ import 'package:news_hub/presentation/pages/extension_repos/bloc/extension_repos
     as _i235;
 import 'package:news_hub/presentation/pages/extensions/bloc/extensions_cubit.dart'
     as _i945;
-import 'package:news_hub/presentation/pages/search/bloc/search_cubit.dart'
-    as _i21;
+import 'package:news_hub/presentation/pages/thread_infos/bloc/filter_by_boards_cubit.dart'
+    as _i495;
 import 'package:news_hub/presentation/pages/thread_infos/bloc/thread_infos_cubit.dart'
     as _i181;
 import 'package:news_hub/presentation/router/router.dart' as _i762;
@@ -180,6 +180,8 @@ extension GetItInjectableX on _i174.GetIt {
               apiService: gh<_i892.ExtensionApiService>(),
               extensionRepo: gh<_i981.InstalledExtensionRepository>(),
             ));
+    gh.factory<_i495.FilterByBoardsCubit>(
+        () => _i495.FilterByBoardsCubit(gh<_i315.ListInstalledExtensions>()));
     gh.lazySingleton<_i783.InstallExtension>(() => _i783.InstallExtension(
           extensionApiService: gh<_i892.ExtensionApiService>(),
           installService: gh<_i103.ExtensionInstallService>(),
@@ -201,25 +203,21 @@ extension GetItInjectableX on _i174.GetIt {
               extensionRepoRepository: gh<_i623.ExtensionRepoRepository>(),
               extensionApiService: gh<_i623.ExtensionRepoApiService>(),
             ));
-    gh.factory<_i21.SearchCubit>(() => _i21.SearchCubit(
-          listSearchConfigs: gh<_i1064.ListSearchConfigs>(),
-          listExtensions: gh<_i315.ListInstalledExtensions>(),
+    gh.lazySingleton<_i719.ListThreadInfos>(() => _i719.ListThreadInfos(
+          apiService: gh<_i892.ExtensionApiService>(),
+          listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
         ));
+    gh.factory<_i181.ThreadInfosCubit>(() =>
+        _i181.ThreadInfosCubit(listThreadInfos: gh<_i315.ListThreadInfos>()));
     gh.factory<_i229.AddExtensionRepoCubit>(() => _i229.AddExtensionRepoCubit(
           validExtensionRepoUrl: gh<_i475.ValidExtensionRepoUrl>(),
           getExtensionRepo: gh<_i581.GetExtensionRepo>(),
           getRemoteExtensionRepo: gh<_i872.GetRemoteExtensionRepo>(),
           createExtensionRepo: gh<_i460.CreateExtensionRepo>(),
         ));
-    gh.lazySingleton<_i719.ListThreadInfos>(() => _i719.ListThreadInfos(
-          apiService: gh<_i892.ExtensionApiService>(),
-          listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
-        ));
     gh.lazySingleton<_i315.ExtensionPreferencesService>(() =>
         _i29.ExtensionPreferencesServiceImpl(
             store: gh<_i365.PreferenceStore>()));
-    gh.factory<_i181.ThreadInfosCubit>(() =>
-        _i181.ThreadInfosCubit(listThreadInfos: gh<_i315.ListThreadInfos>()));
     gh.lazySingleton<_i214.ListExtensions>(() => _i214.ListExtensions(
           prefService: gh<_i515.ExtensionPreferencesService>(),
           listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),

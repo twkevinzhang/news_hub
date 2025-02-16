@@ -4,9 +4,10 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/domain/extension/extension.dart';
+import 'package:news_hub/domain/extension/models/models.dart';
 import 'package:news_hub/locator.dart';
-import 'package:news_hub/presentation/pages/search/models/models.dart';
 import 'package:news_hub/presentation/pages/thread_infos/bloc/thread_infos_cubit.dart';
+import 'package:news_hub/presentation/pages/thread_infos/screens/search_screen.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
 import 'package:news_hub/presentation/widgets/widgets.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -17,26 +18,11 @@ class ThreadInfosScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final provider = CustomSliverScope.of(context);
-
-    return BlocProvider(
-      create: (context) => sl<ThreadInfosCubit>()..init(),
-      child: _ThreadInfosView(
-        scrollController: provider.scrollController,
-      ),
-    );
-  }
-}
-
-class _ThreadInfosView extends StatelessWidget {
-  final ScrollController scrollController;
-  const _ThreadInfosView({super.key, required this.scrollController});
-
-  @override
-  Widget build(BuildContext context) {
     return BlocBuilder<ThreadInfosCubit, ThreadInfosState>(
       builder: (context, state) {
         final cubit = context.read<ThreadInfosCubit>();
+        final scrollController = CustomSliverScope.of(context).scrollController;
+        final router = AutoRouter.of(context);
 
         return Scaffold(
           body: SafeArea(
@@ -54,13 +40,6 @@ class _ThreadInfosView extends StatelessWidget {
                     IconButton(
                       icon: const Icon(Icons.sort_outlined),
                       onPressed: () async {
-                        final filter = await AutoRouter.of(context).push<ThreadsFilter?>(SearchRoute());
-                        if (!context.mounted) return;
-                        if (filter != null) {
-                          cubit.filter = filter;
-                          cubit.sorting = null;
-                          cubit.refresh();
-                        }
                       },
                     ),
                   ],
@@ -70,7 +49,9 @@ class _ThreadInfosView extends StatelessWidget {
                   delegate: _SliverAppBarDelegate(
                     minHeight: 48,
                     maxHeight: 48,
-                    child: _buildFilterBar(),
+                    child: FilterBar(onBoardsFilterClick: () {
+                      router.push<ThreadsFilter?>(FilterByBoardsRoute());
+                    }),
                   ),
                 ),
                 PagedSliverList<int, ThreadWithExtension>.separated(
@@ -105,21 +86,6 @@ class _ThreadInfosView extends StatelessWidget {
           ),
         );
       },
-    );
-  }
-
-  Widget _buildFilterBar() {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Row(
-        children: [
-          ActionChip(
-            avatar: Icon(Icons.filter_alt_outlined),
-            label: const Text('Boards'),
-            onPressed: () {},
-          ),
-        ],
-      ),
     );
   }
 }
