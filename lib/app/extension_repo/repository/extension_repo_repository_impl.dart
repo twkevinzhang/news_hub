@@ -35,7 +35,7 @@ class ExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
   @override
   Future<void> delete(String baseUrl) async {
     await (_db.delete(_db.extensionRepos)
-      ..where((tbl) => tbl.baseUrl.equals(baseUrl)))
+          ..where((tbl) => tbl.baseUrl.equals(baseUrl)))
         .go();
   }
 
@@ -53,16 +53,17 @@ class ExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
   @override
   Future<domain.ExtensionRepo> get(String baseUrl) async {
     final repo = await (_db.select(_db.extensionRepos)
-      ..where((tbl) => tbl.baseUrl.equals(baseUrl)))
+          ..where((tbl) => tbl.baseUrl.equals(baseUrl)))
         .getSingleOrNull();
     if (repo == null) throw NotFoundException();
     return repo.toDomain();
   }
 
   @override
-  Future<domain.ExtensionRepo> getBySigningKeyFingerprint(String fingerprint) async {
+  Future<domain.ExtensionRepo> getBySigningKeyFingerprint(
+      String fingerprint) async {
     final repo = await (_db.select(_db.extensionRepos)
-      ..where((tbl) => tbl.signingKeyFingerprint.equals(fingerprint)))
+          ..where((tbl) => tbl.signingKeyFingerprint.equals(fingerprint)))
         .getSingleOrNull();
     if (repo == null) throw NotFoundException();
     return repo.toDomain();
@@ -71,7 +72,7 @@ class ExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
   @override
   Future<void> replace(domain.ExtensionRepo newRepo) async {
     await (_db.update(_db.extensionRepos)
-      ..where((tbl) => tbl.baseUrl.equals(newRepo.baseUrl)))
+          ..where((tbl) => tbl.baseUrl.equals(newRepo.baseUrl)))
         .write(ExtensionReposCompanion(
       displayName: Value(newRepo.displayName),
       website: Value(newRepo.website),
@@ -82,7 +83,10 @@ class ExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
 
   @override
   Stream<List<domain.ExtensionRepo>> subscribeList() {
-    return _db.select(_db.extensionRepos).watch().map((repos) => repos.map((e) => e.toDomain()).toList());
+    return _db
+        .select(_db.extensionRepos)
+        .watch()
+        .map((repos) => repos.map((e) => e.toDomain()).toList());
   }
 
   @override
@@ -93,16 +97,17 @@ class ExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
     required String signingKeyFingerprint,
   }) async {
     await _db.into(_db.extensionRepos).insertOnConflictUpdate(ExtensionRepo(
-      baseUrl: baseUrl,
-      displayName: displayName,
-      website: website,
-      signingKeyFingerprint: signingKeyFingerprint,
-    ));
+          baseUrl: baseUrl,
+          displayName: displayName,
+          website: website,
+          signingKeyFingerprint: signingKeyFingerprint,
+        ));
     return get(baseUrl);
   }
 
   @override
-  Future<domain.ExtensionRepo> upsertWithObject(domain.ExtensionRepo repo) async {
+  Future<domain.ExtensionRepo> upsertWithObject(
+      domain.ExtensionRepo repo) async {
     return upsert(
       baseUrl: repo.baseUrl,
       displayName: repo.displayName,

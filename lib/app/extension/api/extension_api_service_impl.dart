@@ -20,27 +20,27 @@ class ExtensionApiServiceImpl implements ExtensionApiService {
   final Dio _dio;
   ExtensionApiServiceImpl({
     required Dio dio,
-  }): _dio = dio;
+  }) : _dio = dio;
 
-  Future<Response<T>> get<T>(
-    domain.Extension extension,
-    String path,
-    {Map<String, dynamic>? queryParameters}
-  ) async {
+  Future<Response<T>> get<T>(domain.Extension extension, String path,
+      {Map<String, dynamic>? queryParameters}) async {
     return await _dio.get(
-        "${extension.address}/$path",
-        options: Options(responseType: ResponseType.bytes),
-        queryParameters: queryParameters,
+      "${extension.address}/$path",
+      options: Options(responseType: ResponseType.bytes),
+      queryParameters: queryParameters,
     );
   }
 
   @override
   Future<void> run(domain.Extension extension) async {
     final directory = await getApplicationSupportDirectory();
-    final appPath = [directory.path, installedFileFolder, extension.pkgName].toUrl();
+    final appPath =
+        [directory.path, installedFileFolder, extension.pkgName].toUrl();
     Directory.current = path.dirname(appPath);
-    SeriousPython.runProgram([appPath, 'main.py'].toUrl(), environmentVariables: {"a": "1", "b": "2"});
-    await Future.delayed(const Duration(seconds: 5)); // wait flask server launched
+    SeriousPython.runProgram([appPath, 'main.py'].toUrl(),
+        environmentVariables: {"a": "1", "b": "2"});
+    await Future.delayed(
+        const Duration(seconds: 5)); // wait flask server launched
     final res = await site(extension: extension, siteId: '1');
   }
 
@@ -51,9 +51,12 @@ class ExtensionApiServiceImpl implements ExtensionApiService {
   }
 
   @override
-  Future<domain.Site> site({required domain.Extension extension, required String siteId}) async {
+  Future<domain.Site> site(
+      {required domain.Extension extension, required String siteId}) async {
     final res = await get(extension, 'sites/$siteId');
-    return pb.GetSiteRes.fromBuffer(res.data as Uint8List).site.toDomain(extension.pkgName);
+    return pb.GetSiteRes.fromBuffer(res.data as Uint8List)
+        .site
+        .toDomain(extension.pkgName);
   }
 
   @override
@@ -63,7 +66,10 @@ class ExtensionApiServiceImpl implements ExtensionApiService {
     required String siteId,
   }) async {
     final res = await get(extension, 'sites/$siteId/boards');
-    return pb.GetBoardsRes.fromBuffer(res.data as Uint8List).boards.map((b) => b.toDomain(extension.pkgName)).toList();
+    return pb.GetBoardsRes.fromBuffer(res.data as Uint8List)
+        .boards
+        .map((b) => b.toDomain(extension.pkgName))
+        .toList();
   }
 
   @override
@@ -75,13 +81,18 @@ class ExtensionApiServiceImpl implements ExtensionApiService {
     required String siteId,
     required String boardId,
   }) async {
-    final res = await get(extension, 'sites/$siteId/boards/$boardId/thread-infos', queryParameters: {
-      'page': pagination?.page,
-      'pageSize': pagination?.pageSize,
-      'sortBy': sortBy,
-      'keywords': keywords,
-    });
-    return pb.GetThreadInfosRes.fromBuffer(res.data as Uint8List).threadInfos.map((t) => t.toDomain(extension.pkgName)).toList();
+    final res = await get(
+        extension, 'sites/$siteId/boards/$boardId/thread-infos',
+        queryParameters: {
+          'page': pagination?.page,
+          'pageSize': pagination?.pageSize,
+          'sortBy': sortBy,
+          'keywords': keywords,
+        });
+    return pb.GetThreadInfosRes.fromBuffer(res.data as Uint8List)
+        .threadInfos
+        .map((t) => t.toDomain(extension.pkgName))
+        .toList();
   }
 
   @override
@@ -91,8 +102,11 @@ class ExtensionApiServiceImpl implements ExtensionApiService {
     required String boardId,
     required String id,
   }) async {
-    final res = await get(extension, 'sites/$siteId/boards/$boardId/threads/$id');
-    return pb.GetThreadRes.fromBuffer(res.data as Uint8List).thread.toDomain(extension.pkgName);
+    final res =
+        await get(extension, 'sites/$siteId/boards/$boardId/threads/$id');
+    return pb.GetThreadRes.fromBuffer(res.data as Uint8List)
+        .thread
+        .toDomain(extension.pkgName);
   }
 
   @override
@@ -104,11 +118,16 @@ class ExtensionApiServiceImpl implements ExtensionApiService {
     required String threadId,
     required String originalPostId,
   }) async {
-    final res = await get(extension, 'sites/$siteId/boards/$boardId/threads/$threadId/posts/$originalPostId/regarding-posts', queryParameters: {
-      'page': pagination?.page,
-      'pageSize': pagination?.pageSize,
-    });
-    return pb.GetRegardingPostsRes.fromBuffer(res.data as Uint8List).regardingPosts.map((p) => p.toDomain(extension.pkgName)).toList();
+    final res = await get(extension,
+        'sites/$siteId/boards/$boardId/threads/$threadId/posts/$originalPostId/regarding-posts',
+        queryParameters: {
+          'page': pagination?.page,
+          'pageSize': pagination?.pageSize,
+        });
+    return pb.GetRegardingPostsRes.fromBuffer(res.data as Uint8List)
+        .regardingPosts
+        .map((p) => p.toDomain(extension.pkgName))
+        .toList();
   }
 
   @override
@@ -119,8 +138,11 @@ class ExtensionApiServiceImpl implements ExtensionApiService {
     required String threadId,
     required String id,
   }) async {
-    final res = await get(extension, 'sites/$siteId/boards/$boardId/threads/$threadId/posts/$id');
-    return pb.GetPostRes.fromBuffer(res.data as Uint8List).post.toDomain(extension.pkgName);
+    final res = await get(
+        extension, 'sites/$siteId/boards/$boardId/threads/$threadId/posts/$id');
+    return pb.GetPostRes.fromBuffer(res.data as Uint8List)
+        .post
+        .toDomain(extension.pkgName);
   }
 
   @override
@@ -132,10 +154,15 @@ class ExtensionApiServiceImpl implements ExtensionApiService {
     required String threadId,
     required String postId,
   }) async {
-    final res = await get(extension, 'sites/$siteId/boards/$boardId/threads/$threadId/posts/$postId/comments', queryParameters: {
-      'page': pagination?.page,
-      'pageSize': pagination?.pageSize,
-    });
-    return pb.GetCommentsRes.fromBuffer(res.data as Uint8List).comments.map((c) => c.toDomain(extension.pkgName)).toList();
+    final res = await get(extension,
+        'sites/$siteId/boards/$boardId/threads/$threadId/posts/$postId/comments',
+        queryParameters: {
+          'page': pagination?.page,
+          'pageSize': pagination?.pageSize,
+        });
+    return pb.GetCommentsRes.fromBuffer(res.data as Uint8List)
+        .comments
+        .map((c) => c.toDomain(extension.pkgName))
+        .toList();
   }
 }

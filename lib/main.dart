@@ -19,13 +19,14 @@ void main() async {
   // testApiService();
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
-  
+
   runApp(App());
 }
 
 void testApiService() async {
   final extension = Extension(
-    repoBaseUrl: 'https://raw.githubusercontent.com/twkevinzhang/news_hub_extensions/master',
+    repoBaseUrl:
+        'https://raw.githubusercontent.com/twkevinzhang/news_hub_extensions/master',
     pkgName: 'twkevinzhang_komica',
     displayName: 'Komica Ex',
     zipName: 'twkevinzhang_komica.zip',

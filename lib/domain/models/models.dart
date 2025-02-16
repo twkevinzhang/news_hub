@@ -231,7 +231,8 @@ class ImageParagraph extends Paragraph {
   ImageParagraph({
     String? thumb,
     required this.raw,
-  }) : _thumb = thumb, super(ParagraphType.image);
+  })  : _thumb = thumb,
+        super(ParagraphType.image);
 
   thumb() {
     return _thumb ?? raw;
@@ -242,7 +243,7 @@ class VideoParagraph extends Paragraph {
   final String? thumb;
   final String url;
 
-  VideoParagraph({ this.thumb, required this.url }) : super(ParagraphType.video);
+  VideoParagraph({this.thumb, required this.url}) : super(ParagraphType.video);
 }
 
 class TextParagraph extends Paragraph {
@@ -302,11 +303,12 @@ class SearchConfig {
   final Map<String, String> threadsSorting; // boardId -> sorting
   final String? keywords;
 
-  SearchConfig(
-      {required this.id,
-      required this.enabledExtensionPkgNames,
-      required this.enabledBoardIds,
-      required this.boardsOrder,
-      required this.threadsSorting,
-      required this.keywords});
+  SearchConfig({
+    required this.id,
+    required this.enabledExtensionPkgNames,
+    required this.enabledBoardIds,
+    required this.boardsOrder,
+    required this.threadsSorting,
+    required this.keywords,
+  });
 }

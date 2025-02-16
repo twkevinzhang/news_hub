@@ -10,11 +10,12 @@ class PreferenceStoreImpl implements PreferenceStore {
 
   PreferenceStoreImpl({
     required SharedPreferences prefs,
-  })  : _prefs = prefs;
+  }) : _prefs = prefs;
 
   @override
   Preference<bool> getBoolean(String key, {bool defaultValue = false}) {
-    return BooleanPrimitive(prefs: _prefs, key: key, defaultValue: defaultValue);
+    return BooleanPrimitive(
+        prefs: _prefs, key: key, defaultValue: defaultValue);
   }
 
   @override
@@ -28,8 +29,14 @@ class PreferenceStoreImpl implements PreferenceStore {
   }
 
   @override
-  Preference<T> getObject<T>(String key, T defaultValue, String Function(T p1) serializer, T Function(String p1) deserializer) {
-    return ObjectPrimitive(prefs: _prefs, key: key, defaultValue: defaultValue, serializer: serializer, deserializer: deserializer);
+  Preference<T> getObject<T>(String key, T defaultValue,
+      String Function(T p1) serializer, T Function(String p1) deserializer) {
+    return ObjectPrimitive(
+        prefs: _prefs,
+        key: key,
+        defaultValue: defaultValue,
+        serializer: serializer,
+        deserializer: deserializer);
   }
 
   @override
@@ -38,8 +45,9 @@ class PreferenceStoreImpl implements PreferenceStore {
   }
 
   @override
-  Preference<Set<String>> getStringList(String key, {Set<String> defaultValue = const {}}) {
-    return StringListPrimitive(prefs: _prefs, key: key, defaultValue: defaultValue);
+  Preference<Set<String>> getStringList(String key,
+      {Set<String> defaultValue = const {}}) {
+    return StringListPrimitive(
+        prefs: _prefs, key: key, defaultValue: defaultValue);
   }
-
 }

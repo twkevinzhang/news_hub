@@ -1,12 +1,10 @@
 import 'dart:async';
 
-
 import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 
 import 'package:news_hub/domain/extension_repo/interactor/create_extension_repo.dart';
 import 'package:news_hub/domain/extension_repo/interactor/get_extension_repo.dart';

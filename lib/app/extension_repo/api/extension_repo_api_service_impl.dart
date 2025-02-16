@@ -18,19 +18,26 @@ class ExtensionRepoApiServiceImpl implements ExtensionRepoApiService {
 
   @override
   Future<ExtensionRepo> detail(String baseUrl) async {
-    final res = await _dio.get('https://api.github.com/repos/$baseUrl/contents/repo.json');
-    return DetailResDto.fromJson(res.data).mapContent((json) => ExtensionRepoDto.fromJson(json).toExtensionRepo(baseUrl: baseUrl));
+    final res = await _dio
+        .get('https://api.github.com/repos/$baseUrl/contents/repo.json');
+    return DetailResDto.fromJson(res.data).mapContent((json) =>
+        ExtensionRepoDto.fromJson(json).toExtensionRepo(baseUrl: baseUrl));
   }
 
   @override
   Future<List<RemoteExtension>> extensions(String baseUrl) async {
-    final res = await _dio.get('https://api.github.com/repos/$baseUrl/contents/extensions.json');
-    return DetailResDto.fromJson(res.data).mapIterableContent((json) => ExtensionDto.fromJson(json).toRemoteExtension()).toList();
+    final res = await _dio
+        .get('https://api.github.com/repos/$baseUrl/contents/extensions.json');
+    return DetailResDto.fromJson(res.data)
+        .mapIterableContent(
+            (json) => ExtensionDto.fromJson(json).toRemoteExtension())
+        .toList();
   }
 
   @override
   Future<String> zipUrl(Extension extension) async {
-    final res = await _dio.get('https://api.github.com/repos/${extension.repoBaseUrl}/contents/zip/${extension.pkgName}');
+    final res = await _dio.get(
+        'https://api.github.com/repos/${extension.repoBaseUrl}/contents/zip/${extension.pkgName}');
     final dto = DetailResDto.fromJson(res.data);
     return dto.downloadUrl;
   }

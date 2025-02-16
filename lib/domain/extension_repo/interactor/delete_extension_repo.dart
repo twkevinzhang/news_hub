@@ -3,13 +3,13 @@ import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class DeleteExtensionRepo {
-    DeleteExtensionRepo({
-        required ExtensionRepoRepository repository,
-    })  : _repository = repository;
+  DeleteExtensionRepo({
+    required ExtensionRepoRepository repository,
+  }) : _repository = repository;
 
-    final ExtensionRepoRepository _repository;
+  final ExtensionRepoRepository _repository;
 
-    Future<void> call(String baseUrl) {
-        return _repository.delete(baseUrl);
-    }
+  Future<void> call(String baseUrl) {
+    return _repository.delete(baseUrl);
+  }
 }

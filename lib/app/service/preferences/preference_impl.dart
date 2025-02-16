@@ -12,7 +12,7 @@ abstract class PreferenceImpl<T> implements Preference<T> {
     required prefs,
     required key,
     required defaultValue,
-  }) : _prefs = prefs,
+  })  : _prefs = prefs,
         _rxPrefs = RxSharedPreferences(prefs),
         _key = key,
         _defaultValue = defaultValue;
@@ -45,7 +45,6 @@ abstract class PreferenceImpl<T> implements Preference<T> {
 
   @override
   Future<void> set(T value);
-
 }
 
 class StringPrimitive extends PreferenceImpl<String> {
@@ -57,7 +56,7 @@ class StringPrimitive extends PreferenceImpl<String> {
 
   @override
   Stream<String> changes() {
-    return _rxPrefs.getStringStream(_key).map((v) =>v ?? _defaultValue);
+    return _rxPrefs.getStringStream(_key).map((v) => v ?? _defaultValue);
   }
 
   @override
@@ -149,7 +148,9 @@ class StringListPrimitive extends PreferenceImpl<Set<String>> {
 
   @override
   Stream<Set<String>> changes() {
-    return _rxPrefs.getStringListStream(_key).map((v) => v?.toSet() ?? _defaultValue);
+    return _rxPrefs
+        .getStringListStream(_key)
+        .map((v) => v?.toSet() ?? _defaultValue);
   }
 
   @override
@@ -172,19 +173,20 @@ class ObjectPrimitive<T> extends PreferenceImpl<T> {
     required super.defaultValue,
     required serializer,
     required deserializer,
-  }) : _serializer = serializer,
+  })  : _serializer = serializer,
         _deserializer = deserializer;
 
   @override
   Stream<T> changes() {
-    return _rxPrefs.getStringStream(_key)
+    return _rxPrefs
+        .getStringStream(_key)
         .map((v) => v == null
-          ? throw ArgumentError("value should not be null")
-          : _deserializer(v))
+            ? throw ArgumentError("value should not be null")
+            : _deserializer(v))
         .handleError((error) {
-          log.e(error);
-          return _defaultValue;
-        });
+      log.e(error);
+      return _defaultValue;
+    });
   }
 
   @override

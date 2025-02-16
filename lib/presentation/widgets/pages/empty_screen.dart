@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class EmptyScreen extends StatelessWidget {
-  const EmptyScreen({String? message, super.key}): _message = message ?? 'EmptyScreen';
+  const EmptyScreen({String? message, super.key})
+      : _message = message ?? 'EmptyScreen';
 
   final String _message;
 

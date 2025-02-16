@@ -28,7 +28,7 @@ import 'package:news_hub/presentation/pages/thread_infos/view/thread_infos_scree
 /// [_i1.AddExtensionRepoScreen]
 class AddExtensionRepoRoute extends _i8.PageRouteInfo<void> {
   const AddExtensionRepoRoute({List<_i8.PageRouteInfo>? children})
-    : super(AddExtensionRepoRoute.name, initialChildren: children);
+      : super(AddExtensionRepoRoute.name, initialChildren: children);
 
   static const String name = 'AddExtensionRepoRoute';
 
@@ -44,7 +44,7 @@ class AddExtensionRepoRoute extends _i8.PageRouteInfo<void> {
 /// [_i2.ExtensionReposScreen]
 class ExtensionReposRoute extends _i8.PageRouteInfo<void> {
   const ExtensionReposRoute({List<_i8.PageRouteInfo>? children})
-    : super(ExtensionReposRoute.name, initialChildren: children);
+      : super(ExtensionReposRoute.name, initialChildren: children);
 
   static const String name = 'ExtensionReposRoute';
 
@@ -60,7 +60,7 @@ class ExtensionReposRoute extends _i8.PageRouteInfo<void> {
 /// [_i3.ExtensionsScreen]
 class ExtensionsRoute extends _i8.PageRouteInfo<void> {
   const ExtensionsRoute({List<_i8.PageRouteInfo>? children})
-    : super(ExtensionsRoute.name, initialChildren: children);
+      : super(ExtensionsRoute.name, initialChildren: children);
 
   static const String name = 'ExtensionsRoute';
 
@@ -76,7 +76,7 @@ class ExtensionsRoute extends _i8.PageRouteInfo<void> {
 /// [_i4.HomeScreen]
 class HomeRoute extends _i8.PageRouteInfo<void> {
   const HomeRoute({List<_i8.PageRouteInfo>? children})
-    : super(HomeRoute.name, initialChildren: children);
+      : super(HomeRoute.name, initialChildren: children);
 
   static const String name = 'HomeRoute';
 
@@ -92,7 +92,7 @@ class HomeRoute extends _i8.PageRouteInfo<void> {
 /// [_i5.SearchScreen]
 class SearchRoute extends _i8.PageRouteInfo<void> {
   const SearchRoute({List<_i8.PageRouteInfo>? children})
-    : super(SearchRoute.name, initialChildren: children);
+      : super(SearchRoute.name, initialChildren: children);
 
   static const String name = 'SearchRoute';
 
@@ -108,7 +108,7 @@ class SearchRoute extends _i8.PageRouteInfo<void> {
 /// [_i6.SettingsScreen]
 class SettingsRoute extends _i8.PageRouteInfo<void> {
   const SettingsRoute({List<_i8.PageRouteInfo>? children})
-    : super(SettingsRoute.name, initialChildren: children);
+      : super(SettingsRoute.name, initialChildren: children);
 
   static const String name = 'SettingsRoute';
 
@@ -124,7 +124,7 @@ class SettingsRoute extends _i8.PageRouteInfo<void> {
 /// [_i7.ThreadInfosScreen]
 class ThreadInfosRoute extends _i8.PageRouteInfo<void> {
   const ThreadInfosRoute({List<_i8.PageRouteInfo>? children})
-    : super(ThreadInfosRoute.name, initialChildren: children);
+      : super(ThreadInfosRoute.name, initialChildren: children);
 
   static const String name = 'ThreadInfosRoute';
 

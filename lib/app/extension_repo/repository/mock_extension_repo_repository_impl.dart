@@ -5,15 +5,13 @@ import 'package:news_hub/domain/models/models.dart';
 @test
 @LazySingleton(as: ExtensionRepoRepository)
 class MockExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
-
   @override
   Future<void> insert({
     required String baseUrl,
     required String displayName,
     required String website,
     required String signingKeyFingerprint,
-  }) async {
-  }
+  }) async {}
 
   @override
   Future<void> delete(String baseUrl) async {

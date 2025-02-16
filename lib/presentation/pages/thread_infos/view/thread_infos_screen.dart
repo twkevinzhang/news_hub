@@ -32,55 +32,55 @@ class _ThreadInfosView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ThreadInfosCubit, ThreadInfosState>(
         builder: (context, state) {
-          final cubit = context.read<ThreadInfosCubit>();
+      final cubit = context.read<ThreadInfosCubit>();
 
-          return Scaffold(
-              appBar: AppBar(
-                title: const Text('Threads'),
-                actions: [
-                  IconButton(
-                    icon: const Icon(Icons.search_outlined),
-                    onPressed: () async {
-                      final filter = await AutoRouter.of(context).push<ThreadsFilter?>(SearchRoute());
-                      if (!context.mounted) return;
-                      if (filter != null) {
-                        cubit.filter = filter;
-                        cubit.sorting = null;
-                        cubit.refresh();
-                      }
-                    },
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Threads'),
+          actions: [
+            IconButton(
+              icon: const Icon(Icons.search_outlined),
+              onPressed: () async {
+                final filter = await AutoRouter.of(context)
+                    .push<ThreadsFilter?>(SearchRoute());
+                if (!context.mounted) return;
+                if (filter != null) {
+                  cubit.filter = filter;
+                  cubit.sorting = null;
+                  cubit.refresh();
+                }
+              },
+            ),
+          ],
+        ),
+        body: PagedListView<int, ThreadWithExtension>(
+          pagingController: cubit.pagingController,
+          builderDelegate: PagedChildBuilderDelegate<ThreadWithExtension>(
+            itemBuilder: (context, thread, index) => GestureDetector(
+              onTap: () {},
+              child: Column(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Container(),
                   ),
+                  const Divider(),
                 ],
               ),
-            body: PagedListView<int, ThreadWithExtension>(
-              pagingController: cubit.pagingController,
-              builderDelegate: PagedChildBuilderDelegate<ThreadWithExtension>(
-                itemBuilder: (context, thread, index) => GestureDetector(
-                  onTap: () {
-                  },
-                  child: Column(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(16),
-                        child: Container(),
-                      ),
-                      const Divider(),
-                    ],
-                  ),
-                ),
-                noItemsFoundIndicatorBuilder: (context) => Center(
-                  child: Text("空"),
-                ),
-                firstPageProgressIndicatorBuilder: (context) =>
-                const LoadingIndicator(),
-                newPageProgressIndicatorBuilder: (context) =>
-                const LoadingIndicator(),
-                noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
-                transitionDuration: const Duration(seconds: 1),
-                animateTransitions: true,
-              ),
             ),
-          );
-        });
+            noItemsFoundIndicatorBuilder: (context) => Center(
+              child: Text("空"),
+            ),
+            firstPageProgressIndicatorBuilder: (context) =>
+                const LoadingIndicator(),
+            newPageProgressIndicatorBuilder: (context) =>
+                const LoadingIndicator(),
+            noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
+            transitionDuration: const Duration(seconds: 1),
+            animateTransitions: true,
+          ),
+        ),
+      );
+    });
   }
 }

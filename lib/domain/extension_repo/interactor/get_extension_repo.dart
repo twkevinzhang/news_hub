@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 class GetExtensionRepo {
   GetExtensionRepo({
     required ExtensionRepoRepository repo,
-  })  : _repo = repo;
+  }) : _repo = repo;
 
   final ExtensionRepoRepository _repo;
 

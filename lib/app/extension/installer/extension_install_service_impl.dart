@@ -54,7 +54,8 @@ class ExtensionInstallServiceImpl implements ExtensionInstallService {
 
     // 監聽下載進度
     final sub = StreamController<int>();
-    FlutterDownloader.registerCallback((String id, int statusCode, int progress) {
+    FlutterDownloader.registerCallback(
+        (String id, int statusCode, int progress) {
       if (id == taskId) {
         if (!sub.isClosed) {
           sub.add(progress);
