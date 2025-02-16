@@ -7,32 +7,15 @@ part 'extension_dto.g.dart';
 @Freezed(toJson: true)
 class ExtensionDto with _$ExtensionDto {
   const factory ExtensionDto({
-    @JsonKey(name: 'repo_base_url', required: true)
-    required String repoBaseUrl,
-
-    @JsonKey(name: 'pkg_name', required: true)
-    required String pkgName,
-
-    @JsonKey(name: 'display_name', required: true)
-    required String displayName,
-
-    @JsonKey(name: 'zip_name', required: true)
-    required String zipName,
-
-    @JsonKey(name: 'address', required: true)
-    required String address,
-
-    @JsonKey(name: 'version', required: true)
-    required int version,
-
-    @JsonKey(name: 'python_version', required: true)
-    required int pythonVersion,
-
-    @JsonKey(name: 'lang', required: true)
-    required String lang,
-
-    @JsonKey(name: 'is_nsfw', required: true)
-    required bool isNsfw,
+    @JsonKey(name: 'repo_base_url', required: true) required String repoBaseUrl,
+    @JsonKey(name: 'pkg_name', required: true) required String pkgName,
+    @JsonKey(name: 'display_name', required: true) required String displayName,
+    @JsonKey(name: 'zip_name', required: true) required String zipName,
+    @JsonKey(name: 'address', required: true) required String address,
+    @JsonKey(name: 'version', required: true) required int version,
+    @JsonKey(name: 'python_version', required: true) required int pythonVersion,
+    @JsonKey(name: 'lang', required: true) required String lang,
+    @JsonKey(name: 'is_nsfw', required: true) required bool isNsfw,
   }) = _ExtensionDto;
 
   factory ExtensionDto.fromJson(Map<String, dynamic> json) =>

@@ -5,4 +5,3 @@ class NotFoundException implements Exception {
 class AlreadyExistsException implements Exception {
   AlreadyExistsException();
 }
-

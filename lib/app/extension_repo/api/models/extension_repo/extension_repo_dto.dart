@@ -11,9 +11,11 @@ class ExtensionRepoDto with _$ExtensionRepoDto {
     @JsonKey(name: 'base_url', required: true) required String baseUrl,
     @JsonKey(name: 'display_name', required: true) required String displayName,
     @JsonKey(name: 'website', required: true) required String website,
-    @JsonKey(name: 'signing_key_fingerprint', required: true) required String signingKeyFingerprint,
+    @JsonKey(name: 'signing_key_fingerprint', required: true)
+    required String signingKeyFingerprint,
   }) = _ExtensionRepoDto;
-  factory ExtensionRepoDto.fromJson(Map<String, dynamic> json) => _$ExtensionRepoDtoFromJson(json);
+  factory ExtensionRepoDto.fromJson(Map<String, dynamic> json) =>
+      _$ExtensionRepoDtoFromJson(json);
 }
 
 extension ExtensionRepoDtoEx on ExtensionRepoDto {

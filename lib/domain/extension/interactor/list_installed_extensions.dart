@@ -11,7 +11,8 @@ class ListInstalledExtensions {
   ListInstalledExtensions({
     required ExtensionApiService apiService,
     required InstalledExtensionRepository extensionRepo,
-  }): _apiService = apiService, _extensionRepo = extensionRepo;
+  })  : _apiService = apiService,
+        _extensionRepo = extensionRepo;
 
   Stream<List<Extension>> asStream() {
     return _extensionRepo.stream();

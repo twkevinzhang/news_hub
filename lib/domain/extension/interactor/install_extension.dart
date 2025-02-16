@@ -1,6 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:news_hub/domain/extension/extension_api_service.dart';
-import 'package:news_hub/domain/extension/extension_install_service.dart' as installer;
+import 'package:news_hub/domain/extension/extension_install_service.dart'
+    as installer;
 import 'package:news_hub/domain/extension/extension_repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:injectable/injectable.dart';
@@ -26,7 +27,8 @@ class InstallExtension {
         _extensionApiService = extensionApiService,
         _extensionRepository = extensionRepository;
 
-  Stream<Pair<InstallStatus, double>> downloadAndInstall(String zipUrl, Extension extension) async* {
+  Stream<Pair<InstallStatus, double>> downloadAndInstall(
+      String zipUrl, Extension extension) async* {
     yield Pair(InstallStatus.downloading, 0.0);
     await _installService.removeZip(extension);
     await for (final status in _installService.download(zipUrl, extension)) {

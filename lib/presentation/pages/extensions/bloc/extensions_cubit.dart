@@ -82,7 +82,8 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
     await _uninstallExtension.call(extension);
     final sub =
         _installExtension.downloadAndInstall(zipUrl, extension).listen((pair) {
-      final newInstallingExtensions = state.installingExtensions..addAll({ extension.pkgName: pair });
+      final newInstallingExtensions = state.installingExtensions
+        ..addAll({extension.pkgName: pair});
       emit(state.copyWith(installingExtensions: newInstallingExtensions));
     }, onError: (error) {
       print(error);
@@ -94,7 +95,8 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
     final zipUrl = await _extensionRepoApiService.zipUrl(extension);
     final sub =
         _installExtension.downloadAndInstall(zipUrl, extension).listen((pair) {
-      final newInstallingExtensions = state.installingExtensions..addAll({ extension.pkgName: pair });
+      final newInstallingExtensions = state.installingExtensions
+        ..addAll({extension.pkgName: pair});
       emit(state.copyWith(installingExtensions: newInstallingExtensions));
     }, onError: (error) {
       print(error);

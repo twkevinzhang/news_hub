@@ -24,7 +24,10 @@ class InstalledExtensionRepositoryImpl implements InstalledExtensionRepository {
 
   @override
   Stream<List<domain.Extension>> stream() {
-    return _db.select(_db.installedExtensions).watch().map((l) => l.map((e) => e.toDomain()).toList());
+    return _db
+        .select(_db.installedExtensions)
+        .watch()
+        .map((l) => l.map((e) => e.toDomain()).toList());
   }
 
   @override
@@ -60,7 +63,8 @@ class InstalledExtensionRepositoryImpl implements InstalledExtensionRepository {
       lang: Value(lang),
       isNsfw: isNsfw,
     );
-    final res = await _db.into(_db.installedExtensions).insertReturning(extension);
+    final res =
+        await _db.into(_db.installedExtensions).insertReturning(extension);
     return res.toDomain();
   }
 

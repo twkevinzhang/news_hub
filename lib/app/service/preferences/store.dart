@@ -9,12 +9,13 @@ abstract class PreferenceStore {
 
   Preference<bool> getBoolean(String key, {bool defaultValue = false});
 
-  Preference<Set<String>> getStringList(String key, {Set<String> defaultValue = const {}});
+  Preference<Set<String>> getStringList(String key,
+      {Set<String> defaultValue = const {}});
 
   Preference<T> getObject<T>(
-      String key,
-      T defaultValue,
-      String Function(T) serializer,
-      T Function(String) deserializer,
-      );
+    String key,
+    T defaultValue,
+    String Function(T) serializer,
+    T Function(String) deserializer,
+  );
 }

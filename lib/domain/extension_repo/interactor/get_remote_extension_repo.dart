@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 class GetRemoteExtensionRepo {
   GetRemoteExtensionRepo({
     required ExtensionRepoApiService service,
-  })  : _service = service;
+  }) : _service = service;
 
   final ExtensionRepoApiService _service;
 

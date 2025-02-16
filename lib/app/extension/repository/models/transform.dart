@@ -10,7 +10,8 @@ extension ExtensionTransform on database.InstalledExtension {
       zipName: zipName, // Assuming zipName is not stored in the database
       address: address, // Assuming address is not stored in the database
       version: version,
-      pythonVersion: pythonVersion, // Assuming pythonVersion is not stored in the database
+      pythonVersion:
+          pythonVersion, // Assuming pythonVersion is not stored in the database
       lang: lang, // Assuming lang is not stored in the database
       isNsfw: isNsfw, // Assum
     );

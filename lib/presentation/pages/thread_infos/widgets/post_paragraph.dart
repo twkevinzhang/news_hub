@@ -56,7 +56,6 @@ class ParagraphWidget extends StatelessWidget {
   }
 }
 
-
 class TextParagraph extends StatelessWidget {
   final String content;
   final int? maxLines;
@@ -123,9 +122,7 @@ class ReplyToParagraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final preview = onPreviewReplyTo(id);
-    final annotations = preview.isEmpty
-        ? ">>${id}"
-        : ">>${id}($preview...)";
+    final annotations = preview.isEmpty ? ">>${id}" : ">>${id}($preview...)";
 
     return LinkParagraph(
       text: annotations,
@@ -212,7 +209,8 @@ class VideoParagraph extends StatelessWidget {
             height: 80.0,
             width: 80.0,
             child: CachedNetworkImage(
-              imageUrl: thumb ?? 'https://img.freepik.com/premium-vector/window-operating-system-error-warning-dialog-window-popup-message-with-system-failure-flat-design_812892-54.jpg?semt=ais_hybrid',
+              imageUrl: thumb ??
+                  'https://img.freepik.com/premium-vector/window-operating-system-error-warning-dialog-window-popup-message-with-system-failure-flat-design_812892-54.jpg?semt=ais_hybrid',
               placeholder: (context, url) => const Center(
                 child: CircularProgressIndicator(),
               ),

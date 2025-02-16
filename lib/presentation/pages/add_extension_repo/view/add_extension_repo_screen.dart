@@ -99,13 +99,10 @@ class _AddExtensionRepoView extends StatelessWidget {
                               ],
                             ),
                           ),
+                          ListTile(title: Text("baseUrl: ${repo.baseUrl}")),
                           ListTile(
-                              title: Text("baseUrl: ${repo.baseUrl}")),
-                          ListTile(
-                              title: Text(
-                                  "displayName: ${repo.displayName}")),
-                          ListTile(
-                              title: Text("website: ${repo.website}")),
+                              title: Text("displayName: ${repo.displayName}")),
+                          ListTile(title: Text("website: ${repo.website}")),
                           ListTile(
                               title: Text(
                                   "signingKeyFingerprint: ${repo.signingKeyFingerprint}")),
@@ -113,10 +110,14 @@ class _AddExtensionRepoView extends StatelessWidget {
                       ),
                     ),
                     state.addResult.when(
-                      initial: () => _buildElevatedButtonTile(context, cubit.addExtensionRepo, const Text('Add Repo')),
-                      loading: () => _buildElevatedButtonTile(context, null, const CircularProgressIndicator()),
-                      completed: (r) => _buildElevatedButtonTile(context, null, const Text('已完成加入')),
-                      error: (exception) => _buildElevatedButtonTile(context, null, Text(exception.toString())),
+                      initial: () => _buildElevatedButtonTile(context,
+                          cubit.addExtensionRepo, const Text('Add Repo')),
+                      loading: () => _buildElevatedButtonTile(
+                          context, null, const CircularProgressIndicator()),
+                      completed: (r) => _buildElevatedButtonTile(
+                          context, null, const Text('已完成加入')),
+                      error: (exception) => _buildElevatedButtonTile(
+                          context, null, Text(exception.toString())),
                     )
                   ],
                 );

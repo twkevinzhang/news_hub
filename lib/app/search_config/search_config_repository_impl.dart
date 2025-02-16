@@ -27,7 +27,11 @@ class SearchConfigRepositoryImpl implements SearchConfigRepository {
   }
 
   @override
-  Future<void> insertRepo({required String id, required Set<Board> enabledBoards, required Set<Pair<Board, String>> threadsSorting, required String keywords}) {
+  Future<void> insertRepo(
+      {required String id,
+      required Set<Board> enabledBoards,
+      required Set<Pair<Board, String>> threadsSorting,
+      required String keywords}) {
     throw UnimplementedError();
   }
 
@@ -37,8 +41,11 @@ class SearchConfigRepositoryImpl implements SearchConfigRepository {
   }
 
   @override
-  Future<void> upsertRepo({required String id, required Set<Board> enabledBoards, required Set<Pair<Board, String>> threadsSorting, required String keywords}) {
+  Future<void> upsertRepo(
+      {required String id,
+      required Set<Board> enabledBoards,
+      required Set<Pair<Board, String>> threadsSorting,
+      required String keywords}) {
     throw UnimplementedError();
   }
-
 }

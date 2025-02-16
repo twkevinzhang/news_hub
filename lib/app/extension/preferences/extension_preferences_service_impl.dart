@@ -7,13 +7,14 @@ import 'package:news_hub/domain/extension/extension.dart';
 class ExtensionPreferencesServiceImpl implements ExtensionPreferencesService {
   ExtensionPreferencesServiceImpl({
     required PreferenceStore store,
-  })  : _store = store;
+  }) : _store = store;
 
   final PreferenceStore _store;
 
   @override
   Preference<Set<String>> enabledLanguages() {
-    return _store.getStringList('extension_languages', defaultValue: {'en'}); // Replace with actual default languages
+    return _store.getStringList('extension_languages',
+        defaultValue: {'en'}); // Replace with actual default languages
   }
 
   @override

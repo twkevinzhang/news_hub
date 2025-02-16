@@ -27,101 +27,101 @@ class _ExtensionsView extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ExtensionsCubit, ExtensionsState>(
         builder: (context, state) {
-          final cubit = context.read<ExtensionsCubit>();
-          return Scaffold(
-            appBar: AppBar(
-              title: const Text('Extensions'),
-              actions: [
-                SearchAnchor(
-                    viewOnChanged: (text) => cubit.changeKeywords(text),
-                    viewOnSubmitted: (text) {
-                      cubit.loadExtensions();
-                      cubit.closeView(text);
+      final cubit = context.read<ExtensionsCubit>();
+      return Scaffold(
+        appBar: AppBar(
+          title: const Text('Extensions'),
+          actions: [
+            SearchAnchor(
+                viewOnChanged: (text) => cubit.changeKeywords(text),
+                viewOnSubmitted: (text) {
+                  cubit.loadExtensions();
+                  cubit.closeView(text);
+                },
+                isFullScreen: true,
+                searchController: cubit.searchController,
+                builder: (BuildContext context, SearchController controller) {
+                  return IconButton(
+                    icon: const Icon(Icons.filter_list_outlined),
+                    onPressed: () {
+                      controller.openView();
                     },
-                    isFullScreen: true,
-                    searchController: cubit.searchController,
-                    builder: (BuildContext context, SearchController controller) {
-                      return IconButton(
-                        icon: const Icon(Icons.filter_list_outlined),
-                        onPressed: () {
-                          controller.openView();
-                        },
-                      );
-                    },
-                    suggestionsBuilder:
-                        (BuildContext context, SearchController controller) {
-                      return List<ListTile>.generate(5, (int index) {
-                        final String item = 'item $index';
-                        return ListTile(
-                          title: Text(item),
-                          onTap: () {
-                            cubit.changeKeywords(item);
-                            controller.closeView(item);
-                            cubit.loadExtensions();
-                          },
-                        );
-                      });
-                    }),
-                IconButton(
-                  icon: const Icon(Icons.add_outlined),
-                  onPressed: () async {
-                    await AutoRouter.of(context).push(ExtensionReposRoute());
-                  },
-                ),
+                  );
+                },
+                suggestionsBuilder:
+                    (BuildContext context, SearchController controller) {
+                  return List<ListTile>.generate(5, (int index) {
+                    final String item = 'item $index';
+                    return ListTile(
+                      title: Text(item),
+                      onTap: () {
+                        cubit.changeKeywords(item);
+                        controller.closeView(item);
+                        cubit.loadExtensions();
+                      },
+                    );
+                  });
+                }),
+            IconButton(
+              icon: const Icon(Icons.add_outlined),
+              onPressed: () async {
+                await AutoRouter.of(context).push(ExtensionReposRoute());
+              },
+            ),
+          ],
+        ),
+        body: state.extensions.when(
+          completed: (data) => ListView(
+            children: [
+              if (data.updates.isNotEmpty) ...[
+                ListTile(title: TextDivider("等待更新")),
+                ...data.updates.map((e) => ListTile(
+                      title: Text("${e.displayName}"),
+                      trailing: state.installingExtensions
+                              .containsKey(e.pkgName)
+                          ? CircularProgressIndicator(
+                              value:
+                                  state.installingExtensions[e.pkgName]!.second)
+                          : IconButton(
+                              icon: Icon(Icons.update),
+                              onPressed: () => {
+                                cubit.updateExtension(e),
+                              },
+                            ),
+                    ))
               ],
-            ),
-            body: state.extensions.when(
-              completed: (data) => ListView(
-                children: [
-                  if (data.updates.isNotEmpty) ...[
-                    ListTile(title: TextDivider("等待更新")),
-                    ...data.updates.map((e) => ListTile(
+              if (data.installed.isNotEmpty) ...[
+                ListTile(title: TextDivider("已安裝")),
+                ...data.installed.map((e) => ListTile(
+                      title: Text("${e.displayName}"),
+                    ))
+              ],
+              if (data.notInstalled.isNotEmpty) ...[
+                ListTile(title: TextDivider("未安裝")),
+                ...data.notInstalled.map((e) => ListTile(
                       title: Text("${e.displayName}"),
                       trailing: state.installingExtensions
-                          .containsKey(e.pkgName)
+                              .containsKey(e.pkgName)
                           ? CircularProgressIndicator(
-                          value:
-                          state.installingExtensions[e.pkgName]!.second)
+                              value:
+                                  state.installingExtensions[e.pkgName]!.second)
                           : IconButton(
-                        icon: Icon(Icons.update),
-                        onPressed: () => {
-                          cubit.updateExtension(e),
-                        },
-                      ),
+                              icon: Icon(Icons.download),
+                              onPressed: () => {
+                                cubit.installExtension(e),
+                              },
+                            ),
                     ))
-                  ],
-                  if (data.installed.isNotEmpty) ...[
-                    ListTile(title: TextDivider("已安裝")),
-                    ...data.installed.map((e) => ListTile(
-                      title: Text("${e.displayName}"),
-                    ))
-                  ],
-                  if (data.notInstalled.isNotEmpty) ...[
-                    ListTile(title: TextDivider("未安裝")),
-                    ...data.notInstalled.map((e) => ListTile(
-                      title: Text("${e.displayName}"),
-                      trailing: state.installingExtensions
-                          .containsKey(e.pkgName)
-                          ? CircularProgressIndicator(
-                          value:
-                          state.installingExtensions[e.pkgName]!.second)
-                          : IconButton(
-                        icon: Icon(Icons.download),
-                        onPressed: () => {
-                          cubit.installExtension(e),
-                        },
-                      ),
-                    ))
-                  ],
-                ],
-              ),
-              error: (exception) => Center(
-                child: Text(exception.toString()),
-              ),
-              initial: () => const SizedBox(),
-              loading: () => const LoadingIndicator(),
-            ),
-          );
-        });
+              ],
+            ],
+          ),
+          error: (exception) => Center(
+            child: Text(exception.toString()),
+          ),
+          initial: () => const SizedBox(),
+          loading: () => const LoadingIndicator(),
+        ),
+      );
+    });
   }
 }

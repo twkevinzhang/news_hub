@@ -11,7 +11,7 @@ class PostCard extends StatelessWidget {
     super.key,
     required this.post,
     required this.boardName,
-});
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -123,7 +123,10 @@ class _PostActions extends StatelessWidget {
   final int comments;
   final DateTime createdAt;
   const _PostActions({
-    required this.createdAt, required this.liked, required this.threads, required this.comments,
+    required this.createdAt,
+    required this.liked,
+    required this.threads,
+    required this.comments,
   });
 
   @override
