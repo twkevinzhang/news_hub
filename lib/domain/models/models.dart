@@ -127,6 +127,7 @@ class Board {
   });
 }
 
+// 拆成 PTT Thread, Gamer Thread 兩種，都繼承自 Thread
 class ThreadInfo {
   final String extensionPkgName;
   final String siteId;

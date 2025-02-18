@@ -20,11 +20,12 @@ class AppRouter extends RootStackRouter {
             AutoRoute(path: 'settings', page: SettingsRoute.page),
           ],
         ),
-        AutoRoute(path: '/search-threads', page: SearchRoute.page),
         AutoRoute(
-            path: '/extension-repos',
-            page: ExtensionReposRoute.page,
-            children: []),
+          path: '/search-threads',
+          page: SearchRoute.page,
+          fullscreenDialog: true,
+        ),
+        AutoRoute(path: '/extension-repos', page: ExtensionReposRoute.page, children: []),
         AutoRoute(
           path: '/add-extension-repos',
           page: AddExtensionRepoRoute.page,

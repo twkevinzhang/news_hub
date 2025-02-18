@@ -18,11 +18,8 @@ final _mockPost = Post(
   comments: 0,
   contents: [
     TextParagraph(content: 'Text Content Maybe'),
-    VideoParagraph(
-        thumb: null, url: 'https://www.youtube.com/watch?v=_m7lYMTNQg8'),
-    ImageParagraph(
-        thumb: 'https://dummyimage.com/200x300/000/fff',
-        raw: 'https://picsum.photos/200/300'),
+    VideoParagraph(thumb: null, url: 'https://www.youtube.com/watch?v=_m7lYMTNQg8'),
+    ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
     QuoteParagraph(content: 'i m quote'),
     ReplyToParagraph(id: 'first-respondent'),
     LinkParagraph(content: 'https://pub.dev/packages/better_player'),
@@ -38,11 +35,13 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   }
 
   @override
-  Future<Site> site(
-      {required Extension extension, required String siteId}) async {
+  Future<Site> site({
+    required Extension extension,
+    required String siteId,
+  }) async {
     await Future.delayed(const Duration(seconds: 1));
     return Site(
-      extensionPkgName: 'twkevinzhang_komica',
+      extensionPkgName: 'twkevinzhang_beeceptor',
       id: '1',
       name: 'Komica',
       icon: 'komica',
@@ -102,12 +101,12 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   }) async {
     await Future.delayed(const Duration(seconds: 1));
     if (boardId == '1') {
-      return [
-        ThreadInfo(
+      return List<ThreadInfo>.generate(10, (index) {
+        return ThreadInfo(
           extensionPkgName: 'twkevinzhang_beeceptor',
           siteId: '1',
           boardId: '1',
-          id: '1',
+          id: index.toString(),
           url: 'https://beeceptor.com/threads/1',
           title: 'Thread Title',
           authorName: 'Author',
@@ -116,8 +115,8 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
           regardingPostCount: 1,
           previewContent: 'Preview Content',
           tags: [],
-        ),
-      ];
+        );
+      });
     } else {
       return [];
     }

@@ -39,6 +39,9 @@ class _SearchView extends StatelessWidget {
       return Scaffold(
         appBar: AppBar(
           title: Text("搜尋條件設定"),
+          bottom: PreferredSize(
+              child: Text("Title 2"),
+              preferredSize: Size.zero),
         ),
         body: Column(
           children: [

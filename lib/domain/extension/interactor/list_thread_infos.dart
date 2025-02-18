@@ -25,9 +25,8 @@ class ListThreadInfos {
       boards =
           boards.sortedBy((b) => searchConfigForm.boardsOrder.indexOf(b.id));
     }
-    final threads = (await Future.wait(boards.map((b) {
-      final e = extensions
-          .firstWhere((element) => element.pkgName == b.extensionPkgName);
+    final promises = boards.map((b) {
+      final e = extensions.firstWhere((element) => element.pkgName == b.extensionPkgName);
       return _apiService.threadInfos(
         extension: e,
         siteId: e.site.id,
@@ -36,9 +35,8 @@ class ListThreadInfos {
         sortBy: searchConfigForm?.threadsSorting[b.id],
         keywords: searchConfigForm?.keywords,
       );
-    })))
-        .flatten();
-
+    });
+    final threads = (await Future.wait(promises)).flatten();
     return threads.map((t) {
       final e = extensions
           .firstWhere((element) => element.pkgName == t.extensionPkgName);

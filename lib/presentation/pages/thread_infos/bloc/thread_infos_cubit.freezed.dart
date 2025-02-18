@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ThreadInfosState {
   ThreadsFilter? get filter => throw _privateConstructorUsedError;
   ThreadsSorting? get sorting => throw _privateConstructorUsedError;
+  double get visibilityFactor => throw _privateConstructorUsedError;
 
   /// Create a copy of ThreadInfosState
   /// with the given fields replaced by the non-null parameter values.
@@ -32,7 +33,10 @@ abstract class $ThreadInfosStateCopyWith<$Res> {
           ThreadInfosState value, $Res Function(ThreadInfosState) then) =
       _$ThreadInfosStateCopyWithImpl<$Res, ThreadInfosState>;
   @useResult
-  $Res call({ThreadsFilter? filter, ThreadsSorting? sorting});
+  $Res call(
+      {ThreadsFilter? filter,
+      ThreadsSorting? sorting,
+      double visibilityFactor});
 
   $ThreadsFilterCopyWith<$Res>? get filter;
   $ThreadsSortingCopyWith<$Res>? get sorting;
@@ -55,6 +59,7 @@ class _$ThreadInfosStateCopyWithImpl<$Res, $Val extends ThreadInfosState>
   $Res call({
     Object? filter = freezed,
     Object? sorting = freezed,
+    Object? visibilityFactor = null,
   }) {
     return _then(_value.copyWith(
       filter: freezed == filter
@@ -65,6 +70,10 @@ class _$ThreadInfosStateCopyWithImpl<$Res, $Val extends ThreadInfosState>
           ? _value.sorting
           : sorting // ignore: cast_nullable_to_non_nullable
               as ThreadsSorting?,
+      visibilityFactor: null == visibilityFactor
+          ? _value.visibilityFactor
+          : visibilityFactor // ignore: cast_nullable_to_non_nullable
+              as double,
     ) as $Val);
   }
 
@@ -105,7 +114,10 @@ abstract class _$$ThreadInfosStateImplCopyWith<$Res>
       __$$ThreadInfosStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ThreadsFilter? filter, ThreadsSorting? sorting});
+  $Res call(
+      {ThreadsFilter? filter,
+      ThreadsSorting? sorting,
+      double visibilityFactor});
 
   @override
   $ThreadsFilterCopyWith<$Res>? get filter;
@@ -128,6 +140,7 @@ class __$$ThreadInfosStateImplCopyWithImpl<$Res>
   $Res call({
     Object? filter = freezed,
     Object? sorting = freezed,
+    Object? visibilityFactor = null,
   }) {
     return _then(_$ThreadInfosStateImpl(
       filter: freezed == filter
@@ -138,23 +151,43 @@ class __$$ThreadInfosStateImplCopyWithImpl<$Res>
           ? _value.sorting
           : sorting // ignore: cast_nullable_to_non_nullable
               as ThreadsSorting?,
+      visibilityFactor: null == visibilityFactor
+          ? _value.visibilityFactor
+          : visibilityFactor // ignore: cast_nullable_to_non_nullable
+              as double,
     ));
   }
 }
 
 /// @nodoc
 
-class _$ThreadInfosStateImpl implements _ThreadInfosState {
-  const _$ThreadInfosStateImpl({this.filter, this.sorting});
+class _$ThreadInfosStateImpl
+    with DiagnosticableTreeMixin
+    implements _ThreadInfosState {
+  const _$ThreadInfosStateImpl(
+      {this.filter, this.sorting, this.visibilityFactor = 1.0});
 
   @override
   final ThreadsFilter? filter;
   @override
   final ThreadsSorting? sorting;
+  @override
+  @JsonKey()
+  final double visibilityFactor;
 
   @override
-  String toString() {
-    return 'ThreadInfosState(filter: $filter, sorting: $sorting)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ThreadInfosState(filter: $filter, sorting: $sorting, visibilityFactor: $visibilityFactor)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ThreadInfosState'))
+      ..add(DiagnosticsProperty('filter', filter))
+      ..add(DiagnosticsProperty('sorting', sorting))
+      ..add(DiagnosticsProperty('visibilityFactor', visibilityFactor));
   }
 
   @override
@@ -163,11 +196,14 @@ class _$ThreadInfosStateImpl implements _ThreadInfosState {
         (other.runtimeType == runtimeType &&
             other is _$ThreadInfosStateImpl &&
             (identical(other.filter, filter) || other.filter == filter) &&
-            (identical(other.sorting, sorting) || other.sorting == sorting));
+            (identical(other.sorting, sorting) || other.sorting == sorting) &&
+            (identical(other.visibilityFactor, visibilityFactor) ||
+                other.visibilityFactor == visibilityFactor));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, filter, sorting);
+  int get hashCode =>
+      Object.hash(runtimeType, filter, sorting, visibilityFactor);
 
   /// Create a copy of ThreadInfosState
   /// with the given fields replaced by the non-null parameter values.
@@ -182,12 +218,15 @@ class _$ThreadInfosStateImpl implements _ThreadInfosState {
 abstract class _ThreadInfosState implements ThreadInfosState {
   const factory _ThreadInfosState(
       {final ThreadsFilter? filter,
-      final ThreadsSorting? sorting}) = _$ThreadInfosStateImpl;
+      final ThreadsSorting? sorting,
+      final double visibilityFactor}) = _$ThreadInfosStateImpl;
 
   @override
   ThreadsFilter? get filter;
   @override
   ThreadsSorting? get sorting;
+  @override
+  double get visibilityFactor;
 
   /// Create a copy of ThreadInfosState
   /// with the given fields replaced by the non-null parameter values.

@@ -24,6 +24,8 @@ import 'package:news_hub/app/extension/preferences/extension_preferences_service
     as _i29;
 import 'package:news_hub/app/extension/repository/installed_extension_repository_impl.dart'
     as _i753;
+import 'package:news_hub/app/extension/repository/mock_installed_extension_repository_impl.dart'
+    as _i1056;
 import 'package:news_hub/app/extension_repo/api/extension_repo_api_service_impl.dart'
     as _i999;
 import 'package:news_hub/app/extension_repo/api/mock_extension_repo_api_service_impl.dart'
@@ -129,6 +131,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i623.ExtensionRepoRepository>(
       () => _i178.MockExtensionRepoRepositoryImpl(),
+      registerFor: {_test},
+    );
+    gh.lazySingleton<_i981.InstalledExtensionRepository>(
+      () => _i1056.MockInstalledExtensionRepositoryImpl(),
       registerFor: {_test},
     );
     await gh.lazySingletonAsync<_i315.ExtensionInstallService>(

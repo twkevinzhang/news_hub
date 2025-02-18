@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -11,6 +11,7 @@ import 'package:news_hub/presentation/widgets/molecules/molecules.dart';
 import 'package:news_hub/shared/models.dart';
 
 part 'thread_infos_cubit.freezed.dart';
+
 
 @freezed
 class ThreadInfosState with _$ThreadInfosState {
@@ -42,12 +43,22 @@ class ThreadInfosCubit extends Cubit<ThreadInfosState> {
     emit(state.copyWith(filter: filter));
   }
 
+  get filtered => state.filter != null;
+
   set sorting(ThreadsSorting? sorting) {
     emit(state.copyWith(sorting: sorting));
   }
 
   void init() {
     _loadThreadInfos(1);
+  }
+
+  void refresh() {
+    pagingController.refresh();
+  }
+
+  void updateVisibilityFactor(double factor) {
+    emit(state.copyWith(visibilityFactor: factor));
   }
 
   void _loadThreadInfos(int pageKey) async {
@@ -70,11 +81,8 @@ class ThreadInfosCubit extends Cubit<ThreadInfosState> {
       }
     } catch (e) {
       pagingController.error = e;
+      if (kDebugMode) rethrow;
     }
-  }
-
-  void refresh() {
-    pagingController.refresh();
   }
 
   @override
