@@ -2,10 +2,10 @@ export SERIOUS_PYTHON_SITE_PACKAGES := {{ NEED_TO_SET }}/Projects/news_hub_exten
 export PATH := $(PATH):$(HOME)/.pub-cache/bin
 
 run:
-	flutter run
+	fvm flutter run
 
 build:
-	dart run build_runner build --delete-conflicting-outputs
+	fvm dart run build_runner build --delete-conflicting-outputs
 
 proto:
 	protoc --dart_out=grpc:lib/app/extension/models -Inews_hub_protos news_hub_protos/*.proto

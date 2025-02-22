@@ -42,3 +42,5 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 beeceptor/dist/*
+android/app/.cxx/Debug
+.fvm/flutter_sdk
