@@ -1,18 +1,18 @@
 import 'package:dartx/src/map.dart';
+import 'package:news_hub/domain/bookmark/bookmark_repository.dart';
 import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/domain/search_config/search_config.dart';
 import 'package:injectable/injectable.dart';
 
 // TODO: implement it
-@LazySingleton(as: SearchConfigRepository)
-class SearchConfigRepositoryImpl implements SearchConfigRepository {
+@LazySingleton(as: BookmarkRepository)
+class BookmarkRepositoryImpl implements BookmarkRepository {
   @override
   Future<void> deleteRepo(String id) {
     throw UnimplementedError();
   }
 
   @override
-  Future<List<SearchConfig>> getAll() {
+  Future<List<Bookmark>> getAll() {
     throw UnimplementedError();
   }
 
@@ -22,7 +22,7 @@ class SearchConfigRepositoryImpl implements SearchConfigRepository {
   }
 
   @override
-  Future<SearchConfig?> getSearchConfig(String id) {
+  Future<Bookmark?> get(String id) {
     throw UnimplementedError();
   }
 
@@ -36,7 +36,7 @@ class SearchConfigRepositoryImpl implements SearchConfigRepository {
   }
 
   @override
-  Stream<List<SearchConfig>> subscribeAll() {
+  Stream<List<Bookmark>> subscribeAll() {
     throw UnimplementedError();
   }
 

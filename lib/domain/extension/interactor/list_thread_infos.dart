@@ -21,9 +21,9 @@ class ListThreadInfos {
       {Pagination? pagination, ThreadsFilter? filter, ThreadsSorting? sorting}) async {
     final extensions = await _listInstalledExtensions.withBoards();
     List<Board> boards = extensions.map((e) => e.boards).flatten().toList();
-    if (searchConfigForm != null) {
+    if (sorting != null) {
       boards =
-          boards.sortedBy((b) => searchConfigForm.boardsOrder.indexOf(b.id));
+          boards.sortedBy((b) => sorting.boardsOrder.indexOf(b.id));
     }
     final threads = (await Future.wait(boards.map((b) {
       final e = extensions
@@ -33,8 +33,8 @@ class ListThreadInfos {
         siteId: e.site.id,
         boardId: b.id,
         pagination: pagination,
-        sortBy: searchConfigForm?.threadsSorting[b.id],
-        keywords: searchConfigForm?.keywords,
+        sortBy: sorting?.threadsSorting[b.id],
+        keywords: filter?.keywords,
       );
     })))
         .flatten();

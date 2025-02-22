@@ -13,28 +13,10 @@ class ThreadsFilter with _$ThreadsFilter {
   }) = _ThreadsFilter;
 }
 
-extension ThreadsFilterEx on ThreadsFilter {
-  ThreadsFilter fromEntity(SearchConfig c) {
-    return ThreadsFilter(
-        extensionPkgNames: c.enabledExtensionPkgNames,
-        boardIds: c.enabledBoardIds,
-        keywords: c.keywords);
-  }
-}
-
 @freezed
 class ThreadsSorting with _$ThreadsSorting {
   const factory ThreadsSorting({
     required List<String> boardsOrder,
     required Map<String, String> threadsSorting,
   }) = _ThreadsSorting;
-}
-
-extension ThreadsSortingEx on ThreadsSorting {
-  ThreadsSorting fromEntity(SearchConfig c) {
-    return ThreadsSorting(
-      boardsOrder: c.boardsOrder,
-      threadsSorting: c.threadsSorting,
-    );
-  }
 }

@@ -1,3 +1,5 @@
+import 'package:news_hub/presentation/pages/search/models/models.dart';
+
 class ExtensionRepo {
   final String? icon;
   final String baseUrl;
@@ -294,21 +296,14 @@ class Comment {
   });
 }
 
-/// 搜尋條件、排序
-class SearchConfig {
+class Bookmark {
   final String id;
-  final Set<String> enabledExtensionPkgNames;
-  final Set<String> enabledBoardIds;
-  final List<String> boardsOrder;
-  final Map<String, String> threadsSorting; // boardId -> sorting
-  final String? keywords;
+  final ThreadsFilter filter;
+  final ThreadsSorting sorting;
 
-  SearchConfig({
+  Bookmark({
     required this.id,
-    required this.enabledExtensionPkgNames,
-    required this.enabledBoardIds,
-    required this.boardsOrder,
-    required this.threadsSorting,
-    required this.keywords,
+    required this.filter,
+    required this.sorting,
   });
 }

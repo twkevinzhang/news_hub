@@ -12,6 +12,7 @@
 import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
+import 'package:news_hub/app/bookmark/bookmark_repository_impl.dart' as _i495;
 import 'package:news_hub/app/extension/api/extension_api_service_impl.dart'
     as _i516;
 import 'package:news_hub/app/extension/api/mock_extension_api_service_impl.dart'
@@ -32,11 +33,12 @@ import 'package:news_hub/app/extension_repo/repository/extension_repo_repository
     as _i374;
 import 'package:news_hub/app/extension_repo/repository/mock_extension_repo_repository_impl.dart'
     as _i178;
-import 'package:news_hub/app/search_config/search_config_repository_impl.dart'
-    as _i374;
 import 'package:news_hub/app/service/database/database.dart' as _i539;
 import 'package:news_hub/app/service/preferences/store.dart' as _i365;
 import 'package:news_hub/app/service/preferences/store_impl.dart' as _i842;
+import 'package:news_hub/domain/bookmark/bookmark_repository.dart' as _i521;
+import 'package:news_hub/domain/bookmark/interactor/list_bookmarks.dart'
+    as _i1049;
 import 'package:news_hub/domain/extension/extension.dart' as _i315;
 import 'package:news_hub/domain/extension/extension_api_service.dart' as _i892;
 import 'package:news_hub/domain/extension/extension_install_service.dart'
@@ -73,11 +75,6 @@ import 'package:news_hub/domain/extension_repo/interactor/list_extension_repos.d
     as _i25;
 import 'package:news_hub/domain/extension_repo/interactor/valid_extension_repo_url.dart'
     as _i475;
-import 'package:news_hub/domain/search_config/interactor/list_search_configs.dart'
-    as _i433;
-import 'package:news_hub/domain/search_config/search_config.dart' as _i1064;
-import 'package:news_hub/domain/search_config/search_config_repository.dart'
-    as _i271;
 import 'package:news_hub/locator.dart' as _i56;
 import 'package:news_hub/presentation/pages/add_extension_repo/bloc/add_extension_repo_cubit.dart'
     as _i229;
@@ -116,8 +113,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i475.ValidExtensionRepoUrl>(
         () => _i475.ValidExtensionRepoUrl());
     gh.lazySingleton<_i762.AppRouter>(() => _i762.AppRouter());
-    gh.lazySingleton<_i1064.SearchConfigRepository>(
-        () => _i374.SearchConfigRepositoryImpl());
     await gh.lazySingletonAsync<_i315.ExtensionInstallService>(
       () => _i1036.ExtensionInstallServiceImpl.create(),
       registerFor: {_dev},
@@ -152,6 +147,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i517.UninstallExtension>(() => _i517.UninstallExtension(
         installService: gh<_i103.ExtensionInstallService>()));
+    gh.lazySingleton<_i521.BookmarkRepository>(
+        () => _i495.BookmarkRepositoryImpl());
+    gh.lazySingleton<_i1049.ListBookmarks>(
+        () => _i1049.ListBookmarks(repo: gh<_i521.BookmarkRepository>()));
     gh.lazySingleton<_i25.ListExtensionRepo>(() => _i25.ListExtensionRepo(
         repository: gh<_i525.ExtensionRepoRepository>()));
     gh.lazySingleton<_i1062.DeleteExtensionRepo>(() =>
@@ -167,8 +166,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i365.PreferenceStore>(
         () => _i842.PreferenceStoreImpl(prefs: gh<_i579.SharedPreferences>()));
-    gh.lazySingleton<_i433.ListSearchConfigs>(() =>
-        _i433.ListSearchConfigs(repo: gh<_i271.SearchConfigRepository>()));
     gh.lazySingleton<_i351.ListInstalledExtensions>(
         () => _i351.ListInstalledExtensions(
               apiService: gh<_i892.ExtensionApiService>(),
@@ -195,10 +192,6 @@ extension GetItInjectableX on _i174.GetIt {
               extensionRepoRepository: gh<_i623.ExtensionRepoRepository>(),
               extensionApiService: gh<_i623.ExtensionRepoApiService>(),
             ));
-    gh.factory<_i21.SearchCubit>(() => _i21.SearchCubit(
-          listSearchConfigs: gh<_i1064.ListSearchConfigs>(),
-          listExtensions: gh<_i315.ListInstalledExtensions>(),
-        ));
     gh.factory<_i229.AddExtensionRepoCubit>(() => _i229.AddExtensionRepoCubit(
           validExtensionRepoUrl: gh<_i475.ValidExtensionRepoUrl>(),
           getExtensionRepo: gh<_i581.GetExtensionRepo>(),
@@ -212,6 +205,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i315.ExtensionPreferencesService>(() =>
         _i29.ExtensionPreferencesServiceImpl(
             store: gh<_i365.PreferenceStore>()));
+    gh.factory<_i21.SearchCubit>(() => _i21.SearchCubit(
+          listSearchConfigs: gh<InvalidType>(),
+          listExtensions: gh<_i315.ListInstalledExtensions>(),
+        ));
     gh.factory<_i181.ThreadInfosCubit>(() =>
         _i181.ThreadInfosCubit(listThreadInfos: gh<_i315.ListThreadInfos>()));
     gh.lazySingleton<_i214.ListExtensions>(() => _i214.ListExtensions(
