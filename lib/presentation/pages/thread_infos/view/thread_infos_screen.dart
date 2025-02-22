@@ -36,7 +36,12 @@ class _ThreadInfosView extends StatelessWidget {
 
       return Scaffold(
         appBar: AppBar(
-          title: const Text('Threads'),
+          leading: IconButton(
+            icon: const Icon(Icons.bookmark_outline),
+            onPressed: () {
+            },
+          ),
+          title: const Text('Default'),
           actions: [
             IconButton(
               icon: const Icon(Icons.search_outlined),

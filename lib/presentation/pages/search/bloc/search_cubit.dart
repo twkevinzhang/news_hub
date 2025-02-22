@@ -1,11 +1,8 @@
-
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-
-import 'package:news_hub/domain/search_config/search_config.dart';
+import 'package:news_hub/domain/bookmark/interactor/list_bookmarks.dart';
 import 'package:news_hub/domain/extension/extension.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/presentation/pages/search/models/models.dart';
@@ -29,7 +26,7 @@ class SearchCubit extends Cubit<SearchState> {
   final PageController pageController;
 
   SearchCubit({
-    required ListSearchConfigs listSearchConfigs,
+    required ListBookmarks listBookmarks,
     required ListInstalledExtensions listExtensions,
   })  : _listExtensions = listExtensions,
         pageController = PageController(),

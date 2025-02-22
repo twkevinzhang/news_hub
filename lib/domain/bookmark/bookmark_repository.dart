@@ -1,12 +1,12 @@
 import 'package:dartx/dartx.dart';
 import 'package:news_hub/domain/models/models.dart';
 
-abstract class SearchConfigRepository {
-  Stream<List<SearchConfig>> subscribeAll();
+abstract class BookmarkRepository {
+  Stream<List<Bookmark>> subscribeAll();
 
-  Future<List<SearchConfig>> getAll();
+  Future<List<Bookmark>> getAll();
 
-  Future<SearchConfig?> getSearchConfig(String id);
+  Future<Bookmark?> get(String id);
 
   Stream<int> getCount();
 

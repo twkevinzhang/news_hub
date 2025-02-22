@@ -78,7 +78,7 @@ class _SearchView extends StatelessWidget {
             child: isLatest ? Icon(Icons.search) : Icon(Icons.arrow_forward),
             onPressed: () {
               isLatest
-                  ? AutoRouter.of(context).popForced(state.searchConfig)
+                  ? AutoRouter.of(context).popForced(state.filter)
                   : cubit.nextStep();
             }),
       );
@@ -90,12 +90,12 @@ class _SearchView extends StatelessWidget {
       final cubit = context.read<SearchCubit>();
       return ListView(
         children: [
-          ...state.allExtensions
-              .filter((e) => state.searchConfig.extensionPkgNames
+          ...state.installedExtensions
+              .filter((e) => state.filter.extensionPkgNames
               .contains(e.pkgName))
               .flatMap((e) => e.boards
               .filter(
-                  (b) => state.searchConfig.boardIds.contains(b.id))
+                  (b) => state.filter.boardIds.contains(b.id))
               .map((b) => ListTile(
             title: Text("[${e.displayName}] ${b.name}"),
             trailing: DropdownButton(
@@ -105,7 +105,7 @@ class _SearchView extends StatelessWidget {
                   child: Text(s),
                 );
               }).toList(),
-              value: state.searchConfig.threadsSorting[b.id] ??
+              value: state.filter.threadsSorting[b.id] ??
                   b.supportedThreadsSorting.first,
               onChanged: (value) {
                 if (value != null) {
@@ -116,7 +116,7 @@ class _SearchView extends StatelessWidget {
           ))),
           ListTile(title: TextDivider("未啟用")),
           ...state.allExtensions
-              .filter((e) => !state.searchConfig.extensionPkgNames
+              .filter((e) => !state.filter.extensionPkgNames
               .contains(e.pkgName))
               .map((e) => ListTile(
             title: Text("[${e.displayName}]"),
@@ -132,11 +132,11 @@ class _SearchView extends StatelessWidget {
       return ListView(
         children: [
           ...state.installedExtensions
-              .filter((e) => state.searchConfig.extensionPkgNames
+              .filter((e) => state.filter.extensionPkgNames
               .contains(e.pkgName))
               .flatMap((e) => e.boards
               .filter(
-                  (b) => state.searchConfig.boardIds.contains(b.id))
+                  (b) => state.filter.boardIds.contains(b.id))
               .map((b) => ListTile(
             title: Text("[${e.displayName}] ${b.name}"),
             trailing: DropdownButton(
@@ -146,7 +146,7 @@ class _SearchView extends StatelessWidget {
                   child: Text(s),
                 );
               }).toList(),
-              value: state.searchConfig.threadsSorting[b.id] ??
+              value: state.sorting.threadsSorting[b.id] ??
                   b.supportedThreadsSorting.first,
               onChanged: (value) {
                 if (value != null) {
@@ -156,8 +156,8 @@ class _SearchView extends StatelessWidget {
             ),
           ))),
           ListTile(title: TextDivider("未啟用")),
-          ...state.allExtensions
-              .filter((e) => !state.searchConfig.extensionPkgNames
+          ...state.installedExtensions
+              .filter((e) => !state.filter.extensionPkgNames
               .contains(e.pkgName))
               .map((e) => ListTile(
             title: Text("[${e.displayName}]"),
@@ -176,7 +176,7 @@ class _SearchView extends StatelessWidget {
           children: [
             SearchAnchor(
                 viewOnChanged: (text) => cubit.changeKeywords(text),
-                viewOnSubmitted: (text) => AutoRouter.of(context).popForced(state.searchConfig),
+                viewOnSubmitted: (text) => AutoRouter.of(context).popForced(state.filter),
                 builder: (BuildContext context, SearchController controller) =>
                     SearchBar(
                       controller: controller,
