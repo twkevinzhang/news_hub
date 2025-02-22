@@ -3,8 +3,6 @@ import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/extension/extension_api_service.dart';
 import 'package:news_hub/domain/extension/interactor/list_installed_extensions.dart';
 import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/presentation/pages/search/models/models.dart';
-import 'package:news_hub/presentation/pages/search/search.dart';
 import 'package:news_hub/shared/models.dart';
 
 @lazySingleton
@@ -17,31 +15,36 @@ class ListThreadInfos {
   })  : _apiService = apiService,
         _listInstalledExtensions = listInstalledExtensions;
 
-  Future<List<ThreadWithExtension>> call(
-      {Pagination? pagination, ThreadsFilter? filter, ThreadsSorting? sorting}) async {
+  Future<List<ThreadWithExtension>> call({
+    Pagination? pagination,
+    ThreadsFilter? filter,
+    ThreadsSorting? sorting,
+  }) async {
     final extensions = await _listInstalledExtensions.withBoards();
-    List<Board> boards = extensions.map((e) => e.boards).flatten().toList();
+    var boards = extensions.map((e) => e.boards).flatten();
     if (sorting != null) {
-      boards =
-          boards.sortedBy((b) => sorting.boardsOrder.indexOf(b.id));
+      boards = boards.sortedBy((b) => sorting.boardsOrder.indexOf(b.id));
+    }
+    if (filter != null) {
+      if (filter.boardsSorting.isNotEmpty) {
+        boards = boards.filter((b) => filter.boardsSorting.containsKey(b.id));
+      }
     }
     final threads = (await Future.wait(boards.map((b) {
-      final e = extensions
-          .firstWhere((element) => element.pkgName == b.extensionPkgName);
+      final e = extensions.firstWhere((element) => element.pkgName == b.extensionPkgName);
       return _apiService.threadInfos(
         extension: e,
         siteId: e.site.id,
         boardId: b.id,
         pagination: pagination,
-        sortBy: sorting?.threadsSorting[b.id],
+        sortBy: filter?.boardsSorting[b.id],
         keywords: filter?.keywords,
       );
     })))
         .flatten();
 
     return threads.map((t) {
-      final e = extensions
-          .firstWhere((element) => element.pkgName == t.extensionPkgName);
+      final e = extensions.firstWhere((element) => element.pkgName == t.extensionPkgName);
       final b = boards.firstWhere((element) => element.id == t.boardId);
       return ThreadWithExtension(thread: t, board: b, extension: e);
     }).toList();

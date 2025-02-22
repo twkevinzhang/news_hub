@@ -1,13 +1,9 @@
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:news_hub/domain/extension/extension.dart';
-import 'package:news_hub/presentation/pages/search/bloc/search_cubit.dart';
-import 'package:news_hub/presentation/pages/search/models/models.dart';
-import 'package:news_hub/presentation/pages/search/search.dart';
+import 'package:news_hub/domain/models/models.dart';
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/presentation/widgets/molecules/molecules.dart';
 import 'package:news_hub/shared/models.dart';
 
 part 'thread_infos_cubit.freezed.dart';

@@ -1,4 +1,7 @@
-import 'package:news_hub/presentation/pages/search/models/models.dart';
+import 'package:flutter/foundation.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'models.freezed.dart';
 
 class ExtensionRepo {
   final String? icon;
@@ -306,4 +309,19 @@ class Bookmark {
     required this.filter,
     required this.sorting,
   });
+}
+
+@freezed
+class ThreadsFilter with _$ThreadsFilter {
+  const factory ThreadsFilter({
+    required Map<String, String> boardsSorting,
+    required String? keywords,
+  }) = _ThreadsFilter;
+}
+
+@freezed
+class ThreadsSorting with _$ThreadsSorting {
+  const factory ThreadsSorting({
+    required List<String> boardsOrder,
+  }) = _ThreadsSorting;
 }

@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/domain/extension/extension.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/search/bloc/search_cubit.dart';
-import 'package:news_hub/presentation/pages/search/models/models.dart';
 import 'package:news_hub/presentation/pages/search/search.dart';
 import 'package:news_hub/presentation/pages/thread_infos/bloc/thread_infos_cubit.dart';
 import 'package:news_hub/presentation/pages/thread_infos/widgets/post_card.dart';
@@ -20,72 +19,61 @@ class ThreadInfosScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<ThreadInfosCubit>()..init(),
-      child: _ThreadInfosView(),
+      child: _ThreadInfosScreen(),
     );
   }
 }
 
-class _ThreadInfosView extends StatelessWidget {
-  const _ThreadInfosView({super.key});
+class _ThreadInfosScreen extends StatelessWidget {
+  const _ThreadInfosScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ThreadInfosCubit, ThreadInfosState>(
-        builder: (context, state) {
-      final cubit = context.read<ThreadInfosCubit>();
-
-      return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: const Icon(Icons.bookmark_outline),
-            onPressed: () {
+    final cubit = context.watch<ThreadInfosCubit>();
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.menu),
+          onPressed: () {
+          },
+        ),
+        title: const Text('Bookmark Name'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search_outlined),
+            onPressed: () async {
+              await AutoRouter.of(context).push(SearchRoute());
             },
           ),
-          title: const Text('Default'),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.search_outlined),
-              onPressed: () async {
-                final filter = await AutoRouter.of(context)
-                    .push<ThreadsFilter?>(SearchRoute());
-                if (!context.mounted) return;
-                if (filter != null) {
-                  cubit.filter = filter;
-                  cubit.sorting = null;
-                  cubit.refresh();
-                }
-              },
+        ],
+      ),
+      body: PagedListView<int, ThreadWithExtension>(
+        pagingController: cubit.pagingController,
+        builderDelegate: PagedChildBuilderDelegate<ThreadWithExtension>(
+          itemBuilder: (context, thread, index) => GestureDetector(
+            onTap: () {},
+            child: Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Container(),
+                ),
+                const Divider(),
+              ],
             ),
-          ],
-        ),
-        body: PagedListView<int, ThreadWithExtension>(
-          pagingController: cubit.pagingController,
-          builderDelegate: PagedChildBuilderDelegate<ThreadWithExtension>(
-            itemBuilder: (context, thread, index) => GestureDetector(
-              onTap: () {},
-              child: Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(16),
-                    child: Container(),
-                  ),
-                  const Divider(),
-                ],
-              ),
-            ),
-            noItemsFoundIndicatorBuilder: (context) => Center(
-              child: Text("空"),
-            ),
-            firstPageProgressIndicatorBuilder: (context) =>
-                const LoadingIndicator(),
-            newPageProgressIndicatorBuilder: (context) =>
-                const LoadingIndicator(),
-            noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
-            transitionDuration: const Duration(seconds: 1),
-            animateTransitions: true,
           ),
+          noItemsFoundIndicatorBuilder: (context) => Center(
+            child: Text("空"),
+          ),
+          firstPageProgressIndicatorBuilder: (context) =>
+          const LoadingIndicator(),
+          newPageProgressIndicatorBuilder: (context) =>
+          const LoadingIndicator(),
+          noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
+          transitionDuration: const Duration(seconds: 1),
+          animateTransitions: true,
         ),
-      );
-    });
+      ),
+    );
   }
 }

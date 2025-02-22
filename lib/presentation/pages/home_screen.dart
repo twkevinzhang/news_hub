@@ -11,14 +11,18 @@ class HomeScreen extends StatelessWidget {
     return AutoTabsScaffold(
         routes: [
           ThreadInfosRoute(),
+          SearchRoute(),
           ExtensionsRoute(),
           SettingsRoute(),
         ],
         bottomNavigationBuilder: (_, router) {
           return BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
                   icon: Icon(Icons.newspaper), label: 'Threads'),
+              BottomNavigationBarItem(
+                  icon: Icon(Icons.search), label: 'Search'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.extension), label: 'Extensions'),
               BottomNavigationBarItem(
