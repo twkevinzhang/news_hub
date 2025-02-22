@@ -15,25 +15,27 @@ class AppRouter extends RootStackRouter {
           path: '/',
           page: HomeRoute.page,
           children: [
-            AutoRoute(path: 'thread-infos', page: ThreadInfosRoute.page),
+            AutoRoute(
+              path: 'thread-infos',
+              page: ThreadInfosRoute.page,
+              children: [
+                AutoRoute(path: '', page: ThreadInfosRoute.page),
+                AutoRoute(path: ':bookmark_id', page: ThreadInfosRoute.page),
+              ],
+            ),
+            AutoRoute(path: 'search', page: SearchRoute.page),
             AutoRoute(path: 'extensions', page: ExtensionsRoute.page),
             AutoRoute(path: 'settings', page: SettingsRoute.page),
           ],
         ),
-        AutoRoute(path: '/search-threads', page: SearchRoute.page),
-        AutoRoute(
-            path: '/extension-repos',
-            page: ExtensionReposRoute.page,
-            children: []),
-        AutoRoute(
-          path: '/add-extension-repos',
-          page: AddExtensionRepoRoute.page,
-          fullscreenDialog: true,
-        ),
+        // AutoRoute(path: '/extension-repos', page: ExtensionReposRoute.page, children: [
+        //   AutoRoute(path: '', page: ExtensionReposRoute.page),
+        //   AutoRoute(path: 'add', page: AddExtensionRepoRoute.page),
+        // ]),
       ];
 
   @override
   List<AutoRouteGuard> get guards => [
         // optionally add root guards here
-      ];
+  ];
 }

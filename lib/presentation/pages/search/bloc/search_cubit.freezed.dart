@@ -16,11 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SearchState {
-  int get currentStep => throw _privateConstructorUsedError;
-  Result<List<ExtensionWithBoards>> get installedExtensions =>
-      throw _privateConstructorUsedError;
   ThreadsFilter get filter => throw _privateConstructorUsedError;
-  ThreadsSorting get sorting => throw _privateConstructorUsedError;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -35,15 +31,9 @@ abstract class $SearchStateCopyWith<$Res> {
           SearchState value, $Res Function(SearchState) then) =
       _$SearchStateCopyWithImpl<$Res, SearchState>;
   @useResult
-  $Res call(
-      {int currentStep,
-      Result<List<ExtensionWithBoards>> installedExtensions,
-      ThreadsFilter filter,
-      ThreadsSorting sorting});
+  $Res call({ThreadsFilter filter});
 
-  $ResultCopyWith<List<ExtensionWithBoards>, $Res> get installedExtensions;
   $ThreadsFilterCopyWith<$Res> get filter;
-  $ThreadsSortingCopyWith<$Res> get sorting;
 }
 
 /// @nodoc
@@ -61,40 +51,14 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currentStep = null,
-    Object? installedExtensions = null,
     Object? filter = null,
-    Object? sorting = null,
   }) {
     return _then(_value.copyWith(
-      currentStep: null == currentStep
-          ? _value.currentStep
-          : currentStep // ignore: cast_nullable_to_non_nullable
-              as int,
-      installedExtensions: null == installedExtensions
-          ? _value.installedExtensions
-          : installedExtensions // ignore: cast_nullable_to_non_nullable
-              as Result<List<ExtensionWithBoards>>,
       filter: null == filter
           ? _value.filter
           : filter // ignore: cast_nullable_to_non_nullable
               as ThreadsFilter,
-      sorting: null == sorting
-          ? _value.sorting
-          : sorting // ignore: cast_nullable_to_non_nullable
-              as ThreadsSorting,
     ) as $Val);
-  }
-
-  /// Create a copy of SearchState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ResultCopyWith<List<ExtensionWithBoards>, $Res> get installedExtensions {
-    return $ResultCopyWith<List<ExtensionWithBoards>, $Res>(
-        _value.installedExtensions, (value) {
-      return _then(_value.copyWith(installedExtensions: value) as $Val);
-    });
   }
 
   /// Create a copy of SearchState
@@ -104,16 +68,6 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
   $ThreadsFilterCopyWith<$Res> get filter {
     return $ThreadsFilterCopyWith<$Res>(_value.filter, (value) {
       return _then(_value.copyWith(filter: value) as $Val);
-    });
-  }
-
-  /// Create a copy of SearchState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ThreadsSortingCopyWith<$Res> get sorting {
-    return $ThreadsSortingCopyWith<$Res>(_value.sorting, (value) {
-      return _then(_value.copyWith(sorting: value) as $Val);
     });
   }
 }
@@ -126,18 +80,10 @@ abstract class _$$SearchStateImplCopyWith<$Res>
       __$$SearchStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int currentStep,
-      Result<List<ExtensionWithBoards>> installedExtensions,
-      ThreadsFilter filter,
-      ThreadsSorting sorting});
+  $Res call({ThreadsFilter filter});
 
   @override
-  $ResultCopyWith<List<ExtensionWithBoards>, $Res> get installedExtensions;
-  @override
   $ThreadsFilterCopyWith<$Res> get filter;
-  @override
-  $ThreadsSortingCopyWith<$Res> get sorting;
 }
 
 /// @nodoc
@@ -153,28 +99,13 @@ class __$$SearchStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? currentStep = null,
-    Object? installedExtensions = null,
     Object? filter = null,
-    Object? sorting = null,
   }) {
     return _then(_$SearchStateImpl(
-      currentStep: null == currentStep
-          ? _value.currentStep
-          : currentStep // ignore: cast_nullable_to_non_nullable
-              as int,
-      installedExtensions: null == installedExtensions
-          ? _value.installedExtensions
-          : installedExtensions // ignore: cast_nullable_to_non_nullable
-              as Result<List<ExtensionWithBoards>>,
       filter: null == filter
           ? _value.filter
           : filter // ignore: cast_nullable_to_non_nullable
               as ThreadsFilter,
-      sorting: null == sorting
-          ? _value.sorting
-          : sorting // ignore: cast_nullable_to_non_nullable
-              as ThreadsSorting,
     ));
   }
 }
@@ -182,24 +113,14 @@ class __$$SearchStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SearchStateImpl implements _SearchState {
-  const _$SearchStateImpl(
-      {required this.currentStep,
-      required this.installedExtensions,
-      required this.filter,
-      required this.sorting});
+  const _$SearchStateImpl({required this.filter});
 
   @override
-  final int currentStep;
-  @override
-  final Result<List<ExtensionWithBoards>> installedExtensions;
-  @override
   final ThreadsFilter filter;
-  @override
-  final ThreadsSorting sorting;
 
   @override
   String toString() {
-    return 'SearchState(currentStep: $currentStep, installedExtensions: $installedExtensions, filter: $filter, sorting: $sorting)';
+    return 'SearchState(filter: $filter)';
   }
 
   @override
@@ -207,17 +128,11 @@ class _$SearchStateImpl implements _SearchState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SearchStateImpl &&
-            (identical(other.currentStep, currentStep) ||
-                other.currentStep == currentStep) &&
-            (identical(other.installedExtensions, installedExtensions) ||
-                other.installedExtensions == installedExtensions) &&
-            (identical(other.filter, filter) || other.filter == filter) &&
-            (identical(other.sorting, sorting) || other.sorting == sorting));
+            (identical(other.filter, filter) || other.filter == filter));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, currentStep, installedExtensions, filter, sorting);
+  int get hashCode => Object.hash(runtimeType, filter);
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -229,20 +144,11 @@ class _$SearchStateImpl implements _SearchState {
 }
 
 abstract class _SearchState implements SearchState {
-  const factory _SearchState(
-      {required final int currentStep,
-      required final Result<List<ExtensionWithBoards>> installedExtensions,
-      required final ThreadsFilter filter,
-      required final ThreadsSorting sorting}) = _$SearchStateImpl;
+  const factory _SearchState({required final ThreadsFilter filter}) =
+      _$SearchStateImpl;
 
   @override
-  int get currentStep;
-  @override
-  Result<List<ExtensionWithBoards>> get installedExtensions;
-  @override
   ThreadsFilter get filter;
-  @override
-  ThreadsSorting get sorting;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.

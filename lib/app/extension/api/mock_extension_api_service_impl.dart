@@ -42,11 +42,11 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
       {required Extension extension, required String siteId}) async {
     await Future.delayed(const Duration(seconds: 1));
     return Site(
-      extensionPkgName: 'twkevinzhang_komica',
+      extensionPkgName: 'twkevinzhang_beeceptor',
       id: '1',
-      name: 'Komica',
-      icon: 'komica',
-      url: 'komica.org',
+      name: 'Beeceptor',
+      icon: 'beeceptor.ico',
+      url: 'https://beeceptor.com',
     );
   }
 
