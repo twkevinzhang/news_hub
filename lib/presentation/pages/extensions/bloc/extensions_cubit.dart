@@ -34,7 +34,6 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
   final ExtensionRepoApiService _extensionRepoApiService;
   final Map<String, StreamSubscription>
       _installingStream; // pkgName -> StreamSubscription
-  final SearchController searchController;
 
   ExtensionsCubit({
     required ListExtensions listExtensions,
@@ -46,7 +45,6 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
         _uninstallExtension = uninstallExtension,
         _extensionRepoApiService = extensionRepoApiService,
         _installingStream = {},
-        searchController = SearchController(),
         super(ExtensionsState(
           keyword: null,
           extensions: Result.initial(),
@@ -72,14 +70,6 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
     } on Exception catch (e) {
       safeEmit(state.copyWith(extensions: Result.error(e)));
     }
-  }
-
-  void closeView(String? selectedText) {
-    searchController.closeView(selectedText);
-  }
-
-  void changeKeywords(String keyword) {
-    safeEmit(state.copyWith(keyword: keyword));
   }
 
   Future<void> updateExtension(Extension extension) async {

@@ -28,36 +28,6 @@ class ExtensionsScreen extends StatelessWidget implements AutoRouteWrapper {
         appBar: AppBar(
           title: const Text('Extensions'),
           actions: [
-            SearchAnchor(
-                viewOnChanged: (text) => cubit.changeKeywords(text),
-                viewOnSubmitted: (text) {
-                  cubit.loadExtensions();
-                  cubit.closeView(text);
-                },
-                isFullScreen: true,
-                searchController: cubit.searchController,
-                builder: (BuildContext context, SearchController controller) {
-                  return IconButton(
-                    icon: const Icon(Icons.filter_list_outlined),
-                    onPressed: () {
-                      controller.openView();
-                    },
-                  );
-                },
-                suggestionsBuilder:
-                    (BuildContext context, SearchController controller) {
-                  return List<ListTile>.generate(5, (int index) {
-                    final String item = 'item $index';
-                    return ListTile(
-                      title: Text(item),
-                      onTap: () {
-                        cubit.changeKeywords(item);
-                        controller.closeView(item);
-                        cubit.loadExtensions();
-                      },
-                    );
-                  });
-                }),
             IconButton(
               icon: const Icon(Icons.add_outlined),
               onPressed: () async {
