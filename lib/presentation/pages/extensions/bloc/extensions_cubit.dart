@@ -55,6 +55,10 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
     loadExtensions();
   }
 
+  bool isInstalling(Extension extension) {
+    return state.installingExtensions.containsKey(extension.pkgName);
+  }
+
   @override
   Future<void> close() {
     for (var element in _installingStream.values) {
