@@ -66,8 +66,12 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
   }
 
   Future<void> loadExtensions() async {
-    final result = await _listExtensions.asFuture(state.keyword);
-    safeEmit(state.copyWith(extensions: Result.completed(result)));
+    try {
+      final result = await _listExtensions.asFuture(state.keyword);
+      safeEmit(state.copyWith(extensions: Result.completed(result)));
+    } on Exception catch (e) {
+      safeEmit(state.copyWith(extensions: Result.error(e)));
+    }
   }
 
   void closeView(String? selectedText) {
