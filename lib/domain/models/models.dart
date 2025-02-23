@@ -319,9 +319,28 @@ class ThreadsFilter with _$ThreadsFilter {
   }) = _ThreadsFilter;
 }
 
+extension ThreadsFilterEx on ThreadsFilter {
+  int boardsTotal() {
+    final boardIds = boardsSorting.keys.toSet();
+    return boardIds.length;
+  }
+}
+
 @freezed
 class ThreadsSorting with _$ThreadsSorting {
   const factory ThreadsSorting({
     required List<String> boardsOrder,
   }) = _ThreadsSorting;
+}
+
+class Suggestion {
+  final String id;
+  final String keywords;
+  final DateTime latestUsedAt;
+
+  Suggestion({
+    required this.id,
+    required this.keywords,
+    required this.latestUsedAt,
+  });
 }

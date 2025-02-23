@@ -1,6 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/domain/bookmark/interactor/list_bookmarks.dart';
 import 'package:news_hub/domain/extension/extension.dart';
@@ -12,28 +11,43 @@ part 'search_cubit.freezed.dart';
 class SearchState with _$SearchState {
   const factory SearchState({
     required ThreadsFilter filter,
+    required ThreadsFilter submittedFilter,
   }) = _SearchState;
 }
 
 @injectable
 class SearchCubit extends Cubit<SearchState> {
-  final PageController pageController;
-
   SearchCubit({
     required ListBookmarks listBookmarks,
     required ListInstalledExtensions listExtensions,
-  })  : pageController = PageController(),
-        super(SearchState(
+  }) : super(SearchState(
           filter: ThreadsFilter(
+            boardsSorting: {},
+            keywords: null,
+          ),
+          submittedFilter: ThreadsFilter(
             boardsSorting: {},
             keywords: null,
           ),
         ));
 
-  @override
-  Future<void> close() {
-    pageController.dispose();
-    return super.close();
+  void init() {
+    emit(state.copyWith(
+      filter: ThreadsFilter(
+        boardsSorting: {},
+        keywords: null,
+      ),
+      submittedFilter: ThreadsFilter(
+        boardsSorting: {},
+        keywords: null,
+      ),
+    ));
+  }
+
+  void setBoardsSorting(Map<String, String> boardsSorting) {
+    emit(state.copyWith(
+      filter: state.filter.copyWith(boardsSorting: boardsSorting),
+    ));
   }
 
   void setKeywords(String? keywords) {
@@ -44,5 +58,13 @@ class SearchCubit extends Cubit<SearchState> {
     emit(state.copyWith(
       filter: state.filter.copyWith(keywords: keywords),
     ));
+  }
+
+  void reset() {
+    emit(state.copyWith(filter: state.submittedFilter));
+  }
+
+  void submit() {
+    emit(state.copyWith(submittedFilter: state.filter));
   }
 }
