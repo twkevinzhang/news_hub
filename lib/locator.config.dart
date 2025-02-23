@@ -95,8 +95,6 @@ import 'package:news_hub/presentation/pages/extensions/bloc/extensions_cubit.dar
     as _i945;
 import 'package:news_hub/presentation/pages/search/bloc/boards_picker_cubit.dart'
     as _i1070;
-import 'package:news_hub/presentation/pages/search/bloc/search_bar_cubit.dart'
-    as _i307;
 import 'package:news_hub/presentation/pages/search/bloc/search_cubit.dart'
     as _i21;
 import 'package:news_hub/presentation/pages/thread_infos/bloc/thread_infos_cubit.dart'
@@ -204,10 +202,6 @@ extension GetItInjectableX on _i174.GetIt {
           repository: gh<_i525.ExtensionRepoRepository>(),
           service: gh<_i1021.ExtensionRepoApiService>(),
         ));
-    gh.factory<_i21.SearchCubit>(() => _i21.SearchCubit(
-          listBookmarks: gh<_i1049.ListBookmarks>(),
-          listExtensions: gh<_i315.ListInstalledExtensions>(),
-        ));
     gh.factory<_i235.ExtensionReposCubit>(() => _i235.ExtensionReposCubit(
           listExtensionRepo: gh<_i25.ListExtensionRepo>(),
           deleteExtensionRepo: gh<_i1062.DeleteExtensionRepo>(),
@@ -241,7 +235,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i315.ExtensionPreferencesService>(() =>
         _i29.ExtensionPreferencesServiceImpl(
             store: gh<_i365.PreferenceStore>()));
-    gh.factory<_i307.SearchBarCubit>(() => _i307.SearchBarCubit(
+    gh.factory<_i21.SearchCubit>(() => _i21.SearchCubit(
           listSuggestions: gh<_i643.ListSuggestions>(),
           updateSuggestionLatestUsedAt:
               gh<_i650.UpdateSuggestionLatestUsedAt>(),

@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/search/bloc/boards_picker_cubit.dart';
 
 class BoardsPickerScreen extends StatelessWidget {
@@ -12,21 +11,6 @@ class BoardsPickerScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("Boards Picker"),
-        actions: [
-          TextButton(
-            child: Text("重設"),
-            onPressed: () {
-              cubit.reset();
-            },
-          ),
-          ElevatedButton(
-            child: Text("儲存"),
-            onPressed: () {
-              cubit.submit();
-              AutoRouter.of(context).popForced(cubit.state.submittedChosenBoardsSorting);
-            },
-          ),
-        ],
       ),
       body: cubit.state.extensionBoards.when(
         initial: () => Center(child: Text("No installed extensions")),
@@ -69,6 +53,21 @@ class BoardsPickerScreen extends StatelessWidget {
           ],
         ),
       ),
+      persistentFooterButtons: [
+        TextButton(
+          child: Text("重設"),
+          onPressed: () {
+            cubit.reset();
+          },
+        ),
+        FilledButton(
+          child: Text("儲存"),
+          onPressed: () {
+            cubit.submit();
+            AutoRouter.of(context).popForced(cubit.state.submittedChosenBoardsSorting);
+          },
+        ),
+      ],
     );
   }
 }

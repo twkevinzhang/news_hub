@@ -1,18 +1,14 @@
 import 'package:auto_route/auto_route.dart';
-import 'package:dartx/dartx.dart';
-import 'package:easy_stepper/easy_stepper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/domain/models/models.dart';
 
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/search/bloc/boards_picker_cubit.dart';
-import 'package:news_hub/presentation/pages/search/bloc/search_bar_cubit.dart';
 import 'package:news_hub/presentation/pages/search/bloc/search_cubit.dart';
 import 'package:news_hub/presentation/pages/search/view/boards_picker_screen.dart';
 import 'package:news_hub/presentation/pages/search/view/search_bar_view.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
-import 'package:news_hub/presentation/widgets/widgets.dart';
 
 @RoutePage()
 class SearchScreen extends StatelessWidget {
@@ -20,15 +16,19 @@ class SearchScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<SearchCubit>(
-      create: (context) => sl<SearchCubit>(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<SearchCubit>(
+          create: (context) => sl<SearchCubit>(),
+        ),
+      ],
       child: _SearchScreen(),
     );
   }
 }
 
 class _SearchScreen extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormState>(debugLabel: '_SearchScreen');
 
   @override
   Widget build(BuildContext context) {
@@ -37,12 +37,6 @@ class _SearchScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("搜尋"),
-        actions: [
-          TextButton(
-            child: Text("重設"),
-            onPressed: () => cubit.reset(),
-          ),
-        ],
       ),
       body: Form(
         key: _formKey,
@@ -90,17 +84,37 @@ class _SearchScreen extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                    child: _buildSearchBar(context, cubit),
+                    child: SearchBarView(
+                      value: cubit.state.filter.keywords ?? '',
+                      boardsTotal: cubit.state.filter.boardsTotal(),
+                      onChanged: (value) => cubit.setKeywords(value ?? ''),
+                      onSelected: (suggestion) => cubit.clickSuggestion(suggestion),
+                      onClear: () => cubit.clearKeywords(),
+                    ),
                   ),
                 ],
               ),
             ),
             SizedBox(height: 16),
-            ListTile(
-              title: FilledButton.icon(
-                onPressed: () {},
-                icon: const Icon(Icons.search_outlined),
-                label: const Text('開始搜尋'),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextButton(
+                      onPressed: () => cubit.reset(),
+                      child: Text("重設"),
+                    ),
+                  ),
+                  SizedBox(width: 16), // 按鈕之間的間距
+                  Expanded(
+                    child: FilledButton.icon(
+                      onPressed: () => _onSubmit(context, cubit),
+                      icon: const Icon(Icons.search_outlined),
+                      label: const Text('開始搜尋'),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -126,13 +140,10 @@ class _SearchScreen extends StatelessWidget {
     }
   }
 
-  Widget _buildSearchBar(BuildContext context, SearchCubit cubit) {
-    return BlocProvider<SearchBarCubit>(
-      create: (context) => sl<SearchBarCubit>()..init(initialKeywords: cubit.state.filter.keywords),
-      child: SearchBarView(
-        onChanged: (value) => cubit.setKeywords(value),
-        boardsTotal: cubit.state.filter.boardsTotal(),
-      ),
-    );
+  void _onSubmit(BuildContext context, SearchCubit cubit) {
+    if (_formKey.currentState!.validate()) {
+      _formKey.currentState!.save();
+      AutoRouter.of(context).popAndPush(ThreadInfosRoute(filter: cubit.state.filter));
+    }
   }
 }

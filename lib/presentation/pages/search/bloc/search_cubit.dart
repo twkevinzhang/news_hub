@@ -1,15 +1,19 @@
+import 'package:dartx/dartx.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_hub/domain/bookmark/interactor/list_bookmarks.dart';
-import 'package:news_hub/domain/extension/extension.dart';
 import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/domain/suggestion/interactor/insert_suggestion.dart' show InsertSuggestion;
+import 'package:news_hub/domain/suggestion/interactor/list_suggestions.dart';
+import 'package:news_hub/domain/suggestion/interactor/update_suggestion_latest_used_at.dart';
+import 'package:news_hub/shared/models.dart';
 
 part 'search_cubit.freezed.dart';
 
 @freezed
 class SearchState with _$SearchState {
   const factory SearchState({
+    required Result<List<Suggestion>> suggestions,
     required ThreadsFilter filter,
     required ThreadsFilter submittedFilter,
   }) = _SearchState;
@@ -17,31 +21,54 @@ class SearchState with _$SearchState {
 
 @injectable
 class SearchCubit extends Cubit<SearchState> {
+  final ListSuggestions _listSuggestions;
+  final UpdateSuggestionLatestUsedAt _updateSuggestionLatestUsedAt;
+  final InsertSuggestion _insertSuggestion;
+
   SearchCubit({
-    required ListBookmarks listBookmarks,
-    required ListInstalledExtensions listExtensions,
-  }) : super(SearchState(
+    required ListSuggestions listSuggestions,
+    required UpdateSuggestionLatestUsedAt updateSuggestionLatestUsedAt,
+    required InsertSuggestion insertSuggestion,
+  })  : _listSuggestions = listSuggestions,
+        _updateSuggestionLatestUsedAt = updateSuggestionLatestUsedAt,
+        _insertSuggestion = insertSuggestion,
+        super(SearchState(
+          suggestions: Result.initial(),
           filter: ThreadsFilter(
             boardsSorting: {},
-            keywords: null,
+            keywords: '',
           ),
           submittedFilter: ThreadsFilter(
             boardsSorting: {},
-            keywords: null,
+            keywords: '',
           ),
         ));
 
-  void init() {
+  void init() async {
     emit(state.copyWith(
       filter: ThreadsFilter(
         boardsSorting: {},
-        keywords: null,
+        keywords: '',
       ),
       submittedFilter: ThreadsFilter(
         boardsSorting: {},
-        keywords: null,
+        keywords: '',
       ),
     ));
+
+    emit(state.copyWith(
+      suggestions: Result.loading(),
+    ));
+    try {
+      final suggestions = await _listSuggestions.call();
+      emit(state.copyWith(
+        suggestions: Result.completed(suggestions),
+      ));
+    } on Exception catch (e) {
+      emit(state.copyWith(
+        suggestions: Result.error(e),
+      ));
+    }
   }
 
   void setBoardsSorting(Map<String, String> boardsSorting) {
@@ -50,14 +77,29 @@ class SearchCubit extends Cubit<SearchState> {
     ));
   }
 
-  void setKeywords(String? keywords) {
-    keywords = keywords?.trim();
-    if (keywords == '') {
-      keywords = null;
+  void setKeywords(String keywords) {
+    keywords = keywords.trim();
+    emit(state.copyWith.filter(keywords: keywords));
+  }
+
+  void clearKeywords() {
+    setKeywords('');
+  }
+
+  void clickSuggestion(Suggestion suggestion) {
+    var newKeywords = '';
+    if (state.filter.keywords.isNotBlank) {
+      newKeywords = '${state.filter.keywords} ${suggestion.keywords}';
+    } else {
+      newKeywords = suggestion.keywords;
     }
-    emit(state.copyWith(
-      filter: state.filter.copyWith(keywords: keywords),
-    ));
+    setKeywords(newKeywords);
+    _updateSuggestionLatestUsedAt.call(suggestion.id);
+  }
+
+  void createSuggestion({String? keywords}) {
+    if (keywords == null) return;
+    _insertSuggestion.call(keywords: keywords);
   }
 
   void reset() {

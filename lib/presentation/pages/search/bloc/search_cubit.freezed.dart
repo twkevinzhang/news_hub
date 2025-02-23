@@ -16,6 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SearchState {
+  Result<List<Suggestion>> get suggestions =>
+      throw _privateConstructorUsedError;
   ThreadsFilter get filter => throw _privateConstructorUsedError;
   ThreadsFilter get submittedFilter => throw _privateConstructorUsedError;
 
@@ -32,8 +34,12 @@ abstract class $SearchStateCopyWith<$Res> {
           SearchState value, $Res Function(SearchState) then) =
       _$SearchStateCopyWithImpl<$Res, SearchState>;
   @useResult
-  $Res call({ThreadsFilter filter, ThreadsFilter submittedFilter});
+  $Res call(
+      {Result<List<Suggestion>> suggestions,
+      ThreadsFilter filter,
+      ThreadsFilter submittedFilter});
 
+  $ResultCopyWith<List<Suggestion>, $Res> get suggestions;
   $ThreadsFilterCopyWith<$Res> get filter;
   $ThreadsFilterCopyWith<$Res> get submittedFilter;
 }
@@ -53,10 +59,15 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? suggestions = null,
     Object? filter = null,
     Object? submittedFilter = null,
   }) {
     return _then(_value.copyWith(
+      suggestions: null == suggestions
+          ? _value.suggestions
+          : suggestions // ignore: cast_nullable_to_non_nullable
+              as Result<List<Suggestion>>,
       filter: null == filter
           ? _value.filter
           : filter // ignore: cast_nullable_to_non_nullable
@@ -66,6 +77,16 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
           : submittedFilter // ignore: cast_nullable_to_non_nullable
               as ThreadsFilter,
     ) as $Val);
+  }
+
+  /// Create a copy of SearchState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ResultCopyWith<List<Suggestion>, $Res> get suggestions {
+    return $ResultCopyWith<List<Suggestion>, $Res>(_value.suggestions, (value) {
+      return _then(_value.copyWith(suggestions: value) as $Val);
+    });
   }
 
   /// Create a copy of SearchState
@@ -97,8 +118,13 @@ abstract class _$$SearchStateImplCopyWith<$Res>
       __$$SearchStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ThreadsFilter filter, ThreadsFilter submittedFilter});
+  $Res call(
+      {Result<List<Suggestion>> suggestions,
+      ThreadsFilter filter,
+      ThreadsFilter submittedFilter});
 
+  @override
+  $ResultCopyWith<List<Suggestion>, $Res> get suggestions;
   @override
   $ThreadsFilterCopyWith<$Res> get filter;
   @override
@@ -118,10 +144,15 @@ class __$$SearchStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? suggestions = null,
     Object? filter = null,
     Object? submittedFilter = null,
   }) {
     return _then(_$SearchStateImpl(
+      suggestions: null == suggestions
+          ? _value.suggestions
+          : suggestions // ignore: cast_nullable_to_non_nullable
+              as Result<List<Suggestion>>,
       filter: null == filter
           ? _value.filter
           : filter // ignore: cast_nullable_to_non_nullable
@@ -138,8 +169,12 @@ class __$$SearchStateImplCopyWithImpl<$Res>
 
 class _$SearchStateImpl implements _SearchState {
   const _$SearchStateImpl(
-      {required this.filter, required this.submittedFilter});
+      {required this.suggestions,
+      required this.filter,
+      required this.submittedFilter});
 
+  @override
+  final Result<List<Suggestion>> suggestions;
   @override
   final ThreadsFilter filter;
   @override
@@ -147,7 +182,7 @@ class _$SearchStateImpl implements _SearchState {
 
   @override
   String toString() {
-    return 'SearchState(filter: $filter, submittedFilter: $submittedFilter)';
+    return 'SearchState(suggestions: $suggestions, filter: $filter, submittedFilter: $submittedFilter)';
   }
 
   @override
@@ -155,13 +190,16 @@ class _$SearchStateImpl implements _SearchState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$SearchStateImpl &&
+            (identical(other.suggestions, suggestions) ||
+                other.suggestions == suggestions) &&
             (identical(other.filter, filter) || other.filter == filter) &&
             (identical(other.submittedFilter, submittedFilter) ||
                 other.submittedFilter == submittedFilter));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, filter, submittedFilter);
+  int get hashCode =>
+      Object.hash(runtimeType, suggestions, filter, submittedFilter);
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -174,9 +212,12 @@ class _$SearchStateImpl implements _SearchState {
 
 abstract class _SearchState implements SearchState {
   const factory _SearchState(
-      {required final ThreadsFilter filter,
+      {required final Result<List<Suggestion>> suggestions,
+      required final ThreadsFilter filter,
       required final ThreadsFilter submittedFilter}) = _$SearchStateImpl;
 
+  @override
+  Result<List<Suggestion>> get suggestions;
   @override
   ThreadsFilter get filter;
   @override

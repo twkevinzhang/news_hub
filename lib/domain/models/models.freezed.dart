@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ThreadsFilter {
   Map<String, String> get boardsSorting => throw _privateConstructorUsedError;
-  String? get keywords => throw _privateConstructorUsedError;
+  String get keywords => throw _privateConstructorUsedError;
 
   /// Create a copy of ThreadsFilter
   /// with the given fields replaced by the non-null parameter values.
@@ -32,7 +32,7 @@ abstract class $ThreadsFilterCopyWith<$Res> {
           ThreadsFilter value, $Res Function(ThreadsFilter) then) =
       _$ThreadsFilterCopyWithImpl<$Res, ThreadsFilter>;
   @useResult
-  $Res call({Map<String, String> boardsSorting, String? keywords});
+  $Res call({Map<String, String> boardsSorting, String keywords});
 }
 
 /// @nodoc
@@ -51,17 +51,17 @@ class _$ThreadsFilterCopyWithImpl<$Res, $Val extends ThreadsFilter>
   @override
   $Res call({
     Object? boardsSorting = null,
-    Object? keywords = freezed,
+    Object? keywords = null,
   }) {
     return _then(_value.copyWith(
       boardsSorting: null == boardsSorting
           ? _value.boardsSorting
           : boardsSorting // ignore: cast_nullable_to_non_nullable
               as Map<String, String>,
-      keywords: freezed == keywords
+      keywords: null == keywords
           ? _value.keywords
           : keywords // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ) as $Val);
   }
 }
@@ -74,7 +74,7 @@ abstract class _$$ThreadsFilterImplCopyWith<$Res>
       __$$ThreadsFilterImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Map<String, String> boardsSorting, String? keywords});
+  $Res call({Map<String, String> boardsSorting, String keywords});
 }
 
 /// @nodoc
@@ -91,17 +91,17 @@ class __$$ThreadsFilterImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? boardsSorting = null,
-    Object? keywords = freezed,
+    Object? keywords = null,
   }) {
     return _then(_$ThreadsFilterImpl(
       boardsSorting: null == boardsSorting
           ? _value._boardsSorting
           : boardsSorting // ignore: cast_nullable_to_non_nullable
               as Map<String, String>,
-      keywords: freezed == keywords
+      keywords: null == keywords
           ? _value.keywords
           : keywords // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
     ));
   }
 }
@@ -125,7 +125,7 @@ class _$ThreadsFilterImpl
   }
 
   @override
-  final String? keywords;
+  final String keywords;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -168,12 +168,12 @@ class _$ThreadsFilterImpl
 abstract class _ThreadsFilter implements ThreadsFilter {
   const factory _ThreadsFilter(
       {required final Map<String, String> boardsSorting,
-      required final String? keywords}) = _$ThreadsFilterImpl;
+      required final String keywords}) = _$ThreadsFilterImpl;
 
   @override
   Map<String, String> get boardsSorting;
   @override
-  String? get keywords;
+  String get keywords;
 
   /// Create a copy of ThreadsFilter
   /// with the given fields replaced by the non-null parameter values.

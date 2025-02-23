@@ -1,22 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_hub/app/service/database/database.dart';
-import 'package:news_hub/presentation/pages/search/bloc/search_bar_cubit.dart';
+import 'package:news_hub/presentation/widgets/molecules/reactive_text_form_field.dart';
 import 'package:news_hub/presentation/widgets/molecules/text_field_anchor.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 
 class SearchBarView extends StatelessWidget {
   final int boardsTotal;
+  final String value;
   final Function(String?) onChanged;
+  final Function(domain.Suggestion) onSelected;
+  final Function() onClear;
   const SearchBarView({
     super.key,
+    required this.value,
     required this.boardsTotal,
     required this.onChanged,
+    required this.onSelected,
+    required this.onClear,
   });
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.watch<SearchBarCubit>();
     final mockItems = [
       domain.Suggestion(
         id: "1",
@@ -34,37 +37,39 @@ class SearchBarView extends StatelessWidget {
         latestUsedAt: DateTime.now(),
       ),
     ];
-    return TextFieldAnchor(
-      textFieldBuilder: (focusNode) {
-        return TextField(
-          controller: cubit.textEditingController,
-          focusNode: focusNode,
-          decoration: InputDecoration(
-            label: Text('在 ${boardsTotal} 個版面中搜尋'),
-            helperText: '請輸入關鍵字',
-            prefixIcon: Icon(Icons.search_outlined),
-            border: OutlineInputBorder(),
-            suffixIcon: IconButton(
-              icon: Icon(Icons.cancel_outlined),
-              onPressed: () => cubit.clear(),
-            ),
-          ),
-          onChanged: (value) {
-            onChanged(value);
+    return Column(
+      children: [
+        TextFieldAnchor(
+          textFieldBuilder: (focusNode) {
+            return ReactiveTextFormField(
+              focusNode: focusNode,
+              decoration: InputDecoration(
+                label: Text('在 $boardsTotal 個版面中搜尋'),
+                helperText: '請輸入關鍵字',
+                prefixIcon: Icon(Icons.search_outlined),
+                border: OutlineInputBorder(),
+                suffixIcon: IconButton(
+                  icon: Icon(Icons.cancel_outlined),
+                  onPressed: onClear,
+                ),
+              ),
+              value: value,
+              onChanged: onChanged,
+            );
           },
-        );
-      },
-      items: mockItems,
-      onSelected: (index) {
-        cubit.clickSuggestion(suggestion: mockItems[index]);
-        return false;
-      },
-      itemBuilder: (index) {
-        return ListTile(
-          title: Text(mockItems[index].keywords),
-          trailing: Icon(Icons.add_outlined),
-        );
-      },
+          items: mockItems,
+          onSelected: (index) {
+            onSelected(mockItems[index]);
+            return false;
+          },
+          itemBuilder: (index) {
+            return ListTile(
+              title: Text(mockItems[index].keywords),
+              trailing: Icon(Icons.add_outlined),
+            );
+          },
+        ),
+      ],
     );
   }
 }

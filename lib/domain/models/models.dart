@@ -315,7 +315,7 @@ class Bookmark {
 class ThreadsFilter with _$ThreadsFilter {
   const factory ThreadsFilter({
     required Map<String, String> boardsSorting,
-    required String? keywords,
+    required String keywords,
   }) = _ThreadsFilter;
 }
 
