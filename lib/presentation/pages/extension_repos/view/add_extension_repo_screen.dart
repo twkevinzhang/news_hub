@@ -48,57 +48,118 @@ class AddExtensionRepoScreen extends StatelessWidget implements AutoRouteWrapper
             ),
           ),
           cubit.state.remoteRepo.when(
-            initial: () => _buildElevatedButtonTile(context, cubit.fetchExtensionRepo, const Text('Check it')),
-            loading: () => _buildElevatedButtonTile(context, null, const CircularProgressIndicator()),
-            error: (exception) => _buildElevatedButtonTile(context, null, Text(exception.toString())),
+            initial: () => _buildOutlineButtonTile(context, cubit.fetchExtensionRepo, const Text('Check it')),
+            loading: () => _buildOutlineButtonTile(context, null, const CircularProgressIndicator()),
+            error: (exception) => _buildOutlineButtonTile(context, null, Text(exception.toString())),
             completed: (repo) => Column(
               children: [
-                _buildElevatedButtonTile(context, null, const Text('已完成載入')),
+                _buildOutlineButtonTile(context, null, const Text('已完成載入')),
                 Card(
-                  child: Column(
-                    children: [
-                      ListTile(
-                        title: Row(
+                  elevation: 3,
+                  margin: const EdgeInsets.all(16),
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Repository Header
+                        Row(
                           children: [
                             if (repo.icon != null) ...[
-                              Text("icon: "),
-                              CachedNetworkImage(
-                                imageUrl: repo.icon!,
-                                width: 32,
-                                height: 32,
-                                placeholder: (context, url) => CircularProgressIndicator(),
-                                errorWidget: (context, url, error) => Row(
-                                  children: [Icon(Icons.error), Text('Error loading image on $url: $error')],
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(12),
+                                  color: Theme.of(context).colorScheme.surfaceVariant,
                                 ),
-                              )
-                            ]
+                                padding: const EdgeInsets.all(8),
+                                child: CachedNetworkImage(
+                                  imageUrl: repo.icon!,
+                                  width: 48,
+                                  height: 48,
+                                  placeholder: (context, url) => const SizedBox(
+                                    width: 24,
+                                    height: 24,
+                                    child: CircularProgressIndicator(strokeWidth: 2),
+                                  ),
+                                  errorWidget: (context, url, error) => Icon(
+                                    Icons.error_outline,
+                                    color: Theme.of(context).colorScheme.error,
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 16),
+                            ],
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    repo.displayName,
+                                    style: Theme.of(context).textTheme.titleLarge,
+                                  ),
+                                  ...[
+                                    const SizedBox(height: 4),
+                                    Text(
+                                      repo.website,
+                                      style: Theme.of(context).textTheme.bodyMedium?.copyWith(
+                                            color: Theme.of(context).colorScheme.primary,
+                                          ),
+                                    ),
+                                  ],
+                                ],
+                              ),
+                            ),
                           ],
                         ),
-                      ),
-                      ListTile(title: Text("baseUrl: ${repo.baseUrl}")),
-                      ListTile(title: Text("displayName: ${repo.displayName}")),
-                      ListTile(title: Text("website: ${repo.website}")),
-                      ListTile(title: Text("signingKeyFingerprint: ${repo.signingKeyFingerprint}")),
-                    ],
+                        const SizedBox(height: 24),
+
+                        // Repository Details
+                        Container(
+                          decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(12),
+                            color: Theme.of(context).colorScheme.surfaceVariant.withOpacity(0.3),
+                          ),
+                          padding: const EdgeInsets.all(16),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              _buildInfoRow(
+                                context,
+                                "Base URL",
+                                repo.baseUrl,
+                                Icons.link,
+                              ),
+                              const SizedBox(height: 16),
+                              _buildInfoRow(
+                                context,
+                                "Signing Key",
+                                repo.signingKeyFingerprint,
+                                Icons.key,
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 cubit.state.addResult.when(
-                  initial: () => _buildElevatedButtonTile(
+                  initial: () => _buildFilledButton(
                     context,
                     cubit.addExtensionRepo,
                     const Text('Add Repo'),
                   ),
-                  loading: () => _buildElevatedButtonTile(
+                  loading: () => _buildFilledButton(
                     context,
                     null,
-                    const CircularProgressIndicator(),
+                    CircularProgressIndicator(),
                   ),
-                  completed: (r) => _buildElevatedButtonTile(
+                  completed: (r) => _buildFilledButton(
                     context,
                     null,
-                    const Text('已完成加入'),
+                    Text('已完成加入'),
                   ),
-                  error: (exception) => _buildElevatedButtonTile(
+                  error: (exception) => _buildFilledButton(
                     context,
                     null,
                     Text(exception.toString()),
@@ -112,12 +173,68 @@ class AddExtensionRepoScreen extends StatelessWidget implements AutoRouteWrapper
     );
   }
 
-  Widget _buildElevatedButtonTile(BuildContext context, VoidCallback? onPressed, Widget? child) {
+  Widget _buildButtonTile(BuildContext context, Widget child) {
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-        child: SizedBox(
-          width: double.infinity,
-          child: ElevatedButton(onPressed: onPressed, child: child),
-        ));
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Row(
+        children: [
+          Expanded(
+            child: child,
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildOutlineButtonTile(BuildContext context, void Function()? onPressed, Widget child) {
+    return _buildButtonTile(
+      context,
+      OutlinedButton(
+        onPressed: onPressed,
+        child: child,
+      ),
+    );
+  }
+
+  Widget _buildFilledButton(BuildContext context, void Function()? onPressed, Widget child) {
+    return _buildButtonTile(
+      context,
+      FilledButton(
+        onPressed: onPressed,
+        child: child,
+      ),
+    );
+  }
+
+  Widget _buildInfoRow(BuildContext context, String label, String value, IconData icon) {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Icon(
+          icon,
+          size: 20,
+          color: Theme.of(context).colorScheme.primary,
+        ),
+        const SizedBox(width: 12),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                label,
+                style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Theme.of(context).colorScheme.primary,
+                    ),
+              ),
+              const SizedBox(height: 4),
+              Text(
+                value,
+                style: Theme.of(context).textTheme.bodyMedium,
+              ),
+            ],
+          ),
+        ),
+      ],
+    );
   }
 }

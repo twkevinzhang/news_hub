@@ -11,7 +11,9 @@ class MockExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
     required String displayName,
     required String website,
     required String signingKeyFingerprint,
-  }) async {}
+  }) async {
+    throw UnimplementedError();
+  }
 
   @override
   Future<void> delete(String baseUrl) async {
