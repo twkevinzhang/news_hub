@@ -52,6 +52,9 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
           addResult: Result.initial(),
         ));
 
+  void init() {
+  }
+
   Future<void> fetchExtensionRepo() async {
     final indexUrl = state.indexUrl;
     if (indexUrl == null) {
@@ -120,15 +123,19 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
   }
 
   void clearForm() {
-    updateForm(indexUrl: null);
+    onChanged(null);
     textEditingController.clear();
   }
 
-  void updateForm({String? indexUrl}) {
+  void onChanged(String? value) {
     safeEmit(state.copyWith(
-      indexUrl: indexUrl,
+      indexUrl: value,
       remoteRepo: Result.initial(),
       addResult: Result.initial(),
     ));
+  }
+
+  void onTapOutside(PointerDownEvent event) {
+    focusNode.unfocus();
   }
 }
