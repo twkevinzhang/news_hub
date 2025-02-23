@@ -25,6 +25,7 @@ class ExtensionReposScreen extends StatelessWidget implements AutoRouteWrapper {
       final cubit = context.read<ExtensionReposCubit>();
       return Scaffold(
         appBar: AppBar(
+          leading: AutoLeadingButton(),
           title: const Text('Extension Repos'),
         ),
         body: state.repos.when(
@@ -54,11 +55,6 @@ class ExtensionReposScreen extends StatelessWidget implements AutoRouteWrapper {
           child: const Icon(Icons.add_outlined),
           onPressed: () {
             AutoRouter.of(context).push(AddExtensionRepoRoute());
-            // Navigator.of(context).push(MaterialPageRoute<void>(
-            //     builder: (BuildContext context) {
-            //       return AddExtensionRepoDialog();
-            //     },
-            //     fullscreenDialog: true));
           },
         ),
       );

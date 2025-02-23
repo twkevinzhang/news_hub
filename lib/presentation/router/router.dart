@@ -21,7 +21,7 @@ class AppRouter extends RootStackRouter {
           ],
         ),
         AutoRoute(path: '/search', page: SearchRoute.page),
-        AutoRoute(path: '/extension-repos', page: ExtensionReposRoute.page, children: [
+        AutoRoute(path: '/extension-repos', page: WrapperRoute.page, children: [
           AutoRoute(path: '', page: ExtensionReposRoute.page),
           AutoRoute(path: 'add', page: AddExtensionRepoRoute.page),
         ]),

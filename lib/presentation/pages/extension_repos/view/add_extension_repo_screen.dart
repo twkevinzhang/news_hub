@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:news_hub/locator.dart';
-import 'package:news_hub/presentation/pages/add_extension_repo/bloc/add_extension_repo_cubit.dart';
+import 'package:news_hub/presentation/pages/extension_repos/bloc/add_extension_repo_cubit.dart';
 import 'package:news_hub/presentation/widgets/widgets.dart';
 import 'package:news_hub/shared/models.dart';
 

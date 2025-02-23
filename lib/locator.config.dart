@@ -87,7 +87,7 @@ import 'package:news_hub/domain/suggestion/interactor/update_suggestion_latest_u
     as _i650;
 import 'package:news_hub/domain/suggestion/suggestion_repository.dart' as _i677;
 import 'package:news_hub/locator.dart' as _i56;
-import 'package:news_hub/presentation/pages/add_extension_repo/bloc/add_extension_repo_cubit.dart'
+import 'package:news_hub/presentation/pages/extension_repos/bloc/add_extension_repo_cubit.dart'
     as _i229;
 import 'package:news_hub/presentation/pages/extension_repos/bloc/extension_repos_cubit.dart'
     as _i235;
