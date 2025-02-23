@@ -10,21 +10,17 @@ import 'package:news_hub/presentation/widgets/widgets.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 @RoutePage()
-class ThreadInfosScreen extends StatelessWidget {
+class ThreadInfosScreen extends StatelessWidget implements AutoRouteWrapper {
   final ThreadsFilter? filter;
   const ThreadInfosScreen({super.key, this.filter});
 
   @override
-  Widget build(BuildContext context) {
+  Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<ThreadInfosCubit>()..init(filter: filter),
-      child: _ThreadInfosScreen(),
+      child: this,
     );
   }
-}
-
-class _ThreadInfosScreen extends StatelessWidget {
-  const _ThreadInfosScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

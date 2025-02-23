@@ -8,25 +8,20 @@ import 'package:news_hub/presentation/router/router.gr.dart';
 import 'package:news_hub/presentation/widgets/widgets.dart';
 
 @RoutePage()
-class ExtensionReposScreen extends StatelessWidget {
+class ExtensionReposScreen extends StatelessWidget implements AutoRouteWrapper {
   const ExtensionReposScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<ExtensionReposCubit>()..init(),
-      child: _ExtensionReposView(),
+      child: this,
     );
   }
-}
-
-class _ExtensionReposView extends StatelessWidget {
-  _ExtensionReposView({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<ExtensionReposCubit, ExtensionReposState>(
-        builder: (context, state) {
+    return BlocBuilder<ExtensionReposCubit, ExtensionReposState>(builder: (context, state) {
       final cubit = context.read<ExtensionReposCubit>();
       return Scaffold(
         appBar: AppBar(

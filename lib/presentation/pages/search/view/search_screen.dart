@@ -11,24 +11,18 @@ import 'package:news_hub/presentation/pages/search/view/search_bar_view.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
 
 @RoutePage()
-class SearchScreen extends StatelessWidget {
-  const SearchScreen({super.key});
+class SearchScreen extends StatelessWidget implements AutoRouteWrapper {
+  final _formKey = GlobalKey<FormState>(debugLabel: '_SearchScreen');
+
+  SearchScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider<SearchCubit>(
-          create: (context) => sl<SearchCubit>(),
-        ),
-      ],
-      child: _SearchScreen(),
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(
+      create: (context) => sl<SearchCubit>()..init(),
+      child: this,
     );
   }
-}
-
-class _SearchScreen extends StatelessWidget {
-  final _formKey = GlobalKey<FormState>(debugLabel: '_SearchScreen');
 
   @override
   Widget build(BuildContext context) {
