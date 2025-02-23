@@ -39,8 +39,13 @@ class ExtensionReposCubit extends Cubit<ExtensionReposState> {
   }
 
   Future<void> loadExtensionRepos() async {
-    final result = await _listExtensionRepo.asFuture();
-    safeEmit(state.copyWith(repos: Result.completed(result)));
+    safeEmit(state.copyWith(repos: Result.loading()));
+    try {
+      final result = await _listExtensionRepo.asFuture();
+      safeEmit(state.copyWith(repos: Result.completed(result)));
+    } on Exception catch (e) {
+      safeEmit(state.copyWith(repos: Result.error(e)));
+    }
   }
 
   Future<void> deleteExtensionRepo(String baseUrl) async {
