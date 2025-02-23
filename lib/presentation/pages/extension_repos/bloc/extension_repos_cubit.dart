@@ -10,6 +10,7 @@ import 'package:news_hub/domain/extension_repo/interactor/delete_extension_repo.
 import 'package:news_hub/domain/extension_repo/interactor/list_extension_repos.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/presentation/widgets/widgets.dart';
+import 'package:news_hub/shared/extensions.dart';
 import 'package:news_hub/shared/models.dart';
 
 part 'extension_repos_cubit.freezed.dart';
@@ -39,7 +40,7 @@ class ExtensionReposCubit extends Cubit<ExtensionReposState> {
 
   Future<void> loadExtensionRepos() async {
     final result = await _listExtensionRepo.asFuture();
-    emit(state.copyWith(repos: Result.completed(result)));
+    safeEmit(state.copyWith(repos: Result.completed(result)));
   }
 
   Future<void> deleteExtensionRepo(String baseUrl) async {

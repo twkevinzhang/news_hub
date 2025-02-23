@@ -3,6 +3,7 @@ import 'package:dartx/dartx.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/extension/interactor/list_installed_extensions.dart';
+import 'package:news_hub/shared/extensions.dart';
 import 'package:news_hub/shared/models.dart';
 
 part 'boards_picker_cubit.freezed.dart';
@@ -37,22 +38,22 @@ class BoardsPickerCubit extends Cubit<BoardsPickerState> {
   Future<void> init({
     Map<String, String>? initialChosenBoardsSorting,
   }) async {
-    emit(state.copyWith(
+    safeEmit(state.copyWith(
       extensionBoards: Result.loading(),
     ));
     try {
       final extensions = await _listExtensions.withBoards();
-      emit(state.copyWith(
+      safeEmit(state.copyWith(
         extensionBoards: Result.completed(extensions),
       ));
     } on Exception catch (e) {
-      emit(state.copyWith(
+      safeEmit(state.copyWith(
         extensionBoards: Result.error(e),
       ));
     }
 
     if (initialChosenBoardsSorting != null) {
-      emit(state.copyWith(
+      safeEmit(state.copyWith(
         chosenBoardsSorting: initialChosenBoardsSorting,
         submittedChosenBoardsSorting: initialChosenBoardsSorting,
       ));
@@ -91,11 +92,11 @@ class BoardsPickerCubit extends Cubit<BoardsPickerState> {
     if (value) {
       final newBoardSorting = extension.boards
           .map((e) => MapEntry(e.id, e.supportedThreadsSorting.first));
-      emit(state.copyWith(
+      safeEmit(state.copyWith(
         chosenBoardsSorting: { ...state.chosenBoardsSorting }..addEntries(newBoardSorting),
       ));
     } else {
-      emit(state.copyWith(
+      safeEmit(state.copyWith(
         chosenBoardsSorting: { ...state.chosenBoardsSorting }..removeWhere((key, value) => extension.boards.any((e) => e.id == key)),
       ));
     }
@@ -111,11 +112,11 @@ class BoardsPickerCubit extends Cubit<BoardsPickerState> {
       if (board == null) {
         throw Exception("state.extensionBoards not loaded");
       }
-      emit(state.copyWith(
+      safeEmit(state.copyWith(
         chosenBoardsSorting: { ...state.chosenBoardsSorting }..addAll({boardId: board.supportedThreadsSorting.first}),
       ));
     } else {
-      emit(state.copyWith(
+      safeEmit(state.copyWith(
         chosenBoardsSorting: { ...state.chosenBoardsSorting }..remove(boardId),
       ));
     }
@@ -123,19 +124,19 @@ class BoardsPickerCubit extends Cubit<BoardsPickerState> {
 
   void setBoardSorting(String boardId, String? sorting) {
     if (sorting == null) return;
-    emit(state.copyWith(
+    safeEmit(state.copyWith(
       chosenBoardsSorting: { ...state.chosenBoardsSorting }..addAll({boardId: sorting}),
     ));
   }
 
   void reset() {
-    emit(state.copyWith(
+    safeEmit(state.copyWith(
       chosenBoardsSorting: state.submittedChosenBoardsSorting,
     ));
   }
 
   void submit() {
-    emit(state.copyWith(
+    safeEmit(state.copyWith(
       submittedChosenBoardsSorting: state.chosenBoardsSorting,
     ));
   }

@@ -12,6 +12,7 @@ import 'package:news_hub/domain/extension_repo/interactor/get_remote_extension_r
 import 'package:news_hub/domain/extension_repo/interactor/valid_extension_repo_url.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/shared/exceptions.dart';
+import 'package:news_hub/shared/extensions.dart';
 import 'package:news_hub/shared/models.dart';
 
 part 'add_extension_repo_cubit.freezed.dart';
@@ -57,7 +58,7 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
       return _errorState(Exception('Index URL is required'));
     }
 
-    emit(state.copyWith(
+    safeEmit(state.copyWith(
       remoteRepo: Result.loading(),
     ));
 
@@ -81,7 +82,7 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
     } else {
       try {
         final remoteRepo = await _getRemoteExtensionRepo.call(baseUrl);
-        emit(state.copyWith(
+        safeEmit(state.copyWith(
           remoteRepo: Result.completed(remoteRepo),
         ));
       } on DioException catch (e) {
@@ -97,13 +98,13 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
   }
 
   Future<void> addExtensionRepo() async {
-    emit(state.copyWith(
+    safeEmit(state.copyWith(
       addResult: Result.loading(),
     ));
     try {
       final baseUrl = await _validExtensionRepoUrl.call(state.indexUrl!);
       await _createExtensionRepo.call(baseUrl);
-      emit(state.copyWith(
+      safeEmit(state.copyWith(
         addResult: Result.completed(null),
       ));
       return;
@@ -113,7 +114,7 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
   }
 
   void _errorState(Exception e) {
-    emit(state.copyWith(
+    safeEmit(state.copyWith(
       remoteRepo: Result.error(e),
     ));
   }
@@ -124,7 +125,7 @@ class AddExtensionRepoCubit extends Cubit<AddExtensionRepoState> {
   }
 
   void updateForm({String? indexUrl}) {
-    emit(state.copyWith(
+    safeEmit(state.copyWith(
       indexUrl: indexUrl,
       remoteRepo: Result.initial(),
       addResult: Result.initial(),
