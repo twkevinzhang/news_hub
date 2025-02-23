@@ -54,7 +54,7 @@ class BoardsPickerScreen extends StatelessWidget {
         ),
       ),
       persistentFooterButtons: [
-        TextButton(
+        OutlinedButton(
           child: Text("重設"),
           onPressed: () {
             cubit.reset();

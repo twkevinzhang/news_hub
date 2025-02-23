@@ -95,7 +95,7 @@ class SearchScreen extends StatelessWidget implements AutoRouteWrapper {
               child: Row(
                 children: [
                   Expanded(
-                    child: TextButton(
+                    child: OutlinedButton(
                       onPressed: () => cubit.reset(),
                       child: Text("重設"),
                     ),
