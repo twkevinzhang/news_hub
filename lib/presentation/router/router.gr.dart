@@ -53,25 +53,43 @@ class ExtensionReposRoute extends _i8.PageRouteInfo<void> {
   static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
-      return const _i2.ExtensionReposScreen();
+      return _i8.WrappedRoute(child: const _i2.ExtensionReposScreen());
     },
   );
 }
 
 /// generated route for
 /// [_i3.ExtensionsScreen]
-class ExtensionsRoute extends _i8.PageRouteInfo<void> {
-  const ExtensionsRoute({List<_i8.PageRouteInfo>? children})
-    : super(ExtensionsRoute.name, initialChildren: children);
+class ExtensionsRoute extends _i8.PageRouteInfo<ExtensionsRouteArgs> {
+  ExtensionsRoute({_i9.Key? key, List<_i8.PageRouteInfo>? children})
+    : super(
+        ExtensionsRoute.name,
+        args: ExtensionsRouteArgs(key: key),
+        initialChildren: children,
+      );
 
   static const String name = 'ExtensionsRoute';
 
   static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
-      return const _i3.ExtensionsScreen();
+      final args = data.argsAs<ExtensionsRouteArgs>(
+        orElse: () => const ExtensionsRouteArgs(),
+      );
+      return _i8.WrappedRoute(child: _i3.ExtensionsScreen(key: args.key));
     },
   );
+}
+
+class ExtensionsRouteArgs {
+  const ExtensionsRouteArgs({this.key});
+
+  final _i9.Key? key;
+
+  @override
+  String toString() {
+    return 'ExtensionsRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -92,18 +110,36 @@ class HomeRoute extends _i8.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i5.SearchScreen]
-class SearchRoute extends _i8.PageRouteInfo<void> {
-  const SearchRoute({List<_i8.PageRouteInfo>? children})
-    : super(SearchRoute.name, initialChildren: children);
+class SearchRoute extends _i8.PageRouteInfo<SearchRouteArgs> {
+  SearchRoute({_i9.Key? key, List<_i8.PageRouteInfo>? children})
+    : super(
+        SearchRoute.name,
+        args: SearchRouteArgs(key: key),
+        initialChildren: children,
+      );
 
   static const String name = 'SearchRoute';
 
   static _i8.PageInfo page = _i8.PageInfo(
     name,
     builder: (data) {
-      return const _i5.SearchScreen();
+      final args = data.argsAs<SearchRouteArgs>(
+        orElse: () => const SearchRouteArgs(),
+      );
+      return _i8.WrappedRoute(child: _i5.SearchScreen(key: args.key));
     },
   );
+}
+
+class SearchRouteArgs {
+  const SearchRouteArgs({this.key});
+
+  final _i9.Key? key;
+
+  @override
+  String toString() {
+    return 'SearchRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for
@@ -143,7 +179,9 @@ class ThreadInfosRoute extends _i8.PageRouteInfo<ThreadInfosRouteArgs> {
       final args = data.argsAs<ThreadInfosRouteArgs>(
         orElse: () => const ThreadInfosRouteArgs(),
       );
-      return _i7.ThreadInfosScreen(key: args.key, filter: args.filter);
+      return _i8.WrappedRoute(
+        child: _i7.ThreadInfosScreen(key: args.key, filter: args.filter),
+      );
     },
   );
 }

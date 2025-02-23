@@ -8,20 +8,16 @@ import 'package:news_hub/presentation/router/router.gr.dart';
 import 'package:news_hub/presentation/widgets/widgets.dart';
 
 @RoutePage()
-class ExtensionsScreen extends StatelessWidget {
-  const ExtensionsScreen({super.key});
+class ExtensionsScreen extends StatelessWidget implements AutoRouteWrapper {
+  ExtensionsScreen({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
       create: (context) => sl<ExtensionsCubit>()..init(),
-      child: _ExtensionsView(),
+      child: this,
     );
   }
-}
-
-class _ExtensionsView extends StatelessWidget {
-  _ExtensionsView({super.key});
 
   @override
   Widget build(BuildContext context) {
