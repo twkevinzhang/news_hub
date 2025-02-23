@@ -1,4 +1,4 @@
 library;
 
-export 'text_divider.dart';
+export 'subheader_tile.dart';
 export 'loading_indicator.dart';

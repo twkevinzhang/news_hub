@@ -40,7 +40,7 @@ class ExtensionsScreen extends StatelessWidget implements AutoRouteWrapper {
           completed: (data) => ListView(
             children: [
               if (data.updates.isNotEmpty) ...[
-                ListTile(title: TextDivider("等待更新")),
+                SubheaderTile("等待更新"),
                 ...data.updates.map((e) => ListTile(
                       title: Text("${e.displayName}"),
                       trailing: state.installingExtensions
@@ -57,13 +57,13 @@ class ExtensionsScreen extends StatelessWidget implements AutoRouteWrapper {
                     ))
               ],
               if (data.installed.isNotEmpty) ...[
-                ListTile(title: TextDivider("已安裝")),
+                SubheaderTile("已安裝"),
                 ...data.installed.map((e) => ListTile(
                       title: Text("${e.displayName}"),
                     ))
               ],
               if (data.notInstalled.isNotEmpty) ...[
-                ListTile(title: TextDivider("未安裝")),
+                SubheaderTile("未安裝"),
                 ...data.notInstalled.map((e) => ListTile(
                       title: Text("${e.displayName}"),
                       trailing: state.installingExtensions
