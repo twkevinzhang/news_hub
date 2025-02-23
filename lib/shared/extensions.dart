@@ -5,6 +5,7 @@ import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:dartx/dartx.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 extension StringListEx on List<String> {
   String toUrl() {
@@ -49,5 +50,16 @@ extension Int64Ex on $fixnum.Int64 {
 extension StringEx on String {
   String remove(String s) {
     return replaceAll(s, '');
+  }
+}
+
+extension CubitExt<T> on Cubit<T> {
+
+  // ref: https://github.com/felangel/bloc/issues/3069#issuecomment-1095547362
+  void safeEmit(T state) {
+    if (!isClosed) {
+      // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
+      emit(state);
+    }
   }
 }

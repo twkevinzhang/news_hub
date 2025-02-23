@@ -12,6 +12,7 @@ import 'package:news_hub/domain/extension/interactor/install_extension.dart';
 import 'package:news_hub/domain/extension_repo/extension_repo.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/presentation/widgets/widgets.dart';
+import 'package:news_hub/shared/extensions.dart';
 import 'package:news_hub/shared/models.dart';
 
 part 'extensions_cubit.freezed.dart';
@@ -66,7 +67,7 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
 
   Future<void> loadExtensions() async {
     final result = await _listExtensions.asFuture(state.keyword);
-    emit(state.copyWith(extensions: Result.completed(result)));
+    safeEmit(state.copyWith(extensions: Result.completed(result)));
   }
 
   void closeView(String? selectedText) {
@@ -74,7 +75,7 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
   }
 
   void changeKeywords(String keyword) {
-    emit(state.copyWith(keyword: keyword));
+    safeEmit(state.copyWith(keyword: keyword));
   }
 
   Future<void> updateExtension(Extension extension) async {
@@ -84,7 +85,7 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
         _installExtension.downloadAndInstall(zipUrl, extension).listen((pair) {
       final newInstallingExtensions = state.installingExtensions
         ..addAll({extension.pkgName: pair});
-      emit(state.copyWith(installingExtensions: newInstallingExtensions));
+      safeEmit(state.copyWith(installingExtensions: newInstallingExtensions));
     }, onError: (error) {
       print(error);
     });
@@ -97,7 +98,7 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
         _installExtension.downloadAndInstall(zipUrl, extension).listen((pair) {
       final newInstallingExtensions = state.installingExtensions
         ..addAll({extension.pkgName: pair});
-      emit(state.copyWith(installingExtensions: newInstallingExtensions));
+      safeEmit(state.copyWith(installingExtensions: newInstallingExtensions));
     }, onError: (error) {
       print(error);
     });

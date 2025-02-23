@@ -4,6 +4,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:news_hub/domain/extension/extension.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:injectable/injectable.dart';
+import 'package:news_hub/shared/extensions.dart';
 import 'package:news_hub/shared/models.dart';
 
 part 'thread_infos_cubit.freezed.dart';
@@ -35,18 +36,18 @@ class ThreadInfosCubit extends Cubit<ThreadInfosState> {
   }
 
   set filter(ThreadsFilter? filter) {
-    emit(state.copyWith(filter: filter));
+    safeEmit(state.copyWith(filter: filter));
   }
 
   set sorting(ThreadsSorting? sorting) {
-    emit(state.copyWith(sorting: sorting));
+    safeEmit(state.copyWith(sorting: sorting));
   }
 
   void init({
     ThreadsFilter? filter,
     ThreadsSorting? sorting,
   }) {
-    emit(state.copyWith(
+    safeEmit(state.copyWith(
       filter: filter,
       sorting: sorting,
     ));

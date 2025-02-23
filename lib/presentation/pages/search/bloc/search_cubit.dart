@@ -6,6 +6,7 @@ import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/suggestion/interactor/insert_suggestion.dart' show InsertSuggestion;
 import 'package:news_hub/domain/suggestion/interactor/list_suggestions.dart';
 import 'package:news_hub/domain/suggestion/interactor/update_suggestion_latest_used_at.dart';
+import 'package:news_hub/shared/extensions.dart';
 import 'package:news_hub/shared/models.dart';
 
 part 'search_cubit.freezed.dart';
@@ -45,7 +46,7 @@ class SearchCubit extends Cubit<SearchState> {
         ));
 
   void init() async {
-    emit(state.copyWith(
+    safeEmit(state.copyWith(
       filter: ThreadsFilter(
         boardsSorting: {},
         keywords: '',
@@ -56,30 +57,30 @@ class SearchCubit extends Cubit<SearchState> {
       ),
     ));
 
-    emit(state.copyWith(
+    safeEmit(state.copyWith(
       suggestions: Result.loading(),
     ));
     try {
       final suggestions = await _listSuggestions.call();
-      emit(state.copyWith(
+      safeEmit(state.copyWith(
         suggestions: Result.completed(suggestions),
       ));
     } on Exception catch (e) {
-      emit(state.copyWith(
+      safeEmit(state.copyWith(
         suggestions: Result.error(e),
       ));
     }
   }
 
   void setBoardsSorting(Map<String, String> boardsSorting) {
-    emit(state.copyWith(
+    safeEmit(state.copyWith(
       filter: state.filter.copyWith(boardsSorting: boardsSorting),
     ));
   }
 
   void setKeywords(String keywords) {
     keywords = keywords.trim();
-    emit(state.copyWith.filter(keywords: keywords));
+    safeEmit(state.copyWith.filter(keywords: keywords));
   }
 
   void clearKeywords() {
@@ -103,10 +104,10 @@ class SearchCubit extends Cubit<SearchState> {
   }
 
   void reset() {
-    emit(state.copyWith(filter: state.submittedFilter));
+    safeEmit(state.copyWith(filter: state.submittedFilter));
   }
 
   void submit() {
-    emit(state.copyWith(submittedFilter: state.filter));
+    safeEmit(state.copyWith(submittedFilter: state.filter));
   }
 }
