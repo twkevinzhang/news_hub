@@ -51,7 +51,6 @@ class BoardsPickerCubit extends Cubit<BoardsPickerState> {
       ));
     }
 
-    // 可以在這裡處理 submittedChosenBoardsSorting 的初始化
     if (initialChosenBoardsSorting != null) {
       emit(state.copyWith(
         chosenBoardsSorting: initialChosenBoardsSorting,

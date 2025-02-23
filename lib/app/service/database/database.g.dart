@@ -842,18 +842,252 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
   }
 }
 
+class $SuggestionsTable extends Suggestions
+    with TableInfo<$SuggestionsTable, Suggestion> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $SuggestionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _keywordsMeta =
+      const VerificationMeta('keywords');
+  @override
+  late final GeneratedColumn<String> keywords = GeneratedColumn<String>(
+      'keywords', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _latestUsedAtMeta =
+      const VerificationMeta('latestUsedAt');
+  @override
+  late final GeneratedColumn<DateTime> latestUsedAt = GeneratedColumn<DateTime>(
+      'latest_used_at', aliasedName, false,
+      type: DriftSqlType.dateTime, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, keywords, latestUsedAt];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'suggestions';
+  @override
+  VerificationContext validateIntegrity(Insertable<Suggestion> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('keywords')) {
+      context.handle(_keywordsMeta,
+          keywords.isAcceptableOrUnknown(data['keywords']!, _keywordsMeta));
+    } else if (isInserting) {
+      context.missing(_keywordsMeta);
+    }
+    if (data.containsKey('latest_used_at')) {
+      context.handle(
+          _latestUsedAtMeta,
+          latestUsedAt.isAcceptableOrUnknown(
+              data['latest_used_at']!, _latestUsedAtMeta));
+    } else if (isInserting) {
+      context.missing(_latestUsedAtMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Suggestion map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Suggestion(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      keywords: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}keywords'])!,
+      latestUsedAt: attachedDatabase.typeMapping.read(
+          DriftSqlType.dateTime, data['${effectivePrefix}latest_used_at'])!,
+    );
+  }
+
+  @override
+  $SuggestionsTable createAlias(String alias) {
+    return $SuggestionsTable(attachedDatabase, alias);
+  }
+}
+
+class Suggestion extends DataClass implements Insertable<Suggestion> {
+  final String id;
+  final String keywords;
+  final DateTime latestUsedAt;
+  const Suggestion(
+      {required this.id, required this.keywords, required this.latestUsedAt});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['keywords'] = Variable<String>(keywords);
+    map['latest_used_at'] = Variable<DateTime>(latestUsedAt);
+    return map;
+  }
+
+  SuggestionsCompanion toCompanion(bool nullToAbsent) {
+    return SuggestionsCompanion(
+      id: Value(id),
+      keywords: Value(keywords),
+      latestUsedAt: Value(latestUsedAt),
+    );
+  }
+
+  factory Suggestion.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Suggestion(
+      id: serializer.fromJson<String>(json['id']),
+      keywords: serializer.fromJson<String>(json['keywords']),
+      latestUsedAt: serializer.fromJson<DateTime>(json['latestUsedAt']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'keywords': serializer.toJson<String>(keywords),
+      'latestUsedAt': serializer.toJson<DateTime>(latestUsedAt),
+    };
+  }
+
+  Suggestion copyWith({String? id, String? keywords, DateTime? latestUsedAt}) =>
+      Suggestion(
+        id: id ?? this.id,
+        keywords: keywords ?? this.keywords,
+        latestUsedAt: latestUsedAt ?? this.latestUsedAt,
+      );
+  Suggestion copyWithCompanion(SuggestionsCompanion data) {
+    return Suggestion(
+      id: data.id.present ? data.id.value : this.id,
+      keywords: data.keywords.present ? data.keywords.value : this.keywords,
+      latestUsedAt: data.latestUsedAt.present
+          ? data.latestUsedAt.value
+          : this.latestUsedAt,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Suggestion(')
+          ..write('id: $id, ')
+          ..write('keywords: $keywords, ')
+          ..write('latestUsedAt: $latestUsedAt')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, keywords, latestUsedAt);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Suggestion &&
+          other.id == this.id &&
+          other.keywords == this.keywords &&
+          other.latestUsedAt == this.latestUsedAt);
+}
+
+class SuggestionsCompanion extends UpdateCompanion<Suggestion> {
+  final Value<String> id;
+  final Value<String> keywords;
+  final Value<DateTime> latestUsedAt;
+  final Value<int> rowid;
+  const SuggestionsCompanion({
+    this.id = const Value.absent(),
+    this.keywords = const Value.absent(),
+    this.latestUsedAt = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  SuggestionsCompanion.insert({
+    required String id,
+    required String keywords,
+    required DateTime latestUsedAt,
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        keywords = Value(keywords),
+        latestUsedAt = Value(latestUsedAt);
+  static Insertable<Suggestion> custom({
+    Expression<String>? id,
+    Expression<String>? keywords,
+    Expression<DateTime>? latestUsedAt,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (keywords != null) 'keywords': keywords,
+      if (latestUsedAt != null) 'latest_used_at': latestUsedAt,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  SuggestionsCompanion copyWith(
+      {Value<String>? id,
+      Value<String>? keywords,
+      Value<DateTime>? latestUsedAt,
+      Value<int>? rowid}) {
+    return SuggestionsCompanion(
+      id: id ?? this.id,
+      keywords: keywords ?? this.keywords,
+      latestUsedAt: latestUsedAt ?? this.latestUsedAt,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (keywords.present) {
+      map['keywords'] = Variable<String>(keywords.value);
+    }
+    if (latestUsedAt.present) {
+      map['latest_used_at'] = Variable<DateTime>(latestUsedAt.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('SuggestionsCompanion(')
+          ..write('id: $id, ')
+          ..write('keywords: $keywords, ')
+          ..write('latestUsedAt: $latestUsedAt, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
   late final $ExtensionReposTable extensionRepos = $ExtensionReposTable(this);
   late final $InstalledExtensionsTable installedExtensions =
       $InstalledExtensionsTable(this);
+  late final $SuggestionsTable suggestions = $SuggestionsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [extensionRepos, installedExtensions];
+      [extensionRepos, installedExtensions, suggestions];
 }
 
 typedef $$ExtensionReposTableCreateCompanionBuilder = ExtensionReposCompanion
@@ -1286,6 +1520,144 @@ typedef $$InstalledExtensionsTableProcessedTableManager = ProcessedTableManager<
     ),
     InstalledExtension,
     PrefetchHooks Function()>;
+typedef $$SuggestionsTableCreateCompanionBuilder = SuggestionsCompanion
+    Function({
+  required String id,
+  required String keywords,
+  required DateTime latestUsedAt,
+  Value<int> rowid,
+});
+typedef $$SuggestionsTableUpdateCompanionBuilder = SuggestionsCompanion
+    Function({
+  Value<String> id,
+  Value<String> keywords,
+  Value<DateTime> latestUsedAt,
+  Value<int> rowid,
+});
+
+class $$SuggestionsTableFilterComposer
+    extends Composer<_$AppDatabase, $SuggestionsTable> {
+  $$SuggestionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get keywords => $composableBuilder(
+      column: $table.keywords, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<DateTime> get latestUsedAt => $composableBuilder(
+      column: $table.latestUsedAt, builder: (column) => ColumnFilters(column));
+}
+
+class $$SuggestionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $SuggestionsTable> {
+  $$SuggestionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get keywords => $composableBuilder(
+      column: $table.keywords, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<DateTime> get latestUsedAt => $composableBuilder(
+      column: $table.latestUsedAt,
+      builder: (column) => ColumnOrderings(column));
+}
+
+class $$SuggestionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $SuggestionsTable> {
+  $$SuggestionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get keywords =>
+      $composableBuilder(column: $table.keywords, builder: (column) => column);
+
+  GeneratedColumn<DateTime> get latestUsedAt => $composableBuilder(
+      column: $table.latestUsedAt, builder: (column) => column);
+}
+
+class $$SuggestionsTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $SuggestionsTable,
+    Suggestion,
+    $$SuggestionsTableFilterComposer,
+    $$SuggestionsTableOrderingComposer,
+    $$SuggestionsTableAnnotationComposer,
+    $$SuggestionsTableCreateCompanionBuilder,
+    $$SuggestionsTableUpdateCompanionBuilder,
+    (Suggestion, BaseReferences<_$AppDatabase, $SuggestionsTable, Suggestion>),
+    Suggestion,
+    PrefetchHooks Function()> {
+  $$SuggestionsTableTableManager(_$AppDatabase db, $SuggestionsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$SuggestionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$SuggestionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$SuggestionsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> keywords = const Value.absent(),
+            Value<DateTime> latestUsedAt = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              SuggestionsCompanion(
+            id: id,
+            keywords: keywords,
+            latestUsedAt: latestUsedAt,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String keywords,
+            required DateTime latestUsedAt,
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              SuggestionsCompanion.insert(
+            id: id,
+            keywords: keywords,
+            latestUsedAt: latestUsedAt,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (e.readTable(table), BaseReferences(db, table, e)))
+              .toList(),
+          prefetchHooksCallback: null,
+        ));
+}
+
+typedef $$SuggestionsTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $SuggestionsTable,
+    Suggestion,
+    $$SuggestionsTableFilterComposer,
+    $$SuggestionsTableOrderingComposer,
+    $$SuggestionsTableAnnotationComposer,
+    $$SuggestionsTableCreateCompanionBuilder,
+    $$SuggestionsTableUpdateCompanionBuilder,
+    (Suggestion, BaseReferences<_$AppDatabase, $SuggestionsTable, Suggestion>),
+    Suggestion,
+    PrefetchHooks Function()>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -1294,4 +1666,6 @@ class $AppDatabaseManager {
       $$ExtensionReposTableTableManager(_db, _db.extensionRepos);
   $$InstalledExtensionsTableTableManager get installedExtensions =>
       $$InstalledExtensionsTableTableManager(_db, _db.installedExtensions);
+  $$SuggestionsTableTableManager get suggestions =>
+      $$SuggestionsTableTableManager(_db, _db.suggestions);
 }

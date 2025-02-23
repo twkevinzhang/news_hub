@@ -32,8 +32,17 @@ class InstalledExtensions extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+class Suggestions extends Table {
+  TextColumn get id => text()();
+  TextColumn get keywords => text()();
+  DateTimeColumn get latestUsedAt => dateTime()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
 @lazySingleton
-@DriftDatabase(tables: [ExtensionRepos, InstalledExtensions])
+@DriftDatabase(tables: [ExtensionRepos, InstalledExtensions, Suggestions])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 

@@ -33,7 +33,7 @@ class _ThreadInfosScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.menu),
+          icon: const Icon(Icons.menu_outlined),
           onPressed: () {
           },
         ),
