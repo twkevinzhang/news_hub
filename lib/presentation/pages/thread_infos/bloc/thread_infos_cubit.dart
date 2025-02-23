@@ -42,8 +42,14 @@ class ThreadInfosCubit extends Cubit<ThreadInfosState> {
     emit(state.copyWith(sorting: sorting));
   }
 
-  void init() {
-    _loadThreadInfos(1);
+  void init({
+    ThreadsFilter? filter,
+    ThreadsSorting? sorting,
+  }) {
+    emit(state.copyWith(
+      filter: filter,
+      sorting: sorting,
+    ));
   }
 
   void _loadThreadInfos(int pageKey) async {

@@ -2,23 +2,22 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/domain/extension/extension.dart';
+import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/locator.dart';
-import 'package:news_hub/presentation/pages/search/bloc/search_cubit.dart';
-import 'package:news_hub/presentation/pages/search/search.dart';
 import 'package:news_hub/presentation/pages/thread_infos/bloc/thread_infos_cubit.dart';
-import 'package:news_hub/presentation/pages/thread_infos/widgets/post_card.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
 import 'package:news_hub/presentation/widgets/widgets.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 @RoutePage()
 class ThreadInfosScreen extends StatelessWidget {
-  const ThreadInfosScreen({super.key});
+  final ThreadsFilter? filter;
+  const ThreadInfosScreen({super.key, this.filter});
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<ThreadInfosCubit>()..init(),
+      create: (context) => sl<ThreadInfosCubit>()..init(filter: filter),
       child: _ThreadInfosScreen(),
     );
   }
@@ -41,9 +40,7 @@ class _ThreadInfosScreen extends StatelessWidget {
         actions: [
           IconButton(
             icon: const Icon(Icons.search_outlined),
-            onPressed: () async {
-              await AutoRouter.of(context).push(SearchRoute());
-            },
+            onPressed: () => AutoRouter.of(context).push(SearchRoute()),
           ),
         ],
       ),
