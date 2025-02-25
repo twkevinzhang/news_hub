@@ -128,6 +128,23 @@ final $typed_data.Uint8List siteDescriptor = $convert.base64Decode(
     'lSBG5hbWUSIAoLZGVzY3JpcHRpb24YAiABKAlSC2Rlc2NyaXB0aW9uEhAKA3VybBgDIAEoCVID'
     'dXJs');
 
+@$core.Deprecated('Use getBoardsReqDescriptor instead')
+const GetBoardsReq$json = {
+  '1': 'GetBoardsReq',
+  '2': [
+    {'1': 'site_id', '3': 1, '4': 1, '5': 9, '10': 'siteId'},
+    {'1': 'page', '3': 2, '4': 1, '5': 11, '6': '.pb.PaginationReq', '9': 0, '10': 'page', '17': true},
+  ],
+  '8': [
+    {'1': '_page'},
+  ],
+};
+
+/// Descriptor for `GetBoardsReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getBoardsReqDescriptor = $convert.base64Decode(
+    'CgxHZXRCb2FyZHNSZXESFwoHc2l0ZV9pZBgBIAEoCVIGc2l0ZUlkEioKBHBhZ2UYAiABKAsyES'
+    '5wYi5QYWdpbmF0aW9uUmVxSABSBHBhZ2WIAQFCBwoFX3BhZ2U=');
+
 @$core.Deprecated('Use getBoardsResDescriptor instead')
 const GetBoardsRes$json = {
   '1': 'GetBoardsRes',
@@ -162,6 +179,30 @@ final $typed_data.Uint8List boardDescriptor = $convert.base64Decode(
     'UYAyABKAlSBG5hbWUSEgoEaWNvbhgEIAEoCVIEaWNvbhIuChNsYXJnZV93ZWxjb21lX2ltYWdl'
     'GAUgASgJUhFsYXJnZVdlbGNvbWVJbWFnZRIQCgN1cmwYBiABKAlSA3VybBI6ChlzdXBwb3J0ZW'
     'RfdGhyZWFkc19zb3J0aW5nGAcgAygJUhdzdXBwb3J0ZWRUaHJlYWRzU29ydGluZw==');
+
+@$core.Deprecated('Use getThreadInfosReqDescriptor instead')
+const GetThreadInfosReq$json = {
+  '1': 'GetThreadInfosReq',
+  '2': [
+    {'1': 'site_id', '3': 1, '4': 1, '5': 9, '10': 'siteId'},
+    {'1': 'board_id', '3': 2, '4': 1, '5': 9, '10': 'boardId'},
+    {'1': 'page', '3': 3, '4': 1, '5': 11, '6': '.pb.PaginationReq', '9': 0, '10': 'page', '17': true},
+    {'1': 'sort_by', '3': 4, '4': 1, '5': 9, '9': 1, '10': 'sortBy', '17': true},
+    {'1': 'keywords', '3': 5, '4': 1, '5': 9, '9': 2, '10': 'keywords', '17': true},
+  ],
+  '8': [
+    {'1': '_page'},
+    {'1': '_sort_by'},
+    {'1': '_keywords'},
+  ],
+};
+
+/// Descriptor for `GetThreadInfosReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getThreadInfosReqDescriptor = $convert.base64Decode(
+    'ChFHZXRUaHJlYWRJbmZvc1JlcRIXCgdzaXRlX2lkGAEgASgJUgZzaXRlSWQSGQoIYm9hcmRfaW'
+    'QYAiABKAlSB2JvYXJkSWQSKgoEcGFnZRgDIAEoCzIRLnBiLlBhZ2luYXRpb25SZXFIAFIEcGFn'
+    'ZYgBARIcCgdzb3J0X2J5GAQgASgJSAFSBnNvcnRCeYgBARIfCghrZXl3b3JkcxgFIAEoCUgCUg'
+    'hrZXl3b3Jkc4gBAUIHCgVfcGFnZUIKCghfc29ydF9ieUILCglfa2V5d29yZHM=');
 
 @$core.Deprecated('Use getThreadInfosResDescriptor instead')
 const GetThreadInfosRes$json = {
@@ -205,6 +246,21 @@ final $typed_data.Uint8List threadInfoDescriptor = $convert.base64Decode(
     'VudBgIIAEoBVIScmVnYXJkaW5nUG9zdENvdW50EicKD3ByZXZpZXdfY29udGVudBgJIAEoCVIO'
     'cHJldmlld0NvbnRlbnQSEgoEdGFncxgKIAMoCVIEdGFncw==');
 
+@$core.Deprecated('Use getThreadReqDescriptor instead')
+const GetThreadReq$json = {
+  '1': 'GetThreadReq',
+  '2': [
+    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {'1': 'site_id', '3': 2, '4': 1, '5': 9, '10': 'siteId'},
+    {'1': 'board_id', '3': 3, '4': 1, '5': 9, '10': 'boardId'},
+  ],
+};
+
+/// Descriptor for `GetThreadReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getThreadReqDescriptor = $convert.base64Decode(
+    'CgxHZXRUaHJlYWRSZXESDgoCaWQYASABKAlSAmlkEhcKB3NpdGVfaWQYAiABKAlSBnNpdGVJZB'
+    'IZCghib2FyZF9pZBgDIAEoCVIHYm9hcmRJZA==');
+
 @$core.Deprecated('Use getThreadResDescriptor instead')
 const GetThreadRes$json = {
   '1': 'GetThreadRes',
@@ -241,6 +297,28 @@ final $typed_data.Uint8List threadDescriptor = $convert.base64Decode(
     'Z3MYBiADKAlSBHRhZ3MSLQoNb3JpZ2luYWxfcG9zdBgHIAEoCzIILnBiLlBvc3RSDG9yaWdpbm'
     'FsUG9zdA==');
 
+@$core.Deprecated('Use getRegardingPostsReqDescriptor instead')
+const GetRegardingPostsReq$json = {
+  '1': 'GetRegardingPostsReq',
+  '2': [
+    {'1': 'site_id', '3': 1, '4': 1, '5': 9, '10': 'siteId'},
+    {'1': 'board_id', '3': 2, '4': 1, '5': 9, '10': 'boardId'},
+    {'1': 'thread_id', '3': 3, '4': 1, '5': 9, '10': 'threadId'},
+    {'1': 'original_post_id', '3': 5, '4': 1, '5': 9, '10': 'originalPostId'},
+    {'1': 'page', '3': 4, '4': 1, '5': 11, '6': '.pb.PaginationReq', '9': 0, '10': 'page', '17': true},
+  ],
+  '8': [
+    {'1': '_page'},
+  ],
+};
+
+/// Descriptor for `GetRegardingPostsReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getRegardingPostsReqDescriptor = $convert.base64Decode(
+    'ChRHZXRSZWdhcmRpbmdQb3N0c1JlcRIXCgdzaXRlX2lkGAEgASgJUgZzaXRlSWQSGQoIYm9hcm'
+    'RfaWQYAiABKAlSB2JvYXJkSWQSGwoJdGhyZWFkX2lkGAMgASgJUgh0aHJlYWRJZBIoChBvcmln'
+    'aW5hbF9wb3N0X2lkGAUgASgJUg5vcmlnaW5hbFBvc3RJZBIqCgRwYWdlGAQgASgLMhEucGIuUG'
+    'FnaW5hdGlvblJlcUgAUgRwYWdliAEBQgcKBV9wYWdl');
+
 @$core.Deprecated('Use getRegardingPostsResDescriptor instead')
 const GetRegardingPostsRes$json = {
   '1': 'GetRegardingPostsRes',
@@ -255,6 +333,22 @@ final $typed_data.Uint8List getRegardingPostsResDescriptor = $convert.base64Deco
     'ChRHZXRSZWdhcmRpbmdQb3N0c1JlcxIxCg9yZWdhcmRpbmdfcG9zdHMYASADKAsyCC5wYi5Qb3'
     'N0Ug5yZWdhcmRpbmdQb3N0cxIlCgRwYWdlGAIgASgLMhEucGIuUGFnaW5hdGlvblJlc1IEcGFn'
     'ZQ==');
+
+@$core.Deprecated('Use getPostReqDescriptor instead')
+const GetPostReq$json = {
+  '1': 'GetPostReq',
+  '2': [
+    {'1': 'site_id', '3': 1, '4': 1, '5': 9, '10': 'siteId'},
+    {'1': 'board_id', '3': 2, '4': 1, '5': 9, '10': 'boardId'},
+    {'1': 'thread_id', '3': 3, '4': 1, '5': 9, '10': 'threadId'},
+    {'1': 'id', '3': 4, '4': 1, '5': 9, '10': 'id'},
+  ],
+};
+
+/// Descriptor for `GetPostReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getPostReqDescriptor = $convert.base64Decode(
+    'CgpHZXRQb3N0UmVxEhcKB3NpdGVfaWQYASABKAlSBnNpdGVJZBIZCghib2FyZF9pZBgCIAEoCV'
+    'IHYm9hcmRJZBIbCgl0aHJlYWRfaWQYAyABKAlSCHRocmVhZElkEg4KAmlkGAQgASgJUgJpZA==');
 
 @$core.Deprecated('Use getPostResDescriptor instead')
 const GetPostRes$json = {
@@ -410,6 +504,28 @@ final $typed_data.Uint8List postDescriptor = $convert.base64Decode(
     'gJUgV0aXRsZRISCgRsaWtlGAwgASgFUgRsaWtlEhgKB2Rpc2xpa2UYDSABKAVSB2Rpc2xpa2US'
     'GgoIY29tbWVudHMYDiABKAVSCGNvbW1lbnRzEikKCGNvbnRlbnRzGA8gAygLMg0ucGIuUGFyYW'
     'dyYXBoUghjb250ZW50c0IRCg9fb3JpZ2luX3Bvc3RfaWQ=');
+
+@$core.Deprecated('Use getCommentsReqDescriptor instead')
+const GetCommentsReq$json = {
+  '1': 'GetCommentsReq',
+  '2': [
+    {'1': 'site_id', '3': 1, '4': 1, '5': 9, '10': 'siteId'},
+    {'1': 'board_id', '3': 2, '4': 1, '5': 9, '10': 'boardId'},
+    {'1': 'thread_id', '3': 3, '4': 1, '5': 9, '10': 'threadId'},
+    {'1': 'post_id', '3': 4, '4': 1, '5': 9, '10': 'postId'},
+    {'1': 'page', '3': 5, '4': 1, '5': 11, '6': '.pb.PaginationReq', '9': 0, '10': 'page', '17': true},
+  ],
+  '8': [
+    {'1': '_page'},
+  ],
+};
+
+/// Descriptor for `GetCommentsReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getCommentsReqDescriptor = $convert.base64Decode(
+    'Cg5HZXRDb21tZW50c1JlcRIXCgdzaXRlX2lkGAEgASgJUgZzaXRlSWQSGQoIYm9hcmRfaWQYAi'
+    'ABKAlSB2JvYXJkSWQSGwoJdGhyZWFkX2lkGAMgASgJUgh0aHJlYWRJZBIXCgdwb3N0X2lkGAQg'
+    'ASgJUgZwb3N0SWQSKgoEcGFnZRgFIAEoCzIRLnBiLlBhZ2luYXRpb25SZXFIAFIEcGFnZYgBAU'
+    'IHCgVfcGFnZQ==');
 
 @$core.Deprecated('Use getCommentsResDescriptor instead')
 const GetCommentsRes$json = {

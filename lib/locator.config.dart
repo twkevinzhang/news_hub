@@ -13,14 +13,16 @@ import 'package:dio/dio.dart' as _i361;
 import 'package:get_it/get_it.dart' as _i174;
 import 'package:injectable/injectable.dart' as _i526;
 import 'package:news_hub/app/bookmark/bookmark_repository_impl.dart' as _i495;
-import 'package:news_hub/app/extension/api/extension_api_service_impl.dart'
-    as _i516;
+import 'package:news_hub/app/extension/api/grpc_extension_api_service_impl.dart'
+    as _i672;
 import 'package:news_hub/app/extension/api/mock_extension_api_service_impl.dart'
     as _i511;
 import 'package:news_hub/app/extension/installer/extension_install_service_impl.dart'
     as _i1036;
 import 'package:news_hub/app/extension/installer/mock_extension_install_service_impl.dart'
     as _i863;
+import 'package:news_hub/app/extension/instance_manager/extension_instance_manager_impl.dart'
+    as _i899;
 import 'package:news_hub/app/extension/preferences/extension_preferences_service_impl.dart'
     as _i29;
 import 'package:news_hub/app/extension/repository/installed_extension_repository_impl.dart'
@@ -47,6 +49,8 @@ import 'package:news_hub/domain/extension/extension.dart' as _i315;
 import 'package:news_hub/domain/extension/extension_api_service.dart' as _i892;
 import 'package:news_hub/domain/extension/extension_install_service.dart'
     as _i103;
+import 'package:news_hub/domain/extension/extension_instance_manager.dart'
+    as _i284;
 import 'package:news_hub/domain/extension/extension_preferences_service.dart'
     as _i515;
 import 'package:news_hub/domain/extension/extension_repository.dart' as _i981;
@@ -60,6 +64,8 @@ import 'package:news_hub/domain/extension/interactor/list_remote_extensions.dart
     as _i915;
 import 'package:news_hub/domain/extension/interactor/list_thread_infos.dart'
     as _i719;
+import 'package:news_hub/domain/extension/interactor/run_all_extensions.dart'
+    as _i470;
 import 'package:news_hub/domain/extension/interactor/uninstall_extension.dart'
     as _i517;
 import 'package:news_hub/domain/extension_repo/extension_repo.dart' as _i623;
@@ -88,7 +94,7 @@ import 'package:news_hub/domain/suggestion/interactor/update_suggestion_latest_u
 import 'package:news_hub/domain/suggestion/suggestion_repository.dart' as _i677;
 import 'package:news_hub/locator.dart' as _i56;
 import 'package:news_hub/presentation/pages/extension_repos/bloc/add_extension_repo_cubit.dart'
-    as _i229;
+    as _i875;
 import 'package:news_hub/presentation/pages/extension_repos/bloc/extension_repos_cubit.dart'
     as _i235;
 import 'package:news_hub/presentation/pages/extensions/bloc/extensions_cubit.dart'
@@ -133,6 +139,8 @@ extension GetItInjectableX on _i174.GetIt {
       registerFor: {_dev},
       preResolve: true,
     );
+    gh.lazySingleton<_i284.ExtensionInstanceManager>(
+        () => _i899.ExtensionInstanceManagerImpl());
     gh.lazySingleton<_i623.ExtensionRepoRepository>(
       () => _i374.ExtensionRepoRepositoryImpl(db: gh<_i539.AppDatabase>()),
       registerFor: {_dev},
@@ -168,17 +176,23 @@ extension GetItInjectableX on _i174.GetIt {
         installService: gh<_i103.ExtensionInstallService>()));
     gh.lazySingleton<_i521.BookmarkRepository>(
         () => _i495.BookmarkRepositoryImpl());
+    gh.lazySingleton<_i315.ExtensionApiService>(
+      () => _i672.GrpcExtensionApiServiceImpl(),
+      registerFor: {_dev},
+    );
     gh.lazySingleton<_i1049.ListBookmarks>(
         () => _i1049.ListBookmarks(repo: gh<_i521.BookmarkRepository>()));
+    gh.lazySingleton<_i783.InstallExtension>(() => _i783.InstallExtension(
+          extensionInstanceManager: gh<_i284.ExtensionInstanceManager>(),
+          extensionApiService: gh<_i892.ExtensionApiService>(),
+          installService: gh<_i103.ExtensionInstallService>(),
+          extensionRepository: gh<_i981.InstalledExtensionRepository>(),
+        ));
     gh.lazySingleton<_i25.ListExtensionRepo>(() => _i25.ListExtensionRepo(
         repository: gh<_i525.ExtensionRepoRepository>()));
     gh.lazySingleton<_i1062.DeleteExtensionRepo>(() =>
         _i1062.DeleteExtensionRepo(
             repository: gh<_i525.ExtensionRepoRepository>()));
-    gh.lazySingleton<_i315.ExtensionApiService>(
-      () => _i516.ExtensionApiServiceImpl(dio: gh<_i361.Dio>()),
-      registerFor: {_dev},
-    );
     gh.lazySingleton<_i623.ExtensionRepoApiService>(
       () => _i999.ExtensionRepoApiServiceImpl(dio: gh<_i361.Dio>()),
       registerFor: {_dev},
@@ -190,11 +204,6 @@ extension GetItInjectableX on _i174.GetIt {
               apiService: gh<_i892.ExtensionApiService>(),
               extensionRepo: gh<_i981.InstalledExtensionRepository>(),
             ));
-    gh.lazySingleton<_i783.InstallExtension>(() => _i783.InstallExtension(
-          extensionApiService: gh<_i892.ExtensionApiService>(),
-          installService: gh<_i103.ExtensionInstallService>(),
-          extensionRepository: gh<_i981.InstalledExtensionRepository>(),
-        ));
     gh.lazySingleton<_i872.GetRemoteExtensionRepo>(() =>
         _i872.GetRemoteExtensionRepo(
             service: gh<_i1021.ExtensionRepoApiService>()));
@@ -213,6 +222,10 @@ extension GetItInjectableX on _i174.GetIt {
             suggestionRepo: gh<_i677.SuggestionRepository>()));
     gh.lazySingleton<_i446.InsertSuggestion>(() => _i446.InsertSuggestion(
         suggestionRepo: gh<_i677.SuggestionRepository>()));
+    gh.lazySingleton<_i470.RunAllExtensions>(() => _i470.RunAllExtensions(
+          manager: gh<_i284.ExtensionInstanceManager>(),
+          extensionRepository: gh<_i981.InstalledExtensionRepository>(),
+        ));
     gh.lazySingleton<_i915.ListRemoteExtensions>(
         () => _i915.ListRemoteExtensions(
               extensionRepoRepository: gh<_i623.ExtensionRepoRepository>(),
@@ -224,7 +237,7 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i181.ThreadInfosCubit>(() =>
         _i181.ThreadInfosCubit(listThreadInfos: gh<_i315.ListThreadInfos>()));
-    gh.factory<_i229.AddExtensionRepoCubit>(() => _i229.AddExtensionRepoCubit(
+    gh.factory<_i875.AddExtensionRepoCubit>(() => _i875.AddExtensionRepoCubit(
           validExtensionRepoUrl: gh<_i475.ValidExtensionRepoUrl>(),
           getExtensionRepo: gh<_i581.GetExtensionRepo>(),
           getRemoteExtensionRepo: gh<_i872.GetRemoteExtensionRepo>(),
@@ -248,7 +261,7 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i945.ExtensionsCubit>(() => _i945.ExtensionsCubit(
           listExtensions: gh<_i315.ListExtensions>(),
-          installExtension: gh<_i783.InstallExtension>(),
+          installExtension: gh<_i315.InstallExtension>(),
           uninstallExtension: gh<_i315.UninstallExtension>(),
           extensionRepoApiService: gh<_i623.ExtensionRepoApiService>(),
         ));

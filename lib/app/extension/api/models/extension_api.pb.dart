@@ -424,6 +424,72 @@ class Site extends $pb.GeneratedMessage {
   void clearIcon() => clearField(5);
 }
 
+class GetBoardsReq extends $pb.GeneratedMessage {
+  factory GetBoardsReq({
+    $core.String? siteId,
+    PaginationReq? page,
+  }) {
+    final $result = create();
+    if (siteId != null) {
+      $result.siteId = siteId;
+    }
+    if (page != null) {
+      $result.page = page;
+    }
+    return $result;
+  }
+  GetBoardsReq._() : super();
+  factory GetBoardsReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetBoardsReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetBoardsReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'siteId')
+    ..aOM<PaginationReq>(2, _omitFieldNames ? '' : 'page', subBuilder: PaginationReq.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetBoardsReq clone() => GetBoardsReq()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetBoardsReq copyWith(void Function(GetBoardsReq) updates) => super.copyWith((message) => updates(message as GetBoardsReq)) as GetBoardsReq;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetBoardsReq create() => GetBoardsReq._();
+  GetBoardsReq createEmptyInstance() => create();
+  static $pb.PbList<GetBoardsReq> createRepeated() => $pb.PbList<GetBoardsReq>();
+  @$core.pragma('dart2js:noInline')
+  static GetBoardsReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetBoardsReq>(create);
+  static GetBoardsReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get siteId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set siteId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSiteId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSiteId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  PaginationReq get page => $_getN(1);
+  @$pb.TagNumber(2)
+  set page(PaginationReq v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPage() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPage() => clearField(2);
+  @$pb.TagNumber(2)
+  PaginationReq ensurePage() => $_ensure(1);
+}
+
 class GetBoardsRes extends $pb.GeneratedMessage {
   factory GetBoardsRes({
     $core.Iterable<Board>? boards,
@@ -610,6 +676,114 @@ class Board extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(7)
   $core.List<$core.String> get supportedThreadsSorting => $_getList(6);
+}
+
+class GetThreadInfosReq extends $pb.GeneratedMessage {
+  factory GetThreadInfosReq({
+    $core.String? siteId,
+    $core.String? boardId,
+    PaginationReq? page,
+    $core.String? sortBy,
+    $core.String? keywords,
+  }) {
+    final $result = create();
+    if (siteId != null) {
+      $result.siteId = siteId;
+    }
+    if (boardId != null) {
+      $result.boardId = boardId;
+    }
+    if (page != null) {
+      $result.page = page;
+    }
+    if (sortBy != null) {
+      $result.sortBy = sortBy;
+    }
+    if (keywords != null) {
+      $result.keywords = keywords;
+    }
+    return $result;
+  }
+  GetThreadInfosReq._() : super();
+  factory GetThreadInfosReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetThreadInfosReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetThreadInfosReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'siteId')
+    ..aOS(2, _omitFieldNames ? '' : 'boardId')
+    ..aOM<PaginationReq>(3, _omitFieldNames ? '' : 'page', subBuilder: PaginationReq.create)
+    ..aOS(4, _omitFieldNames ? '' : 'sortBy')
+    ..aOS(5, _omitFieldNames ? '' : 'keywords')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetThreadInfosReq clone() => GetThreadInfosReq()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetThreadInfosReq copyWith(void Function(GetThreadInfosReq) updates) => super.copyWith((message) => updates(message as GetThreadInfosReq)) as GetThreadInfosReq;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetThreadInfosReq create() => GetThreadInfosReq._();
+  GetThreadInfosReq createEmptyInstance() => create();
+  static $pb.PbList<GetThreadInfosReq> createRepeated() => $pb.PbList<GetThreadInfosReq>();
+  @$core.pragma('dart2js:noInline')
+  static GetThreadInfosReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetThreadInfosReq>(create);
+  static GetThreadInfosReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get siteId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set siteId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSiteId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSiteId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get boardId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set boardId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasBoardId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearBoardId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  PaginationReq get page => $_getN(2);
+  @$pb.TagNumber(3)
+  set page(PaginationReq v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasPage() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPage() => clearField(3);
+  @$pb.TagNumber(3)
+  PaginationReq ensurePage() => $_ensure(2);
+
+  @$pb.TagNumber(4)
+  $core.String get sortBy => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set sortBy($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasSortBy() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearSortBy() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get keywords => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set keywords($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasKeywords() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearKeywords() => clearField(5);
 }
 
 class GetThreadInfosRes extends $pb.GeneratedMessage {
@@ -856,6 +1030,84 @@ class ThreadInfo extends $pb.GeneratedMessage {
   void clearUrl() => clearField(11);
 }
 
+class GetThreadReq extends $pb.GeneratedMessage {
+  factory GetThreadReq({
+    $core.String? id,
+    $core.String? siteId,
+    $core.String? boardId,
+  }) {
+    final $result = create();
+    if (id != null) {
+      $result.id = id;
+    }
+    if (siteId != null) {
+      $result.siteId = siteId;
+    }
+    if (boardId != null) {
+      $result.boardId = boardId;
+    }
+    return $result;
+  }
+  GetThreadReq._() : super();
+  factory GetThreadReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetThreadReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetThreadReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'siteId')
+    ..aOS(3, _omitFieldNames ? '' : 'boardId')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetThreadReq clone() => GetThreadReq()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetThreadReq copyWith(void Function(GetThreadReq) updates) => super.copyWith((message) => updates(message as GetThreadReq)) as GetThreadReq;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetThreadReq create() => GetThreadReq._();
+  GetThreadReq createEmptyInstance() => create();
+  static $pb.PbList<GetThreadReq> createRepeated() => $pb.PbList<GetThreadReq>();
+  @$core.pragma('dart2js:noInline')
+  static GetThreadReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetThreadReq>(create);
+  static GetThreadReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get id => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set id($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get siteId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set siteId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasSiteId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearSiteId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get boardId => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set boardId($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasBoardId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearBoardId() => clearField(3);
+}
+
 class GetThreadRes extends $pb.GeneratedMessage {
   factory GetThreadRes({
     Thread? thread,
@@ -1052,6 +1304,114 @@ class Thread extends $pb.GeneratedMessage {
   void clearUrl() => clearField(8);
 }
 
+class GetRegardingPostsReq extends $pb.GeneratedMessage {
+  factory GetRegardingPostsReq({
+    $core.String? siteId,
+    $core.String? boardId,
+    $core.String? threadId,
+    PaginationReq? page,
+    $core.String? originalPostId,
+  }) {
+    final $result = create();
+    if (siteId != null) {
+      $result.siteId = siteId;
+    }
+    if (boardId != null) {
+      $result.boardId = boardId;
+    }
+    if (threadId != null) {
+      $result.threadId = threadId;
+    }
+    if (page != null) {
+      $result.page = page;
+    }
+    if (originalPostId != null) {
+      $result.originalPostId = originalPostId;
+    }
+    return $result;
+  }
+  GetRegardingPostsReq._() : super();
+  factory GetRegardingPostsReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetRegardingPostsReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetRegardingPostsReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'siteId')
+    ..aOS(2, _omitFieldNames ? '' : 'boardId')
+    ..aOS(3, _omitFieldNames ? '' : 'threadId')
+    ..aOM<PaginationReq>(4, _omitFieldNames ? '' : 'page', subBuilder: PaginationReq.create)
+    ..aOS(5, _omitFieldNames ? '' : 'originalPostId')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetRegardingPostsReq clone() => GetRegardingPostsReq()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetRegardingPostsReq copyWith(void Function(GetRegardingPostsReq) updates) => super.copyWith((message) => updates(message as GetRegardingPostsReq)) as GetRegardingPostsReq;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetRegardingPostsReq create() => GetRegardingPostsReq._();
+  GetRegardingPostsReq createEmptyInstance() => create();
+  static $pb.PbList<GetRegardingPostsReq> createRepeated() => $pb.PbList<GetRegardingPostsReq>();
+  @$core.pragma('dart2js:noInline')
+  static GetRegardingPostsReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetRegardingPostsReq>(create);
+  static GetRegardingPostsReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get siteId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set siteId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSiteId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSiteId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get boardId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set boardId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasBoardId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearBoardId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get threadId => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set threadId($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasThreadId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearThreadId() => clearField(3);
+
+  @$pb.TagNumber(4)
+  PaginationReq get page => $_getN(3);
+  @$pb.TagNumber(4)
+  set page(PaginationReq v) { setField(4, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasPage() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPage() => clearField(4);
+  @$pb.TagNumber(4)
+  PaginationReq ensurePage() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  $core.String get originalPostId => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set originalPostId($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasOriginalPostId() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearOriginalPostId() => clearField(5);
+}
+
 class GetRegardingPostsRes extends $pb.GeneratedMessage {
   factory GetRegardingPostsRes({
     $core.Iterable<Post>? regardingPosts,
@@ -1110,6 +1470,98 @@ class GetRegardingPostsRes extends $pb.GeneratedMessage {
   void clearPage() => clearField(2);
   @$pb.TagNumber(2)
   PaginationRes ensurePage() => $_ensure(1);
+}
+
+class GetPostReq extends $pb.GeneratedMessage {
+  factory GetPostReq({
+    $core.String? siteId,
+    $core.String? boardId,
+    $core.String? threadId,
+    $core.String? id,
+  }) {
+    final $result = create();
+    if (siteId != null) {
+      $result.siteId = siteId;
+    }
+    if (boardId != null) {
+      $result.boardId = boardId;
+    }
+    if (threadId != null) {
+      $result.threadId = threadId;
+    }
+    if (id != null) {
+      $result.id = id;
+    }
+    return $result;
+  }
+  GetPostReq._() : super();
+  factory GetPostReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetPostReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetPostReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'siteId')
+    ..aOS(2, _omitFieldNames ? '' : 'boardId')
+    ..aOS(3, _omitFieldNames ? '' : 'threadId')
+    ..aOS(4, _omitFieldNames ? '' : 'id')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetPostReq clone() => GetPostReq()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetPostReq copyWith(void Function(GetPostReq) updates) => super.copyWith((message) => updates(message as GetPostReq)) as GetPostReq;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetPostReq create() => GetPostReq._();
+  GetPostReq createEmptyInstance() => create();
+  static $pb.PbList<GetPostReq> createRepeated() => $pb.PbList<GetPostReq>();
+  @$core.pragma('dart2js:noInline')
+  static GetPostReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetPostReq>(create);
+  static GetPostReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get siteId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set siteId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSiteId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSiteId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get boardId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set boardId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasBoardId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearBoardId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get threadId => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set threadId($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasThreadId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearThreadId() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get id => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set id($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasId() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearId() => clearField(4);
 }
 
 class GetPostRes extends $pb.GeneratedMessage {
@@ -1885,6 +2337,114 @@ class Post extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(15)
   $core.List<Paragraph> get contents => $_getList(13);
+}
+
+class GetCommentsReq extends $pb.GeneratedMessage {
+  factory GetCommentsReq({
+    $core.String? siteId,
+    $core.String? boardId,
+    $core.String? threadId,
+    $core.String? postId,
+    PaginationReq? page,
+  }) {
+    final $result = create();
+    if (siteId != null) {
+      $result.siteId = siteId;
+    }
+    if (boardId != null) {
+      $result.boardId = boardId;
+    }
+    if (threadId != null) {
+      $result.threadId = threadId;
+    }
+    if (postId != null) {
+      $result.postId = postId;
+    }
+    if (page != null) {
+      $result.page = page;
+    }
+    return $result;
+  }
+  GetCommentsReq._() : super();
+  factory GetCommentsReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetCommentsReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetCommentsReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'siteId')
+    ..aOS(2, _omitFieldNames ? '' : 'boardId')
+    ..aOS(3, _omitFieldNames ? '' : 'threadId')
+    ..aOS(4, _omitFieldNames ? '' : 'postId')
+    ..aOM<PaginationReq>(5, _omitFieldNames ? '' : 'page', subBuilder: PaginationReq.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetCommentsReq clone() => GetCommentsReq()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetCommentsReq copyWith(void Function(GetCommentsReq) updates) => super.copyWith((message) => updates(message as GetCommentsReq)) as GetCommentsReq;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetCommentsReq create() => GetCommentsReq._();
+  GetCommentsReq createEmptyInstance() => create();
+  static $pb.PbList<GetCommentsReq> createRepeated() => $pb.PbList<GetCommentsReq>();
+  @$core.pragma('dart2js:noInline')
+  static GetCommentsReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetCommentsReq>(create);
+  static GetCommentsReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get siteId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set siteId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSiteId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSiteId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get boardId => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set boardId($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasBoardId() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearBoardId() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get threadId => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set threadId($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasThreadId() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearThreadId() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get postId => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set postId($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasPostId() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPostId() => clearField(4);
+
+  @$pb.TagNumber(5)
+  PaginationReq get page => $_getN(4);
+  @$pb.TagNumber(5)
+  set page(PaginationReq v) { setField(5, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasPage() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearPage() => clearField(5);
+  @$pb.TagNumber(5)
+  PaginationReq ensurePage() => $_ensure(4);
 }
 
 class GetCommentsRes extends $pb.GeneratedMessage {

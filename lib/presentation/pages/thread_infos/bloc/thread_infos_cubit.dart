@@ -63,6 +63,7 @@ class ThreadInfosCubit extends Cubit<ThreadInfosState> {
           pageSize: _pageSize,
         ),
       );
+      print('ThreadInfosCubit result length: ${result.length}');
 
       final isLastPage = result.length < _pageSize;
       if (isLastPage) {

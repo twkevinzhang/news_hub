@@ -2,11 +2,8 @@ import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/shared/models.dart';
 
 abstract class ExtensionApiService {
-  Future<void> run(Extension extension);
-  Future<void> close(Extension extension);
   Future<Site> site({
     required Extension extension,
-    required String siteId,
   });
   Future<List<Board>> boards({
     Pagination? pagination,
