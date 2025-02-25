@@ -2,6 +2,7 @@ import 'package:dartx/dartx.dart';
 import 'package:news_hub/domain/extension/extension_api_service.dart';
 import 'package:news_hub/domain/extension/extension_install_service.dart'
     as installer;
+import 'package:news_hub/domain/extension/extension_instance_manager.dart';
 import 'package:news_hub/domain/extension/extension_repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:injectable/injectable.dart';
@@ -16,15 +17,18 @@ enum InstallStatus {
 
 @lazySingleton
 class InstallExtension {
+  final ExtensionInstanceManager _extensionInstanceManager;
   final ExtensionApiService _extensionApiService;
   final installer.ExtensionInstallService _installService;
   final InstalledExtensionRepository _extensionRepository;
   InstallExtension({
+    required ExtensionInstanceManager extensionInstanceManager,
     required ExtensionApiService extensionApiService,
     required installer.ExtensionInstallService installService,
     required InstalledExtensionRepository extensionRepository,
   })  : _installService = installService,
         _extensionApiService = extensionApiService,
+        _extensionInstanceManager = extensionInstanceManager,
         _extensionRepository = extensionRepository;
 
   Stream<Pair<InstallStatus, double>> downloadAndInstall(
@@ -34,6 +38,16 @@ class InstallExtension {
     await for (final status in _installService.download(zipUrl, extension)) {
       yield Pair(InstallStatus.downloading, status.toDouble());
     }
+    await installOnly(extension).last;
+  }
+
+  Future<void> uninstall(Extension extension) async {
+    await _extensionInstanceManager.close(extension);
+    await _installService.uninstall(extension);
+    await _extensionRepository.delete(extension.pkgName);
+  }
+
+  Stream<Pair<InstallStatus, double>> installOnly(Extension extension) async* {
     await for (final status in _installService.install(extension)) {
       if (status == installer.ZipStatus.reading) {
         yield Pair(InstallStatus.reading, 0.0);
@@ -42,8 +56,10 @@ class InstallExtension {
       }
     }
     yield Pair(InstallStatus.testing, 0.0);
-    await _extensionApiService.run(extension);
-    await _extensionApiService.close(extension);
+    await _extensionInstanceManager.runNew(extension);
+    final site = await _extensionApiService.site(extension: extension);
+    print('install site: $site');
+    await _extensionInstanceManager.close(extension);
     await _extensionRepository.insert(
       repoBaseUrl: extension.repoBaseUrl,
       pkgName: extension.pkgName,

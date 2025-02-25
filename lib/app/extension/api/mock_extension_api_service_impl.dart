@@ -18,11 +18,8 @@ final _mockPost = Post(
   comments: 0,
   contents: [
     TextParagraph(content: 'Text Content Maybe'),
-    VideoParagraph(
-        thumb: null, url: 'https://www.youtube.com/watch?v=_m7lYMTNQg8'),
-    ImageParagraph(
-        thumb: 'https://dummyimage.com/200x300/000/fff',
-        raw: 'https://picsum.photos/200/300'),
+    VideoParagraph(thumb: null, url: 'https://www.youtube.com/watch?v=_m7lYMTNQg8'),
+    ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
     QuoteParagraph(content: 'i m quote'),
     ReplyToParagraph(id: 'first-respondent'),
     LinkParagraph(content: 'https://pub.dev/packages/better_player'),
@@ -38,8 +35,9 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   }
 
   @override
-  Future<Site> site(
-      {required Extension extension, required String siteId}) async {
+  Future<Site> site({
+    required Extension extension,
+  }) async {
     await Future.delayed(const Duration(seconds: 1));
     return Site(
       extensionPkgName: 'twkevinzhang_beeceptor',

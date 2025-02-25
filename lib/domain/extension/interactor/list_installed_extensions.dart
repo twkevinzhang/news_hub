@@ -25,7 +25,7 @@ class ListInstalledExtensions {
   Future<List<ExtensionWithBoards>> withBoards() async {
     final extensions = await _extensionRepo.list();
     final promises = extensions.map((e) async {
-      final site = await _apiService.site(extension: e, siteId: "1");
+      final site = await _apiService.site(extension: e);
       final boards = await _apiService.boards(extension: e, siteId: site.id);
       return ExtensionWithBoards(
         repoBaseUrl: e.repoBaseUrl,
