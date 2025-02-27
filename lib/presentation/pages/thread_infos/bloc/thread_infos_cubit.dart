@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -51,6 +52,7 @@ class ThreadInfosCubit extends Cubit<ThreadInfosState> {
       filter: filter,
       sorting: sorting,
     ));
+    pagingController.refresh();
   }
 
   void _loadThreadInfos(int pageKey) async {
@@ -63,7 +65,6 @@ class ThreadInfosCubit extends Cubit<ThreadInfosState> {
           pageSize: _pageSize,
         ),
       );
-      print('ThreadInfosCubit result length: ${result.length}');
 
       final isLastPage = result.length < _pageSize;
       if (isLastPage) {
@@ -72,7 +73,9 @@ class ThreadInfosCubit extends Cubit<ThreadInfosState> {
         final nextPageKey = pageKey + result.length;
         pagingController.appendPage(result, nextPageKey);
       }
-    } catch (e) {
+    } catch (e, s) {
+      debugPrint('Exception: $e');
+      debugPrint('StackTrace: $s');
       pagingController.error = e;
     }
   }

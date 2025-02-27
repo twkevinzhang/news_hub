@@ -9,6 +9,7 @@ import 'package:news_hub/shared/models.dart';
 class ListThreadInfos {
   final ExtensionApiService _apiService;
   final ListInstalledExtensions _listInstalledExtensions;
+
   ListThreadInfos({
     required ExtensionApiService apiService,
     required ListInstalledExtensions listInstalledExtensions,
@@ -22,6 +23,9 @@ class ListThreadInfos {
   }) async {
     final extensions = await _listInstalledExtensions.withBoards();
     var boards = extensions.map((e) => e.boards).flatten();
+    if (boards.length > 3) {
+      boards = boards.take(1).toList();
+    }
     if (sorting != null) {
       boards = boards.sortedBy((b) => sorting.boardsOrder.indexOf(b.id));
     }
@@ -31,7 +35,7 @@ class ListThreadInfos {
       }
     }
     final threads = (await Future.wait(boards.map((b) {
-      final e = extensions.firstWhere((element) => element.pkgName == b.extensionPkgName);
+      final e = extensions.firstWhere((e) => e.pkgName == b.extensionPkgName);
       return _apiService.threadInfos(
         extension: e,
         siteId: e.site.id,
@@ -44,8 +48,8 @@ class ListThreadInfos {
         .flatten();
 
     return threads.map((t) {
-      final e = extensions.firstWhere((element) => element.pkgName == t.extensionPkgName);
-      final b = boards.firstWhere((element) => element.id == t.boardId);
+      final e = extensions.firstWhere((e) => e.pkgName == t.extensionPkgName);
+      final b = boards.firstWhere((b) => b.id == t.boardId);
       return ThreadWithExtension(thread: t, board: b, extension: e);
     }).toList();
   }

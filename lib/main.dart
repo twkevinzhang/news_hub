@@ -22,17 +22,20 @@ import 'domain/extension/interactor/run_all_extensions.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await configureDependencies();
-  await testFromReload();
+  await testFromNewAsset();
+  await production();
   runApp(App());
 }
 
 Future<void> production() async {
   final runAllExtensions = sl<RunAllExtensions>();
   try {
+    await runAllExtensions.closeAll();
     await runAllExtensions.call();
     runApp(App());
-  } catch (e) {
-    print(e);
+  } catch (e, s) {
+    debugPrint('Exception: $e');
+    debugPrint('StackTrace: $s');
   } finally {
     await runAllExtensions.closeAll();
   }
@@ -105,7 +108,8 @@ Future<void> copyFile(String filename) async {
     await destinationFile.writeAsBytes(byteData.buffer.asUint8List());
 
     print('檔案已成功複製到: ${destinationFile.path}');
-  } catch (e) {
+  } catch (e, s) {
     print('複製檔案時發生錯誤: $e');
+    print('StackTrace: $s');
   }
 }

@@ -5,6 +5,8 @@ import 'package:news_hub/domain/extension/extension.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/thread_infos/bloc/thread_infos_cubit.dart';
+import 'package:news_hub/presentation/pages/thread_infos/widgets/post_card.dart';
+import 'package:news_hub/presentation/pages/thread_infos/widgets/thread_card.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
 import 'package:news_hub/presentation/widgets/widgets.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -29,8 +31,7 @@ class ThreadInfosScreen extends StatelessWidget implements AutoRouteWrapper {
       appBar: AppBar(
         leading: IconButton(
           icon: const Icon(Icons.menu_outlined),
-          onPressed: () {
-          },
+          onPressed: () {},
         ),
         title: const Text('Bookmark Name'),
         actions: [
@@ -40,32 +41,23 @@ class ThreadInfosScreen extends StatelessWidget implements AutoRouteWrapper {
           ),
         ],
       ),
-      body: PagedListView<int, ThreadWithExtension>(
+      body: PagedListView<int, ThreadWithExtension>.separated(
         pagingController: cubit.pagingController,
         builderDelegate: PagedChildBuilderDelegate<ThreadWithExtension>(
-          itemBuilder: (context, thread, index) => GestureDetector(
+          itemBuilder: (context, thread, index) => InkWell(
             onTap: () {},
-            child: Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(16),
-                  child: Container(),
-                ),
-                const Divider(),
-              ],
-            ),
+            child: ThreadInfoCard(thread: thread),
           ),
           noItemsFoundIndicatorBuilder: (context) => Center(
             child: Text("空"),
           ),
-          firstPageProgressIndicatorBuilder: (context) =>
-          const LoadingIndicator(),
-          newPageProgressIndicatorBuilder: (context) =>
-          const LoadingIndicator(),
+          firstPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
+          newPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
           noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
           transitionDuration: const Duration(seconds: 1),
           animateTransitions: true,
         ),
+        separatorBuilder: (context, index) => const Divider(height: 0),
       ),
     );
   }

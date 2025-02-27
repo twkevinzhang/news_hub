@@ -140,8 +140,8 @@ class ThreadInfo {
   final String url;
   final String title;
   final String authorName;
-  final int createdAt;
-  final int latestRegardingPostCreatedAt;
+  final DateTime createdAt;
+  final DateTime latestRegardingPostCreatedAt;
   final int regardingPostCount;
   final String previewContent;
   final List<String> tags;

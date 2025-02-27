@@ -208,15 +208,15 @@ final $typed_data.Uint8List getThreadInfosReqDescriptor = $convert.base64Decode(
 const GetThreadInfosRes$json = {
   '1': 'GetThreadInfosRes',
   '2': [
-    {'1': 'threadInfos', '3': 1, '4': 3, '5': 11, '6': '.pb.ThreadInfo', '10': 'threadInfos'},
+    {'1': 'thread_infos', '3': 1, '4': 3, '5': 11, '6': '.pb.ThreadInfo', '10': 'threadInfos'},
     {'1': 'page', '3': 2, '4': 1, '5': 11, '6': '.pb.PaginationRes', '10': 'page'},
   ],
 };
 
 /// Descriptor for `GetThreadInfosRes`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List getThreadInfosResDescriptor = $convert.base64Decode(
-    'ChFHZXRUaHJlYWRJbmZvc1JlcxIwCgt0aHJlYWRJbmZvcxgBIAMoCzIOLnBiLlRocmVhZEluZm'
-    '9SC3RocmVhZEluZm9zEiUKBHBhZ2UYAiABKAsyES5wYi5QYWdpbmF0aW9uUmVzUgRwYWdl');
+    'ChFHZXRUaHJlYWRJbmZvc1JlcxIxCgx0aHJlYWRfaW5mb3MYASADKAsyDi5wYi5UaHJlYWRJbm'
+    'ZvUgt0aHJlYWRJbmZvcxIlCgRwYWdlGAIgASgLMhEucGIuUGFnaW5hdGlvblJlc1IEcGFnZQ==');
 
 @$core.Deprecated('Use threadInfoDescriptor instead')
 const ThreadInfo$json = {

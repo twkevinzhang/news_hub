@@ -15,7 +15,10 @@ extension SiteTransform on pb.Site {
 }
 
 extension BoardTransform on pb.Board {
-  domain.Board toDomain(String extensionPkgName) {
+  domain.Board toDomain(
+    String extensionPkgName,
+    String siteId,
+  ) {
     return domain.Board(
       extensionPkgName: extensionPkgName,
       id: id,
@@ -30,7 +33,7 @@ extension BoardTransform on pb.Board {
 }
 
 extension ThreadInfoTransform on pb.ThreadInfo {
-  domain.ThreadInfo toDomain(String extensionPkgName) {
+  domain.ThreadInfo toDomain(String extensionPkgName, String siteId, String boardId) {
     return domain.ThreadInfo(
       extensionPkgName: extensionPkgName,
       id: id,
@@ -39,10 +42,10 @@ extension ThreadInfoTransform on pb.ThreadInfo {
       url: url,
       title: title,
       authorName: authorName,
-      latestRegardingPostCreatedAt: latestRegardingPostCreatedAt.toInt(),
+      latestRegardingPostCreatedAt: latestRegardingPostCreatedAt.toDateTime(),
       regardingPostCount: regardingPostCount,
       previewContent: previewContent,
-      createdAt: createdAt.toInt(),
+      createdAt: createdAt.toDateTime(),
       tags: tags,
     );
   }
