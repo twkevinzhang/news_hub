@@ -85,7 +85,7 @@ class MockInstalledExtensionRepositoryImpl implements InstalledExtensionReposito
   }) async {
     try {
       await delete(pkgName);
-    } catch (e) {
+    } catch (e, s) {
       // Ignore if not found
     }
     return insert(

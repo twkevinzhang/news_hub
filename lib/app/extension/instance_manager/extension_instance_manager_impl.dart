@@ -34,8 +34,13 @@ class ExtensionInstanceManagerImpl implements ExtensionInstanceManager {
   @override
   Future<void> close(domain.Extension extension) async {
     final instance = instanceMap[extension.pkgName];
-    instance?.terminate();
+    if (instance == null) {
+      print('${extension.pkgName} not launched');
+      return;
+    }
+    instance.terminate();
     await Future.delayed(const Duration(seconds: 5));
+    instanceMap.remove(extension.pkgName);
     print('${extension.pkgName} closed');
   }
 }

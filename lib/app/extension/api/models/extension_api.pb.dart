@@ -805,7 +805,7 @@ class GetThreadInfosRes extends $pb.GeneratedMessage {
   factory GetThreadInfosRes.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetThreadInfosRes', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
-    ..pc<ThreadInfo>(1, _omitFieldNames ? '' : 'threadInfos', $pb.PbFieldType.PM, protoName: 'threadInfos', subBuilder: ThreadInfo.create)
+    ..pc<ThreadInfo>(1, _omitFieldNames ? '' : 'threadInfos', $pb.PbFieldType.PM, subBuilder: ThreadInfo.create)
     ..aOM<PaginationRes>(2, _omitFieldNames ? '' : 'page', subBuilder: PaginationRes.create)
     ..hasRequiredFields = false
   ;

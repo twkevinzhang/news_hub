@@ -28,6 +28,8 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
       port: 55001,
       options: const ChannelOptions(
         credentials: ChannelCredentials.insecure(),
+        connectTimeout: Duration(seconds: 5),
+        connectionTimeout: Duration(seconds: 5),
       ),
     );
     _client = ExtensionApiClient(channel);
@@ -54,7 +56,12 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
         pageSize: pagination?.pageSize,
       ),
     ));
-    return res.boards.map((b) => b.toDomain(extension.pkgName)).toList();
+    return res.boards
+        .map((b) => b.toDomain(
+              extension.pkgName,
+              siteId,
+            ))
+        .toList();
   }
 
   @override
@@ -76,7 +83,13 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
       sortBy: sortBy,
       keywords: keywords,
     ));
-    return res.threadInfos.map((t) => t.toDomain(extension.pkgName)).toList();
+    return res.threadInfos
+        .map((t) => t.toDomain(
+              extension.pkgName,
+              siteId,
+              boardId,
+            ))
+        .toList();
   }
 
   @override

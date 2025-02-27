@@ -44,7 +44,7 @@ class ExtensionApiServiceImpl implements ExtensionApiService {
     required String siteId,
   }) async {
     final res = await get(extension, 'sites/$siteId/boards');
-    return pb.GetBoardsRes.fromBuffer(res.data as Uint8List).boards.map((b) => b.toDomain(extension.pkgName)).toList();
+    return pb.GetBoardsRes.fromBuffer(res.data as Uint8List).boards.map((b) => b.toDomain(extension.pkgName, siteId)).toList();
   }
 
   @override
@@ -62,7 +62,7 @@ class ExtensionApiServiceImpl implements ExtensionApiService {
       'sortBy': sortBy,
       'keywords': keywords,
     });
-    return pb.GetThreadInfosRes.fromBuffer(res.data as Uint8List).threadInfos.map((t) => t.toDomain(extension.pkgName)).toList();
+    return pb.GetThreadInfosRes.fromBuffer(res.data as Uint8List).threadInfos.map((t) => t.toDomain(extension.pkgName, siteId, boardId)).toList();
   }
 
   @override
