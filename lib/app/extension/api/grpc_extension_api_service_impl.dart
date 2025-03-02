@@ -18,7 +18,7 @@ import 'package:injectable/injectable.dart';
 
 import 'models/extension_api.pbgrpc.dart';
 
-@dev
+@Environment(AppEnv.demoExtension)
 @LazySingleton(as: ExtensionApiService)
 class GrpcExtensionApiServiceImpl implements ExtensionApiService {
   late ExtensionApiClient _client;
@@ -37,16 +37,16 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
 
   @override
   Future<domain.Site> site({
-    required domain.Extension extension,
+    required String extensionPkgName,
   }) async {
     final res = await _client.getSite(Empty());
-    return res.site.toDomain(extension.pkgName);
+    return res.site.toDomain(extensionPkgName);
   }
 
   @override
   Future<List<domain.Board>> boards({
     Pagination? pagination,
-    required domain.Extension extension,
+    required String extensionPkgName,
     required String siteId,
   }) async {
     final res = await _client.getBoards(GetBoardsReq(
@@ -58,7 +58,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
     ));
     return res.boards
         .map((b) => b.toDomain(
-              extension.pkgName,
+              extensionPkgName,
               siteId,
             ))
         .toList();
@@ -69,7 +69,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
     Pagination? pagination,
     String? sortBy,
     String? keywords,
-    required domain.Extension extension,
+    required String extensionPkgName,
     required String siteId,
     required String boardId,
   }) async {
@@ -85,7 +85,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
     ));
     return res.threadInfos
         .map((t) => t.toDomain(
-              extension.pkgName,
+              extensionPkgName,
               siteId,
               boardId,
             ))
@@ -94,7 +94,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
 
   @override
   Future<domain.Thread> thread({
-    required domain.Extension extension,
+    required String extensionPkgName,
     required String siteId,
     required String boardId,
     required String id,
@@ -104,34 +104,32 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
       boardId: boardId,
       id: id,
     ));
-    return res.thread.toDomain(extension.pkgName);
+    return res.thread.toDomain(extensionPkgName);
   }
 
   @override
   Future<List<domain.Post>> regardingPosts({
     Pagination? pagination,
-    required domain.Extension extension,
+    required String extensionPkgName,
     required String siteId,
     required String boardId,
     required String threadId,
-    required String originalPostId,
   }) async {
     final res = await _client.getRegardingPosts(GetRegardingPostsReq(
       siteId: siteId,
       boardId: boardId,
       threadId: threadId,
-      originalPostId: originalPostId,
       page: PaginationReq(
         page: pagination?.page,
         pageSize: pagination?.pageSize,
       ),
     ));
-    return res.regardingPosts.map((p) => p.toDomain(extension.pkgName)).toList();
+    return res.regardingPosts.map((p) => p.toDomain(extensionPkgName)).toList();
   }
 
   @override
   Future<domain.Post> post({
-    required domain.Extension extension,
+    required String extensionPkgName,
     required String siteId,
     required String boardId,
     required String threadId,
@@ -143,13 +141,13 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
       threadId: threadId,
       id: id,
     ));
-    return res.post.toDomain(extension.pkgName);
+    return res.post.toDomain(extensionPkgName);
   }
 
   @override
   Future<List<domain.Comment>> comments({
     Pagination? pagination,
-    required domain.Extension extension,
+    required String extensionPkgName,
     required String siteId,
     required String boardId,
     required String threadId,
@@ -165,6 +163,6 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
         pageSize: pagination?.pageSize,
       ),
     ));
-    return res.comments.map((c) => c.toDomain(extension.pkgName)).toList();
+    return res.comments.map((c) => c.toDomain(extensionPkgName)).toList();
   }
 }

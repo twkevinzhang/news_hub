@@ -8,7 +8,7 @@ import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/shared/constants.dart';
 import 'package:news_hub/shared/extensions.dart';
 
-@test
+@Environment(AppEnv.mockExtension)
 @preResolve
 @LazySingleton(as: ExtensionInstallService)
 class MockExtensionInstallServiceImpl implements ExtensionInstallService {

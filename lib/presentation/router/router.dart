@@ -20,6 +20,7 @@ class AppRouter extends RootStackRouter {
             AutoRoute(path: 'settings', page: SettingsRoute.page),
           ],
         ),
+        AutoRoute(path: '/thread-detail', page: ThreadDetailRoute.page),
         AutoRoute(path: '/search', page: SearchRoute.page),
         AutoRoute(path: '/extension-repos', page: WrapperRoute.page, children: [
           AutoRoute(path: '', page: ExtensionReposRoute.page),

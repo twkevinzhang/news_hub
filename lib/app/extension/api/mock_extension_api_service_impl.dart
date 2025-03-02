@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:injectable/injectable.dart';
+import 'package:news_hub/shared/constants.dart';
 import 'package:news_hub/shared/models.dart';
 import 'package:news_hub/domain/extension/extension.dart';
 import 'package:news_hub/domain/models/models.dart';
@@ -26,17 +27,12 @@ final _mockPost = Post(
   ],
 );
 
-@test
+@Environment(AppEnv.mockExtension)
 @LazySingleton(as: ExtensionApiService)
 class MockExtensionApiServiceImpl implements ExtensionApiService {
   @override
-  Future<void> run(Extension extension) async {
-    await Future.delayed(const Duration(seconds: 1));
-  }
-
-  @override
   Future<Site> site({
-    required Extension extension,
+    required String extensionPkgName,
   }) async {
     await Future.delayed(const Duration(seconds: 1));
     return Site(
@@ -51,7 +47,7 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   @override
   Future<List<Board>> boards({
     Pagination? pagination,
-    required Extension extension,
+    required String extensionPkgName,
     required String siteId,
   }) async {
     await Future.delayed(const Duration(seconds: 1));
@@ -94,7 +90,7 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
     Pagination? pagination,
     String? sortBy,
     String? keywords,
-    required Extension extension,
+    required String extensionPkgName,
     required String siteId,
     required String boardId,
   }) async {
@@ -123,7 +119,7 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
 
   @override
   Future<Thread> thread({
-    required Extension extension,
+    required String extensionPkgName,
     required String siteId,
     required String boardId,
     required String id,
@@ -145,11 +141,10 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   @override
   Future<List<Post>> regardingPosts({
     Pagination? pagination,
-    required Extension extension,
+    required String extensionPkgName,
     required String siteId,
     required String boardId,
     required String threadId,
-    required String originalPostId,
   }) async {
     await Future.delayed(const Duration(seconds: 1));
     return List<Post>.generate(3, (index) => _mockPost);
@@ -158,7 +153,7 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   @override
   Future<Post> post({
     Pagination? pagination,
-    required Extension extension,
+    required String extensionPkgName,
     required String siteId,
     required String boardId,
     required String threadId,
@@ -171,7 +166,7 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   @override
   Future<List<Comment>> comments({
     Pagination? pagination,
-    required Extension extension,
+    required String extensionPkgName,
     required String siteId,
     required String boardId,
     required String threadId,
@@ -213,10 +208,5 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
         contents: [TextParagraph(content: 'this is a comment')],
       ),
     ];
-  }
-
-  @override
-  Future<void> close(Extension extension) {
-    throw UnimplementedError();
   }
 }
