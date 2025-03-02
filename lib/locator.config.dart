@@ -62,10 +62,6 @@ import 'package:news_hub/domain/extension/interactor/list_installed_extensions.d
     as _i351;
 import 'package:news_hub/domain/extension/interactor/list_remote_extensions.dart'
     as _i915;
-import 'package:news_hub/domain/extension/interactor/list_thread_infos.dart'
-    as _i719;
-import 'package:news_hub/domain/extension/interactor/run_all_extensions.dart'
-    as _i470;
 import 'package:news_hub/domain/extension/interactor/uninstall_extension.dart'
     as _i517;
 import 'package:news_hub/domain/extension_repo/extension_repo.dart' as _i623;
@@ -92,6 +88,9 @@ import 'package:news_hub/domain/suggestion/interactor/list_suggestions.dart'
 import 'package:news_hub/domain/suggestion/interactor/update_suggestion_latest_used_at.dart'
     as _i650;
 import 'package:news_hub/domain/suggestion/suggestion_repository.dart' as _i677;
+import 'package:news_hub/domain/thread/interactor/get_thread.dart' as _i616;
+import 'package:news_hub/domain/thread/interactor/list_thread_infos.dart'
+    as _i952;
 import 'package:news_hub/locator.dart' as _i56;
 import 'package:news_hub/presentation/pages/extension_repos/bloc/add_extension_repo_cubit.dart'
     as _i875;
@@ -103,13 +102,15 @@ import 'package:news_hub/presentation/pages/search/bloc/boards_picker_cubit.dart
     as _i1070;
 import 'package:news_hub/presentation/pages/search/bloc/search_cubit.dart'
     as _i21;
+import 'package:news_hub/presentation/pages/thread_detail/bloc/thread_detail_cubit.dart'
+    as _i725;
 import 'package:news_hub/presentation/pages/thread_infos/bloc/thread_infos_cubit.dart'
     as _i181;
 import 'package:news_hub/presentation/router/router.dart' as _i762;
 import 'package:rx_shared_preferences/rx_shared_preferences.dart' as _i579;
 
-const String _dev = 'dev';
-const String _test = 'test';
+const String _mockExtension = 'mockExtension';
+const String _demoExtension = 'demoExtension';
 
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
@@ -132,56 +133,54 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i475.ValidExtensionRepoUrl>(
         () => _i475.ValidExtensionRepoUrl());
     gh.lazySingleton<_i762.AppRouter>(() => _i762.AppRouter());
+    gh.lazySingleton<_i623.ExtensionRepoApiService>(
+      () => _i681.MockExtensionRepoApiServiceImpl(),
+      registerFor: {_mockExtension},
+    );
     gh.lazySingleton<_i677.SuggestionRepository>(
         () => _i530.SuggestionRepositoryImpl(db: gh<_i539.AppDatabase>()));
-    await gh.lazySingletonAsync<_i315.ExtensionInstallService>(
-      () => _i1036.ExtensionInstallServiceImpl.create(),
-      registerFor: {_dev},
-      preResolve: true,
+    gh.lazySingleton<_i315.ExtensionApiService>(
+      () => _i511.MockExtensionApiServiceImpl(),
+      registerFor: {_mockExtension},
     );
     gh.lazySingleton<_i284.ExtensionInstanceManager>(
         () => _i899.ExtensionInstanceManagerImpl());
-    gh.lazySingleton<_i623.ExtensionRepoRepository>(
-      () => _i374.ExtensionRepoRepositoryImpl(db: gh<_i539.AppDatabase>()),
-      registerFor: {_dev},
-    );
-    gh.lazySingleton<_i623.ExtensionRepoRepository>(
-      () => _i178.MockExtensionRepoRepositoryImpl(),
-      registerFor: {_test},
+    await gh.lazySingletonAsync<_i315.ExtensionInstallService>(
+      () => _i863.MockExtensionInstallServiceImpl.create(),
+      registerFor: {_mockExtension},
+      preResolve: true,
     );
     gh.lazySingleton<_i981.InstalledExtensionRepository>(
       () => _i1056.MockInstalledExtensionRepositoryImpl(),
-      registerFor: {_test},
+      registerFor: {_mockExtension},
     );
-    await gh.lazySingletonAsync<_i315.ExtensionInstallService>(
-      () => _i863.MockExtensionInstallServiceImpl.create(),
-      registerFor: {_test},
-      preResolve: true,
+    gh.lazySingleton<_i623.ExtensionRepoRepository>(
+      () => _i178.MockExtensionRepoRepositoryImpl(),
+      registerFor: {_mockExtension},
     );
-    gh.lazySingleton<_i315.ExtensionApiService>(
-      () => _i511.MockExtensionApiServiceImpl(),
-      registerFor: {_test},
+    gh.lazySingleton<_i623.ExtensionRepoApiService>(
+      () => _i999.ExtensionRepoApiServiceImpl(dio: gh<_i361.Dio>()),
+      registerFor: {_demoExtension},
+    );
+    gh.factory<_i56.Preparation>(
+      () => _i56.MockExtensionPreparation(),
+      registerFor: {_mockExtension},
     );
     gh.lazySingleton<_i581.GetExtensionRepo>(() =>
         _i581.GetExtensionRepo(repo: gh<_i623.ExtensionRepoRepository>()));
-    gh.lazySingleton<_i981.InstalledExtensionRepository>(
-      () => _i753.InstalledExtensionRepositoryImpl(db: gh<_i539.AppDatabase>()),
-      registerFor: {_dev},
-    );
-    gh.lazySingleton<_i623.ExtensionRepoApiService>(
-      () => _i681.MockExtensionRepoApiServiceImpl(),
-      registerFor: {_test},
-    );
+    gh.lazySingleton<_i616.GetThread>(() => _i616.GetThread(
+          apiService: gh<_i892.ExtensionApiService>(),
+          installedExtensionRepository:
+              gh<_i981.InstalledExtensionRepository>(),
+        ));
     gh.lazySingleton<_i517.UninstallExtension>(() => _i517.UninstallExtension(
         installService: gh<_i103.ExtensionInstallService>()));
     gh.lazySingleton<_i521.BookmarkRepository>(
         () => _i495.BookmarkRepositoryImpl());
-    gh.lazySingleton<_i315.ExtensionApiService>(
-      () => _i672.GrpcExtensionApiServiceImpl(),
-      registerFor: {_dev},
-    );
     gh.lazySingleton<_i1049.ListBookmarks>(
         () => _i1049.ListBookmarks(repo: gh<_i521.BookmarkRepository>()));
+    gh.factory<_i725.ThreadDetailCubit>(
+        () => _i725.ThreadDetailCubit(getThread: gh<_i616.GetThread>()));
     gh.lazySingleton<_i783.InstallExtension>(() => _i783.InstallExtension(
           extensionInstanceManager: gh<_i284.ExtensionInstanceManager>(),
           extensionApiService: gh<_i892.ExtensionApiService>(),
@@ -193,9 +192,14 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i1062.DeleteExtensionRepo>(() =>
         _i1062.DeleteExtensionRepo(
             repository: gh<_i525.ExtensionRepoRepository>()));
-    gh.lazySingleton<_i623.ExtensionRepoApiService>(
-      () => _i999.ExtensionRepoApiServiceImpl(dio: gh<_i361.Dio>()),
-      registerFor: {_dev},
+    await gh.lazySingletonAsync<_i315.ExtensionInstallService>(
+      () => _i1036.ExtensionInstallServiceImpl.create(),
+      registerFor: {_demoExtension},
+      preResolve: true,
+    );
+    gh.lazySingleton<_i623.ExtensionRepoRepository>(
+      () => _i374.ExtensionRepoRepositoryImpl(db: gh<_i539.AppDatabase>()),
+      registerFor: {_demoExtension},
     );
     gh.lazySingleton<_i365.PreferenceStore>(
         () => _i842.PreferenceStoreImpl(prefs: gh<_i579.SharedPreferences>()));
@@ -211,6 +215,10 @@ extension GetItInjectableX on _i174.GetIt {
           repository: gh<_i525.ExtensionRepoRepository>(),
           service: gh<_i1021.ExtensionRepoApiService>(),
         ));
+    gh.lazySingleton<_i981.InstalledExtensionRepository>(
+      () => _i753.InstalledExtensionRepositoryImpl(db: gh<_i539.AppDatabase>()),
+      registerFor: {_demoExtension},
+    );
     gh.factory<_i235.ExtensionReposCubit>(() => _i235.ExtensionReposCubit(
           listExtensionRepo: gh<_i25.ListExtensionRepo>(),
           deleteExtensionRepo: gh<_i1062.DeleteExtensionRepo>(),
@@ -222,21 +230,29 @@ extension GetItInjectableX on _i174.GetIt {
             suggestionRepo: gh<_i677.SuggestionRepository>()));
     gh.lazySingleton<_i446.InsertSuggestion>(() => _i446.InsertSuggestion(
         suggestionRepo: gh<_i677.SuggestionRepository>()));
-    gh.lazySingleton<_i470.RunAllExtensions>(() => _i470.RunAllExtensions(
-          manager: gh<_i284.ExtensionInstanceManager>(),
-          extensionRepository: gh<_i981.InstalledExtensionRepository>(),
-        ));
+    gh.lazySingleton<_i315.ExtensionApiService>(
+      () => _i672.GrpcExtensionApiServiceImpl(),
+      registerFor: {_demoExtension},
+    );
+    gh.factory<_i56.Preparation>(
+      () => _i56.DemoExtensionPreparation(
+        manager: gh<_i284.ExtensionInstanceManager>(),
+        installer: gh<_i783.InstallExtension>(),
+        apiService: gh<_i892.ExtensionApiService>(),
+      ),
+      registerFor: {_demoExtension},
+    );
     gh.lazySingleton<_i915.ListRemoteExtensions>(
         () => _i915.ListRemoteExtensions(
               extensionRepoRepository: gh<_i623.ExtensionRepoRepository>(),
               extensionApiService: gh<_i623.ExtensionRepoApiService>(),
             ));
-    gh.lazySingleton<_i719.ListThreadInfos>(() => _i719.ListThreadInfos(
+    gh.lazySingleton<_i952.ListThreadInfos>(() => _i952.ListThreadInfos(
           apiService: gh<_i892.ExtensionApiService>(),
           listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
         ));
     gh.factory<_i181.ThreadInfosCubit>(() =>
-        _i181.ThreadInfosCubit(listThreadInfos: gh<_i315.ListThreadInfos>()));
+        _i181.ThreadInfosCubit(listThreadInfos: gh<_i952.ListThreadInfos>()));
     gh.factory<_i875.AddExtensionRepoCubit>(() => _i875.AddExtensionRepoCubit(
           validExtensionRepoUrl: gh<_i475.ValidExtensionRepoUrl>(),
           getExtensionRepo: gh<_i581.GetExtensionRepo>(),

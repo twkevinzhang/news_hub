@@ -304,7 +304,6 @@ const GetRegardingPostsReq$json = {
     {'1': 'site_id', '3': 1, '4': 1, '5': 9, '10': 'siteId'},
     {'1': 'board_id', '3': 2, '4': 1, '5': 9, '10': 'boardId'},
     {'1': 'thread_id', '3': 3, '4': 1, '5': 9, '10': 'threadId'},
-    {'1': 'original_post_id', '3': 5, '4': 1, '5': 9, '10': 'originalPostId'},
     {'1': 'page', '3': 4, '4': 1, '5': 11, '6': '.pb.PaginationReq', '9': 0, '10': 'page', '17': true},
   ],
   '8': [
@@ -315,9 +314,8 @@ const GetRegardingPostsReq$json = {
 /// Descriptor for `GetRegardingPostsReq`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List getRegardingPostsReqDescriptor = $convert.base64Decode(
     'ChRHZXRSZWdhcmRpbmdQb3N0c1JlcRIXCgdzaXRlX2lkGAEgASgJUgZzaXRlSWQSGQoIYm9hcm'
-    'RfaWQYAiABKAlSB2JvYXJkSWQSGwoJdGhyZWFkX2lkGAMgASgJUgh0aHJlYWRJZBIoChBvcmln'
-    'aW5hbF9wb3N0X2lkGAUgASgJUg5vcmlnaW5hbFBvc3RJZBIqCgRwYWdlGAQgASgLMhEucGIuUG'
-    'FnaW5hdGlvblJlcUgAUgRwYWdliAEBQgcKBV9wYWdl');
+    'RfaWQYAiABKAlSB2JvYXJkSWQSGwoJdGhyZWFkX2lkGAMgASgJUgh0aHJlYWRJZBIqCgRwYWdl'
+    'GAQgASgLMhEucGIuUGFnaW5hdGlvblJlcUgAUgRwYWdliAEBQgcKBV9wYWdl');
 
 @$core.Deprecated('Use getRegardingPostsResDescriptor instead')
 const GetRegardingPostsRes$json = {
@@ -479,9 +477,8 @@ const Post$json = {
     {'1': 'thread_id', '3': 2, '4': 1, '5': 9, '10': 'threadId'},
     {'1': 'board_id', '3': 3, '4': 1, '5': 9, '10': 'boardId'},
     {'1': 'site_id', '3': 4, '4': 1, '5': 9, '10': 'siteId'},
-    {'1': 'authorId', '3': 11, '4': 1, '5': 9, '10': 'authorId'},
+    {'1': 'author_id', '3': 11, '4': 1, '5': 9, '10': 'authorId'},
     {'1': 'author_name', '3': 5, '4': 1, '5': 9, '10': 'authorName'},
-    {'1': 'content', '3': 6, '4': 1, '5': 9, '10': 'content'},
     {'1': 'created_at', '3': 7, '4': 1, '5': 3, '10': 'createdAt'},
     {'1': 'title', '3': 9, '4': 1, '5': 9, '10': 'title'},
     {'1': 'like', '3': 12, '4': 1, '5': 5, '10': 'like'},
@@ -498,12 +495,12 @@ const Post$json = {
 final $typed_data.Uint8List postDescriptor = $convert.base64Decode(
     'CgRQb3N0Eg4KAmlkGAEgASgJUgJpZBIpCg5vcmlnaW5fcG9zdF9pZBgKIAEoCUgAUgxvcmlnaW'
     '5Qb3N0SWSIAQESGwoJdGhyZWFkX2lkGAIgASgJUgh0aHJlYWRJZBIZCghib2FyZF9pZBgDIAEo'
-    'CVIHYm9hcmRJZBIXCgdzaXRlX2lkGAQgASgJUgZzaXRlSWQSGgoIYXV0aG9ySWQYCyABKAlSCG'
-    'F1dGhvcklkEh8KC2F1dGhvcl9uYW1lGAUgASgJUgphdXRob3JOYW1lEhgKB2NvbnRlbnQYBiAB'
-    'KAlSB2NvbnRlbnQSHQoKY3JlYXRlZF9hdBgHIAEoA1IJY3JlYXRlZEF0EhQKBXRpdGxlGAkgAS'
-    'gJUgV0aXRsZRISCgRsaWtlGAwgASgFUgRsaWtlEhgKB2Rpc2xpa2UYDSABKAVSB2Rpc2xpa2US'
-    'GgoIY29tbWVudHMYDiABKAVSCGNvbW1lbnRzEikKCGNvbnRlbnRzGA8gAygLMg0ucGIuUGFyYW'
-    'dyYXBoUghjb250ZW50c0IRCg9fb3JpZ2luX3Bvc3RfaWQ=');
+    'CVIHYm9hcmRJZBIXCgdzaXRlX2lkGAQgASgJUgZzaXRlSWQSGwoJYXV0aG9yX2lkGAsgASgJUg'
+    'hhdXRob3JJZBIfCgthdXRob3JfbmFtZRgFIAEoCVIKYXV0aG9yTmFtZRIdCgpjcmVhdGVkX2F0'
+    'GAcgASgDUgljcmVhdGVkQXQSFAoFdGl0bGUYCSABKAlSBXRpdGxlEhIKBGxpa2UYDCABKAVSBG'
+    'xpa2USGAoHZGlzbGlrZRgNIAEoBVIHZGlzbGlrZRIaCghjb21tZW50cxgOIAEoBVIIY29tbWVu'
+    'dHMSKQoIY29udGVudHMYDyADKAsyDS5wYi5QYXJhZ3JhcGhSCGNvbnRlbnRzQhEKD19vcmlnaW'
+    '5fcG9zdF9pZA==');
 
 @$core.Deprecated('Use getCommentsReqDescriptor instead')
 const GetCommentsReq$json = {

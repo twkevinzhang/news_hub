@@ -4,10 +4,11 @@ import 'package:news_hub/app/service/database/database.dart';
 import 'package:news_hub/domain/extension/extension_repository.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 import 'package:injectable/injectable.dart';
+import 'package:news_hub/shared/constants.dart';
 import 'package:news_hub/shared/exceptions.dart';
 import 'package:uuid/uuid.dart';
 
-@test
+@Environment(AppEnv.mockExtension)
 @LazySingleton(as: InstalledExtensionRepository)
 class MockInstalledExtensionRepositoryImpl implements InstalledExtensionRepository {
   final List<domain.Extension> _extensions = [

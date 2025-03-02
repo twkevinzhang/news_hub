@@ -191,7 +191,11 @@ class Post {
   final String siteId;
   final String boardId;
   final String threadId;
+
+  // 如果該 Post 是 Origin Post，則 originPostId 為 null;
+  // 如果是 Regarding Post，則 originPostId 為 Origin Post 的 ID。
   final String? originPostId;
+
   final String id;
   final String? title;
   final String? url;

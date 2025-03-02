@@ -85,7 +85,7 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
         ..addAll({extension.pkgName: pair});
       safeEmit(state.copyWith(installingExtensions: newInstallingExtensions));
     }, onError: (error) {
-      print(error);
+        debugPrint(error);
     });
     _installingStream[extension.pkgName] = sub;
   }
@@ -98,7 +98,7 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
         ..addAll({extension.pkgName: pair});
       safeEmit(state.copyWith(installingExtensions: newInstallingExtensions));
     }, onError: (error) {
-      print(error);
+      debugPrint(error);
     });
     _installingStream[extension.pkgName] = sub;
   }

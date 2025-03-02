@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:news_hub/domain/extension/interactor/list_thread_infos.dart';
-import 'package:news_hub/presentation/pages/thread_infos/widgets/post_paragraph.dart';
+import 'package:news_hub/domain/thread/interactor/list_thread_infos.dart';
+import 'package:news_hub/presentation/pages/thread_detail/widgets/post_paragraph.dart';
 import 'package:news_hub/presentation/widgets/atoms/atoms.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:news_hub/domain/models/models.dart' as domain;
 
 class ThreadInfoCard extends StatelessWidget {
-  final ThreadWithExtension thread;
+  final ThreadInfoWithExtension thread;
   const ThreadInfoCard({
     super.key,
     required this.thread,

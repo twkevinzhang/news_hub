@@ -1310,7 +1310,6 @@ class GetRegardingPostsReq extends $pb.GeneratedMessage {
     $core.String? boardId,
     $core.String? threadId,
     PaginationReq? page,
-    $core.String? originalPostId,
   }) {
     final $result = create();
     if (siteId != null) {
@@ -1325,9 +1324,6 @@ class GetRegardingPostsReq extends $pb.GeneratedMessage {
     if (page != null) {
       $result.page = page;
     }
-    if (originalPostId != null) {
-      $result.originalPostId = originalPostId;
-    }
     return $result;
   }
   GetRegardingPostsReq._() : super();
@@ -1339,7 +1335,6 @@ class GetRegardingPostsReq extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'boardId')
     ..aOS(3, _omitFieldNames ? '' : 'threadId')
     ..aOM<PaginationReq>(4, _omitFieldNames ? '' : 'page', subBuilder: PaginationReq.create)
-    ..aOS(5, _omitFieldNames ? '' : 'originalPostId')
     ..hasRequiredFields = false
   ;
 
@@ -1401,15 +1396,6 @@ class GetRegardingPostsReq extends $pb.GeneratedMessage {
   void clearPage() => clearField(4);
   @$pb.TagNumber(4)
   PaginationReq ensurePage() => $_ensure(3);
-
-  @$pb.TagNumber(5)
-  $core.String get originalPostId => $_getSZ(4);
-  @$pb.TagNumber(5)
-  set originalPostId($core.String v) { $_setString(4, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasOriginalPostId() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearOriginalPostId() => clearField(5);
 }
 
 class GetRegardingPostsRes extends $pb.GeneratedMessage {
@@ -2120,7 +2106,6 @@ class Post extends $pb.GeneratedMessage {
     $core.String? boardId,
     $core.String? siteId,
     $core.String? authorName,
-    $core.String? content,
     $fixnum.Int64? createdAt,
     $core.String? title,
     $core.String? originPostId,
@@ -2145,9 +2130,6 @@ class Post extends $pb.GeneratedMessage {
     }
     if (authorName != null) {
       $result.authorName = authorName;
-    }
-    if (content != null) {
-      $result.content = content;
     }
     if (createdAt != null) {
       $result.createdAt = createdAt;
@@ -2185,11 +2167,10 @@ class Post extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'boardId')
     ..aOS(4, _omitFieldNames ? '' : 'siteId')
     ..aOS(5, _omitFieldNames ? '' : 'authorName')
-    ..aOS(6, _omitFieldNames ? '' : 'content')
     ..aInt64(7, _omitFieldNames ? '' : 'createdAt')
     ..aOS(9, _omitFieldNames ? '' : 'title')
     ..aOS(10, _omitFieldNames ? '' : 'originPostId')
-    ..aOS(11, _omitFieldNames ? '' : 'authorId', protoName: 'authorId')
+    ..aOS(11, _omitFieldNames ? '' : 'authorId')
     ..a<$core.int>(12, _omitFieldNames ? '' : 'like', $pb.PbFieldType.O3)
     ..a<$core.int>(13, _omitFieldNames ? '' : 'dislike', $pb.PbFieldType.O3)
     ..a<$core.int>(14, _omitFieldNames ? '' : 'comments', $pb.PbFieldType.O3)
@@ -2263,80 +2244,71 @@ class Post extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   void clearAuthorName() => clearField(5);
 
-  @$pb.TagNumber(6)
-  $core.String get content => $_getSZ(5);
-  @$pb.TagNumber(6)
-  set content($core.String v) { $_setString(5, v); }
-  @$pb.TagNumber(6)
-  $core.bool hasContent() => $_has(5);
-  @$pb.TagNumber(6)
-  void clearContent() => clearField(6);
-
   @$pb.TagNumber(7)
-  $fixnum.Int64 get createdAt => $_getI64(6);
+  $fixnum.Int64 get createdAt => $_getI64(5);
   @$pb.TagNumber(7)
-  set createdAt($fixnum.Int64 v) { $_setInt64(6, v); }
+  set createdAt($fixnum.Int64 v) { $_setInt64(5, v); }
   @$pb.TagNumber(7)
-  $core.bool hasCreatedAt() => $_has(6);
+  $core.bool hasCreatedAt() => $_has(5);
   @$pb.TagNumber(7)
   void clearCreatedAt() => clearField(7);
 
   @$pb.TagNumber(9)
-  $core.String get title => $_getSZ(7);
+  $core.String get title => $_getSZ(6);
   @$pb.TagNumber(9)
-  set title($core.String v) { $_setString(7, v); }
+  set title($core.String v) { $_setString(6, v); }
   @$pb.TagNumber(9)
-  $core.bool hasTitle() => $_has(7);
+  $core.bool hasTitle() => $_has(6);
   @$pb.TagNumber(9)
   void clearTitle() => clearField(9);
 
   @$pb.TagNumber(10)
-  $core.String get originPostId => $_getSZ(8);
+  $core.String get originPostId => $_getSZ(7);
   @$pb.TagNumber(10)
-  set originPostId($core.String v) { $_setString(8, v); }
+  set originPostId($core.String v) { $_setString(7, v); }
   @$pb.TagNumber(10)
-  $core.bool hasOriginPostId() => $_has(8);
+  $core.bool hasOriginPostId() => $_has(7);
   @$pb.TagNumber(10)
   void clearOriginPostId() => clearField(10);
 
   @$pb.TagNumber(11)
-  $core.String get authorId => $_getSZ(9);
+  $core.String get authorId => $_getSZ(8);
   @$pb.TagNumber(11)
-  set authorId($core.String v) { $_setString(9, v); }
+  set authorId($core.String v) { $_setString(8, v); }
   @$pb.TagNumber(11)
-  $core.bool hasAuthorId() => $_has(9);
+  $core.bool hasAuthorId() => $_has(8);
   @$pb.TagNumber(11)
   void clearAuthorId() => clearField(11);
 
   @$pb.TagNumber(12)
-  $core.int get like => $_getIZ(10);
+  $core.int get like => $_getIZ(9);
   @$pb.TagNumber(12)
-  set like($core.int v) { $_setSignedInt32(10, v); }
+  set like($core.int v) { $_setSignedInt32(9, v); }
   @$pb.TagNumber(12)
-  $core.bool hasLike() => $_has(10);
+  $core.bool hasLike() => $_has(9);
   @$pb.TagNumber(12)
   void clearLike() => clearField(12);
 
   @$pb.TagNumber(13)
-  $core.int get dislike => $_getIZ(11);
+  $core.int get dislike => $_getIZ(10);
   @$pb.TagNumber(13)
-  set dislike($core.int v) { $_setSignedInt32(11, v); }
+  set dislike($core.int v) { $_setSignedInt32(10, v); }
   @$pb.TagNumber(13)
-  $core.bool hasDislike() => $_has(11);
+  $core.bool hasDislike() => $_has(10);
   @$pb.TagNumber(13)
   void clearDislike() => clearField(13);
 
   @$pb.TagNumber(14)
-  $core.int get comments => $_getIZ(12);
+  $core.int get comments => $_getIZ(11);
   @$pb.TagNumber(14)
-  set comments($core.int v) { $_setSignedInt32(12, v); }
+  set comments($core.int v) { $_setSignedInt32(11, v); }
   @$pb.TagNumber(14)
-  $core.bool hasComments() => $_has(12);
+  $core.bool hasComments() => $_has(11);
   @$pb.TagNumber(14)
   void clearComments() => clearField(14);
 
   @$pb.TagNumber(15)
-  $core.List<Paragraph> get contents => $_getList(13);
+  $core.List<Paragraph> get contents => $_getList(12);
 }
 
 class GetCommentsReq extends $pb.GeneratedMessage {

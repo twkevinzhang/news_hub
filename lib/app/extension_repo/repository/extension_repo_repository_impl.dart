@@ -4,9 +4,10 @@ import 'package:news_hub/app/service/database/database.dart';
 import 'package:news_hub/domain/extension_repo/extension_repo.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 import 'package:injectable/injectable.dart';
+import 'package:news_hub/shared/constants.dart';
 import 'package:news_hub/shared/exceptions.dart';
 
-@dev
+@Environment(AppEnv.demoExtension)
 @LazySingleton(as: ExtensionRepoRepository)
 class ExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
   final AppDatabase _db;

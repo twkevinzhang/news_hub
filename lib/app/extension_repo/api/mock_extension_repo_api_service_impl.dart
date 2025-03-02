@@ -1,8 +1,9 @@
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/extension_repo/extension_repo.dart';
 import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/shared/constants.dart';
 
-@test
+@Environment(AppEnv.mockExtension)
 @LazySingleton(as: ExtensionRepoApiService)
 class MockExtensionRepoApiServiceImpl implements ExtensionRepoApiService {
   @override

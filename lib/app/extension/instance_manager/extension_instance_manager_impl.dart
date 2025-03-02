@@ -27,7 +27,7 @@ class ExtensionInstanceManagerImpl implements ExtensionInstanceManager {
     Directory.current = path.dirname(appPath);
     SeriousPython.runProgram([appPath, 'main.py'].toUrl(), environmentVariables: {"PYTHONUNBUFFERED": "true"});
     await Future.delayed(const Duration(seconds: 5)); // wait server launched
-    print('${extension.pkgName} launched');
+    debugPrint('${extension.pkgName} launched');
     instanceMap[extension.pkgName] = SeriousPythonPlatform.instance;
   }
 
@@ -35,12 +35,12 @@ class ExtensionInstanceManagerImpl implements ExtensionInstanceManager {
   Future<void> close(domain.Extension extension) async {
     final instance = instanceMap[extension.pkgName];
     if (instance == null) {
-      print('${extension.pkgName} not launched');
+      debugPrint('${extension.pkgName} not launched');
       return;
     }
     instance.terminate();
     await Future.delayed(const Duration(seconds: 5));
     instanceMap.remove(extension.pkgName);
-    print('${extension.pkgName} closed');
+    debugPrint('${extension.pkgName} closed');
   }
 }

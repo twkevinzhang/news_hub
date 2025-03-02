@@ -53,7 +53,7 @@ extension StringEx on String {
   }
 }
 
-extension CubitExt<T> on Cubit<T> {
+extension CubitEx<T> on Cubit<T> {
 
   // ref: https://github.com/felangel/bloc/issues/3069#issuecomment-1095547362
   void safeEmit(T state) {
@@ -61,5 +61,13 @@ extension CubitExt<T> on Cubit<T> {
       // ignore: invalid_use_of_visible_for_testing_member, invalid_use_of_protected_member
       emit(state);
     }
+  }
+}
+
+extension FutureEx<T> on Future<T> {
+  Future<T> safe() {
+    return this.catchError((e) {
+      debugPrint(e.toString());
+    });
   }
 }

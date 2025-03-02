@@ -16,15 +16,16 @@ class ListThreadInfos {
   })  : _apiService = apiService,
         _listInstalledExtensions = listInstalledExtensions;
 
-  Future<List<ThreadWithExtension>> call({
+  Future<List<ThreadInfoWithExtension>> call({
     Pagination? pagination,
     ThreadsFilter? filter,
     ThreadsSorting? sorting,
   }) async {
     final extensions = await _listInstalledExtensions.withBoards();
     var boards = extensions.map((e) => e.boards).flatten();
+    var sites = extensions.map((e) => e.site);
     if (boards.length > 3) {
-      boards = boards.take(1).toList();
+      boards = boards.take(1).toList(); // for test
     }
     if (sorting != null) {
       boards = boards.sortedBy((b) => sorting.boardsOrder.indexOf(b.id));
@@ -37,7 +38,7 @@ class ListThreadInfos {
     final threads = (await Future.wait(boards.map((b) {
       final e = extensions.firstWhere((e) => e.pkgName == b.extensionPkgName);
       return _apiService.threadInfos(
-        extension: e,
+        extensionPkgName: e.pkgName,
         siteId: e.site.id,
         boardId: b.id,
         pagination: pagination,
@@ -50,18 +51,21 @@ class ListThreadInfos {
     return threads.map((t) {
       final e = extensions.firstWhere((e) => e.pkgName == t.extensionPkgName);
       final b = boards.firstWhere((b) => b.id == t.boardId);
-      return ThreadWithExtension(thread: t, board: b, extension: e);
+      final s = sites.firstWhere((s) => s.id == b.siteId);
+      return ThreadInfoWithExtension(thread: t, board: b, extension: e, site: s);
     }).toList();
   }
 }
 
-class ThreadWithExtension extends ThreadInfo {
+class ThreadInfoWithExtension extends ThreadInfo {
   final Board board;
+  final Site site;
   final Extension extension;
 
-  ThreadWithExtension({
+  ThreadInfoWithExtension({
     required ThreadInfo thread,
     required this.board,
+    required this.site,
     required this.extension,
   }) : super(
           extensionPkgName: thread.extensionPkgName,

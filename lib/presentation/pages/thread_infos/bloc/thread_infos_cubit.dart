@@ -2,9 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
-import 'package:news_hub/domain/extension/extension.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:injectable/injectable.dart';
+import 'package:news_hub/domain/thread/interactor/list_thread_infos.dart';
 import 'package:news_hub/shared/extensions.dart';
 import 'package:news_hub/shared/models.dart';
 
@@ -21,7 +21,7 @@ class ThreadInfosState with _$ThreadInfosState {
 @injectable
 class ThreadInfosCubit extends Cubit<ThreadInfosState> {
   final ListThreadInfos _listThreadInfos;
-  final PagingController<int, ThreadWithExtension> pagingController;
+  final PagingController<int, ThreadInfoWithExtension> pagingController;
 
   static const _pageSize = 10;
 
@@ -70,8 +70,7 @@ class ThreadInfosCubit extends Cubit<ThreadInfosState> {
       if (isLastPage) {
         pagingController.appendLastPage(result);
       } else {
-        final nextPageKey = pageKey + result.length;
-        pagingController.appendPage(result, nextPageKey);
+        pagingController.appendPage(result, pageKey + 1);
       }
     } catch (e, s) {
       debugPrint('Exception: $e');
