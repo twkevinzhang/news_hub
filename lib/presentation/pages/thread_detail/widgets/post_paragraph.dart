@@ -74,6 +74,7 @@ class ArticleWidget extends StatelessWidget {
         ));
       } else if (paragraph is domain.ReplyToParagraph) {
         // 回复段落 - 添加为可点击的TextSpan
+        article.enter();
         final preview = onPreviewReplyTo(paragraph.id);
         final annotations = preview.isEmpty
             ? ">>${paragraph.id} "
@@ -87,6 +88,7 @@ class ArticleWidget extends StatelessWidget {
           recognizer: TapGestureRecognizer()
             ..onTap = () => onParagraphClick(paragraph),
         ));
+        article.enter();
       } else if (paragraph is domain.ImageParagraph) {
         // 图片段落 - 添加为可点击的Image
         article.enter();
