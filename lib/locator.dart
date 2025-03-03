@@ -22,7 +22,7 @@ final sl = GetIt.instance;
 Future<void> configureDependencies() => sl.init(
       environmentFilter: const NoEnvOrContainsAny(
         // kReleaseMode ? {Environment.prod} : {Environment.dev},
-        {AppEnv.mockExtension},
+        {AppEnv.demoExtension},
       ),
     );
 

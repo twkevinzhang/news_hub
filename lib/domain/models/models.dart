@@ -132,60 +132,6 @@ class Board {
   });
 }
 
-class ThreadInfo {
-  final String extensionPkgName;
-  final String siteId;
-  final String boardId;
-  final String id;
-  final String url;
-  final String title;
-  final String authorName;
-  final DateTime createdAt;
-  final DateTime latestRegardingPostCreatedAt;
-  final int regardingPostCount;
-  final String previewContent;
-  final List<String> tags;
-
-  ThreadInfo({
-    required this.extensionPkgName,
-    required this.siteId,
-    required this.boardId,
-    required this.id,
-    required this.url,
-    required this.title,
-    required this.authorName,
-    required this.createdAt,
-    required this.latestRegardingPostCreatedAt,
-    required this.regardingPostCount,
-    required this.previewContent,
-    required this.tags,
-  });
-}
-
-class Thread {
-  final String extensionPkgName;
-  final String siteId;
-  final String boardId;
-  final String id;
-  final String url;
-  final int latestRegardingPostCreatedAt;
-  final int regardingPostCount;
-  final List<String> tags;
-  final Post originalPost; // OP
-
-  Thread({
-    required this.extensionPkgName,
-    required this.siteId,
-    required this.boardId,
-    required this.id,
-    required this.url,
-    required this.latestRegardingPostCreatedAt,
-    required this.regardingPostCount,
-    required this.tags,
-    required this.originalPost,
-  });
-}
-
 class Post {
   final String extensionPkgName;
   final String siteId;
@@ -193,18 +139,21 @@ class Post {
   final String threadId;
 
   // 如果該 Post 是 Origin Post，則 originPostId 為 null;
-  // 如果是 Regarding Post，則 originPostId 為 Origin Post 的 ID。
+  // 如果是 Regarding Post，則 originPostId 為 OP 的 ID。
   final String? originPostId;
 
   final String id;
   final String? title;
   final String? url;
+  final int? latestRegardingPostCreatedAt;
+  final int? regardingPostsCount;
   final DateTime createdAt;
   final String authorId;
   final String authorName;
-  final int like;
-  final int dislike;
+  final int liked;
+  final int disliked;
   final int comments;
+  final List<String> tags;
   final List<Paragraph> contents;
 
   Post({
@@ -219,10 +168,13 @@ class Post {
     required this.createdAt,
     required this.authorId,
     required this.authorName,
-    required this.like,
-    required this.dislike,
+    required this.liked,
+    required this.disliked,
     required this.comments,
     required this.contents,
+    this.latestRegardingPostCreatedAt,
+    this.regardingPostsCount,
+    required this.tags,
   });
 }
 

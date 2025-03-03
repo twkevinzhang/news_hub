@@ -14,8 +14,8 @@ final _mockPost = Post(
   createdAt: DateTime.now(),
   authorId: '1',
   authorName: '無名',
-  like: 0,
-  dislike: 0,
+  liked: 0,
+  disliked: 0,
   comments: 0,
   contents: [
     TextParagraph(content: 'Text Content Maybe'),
@@ -25,6 +25,7 @@ final _mockPost = Post(
     ReplyToParagraph(id: 'first-respondent'),
     LinkParagraph(content: 'https://pub.dev/packages/better_player'),
   ],
+  tags: [],
 );
 
 @Environment(AppEnv.mockExtension)
@@ -86,7 +87,7 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   }
 
   @override
-  Future<List<ThreadInfo>> threadInfos({
+  Future<List<Post>> threadInfos({
     Pagination? pagination,
     String? sortBy,
     String? keywords,
@@ -96,46 +97,21 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   }) async {
     await Future.delayed(const Duration(seconds: 1));
     if (boardId == '1') {
-      return [
-        ThreadInfo(
-          extensionPkgName: 'twkevinzhang_beeceptor',
-          siteId: '1',
-          boardId: '1',
-          id: '1',
-          url: 'https://beeceptor.com/threads/1',
-          title: 'Thread Title',
-          authorName: 'Author',
-          createdAt: DateTime.now(),
-          latestRegardingPostCreatedAt: DateTime.now(),
-          regardingPostCount: 1,
-          previewContent: 'Preview Content',
-          tags: [],
-        ),
-      ];
+      return [_mockPost];
     } else {
       return [];
     }
   }
 
   @override
-  Future<Thread> thread({
+  Future<Post> thread({
     required String extensionPkgName,
     required String siteId,
     required String boardId,
     required String id,
   }) async {
     await Future.delayed(const Duration(seconds: 1));
-    return Thread(
-      extensionPkgName: 'twkevinzhang_beeceptor',
-      siteId: '1',
-      boardId: '1',
-      id: '1',
-      url: 'https://beeceptor.com/',
-      originalPost: _mockPost,
-      latestRegardingPostCreatedAt: DateTime.now().millisecondsSinceEpoch,
-      regardingPostCount: 1,
-      tags: [],
-    );
+    return _mockPost;
   }
 
   @override

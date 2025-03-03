@@ -65,7 +65,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
   }
 
   @override
-  Future<List<domain.ThreadInfo>> threadInfos({
+  Future<List<domain.Post>> threadInfos({
     Pagination? pagination,
     String? sortBy,
     String? keywords,
@@ -84,16 +84,12 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
       keywords: keywords,
     ));
     return res.threadInfos
-        .map((t) => t.toDomain(
-              extensionPkgName,
-              siteId,
-              boardId,
-            ))
+        .map((t) => t.toDomain(extensionPkgName))
         .toList();
   }
 
   @override
-  Future<domain.Thread> thread({
+  Future<domain.Post> thread({
     required String extensionPkgName,
     required String siteId,
     required String boardId,

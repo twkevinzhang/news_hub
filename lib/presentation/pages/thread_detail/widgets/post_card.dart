@@ -20,7 +20,7 @@ class PostCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _PostHeader(
+          PostHeader(
             postId: post.id,
             author: post.authorName,
             createdAt: post.createdAt,
@@ -33,8 +33,8 @@ class PostCard extends StatelessWidget {
             onPreviewReplyTo: (String id) => '',
           ),
           SizedBox(height: 8),
-          _PostActions(
-            liked: post.like,
+          PostActions(
+            liked: post.liked,
             regardingPosts: 0,
             comments: post.comments,
           ),
@@ -44,12 +44,12 @@ class PostCard extends StatelessWidget {
   }
 }
 
-class _PostHeader extends StatelessWidget {
+class PostHeader extends StatelessWidget {
   final String postId;
   final String author;
   final DateTime createdAt;
   final String category;
-  const _PostHeader({
+  const PostHeader({
     super.key,
     required this.postId,
     required this.author,
@@ -88,14 +88,14 @@ class _PostHeader extends StatelessWidget {
   }
 }
 
-class _PostActions extends StatelessWidget {
-  final int liked;
-  final int regardingPosts;
-  final int comments;
-  const _PostActions({
-    required this.liked,
-    required this.regardingPosts,
-    required this.comments,
+class PostActions extends StatelessWidget {
+  final int? liked;
+  final int? regardingPosts;
+  final int? comments;
+  const PostActions({
+    this.liked,
+    this.regardingPosts,
+    this.comments,
   });
 
   @override

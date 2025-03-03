@@ -32,41 +32,6 @@ extension BoardTransform on pb.Board {
   }
 }
 
-extension ThreadInfoTransform on pb.ThreadInfo {
-  domain.ThreadInfo toDomain(String extensionPkgName, String siteId, String boardId) {
-    return domain.ThreadInfo(
-      extensionPkgName: extensionPkgName,
-      id: id,
-      siteId: siteId,
-      boardId: boardId,
-      url: url,
-      title: title,
-      authorName: authorName,
-      latestRegardingPostCreatedAt: latestRegardingPostCreatedAt.toDateTime(),
-      regardingPostCount: regardingPostCount,
-      previewContent: previewContent,
-      createdAt: createdAt.toDateTime(),
-      tags: tags,
-    );
-  }
-}
-
-extension ThreadTransform on pb.Thread {
-  domain.Thread toDomain(String extensionPkgName) {
-    return domain.Thread(
-      extensionPkgName: extensionPkgName,
-      id: id,
-      siteId: siteId,
-      boardId: boardId,
-      latestRegardingPostCreatedAt: latestRegardingPostCreatedAt.toInt(),
-      regardingPostCount: regardingPostCount,
-      tags: tags,
-      originalPost: originalPost.toDomain(extensionPkgName),
-      url: url,
-    );
-  }
-}
-
 extension PostTransform on pb.Post {
   domain.Post toDomain(String extensionPkgName) {
     return domain.Post(
@@ -81,9 +46,9 @@ extension PostTransform on pb.Post {
       createdAt: createdAt.toDateTime(),
       title: title,
       originPostId: originPostId,
-      like: like,
-      dislike: dislike,
-      comments: comments,
+      liked: liked,
+      disliked: disliked,
+      comments: comments, tags: [],
     );
   }
 }

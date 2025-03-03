@@ -17,7 +17,7 @@ class GetThread {
   })  : _apiService = apiService,
         _installedExtensionRepository = installedExtensionRepository;
 
-  Future<ThreadWithExtension> call({
+  Future<PostWithExtension> call({
     required String extensionPkgName,
     required String siteId,
     required String boardId,
@@ -34,17 +34,11 @@ class GetThread {
     );
     final (extension, site, boards, thread) = await (extensionF, siteF, boardsF, threadF).wait;
     final board = boards.firstWhere((b) => b.id == boardId);
-    return ThreadWithExtension(
-      thread: thread,
+    return PostWithExtension(
+      post: thread,
       board: board,
       site: site,
       extension: extension,
-      originalPostWithExtension: PostWithExtension(
-        post: thread.originalPost,
-        board: board,
-        site: site,
-        extension: extension,
-      ),
     );
   }
 
@@ -78,31 +72,6 @@ class GetThread {
   }
 }
 
-class ThreadWithExtension extends Thread {
-  final Board board;
-  final Site site;
-  final Extension extension;
-  final PostWithExtension originalPostWithExtension;
-
-  ThreadWithExtension({
-    required Thread thread,
-    required this.board,
-    required this.site,
-    required this.extension,
-    required this.originalPostWithExtension,
-  }) : super(
-          extensionPkgName: thread.extensionPkgName,
-          siteId: thread.siteId,
-          boardId: thread.boardId,
-          id: thread.id,
-          url: thread.url,
-          latestRegardingPostCreatedAt: thread.latestRegardingPostCreatedAt,
-          regardingPostCount: thread.regardingPostCount,
-          tags: thread.tags,
-          originalPost: thread.originalPost,
-        );
-}
-
 class PostWithExtension extends Post {
   final Extension extension;
   final Site site;
@@ -124,9 +93,13 @@ class PostWithExtension extends Post {
           createdAt: post.createdAt,
           authorId: post.authorId,
           authorName: post.authorName,
-          like: post.like,
-          dislike: post.dislike,
+          liked: post.liked,
+          disliked: post.disliked,
           comments: post.comments,
           contents: post.contents,
+          tags: post.tags,
+          latestRegardingPostCreatedAt: post.latestRegardingPostCreatedAt,
+          regardingPostsCount: post.regardingPostsCount,
+          originPostId: post.originPostId,
         );
 }

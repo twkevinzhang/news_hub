@@ -10,7 +10,7 @@ abstract class ExtensionApiService {
     required String extensionPkgName,
     required String siteId,
   });
-  Future<List<ThreadInfo>> threadInfos({
+  Future<List<Post>> threadInfos({
     Pagination? pagination,
     String? sortBy,
     String? keywords,
@@ -18,7 +18,7 @@ abstract class ExtensionApiService {
     required String siteId,
     required String boardId,
   });
-  Future<Thread> thread({
+  Future<Post> thread({
     required String extensionPkgName,
     required String siteId,
     required String boardId,
