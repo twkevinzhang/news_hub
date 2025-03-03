@@ -397,12 +397,14 @@ const ReplyToParagraph$json = {
   '1': 'ReplyToParagraph',
   '2': [
     {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {'1': 'preview', '3': 2, '4': 1, '5': 9, '10': 'preview'},
   ],
 };
 
 /// Descriptor for `ReplyToParagraph`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List replyToParagraphDescriptor = $convert.base64Decode(
-    'ChBSZXBseVRvUGFyYWdyYXBoEg4KAmlkGAEgASgJUgJpZA==');
+    'ChBSZXBseVRvUGFyYWdyYXBoEg4KAmlkGAEgASgJUgJpZBIYCgdwcmV2aWV3GAIgASgJUgdwcm'
+    'V2aWV3');
 
 @$core.Deprecated('Use linkParagraphDescriptor instead')
 const LinkParagraph$json = {
@@ -432,10 +434,11 @@ const Post$json = {
     {'1': 'liked', '3': 12, '4': 1, '5': 5, '10': 'liked'},
     {'1': 'disliked', '3': 13, '4': 1, '5': 5, '10': 'disliked'},
     {'1': 'comments', '3': 14, '4': 1, '5': 5, '10': 'comments'},
-    {'1': 'latest_regarding_post_created_at', '3': 15, '4': 1, '5': 3, '10': 'latestRegardingPostCreatedAt'},
-    {'1': 'regarding_posts', '3': 16, '4': 1, '5': 5, '10': 'regardingPosts'},
     {'1': 'contents', '3': 17, '4': 3, '5': 11, '6': '.pb.Paragraph', '10': 'contents'},
     {'1': 'tags', '3': 18, '4': 3, '5': 9, '10': 'tags'},
+    {'1': 'latest_regarding_post_created_at', '3': 15, '4': 1, '5': 3, '10': 'latestRegardingPostCreatedAt'},
+    {'1': 'regarding_posts_count', '3': 19, '4': 1, '5': 5, '10': 'regardingPostsCount'},
+    {'1': 'url', '3': 20, '4': 1, '5': 9, '10': 'url'},
   ],
   '8': [
     {'1': '_origin_post_id'},
@@ -450,10 +453,11 @@ final $typed_data.Uint8List postDescriptor = $convert.base64Decode(
     'hhdXRob3JJZBIfCgthdXRob3JfbmFtZRgFIAEoCVIKYXV0aG9yTmFtZRIdCgpjcmVhdGVkX2F0'
     'GAcgASgDUgljcmVhdGVkQXQSFAoFdGl0bGUYCSABKAlSBXRpdGxlEhQKBWxpa2VkGAwgASgFUg'
     'VsaWtlZBIaCghkaXNsaWtlZBgNIAEoBVIIZGlzbGlrZWQSGgoIY29tbWVudHMYDiABKAVSCGNv'
-    'bW1lbnRzEkYKIGxhdGVzdF9yZWdhcmRpbmdfcG9zdF9jcmVhdGVkX2F0GA8gASgDUhxsYXRlc3'
-    'RSZWdhcmRpbmdQb3N0Q3JlYXRlZEF0EicKD3JlZ2FyZGluZ19wb3N0cxgQIAEoBVIOcmVnYXJk'
-    'aW5nUG9zdHMSKQoIY29udGVudHMYESADKAsyDS5wYi5QYXJhZ3JhcGhSCGNvbnRlbnRzEhIKBH'
-    'RhZ3MYEiADKAlSBHRhZ3NCEQoPX29yaWdpbl9wb3N0X2lk');
+    'bW1lbnRzEikKCGNvbnRlbnRzGBEgAygLMg0ucGIuUGFyYWdyYXBoUghjb250ZW50cxISCgR0YW'
+    'dzGBIgAygJUgR0YWdzEkYKIGxhdGVzdF9yZWdhcmRpbmdfcG9zdF9jcmVhdGVkX2F0GA8gASgD'
+    'UhxsYXRlc3RSZWdhcmRpbmdQb3N0Q3JlYXRlZEF0EjIKFXJlZ2FyZGluZ19wb3N0c19jb3VudB'
+    'gTIAEoBVITcmVnYXJkaW5nUG9zdHNDb3VudBIQCgN1cmwYFCABKAlSA3VybEIRCg9fb3JpZ2lu'
+    'X3Bvc3RfaWQ=');
 
 @$core.Deprecated('Use getCommentsReqDescriptor instead')
 const GetCommentsReq$json = {

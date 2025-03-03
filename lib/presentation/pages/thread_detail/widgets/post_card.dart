@@ -1,46 +1,51 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:news_hub/presentation/pages/thread_detail/widgets/post_paragraph.dart';
+import 'package:news_hub/shared/extensions.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:news_hub/domain/models/models.dart' as domain;
 
-class PostCard extends StatelessWidget {
+class PostLayout extends StatelessWidget {
   final domain.Post post;
-  final String boardName;
-  const PostCard({
+  final FutureOr<void> Function(domain.Paragraph paragraph)? onParagraphClick;
+  final FutureOr<void> Function()? onLikeClick;
+  final FutureOr<void> Function()? onRegardingPostsClick;
+  final FutureOr<void> Function()? onCommentsClick;
+  const PostLayout({
     super.key,
     required this.post,
-    required this.boardName,
+    this.onParagraphClick,
+    this.onLikeClick,
+    this.onRegardingPostsClick,
+    this.onCommentsClick,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        child: Padding(
-      padding: const EdgeInsets.all(8),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          PostHeader(
-            postId: post.id,
-            author: post.authorName,
-            createdAt: post.createdAt,
-            category: boardName,
-          ),
-          SizedBox(height: 8),
-          ArticleWidget(
-            contents: post.contents,
-            onParagraphClick: (domain.Paragraph paragraph) {},
-            onPreviewReplyTo: (String id) => '',
-          ),
-          SizedBox(height: 8),
-          PostActions(
-            liked: post.liked,
-            regardingPosts: 0,
-            comments: post.comments,
-          ),
-        ],
-      ),
-    ));
+    return Wrap(
+      children: [
+        PostHeader(
+          postId: post.id,
+          author: post.authorName,
+          createdAt: post.createdAt,
+          category: null,
+        ),
+        ArticleWidget(
+          contents: post.contents,
+          onParagraphClick: onParagraphClick,
+        ),
+        Container(height: 8),
+        PostActions(
+          liked: post.liked,
+          regardingPosts: post.regardingPostsCount,
+          comments: post.comments,
+          onLikeClick: onLikeClick,
+          onRegardingPostsClick: onRegardingPostsClick,
+          onCommentsClick: onCommentsClick,
+        ),
+      ],
+    );
   }
 }
 
@@ -48,7 +53,7 @@ class PostHeader extends StatelessWidget {
   final String postId;
   final String author;
   final DateTime createdAt;
-  final String category;
+  final String? category;
   const PostHeader({
     super.key,
     required this.postId,
@@ -74,6 +79,12 @@ class PostHeader extends StatelessWidget {
             Text(author, style: primaryStyle),
             SizedBox(width: 8),
             Text(timeago.format(createdAt), style: outlineStyle),
+            SizedBox(width: 8),
+            if (category != null) ...[
+              Text('in', style: outlineStyle),
+              SizedBox(width: 4),
+              Text(category!, style: outlineStyle),
+            ],
           ],
         ),
         Row(
@@ -92,37 +103,61 @@ class PostActions extends StatelessWidget {
   final int? liked;
   final int? regardingPosts;
   final int? comments;
+  final FutureOr<void> Function()? onLikeClick;
+  final FutureOr<void> Function()? onRegardingPostsClick;
+  final FutureOr<void> Function()? onCommentsClick;
   const PostActions({
     this.liked,
     this.regardingPosts,
     this.comments,
+    this.onLikeClick,
+    this.onRegardingPostsClick,
+    this.onCommentsClick,
   });
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
-    final primaryStyle = theme.textTheme.bodySmall!.copyWith(
-      color: theme.colorScheme.primary,
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        if (liked.isPositive)
+          ..._getAction(context, Icons.thumb_up_alt_outlined, onLikeClick, liked.toString()),
+        if (regardingPosts.isPositive)
+          ..._getAction(context, Icons.comment_outlined, onRegardingPostsClick, regardingPosts.toString()),
+        if (comments.isPositive)
+          ..._getAction(context, Icons.bubble_chart_outlined, onCommentsClick, comments.toString()),
+      ],
     );
+  }
+
+  List<Widget> _getAction(
+    BuildContext context,
+    IconData icon,
+    void Function()? onTap,
+    String text,
+  ) {
+    final theme = Theme.of(context);
     final outlineColor = theme.colorScheme.outline;
     final outlineStyle = theme.textTheme.bodySmall!.copyWith(
       color: outlineColor,
     );
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Icon(Icons.thumb_up_alt_outlined, color: outlineColor),
-        SizedBox(width: 4),
-        Text(liked.toString(), style: outlineStyle),
-        SizedBox(width: 8),
-        Icon(Icons.fork_right_outlined, color: outlineColor),
-        SizedBox(width: 4),
-        Text(regardingPosts.toString(), style: outlineStyle),
-        SizedBox(width: 8),
-        Icon(Icons.chat_bubble_outline_outlined, color: outlineColor),
-        SizedBox(width: 4),
-        Text(comments.toString(), style: outlineStyle),
-      ],
-    );
+    final row = [
+      Icon(icon, color: outlineColor),
+      SizedBox(width: 4),
+      Text(text, style: outlineStyle),
+      SizedBox(width: 8),
+    ];
+    if (onTap != null) {
+      return [
+        InkWell(
+          onTap: onTap,
+          child: Row(
+            children: row,
+          ),
+        ),
+      ];
+    } else {
+      return row;
+    }
   }
 }

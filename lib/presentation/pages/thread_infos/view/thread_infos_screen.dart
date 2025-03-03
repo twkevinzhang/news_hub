@@ -50,8 +50,16 @@ class ThreadInfosScreen extends StatelessWidget implements AutoRouteWrapper {
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
             child: ThreadInfoCard(thread: thread),
           ),
-          noItemsFoundIndicatorBuilder: (context) => Center(
-            child: Text("Empty"),
+          noItemsFoundIndicatorBuilder: (context) => Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text("Empty"),
+              ElevatedButton(
+                onPressed: () => cubit.refresh(),
+                child: const Text("Refresh"),
+              ),
+            ],
           ),
           firstPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
           newPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),

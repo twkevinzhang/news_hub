@@ -1,7 +1,10 @@
+import 'dart:async';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
+import 'package:news_hub/shared/extensions.dart';
 
 class Article {
   List<Widget> children = [];
@@ -26,15 +29,13 @@ class Article {
 class ArticleWidget extends StatelessWidget {
   final List<domain.Paragraph> contents;
   final int? textLengthMax;
-  final void Function(domain.Paragraph paragraph) onParagraphClick;
-  final String Function(String id) onPreviewReplyTo;
+  final FutureOr<void> Function(domain.Paragraph paragraph)? onParagraphClick;
 
   const ArticleWidget({
     super.key,
     required this.contents,
     this.textLengthMax,
     required this.onParagraphClick,
-    required this.onPreviewReplyTo,
   });
 
   @override
@@ -70,15 +71,14 @@ class ArticleWidget extends StatelessWidget {
             decoration: TextDecoration.underline,
           ),
           recognizer: TapGestureRecognizer()
-            ..onTap = () => onParagraphClick(paragraph),
+            ..onTap = () => onParagraphClick?.call(paragraph),
         ));
       } else if (paragraph is domain.ReplyToParagraph) {
         // 回复段落 - 添加为可点击的TextSpan
         article.enter();
-        final preview = onPreviewReplyTo(paragraph.id);
-        final annotations = preview.isEmpty
+        final annotations = paragraph.preview.isEmpty
             ? ">>${paragraph.id} "
-            : ">>${paragraph.id}($preview...) ";
+            : ">>${paragraph.id}(${paragraph.preview.truncate(7)}) ";
         article.input(TextSpan(
           text: annotations,
           style: textStyle.copyWith(
@@ -86,7 +86,7 @@ class ArticleWidget extends StatelessWidget {
             decoration: TextDecoration.underline,
           ),
           recognizer: TapGestureRecognizer()
-            ..onTap = () => onParagraphClick(paragraph),
+            ..onTap = () => onParagraphClick?.call(paragraph),
         ));
         article.enter();
       } else if (paragraph is domain.ImageParagraph) {
@@ -94,14 +94,14 @@ class ArticleWidget extends StatelessWidget {
         article.enter();
         article.inputWidget(ImageParagraph(
           imageUrl: paragraph.thumb(),
-          onClick: () => onParagraphClick(paragraph),
+          onClick: () => onParagraphClick?.call(paragraph),
         ));
       } else if (paragraph is domain.VideoParagraph) {
         // 视频段落 - 添加为可点击的Video
         article.enter();
         article.inputWidget(VideoParagraph(
           thumb: paragraph.thumb,
-          onClick: () => onParagraphClick(paragraph),
+          onClick: () => onParagraphClick?.call((paragraph)),
         ));
       }
     }

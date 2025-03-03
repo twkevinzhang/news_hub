@@ -17,7 +17,8 @@ class ThreadDetailState with _$ThreadDetailState {
     required String siteId,
     required String boardId,
     required String threadId,
-    required Result<Post> thread,
+    required Map<String, Result<Post>> threadMap,
+    required Map<String, Result<List<Post>>> regardingPostsMap,
   }) = _ThreadDetailState;
 }
 
@@ -37,7 +38,8 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
           siteId: '',
           boardId: '',
           threadId: '',
-          thread: Result.initial(),
+          threadMap: {},
+          regardingPostsMap: {},
         )) {
     pagingController.addPageRequestListener(_loadPosts);
   }
@@ -99,7 +101,40 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
       siteId: siteId,
       boardId: boardId,
       threadId: threadId,
-      thread: Result.initial(),
+      threadMap: {},
+      regardingPostsMap: {},
     ));
+  }
+
+  void loadThread(String newThreadId) async {
+    if (state.threadMap.containsKey(newThreadId)) {
+      return;
+    }
+    final newMap = Map<String, Result<Post>>.from(state.threadMap)..[newThreadId] = Result.loading();
+    safeEmit(state.copyWith(threadMap: newMap));
+    final newThread = await _getThread.call(
+      extensionPkgName: state.extensionPkgName,
+      siteId: state.siteId,
+      boardId: state.boardId,
+      id: newThreadId,
+    );
+    final newMap2 = Map<String, Result<Post>>.from(state.threadMap)..[newThreadId] = Result.completed(newThread);
+    safeEmit(state.copyWith(threadMap: newMap2));
+  }
+
+  void loadRegardingPosts(String newThreadId) async {
+    if (state.regardingPostsMap.containsKey(newThreadId)) {
+      return;
+    }
+    final newMap = Map.of(state.regardingPostsMap)..[newThreadId] = Result.loading();
+    safeEmit(state.copyWith(regardingPostsMap: newMap));
+    final regardingPostsMap = await _getThread.listRegardingPosts(
+      extensionPkgName: state.extensionPkgName,
+      siteId: state.siteId,
+      boardId: state.boardId,
+      threadId: newThreadId,
+    );
+    final newMap2 = Map.of(state.regardingPostsMap)..[newThreadId] = Result.completed(regardingPostsMap);
+    safeEmit(state.copyWith(regardingPostsMap: newMap2));
   }
 }

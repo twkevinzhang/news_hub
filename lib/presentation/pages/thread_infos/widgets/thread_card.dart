@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:news_hub/domain/thread/interactor/get_thread.dart';
@@ -11,9 +13,11 @@ import 'package:news_hub/domain/models/models.dart' as domain;
 
 class ThreadInfoCard extends StatelessWidget {
   final PostWithExtension thread;
+  final FutureOr<void> Function(domain.Paragraph paragraph)? onParagraphClick;
   const ThreadInfoCard({
     super.key,
     required this.thread,
+    this.onParagraphClick,
   });
 
   @override
@@ -30,29 +34,7 @@ class ThreadInfoCard extends StatelessWidget {
           },
           child: Padding(
             padding: const EdgeInsets.all(8),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                PostHeader(
-                  postId: thread.id,
-                  author: thread.authorName,
-                  createdAt: thread.createdAt,
-                  category: thread.board.name,
-                ),
-                SizedBox(height: 8),
-                ArticleWidget(
-                  contents: thread.contents,
-                  onParagraphClick: (domain.Paragraph paragraph) {},
-                  onPreviewReplyTo: (String id) => '',
-                ),
-                SizedBox(height: 8),
-                PostActions(
-                  liked: thread.liked,
-                  regardingPosts: thread.regardingPostsCount,
-                  comments: null,
-                ),
-              ],
-            ),
+            child: PostLayout(post: thread, onParagraphClick: onParagraphClick),
           )),
     );
   }

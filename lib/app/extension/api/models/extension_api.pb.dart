@@ -1674,10 +1674,14 @@ class QuoteParagraph extends $pb.GeneratedMessage {
 class ReplyToParagraph extends $pb.GeneratedMessage {
   factory ReplyToParagraph({
     $core.String? id,
+    $core.String? preview,
   }) {
     final $result = create();
     if (id != null) {
       $result.id = id;
+    }
+    if (preview != null) {
+      $result.preview = preview;
     }
     return $result;
   }
@@ -1687,6 +1691,7 @@ class ReplyToParagraph extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ReplyToParagraph', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(2, _omitFieldNames ? '' : 'preview')
     ..hasRequiredFields = false
   ;
 
@@ -1719,6 +1724,15 @@ class ReplyToParagraph extends $pb.GeneratedMessage {
   $core.bool hasId() => $_has(0);
   @$pb.TagNumber(1)
   void clearId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get preview => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set preview($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasPreview() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearPreview() => clearField(2);
 }
 
 class LinkParagraph extends $pb.GeneratedMessage {
@@ -1786,9 +1800,10 @@ class Post extends $pb.GeneratedMessage {
     $core.int? disliked,
     $core.int? comments,
     $fixnum.Int64? latestRegardingPostCreatedAt,
-    $core.int? regardingPosts,
     $core.Iterable<Paragraph>? contents,
     $core.Iterable<$core.String>? tags,
+    $core.int? regardingPostsCount,
+    $core.String? url,
   }) {
     final $result = create();
     if (id != null) {
@@ -1830,14 +1845,17 @@ class Post extends $pb.GeneratedMessage {
     if (latestRegardingPostCreatedAt != null) {
       $result.latestRegardingPostCreatedAt = latestRegardingPostCreatedAt;
     }
-    if (regardingPosts != null) {
-      $result.regardingPosts = regardingPosts;
-    }
     if (contents != null) {
       $result.contents.addAll(contents);
     }
     if (tags != null) {
       $result.tags.addAll(tags);
+    }
+    if (regardingPostsCount != null) {
+      $result.regardingPostsCount = regardingPostsCount;
+    }
+    if (url != null) {
+      $result.url = url;
     }
     return $result;
   }
@@ -1859,9 +1877,10 @@ class Post extends $pb.GeneratedMessage {
     ..a<$core.int>(13, _omitFieldNames ? '' : 'disliked', $pb.PbFieldType.O3)
     ..a<$core.int>(14, _omitFieldNames ? '' : 'comments', $pb.PbFieldType.O3)
     ..aInt64(15, _omitFieldNames ? '' : 'latestRegardingPostCreatedAt')
-    ..a<$core.int>(16, _omitFieldNames ? '' : 'regardingPosts', $pb.PbFieldType.O3)
     ..pc<Paragraph>(17, _omitFieldNames ? '' : 'contents', $pb.PbFieldType.PM, subBuilder: Paragraph.create)
     ..pPS(18, _omitFieldNames ? '' : 'tags')
+    ..a<$core.int>(19, _omitFieldNames ? '' : 'regardingPostsCount', $pb.PbFieldType.O3)
+    ..aOS(20, _omitFieldNames ? '' : 'url')
     ..hasRequiredFields = false
   ;
 
@@ -2003,20 +2022,29 @@ class Post extends $pb.GeneratedMessage {
   @$pb.TagNumber(15)
   void clearLatestRegardingPostCreatedAt() => clearField(15);
 
-  @$pb.TagNumber(16)
-  $core.int get regardingPosts => $_getIZ(13);
-  @$pb.TagNumber(16)
-  set regardingPosts($core.int v) { $_setSignedInt32(13, v); }
-  @$pb.TagNumber(16)
-  $core.bool hasRegardingPosts() => $_has(13);
-  @$pb.TagNumber(16)
-  void clearRegardingPosts() => clearField(16);
-
   @$pb.TagNumber(17)
-  $core.List<Paragraph> get contents => $_getList(14);
+  $core.List<Paragraph> get contents => $_getList(13);
 
   @$pb.TagNumber(18)
-  $core.List<$core.String> get tags => $_getList(15);
+  $core.List<$core.String> get tags => $_getList(14);
+
+  @$pb.TagNumber(19)
+  $core.int get regardingPostsCount => $_getIZ(15);
+  @$pb.TagNumber(19)
+  set regardingPostsCount($core.int v) { $_setSignedInt32(15, v); }
+  @$pb.TagNumber(19)
+  $core.bool hasRegardingPostsCount() => $_has(15);
+  @$pb.TagNumber(19)
+  void clearRegardingPostsCount() => clearField(19);
+
+  @$pb.TagNumber(20)
+  $core.String get url => $_getSZ(16);
+  @$pb.TagNumber(20)
+  set url($core.String v) { $_setString(16, v); }
+  @$pb.TagNumber(20)
+  $core.bool hasUrl() => $_has(16);
+  @$pb.TagNumber(20)
+  void clearUrl() => clearField(20);
 }
 
 class GetCommentsReq extends $pb.GeneratedMessage {

@@ -20,7 +20,9 @@ mixin _$ThreadDetailState {
   String get siteId => throw _privateConstructorUsedError;
   String get boardId => throw _privateConstructorUsedError;
   String get threadId => throw _privateConstructorUsedError;
-  Result<Post> get thread => throw _privateConstructorUsedError;
+  Map<String, Result<Post>> get threadMap => throw _privateConstructorUsedError;
+  Map<String, Result<List<Post>>> get regardingPostsMap =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of ThreadDetailState
   /// with the given fields replaced by the non-null parameter values.
@@ -40,9 +42,8 @@ abstract class $ThreadDetailStateCopyWith<$Res> {
       String siteId,
       String boardId,
       String threadId,
-      Result<Post> thread});
-
-  $ResultCopyWith<Post, $Res> get thread;
+      Map<String, Result<Post>> threadMap,
+      Map<String, Result<List<Post>>> regardingPostsMap});
 }
 
 /// @nodoc
@@ -64,7 +65,8 @@ class _$ThreadDetailStateCopyWithImpl<$Res, $Val extends ThreadDetailState>
     Object? siteId = null,
     Object? boardId = null,
     Object? threadId = null,
-    Object? thread = null,
+    Object? threadMap = null,
+    Object? regardingPostsMap = null,
   }) {
     return _then(_value.copyWith(
       extensionPkgName: null == extensionPkgName
@@ -83,21 +85,15 @@ class _$ThreadDetailStateCopyWithImpl<$Res, $Val extends ThreadDetailState>
           ? _value.threadId
           : threadId // ignore: cast_nullable_to_non_nullable
               as String,
-      thread: null == thread
-          ? _value.thread
-          : thread // ignore: cast_nullable_to_non_nullable
-              as Result<Post>,
+      threadMap: null == threadMap
+          ? _value.threadMap
+          : threadMap // ignore: cast_nullable_to_non_nullable
+              as Map<String, Result<Post>>,
+      regardingPostsMap: null == regardingPostsMap
+          ? _value.regardingPostsMap
+          : regardingPostsMap // ignore: cast_nullable_to_non_nullable
+              as Map<String, Result<List<Post>>>,
     ) as $Val);
-  }
-
-  /// Create a copy of ThreadDetailState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ResultCopyWith<Post, $Res> get thread {
-    return $ResultCopyWith<Post, $Res>(_value.thread, (value) {
-      return _then(_value.copyWith(thread: value) as $Val);
-    });
   }
 }
 
@@ -114,10 +110,8 @@ abstract class _$$ThreadDetailStateImplCopyWith<$Res>
       String siteId,
       String boardId,
       String threadId,
-      Result<Post> thread});
-
-  @override
-  $ResultCopyWith<Post, $Res> get thread;
+      Map<String, Result<Post>> threadMap,
+      Map<String, Result<List<Post>>> regardingPostsMap});
 }
 
 /// @nodoc
@@ -137,7 +131,8 @@ class __$$ThreadDetailStateImplCopyWithImpl<$Res>
     Object? siteId = null,
     Object? boardId = null,
     Object? threadId = null,
-    Object? thread = null,
+    Object? threadMap = null,
+    Object? regardingPostsMap = null,
   }) {
     return _then(_$ThreadDetailStateImpl(
       extensionPkgName: null == extensionPkgName
@@ -156,10 +151,14 @@ class __$$ThreadDetailStateImplCopyWithImpl<$Res>
           ? _value.threadId
           : threadId // ignore: cast_nullable_to_non_nullable
               as String,
-      thread: null == thread
-          ? _value.thread
-          : thread // ignore: cast_nullable_to_non_nullable
-              as Result<Post>,
+      threadMap: null == threadMap
+          ? _value._threadMap
+          : threadMap // ignore: cast_nullable_to_non_nullable
+              as Map<String, Result<Post>>,
+      regardingPostsMap: null == regardingPostsMap
+          ? _value._regardingPostsMap
+          : regardingPostsMap // ignore: cast_nullable_to_non_nullable
+              as Map<String, Result<List<Post>>>,
     ));
   }
 }
@@ -174,7 +173,10 @@ class _$ThreadDetailStateImpl
       required this.siteId,
       required this.boardId,
       required this.threadId,
-      required this.thread});
+      required final Map<String, Result<Post>> threadMap,
+      required final Map<String, Result<List<Post>>> regardingPostsMap})
+      : _threadMap = threadMap,
+        _regardingPostsMap = regardingPostsMap;
 
   @override
   final String extensionPkgName;
@@ -184,12 +186,26 @@ class _$ThreadDetailStateImpl
   final String boardId;
   @override
   final String threadId;
+  final Map<String, Result<Post>> _threadMap;
   @override
-  final Result<Post> thread;
+  Map<String, Result<Post>> get threadMap {
+    if (_threadMap is EqualUnmodifiableMapView) return _threadMap;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_threadMap);
+  }
+
+  final Map<String, Result<List<Post>>> _regardingPostsMap;
+  @override
+  Map<String, Result<List<Post>>> get regardingPostsMap {
+    if (_regardingPostsMap is EqualUnmodifiableMapView)
+      return _regardingPostsMap;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_regardingPostsMap);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ThreadDetailState(extensionPkgName: $extensionPkgName, siteId: $siteId, boardId: $boardId, threadId: $threadId, thread: $thread)';
+    return 'ThreadDetailState(extensionPkgName: $extensionPkgName, siteId: $siteId, boardId: $boardId, threadId: $threadId, threadMap: $threadMap, regardingPostsMap: $regardingPostsMap)';
   }
 
   @override
@@ -201,7 +217,8 @@ class _$ThreadDetailStateImpl
       ..add(DiagnosticsProperty('siteId', siteId))
       ..add(DiagnosticsProperty('boardId', boardId))
       ..add(DiagnosticsProperty('threadId', threadId))
-      ..add(DiagnosticsProperty('thread', thread));
+      ..add(DiagnosticsProperty('threadMap', threadMap))
+      ..add(DiagnosticsProperty('regardingPostsMap', regardingPostsMap));
   }
 
   @override
@@ -215,12 +232,21 @@ class _$ThreadDetailStateImpl
             (identical(other.boardId, boardId) || other.boardId == boardId) &&
             (identical(other.threadId, threadId) ||
                 other.threadId == threadId) &&
-            (identical(other.thread, thread) || other.thread == thread));
+            const DeepCollectionEquality()
+                .equals(other._threadMap, _threadMap) &&
+            const DeepCollectionEquality()
+                .equals(other._regardingPostsMap, _regardingPostsMap));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, extensionPkgName, siteId, boardId, threadId, thread);
+      runtimeType,
+      extensionPkgName,
+      siteId,
+      boardId,
+      threadId,
+      const DeepCollectionEquality().hash(_threadMap),
+      const DeepCollectionEquality().hash(_regardingPostsMap));
 
   /// Create a copy of ThreadDetailState
   /// with the given fields replaced by the non-null parameter values.
@@ -234,11 +260,13 @@ class _$ThreadDetailStateImpl
 
 abstract class _ThreadDetailState implements ThreadDetailState {
   const factory _ThreadDetailState(
-      {required final String extensionPkgName,
-      required final String siteId,
-      required final String boardId,
-      required final String threadId,
-      required final Result<Post> thread}) = _$ThreadDetailStateImpl;
+          {required final String extensionPkgName,
+          required final String siteId,
+          required final String boardId,
+          required final String threadId,
+          required final Map<String, Result<Post>> threadMap,
+          required final Map<String, Result<List<Post>>> regardingPostsMap}) =
+      _$ThreadDetailStateImpl;
 
   @override
   String get extensionPkgName;
@@ -249,7 +277,9 @@ abstract class _ThreadDetailState implements ThreadDetailState {
   @override
   String get threadId;
   @override
-  Result<Post> get thread;
+  Map<String, Result<Post>> get threadMap;
+  @override
+  Map<String, Result<List<Post>>> get regardingPostsMap;
 
   /// Create a copy of ThreadDetailState
   /// with the given fields replaced by the non-null parameter values.
