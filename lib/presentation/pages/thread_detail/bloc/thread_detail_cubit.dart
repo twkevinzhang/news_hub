@@ -17,7 +17,7 @@ class ThreadDetailState with _$ThreadDetailState {
     required String siteId,
     required String boardId,
     required String threadId,
-    required Result<Thread> thread,
+    required Result<Post> thread,
   }) = _ThreadDetailState;
 }
 
@@ -61,7 +61,7 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
       bool isLastPage = false;
       if (pageKey == 1) {
         final (thread, regardingPosts) = await(threadF, regardingPostsF).wait;
-        posts = [thread.originalPostWithExtension, ...regardingPosts];
+        posts = [thread, ...regardingPosts];
         isLastPage = regardingPosts.length < _pageSize;
       } else {
         posts = await _getThread.listRegardingPosts(

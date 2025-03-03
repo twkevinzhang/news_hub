@@ -20,7 +20,7 @@ mixin _$ThreadDetailState {
   String get siteId => throw _privateConstructorUsedError;
   String get boardId => throw _privateConstructorUsedError;
   String get threadId => throw _privateConstructorUsedError;
-  Result<Thread> get thread => throw _privateConstructorUsedError;
+  Result<Post> get thread => throw _privateConstructorUsedError;
 
   /// Create a copy of ThreadDetailState
   /// with the given fields replaced by the non-null parameter values.
@@ -40,9 +40,9 @@ abstract class $ThreadDetailStateCopyWith<$Res> {
       String siteId,
       String boardId,
       String threadId,
-      Result<Thread> thread});
+      Result<Post> thread});
 
-  $ResultCopyWith<Thread, $Res> get thread;
+  $ResultCopyWith<Post, $Res> get thread;
 }
 
 /// @nodoc
@@ -86,7 +86,7 @@ class _$ThreadDetailStateCopyWithImpl<$Res, $Val extends ThreadDetailState>
       thread: null == thread
           ? _value.thread
           : thread // ignore: cast_nullable_to_non_nullable
-              as Result<Thread>,
+              as Result<Post>,
     ) as $Val);
   }
 
@@ -94,8 +94,8 @@ class _$ThreadDetailStateCopyWithImpl<$Res, $Val extends ThreadDetailState>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ResultCopyWith<Thread, $Res> get thread {
-    return $ResultCopyWith<Thread, $Res>(_value.thread, (value) {
+  $ResultCopyWith<Post, $Res> get thread {
+    return $ResultCopyWith<Post, $Res>(_value.thread, (value) {
       return _then(_value.copyWith(thread: value) as $Val);
     });
   }
@@ -114,10 +114,10 @@ abstract class _$$ThreadDetailStateImplCopyWith<$Res>
       String siteId,
       String boardId,
       String threadId,
-      Result<Thread> thread});
+      Result<Post> thread});
 
   @override
-  $ResultCopyWith<Thread, $Res> get thread;
+  $ResultCopyWith<Post, $Res> get thread;
 }
 
 /// @nodoc
@@ -159,7 +159,7 @@ class __$$ThreadDetailStateImplCopyWithImpl<$Res>
       thread: null == thread
           ? _value.thread
           : thread // ignore: cast_nullable_to_non_nullable
-              as Result<Thread>,
+              as Result<Post>,
     ));
   }
 }
@@ -185,7 +185,7 @@ class _$ThreadDetailStateImpl
   @override
   final String threadId;
   @override
-  final Result<Thread> thread;
+  final Result<Post> thread;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -238,7 +238,7 @@ abstract class _ThreadDetailState implements ThreadDetailState {
       required final String siteId,
       required final String boardId,
       required final String threadId,
-      required final Result<Thread> thread}) = _$ThreadDetailStateImpl;
+      required final Result<Post> thread}) = _$ThreadDetailStateImpl;
 
   @override
   String get extensionPkgName;
@@ -249,7 +249,7 @@ abstract class _ThreadDetailState implements ThreadDetailState {
   @override
   String get threadId;
   @override
-  Result<Thread> get thread;
+  Result<Post> get thread;
 
   /// Create a copy of ThreadDetailState
   /// with the given fields replaced by the non-null parameter values.
