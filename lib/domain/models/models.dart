@@ -137,24 +137,24 @@ class Post {
   final String siteId;
   final String boardId;
   final String threadId;
+  final String id;
+  final String? title;
+  final String? url;
+  final DateTime createdAt;
+  final String authorId;
+  final String authorName;
+  final int? liked;
+  final int? disliked;
+  final int? comments;
+  final List<String>? tags;
+  final List<Paragraph> contents;
 
   // 如果該 Post 是 Origin Post，則 originPostId 為 null;
   // 如果是 Regarding Post，則 originPostId 為 OP 的 ID。
   final String? originPostId;
 
-  final String id;
-  final String? title;
-  final String? url;
-  final int? latestRegardingPostCreatedAt;
+  final DateTime? latestRegardingPostCreatedAt;
   final int? regardingPostsCount;
-  final DateTime createdAt;
-  final String authorId;
-  final String authorName;
-  final int liked;
-  final int disliked;
-  final int comments;
-  final List<String> tags;
-  final List<Paragraph> contents;
 
   Post({
     required this.extensionPkgName,
@@ -221,8 +221,9 @@ class QuoteParagraph extends Paragraph {
 
 class ReplyToParagraph extends Paragraph {
   final String id;
+  final String preview;
 
-  ReplyToParagraph({required this.id}) : super(ParagraphType.replyTo);
+  ReplyToParagraph({required this.id, required this.preview}) : super(ParagraphType.replyTo);
 }
 
 class LinkParagraph extends Paragraph {

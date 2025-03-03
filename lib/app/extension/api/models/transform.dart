@@ -48,7 +48,11 @@ extension PostTransform on pb.Post {
       originPostId: originPostId,
       liked: liked,
       disliked: disliked,
-      comments: comments, tags: [],
+      comments: comments,
+      tags: [],
+      regardingPostsCount: regardingPostsCount,
+      latestRegardingPostCreatedAt: latestRegardingPostCreatedAt.toDateTime(),
+      url: url,
     );
   }
 }
@@ -128,6 +132,7 @@ extension ReplyToParagraphTransform on pb.ReplyToParagraph {
   domain.ReplyToParagraph toDomain() {
     return domain.ReplyToParagraph(
       id: id,
+      preview: preview,
     );
   }
 }

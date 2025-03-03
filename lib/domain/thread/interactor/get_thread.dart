@@ -98,8 +98,8 @@ class PostWithExtension extends Post {
           comments: post.comments,
           contents: post.contents,
           tags: post.tags,
+          originPostId: post.originPostId,
           latestRegardingPostCreatedAt: post.latestRegardingPostCreatedAt,
           regardingPostsCount: post.regardingPostsCount,
-          originPostId: post.originPostId,
         );
 }

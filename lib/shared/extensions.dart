@@ -43,13 +43,20 @@ extension FileEx on File {
 
 extension Int64Ex on $fixnum.Int64 {
   DateTime toDateTime() {
-    return DateTime.fromMillisecondsSinceEpoch(toInt());
+    return DateTime.fromMillisecondsSinceEpoch(toInt() * 1000);
   }
 }
 
 extension StringEx on String {
   String remove(String s) {
     return replaceAll(s, '');
+  }
+
+  String truncate(int maxLength, { omission = '...' }) {
+    if (length >= length) {
+      return this;
+    }
+    return replaceRange(length, length, omission);
   }
 }
 
@@ -64,10 +71,8 @@ extension CubitEx<T> on Cubit<T> {
   }
 }
 
-extension FutureEx<T> on Future<T> {
-  Future<T> safe() {
-    return this.catchError((e) {
-      debugPrint(e.toString());
-    });
+extension IntEx on int? {
+  get isPositive {
+    return this != null && this! > 0;
   }
 }
