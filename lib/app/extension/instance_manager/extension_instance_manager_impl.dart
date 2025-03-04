@@ -23,9 +23,10 @@ class ExtensionInstanceManagerImpl implements ExtensionInstanceManager {
   Future<void> runNew(domain.Extension extension) async {
     WidgetsFlutterBinding.ensureInitialized();
     final directory = await getApplicationSupportDirectory();
-    final appPath = [directory.path, installedFileFolder, extension.pkgName].toUrl();
-    Directory.current = path.dirname(appPath);
-    SeriousPython.runProgram([appPath, 'main.py'].toUrl(), environmentVariables: {"PYTHONUNBUFFERED": "true"});
+    final appPath = directory.uri.dir(installedFileFolder).dir(extension.pkgName);
+    Directory.current = appPath.toFilePath();
+    final entrypoint = appPath.file("main.py").toFilePath();
+    SeriousPython.runProgram(entrypoint, environmentVariables: {"PYTHONUNBUFFERED": "true"});
     await Future.delayed(const Duration(seconds: 5)); // wait server launched
     debugPrint('${extension.pkgName} launched');
     instanceMap[extension.pkgName] = SeriousPythonPlatform.instance;

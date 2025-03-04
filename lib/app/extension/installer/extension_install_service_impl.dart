@@ -15,17 +15,18 @@ import 'package:news_hub/shared/extensions.dart';
 @preResolve
 @LazySingleton(as: ExtensionInstallService)
 class ExtensionInstallServiceImpl implements ExtensionInstallService {
-  final String _downloadFolder;
-  final String _installFolder;
+  final Uri _downloadFolder;
+  final Uri _installFolder;
 
   ExtensionInstallServiceImpl._(this._downloadFolder, this._installFolder);
   @factoryMethod
   static Future<ExtensionInstallService> create() async {
     WidgetsFlutterBinding.ensureInitialized();
     final directory = await getApplicationSupportDirectory();
-    final d = [directory.path, downloadedFileFolder].toUrl();
-    final i = [directory.path, installedFileFolder].toUrl();
-    return ExtensionInstallServiceImpl._(d, i);
+    return ExtensionInstallServiceImpl._(
+        directory.uri.dir(downloadedFileFolder),
+        directory.uri.dir(installedFileFolder),
+    );
   }
 
   @override
@@ -39,11 +40,11 @@ class ExtensionInstallServiceImpl implements ExtensionInstallService {
     }
 
     // 開始下載任務
-    Directory(_downloadFolder).createSync(recursive: true);
+    Directory.fromUri(_downloadFolder).createSync(recursive: true);
     final taskId = await FlutterDownloader.enqueue(
       url: zipUrl,
       headers: {}, // 可選：例如加入認證標頭
-      savedDir: _downloadFolder,
+      savedDir: _downloadFolder.toString(),
       showNotification: true, // 顯示下載進度通知
       openFileFromNotification: true, // 通知可開啟下載的檔案
     );
@@ -69,22 +70,22 @@ class ExtensionInstallServiceImpl implements ExtensionInstallService {
   @override
   Stream<ZipStatus> install(Extension extension) async* {
     // Read the Zip file from disk.
-    final downloadedFile = [_downloadFolder, extension.zipName].toUrl();
+    final downloadedFile = _downloadFolder.file(extension.zipName);
     yield ZipStatus.reading;
-    final bytes = await File(downloadedFile).readAsBytes();
+    final bytes = await File.fromUri(downloadedFile).readAsBytes();
 
     // Decode the Zip file
     yield ZipStatus.extracting;
     final archive = ZipDecoder().decodeBytes(bytes);
     for (final file in archive) {
-      final url = [_installFolder, extension.pkgName, file.name].toUrl();
+      final uri = _installFolder.dir(extension.pkgName).file(file.name);
       if (file.isFile) {
         final data = file.content as List<int>;
-        File(url)
+        File.fromUri(uri)
           ..createSync(recursive: true)
           ..writeAsBytesSync(data);
       } else {
-        Directory(url).createSync(recursive: true);
+        Directory.fromUri(uri).createSync(recursive: true);
       }
     }
 
@@ -93,9 +94,9 @@ class ExtensionInstallServiceImpl implements ExtensionInstallService {
 
   @override
   Future<void> uninstall(Extension extension) async {
-    final folder = [_installFolder, extension.pkgName].toUrl();
+    final folder = _installFolder.dir(extension.pkgName);
     try {
-      await Directory(folder).delete(recursive: true);
+      await Directory.fromUri(folder).delete(recursive: true);
     } on PathNotFoundException catch (e) {
       // pass
     }
@@ -103,9 +104,9 @@ class ExtensionInstallServiceImpl implements ExtensionInstallService {
 
   @override
   Future<void> removeZip(Extension extension) async {
-    final folder = [_downloadFolder, extension.zipName].toUrl();
+    final zip = _downloadFolder.file(extension.zipName);
     try {
-      await Directory(folder).delete(recursive: true);
+      await Directory.fromUri(zip).delete(recursive: true);
     } on PathNotFoundException catch (e) {
       // pass
     }

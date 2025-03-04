@@ -15,4 +15,4 @@ proto:
 
 .PHONY: log
 log:
-	./adb.sh cat $(FILES_HOME)/flasks/komica.log
+	./adb.sh cat $(FILES_HOME)/extensions/twkevinzhang_komica/komica.log

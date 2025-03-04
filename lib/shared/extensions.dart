@@ -7,12 +7,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-extension StringListEx on List<String> {
-  String toUrl() {
-    return join("/");
-  }
-}
-
 extension FileEx on File {
   Stream<Pair<int, Uint8List?>> readAsProgress() async* {
     final fileSize = await length(); // 獲取文件總大小
@@ -74,5 +68,21 @@ extension CubitEx<T> on Cubit<T> {
 extension IntEx on int? {
   get isPositive {
     return this != null && this! > 0;
+  }
+}
+
+extension UriEx on Uri {
+  Uri dir(String path) {
+    if (path.endsWith('/')) {
+      return resolve(path);
+    }
+    return resolve('$path/');
+  }
+
+  Uri file(String path) {
+    if (path.endsWith('/')) {
+      path = path.substring(0, path.length - 1);
+    }
+    return resolve(path);
   }
 }
