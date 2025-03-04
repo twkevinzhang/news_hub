@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart' as injectable;
 
-const String downloadedFileFolder = "flasks_zips";
-const String installedFileFolder = "flasks";
+const String downloadedFileFolder = "extension_zips/";
+const String installedFileFolder = "extensions/";
 
 class AppEnv {
   /// name of the environment

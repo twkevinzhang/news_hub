@@ -12,16 +12,16 @@ import 'package:news_hub/shared/extensions.dart';
 @preResolve
 @LazySingleton(as: ExtensionInstallService)
 class MockExtensionInstallServiceImpl implements ExtensionInstallService {
-  final String _downloadFolder;
-  final String _installFolder;
+  final Uri _downloadFolder;
+  final Uri _installFolder;
 
   MockExtensionInstallServiceImpl._(this._downloadFolder, this._installFolder);
   @factoryMethod
   static Future<ExtensionInstallService> create() async {
     WidgetsFlutterBinding.ensureInitialized();
     final directory = await getApplicationSupportDirectory();
-    final d = [directory.path, downloadedFileFolder].toUrl();
-    final i = [directory.path, installedFileFolder].toUrl();
+    final d = directory.uri.resolve(downloadedFileFolder);
+    final i = directory.uri.resolve(installedFileFolder);
     return MockExtensionInstallServiceImpl._(d, i);
   }
 
