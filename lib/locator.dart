@@ -79,8 +79,8 @@ class DemoExtensionPreparation implements Preparation {
 
   @override
   Future<void> call() async {
-    // newAssetCase();
-    reloadPythonFileCase();
+    newAssetCase();
+    // reloadPythonFileCase();
   }
 
   /// 當 demo_extension.zip 是新版本時，需使用此方法重新解壓縮 demo_extension.zip 到 device 上
@@ -105,7 +105,7 @@ class DemoExtensionPreparation implements Preparation {
     await _manager.close(mockExtension);
     await _manager.runNew(mockExtension);
     final site = await _apiService.site(extensionPkgName: mockExtension.pkgName);
-    print('site: $site');
+    debugPrint('site: $site');
     await _manager.close(mockExtension);
   }
 
