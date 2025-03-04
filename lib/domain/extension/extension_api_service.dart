@@ -23,6 +23,7 @@ abstract class ExtensionApiService {
     required String siteId,
     required String boardId,
     required String id,
+    String? postId,
   });
   Future<List<Post>> regardingPosts({
     Pagination? pagination,
@@ -30,6 +31,7 @@ abstract class ExtensionApiService {
     required String siteId,
     required String boardId,
     required String threadId,
+    String? postId,
   });
   Future<Post> post({
     required String extensionPkgName,

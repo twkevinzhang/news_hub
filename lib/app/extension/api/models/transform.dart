@@ -45,7 +45,6 @@ extension PostTransform on pb.Post {
       contents: contents.map((e) => e.toDomain()).toList(),
       createdAt: createdAt.toDateTime(),
       title: title,
-      originPostId: originPostId,
       liked: liked,
       disliked: disliked,
       comments: comments,

@@ -47,10 +47,10 @@ extension StringEx on String {
   }
 
   String truncate(int maxLength, { omission = '...' }) {
-    if (length >= length) {
+    if (maxLength >= length) {
       return this;
     }
-    return replaceRange(length, length, omission);
+    return replaceRange(maxLength, length, omission);
   }
 }
 
