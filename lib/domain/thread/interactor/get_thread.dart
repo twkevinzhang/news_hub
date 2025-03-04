@@ -22,6 +22,7 @@ class GetThread {
     required String siteId,
     required String boardId,
     required String id,
+    String? postId,
   }) async {
     final extensionF = _installedExtensionRepository.get(extensionPkgName);
     final siteF = _apiService.site(extensionPkgName: extensionPkgName);
@@ -31,6 +32,7 @@ class GetThread {
       siteId: siteId,
       boardId: boardId,
       id: id,
+      postId: postId,
     );
     final (extension, site, boards, thread) = await (extensionF, siteF, boardsF, threadF).wait;
     final board = boards.firstWhere((b) => b.id == boardId);
@@ -48,6 +50,7 @@ class GetThread {
     required String siteId,
     required String boardId,
     required String threadId,
+    String? postId,
   }) async {
     final extensionF = _installedExtensionRepository.get(extensionPkgName);
     final siteF = _apiService.site(extensionPkgName: extensionPkgName);
@@ -57,6 +60,7 @@ class GetThread {
       siteId: siteId,
       boardId: boardId,
       threadId: threadId,
+      postId: postId,
     );
     final (extension, site, boards, regardingPosts) = await (extensionF, siteF, boardsF, regardingPostsF).wait;
     final board = boards.firstWhere((b) => b.id == boardId);
@@ -98,7 +102,6 @@ class PostWithExtension extends Post {
           comments: post.comments,
           contents: post.contents,
           tags: post.tags,
-          originPostId: post.originPostId,
           latestRegardingPostCreatedAt: post.latestRegardingPostCreatedAt,
           regardingPostsCount: post.regardingPostsCount,
         );

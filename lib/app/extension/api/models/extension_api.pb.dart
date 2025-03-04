@@ -846,11 +846,12 @@ class GetThreadInfosRes extends $pb.GeneratedMessage {
   PaginationRes ensurePage() => $_ensure(1);
 }
 
-class GetThreadReq extends $pb.GeneratedMessage {
-  factory GetThreadReq({
+class GetThreadPostReq extends $pb.GeneratedMessage {
+  factory GetThreadPostReq({
     $core.String? id,
     $core.String? siteId,
     $core.String? boardId,
+    $core.String? postId,
   }) {
     final $result = create();
     if (id != null) {
@@ -862,16 +863,20 @@ class GetThreadReq extends $pb.GeneratedMessage {
     if (boardId != null) {
       $result.boardId = boardId;
     }
+    if (postId != null) {
+      $result.postId = postId;
+    }
     return $result;
   }
-  GetThreadReq._() : super();
-  factory GetThreadReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GetThreadReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  GetThreadPostReq._() : super();
+  factory GetThreadPostReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetThreadPostReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetThreadReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetThreadPostReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..aOS(2, _omitFieldNames ? '' : 'siteId')
     ..aOS(3, _omitFieldNames ? '' : 'boardId')
+    ..aOS(4, _omitFieldNames ? '' : 'postId')
     ..hasRequiredFields = false
   ;
 
@@ -879,22 +884,22 @@ class GetThreadReq extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  GetThreadReq clone() => GetThreadReq()..mergeFromMessage(this);
+  GetThreadPostReq clone() => GetThreadPostReq()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetThreadReq copyWith(void Function(GetThreadReq) updates) => super.copyWith((message) => updates(message as GetThreadReq)) as GetThreadReq;
+  GetThreadPostReq copyWith(void Function(GetThreadPostReq) updates) => super.copyWith((message) => updates(message as GetThreadPostReq)) as GetThreadPostReq;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static GetThreadReq create() => GetThreadReq._();
-  GetThreadReq createEmptyInstance() => create();
-  static $pb.PbList<GetThreadReq> createRepeated() => $pb.PbList<GetThreadReq>();
+  static GetThreadPostReq create() => GetThreadPostReq._();
+  GetThreadPostReq createEmptyInstance() => create();
+  static $pb.PbList<GetThreadPostReq> createRepeated() => $pb.PbList<GetThreadPostReq>();
   @$core.pragma('dart2js:noInline')
-  static GetThreadReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetThreadReq>(create);
-  static GetThreadReq? _defaultInstance;
+  static GetThreadPostReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetThreadPostReq>(create);
+  static GetThreadPostReq? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);
@@ -922,24 +927,33 @@ class GetThreadReq extends $pb.GeneratedMessage {
   $core.bool hasBoardId() => $_has(2);
   @$pb.TagNumber(3)
   void clearBoardId() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get postId => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set postId($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasPostId() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearPostId() => clearField(4);
 }
 
-class GetThreadRes extends $pb.GeneratedMessage {
-  factory GetThreadRes({
-    Post? thread,
+class GetThreadPostRes extends $pb.GeneratedMessage {
+  factory GetThreadPostRes({
+    Post? threadPost,
   }) {
     final $result = create();
-    if (thread != null) {
-      $result.thread = thread;
+    if (threadPost != null) {
+      $result.threadPost = threadPost;
     }
     return $result;
   }
-  GetThreadRes._() : super();
-  factory GetThreadRes.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GetThreadRes.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  GetThreadPostRes._() : super();
+  factory GetThreadPostRes.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetThreadPostRes.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetThreadRes', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
-    ..aOM<Post>(1, _omitFieldNames ? '' : 'thread', subBuilder: Post.create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetThreadPostRes', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..aOM<Post>(1, _omitFieldNames ? '' : 'threadPost', subBuilder: Post.create)
     ..hasRequiredFields = false
   ;
 
@@ -947,33 +961,33 @@ class GetThreadRes extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  GetThreadRes clone() => GetThreadRes()..mergeFromMessage(this);
+  GetThreadPostRes clone() => GetThreadPostRes()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetThreadRes copyWith(void Function(GetThreadRes) updates) => super.copyWith((message) => updates(message as GetThreadRes)) as GetThreadRes;
+  GetThreadPostRes copyWith(void Function(GetThreadPostRes) updates) => super.copyWith((message) => updates(message as GetThreadPostRes)) as GetThreadPostRes;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static GetThreadRes create() => GetThreadRes._();
-  GetThreadRes createEmptyInstance() => create();
-  static $pb.PbList<GetThreadRes> createRepeated() => $pb.PbList<GetThreadRes>();
+  static GetThreadPostRes create() => GetThreadPostRes._();
+  GetThreadPostRes createEmptyInstance() => create();
+  static $pb.PbList<GetThreadPostRes> createRepeated() => $pb.PbList<GetThreadPostRes>();
   @$core.pragma('dart2js:noInline')
-  static GetThreadRes getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetThreadRes>(create);
-  static GetThreadRes? _defaultInstance;
+  static GetThreadPostRes getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetThreadPostRes>(create);
+  static GetThreadPostRes? _defaultInstance;
 
   @$pb.TagNumber(1)
-  Post get thread => $_getN(0);
+  Post get threadPost => $_getN(0);
   @$pb.TagNumber(1)
-  set thread(Post v) { setField(1, v); }
+  set threadPost(Post v) { setField(1, v); }
   @$pb.TagNumber(1)
-  $core.bool hasThread() => $_has(0);
+  $core.bool hasThreadPost() => $_has(0);
   @$pb.TagNumber(1)
-  void clearThread() => clearField(1);
+  void clearThreadPost() => clearField(1);
   @$pb.TagNumber(1)
-  Post ensureThread() => $_ensure(0);
+  Post ensureThreadPost() => $_ensure(0);
 }
 
 class GetRegardingPostsReq extends $pb.GeneratedMessage {
@@ -982,6 +996,7 @@ class GetRegardingPostsReq extends $pb.GeneratedMessage {
     $core.String? boardId,
     $core.String? threadId,
     PaginationReq? page,
+    $core.String? postId,
   }) {
     final $result = create();
     if (siteId != null) {
@@ -996,6 +1011,9 @@ class GetRegardingPostsReq extends $pb.GeneratedMessage {
     if (page != null) {
       $result.page = page;
     }
+    if (postId != null) {
+      $result.postId = postId;
+    }
     return $result;
   }
   GetRegardingPostsReq._() : super();
@@ -1007,6 +1025,7 @@ class GetRegardingPostsReq extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'boardId')
     ..aOS(3, _omitFieldNames ? '' : 'threadId')
     ..aOM<PaginationReq>(4, _omitFieldNames ? '' : 'page', subBuilder: PaginationReq.create)
+    ..aOS(5, _omitFieldNames ? '' : 'postId')
     ..hasRequiredFields = false
   ;
 
@@ -1068,6 +1087,15 @@ class GetRegardingPostsReq extends $pb.GeneratedMessage {
   void clearPage() => clearField(4);
   @$pb.TagNumber(4)
   PaginationReq ensurePage() => $_ensure(3);
+
+  @$pb.TagNumber(5)
+  $core.String get postId => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set postId($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasPostId() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearPostId() => clearField(5);
 }
 
 class GetRegardingPostsRes extends $pb.GeneratedMessage {
@@ -1128,150 +1156,6 @@ class GetRegardingPostsRes extends $pb.GeneratedMessage {
   void clearPage() => clearField(2);
   @$pb.TagNumber(2)
   PaginationRes ensurePage() => $_ensure(1);
-}
-
-class GetPostReq extends $pb.GeneratedMessage {
-  factory GetPostReq({
-    $core.String? siteId,
-    $core.String? boardId,
-    $core.String? threadId,
-    $core.String? id,
-  }) {
-    final $result = create();
-    if (siteId != null) {
-      $result.siteId = siteId;
-    }
-    if (boardId != null) {
-      $result.boardId = boardId;
-    }
-    if (threadId != null) {
-      $result.threadId = threadId;
-    }
-    if (id != null) {
-      $result.id = id;
-    }
-    return $result;
-  }
-  GetPostReq._() : super();
-  factory GetPostReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GetPostReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetPostReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'siteId')
-    ..aOS(2, _omitFieldNames ? '' : 'boardId')
-    ..aOS(3, _omitFieldNames ? '' : 'threadId')
-    ..aOS(4, _omitFieldNames ? '' : 'id')
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  GetPostReq clone() => GetPostReq()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  GetPostReq copyWith(void Function(GetPostReq) updates) => super.copyWith((message) => updates(message as GetPostReq)) as GetPostReq;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static GetPostReq create() => GetPostReq._();
-  GetPostReq createEmptyInstance() => create();
-  static $pb.PbList<GetPostReq> createRepeated() => $pb.PbList<GetPostReq>();
-  @$core.pragma('dart2js:noInline')
-  static GetPostReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetPostReq>(create);
-  static GetPostReq? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get siteId => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set siteId($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasSiteId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearSiteId() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get boardId => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set boardId($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasBoardId() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearBoardId() => clearField(2);
-
-  @$pb.TagNumber(3)
-  $core.String get threadId => $_getSZ(2);
-  @$pb.TagNumber(3)
-  set threadId($core.String v) { $_setString(2, v); }
-  @$pb.TagNumber(3)
-  $core.bool hasThreadId() => $_has(2);
-  @$pb.TagNumber(3)
-  void clearThreadId() => clearField(3);
-
-  @$pb.TagNumber(4)
-  $core.String get id => $_getSZ(3);
-  @$pb.TagNumber(4)
-  set id($core.String v) { $_setString(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasId() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearId() => clearField(4);
-}
-
-class GetPostRes extends $pb.GeneratedMessage {
-  factory GetPostRes({
-    Post? post,
-  }) {
-    final $result = create();
-    if (post != null) {
-      $result.post = post;
-    }
-    return $result;
-  }
-  GetPostRes._() : super();
-  factory GetPostRes.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GetPostRes.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetPostRes', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
-    ..aOM<Post>(1, _omitFieldNames ? '' : 'post', subBuilder: Post.create)
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  GetPostRes clone() => GetPostRes()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  GetPostRes copyWith(void Function(GetPostRes) updates) => super.copyWith((message) => updates(message as GetPostRes)) as GetPostRes;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static GetPostRes create() => GetPostRes._();
-  GetPostRes createEmptyInstance() => create();
-  static $pb.PbList<GetPostRes> createRepeated() => $pb.PbList<GetPostRes>();
-  @$core.pragma('dart2js:noInline')
-  static GetPostRes getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetPostRes>(create);
-  static GetPostRes? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  Post get post => $_getN(0);
-  @$pb.TagNumber(1)
-  set post(Post v) { setField(1, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasPost() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearPost() => clearField(1);
-  @$pb.TagNumber(1)
-  Post ensurePost() => $_ensure(0);
 }
 
 enum Paragraph_Content {
@@ -1794,7 +1678,6 @@ class Post extends $pb.GeneratedMessage {
     $core.String? authorName,
     $fixnum.Int64? createdAt,
     $core.String? title,
-    $core.String? originPostId,
     $core.String? authorId,
     $core.int? liked,
     $core.int? disliked,
@@ -1826,9 +1709,6 @@ class Post extends $pb.GeneratedMessage {
     }
     if (title != null) {
       $result.title = title;
-    }
-    if (originPostId != null) {
-      $result.originPostId = originPostId;
     }
     if (authorId != null) {
       $result.authorId = authorId;
@@ -1871,7 +1751,6 @@ class Post extends $pb.GeneratedMessage {
     ..aOS(5, _omitFieldNames ? '' : 'authorName')
     ..aInt64(7, _omitFieldNames ? '' : 'createdAt')
     ..aOS(9, _omitFieldNames ? '' : 'title')
-    ..aOS(10, _omitFieldNames ? '' : 'originPostId')
     ..aOS(11, _omitFieldNames ? '' : 'authorId')
     ..a<$core.int>(12, _omitFieldNames ? '' : 'liked', $pb.PbFieldType.O3)
     ..a<$core.int>(13, _omitFieldNames ? '' : 'disliked', $pb.PbFieldType.O3)
@@ -1968,81 +1847,72 @@ class Post extends $pb.GeneratedMessage {
   @$pb.TagNumber(9)
   void clearTitle() => clearField(9);
 
-  @$pb.TagNumber(10)
-  $core.String get originPostId => $_getSZ(7);
-  @$pb.TagNumber(10)
-  set originPostId($core.String v) { $_setString(7, v); }
-  @$pb.TagNumber(10)
-  $core.bool hasOriginPostId() => $_has(7);
-  @$pb.TagNumber(10)
-  void clearOriginPostId() => clearField(10);
-
   @$pb.TagNumber(11)
-  $core.String get authorId => $_getSZ(8);
+  $core.String get authorId => $_getSZ(7);
   @$pb.TagNumber(11)
-  set authorId($core.String v) { $_setString(8, v); }
+  set authorId($core.String v) { $_setString(7, v); }
   @$pb.TagNumber(11)
-  $core.bool hasAuthorId() => $_has(8);
+  $core.bool hasAuthorId() => $_has(7);
   @$pb.TagNumber(11)
   void clearAuthorId() => clearField(11);
 
   @$pb.TagNumber(12)
-  $core.int get liked => $_getIZ(9);
+  $core.int get liked => $_getIZ(8);
   @$pb.TagNumber(12)
-  set liked($core.int v) { $_setSignedInt32(9, v); }
+  set liked($core.int v) { $_setSignedInt32(8, v); }
   @$pb.TagNumber(12)
-  $core.bool hasLiked() => $_has(9);
+  $core.bool hasLiked() => $_has(8);
   @$pb.TagNumber(12)
   void clearLiked() => clearField(12);
 
   @$pb.TagNumber(13)
-  $core.int get disliked => $_getIZ(10);
+  $core.int get disliked => $_getIZ(9);
   @$pb.TagNumber(13)
-  set disliked($core.int v) { $_setSignedInt32(10, v); }
+  set disliked($core.int v) { $_setSignedInt32(9, v); }
   @$pb.TagNumber(13)
-  $core.bool hasDisliked() => $_has(10);
+  $core.bool hasDisliked() => $_has(9);
   @$pb.TagNumber(13)
   void clearDisliked() => clearField(13);
 
   @$pb.TagNumber(14)
-  $core.int get comments => $_getIZ(11);
+  $core.int get comments => $_getIZ(10);
   @$pb.TagNumber(14)
-  set comments($core.int v) { $_setSignedInt32(11, v); }
+  set comments($core.int v) { $_setSignedInt32(10, v); }
   @$pb.TagNumber(14)
-  $core.bool hasComments() => $_has(11);
+  $core.bool hasComments() => $_has(10);
   @$pb.TagNumber(14)
   void clearComments() => clearField(14);
 
   @$pb.TagNumber(15)
-  $fixnum.Int64 get latestRegardingPostCreatedAt => $_getI64(12);
+  $fixnum.Int64 get latestRegardingPostCreatedAt => $_getI64(11);
   @$pb.TagNumber(15)
-  set latestRegardingPostCreatedAt($fixnum.Int64 v) { $_setInt64(12, v); }
+  set latestRegardingPostCreatedAt($fixnum.Int64 v) { $_setInt64(11, v); }
   @$pb.TagNumber(15)
-  $core.bool hasLatestRegardingPostCreatedAt() => $_has(12);
+  $core.bool hasLatestRegardingPostCreatedAt() => $_has(11);
   @$pb.TagNumber(15)
   void clearLatestRegardingPostCreatedAt() => clearField(15);
 
   @$pb.TagNumber(17)
-  $core.List<Paragraph> get contents => $_getList(13);
+  $core.List<Paragraph> get contents => $_getList(12);
 
   @$pb.TagNumber(18)
-  $core.List<$core.String> get tags => $_getList(14);
+  $core.List<$core.String> get tags => $_getList(13);
 
   @$pb.TagNumber(19)
-  $core.int get regardingPostsCount => $_getIZ(15);
+  $core.int get regardingPostsCount => $_getIZ(14);
   @$pb.TagNumber(19)
-  set regardingPostsCount($core.int v) { $_setSignedInt32(15, v); }
+  set regardingPostsCount($core.int v) { $_setSignedInt32(14, v); }
   @$pb.TagNumber(19)
-  $core.bool hasRegardingPostsCount() => $_has(15);
+  $core.bool hasRegardingPostsCount() => $_has(14);
   @$pb.TagNumber(19)
   void clearRegardingPostsCount() => clearField(19);
 
   @$pb.TagNumber(20)
-  $core.String get url => $_getSZ(16);
+  $core.String get url => $_getSZ(15);
   @$pb.TagNumber(20)
-  set url($core.String v) { $_setString(16, v); }
+  set url($core.String v) { $_setString(15, v); }
   @$pb.TagNumber(20)
-  $core.bool hasUrl() => $_has(16);
+  $core.bool hasUrl() => $_has(15);
   @$pb.TagNumber(20)
   void clearUrl() => clearField(20);
 }

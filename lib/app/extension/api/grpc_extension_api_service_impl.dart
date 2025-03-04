@@ -94,13 +94,15 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
     required String siteId,
     required String boardId,
     required String id,
+    String? postId,
   }) async {
-    final res = await _client.getThread(GetThreadReq(
+    final res = await _client.getThreadPost(GetThreadPostReq(
       siteId: siteId,
       boardId: boardId,
       id: id,
+      postId: postId,
     ));
-    return res.thread.toDomain(extensionPkgName);
+    return res.threadPost.toDomain(extensionPkgName);
   }
 
   @override
@@ -110,11 +112,13 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
     required String siteId,
     required String boardId,
     required String threadId,
+    String? postId,
   }) async {
     final res = await _client.getRegardingPosts(GetRegardingPostsReq(
       siteId: siteId,
       boardId: boardId,
       threadId: threadId,
+      postId: postId,
       page: PaginationReq(
         page: pagination?.page,
         pageSize: pagination?.pageSize,
@@ -131,13 +135,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
     required String threadId,
     required String id,
   }) async {
-    final res = await _client.getPost(GetPostReq(
-      siteId: siteId,
-      boardId: boardId,
-      threadId: threadId,
-      id: id,
-    ));
-    return res.post.toDomain(extensionPkgName);
+    throw UnimplementedError();
   }
 
   @override

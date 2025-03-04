@@ -109,6 +109,7 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
     required String siteId,
     required String boardId,
     required String id,
+    String? postId,
   }) async {
     await Future.delayed(const Duration(seconds: 1));
     return _mockPost;
@@ -121,6 +122,7 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
     required String siteId,
     required String boardId,
     required String threadId,
+    String? postId,
   }) async {
     await Future.delayed(const Duration(seconds: 1));
     return [

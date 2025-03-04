@@ -148,11 +148,6 @@ class Post {
   final int? comments;
   final List<String>? tags;
   final List<Paragraph> contents;
-
-  // 如果該 Post 是 Origin Post，則 originPostId 為 null;
-  // 如果是 Regarding Post，則 originPostId 為 OP 的 ID。
-  final String? originPostId;
-
   final DateTime? latestRegardingPostCreatedAt;
   final int? regardingPostsCount;
 
@@ -161,7 +156,6 @@ class Post {
     required this.siteId,
     required this.boardId,
     required this.threadId,
-    this.originPostId,
     required this.id,
     this.title,
     this.url,

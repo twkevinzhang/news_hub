@@ -106,35 +106,37 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
     ));
   }
 
-  void loadThread(String newThreadId) async {
-    if (state.threadMap.containsKey(newThreadId)) {
+  void loadThread(String postId) async {
+    if (state.threadMap.containsKey(postId)) {
       return;
     }
-    final newMap = Map<String, Result<Post>>.from(state.threadMap)..[newThreadId] = Result.loading();
+    final newMap = Map<String, Result<Post>>.from(state.threadMap)..[postId] = Result.loading();
     safeEmit(state.copyWith(threadMap: newMap));
     final newThread = await _getThread.call(
       extensionPkgName: state.extensionPkgName,
       siteId: state.siteId,
       boardId: state.boardId,
-      id: newThreadId,
+      id: state.threadId,
+      postId: postId,
     );
-    final newMap2 = Map<String, Result<Post>>.from(state.threadMap)..[newThreadId] = Result.completed(newThread);
+    final newMap2 = Map<String, Result<Post>>.from(state.threadMap)..[postId] = Result.completed(newThread);
     safeEmit(state.copyWith(threadMap: newMap2));
   }
 
-  void loadRegardingPosts(String newThreadId) async {
-    if (state.regardingPostsMap.containsKey(newThreadId)) {
+  void loadRegardingPosts(String postId) async {
+    if (state.regardingPostsMap.containsKey(postId)) {
       return;
     }
-    final newMap = Map.of(state.regardingPostsMap)..[newThreadId] = Result.loading();
+    final newMap = Map.of(state.regardingPostsMap)..[postId] = Result.loading();
     safeEmit(state.copyWith(regardingPostsMap: newMap));
     final regardingPostsMap = await _getThread.listRegardingPosts(
       extensionPkgName: state.extensionPkgName,
       siteId: state.siteId,
       boardId: state.boardId,
-      threadId: newThreadId,
+      threadId: state.threadId,
+      postId: postId,
     );
-    final newMap2 = Map.of(state.regardingPostsMap)..[newThreadId] = Result.completed(regardingPostsMap);
+    final newMap2 = Map.of(state.regardingPostsMap)..[postId] = Result.completed(regardingPostsMap);
     safeEmit(state.copyWith(regardingPostsMap: newMap2));
   }
 }

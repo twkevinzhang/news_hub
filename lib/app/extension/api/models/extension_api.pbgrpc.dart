@@ -33,18 +33,14 @@ class ExtensionApiClient extends $grpc.Client {
       '/pb.ExtensionApi/GetThreadInfos',
       ($0.GetThreadInfosReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.GetThreadInfosRes.fromBuffer(value));
-  static final _$getThread = $grpc.ClientMethod<$0.GetThreadReq, $0.GetThreadRes>(
-      '/pb.ExtensionApi/GetThread',
-      ($0.GetThreadReq value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.GetThreadRes.fromBuffer(value));
+  static final _$getThreadPost = $grpc.ClientMethod<$0.GetThreadPostReq, $0.GetThreadPostRes>(
+      '/pb.ExtensionApi/GetThreadPost',
+      ($0.GetThreadPostReq value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.GetThreadPostRes.fromBuffer(value));
   static final _$getRegardingPosts = $grpc.ClientMethod<$0.GetRegardingPostsReq, $0.GetRegardingPostsRes>(
       '/pb.ExtensionApi/GetRegardingPosts',
       ($0.GetRegardingPostsReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.GetRegardingPostsRes.fromBuffer(value));
-  static final _$getPost = $grpc.ClientMethod<$0.GetPostReq, $0.GetPostRes>(
-      '/pb.ExtensionApi/GetPost',
-      ($0.GetPostReq value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.GetPostRes.fromBuffer(value));
   static final _$getComments = $grpc.ClientMethod<$0.GetCommentsReq, $0.GetCommentsRes>(
       '/pb.ExtensionApi/GetComments',
       ($0.GetCommentsReq value) => value.writeToBuffer(),
@@ -68,16 +64,12 @@ class ExtensionApiClient extends $grpc.Client {
     return $createUnaryCall(_$getThreadInfos, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.GetThreadRes> getThread($0.GetThreadReq request, {$grpc.CallOptions? options}) {
-    return $createUnaryCall(_$getThread, request, options: options);
+  $grpc.ResponseFuture<$0.GetThreadPostRes> getThreadPost($0.GetThreadPostReq request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getThreadPost, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.GetRegardingPostsRes> getRegardingPosts($0.GetRegardingPostsReq request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getRegardingPosts, request, options: options);
-  }
-
-  $grpc.ResponseFuture<$0.GetPostRes> getPost($0.GetPostReq request, {$grpc.CallOptions? options}) {
-    return $createUnaryCall(_$getPost, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.GetCommentsRes> getComments($0.GetCommentsReq request, {$grpc.CallOptions? options}) {
@@ -111,13 +103,13 @@ abstract class ExtensionApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.GetThreadInfosReq.fromBuffer(value),
         ($0.GetThreadInfosRes value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.GetThreadReq, $0.GetThreadRes>(
-        'GetThread',
-        getThread_Pre,
+    $addMethod($grpc.ServiceMethod<$0.GetThreadPostReq, $0.GetThreadPostRes>(
+        'GetThreadPost',
+        getThreadPost_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.GetThreadReq.fromBuffer(value),
-        ($0.GetThreadRes value) => value.writeToBuffer()));
+        ($core.List<$core.int> value) => $0.GetThreadPostReq.fromBuffer(value),
+        ($0.GetThreadPostRes value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.GetRegardingPostsReq, $0.GetRegardingPostsRes>(
         'GetRegardingPosts',
         getRegardingPosts_Pre,
@@ -125,13 +117,6 @@ abstract class ExtensionApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.GetRegardingPostsReq.fromBuffer(value),
         ($0.GetRegardingPostsRes value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.GetPostReq, $0.GetPostRes>(
-        'GetPost',
-        getPost_Pre,
-        false,
-        false,
-        ($core.List<$core.int> value) => $0.GetPostReq.fromBuffer(value),
-        ($0.GetPostRes value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.GetCommentsReq, $0.GetCommentsRes>(
         'GetComments',
         getComments_Pre,
@@ -153,16 +138,12 @@ abstract class ExtensionApiServiceBase extends $grpc.Service {
     return getThreadInfos(call, await request);
   }
 
-  $async.Future<$0.GetThreadRes> getThread_Pre($grpc.ServiceCall call, $async.Future<$0.GetThreadReq> request) async {
-    return getThread(call, await request);
+  $async.Future<$0.GetThreadPostRes> getThreadPost_Pre($grpc.ServiceCall call, $async.Future<$0.GetThreadPostReq> request) async {
+    return getThreadPost(call, await request);
   }
 
   $async.Future<$0.GetRegardingPostsRes> getRegardingPosts_Pre($grpc.ServiceCall call, $async.Future<$0.GetRegardingPostsReq> request) async {
     return getRegardingPosts(call, await request);
-  }
-
-  $async.Future<$0.GetPostRes> getPost_Pre($grpc.ServiceCall call, $async.Future<$0.GetPostReq> request) async {
-    return getPost(call, await request);
   }
 
   $async.Future<$0.GetCommentsRes> getComments_Pre($grpc.ServiceCall call, $async.Future<$0.GetCommentsReq> request) async {
@@ -172,8 +153,7 @@ abstract class ExtensionApiServiceBase extends $grpc.Service {
   $async.Future<$0.GetSiteRes> getSite($grpc.ServiceCall call, $0.Empty request);
   $async.Future<$0.GetBoardsRes> getBoards($grpc.ServiceCall call, $0.GetBoardsReq request);
   $async.Future<$0.GetThreadInfosRes> getThreadInfos($grpc.ServiceCall call, $0.GetThreadInfosReq request);
-  $async.Future<$0.GetThreadRes> getThread($grpc.ServiceCall call, $0.GetThreadReq request);
+  $async.Future<$0.GetThreadPostRes> getThreadPost($grpc.ServiceCall call, $0.GetThreadPostReq request);
   $async.Future<$0.GetRegardingPostsRes> getRegardingPosts($grpc.ServiceCall call, $0.GetRegardingPostsReq request);
-  $async.Future<$0.GetPostRes> getPost($grpc.ServiceCall call, $0.GetPostReq request);
   $async.Future<$0.GetCommentsRes> getComments($grpc.ServiceCall call, $0.GetCommentsReq request);
 }
