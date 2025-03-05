@@ -1,5 +1,7 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:drift/isolate.dart';
+import 'package:drift/native.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get_it/get_it.dart';
@@ -191,16 +193,25 @@ class RemoteExtensionLauncher implements Launcher {
   }
 
   Future<void> insert() async {
-    await _extensionRepository.insert(
-      repoBaseUrl: mockExtension.repoBaseUrl,
-      pkgName: mockExtension.pkgName,
-      displayName: mockExtension.displayName,
-      zipName: mockExtension.zipName,
-      address: mockExtension.address,
-      version: mockExtension.version,
-      pythonVersion: mockExtension.pythonVersion,
-      lang: mockExtension.lang,
-      isNsfw: mockExtension.isNsfw,
-    );
+    try {
+      await _extensionRepository.insert(
+        repoBaseUrl: 'https://raw.githubusercontent.com/twkevinzhang/news_hub_extensions/master',
+        pkgName: 'twkevinzhang_komica',
+        displayName: 'Komica Ex',
+        zipName: 'twkevinzhang_komica.zip',
+        address: 'http://127.0.0.1:55001',
+        version: 1,
+        pythonVersion: 1,
+        isNsfw: false,
+        lang: 'zh_tw',
+      );
+    } on DriftRemoteException catch (e, s) {
+      if (e.remoteCause case SqliteException e2) {
+        if (e2.extendedResultCode == 1555) {
+          return;
+        }
+      }
+      rethrow;
+    }
   }
 }
