@@ -61,6 +61,7 @@ class GetThread {
       boardId: boardId,
       threadId: threadId,
       postId: postId,
+      pagination: pagination,
     ));
     final (extension, site, boards, regardingPosts) = await (extensionF, siteF, boardsF, regardingPostsF).wait;
     final board = boards.firstWhere((b) => b.id == boardId);
