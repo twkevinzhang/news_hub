@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:convert';
 import 'package:cached_query/cached_query.dart';
+import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart';
 import 'package:news_hub/app/extension/api/models/transform.dart';
 import 'package:news_hub/app/service/cache/cache.dart';
@@ -33,16 +35,16 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
 
   @override
   Future<domain.Site> site(GetSiteParams params) async {
-    final res = await Query(
+    final res = await query(
       key: ["site", params],
       queryFn: () => _client.getSite(Empty()),
-    ).result;
-    return res.data!.site.toDomain(params.extensionPkgName);
+    );
+    return res.site.toDomain(params.extensionPkgName);
   }
 
   @override
   Future<List<domain.Board>> boards(GetBoardsParams params) async {
-    final res = await Query(
+    final res = await query(
       key: ["boards", params],
       queryFn: () => _client.getBoards(GetBoardsReq(
         siteId: params.siteId,
@@ -51,8 +53,8 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
           pageSize: params.pagination?.pageSize,
         ),
       )),
-    ).result;
-    return res.data!.boards
+    );
+    return res.boards
         .map((b) => b.toDomain(
       params.extensionPkgName,
       params.siteId,
@@ -62,7 +64,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
 
   @override
   Future<List<domain.Post>> threadInfos(GetThreadInfosParams params) async {
-    final res = await Query(
+    final res = await query(
       key: ["threadInfos", params],
       queryFn: () => _client.getThreadInfos(GetThreadInfosReq(
         siteId: params.siteId,
@@ -74,13 +76,13 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
         sortBy: params.sortBy,
         keywords: params.keywords,
       )),
-    ).result;
-    return res.data!.threadInfos.map((t) => t.toDomain(params.extensionPkgName)).toList();
+    );
+    return res.threadInfos.map((t) => t.toDomain(params.extensionPkgName)).toList();
   }
 
   @override
   Future<domain.Post> thread(GetThreadParams params) async {
-    final res = await Query(
+    final res = await query(
       key: ["thread", params],
       queryFn: () => _client.getThreadPost(GetThreadPostReq(
         siteId: params.siteId,
@@ -88,13 +90,13 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
         id: params.id,
         postId: params.postId,
       )),
-    ).result;
-    return res.data!.threadPost.toDomain(params.extensionPkgName);
+    );
+    return res.threadPost.toDomain(params.extensionPkgName);
   }
 
   @override
   Future<List<domain.Post>> regardingPosts(GetRegardingPostsParams params) async {
-    final res = await Query(
+    final res = await query(
       key: ["regardingPosts", params],
       queryFn: () => _client.getRegardingPosts(GetRegardingPostsReq(
         siteId: params.siteId,
@@ -106,8 +108,8 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
           pageSize: params.pagination?.pageSize,
         ),
       )),
-    ).result;
-    return res.data!.regardingPosts.map((p) => p.toDomain(params.extensionPkgName)).toList();
+    );
+    return res.regardingPosts.map((p) => p.toDomain(params.extensionPkgName)).toList();
   }
 
   @override
@@ -117,7 +119,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
 
   @override
   Future<List<domain.Comment>> comments(GetCommentsParams params) async {
-    final res = await Query(
+    final res = await query(
       key: ["comments", params],
       queryFn: () => _client.getComments(GetCommentsReq(
         siteId: params.siteId,
@@ -129,7 +131,27 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
           pageSize: params.pagination?.pageSize,
         ),
       )),
-    ).result;
-    return res.data!.comments.map((c) => c.toDomain(params.extensionPkgName)).toList();
+    );
+    return res.comments.map((c) => c.toDomain(params.extensionPkgName)).toList();
+  }
+
+  Future<T> query<T>({required Object key, required Future<T> Function() queryFn}) async {
+    QueryState<T> res;
+    try {
+      res = await Query(
+        key: key,
+        queryFn: queryFn,
+      ).result;
+      if (res.error != null) {
+        throw res.error;
+      }
+    } on GrpcError catch (e) {
+      debugPrint(e.message);
+      rethrow;
+    } on Exception catch (e) {
+      debugPrint(e.toString());
+      rethrow;
+    }
+    return res.data!;
   }
 }
