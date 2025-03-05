@@ -56,6 +56,10 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
       siteId: state.siteId,
       boardId: state.boardId,
       threadId: state.threadId,
+      pagination: Pagination(
+        page: pageKey,
+        pageSize: _pageSize,
+      ),
     );
 
     try {
@@ -129,6 +133,10 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
       boardId: state.boardId,
       threadId: state.threadId,
       postId: postId,
+      pagination: Pagination(
+        page: 1,
+        pageSize: 10000,
+      ),
     );
     final newMap2 = Map.of(state.regardingPostsMap)..[postId] = Result.completed(regardingPostsMap);
     safeEmit(state.copyWith(regardingPostsMap: newMap2));
