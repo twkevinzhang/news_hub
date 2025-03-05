@@ -172,7 +172,7 @@ class Post {
   });
 }
 
-enum ParagraphType { quote, replyTo, text, image, link, video }
+enum ParagraphType { quote, replyTo, text, newLine, image, link, video }
 
 abstract class Paragraph {
   final ParagraphType type;
@@ -205,6 +205,12 @@ class TextParagraph extends Paragraph {
   final String content;
 
   TextParagraph({required this.content}) : super(ParagraphType.text);
+}
+
+class NewLineParagraph extends Paragraph {
+  final String symbol;
+
+  NewLineParagraph({required this.symbol}) : super(ParagraphType.newLine);
 }
 
 class QuoteParagraph extends Paragraph {
