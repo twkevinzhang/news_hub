@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'dart:ffi';
 import 'dart:io';
 
@@ -51,6 +52,14 @@ extension StringEx on String {
       return this;
     }
     return replaceRange(maxLength, length, omission);
+  }
+
+  Map<String, dynamic> fromBase64Json() {
+    return jsonDecode(utf8.decode(base64Decode(this.remove('\n'))));
+  }
+
+  List<Map<String, dynamic>> fromBase64List() {
+    return jsonDecode(utf8.decode(base64Decode(this.remove('\n'))));
   }
 }
 
