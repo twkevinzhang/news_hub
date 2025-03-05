@@ -37,6 +37,7 @@ import 'package:news_hub/app/extension_repo/repository/extension_repo_repository
     as _i374;
 import 'package:news_hub/app/extension_repo/repository/mock_extension_repo_repository_impl.dart'
     as _i178;
+import 'package:news_hub/app/service/cache/cache.dart' as _i158;
 import 'package:news_hub/app/service/database/database.dart' as _i539;
 import 'package:news_hub/app/service/preferences/store.dart' as _i365;
 import 'package:news_hub/app/service/preferences/store_impl.dart' as _i842;
@@ -130,6 +131,7 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.singleton<_i361.Dio>(() => appProvider.dio);
     gh.lazySingleton<_i539.AppDatabase>(() => _i539.AppDatabase());
+    gh.lazySingleton<_i158.CacheService>(() => _i158.CacheService());
     gh.lazySingleton<_i475.ValidExtensionRepoUrl>(
         () => _i475.ValidExtensionRepoUrl());
     gh.lazySingleton<_i762.AppRouter>(() => _i762.AppRouter());
@@ -223,6 +225,11 @@ extension GetItInjectableX on _i174.GetIt {
           listExtensionRepo: gh<_i25.ListExtensionRepo>(),
           deleteExtensionRepo: gh<_i1062.DeleteExtensionRepo>(),
         ));
+    gh.lazySingleton<_i315.ExtensionApiService>(
+      () => _i672.GrpcExtensionApiServiceImpl(
+          cacheService: gh<_i158.CacheService>()),
+      registerFor: {_demoExtension},
+    );
     gh.lazySingleton<_i643.ListSuggestions>(() => _i643.ListSuggestions(
         suggestionRepo: gh<_i677.SuggestionRepository>()));
     gh.lazySingleton<_i650.UpdateSuggestionLatestUsedAt>(() =>
@@ -230,10 +237,6 @@ extension GetItInjectableX on _i174.GetIt {
             suggestionRepo: gh<_i677.SuggestionRepository>()));
     gh.lazySingleton<_i446.InsertSuggestion>(() => _i446.InsertSuggestion(
         suggestionRepo: gh<_i677.SuggestionRepository>()));
-    gh.lazySingleton<_i315.ExtensionApiService>(
-      () => _i672.GrpcExtensionApiServiceImpl(),
-      registerFor: {_demoExtension},
-    );
     gh.factory<_i56.Preparation>(
       () => _i56.DemoExtensionPreparation(
         manager: gh<_i284.ExtensionInstanceManager>(),

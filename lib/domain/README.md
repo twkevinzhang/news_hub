@@ -2,5 +2,5 @@
 ## dependencies
  - get_it and injectable
  - dartx
- - freezed
+ - freezed and json_annotation
  - flutter/foundation.dart

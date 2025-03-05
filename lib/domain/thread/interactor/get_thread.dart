@@ -25,15 +25,15 @@ class GetThread {
     String? postId,
   }) async {
     final extensionF = _installedExtensionRepository.get(extensionPkgName);
-    final siteF = _apiService.site(extensionPkgName: extensionPkgName);
-    final boardsF = _apiService.boards(extensionPkgName: extensionPkgName, siteId: siteId);
-    final threadF = _apiService.thread(
+    final siteF = _apiService.site(GetSiteParams(extensionPkgName: extensionPkgName));
+    final boardsF = _apiService.boards(GetBoardsParams(extensionPkgName: extensionPkgName, siteId: siteId));
+    final threadF = _apiService.thread(GetThreadParams(
       extensionPkgName: extensionPkgName,
       siteId: siteId,
       boardId: boardId,
       id: id,
       postId: postId,
-    );
+    ));
     final (extension, site, boards, thread) = await (extensionF, siteF, boardsF, threadF).wait;
     final board = boards.firstWhere((b) => b.id == boardId);
     return PostWithExtension(
@@ -53,15 +53,15 @@ class GetThread {
     String? postId,
   }) async {
     final extensionF = _installedExtensionRepository.get(extensionPkgName);
-    final siteF = _apiService.site(extensionPkgName: extensionPkgName);
-    final boardsF = _apiService.boards(extensionPkgName: extensionPkgName, siteId: siteId);
-    final regardingPostsF = _apiService.regardingPosts(
+    final siteF = _apiService.site(GetSiteParams(extensionPkgName: extensionPkgName));
+    final boardsF = _apiService.boards(GetBoardsParams(extensionPkgName: extensionPkgName, siteId: siteId));
+    final regardingPostsF = _apiService.regardingPosts(GetRegardingPostsParams(
       extensionPkgName: extensionPkgName,
       siteId: siteId,
       boardId: boardId,
       threadId: threadId,
       postId: postId,
-    );
+    ));
     final (extension, site, boards, regardingPosts) = await (extensionF, siteF, boardsF, regardingPostsF).wait;
     final board = boards.firstWhere((b) => b.id == boardId);
 

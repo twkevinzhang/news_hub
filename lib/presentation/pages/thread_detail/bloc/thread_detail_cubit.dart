@@ -107,9 +107,6 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
   }
 
   void loadThread(String postId) async {
-    if (state.threadMap.containsKey(postId)) {
-      return;
-    }
     final newMap = Map<String, Result<Post>>.from(state.threadMap)..[postId] = Result.loading();
     safeEmit(state.copyWith(threadMap: newMap));
     final newThread = await _getThread.call(
@@ -124,9 +121,6 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
   }
 
   void loadRegardingPosts(String postId) async {
-    if (state.regardingPostsMap.containsKey(postId)) {
-      return;
-    }
     final newMap = Map.of(state.regardingPostsMap)..[postId] = Result.loading();
     safeEmit(state.copyWith(regardingPostsMap: newMap));
     final regardingPostsMap = await _getThread.listRegardingPosts(

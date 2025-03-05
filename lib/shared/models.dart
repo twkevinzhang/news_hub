@@ -1,23 +1,17 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'models.freezed.dart';
+part 'models.g.dart';
 
-class Pagination {
-  // for offset-based pagination
-  final int? page;
-  final int? pageSize;
-  // for cursor-based pagination
-  final int? limit;
-  final String? prevCursor;
-  final String? nextCursor;
-
-  Pagination({
-    this.page,
-    this.limit,
-    this.pageSize,
-    this.prevCursor,
-    this.nextCursor,
-  });
+@Freezed(toJson: true)
+class Pagination with _$Pagination {
+  const factory Pagination({
+    int? page,
+    int? pageSize,
+    int? limit,
+    String? prevCursor,
+    String? nextCursor,
+  }) = _Pagination;
 }
 
 @freezed

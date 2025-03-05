@@ -15,6 +15,229 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
+mixin _$Pagination {
+  int? get page => throw _privateConstructorUsedError;
+  int? get pageSize => throw _privateConstructorUsedError;
+  int? get limit => throw _privateConstructorUsedError;
+  String? get prevCursor => throw _privateConstructorUsedError;
+  String? get nextCursor => throw _privateConstructorUsedError;
+
+  /// Serializes this Pagination to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
+  /// Create a copy of Pagination
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $PaginationCopyWith<Pagination> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $PaginationCopyWith<$Res> {
+  factory $PaginationCopyWith(
+          Pagination value, $Res Function(Pagination) then) =
+      _$PaginationCopyWithImpl<$Res, Pagination>;
+  @useResult
+  $Res call(
+      {int? page,
+      int? pageSize,
+      int? limit,
+      String? prevCursor,
+      String? nextCursor});
+}
+
+/// @nodoc
+class _$PaginationCopyWithImpl<$Res, $Val extends Pagination>
+    implements $PaginationCopyWith<$Res> {
+  _$PaginationCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Pagination
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? page = freezed,
+    Object? pageSize = freezed,
+    Object? limit = freezed,
+    Object? prevCursor = freezed,
+    Object? nextCursor = freezed,
+  }) {
+    return _then(_value.copyWith(
+      page: freezed == page
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pageSize: freezed == pageSize
+          ? _value.pageSize
+          : pageSize // ignore: cast_nullable_to_non_nullable
+              as int?,
+      limit: freezed == limit
+          ? _value.limit
+          : limit // ignore: cast_nullable_to_non_nullable
+              as int?,
+      prevCursor: freezed == prevCursor
+          ? _value.prevCursor
+          : prevCursor // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nextCursor: freezed == nextCursor
+          ? _value.nextCursor
+          : nextCursor // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$PaginationImplCopyWith<$Res>
+    implements $PaginationCopyWith<$Res> {
+  factory _$$PaginationImplCopyWith(
+          _$PaginationImpl value, $Res Function(_$PaginationImpl) then) =
+      __$$PaginationImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {int? page,
+      int? pageSize,
+      int? limit,
+      String? prevCursor,
+      String? nextCursor});
+}
+
+/// @nodoc
+class __$$PaginationImplCopyWithImpl<$Res>
+    extends _$PaginationCopyWithImpl<$Res, _$PaginationImpl>
+    implements _$$PaginationImplCopyWith<$Res> {
+  __$$PaginationImplCopyWithImpl(
+      _$PaginationImpl _value, $Res Function(_$PaginationImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of Pagination
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? page = freezed,
+    Object? pageSize = freezed,
+    Object? limit = freezed,
+    Object? prevCursor = freezed,
+    Object? nextCursor = freezed,
+  }) {
+    return _then(_$PaginationImpl(
+      page: freezed == page
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int?,
+      pageSize: freezed == pageSize
+          ? _value.pageSize
+          : pageSize // ignore: cast_nullable_to_non_nullable
+              as int?,
+      limit: freezed == limit
+          ? _value.limit
+          : limit // ignore: cast_nullable_to_non_nullable
+              as int?,
+      prevCursor: freezed == prevCursor
+          ? _value.prevCursor
+          : prevCursor // ignore: cast_nullable_to_non_nullable
+              as String?,
+      nextCursor: freezed == nextCursor
+          ? _value.nextCursor
+          : nextCursor // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+@JsonSerializable(createFactory: false)
+class _$PaginationImpl implements _Pagination {
+  const _$PaginationImpl(
+      {this.page, this.pageSize, this.limit, this.prevCursor, this.nextCursor});
+
+  @override
+  final int? page;
+  @override
+  final int? pageSize;
+  @override
+  final int? limit;
+  @override
+  final String? prevCursor;
+  @override
+  final String? nextCursor;
+
+  @override
+  String toString() {
+    return 'Pagination(page: $page, pageSize: $pageSize, limit: $limit, prevCursor: $prevCursor, nextCursor: $nextCursor)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$PaginationImpl &&
+            (identical(other.page, page) || other.page == page) &&
+            (identical(other.pageSize, pageSize) ||
+                other.pageSize == pageSize) &&
+            (identical(other.limit, limit) || other.limit == limit) &&
+            (identical(other.prevCursor, prevCursor) ||
+                other.prevCursor == prevCursor) &&
+            (identical(other.nextCursor, nextCursor) ||
+                other.nextCursor == nextCursor));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, page, pageSize, limit, prevCursor, nextCursor);
+
+  /// Create a copy of Pagination
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$PaginationImplCopyWith<_$PaginationImpl> get copyWith =>
+      __$$PaginationImplCopyWithImpl<_$PaginationImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$PaginationImplToJson(
+      this,
+    );
+  }
+}
+
+abstract class _Pagination implements Pagination {
+  const factory _Pagination(
+      {final int? page,
+      final int? pageSize,
+      final int? limit,
+      final String? prevCursor,
+      final String? nextCursor}) = _$PaginationImpl;
+
+  @override
+  int? get page;
+  @override
+  int? get pageSize;
+  @override
+  int? get limit;
+  @override
+  String? get prevCursor;
+  @override
+  String? get nextCursor;
+
+  /// Create a copy of Pagination
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$PaginationImplCopyWith<_$PaginationImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$Result<R> {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
