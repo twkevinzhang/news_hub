@@ -104,7 +104,7 @@ class DemoExtensionPreparation implements Preparation {
   Future<void> reloadPythonFileCase() async {
     await _manager.close(mockExtension);
     await _manager.runNew(mockExtension);
-    final site = await _apiService.site(extensionPkgName: mockExtension.pkgName);
+    final site = await _apiService.site(GetSiteParams(extensionPkgName: mockExtension.pkgName));
     debugPrint('site: $site');
     await _manager.close(mockExtension);
   }

@@ -32,9 +32,7 @@ final _mockPost = Post(
 @LazySingleton(as: ExtensionApiService)
 class MockExtensionApiServiceImpl implements ExtensionApiService {
   @override
-  Future<Site> site({
-    required String extensionPkgName,
-  }) async {
+  Future<Site> site(GetSiteParams params) async {
     await Future.delayed(const Duration(seconds: 1));
     return Site(
       extensionPkgName: 'twkevinzhang_beeceptor',
@@ -46,84 +44,79 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   }
 
   @override
-  Future<List<Board>> boards({
-    Pagination? pagination,
-    required String extensionPkgName,
-    required String siteId,
-  }) async {
+  Future<List<Board>> boards(GetBoardsParams params) async {
     await Future.delayed(const Duration(seconds: 1));
     return [
       Board(
         extensionPkgName: 'twkevinzhang_beeceptor',
         siteId: '1',
         id: '1',
-        name: '八卦版',
-        icon: 'https://cdn-icons-png.flaticon.com/512/809/809103.png',
-        largeWelcomeImage: 'https://dummyimage.com/200x300/000/fff',
-        url: 'https://beeceptor.com/goss',
-        supportedThreadsSorting: {'newest', 'popular'},
+        name: 'Board 1',
+        icon: 'icon1',
+        largeWelcomeImage: 'largeWelcomeImage1',
+        url: 'https://example.com/board1',
+        supportedThreadsSorting: {'sorting1'},
       ),
       Board(
         extensionPkgName: 'twkevinzhang_beeceptor',
         siteId: '1',
         id: '2',
-        name: '遊戲版',
-        icon: 'https://cdn-icons-png.flaticon.com/512/809/809103.png',
-        largeWelcomeImage: 'https://dummyimage.com/200x300/000/fff',
-        url: 'https://beeceptor.com/game',
-        supportedThreadsSorting: {'newest', 'popular'},
+        name: 'Board 2',
+        icon: 'icon2',
+        largeWelcomeImage: 'largeWelcomeImage2',
+        url: 'https://example.com/board2',
+        supportedThreadsSorting: {'sorting2'},
       ),
       Board(
         extensionPkgName: 'twkevinzhang_beeceptor',
         siteId: '1',
         id: '3',
-        name: '電蝦版',
-        icon: 'https://cdn-icons-png.flaticon.com/512/809/809103.png',
-        largeWelcomeImage: 'https://dummyimage.com/200x300/000/fff',
-        url: 'https://beeceptor.com/work',
-        supportedThreadsSorting: {'newest', 'popular'},
+        name: 'Board 3',
+        icon: 'icon3',
+        largeWelcomeImage: 'largeWelcomeImage3',
+        url: 'https://example.com/board3',
+        supportedThreadsSorting: {'sorting3'},
       ),
     ];
   }
 
   @override
-  Future<List<Post>> threadInfos({
-    Pagination? pagination,
-    String? sortBy,
-    String? keywords,
-    required String extensionPkgName,
-    required String siteId,
-    required String boardId,
-  }) async {
+  Future<List<Post>> threadInfos(GetThreadInfosParams params) async {
     await Future.delayed(const Duration(seconds: 1));
-    if (boardId == '1') {
+    if (params.boardId == '1') {
       return [_mockPost];
     } else {
-      return [];
+      return [
+        Post(
+          extensionPkgName: 'twkevinzhang_beeceptor',
+          siteId: '1',
+          boardId: '2',
+          threadId: '2',
+          id: '2',
+          createdAt: DateTime.now(),
+          authorId: '2',
+          authorName: 'Author 2',
+          liked: 0,
+          disliked: null,
+          comments: null,
+          regardingPostsCount: 0,
+          contents: [
+            TextParagraph(content: 'Text Content 2'),
+          ],
+          tags: null,
+        ),
+      ];
     }
   }
 
   @override
-  Future<Post> thread({
-    required String extensionPkgName,
-    required String siteId,
-    required String boardId,
-    required String id,
-    String? postId,
-  }) async {
+  Future<Post> thread(GetThreadParams params) async {
     await Future.delayed(const Duration(seconds: 1));
     return _mockPost;
   }
 
   @override
-  Future<List<Post>> regardingPosts({
-    Pagination? pagination,
-    required String extensionPkgName,
-    required String siteId,
-    required String boardId,
-    required String threadId,
-    String? postId,
-  }) async {
+  Future<List<Post>> regardingPosts(GetRegardingPostsParams params) async {
     await Future.delayed(const Duration(seconds: 1));
     return [
       Post(
@@ -131,94 +124,20 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
         siteId: '1',
         boardId: '1',
         threadId: '1',
-        id: '5',
+        id: '1',
         createdAt: DateTime.now(),
         authorId: '1',
         authorName: '無名',
         liked: 0,
         disliked: null,
         comments: null,
-        regardingPostsCount: 0,
+        regardingPostsCount: 3,
         contents: [
-          TextParagraph(content: '路過'),
-        ],
-        tags: null,
-      ),
-      Post(
-        extensionPkgName: 'twkevinzhang_beeceptor',
-        siteId: '1',
-        boardId: '1',
-        threadId: '1',
-        id: '2',
-        createdAt: DateTime.now(),
-        authorId: '1',
-        authorName: '無名',
-        liked: 0,
-        disliked: null,
-        comments: null,
-        regardingPostsCount: 0,
-        contents: [
-          ReplyToParagraph(id: '1', preview: 'Text Content...'),
-          TextParagraph(content: 'regarding post 1'),
+          TextParagraph(content: 'Text Content Maybe'),
+          VideoParagraph(thumb: null, url: 'https://www.youtube.com/watch?v=_m7lYMTNQg8'),
           ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-        ],
-        tags: null,
-      ),
-      Post(
-        extensionPkgName: 'twkevinzhang_beeceptor',
-        siteId: '1',
-        boardId: '1',
-        threadId: '1',
-        id: '3',
-        createdAt: DateTime.now(),
-        authorId: '1',
-        authorName: '無名',
-        liked: 0,
-        disliked: null,
-        comments: null,
-        regardingPostsCount: 0,
-        contents: [
-          ReplyToParagraph(id: '1', preview: 'Text Content...'),
-          TextParagraph(content: 'regarding post 2'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
-        ],
-        tags: null,
-      ),
-      Post(
-        extensionPkgName: 'twkevinzhang_beeceptor',
-        siteId: '1',
-        boardId: '1',
-        threadId: '1',
-        id: '4',
-        createdAt: DateTime.now(),
-        authorId: '1',
-        authorName: '無名',
-        liked: 0,
-        disliked: null,
-        comments: null,
-        regardingPostsCount: 0,
-        contents: [
-          ReplyToParagraph(id: '1', preview: 'Text Content...'),
-          TextParagraph(content: 'regarding post 3'),
-          ImageParagraph(thumb: 'https://dummyimage.com/200x300/000/fff', raw: 'https://picsum.photos/200/300'),
+          QuoteParagraph(content: 'i m quote'),
+          LinkParagraph(content: 'https://pub.dev/packages/better_player'),
         ],
         tags: null,
       ),
@@ -226,27 +145,13 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   }
 
   @override
-  Future<Post> post({
-    Pagination? pagination,
-    required String extensionPkgName,
-    required String siteId,
-    required String boardId,
-    required String threadId,
-    required String id,
-  }) async {
+  Future<Post> post(GetPostParams params) async {
     await Future.delayed(const Duration(seconds: 1));
     return _mockPost;
   }
 
   @override
-  Future<List<Comment>> comments({
-    Pagination? pagination,
-    required String extensionPkgName,
-    required String siteId,
-    required String boardId,
-    required String threadId,
-    required String postId,
-  }) async {
+  Future<List<Comment>> comments(GetCommentsParams params) async {
     await Future.delayed(const Duration(seconds: 1));
     return [
       Comment(

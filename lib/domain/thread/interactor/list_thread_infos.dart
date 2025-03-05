@@ -38,14 +38,14 @@ class ListThreadInfos {
     }
     final threads = (await Future.wait(boards.map((b) {
       final e = extensions.firstWhere((e) => e.pkgName == b.extensionPkgName);
-      return _apiService.threadInfos(
+      return _apiService.threadInfos(GetThreadInfosParams(
         extensionPkgName: e.pkgName,
         siteId: e.site.id,
         boardId: b.id,
         pagination: pagination,
         sortBy: filter?.boardsSorting[b.id],
         keywords: filter?.keywords,
-      );
+      ));
     })))
         .flatten();
 
