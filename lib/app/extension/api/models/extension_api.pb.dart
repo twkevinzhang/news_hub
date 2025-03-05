@@ -1165,6 +1165,7 @@ enum Paragraph_Content {
   quote, 
   replyTo, 
   link, 
+  newLine, 
   notSet
 }
 
@@ -1177,6 +1178,7 @@ class Paragraph extends $pb.GeneratedMessage {
     QuoteParagraph? quote,
     ReplyToParagraph? replyTo,
     LinkParagraph? link,
+    NewLineParagraph? newLine,
   }) {
     final $result = create();
     if (type != null) {
@@ -1200,6 +1202,9 @@ class Paragraph extends $pb.GeneratedMessage {
     if (link != null) {
       $result.link = link;
     }
+    if (newLine != null) {
+      $result.newLine = newLine;
+    }
     return $result;
   }
   Paragraph._() : super();
@@ -1213,10 +1218,11 @@ class Paragraph extends $pb.GeneratedMessage {
     5 : Paragraph_Content.quote,
     6 : Paragraph_Content.replyTo,
     7 : Paragraph_Content.link,
+    8 : Paragraph_Content.newLine,
     0 : Paragraph_Content.notSet
   };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Paragraph', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
-    ..oo(0, [2, 3, 4, 5, 6, 7])
+    ..oo(0, [2, 3, 4, 5, 6, 7, 8])
     ..e<ParagraphType>(1, _omitFieldNames ? '' : 'type', $pb.PbFieldType.OE, defaultOrMaker: ParagraphType.PARAGRAPH_TYPE_UNSPECIFIED, valueOf: ParagraphType.valueOf, enumValues: ParagraphType.values)
     ..aOM<ImageParagraph>(2, _omitFieldNames ? '' : 'image', subBuilder: ImageParagraph.create)
     ..aOM<VideoParagraph>(3, _omitFieldNames ? '' : 'video', subBuilder: VideoParagraph.create)
@@ -1224,6 +1230,7 @@ class Paragraph extends $pb.GeneratedMessage {
     ..aOM<QuoteParagraph>(5, _omitFieldNames ? '' : 'quote', subBuilder: QuoteParagraph.create)
     ..aOM<ReplyToParagraph>(6, _omitFieldNames ? '' : 'replyTo', subBuilder: ReplyToParagraph.create)
     ..aOM<LinkParagraph>(7, _omitFieldNames ? '' : 'link', subBuilder: LinkParagraph.create)
+    ..aOM<NewLineParagraph>(8, _omitFieldNames ? '' : 'newLine', subBuilder: NewLineParagraph.create)
     ..hasRequiredFields = false
   ;
 
@@ -1325,6 +1332,17 @@ class Paragraph extends $pb.GeneratedMessage {
   void clearLink() => clearField(7);
   @$pb.TagNumber(7)
   LinkParagraph ensureLink() => $_ensure(6);
+
+  @$pb.TagNumber(8)
+  NewLineParagraph get newLine => $_getN(7);
+  @$pb.TagNumber(8)
+  set newLine(NewLineParagraph v) { setField(8, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasNewLine() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearNewLine() => clearField(8);
+  @$pb.TagNumber(8)
+  NewLineParagraph ensureNewLine() => $_ensure(7);
 }
 
 class ImageParagraph extends $pb.GeneratedMessage {
@@ -1503,6 +1521,56 @@ class TextParagraph extends $pb.GeneratedMessage {
   $core.bool hasContent() => $_has(0);
   @$pb.TagNumber(1)
   void clearContent() => clearField(1);
+}
+
+class NewLineParagraph extends $pb.GeneratedMessage {
+  factory NewLineParagraph({
+    $core.String? symbol,
+  }) {
+    final $result = create();
+    if (symbol != null) {
+      $result.symbol = symbol;
+    }
+    return $result;
+  }
+  NewLineParagraph._() : super();
+  factory NewLineParagraph.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory NewLineParagraph.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'NewLineParagraph', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'symbol')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  NewLineParagraph clone() => NewLineParagraph()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  NewLineParagraph copyWith(void Function(NewLineParagraph) updates) => super.copyWith((message) => updates(message as NewLineParagraph)) as NewLineParagraph;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static NewLineParagraph create() => NewLineParagraph._();
+  NewLineParagraph createEmptyInstance() => create();
+  static $pb.PbList<NewLineParagraph> createRepeated() => $pb.PbList<NewLineParagraph>();
+  @$core.pragma('dart2js:noInline')
+  static NewLineParagraph getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<NewLineParagraph>(create);
+  static NewLineParagraph? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get symbol => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set symbol($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasSymbol() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearSymbol() => clearField(1);
 }
 
 class QuoteParagraph extends $pb.GeneratedMessage {

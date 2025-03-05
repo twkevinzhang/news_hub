@@ -81,6 +81,8 @@ extension ParagraphTransform on pb.Paragraph {
         return video.toDomain();
       case pb.Paragraph_Content.text:
         return text.toDomain();
+      case pb.Paragraph_Content.newLine:
+        return newLine.toDomain();
       case pb.Paragraph_Content.quote:
         return quote.toDomain();
       case pb.Paragraph_Content.replyTo:
@@ -115,6 +117,14 @@ extension TextParagraphTransform on pb.TextParagraph {
   domain.TextParagraph toDomain() {
     return domain.TextParagraph(
       content: content,
+    );
+  }
+}
+
+extension NewLineParagraphTransform on pb.NewLineParagraph {
+  domain.NewLineParagraph toDomain() {
+    return domain.NewLineParagraph(
+      symbol: symbol,
     );
   }
 }
