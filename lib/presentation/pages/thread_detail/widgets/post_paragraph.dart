@@ -53,6 +53,12 @@ class ArticleWidget extends StatelessWidget {
           text: "${paragraph.content} ",
           style: textStyle,
         ));
+      } else if (paragraph is domain.NewLineParagraph) {
+        // 纯文本段落 - 添加为TextSpan
+        article.input(TextSpan(
+          text: paragraph.symbol,
+          style: textStyle,
+        ));
       } else if (paragraph is domain.QuoteParagraph) {
         // 引用段落 - 使用斜体样式
         article.input(TextSpan(
