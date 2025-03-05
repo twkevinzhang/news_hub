@@ -9,6 +9,7 @@ import 'package:news_hub/shared/exceptions.dart';
 import 'package:uuid/uuid.dart';
 
 @Environment(AppEnv.demoExtension)
+@Environment(AppEnv.remoteExtension)
 @LazySingleton(as: InstalledExtensionRepository)
 class InstalledExtensionRepositoryImpl implements InstalledExtensionRepository {
   final AppDatabase _db;
