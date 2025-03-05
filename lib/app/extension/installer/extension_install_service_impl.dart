@@ -12,6 +12,7 @@ import 'package:news_hub/shared/extensions.dart';
 
 /// [ExtensionInstallServiceImpl] download and install flask extension from _installFolder.
 @Environment(AppEnv.demoExtension)
+@Environment(AppEnv.remoteExtension)
 @preResolve
 @LazySingleton(as: ExtensionInstallService)
 class ExtensionInstallServiceImpl implements ExtensionInstallService {

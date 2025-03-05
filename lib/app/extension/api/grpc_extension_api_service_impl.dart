@@ -13,25 +13,17 @@ import 'package:injectable/injectable.dart';
 import 'models/extension_api.pbgrpc.dart';
 
 @Environment(AppEnv.demoExtension)
+@Environment(AppEnv.remoteExtension)
 @LazySingleton(as: ExtensionApiService)
 class GrpcExtensionApiServiceImpl implements ExtensionApiService {
-  late ExtensionApiClient _client;
-  late CacheService _cacheService;
+  late final ExtensionApiClient _client;
+  late final CacheService _cacheService;
 
   GrpcExtensionApiServiceImpl({
     required CacheService cacheService,
-  }) : _cacheService = cacheService {
-    final channel = ClientChannel(
-      '127.0.0.1',
-      port: 55001,
-      options: const ChannelOptions(
-        credentials: ChannelCredentials.insecure(),
-        connectTimeout: Duration(seconds: 5),
-        connectionTimeout: Duration(seconds: 5),
-      ),
-    );
-    _client = ExtensionApiClient(channel);
-  }
+    required ClientChannel clientChannel,
+  })  : _cacheService = cacheService,
+        _client = ExtensionApiClient(clientChannel);
 
   @override
   Future<domain.Site> site(GetSiteParams params) async {
@@ -56,9 +48,9 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
     );
     return res.boards
         .map((b) => b.toDomain(
-      params.extensionPkgName,
-      params.siteId,
-    ))
+              params.extensionPkgName,
+              params.siteId,
+            ))
         .toList();
   }
 
@@ -138,6 +130,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
   Future<T> query<T>({required Object key, required Future<T> Function() queryFn}) async {
     QueryState<T> res;
     try {
+      debugPrint("query $key");
       res = await Query(
         key: key,
         queryFn: queryFn,

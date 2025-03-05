@@ -43,6 +43,9 @@ mixin _$GithubResponseDto {
   @JsonKey(name: 'encoding', required: true)
   String get encoding => throw _privateConstructorUsedError;
 
+  /// Serializes this GithubResponseDto to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
   /// Create a copy of GithubResponseDto
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -243,7 +246,7 @@ class __$$GithubResponseDtoImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class _$GithubResponseDtoImpl implements _GithubResponseDto {
   const _$GithubResponseDtoImpl(
       {@JsonKey(name: 'name', required: true) required this.name,
@@ -333,6 +336,13 @@ class _$GithubResponseDtoImpl implements _GithubResponseDto {
   _$$GithubResponseDtoImplCopyWith<_$GithubResponseDtoImpl> get copyWith =>
       __$$GithubResponseDtoImplCopyWithImpl<_$GithubResponseDtoImpl>(
           this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$GithubResponseDtoImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _GithubResponseDto implements GithubResponseDto {
@@ -408,6 +418,9 @@ mixin _$Links {
   String get git => throw _privateConstructorUsedError;
   @JsonKey(name: 'html', required: true)
   String get html => throw _privateConstructorUsedError;
+
+  /// Serializes this Links to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of Links
   /// with the given fields replaced by the non-null parameter values.
@@ -510,7 +523,7 @@ class __$$LinksImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class _$LinksImpl implements _Links {
   const _$LinksImpl(
       {@JsonKey(name: 'self', required: true) required this.self,
@@ -556,6 +569,13 @@ class _$LinksImpl implements _Links {
   @pragma('vm:prefer-inline')
   _$$LinksImplCopyWith<_$LinksImpl> get copyWith =>
       __$$LinksImplCopyWithImpl<_$LinksImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$LinksImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _Links implements Links {
@@ -601,6 +621,9 @@ mixin _$GetDetailContentDto {
   String get website => throw _privateConstructorUsedError;
   @JsonKey(name: 'signing_key_fingerprint', required: true)
   String get signingKeyFingerprint => throw _privateConstructorUsedError;
+
+  /// Serializes this GetDetailContentDto to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of GetDetailContentDto
   /// with the given fields replaced by the non-null parameter values.
@@ -732,7 +755,7 @@ class __$$GetDetailContentDtoImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class _$GetDetailContentDtoImpl implements _GetDetailContentDto {
   const _$GetDetailContentDtoImpl(
       {@JsonKey(name: 'icon', required: true) required this.icon,
@@ -793,6 +816,13 @@ class _$GetDetailContentDtoImpl implements _GetDetailContentDto {
   _$$GetDetailContentDtoImplCopyWith<_$GetDetailContentDtoImpl> get copyWith =>
       __$$GetDetailContentDtoImplCopyWithImpl<_$GetDetailContentDtoImpl>(
           this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$GetDetailContentDtoImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _GetDetailContentDto implements GetDetailContentDto {
@@ -857,6 +887,9 @@ mixin _$GetExtensionsContentItemDto {
   String get lang => throw _privateConstructorUsedError;
   @JsonKey(name: 'is_nsfw', required: true)
   bool get isNsfw => throw _privateConstructorUsedError;
+
+  /// Serializes this GetExtensionsContentItemDto to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of GetExtensionsContentItemDto
   /// with the given fields replaced by the non-null parameter values.
@@ -1040,7 +1073,7 @@ class __$$GetExtensionsContentItemDtoImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable(createToJson: false)
+@JsonSerializable()
 class _$GetExtensionsContentItemDtoImpl
     implements _GetExtensionsContentItemDto {
   const _$GetExtensionsContentItemDtoImpl(
@@ -1125,6 +1158,13 @@ class _$GetExtensionsContentItemDtoImpl
   _$$GetExtensionsContentItemDtoImplCopyWith<_$GetExtensionsContentItemDtoImpl>
       get copyWith => __$$GetExtensionsContentItemDtoImplCopyWithImpl<
           _$GetExtensionsContentItemDtoImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$GetExtensionsContentItemDtoImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _GetExtensionsContentItemDto

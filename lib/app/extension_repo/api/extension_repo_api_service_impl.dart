@@ -7,6 +7,7 @@ import 'package:news_hub/shared/constants.dart';
 import 'package:news_hub/shared/extensions.dart';
 
 @Environment(AppEnv.demoExtension)
+@Environment(AppEnv.remoteExtension)
 @LazySingleton(as: ExtensionRepoApiService)
 class ExtensionRepoApiServiceImpl implements ExtensionRepoApiService {
   final Dio _dio;
