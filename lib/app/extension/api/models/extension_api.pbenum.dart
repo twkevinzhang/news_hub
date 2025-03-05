@@ -18,6 +18,7 @@ class ParagraphType extends $pb.ProtobufEnum {
   static const ParagraphType PARAGRAPH_TYPE_QUOTE = ParagraphType._(1, _omitEnumNames ? '' : 'PARAGRAPH_TYPE_QUOTE');
   static const ParagraphType PARAGRAPH_TYPE_REPLY_TO = ParagraphType._(2, _omitEnumNames ? '' : 'PARAGRAPH_TYPE_REPLY_TO');
   static const ParagraphType PARAGRAPH_TYPE_TEXT = ParagraphType._(3, _omitEnumNames ? '' : 'PARAGRAPH_TYPE_TEXT');
+  static const ParagraphType PARAGRAPH_TYPE_NEW_LINE = ParagraphType._(7, _omitEnumNames ? '' : 'PARAGRAPH_TYPE_NEW_LINE');
   static const ParagraphType PARAGRAPH_TYPE_IMAGE = ParagraphType._(4, _omitEnumNames ? '' : 'PARAGRAPH_TYPE_IMAGE');
   static const ParagraphType PARAGRAPH_TYPE_LINK = ParagraphType._(5, _omitEnumNames ? '' : 'PARAGRAPH_TYPE_LINK');
   static const ParagraphType PARAGRAPH_TYPE_VIDEO = ParagraphType._(6, _omitEnumNames ? '' : 'PARAGRAPH_TYPE_VIDEO');
@@ -27,6 +28,7 @@ class ParagraphType extends $pb.ProtobufEnum {
     PARAGRAPH_TYPE_QUOTE,
     PARAGRAPH_TYPE_REPLY_TO,
     PARAGRAPH_TYPE_TEXT,
+    PARAGRAPH_TYPE_NEW_LINE,
     PARAGRAPH_TYPE_IMAGE,
     PARAGRAPH_TYPE_LINK,
     PARAGRAPH_TYPE_VIDEO,

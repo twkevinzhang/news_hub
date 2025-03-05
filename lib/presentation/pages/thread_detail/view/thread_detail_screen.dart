@@ -97,11 +97,12 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
                 child: BlocBuilder<ThreadDetailCubit, ThreadDetailState>(
                   builder: (context, state) => state.threadMap[paragraph.id]!.maybeWhen(
                     orElse: () => const LoadingIndicator(),
-                    completed: (thread) => getPostLayout(
+                    completed: (thread) => SingleChildScrollView(
+                        child: getPostLayout(
                       context,
                       cubit,
                       thread,
-                    ),
+                    )),
                   ),
                 ),
               )),

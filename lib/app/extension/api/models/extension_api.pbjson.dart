@@ -21,6 +21,7 @@ const ParagraphType$json = {
     {'1': 'PARAGRAPH_TYPE_QUOTE', '2': 1},
     {'1': 'PARAGRAPH_TYPE_REPLY_TO', '2': 2},
     {'1': 'PARAGRAPH_TYPE_TEXT', '2': 3},
+    {'1': 'PARAGRAPH_TYPE_NEW_LINE', '2': 7},
     {'1': 'PARAGRAPH_TYPE_IMAGE', '2': 4},
     {'1': 'PARAGRAPH_TYPE_LINK', '2': 5},
     {'1': 'PARAGRAPH_TYPE_VIDEO', '2': 6},
@@ -31,8 +32,9 @@ const ParagraphType$json = {
 final $typed_data.Uint8List paragraphTypeDescriptor = $convert.base64Decode(
     'Cg1QYXJhZ3JhcGhUeXBlEh4KGlBBUkFHUkFQSF9UWVBFX1VOU1BFQ0lGSUVEEAASGAoUUEFSQU'
     'dSQVBIX1RZUEVfUVVPVEUQARIbChdQQVJBR1JBUEhfVFlQRV9SRVBMWV9UTxACEhcKE1BBUkFH'
-    'UkFQSF9UWVBFX1RFWFQQAxIYChRQQVJBR1JBUEhfVFlQRV9JTUFHRRAEEhcKE1BBUkFHUkFQSF'
-    '9UWVBFX0xJTksQBRIYChRQQVJBR1JBUEhfVFlQRV9WSURFTxAG');
+    'UkFQSF9UWVBFX1RFWFQQAxIbChdQQVJBR1JBUEhfVFlQRV9ORVdfTElORRAHEhgKFFBBUkFHUk'
+    'FQSF9UWVBFX0lNQUdFEAQSFwoTUEFSQUdSQVBIX1RZUEVfTElOSxAFEhgKFFBBUkFHUkFQSF9U'
+    'WVBFX1ZJREVPEAY=');
 
 @$core.Deprecated('Use paginationReqDescriptor instead')
 const PaginationReq$json = {
@@ -293,6 +295,7 @@ const Paragraph$json = {
     {'1': 'image', '3': 2, '4': 1, '5': 11, '6': '.pb.ImageParagraph', '9': 0, '10': 'image'},
     {'1': 'video', '3': 3, '4': 1, '5': 11, '6': '.pb.VideoParagraph', '9': 0, '10': 'video'},
     {'1': 'text', '3': 4, '4': 1, '5': 11, '6': '.pb.TextParagraph', '9': 0, '10': 'text'},
+    {'1': 'new_line', '3': 8, '4': 1, '5': 11, '6': '.pb.NewLineParagraph', '9': 0, '10': 'newLine'},
     {'1': 'quote', '3': 5, '4': 1, '5': 11, '6': '.pb.QuoteParagraph', '9': 0, '10': 'quote'},
     {'1': 'reply_to', '3': 6, '4': 1, '5': 11, '6': '.pb.ReplyToParagraph', '9': 0, '10': 'replyTo'},
     {'1': 'link', '3': 7, '4': 1, '5': 11, '6': '.pb.LinkParagraph', '9': 0, '10': 'link'},
@@ -307,9 +310,10 @@ final $typed_data.Uint8List paragraphDescriptor = $convert.base64Decode(
     'CglQYXJhZ3JhcGgSJQoEdHlwZRgBIAEoDjIRLnBiLlBhcmFncmFwaFR5cGVSBHR5cGUSKgoFaW'
     '1hZ2UYAiABKAsyEi5wYi5JbWFnZVBhcmFncmFwaEgAUgVpbWFnZRIqCgV2aWRlbxgDIAEoCzIS'
     'LnBiLlZpZGVvUGFyYWdyYXBoSABSBXZpZGVvEicKBHRleHQYBCABKAsyES5wYi5UZXh0UGFyYW'
-    'dyYXBoSABSBHRleHQSKgoFcXVvdGUYBSABKAsyEi5wYi5RdW90ZVBhcmFncmFwaEgAUgVxdW90'
-    'ZRIxCghyZXBseV90bxgGIAEoCzIULnBiLlJlcGx5VG9QYXJhZ3JhcGhIAFIHcmVwbHlUbxInCg'
-    'RsaW5rGAcgASgLMhEucGIuTGlua1BhcmFncmFwaEgAUgRsaW5rQgkKB2NvbnRlbnQ=');
+    'dyYXBoSABSBHRleHQSMQoIbmV3X2xpbmUYCCABKAsyFC5wYi5OZXdMaW5lUGFyYWdyYXBoSABS'
+    'B25ld0xpbmUSKgoFcXVvdGUYBSABKAsyEi5wYi5RdW90ZVBhcmFncmFwaEgAUgVxdW90ZRIxCg'
+    'hyZXBseV90bxgGIAEoCzIULnBiLlJlcGx5VG9QYXJhZ3JhcGhIAFIHcmVwbHlUbxInCgRsaW5r'
+    'GAcgASgLMhEucGIuTGlua1BhcmFncmFwaEgAUgRsaW5rQgkKB2NvbnRlbnQ=');
 
 @$core.Deprecated('Use imageParagraphDescriptor instead')
 const ImageParagraph$json = {
@@ -356,6 +360,18 @@ const TextParagraph$json = {
 /// Descriptor for `TextParagraph`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List textParagraphDescriptor = $convert.base64Decode(
     'Cg1UZXh0UGFyYWdyYXBoEhgKB2NvbnRlbnQYASABKAlSB2NvbnRlbnQ=');
+
+@$core.Deprecated('Use newLineParagraphDescriptor instead')
+const NewLineParagraph$json = {
+  '1': 'NewLineParagraph',
+  '2': [
+    {'1': 'symbol', '3': 1, '4': 1, '5': 9, '10': 'symbol'},
+  ],
+};
+
+/// Descriptor for `NewLineParagraph`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List newLineParagraphDescriptor = $convert.base64Decode(
+    'ChBOZXdMaW5lUGFyYWdyYXBoEhYKBnN5bWJvbBgBIAEoCVIGc3ltYm9s');
 
 @$core.Deprecated('Use quoteParagraphDescriptor instead')
 const QuoteParagraph$json = {
