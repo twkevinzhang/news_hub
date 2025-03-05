@@ -54,7 +54,6 @@ class InstalledExtensionRepositoryImpl implements InstalledExtensionRepository {
     required bool isNsfw,
   }) async {
     final extension = InstalledExtensionsCompanion.insert(
-      id: const Uuid().v4(),
       repoBaseUrl: repoBaseUrl,
       pkgName: pkgName,
       displayName: displayName,
@@ -90,7 +89,6 @@ class InstalledExtensionRepositoryImpl implements InstalledExtensionRepository {
     required bool isNsfw,
   }) async {
     final extension = InstalledExtensionsCompanion(
-      id: Value(const Uuid().v4()),
       repoBaseUrl: Value(repoBaseUrl),
       pkgName: Value(pkgName),
       displayName: Value(displayName),

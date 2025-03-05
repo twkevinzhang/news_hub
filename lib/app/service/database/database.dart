@@ -17,7 +17,6 @@ class ExtensionRepos extends Table {
 }
 
 class InstalledExtensions extends Table {
-  TextColumn get id => text()();
   TextColumn get repoBaseUrl => text()();
   TextColumn get pkgName => text()();
   TextColumn get displayName => text()();
@@ -29,7 +28,7 @@ class InstalledExtensions extends Table {
   BoolColumn get isNsfw => boolean()();
 
   @override
-  Set<Column> get primaryKey => {id};
+  Set<Column> get primaryKey => {pkgName};
 }
 
 class Suggestions extends Table {
