@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/foundation.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -26,6 +29,7 @@ class ThreadDetailState with _$ThreadDetailState {
 class ThreadDetailCubit extends Cubit<ThreadDetailState> {
   final GetThread _getThread;
   final PagingController<int, PostWithExtension> pagingController;
+  final StreamController<Widget> overlayController;
 
   static const _pageSize = 10;
 
@@ -33,6 +37,7 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
     required GetThread getThread,
   })  : _getThread = getThread,
         pagingController = PagingController(firstPageKey: 1),
+        overlayController = StreamController<Widget>.broadcast(),
         super(ThreadDetailState(
           extensionPkgName: '',
           siteId: '',
@@ -82,6 +87,16 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
         );
         isLastPage = posts.length < _pageSize;
       }
+      final newMap = Map.of(state.threadMap);
+      final newMap2 = Map.of(state.regardingPostsMap);
+      for (final post in posts) {
+        newMap[post.id] = Result.completed(post);
+        if (post.regardingPostsCount.isPositive) {
+          newMap2[post.id] = Result.completed(posts.filterBy(replyToId: post.id).toList());
+        }
+      }
+      safeEmit(state.copyWith(threadMap: newMap));
+      safeEmit(state.copyWith(regardingPostsMap: newMap2));
       if (isLastPage) {
         pagingController.appendLastPage(posts);
       } else {

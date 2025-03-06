@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:auto_route/auto_route.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -8,9 +9,11 @@ import 'package:news_hub/domain/thread/interactor/get_thread.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/thread_detail/bloc/thread_detail_cubit.dart';
 import 'package:news_hub/presentation/pages/thread_detail/widgets/post_card.dart';
+import 'package:news_hub/presentation/pages/thread_detail/widgets/post_gallery_overlay.dart';
 import 'package:news_hub/presentation/widgets/widgets.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:news_hub/shared/models.dart';
+import 'package:swipe_image_gallery/swipe_image_gallery.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 
@@ -63,7 +66,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
             child: Card(
                 child: Padding(
               padding: const EdgeInsets.all(8),
-              child: getPostLayout(context, cubit, post),
+              child: _getPostLayout(context, cubit, post),
             )),
           ),
           noItemsFoundIndicatorBuilder: (context) => Center(
@@ -79,7 +82,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
     );
   }
 
-  Widget getPostLayout(
+  Widget _getPostLayout(
     BuildContext context,
     ThreadDetailCubit cubit,
     domain.Post post,
@@ -95,29 +98,20 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
         } else if (paragraph is domain.ReplyToParagraph) {
           showDialog(
             context: context,
-            builder: (context) => BlocProvider<ThreadDetailCubit>.value(
-              value: cubit..loadThread(paragraph.id),
-              child: Dialog(
-                  child: Padding(
-                padding: EdgeInsets.all(16),
-                child: BlocBuilder<ThreadDetailCubit, ThreadDetailState>(
-                  builder: (context, state) => state.threadMap[paragraph.id]!.maybeWhen(
-                    orElse: () => const LoadingIndicator(),
-                    completed: (thread) => SingleChildScrollView(
-                        child: getPostLayout(
-                      context,
-                      cubit,
-                      thread,
-                    )),
-                  ),
-                ),
-              )),
+            builder: (context) => _getDialog(
+              cubit: cubit,
+              builder: (context, state) => state.threadMap[paragraph.id]!.maybeWhen(
+                orElse: () => const LoadingIndicator(),
+                completed: (thread) => SingleChildScrollView(child: _getPostLayout(context, cubit, thread)),
+              ),
             ),
           );
         } else if (paragraph is domain.VideoParagraph) {
           // TODO
         } else if (paragraph is domain.ImageParagraph) {
-          // TODO
+          final images = post.contents.images();
+          final index = images.indexOf(paragraph);
+          _getPostGallery(context, cubit, post, index).show();
         } else if (paragraph is domain.QuoteParagraph) {
           // TODO
         }
@@ -125,35 +119,63 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
       onRegardingPostsClick: () {
         showDialog(
           context: context,
-          builder: (context) => BlocProvider<ThreadDetailCubit>.value(
-            value: cubit..loadRegardingPosts(post.id),
-            child: Dialog(
+          builder: (context) => _getDialog(
+            cubit: cubit,
+            builder: (context, state) => state.regardingPostsMap[post.id]!.maybeWhen(
+              orElse: () => const LoadingIndicator(),
+              completed: (regardingPosts) => SingleChildScrollView(
                 child: Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: BlocBuilder<ThreadDetailCubit, ThreadDetailState>(
-                builder: (context, state) => state.regardingPostsMap[post.id]!.maybeWhen(
-                  orElse: () => const LoadingIndicator(),
-                  completed: (regardingPosts) => SingleChildScrollView(
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(vertical: 16),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: regardingPosts
-                            .map((regardingPost) => getPostLayout(
-                                  context,
-                                  cubit,
-                                  regardingPost,
-                                ))
-                            .toList(),
-                      ),
-                    ),
-                  ),
+                  padding: EdgeInsets.symmetric(vertical: 16),
+                  child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: regardingPosts.map((regardingPost) => _getPostLayout(context, cubit, regardingPost)).toList()),
                 ),
               ),
-            )),
+            ),
           ),
         );
       },
+    );
+  }
+
+  BlocProvider _getDialog({
+    required ThreadDetailCubit cubit,
+    required Widget Function(BuildContext context, ThreadDetailState state) builder,
+  }) {
+    return BlocProvider<ThreadDetailCubit>.value(
+      value: cubit,
+      child: Dialog(
+          child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 16),
+        child: BlocBuilder<ThreadDetailCubit, ThreadDetailState>(
+          builder: builder,
+        ),
+      )),
+    );
+  }
+
+  SwipeImageGallery _getPostGallery(BuildContext context, ThreadDetailCubit cubit, domain.Post post, int initialIndex) {
+    final images = post.contents.images();
+    return SwipeImageGallery(
+      overlayController: cubit.overlayController,
+      context: context,
+      dragEnabled: false,
+      children: images.map((image) => CachedNetworkImage(
+        imageUrl: image.raw,
+        placeholder: (context, url) => const LoadingIndicator(),
+        errorWidget: (context, url, error) => const Icon(Icons.error),
+      )).toList(),
+      onSwipe: (index) {
+        cubit.overlayController.add(PostGalleryOverlay(
+          title: '${index + 1}/${images.length}',
+          post: post,
+        ));
+      },
+      initialIndex: initialIndex,
+      initialOverlay: PostGalleryOverlay(
+        title: '${initialIndex + 1}/${images.length}',
+        post: post,
+      ),
     );
   }
 }

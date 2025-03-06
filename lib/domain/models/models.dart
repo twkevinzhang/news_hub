@@ -172,6 +172,17 @@ class Post {
   });
 }
 
+extension PostListEx on List<Post> {
+  Iterable<Post> filterBy({ required String replyToId }) {
+    return where((post) => post.contents.any((p) {
+      if (p is ReplyToParagraph) {
+        return p.id == replyToId;
+      }
+      return false;
+    }));
+  }
+}
+
 enum ParagraphType { quote, replyTo, text, newLine, image, link, video }
 
 abstract class Paragraph {
@@ -235,6 +246,12 @@ class LinkParagraph extends Paragraph {
   final String content;
 
   LinkParagraph({required this.content}) : super(ParagraphType.link);
+}
+
+extension ParagraphListEx on List<Paragraph> {
+  List<ImageParagraph> images() {
+    return whereType<ImageParagraph>().toList();
+  }
 }
 
 class Comment {
