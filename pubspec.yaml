@@ -50,8 +50,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
-  assets:
-    - demo_extension/twkevinzhang_komica.zip
+#  assets:
+#    - demo_extension/twkevinzhang_komica.zip
 
 analyzer:
   errors:
