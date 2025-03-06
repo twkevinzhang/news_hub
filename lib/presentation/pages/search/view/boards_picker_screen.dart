@@ -3,6 +3,7 @@ import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/presentation/pages/search/bloc/boards_picker_cubit.dart';
+import 'package:news_hub/presentation/widgets/molecules/loading_indicator.dart';
 
 class BoardsPickerScreen extends StatelessWidget {
   @override
@@ -14,7 +15,7 @@ class BoardsPickerScreen extends StatelessWidget {
       ),
       body: cubit.state.extensionBoards.when(
         initial: () => Center(child: Text("No installed extensions")),
-        loading: () => const Center(child: CircularProgressIndicator()),
+        loading: () => const LoadingIndicator(),
         error: (e) => Center(child: Text(e.toString())),
         completed: (extensionBoards) => ListView(
           children: [

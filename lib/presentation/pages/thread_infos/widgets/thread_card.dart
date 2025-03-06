@@ -3,12 +3,8 @@ import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:news_hub/domain/thread/interactor/get_thread.dart';
-import 'package:news_hub/domain/thread/interactor/list_thread_infos.dart';
 import 'package:news_hub/presentation/pages/thread_detail/widgets/post_card.dart';
-import 'package:news_hub/presentation/pages/thread_detail/widgets/post_paragraph.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
-import 'package:news_hub/presentation/widgets/atoms/atoms.dart';
-import 'package:timeago/timeago.dart' as timeago;
 import 'package:news_hub/domain/models/models.dart' as domain;
 
 class ThreadInfoCard extends StatelessWidget {
