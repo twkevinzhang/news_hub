@@ -141,6 +141,7 @@ extension ReplyToParagraphTransform on pb.ReplyToParagraph {
   domain.ReplyToParagraph toDomain() {
     return domain.ReplyToParagraph(
       id: id,
+      authorName: authorName,
       preview: preview,
     );
   }

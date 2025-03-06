@@ -1627,6 +1627,7 @@ class ReplyToParagraph extends $pb.GeneratedMessage {
   factory ReplyToParagraph({
     $core.String? id,
     $core.String? preview,
+    $core.String? authorName,
   }) {
     final $result = create();
     if (id != null) {
@@ -1634,6 +1635,9 @@ class ReplyToParagraph extends $pb.GeneratedMessage {
     }
     if (preview != null) {
       $result.preview = preview;
+    }
+    if (authorName != null) {
+      $result.authorName = authorName;
     }
     return $result;
   }
@@ -1644,6 +1648,7 @@ class ReplyToParagraph extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ReplyToParagraph', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..aOS(2, _omitFieldNames ? '' : 'preview')
+    ..aOS(3, _omitFieldNames ? '' : 'authorName')
     ..hasRequiredFields = false
   ;
 
@@ -1685,6 +1690,15 @@ class ReplyToParagraph extends $pb.GeneratedMessage {
   $core.bool hasPreview() => $_has(1);
   @$pb.TagNumber(2)
   void clearPreview() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get authorName => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set authorName($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasAuthorName() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearAuthorName() => clearField(3);
 }
 
 class LinkParagraph extends $pb.GeneratedMessage {

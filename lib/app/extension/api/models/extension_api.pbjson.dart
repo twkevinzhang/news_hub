@@ -391,14 +391,15 @@ const ReplyToParagraph$json = {
   '1': 'ReplyToParagraph',
   '2': [
     {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {'1': 'author_name', '3': 3, '4': 1, '5': 9, '10': 'authorName'},
     {'1': 'preview', '3': 2, '4': 1, '5': 9, '10': 'preview'},
   ],
 };
 
 /// Descriptor for `ReplyToParagraph`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List replyToParagraphDescriptor = $convert.base64Decode(
-    'ChBSZXBseVRvUGFyYWdyYXBoEg4KAmlkGAEgASgJUgJpZBIYCgdwcmV2aWV3GAIgASgJUgdwcm'
-    'V2aWV3');
+    'ChBSZXBseVRvUGFyYWdyYXBoEg4KAmlkGAEgASgJUgJpZBIfCgthdXRob3JfbmFtZRgDIAEoCV'
+    'IKYXV0aG9yTmFtZRIYCgdwcmV2aWV3GAIgASgJUgdwcmV2aWV3');
 
 @$core.Deprecated('Use linkParagraphDescriptor instead')
 const LinkParagraph$json = {
