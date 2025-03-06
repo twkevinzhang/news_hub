@@ -141,4 +141,8 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
     final newMap2 = Map.of(state.regardingPostsMap)..[postId] = Result.completed(regardingPostsMap);
     safeEmit(state.copyWith(regardingPostsMap: newMap2));
   }
+
+  void refresh() {
+    pagingController.refresh();
+  }
 }

@@ -48,6 +48,12 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Thread Detail'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.refresh_outlined),
+            onPressed: () => cubit.refresh(),
+          ),
+        ],
       ),
       body: PagedListView<int, PostWithExtension>(
         pagingController: cubit.pagingController,
