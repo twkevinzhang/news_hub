@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
+import 'package:news_hub/presentation/widgets/molecules/loading_indicator.dart';
 import 'package:news_hub/shared/extensions.dart';
 
 class Article {
@@ -76,30 +77,26 @@ class ArticleWidget extends StatelessWidget {
             color: theme.colorScheme.primary,
             decoration: TextDecoration.underline,
           ),
-          recognizer: TapGestureRecognizer()
-            ..onTap = () => onParagraphClick?.call(paragraph),
+          recognizer: TapGestureRecognizer()..onTap = () => onParagraphClick?.call(paragraph),
         ));
       } else if (paragraph is domain.ReplyToParagraph) {
         // 回复段落 - 添加为可点击的TextSpan
         article.enter();
-        final annotations = paragraph.preview.isEmpty
-            ? ">>${paragraph.authorName} "
-            : ">>${paragraph.authorName}(${paragraph.preview.truncate(7)}) ";
+        final annotations = paragraph.preview.isEmpty ? ">>${paragraph.authorName} " : ">>${paragraph.authorName}(${paragraph.preview.truncate(7)}) ";
         article.input(TextSpan(
           text: annotations,
           style: textStyle.copyWith(
             color: theme.colorScheme.secondary,
             decoration: TextDecoration.underline,
           ),
-          recognizer: TapGestureRecognizer()
-            ..onTap = () => onParagraphClick?.call(paragraph),
+          recognizer: TapGestureRecognizer()..onTap = () => onParagraphClick?.call(paragraph),
         ));
         article.enter();
       } else if (paragraph is domain.ImageParagraph) {
         // 图片段落 - 添加为可点击的Image
         article.enter();
         article.inputWidget(ImageParagraph(
-          imageUrl: paragraph.thumb(),
+          imageUrl: paragraph.raw,
           onClick: () => onParagraphClick?.call(paragraph),
         ));
       } else if (paragraph is domain.VideoParagraph) {
@@ -235,20 +232,14 @@ class ImageParagraph extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: onClick,
-      child: SizedBox(
-        height: 80.0,
-        width: 80.0,
-        child: CachedNetworkImage(
+        onTap: onClick,
+        child: FittedBox(
+            child: CachedNetworkImage(
           imageUrl: imageUrl,
-          placeholder: (context, url) => const Center(
-            child: CircularProgressIndicator(),
-          ),
+          placeholder: (context, url) => const LoadingIndicator(),
           errorWidget: (context, url, error) => const Icon(Icons.error),
           fit: BoxFit.cover,
-        ),
-      ),
-    );
+        )));
   }
 }
 
@@ -268,17 +259,11 @@ class VideoParagraph extends StatelessWidget {
       onTap: onClick,
       child: Stack(
         children: [
-          SizedBox(
-            height: 80.0,
-            width: 80.0,
+          FittedBox(
             child: CachedNetworkImage(
-              imageUrl: thumb ??
-                  'https://img.freepik.com/premium-vector/window-operating-system-error-warning-dialog-window-popup-message-with-system-failure-flat-design_812892-54.jpg?semt=ais_hybrid',
-              placeholder: (context, url) => const Center(
-                child: CircularProgressIndicator(),
-              ),
+              imageUrl: 'https://dummyimage.com/640x480/f00/fff&text=video',
+              placeholder: (context, url) => const LoadingIndicator(),
               errorWidget: (context, url, error) => const Icon(Icons.error),
-              fit: BoxFit.cover,
             ),
           ),
           Positioned(
