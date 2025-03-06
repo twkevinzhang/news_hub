@@ -9,6 +9,10 @@ run:
 build:
 	fvm dart run build_runner build --delete-conflicting-outputs
 
+.PHONY: clean
+clean:
+	fvm dart run build_runner clean
+
 .PHONY: proto
 proto:
 	protoc --dart_out=grpc:lib/app/extension/api/models -Inews_hub_protos news_hub_protos/*.proto

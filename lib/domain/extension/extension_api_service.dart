@@ -49,7 +49,7 @@ class GetThreadParams with _$GetThreadParams {
     required String extensionPkgName,
     required String siteId,
     required String boardId,
-    required String id,
+    required String threadId,
     String? postId,
   }) = _GetThreadParams;
 }
@@ -61,7 +61,7 @@ class GetRegardingPostsParams with _$GetRegardingPostsParams {
     required String siteId,
     required String boardId,
     required String threadId,
-    String? postId,
+    String? replyToId,
     Pagination? pagination,
   }) = _GetRegardingPostsParams;
 }

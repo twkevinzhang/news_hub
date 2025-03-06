@@ -36,7 +36,7 @@ Map<String, dynamic> _$$GetThreadParamsImplToJson(
       'extensionPkgName': instance.extensionPkgName,
       'siteId': instance.siteId,
       'boardId': instance.boardId,
-      'id': instance.id,
+      'threadId': instance.threadId,
       'postId': instance.postId,
     };
 
@@ -47,7 +47,7 @@ Map<String, dynamic> _$$GetRegardingPostsParamsImplToJson(
       'siteId': instance.siteId,
       'boardId': instance.boardId,
       'threadId': instance.threadId,
-      'postId': instance.postId,
+      'replyToId': instance.replyToId,
       'pagination': instance.pagination,
     };
 
