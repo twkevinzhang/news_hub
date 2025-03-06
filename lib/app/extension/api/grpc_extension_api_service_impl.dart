@@ -79,7 +79,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
       queryFn: () => _client.getThreadPost(GetThreadPostReq(
         siteId: params.siteId,
         boardId: params.boardId,
-        id: params.id,
+        threadId: params.threadId,
         postId: params.postId,
       )),
     );
@@ -94,7 +94,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
         siteId: params.siteId,
         boardId: params.boardId,
         threadId: params.threadId,
-        postId: params.postId,
+        replyToId: params.replyToId,
         page: PaginationReq(
           page: params.pagination?.page,
           pageSize: params.pagination?.pageSize,

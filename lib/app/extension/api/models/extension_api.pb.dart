@@ -848,14 +848,14 @@ class GetThreadInfosRes extends $pb.GeneratedMessage {
 
 class GetThreadPostReq extends $pb.GeneratedMessage {
   factory GetThreadPostReq({
-    $core.String? id,
+    $core.String? threadId,
     $core.String? siteId,
     $core.String? boardId,
     $core.String? postId,
   }) {
     final $result = create();
-    if (id != null) {
-      $result.id = id;
+    if (threadId != null) {
+      $result.threadId = threadId;
     }
     if (siteId != null) {
       $result.siteId = siteId;
@@ -873,7 +873,7 @@ class GetThreadPostReq extends $pb.GeneratedMessage {
   factory GetThreadPostReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetThreadPostReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'id')
+    ..aOS(1, _omitFieldNames ? '' : 'threadId')
     ..aOS(2, _omitFieldNames ? '' : 'siteId')
     ..aOS(3, _omitFieldNames ? '' : 'boardId')
     ..aOS(4, _omitFieldNames ? '' : 'postId')
@@ -902,13 +902,13 @@ class GetThreadPostReq extends $pb.GeneratedMessage {
   static GetThreadPostReq? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get id => $_getSZ(0);
+  $core.String get threadId => $_getSZ(0);
   @$pb.TagNumber(1)
-  set id($core.String v) { $_setString(0, v); }
+  set threadId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasId() => $_has(0);
+  $core.bool hasThreadId() => $_has(0);
   @$pb.TagNumber(1)
-  void clearId() => clearField(1);
+  void clearThreadId() => clearField(1);
 
   @$pb.TagNumber(2)
   $core.String get siteId => $_getSZ(1);
@@ -996,7 +996,7 @@ class GetRegardingPostsReq extends $pb.GeneratedMessage {
     $core.String? boardId,
     $core.String? threadId,
     PaginationReq? page,
-    $core.String? postId,
+    $core.String? replyToId,
   }) {
     final $result = create();
     if (siteId != null) {
@@ -1011,8 +1011,8 @@ class GetRegardingPostsReq extends $pb.GeneratedMessage {
     if (page != null) {
       $result.page = page;
     }
-    if (postId != null) {
-      $result.postId = postId;
+    if (replyToId != null) {
+      $result.replyToId = replyToId;
     }
     return $result;
   }
@@ -1025,7 +1025,7 @@ class GetRegardingPostsReq extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'boardId')
     ..aOS(3, _omitFieldNames ? '' : 'threadId')
     ..aOM<PaginationReq>(4, _omitFieldNames ? '' : 'page', subBuilder: PaginationReq.create)
-    ..aOS(5, _omitFieldNames ? '' : 'postId')
+    ..aOS(5, _omitFieldNames ? '' : 'replyToId')
     ..hasRequiredFields = false
   ;
 
@@ -1089,13 +1089,13 @@ class GetRegardingPostsReq extends $pb.GeneratedMessage {
   PaginationReq ensurePage() => $_ensure(3);
 
   @$pb.TagNumber(5)
-  $core.String get postId => $_getSZ(4);
+  $core.String get replyToId => $_getSZ(4);
   @$pb.TagNumber(5)
-  set postId($core.String v) { $_setString(4, v); }
+  set replyToId($core.String v) { $_setString(4, v); }
   @$pb.TagNumber(5)
-  $core.bool hasPostId() => $_has(4);
+  $core.bool hasReplyToId() => $_has(4);
   @$pb.TagNumber(5)
-  void clearPostId() => clearField(5);
+  void clearReplyToId() => clearField(5);
 }
 
 class GetRegardingPostsRes extends $pb.GeneratedMessage {

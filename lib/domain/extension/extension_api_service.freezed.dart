@@ -627,7 +627,7 @@ mixin _$GetThreadParams {
   String get extensionPkgName => throw _privateConstructorUsedError;
   String get siteId => throw _privateConstructorUsedError;
   String get boardId => throw _privateConstructorUsedError;
-  String get id => throw _privateConstructorUsedError;
+  String get threadId => throw _privateConstructorUsedError;
   String? get postId => throw _privateConstructorUsedError;
 
   /// Serializes this GetThreadParams to a JSON map.
@@ -650,7 +650,7 @@ abstract class $GetThreadParamsCopyWith<$Res> {
       {String extensionPkgName,
       String siteId,
       String boardId,
-      String id,
+      String threadId,
       String? postId});
 }
 
@@ -672,7 +672,7 @@ class _$GetThreadParamsCopyWithImpl<$Res, $Val extends GetThreadParams>
     Object? extensionPkgName = null,
     Object? siteId = null,
     Object? boardId = null,
-    Object? id = null,
+    Object? threadId = null,
     Object? postId = freezed,
   }) {
     return _then(_value.copyWith(
@@ -688,9 +688,9 @@ class _$GetThreadParamsCopyWithImpl<$Res, $Val extends GetThreadParams>
           ? _value.boardId
           : boardId // ignore: cast_nullable_to_non_nullable
               as String,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      threadId: null == threadId
+          ? _value.threadId
+          : threadId // ignore: cast_nullable_to_non_nullable
               as String,
       postId: freezed == postId
           ? _value.postId
@@ -712,7 +712,7 @@ abstract class _$$GetThreadParamsImplCopyWith<$Res>
       {String extensionPkgName,
       String siteId,
       String boardId,
-      String id,
+      String threadId,
       String? postId});
 }
 
@@ -732,7 +732,7 @@ class __$$GetThreadParamsImplCopyWithImpl<$Res>
     Object? extensionPkgName = null,
     Object? siteId = null,
     Object? boardId = null,
-    Object? id = null,
+    Object? threadId = null,
     Object? postId = freezed,
   }) {
     return _then(_$GetThreadParamsImpl(
@@ -748,9 +748,9 @@ class __$$GetThreadParamsImplCopyWithImpl<$Res>
           ? _value.boardId
           : boardId // ignore: cast_nullable_to_non_nullable
               as String,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
+      threadId: null == threadId
+          ? _value.threadId
+          : threadId // ignore: cast_nullable_to_non_nullable
               as String,
       postId: freezed == postId
           ? _value.postId
@@ -767,7 +767,7 @@ class _$GetThreadParamsImpl implements _GetThreadParams {
       {required this.extensionPkgName,
       required this.siteId,
       required this.boardId,
-      required this.id,
+      required this.threadId,
       this.postId});
 
   @override
@@ -777,13 +777,13 @@ class _$GetThreadParamsImpl implements _GetThreadParams {
   @override
   final String boardId;
   @override
-  final String id;
+  final String threadId;
   @override
   final String? postId;
 
   @override
   String toString() {
-    return 'GetThreadParams(extensionPkgName: $extensionPkgName, siteId: $siteId, boardId: $boardId, id: $id, postId: $postId)';
+    return 'GetThreadParams(extensionPkgName: $extensionPkgName, siteId: $siteId, boardId: $boardId, threadId: $threadId, postId: $postId)';
   }
 
   @override
@@ -795,14 +795,15 @@ class _$GetThreadParamsImpl implements _GetThreadParams {
                 other.extensionPkgName == extensionPkgName) &&
             (identical(other.siteId, siteId) || other.siteId == siteId) &&
             (identical(other.boardId, boardId) || other.boardId == boardId) &&
-            (identical(other.id, id) || other.id == id) &&
+            (identical(other.threadId, threadId) ||
+                other.threadId == threadId) &&
             (identical(other.postId, postId) || other.postId == postId));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, extensionPkgName, siteId, boardId, id, postId);
+  int get hashCode => Object.hash(
+      runtimeType, extensionPkgName, siteId, boardId, threadId, postId);
 
   /// Create a copy of GetThreadParams
   /// with the given fields replaced by the non-null parameter values.
@@ -826,7 +827,7 @@ abstract class _GetThreadParams implements GetThreadParams {
       {required final String extensionPkgName,
       required final String siteId,
       required final String boardId,
-      required final String id,
+      required final String threadId,
       final String? postId}) = _$GetThreadParamsImpl;
 
   @override
@@ -836,7 +837,7 @@ abstract class _GetThreadParams implements GetThreadParams {
   @override
   String get boardId;
   @override
-  String get id;
+  String get threadId;
   @override
   String? get postId;
 
@@ -854,7 +855,7 @@ mixin _$GetRegardingPostsParams {
   String get siteId => throw _privateConstructorUsedError;
   String get boardId => throw _privateConstructorUsedError;
   String get threadId => throw _privateConstructorUsedError;
-  String? get postId => throw _privateConstructorUsedError;
+  String? get replyToId => throw _privateConstructorUsedError;
   Pagination? get pagination => throw _privateConstructorUsedError;
 
   /// Serializes this GetRegardingPostsParams to a JSON map.
@@ -878,7 +879,7 @@ abstract class $GetRegardingPostsParamsCopyWith<$Res> {
       String siteId,
       String boardId,
       String threadId,
-      String? postId,
+      String? replyToId,
       Pagination? pagination});
 
   $PaginationCopyWith<$Res>? get pagination;
@@ -904,7 +905,7 @@ class _$GetRegardingPostsParamsCopyWithImpl<$Res,
     Object? siteId = null,
     Object? boardId = null,
     Object? threadId = null,
-    Object? postId = freezed,
+    Object? replyToId = freezed,
     Object? pagination = freezed,
   }) {
     return _then(_value.copyWith(
@@ -924,9 +925,9 @@ class _$GetRegardingPostsParamsCopyWithImpl<$Res,
           ? _value.threadId
           : threadId // ignore: cast_nullable_to_non_nullable
               as String,
-      postId: freezed == postId
-          ? _value.postId
-          : postId // ignore: cast_nullable_to_non_nullable
+      replyToId: freezed == replyToId
+          ? _value.replyToId
+          : replyToId // ignore: cast_nullable_to_non_nullable
               as String?,
       pagination: freezed == pagination
           ? _value.pagination
@@ -964,7 +965,7 @@ abstract class _$$GetRegardingPostsParamsImplCopyWith<$Res>
       String siteId,
       String boardId,
       String threadId,
-      String? postId,
+      String? replyToId,
       Pagination? pagination});
 
   @override
@@ -990,7 +991,7 @@ class __$$GetRegardingPostsParamsImplCopyWithImpl<$Res>
     Object? siteId = null,
     Object? boardId = null,
     Object? threadId = null,
-    Object? postId = freezed,
+    Object? replyToId = freezed,
     Object? pagination = freezed,
   }) {
     return _then(_$GetRegardingPostsParamsImpl(
@@ -1010,9 +1011,9 @@ class __$$GetRegardingPostsParamsImplCopyWithImpl<$Res>
           ? _value.threadId
           : threadId // ignore: cast_nullable_to_non_nullable
               as String,
-      postId: freezed == postId
-          ? _value.postId
-          : postId // ignore: cast_nullable_to_non_nullable
+      replyToId: freezed == replyToId
+          ? _value.replyToId
+          : replyToId // ignore: cast_nullable_to_non_nullable
               as String?,
       pagination: freezed == pagination
           ? _value.pagination
@@ -1030,7 +1031,7 @@ class _$GetRegardingPostsParamsImpl implements _GetRegardingPostsParams {
       required this.siteId,
       required this.boardId,
       required this.threadId,
-      this.postId,
+      this.replyToId,
       this.pagination});
 
   @override
@@ -1042,13 +1043,13 @@ class _$GetRegardingPostsParamsImpl implements _GetRegardingPostsParams {
   @override
   final String threadId;
   @override
-  final String? postId;
+  final String? replyToId;
   @override
   final Pagination? pagination;
 
   @override
   String toString() {
-    return 'GetRegardingPostsParams(extensionPkgName: $extensionPkgName, siteId: $siteId, boardId: $boardId, threadId: $threadId, postId: $postId, pagination: $pagination)';
+    return 'GetRegardingPostsParams(extensionPkgName: $extensionPkgName, siteId: $siteId, boardId: $boardId, threadId: $threadId, replyToId: $replyToId, pagination: $pagination)';
   }
 
   @override
@@ -1062,7 +1063,8 @@ class _$GetRegardingPostsParamsImpl implements _GetRegardingPostsParams {
             (identical(other.boardId, boardId) || other.boardId == boardId) &&
             (identical(other.threadId, threadId) ||
                 other.threadId == threadId) &&
-            (identical(other.postId, postId) || other.postId == postId) &&
+            (identical(other.replyToId, replyToId) ||
+                other.replyToId == replyToId) &&
             (identical(other.pagination, pagination) ||
                 other.pagination == pagination));
   }
@@ -1070,7 +1072,7 @@ class _$GetRegardingPostsParamsImpl implements _GetRegardingPostsParams {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, extensionPkgName, siteId,
-      boardId, threadId, postId, pagination);
+      boardId, threadId, replyToId, pagination);
 
   /// Create a copy of GetRegardingPostsParams
   /// with the given fields replaced by the non-null parameter values.
@@ -1095,7 +1097,7 @@ abstract class _GetRegardingPostsParams implements GetRegardingPostsParams {
       required final String siteId,
       required final String boardId,
       required final String threadId,
-      final String? postId,
+      final String? replyToId,
       final Pagination? pagination}) = _$GetRegardingPostsParamsImpl;
 
   @override
@@ -1107,7 +1109,7 @@ abstract class _GetRegardingPostsParams implements GetRegardingPostsParams {
   @override
   String get threadId;
   @override
-  String? get postId;
+  String? get replyToId;
   @override
   Pagination? get pagination;
 

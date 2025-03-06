@@ -224,7 +224,7 @@ final $typed_data.Uint8List getThreadInfosResDescriptor = $convert.base64Decode(
 const GetThreadPostReq$json = {
   '1': 'GetThreadPostReq',
   '2': [
-    {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {'1': 'thread_id', '3': 1, '4': 1, '5': 9, '10': 'threadId'},
     {'1': 'site_id', '3': 2, '4': 1, '5': 9, '10': 'siteId'},
     {'1': 'board_id', '3': 3, '4': 1, '5': 9, '10': 'boardId'},
     {'1': 'post_id', '3': 4, '4': 1, '5': 9, '10': 'postId'},
@@ -233,8 +233,9 @@ const GetThreadPostReq$json = {
 
 /// Descriptor for `GetThreadPostReq`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List getThreadPostReqDescriptor = $convert.base64Decode(
-    'ChBHZXRUaHJlYWRQb3N0UmVxEg4KAmlkGAEgASgJUgJpZBIXCgdzaXRlX2lkGAIgASgJUgZzaX'
-    'RlSWQSGQoIYm9hcmRfaWQYAyABKAlSB2JvYXJkSWQSFwoHcG9zdF9pZBgEIAEoCVIGcG9zdElk');
+    'ChBHZXRUaHJlYWRQb3N0UmVxEhsKCXRocmVhZF9pZBgBIAEoCVIIdGhyZWFkSWQSFwoHc2l0ZV'
+    '9pZBgCIAEoCVIGc2l0ZUlkEhkKCGJvYXJkX2lkGAMgASgJUgdib2FyZElkEhcKB3Bvc3RfaWQY'
+    'BCABKAlSBnBvc3RJZA==');
 
 @$core.Deprecated('Use getThreadPostResDescriptor instead')
 const GetThreadPostRes$json = {
@@ -256,11 +257,11 @@ const GetRegardingPostsReq$json = {
     {'1': 'site_id', '3': 1, '4': 1, '5': 9, '10': 'siteId'},
     {'1': 'board_id', '3': 2, '4': 1, '5': 9, '10': 'boardId'},
     {'1': 'thread_id', '3': 3, '4': 1, '5': 9, '10': 'threadId'},
-    {'1': 'post_id', '3': 5, '4': 1, '5': 9, '9': 0, '10': 'postId', '17': true},
+    {'1': 'reply_to_id', '3': 5, '4': 1, '5': 9, '9': 0, '10': 'replyToId', '17': true},
     {'1': 'page', '3': 4, '4': 1, '5': 11, '6': '.pb.PaginationReq', '9': 1, '10': 'page', '17': true},
   ],
   '8': [
-    {'1': '_post_id'},
+    {'1': '_reply_to_id'},
     {'1': '_page'},
   ],
 };
@@ -268,9 +269,9 @@ const GetRegardingPostsReq$json = {
 /// Descriptor for `GetRegardingPostsReq`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List getRegardingPostsReqDescriptor = $convert.base64Decode(
     'ChRHZXRSZWdhcmRpbmdQb3N0c1JlcRIXCgdzaXRlX2lkGAEgASgJUgZzaXRlSWQSGQoIYm9hcm'
-    'RfaWQYAiABKAlSB2JvYXJkSWQSGwoJdGhyZWFkX2lkGAMgASgJUgh0aHJlYWRJZBIcCgdwb3N0'
-    'X2lkGAUgASgJSABSBnBvc3RJZIgBARIqCgRwYWdlGAQgASgLMhEucGIuUGFnaW5hdGlvblJlcU'
-    'gBUgRwYWdliAEBQgoKCF9wb3N0X2lkQgcKBV9wYWdl');
+    'RfaWQYAiABKAlSB2JvYXJkSWQSGwoJdGhyZWFkX2lkGAMgASgJUgh0aHJlYWRJZBIjCgtyZXBs'
+    'eV90b19pZBgFIAEoCUgAUglyZXBseVRvSWSIAQESKgoEcGFnZRgEIAEoCzIRLnBiLlBhZ2luYX'
+    'Rpb25SZXFIAVIEcGFnZYgBAUIOCgxfcmVwbHlfdG9faWRCBwoFX3BhZ2U=');
 
 @$core.Deprecated('Use getRegardingPostsResDescriptor instead')
 const GetRegardingPostsRes$json = {

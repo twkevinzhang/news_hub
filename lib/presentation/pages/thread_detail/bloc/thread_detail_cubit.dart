@@ -49,7 +49,7 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
       extensionPkgName: state.extensionPkgName,
       siteId: state.siteId,
       boardId: state.boardId,
-      id: state.threadId,
+      threadId: state.threadId,
     );
     final regardingPostsF = _getThread.listRegardingPosts(
       extensionPkgName: state.extensionPkgName,
@@ -117,7 +117,7 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
       extensionPkgName: state.extensionPkgName,
       siteId: state.siteId,
       boardId: state.boardId,
-      id: state.threadId,
+      threadId: state.threadId,
       postId: postId,
     );
     final newMap2 = Map<String, Result<Post>>.from(state.threadMap)..[postId] = Result.completed(newThread);
@@ -132,7 +132,7 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
       siteId: state.siteId,
       boardId: state.boardId,
       threadId: state.threadId,
-      postId: postId,
+      replyToId: postId,
       pagination: Pagination(
         page: 1,
         pageSize: 10000,

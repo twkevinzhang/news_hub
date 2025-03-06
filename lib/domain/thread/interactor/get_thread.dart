@@ -21,7 +21,7 @@ class GetThread {
     required String extensionPkgName,
     required String siteId,
     required String boardId,
-    required String id,
+    required String threadId,
     String? postId,
   }) async {
     final extensionF = _installedExtensionRepository.get(extensionPkgName);
@@ -31,7 +31,7 @@ class GetThread {
       extensionPkgName: extensionPkgName,
       siteId: siteId,
       boardId: boardId,
-      id: id,
+      threadId: threadId,
       postId: postId,
     ));
     final (extension, site, boards, thread) = await (extensionF, siteF, boardsF, threadF).wait;
@@ -50,7 +50,7 @@ class GetThread {
     required String siteId,
     required String boardId,
     required String threadId,
-    String? postId,
+    String? replyToId,
   }) async {
     final extensionF = _installedExtensionRepository.get(extensionPkgName);
     final siteF = _apiService.site(GetSiteParams(extensionPkgName: extensionPkgName));
@@ -60,7 +60,7 @@ class GetThread {
       siteId: siteId,
       boardId: boardId,
       threadId: threadId,
-      postId: postId,
+      replyToId: replyToId,
       pagination: pagination,
     ));
     final (extension, site, boards, regardingPosts) = await (extensionF, siteF, boardsF, regardingPostsF).wait;
