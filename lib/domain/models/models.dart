@@ -221,9 +221,14 @@ class QuoteParagraph extends Paragraph {
 
 class ReplyToParagraph extends Paragraph {
   final String id;
+  final String authorName;
   final String preview;
 
-  ReplyToParagraph({required this.id, required this.preview}) : super(ParagraphType.replyTo);
+  ReplyToParagraph({
+    required this.id,
+    required this.authorName,
+    required this.preview,
+  }) : super(ParagraphType.replyTo);
 }
 
 class LinkParagraph extends Paragraph {
