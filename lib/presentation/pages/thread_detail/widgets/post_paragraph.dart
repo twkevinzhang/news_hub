@@ -83,8 +83,8 @@ class ArticleWidget extends StatelessWidget {
         // 回复段落 - 添加为可点击的TextSpan
         article.enter();
         final annotations = paragraph.preview.isEmpty
-            ? ">>${paragraph.id} "
-            : ">>${paragraph.id}(${paragraph.preview.truncate(7)}) ";
+            ? ">>${paragraph.authorName} "
+            : ">>${paragraph.authorName}(${paragraph.preview.truncate(7)}) ";
         article.input(TextSpan(
           text: annotations,
           style: textStyle.copyWith(
