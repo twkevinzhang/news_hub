@@ -41,6 +41,10 @@ class ThreadInfosScreen extends StatelessWidget implements AutoRouteWrapper {
             icon: const Icon(Icons.search_outlined),
             onPressed: () => AutoRouter.of(context).push(SearchRoute()),
           ),
+          IconButton(
+            icon: const Icon(Icons.refresh_outlined),
+            onPressed: () => cubit.refresh(),
+          ),
         ],
       ),
       body: PagedListView<int, PostWithExtension>(
