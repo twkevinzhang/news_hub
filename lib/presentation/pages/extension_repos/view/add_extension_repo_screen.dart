@@ -81,10 +81,7 @@ class AddExtensionRepoScreen extends StatelessWidget implements AutoRouteWrapper
                                     height: 24,
                                     child: CircularProgressIndicator(strokeWidth: 2),
                                   ),
-                                  errorWidget: (context, url, error) => Icon(
-                                    Icons.error_outline,
-                                    color: Theme.of(context).colorScheme.error,
-                                  ),
+                                  errorWidget: (context, url, error) => const Icon(Icons.error),
                                 ),
                               ),
                               const SizedBox(width: 16),

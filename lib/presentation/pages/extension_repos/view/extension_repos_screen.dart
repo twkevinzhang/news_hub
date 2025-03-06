@@ -55,12 +55,7 @@ class ExtensionReposScreen extends StatelessWidget implements AutoRouteWrapper {
                         child: CachedNetworkImage(
                           imageUrl: repo.icon!,
                           fit: BoxFit.cover,
-                          placeholder: (context, url) => Center(
-                            child: CircularProgressIndicator(
-                              strokeWidth: 2,
-                              color: Theme.of(context).colorScheme.primary,
-                            ),
-                          ),
+                          placeholder: (context, url) => const LoadingIndicator(),
                           errorWidget: (context, url, error) => Icon(
                             Icons.extension_outlined,
                             color: Theme.of(context).colorScheme.primary,
