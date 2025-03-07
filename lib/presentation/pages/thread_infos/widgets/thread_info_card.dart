@@ -20,18 +20,20 @@ class ThreadInfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
-          onTap: () {
-            AutoRouter.of(context).push(ThreadDetailRoute(
-              extensionPkgName: thread.extensionPkgName,
-              siteId: thread.siteId,
-              boardId: thread.boardId,
-              threadId: thread.id,
-            ));
-          },
+          onTap: () => _toDetail(context),
           child: Padding(
             padding: const EdgeInsets.all(8),
-            child: PostLayout(post: thread, onParagraphClick: onParagraphClick),
+            child: PostLayout(post: thread, onParagraphClick: null),
           )),
     );
+  }
+
+  void _toDetail(BuildContext context) {
+    AutoRouter.of(context).push(ThreadDetailRoute(
+      extensionPkgName: thread.extensionPkgName,
+      siteId: thread.siteId,
+      boardId: thread.boardId,
+      threadId: thread.id,
+    ));
   }
 }

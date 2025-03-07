@@ -5,7 +5,7 @@ import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/thread/interactor/get_thread.dart' show PostWithExtension;
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/thread_infos/bloc/search_cubit.dart';
-import 'package:news_hub/presentation/pages/thread_infos/widgets/thread_card.dart';
+import 'package:news_hub/presentation/pages/thread_infos/widgets/thread_info_card.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
 import 'package:news_hub/presentation/widgets/widgets.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
