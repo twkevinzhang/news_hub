@@ -144,6 +144,17 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   Future<List<Post>> threadInfos(GetThreadInfosParams params) async {
     await Future.delayed(const Duration(seconds: 1));
     if (params.boardId == '1') {
+      if (params.keywords?.isNotEmpty == true) {
+        return _mockBoard1Posts.where((post) {
+          return post.contents.any((content) {
+            if (content is TextParagraph) {
+              return content.content.contains(params.keywords!);
+            } else {
+              return false;
+            }
+          });
+        }).toList();
+      }
       return _mockBoard1Posts;
     } else {
       return [];
