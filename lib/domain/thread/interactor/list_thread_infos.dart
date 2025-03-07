@@ -36,6 +36,8 @@ class ListThreadInfos {
         boards = boards.filter((b) => filter.boardsSorting.containsKey(b.id));
       }
     }
+
+    // TODO: 將 filter by boards 邏輯搬到 python extension 裡面，注意：要篩選好 boards id 們歸於哪個 extension
     final threads = (await Future.wait(boards.map((b) {
       final e = extensions.firstWhere((e) => e.pkgName == b.extensionPkgName);
       return _apiService.threadInfos(GetThreadInfosParams(
