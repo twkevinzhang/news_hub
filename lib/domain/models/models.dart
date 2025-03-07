@@ -212,6 +212,12 @@ class VideoParagraph extends Paragraph {
   VideoParagraph({this.thumb, required this.url}) : super(ParagraphType.video);
 }
 
+extension VideoParagraphEx on VideoParagraph {
+  bool isYouTube() {
+    return url.startsWith("https://") && (url.contains('youtube.com') || url.contains('youtu.be'));
+  }
+}
+
 class TextParagraph extends Paragraph {
   final String content;
 

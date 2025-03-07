@@ -93,7 +93,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
         if (paragraph is domain.LinkParagraph) {
           final url = paragraph.content;
           if (!await launchUrl(Uri.parse(url))) {
-            throw Exception('Could not launch $url');
+            debugPrint('Could not launch $url');
           }
         } else if (paragraph is domain.ReplyToParagraph) {
           showDialog(
