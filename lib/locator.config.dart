@@ -106,8 +106,6 @@ import 'package:news_hub/presentation/pages/search/bloc/search_cubit.dart'
     as _i21;
 import 'package:news_hub/presentation/pages/thread_detail/bloc/thread_detail_cubit.dart'
     as _i725;
-import 'package:news_hub/presentation/pages/thread_infos/bloc/thread_infos_cubit.dart'
-    as _i181;
 import 'package:news_hub/presentation/router/router.dart' as _i762;
 import 'package:rx_shared_preferences/rx_shared_preferences.dart' as _i579;
 
@@ -273,8 +271,6 @@ extension GetItInjectableX on _i174.GetIt {
         _remoteExtension,
       },
     );
-    gh.factory<_i181.ThreadInfosCubit>(() =>
-        _i181.ThreadInfosCubit(listThreadInfos: gh<_i952.ListThreadInfos>()));
     gh.factory<_i56.Launcher>(
       () => _i56.DemoExtensionLauncher(
         manager: gh<_i284.ExtensionInstanceManager>(),
@@ -289,6 +285,13 @@ extension GetItInjectableX on _i174.GetIt {
           getRemoteExtensionRepo: gh<_i872.GetRemoteExtensionRepo>(),
           createExtensionRepo: gh<_i460.CreateExtensionRepo>(),
         ));
+    gh.factory<_i21.SearchCubit>(() => _i21.SearchCubit(
+          listSuggestions: gh<_i643.ListSuggestions>(),
+          updateSuggestionLatestUsedAt:
+              gh<_i650.UpdateSuggestionLatestUsedAt>(),
+          insertSuggestion: gh<_i446.InsertSuggestion>(),
+          listThreadInfos: gh<_i952.ListThreadInfos>(),
+        ));
     gh.factory<_i56.Launcher>(
       () => _i56.RemoteExtensionLauncher(
           extensionRepository: gh<_i981.InstalledExtensionRepository>()),
@@ -299,12 +302,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i315.ExtensionPreferencesService>(() =>
         _i29.ExtensionPreferencesServiceImpl(
             store: gh<_i365.PreferenceStore>()));
-    gh.factory<_i21.SearchCubit>(() => _i21.SearchCubit(
-          listSuggestions: gh<_i643.ListSuggestions>(),
-          updateSuggestionLatestUsedAt:
-              gh<_i650.UpdateSuggestionLatestUsedAt>(),
-          insertSuggestion: gh<_i446.InsertSuggestion>(),
-        ));
     gh.lazySingleton<_i214.ListExtensions>(() => _i214.ListExtensions(
           prefService: gh<_i515.ExtensionPreferencesService>(),
           listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
