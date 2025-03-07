@@ -1,11 +1,15 @@
 import 'package:dartx/dartx.dart';
+import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/suggestion/interactor/insert_suggestion.dart' show InsertSuggestion;
 import 'package:news_hub/domain/suggestion/interactor/list_suggestions.dart';
 import 'package:news_hub/domain/suggestion/interactor/update_suggestion_latest_used_at.dart';
+import 'package:news_hub/domain/thread/interactor/get_thread.dart';
+import 'package:news_hub/domain/thread/interactor/list_thread_infos.dart';
 import 'package:news_hub/shared/extensions.dart';
 import 'package:news_hub/shared/models.dart';
 
@@ -17,6 +21,7 @@ class SearchState with _$SearchState {
     required Result<List<Suggestion>> suggestions,
     required ThreadsFilter filter,
     required ThreadsFilter submittedFilter,
+    required ThreadsSorting sorting,
   }) = _SearchState;
 }
 
@@ -25,14 +30,21 @@ class SearchCubit extends Cubit<SearchState> {
   final ListSuggestions _listSuggestions;
   final UpdateSuggestionLatestUsedAt _updateSuggestionLatestUsedAt;
   final InsertSuggestion _insertSuggestion;
+  final ListThreadInfos _listThreadInfos;
+  final PagingController<int, PostWithExtension> pagingController;
+
+  static const _pageSize = 10;
 
   SearchCubit({
     required ListSuggestions listSuggestions,
     required UpdateSuggestionLatestUsedAt updateSuggestionLatestUsedAt,
     required InsertSuggestion insertSuggestion,
+    required ListThreadInfos listThreadInfos,
   })  : _listSuggestions = listSuggestions,
         _updateSuggestionLatestUsedAt = updateSuggestionLatestUsedAt,
         _insertSuggestion = insertSuggestion,
+        _listThreadInfos = listThreadInfos,
+        pagingController = PagingController(firstPageKey: 1),
         super(SearchState(
           suggestions: Result.initial(),
           filter: ThreadsFilter(
@@ -43,20 +55,14 @@ class SearchCubit extends Cubit<SearchState> {
             boardsSorting: {},
             keywords: '',
           ),
-        ));
+          sorting: ThreadsSorting(
+            boardsOrder: [],
+          ),
+        )) {
+    pagingController.addPageRequestListener(_loadThreadInfos);
+  }
 
   void init() async {
-    safeEmit(state.copyWith(
-      filter: ThreadsFilter(
-        boardsSorting: {},
-        keywords: '',
-      ),
-      submittedFilter: ThreadsFilter(
-        boardsSorting: {},
-        keywords: '',
-      ),
-    ));
-
     safeEmit(state.copyWith(
       suggestions: Result.loading(),
     ));
@@ -70,12 +76,11 @@ class SearchCubit extends Cubit<SearchState> {
         suggestions: Result.error(e),
       ));
     }
+    pagingController.refresh();
   }
 
   void setBoardsSorting(Map<String, String> boardsSorting) {
-    safeEmit(state.copyWith(
-      filter: state.filter.copyWith(boardsSorting: boardsSorting),
-    ));
+    safeEmit(state.copyWith.filter(boardsSorting: boardsSorting));
   }
 
   void setKeywords(String keywords) {
@@ -109,5 +114,39 @@ class SearchCubit extends Cubit<SearchState> {
 
   void submit() {
     safeEmit(state.copyWith(submittedFilter: state.filter));
+  }
+
+  void _loadThreadInfos(int pageKey) async {
+    try {
+      final result = await _listThreadInfos.call(
+        filter: state.filter,
+        sorting: state.sorting,
+        pagination: Pagination(
+          page: pageKey,
+          pageSize: _pageSize,
+        ),
+      );
+
+      final isLastPage = result.length < _pageSize;
+      if (isLastPage) {
+        pagingController.appendLastPage(result);
+      } else {
+        pagingController.appendPage(result, pageKey + 1);
+      }
+    } catch (e, s) {
+      debugPrint('Exception: $e');
+      debugPrint('StackTrace: $s');
+      pagingController.error = e;
+    }
+  }
+
+  void refresh() {
+    pagingController.refresh();
+  }
+
+  @override
+  Future<void> close() {
+    pagingController.dispose();
+    return super.close();
   }
 }

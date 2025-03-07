@@ -20,6 +20,7 @@ mixin _$SearchState {
       throw _privateConstructorUsedError;
   ThreadsFilter get filter => throw _privateConstructorUsedError;
   ThreadsFilter get submittedFilter => throw _privateConstructorUsedError;
+  ThreadsSorting get sorting => throw _privateConstructorUsedError;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -37,11 +38,13 @@ abstract class $SearchStateCopyWith<$Res> {
   $Res call(
       {Result<List<Suggestion>> suggestions,
       ThreadsFilter filter,
-      ThreadsFilter submittedFilter});
+      ThreadsFilter submittedFilter,
+      ThreadsSorting sorting});
 
   $ResultCopyWith<List<Suggestion>, $Res> get suggestions;
   $ThreadsFilterCopyWith<$Res> get filter;
   $ThreadsFilterCopyWith<$Res> get submittedFilter;
+  $ThreadsSortingCopyWith<$Res> get sorting;
 }
 
 /// @nodoc
@@ -62,6 +65,7 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
     Object? suggestions = null,
     Object? filter = null,
     Object? submittedFilter = null,
+    Object? sorting = null,
   }) {
     return _then(_value.copyWith(
       suggestions: null == suggestions
@@ -76,6 +80,10 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
           ? _value.submittedFilter
           : submittedFilter // ignore: cast_nullable_to_non_nullable
               as ThreadsFilter,
+      sorting: null == sorting
+          ? _value.sorting
+          : sorting // ignore: cast_nullable_to_non_nullable
+              as ThreadsSorting,
     ) as $Val);
   }
 
@@ -108,6 +116,16 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
       return _then(_value.copyWith(submittedFilter: value) as $Val);
     });
   }
+
+  /// Create a copy of SearchState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ThreadsSortingCopyWith<$Res> get sorting {
+    return $ThreadsSortingCopyWith<$Res>(_value.sorting, (value) {
+      return _then(_value.copyWith(sorting: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -121,7 +139,8 @@ abstract class _$$SearchStateImplCopyWith<$Res>
   $Res call(
       {Result<List<Suggestion>> suggestions,
       ThreadsFilter filter,
-      ThreadsFilter submittedFilter});
+      ThreadsFilter submittedFilter,
+      ThreadsSorting sorting});
 
   @override
   $ResultCopyWith<List<Suggestion>, $Res> get suggestions;
@@ -129,6 +148,8 @@ abstract class _$$SearchStateImplCopyWith<$Res>
   $ThreadsFilterCopyWith<$Res> get filter;
   @override
   $ThreadsFilterCopyWith<$Res> get submittedFilter;
+  @override
+  $ThreadsSortingCopyWith<$Res> get sorting;
 }
 
 /// @nodoc
@@ -147,6 +168,7 @@ class __$$SearchStateImplCopyWithImpl<$Res>
     Object? suggestions = null,
     Object? filter = null,
     Object? submittedFilter = null,
+    Object? sorting = null,
   }) {
     return _then(_$SearchStateImpl(
       suggestions: null == suggestions
@@ -161,17 +183,22 @@ class __$$SearchStateImplCopyWithImpl<$Res>
           ? _value.submittedFilter
           : submittedFilter // ignore: cast_nullable_to_non_nullable
               as ThreadsFilter,
+      sorting: null == sorting
+          ? _value.sorting
+          : sorting // ignore: cast_nullable_to_non_nullable
+              as ThreadsSorting,
     ));
   }
 }
 
 /// @nodoc
 
-class _$SearchStateImpl implements _SearchState {
+class _$SearchStateImpl with DiagnosticableTreeMixin implements _SearchState {
   const _$SearchStateImpl(
       {required this.suggestions,
       required this.filter,
-      required this.submittedFilter});
+      required this.submittedFilter,
+      required this.sorting});
 
   @override
   final Result<List<Suggestion>> suggestions;
@@ -179,10 +206,23 @@ class _$SearchStateImpl implements _SearchState {
   final ThreadsFilter filter;
   @override
   final ThreadsFilter submittedFilter;
+  @override
+  final ThreadsSorting sorting;
 
   @override
-  String toString() {
-    return 'SearchState(suggestions: $suggestions, filter: $filter, submittedFilter: $submittedFilter)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'SearchState(suggestions: $suggestions, filter: $filter, submittedFilter: $submittedFilter, sorting: $sorting)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'SearchState'))
+      ..add(DiagnosticsProperty('suggestions', suggestions))
+      ..add(DiagnosticsProperty('filter', filter))
+      ..add(DiagnosticsProperty('submittedFilter', submittedFilter))
+      ..add(DiagnosticsProperty('sorting', sorting));
   }
 
   @override
@@ -194,12 +234,13 @@ class _$SearchStateImpl implements _SearchState {
                 other.suggestions == suggestions) &&
             (identical(other.filter, filter) || other.filter == filter) &&
             (identical(other.submittedFilter, submittedFilter) ||
-                other.submittedFilter == submittedFilter));
+                other.submittedFilter == submittedFilter) &&
+            (identical(other.sorting, sorting) || other.sorting == sorting));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, suggestions, filter, submittedFilter);
+      Object.hash(runtimeType, suggestions, filter, submittedFilter, sorting);
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -214,7 +255,8 @@ abstract class _SearchState implements SearchState {
   const factory _SearchState(
       {required final Result<List<Suggestion>> suggestions,
       required final ThreadsFilter filter,
-      required final ThreadsFilter submittedFilter}) = _$SearchStateImpl;
+      required final ThreadsFilter submittedFilter,
+      required final ThreadsSorting sorting}) = _$SearchStateImpl;
 
   @override
   Result<List<Suggestion>> get suggestions;
@@ -222,6 +264,8 @@ abstract class _SearchState implements SearchState {
   ThreadsFilter get filter;
   @override
   ThreadsFilter get submittedFilter;
+  @override
+  ThreadsSorting get sorting;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
