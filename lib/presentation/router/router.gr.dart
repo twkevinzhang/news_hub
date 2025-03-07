@@ -18,7 +18,7 @@ import 'package:news_hub/presentation/pages/extension_repos/view/extension_repos
 import 'package:news_hub/presentation/pages/extensions/view/extensions_screen.dart'
     as _i3;
 import 'package:news_hub/presentation/pages/home_screen.dart' as _i4;
-import 'package:news_hub/presentation/pages/search/view/search_screen.dart'
+import 'package:news_hub/presentation/pages/thread_infos/view/search_screen.dart'
     as _i5;
 import 'package:news_hub/presentation/pages/settings/view/settings_screen.dart'
     as _i6;

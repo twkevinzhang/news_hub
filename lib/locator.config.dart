@@ -100,9 +100,9 @@ import 'package:news_hub/presentation/pages/extension_repos/bloc/extension_repos
     as _i235;
 import 'package:news_hub/presentation/pages/extensions/bloc/extensions_cubit.dart'
     as _i945;
-import 'package:news_hub/presentation/pages/search/bloc/boards_picker_cubit.dart'
+import 'package:news_hub/presentation/pages/thread_infos/bloc/boards_picker_cubit.dart'
     as _i1070;
-import 'package:news_hub/presentation/pages/search/bloc/search_cubit.dart'
+import 'package:news_hub/presentation/pages/thread_infos/bloc/search_cubit.dart'
     as _i21;
 import 'package:news_hub/presentation/pages/thread_detail/bloc/thread_detail_cubit.dart'
     as _i725;

@@ -2,7 +2,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_hub/presentation/pages/search/bloc/boards_picker_cubit.dart';
+import 'package:news_hub/presentation/pages/thread_infos/bloc/boards_picker_cubit.dart';
 import 'package:news_hub/presentation/widgets/molecules/loading_indicator.dart';
 
 class BoardsPickerScreen extends StatelessWidget {
