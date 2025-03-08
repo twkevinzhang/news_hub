@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:dartx/dartx.dart';
@@ -48,15 +46,41 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget build(BuildContext context) {
     final cubit = context.watch<ThreadDetailCubit>();
+    final thread = cubit.state.threadMap[cubit.state.threadId];
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Thread Detail'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.refresh_outlined),
-            onPressed: () => cubit.refresh(),
-          ),
-        ],
+        title: thread?.maybeWhen(orElse: () => Text(cubit.state.threadId), completed: (thread) => Text(thread.title ?? thread.id)),
+        actions: thread?.maybeWhen(
+            orElse: () => null,
+            completed: (thread) {
+              return [
+                IconButton(
+                  icon: const Icon(Icons.refresh_outlined),
+                  onPressed: () => cubit.refresh(),
+                ),
+                PopupMenuButton(
+                  itemBuilder: (context) {
+                    return [
+                      PopupMenuItem(
+                        value: 0,
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [const Icon(Icons.open_in_new_outlined), const SizedBox(width: 12), Text('在瀏覽器中打開')],
+                        ),
+                      ),
+                    ];
+                  },
+                  onSelected: (value) async {
+                    if (value == 0) {
+                      final url = thread.url;
+                      if (!await launchUrl(Uri.parse(thread.url!))) {
+                        debugPrint('Could not launch $url');
+                      }
+                    }
+                  },
+                ),
+              ];
+            }),
       ),
       body: PagedListView<int, PostWithExtension>(
         pagingController: cubit.pagingController,
@@ -160,11 +184,13 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
       overlayController: cubit.overlayController,
       context: context,
       dragEnabled: false,
-      children: images.map((image) => CachedNetworkImage(
-        imageUrl: image.raw,
-        placeholder: (context, url) => const LoadingIndicator(),
-        errorWidget: (context, url, error) => const Icon(Icons.error),
-      )).toList(),
+      children: images
+          .map((image) => CachedNetworkImage(
+                imageUrl: image.raw,
+                placeholder: (context, url) => const LoadingIndicator(),
+                errorWidget: (context, url, error) => const Icon(Icons.error),
+              ))
+          .toList(),
       onSwipe: (index) {
         cubit.overlayController.add(PostGalleryOverlay(
           title: '${index + 1}/${images.length}',
