@@ -23,40 +23,30 @@ class ListThreadInfos {
     ThreadsSorting? sorting,
   }) async {
     final extensions = await _listInstalledExtensions.withBoards();
-    var boards = extensions.map((e) => e.boards).flatten();
-    var sites = extensions.map((e) => e.site);
-    if (boards.length > 3) {
-      boards = boards.take(1).toList(); // for test
-    }
-    if (sorting != null) {
-      boards = boards.sortedBy((b) => sorting.boardsOrder.indexOf(b.id));
-    }
-    if (filter != null) {
-      if (filter.boardsSorting.isNotEmpty) {
-        boards = boards.filter((b) => filter.boardsSorting.containsKey(b.id));
-      }
-    }
+    final boards = extensions.map((e) => e.boards).flatten();
+    final sites = extensions.map((e) => e.site);
 
-    // TODO: 將 filter by boards 邏輯搬到 python extension 裡面，注意：要篩選好 boards id 們歸於哪個 extension
-    final threads = (await Future.wait(boards.map((b) {
-      final e = extensions.firstWhere((e) => e.pkgName == b.extensionPkgName);
-      return _apiService.threadInfos(GetThreadInfosParams(
+    final threads = (await Future.wait(extensions.map((e) =>
+      _apiService.threadInfos(GetThreadInfosParams(
         extensionPkgName: e.pkgName,
         siteId: e.site.id,
-        boardId: b.id,
+        boardsSorting: filter?.boardsSorting,
         pagination: pagination,
-        sortBy: filter?.boardsSorting[b.id],
         keywords: filter?.keywords,
-      ));
-    })))
+      ))
+    )))
         .flatten();
 
     return threads.map((t) {
       final e = extensions.firstWhere((e) => e.pkgName == t.extensionPkgName);
+      final s = sites.firstWhere((s) => s.extensionPkgName == e.pkgName);
       final b = boards.firstWhere((b) => b.id == t.boardId);
-      final s = sites.firstWhere((s) => s.id == b.siteId);
       return PostWithExtension(post: t, board: b, extension: e, site: s);
     }).toList();
+  }
+
+  Future<void> refresh() async {
+    await _apiService.refreshThreadInfos();
   }
 }
 

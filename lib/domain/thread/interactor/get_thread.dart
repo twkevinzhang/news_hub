@@ -44,36 +44,8 @@ class GetThread {
     );
   }
 
-  Future<List<PostWithExtension>> listRegardingPosts({
-    Pagination? pagination,
-    required String extensionPkgName,
-    required String siteId,
-    required String boardId,
-    required String threadId,
-    String? replyToId,
-  }) async {
-    final extensionF = _installedExtensionRepository.get(extensionPkgName);
-    final siteF = _apiService.site(GetSiteParams(extensionPkgName: extensionPkgName));
-    final boardsF = _apiService.boards(GetBoardsParams(extensionPkgName: extensionPkgName, siteId: siteId));
-    final regardingPostsF = _apiService.regardingPosts(GetRegardingPostsParams(
-      extensionPkgName: extensionPkgName,
-      siteId: siteId,
-      boardId: boardId,
-      threadId: threadId,
-      replyToId: replyToId,
-      pagination: pagination,
-    ));
-    final (extension, site, boards, regardingPosts) = await (extensionF, siteF, boardsF, regardingPostsF).wait;
-    final board = boards.firstWhere((b) => b.id == boardId);
-
-    return regardingPosts
-        .map((p) => PostWithExtension(
-              post: p,
-              site: site,
-              board: board,
-              extension: extension,
-            ))
-        .toList();
+  Future<void> refresh() async {
+    await _apiService.refreshThread();
   }
 }
 
