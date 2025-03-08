@@ -91,6 +91,8 @@ import 'package:news_hub/domain/suggestion/interactor/update_suggestion_latest_u
     as _i650;
 import 'package:news_hub/domain/suggestion/suggestion_repository.dart' as _i677;
 import 'package:news_hub/domain/thread/interactor/get_thread.dart' as _i616;
+import 'package:news_hub/domain/thread/interactor/list_regarding_posts.dart'
+    as _i492;
 import 'package:news_hub/domain/thread/interactor/list_thread_infos.dart'
     as _i952;
 import 'package:news_hub/locator.dart' as _i56;
@@ -100,12 +102,12 @@ import 'package:news_hub/presentation/pages/extension_repos/bloc/extension_repos
     as _i235;
 import 'package:news_hub/presentation/pages/extensions/bloc/extensions_cubit.dart'
     as _i945;
-import 'package:news_hub/presentation/pages/thread_infos/bloc/boards_picker_cubit.dart'
-    as _i1070;
-import 'package:news_hub/presentation/pages/thread_infos/bloc/search_cubit.dart'
-    as _i21;
 import 'package:news_hub/presentation/pages/thread_detail/bloc/thread_detail_cubit.dart'
     as _i725;
+import 'package:news_hub/presentation/pages/thread_infos/bloc/boards_picker_cubit.dart'
+    as _i415;
+import 'package:news_hub/presentation/pages/thread_infos/bloc/search_cubit.dart'
+    as _i955;
 import 'package:news_hub/presentation/router/router.dart' as _i762;
 import 'package:rx_shared_preferences/rx_shared_preferences.dart' as _i579;
 
@@ -171,6 +173,11 @@ extension GetItInjectableX on _i174.GetIt {
           installedExtensionRepository:
               gh<_i981.InstalledExtensionRepository>(),
         ));
+    gh.lazySingleton<_i492.ListRegardingPosts>(() => _i492.ListRegardingPosts(
+          apiService: gh<_i892.ExtensionApiService>(),
+          installedExtensionRepository:
+              gh<_i981.InstalledExtensionRepository>(),
+        ));
     gh.lazySingleton<_i517.UninstallExtension>(() => _i517.UninstallExtension(
         installService: gh<_i103.ExtensionInstallService>()));
     gh.lazySingleton<_i521.BookmarkRepository>(
@@ -184,8 +191,6 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i1049.ListBookmarks>(
         () => _i1049.ListBookmarks(repo: gh<_i521.BookmarkRepository>()));
-    gh.factory<_i725.ThreadDetailCubit>(
-        () => _i725.ThreadDetailCubit(getThread: gh<_i616.GetThread>()));
     gh.lazySingleton<_i623.ExtensionRepoRepository>(
       () => _i374.ExtensionRepoRepositoryImpl(db: gh<_i539.AppDatabase>()),
       registerFor: {
@@ -222,6 +227,10 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i365.PreferenceStore>(
         () => _i842.PreferenceStoreImpl(prefs: gh<_i579.SharedPreferences>()));
+    gh.factory<_i725.ThreadDetailCubit>(() => _i725.ThreadDetailCubit(
+          getThread: gh<_i616.GetThread>(),
+          listRegardingPosts: gh<_i492.ListRegardingPosts>(),
+        ));
     gh.lazySingleton<_i351.ListInstalledExtensions>(
         () => _i351.ListInstalledExtensions(
               apiService: gh<_i892.ExtensionApiService>(),
@@ -285,7 +294,7 @@ extension GetItInjectableX on _i174.GetIt {
           getRemoteExtensionRepo: gh<_i872.GetRemoteExtensionRepo>(),
           createExtensionRepo: gh<_i460.CreateExtensionRepo>(),
         ));
-    gh.factory<_i21.SearchCubit>(() => _i21.SearchCubit(
+    gh.factory<_i955.SearchCubit>(() => _i955.SearchCubit(
           listSuggestions: gh<_i643.ListSuggestions>(),
           updateSuggestionLatestUsedAt:
               gh<_i650.UpdateSuggestionLatestUsedAt>(),
@@ -297,8 +306,8 @@ extension GetItInjectableX on _i174.GetIt {
           extensionRepository: gh<_i981.InstalledExtensionRepository>()),
       registerFor: {_remoteExtension},
     );
-    gh.factory<_i1070.BoardsPickerCubit>(
-        () => _i1070.BoardsPickerCubit(gh<_i351.ListInstalledExtensions>()));
+    gh.factory<_i415.BoardsPickerCubit>(
+        () => _i415.BoardsPickerCubit(gh<_i351.ListInstalledExtensions>()));
     gh.lazySingleton<_i315.ExtensionPreferencesService>(() =>
         _i29.ExtensionPreferencesServiceImpl(
             store: gh<_i365.PreferenceStore>()));

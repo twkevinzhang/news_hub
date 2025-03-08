@@ -143,7 +143,7 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   @override
   Future<List<Post>> threadInfos(GetThreadInfosParams params) async {
     await Future.delayed(const Duration(seconds: 1));
-    if (params.boardId == '1') {
+    if (params.boardsSorting?.keys.contains("1") == true) {
       if (params.keywords?.isNotEmpty == true) {
         return _mockBoard1Posts.where((post) {
           return post.contents.any((content) {
@@ -178,13 +178,45 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   }
 
   @override
-  Future<Post> post(GetPostParams params) async {
-    throw UnimplementedError();
-  }
-
-  @override
   Future<List<Comment>> comments(GetCommentsParams params) async {
     await Future.delayed(const Duration(seconds: 1));
     return _mockPost1Comments;
   }
+
+  @override
+  Future<void> refreshBoards() {
+    // TODO: implement refreshBoards
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> refreshComments() {
+    // TODO: implement refreshComments
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> refreshRegardingPosts() {
+    // TODO: implement refreshRegardingPosts
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> refreshSite() {
+    // TODO: implement refreshSite
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> refreshThread() {
+    // TODO: implement refreshThread
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> refreshThreadInfos() {
+    // TODO: implement refreshThreadInfos
+    throw UnimplementedError();
+  }
+
 }

@@ -24,7 +24,7 @@ Map<String, dynamic> _$$GetThreadInfosParamsImplToJson(
     <String, dynamic>{
       'extensionPkgName': instance.extensionPkgName,
       'siteId': instance.siteId,
-      'boardId': instance.boardId,
+      'boardsSorting': instance.boardsSorting,
       'pagination': instance.pagination,
       'sortBy': instance.sortBy,
       'keywords': instance.keywords,

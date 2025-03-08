@@ -76,7 +76,6 @@ class SearchCubit extends Cubit<SearchState> {
         suggestions: Result.error(e),
       ));
     }
-    pagingController.refresh();
   }
 
   void setBoardsSorting(Map<String, String> boardsSorting) {
@@ -141,6 +140,7 @@ class SearchCubit extends Cubit<SearchState> {
   }
 
   void refresh() {
+    _listThreadInfos.refresh();
     pagingController.refresh();
   }
 

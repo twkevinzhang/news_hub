@@ -7,12 +7,17 @@ part 'extension_api_service.g.dart';
 
 abstract class ExtensionApiService {
   Future<Site> site(GetSiteParams params);
+  Future<void> refreshSite();
   Future<List<Board>> boards(GetBoardsParams params);
+  Future<void> refreshBoards();
   Future<List<Post>> threadInfos(GetThreadInfosParams params);
+  Future<void> refreshThreadInfos();
   Future<Post> thread(GetThreadParams params);
+  Future<void> refreshThread();
   Future<List<Post>> regardingPosts(GetRegardingPostsParams params);
-  Future<Post> post(GetPostParams params);
+  Future<void> refreshRegardingPosts();
   Future<List<Comment>> comments(GetCommentsParams params);
+  Future<void> refreshComments();
 }
 
 @Freezed(toJson: true)
@@ -36,7 +41,7 @@ class GetThreadInfosParams with _$GetThreadInfosParams {
   const factory GetThreadInfosParams({
     required String extensionPkgName,
     required String siteId,
-    required String boardId,
+    required Map<String, String>? boardsSorting,
     Pagination? pagination,
     String? sortBy,
     String? keywords,

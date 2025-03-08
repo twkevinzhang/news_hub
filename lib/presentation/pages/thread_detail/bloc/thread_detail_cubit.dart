@@ -8,6 +8,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/thread/interactor/get_thread.dart';
+import 'package:news_hub/domain/thread/interactor/list_regarding_posts.dart';
 import 'package:news_hub/shared/extensions.dart';
 import 'package:news_hub/shared/models.dart';
 
@@ -28,6 +29,7 @@ class ThreadDetailState with _$ThreadDetailState {
 @injectable
 class ThreadDetailCubit extends Cubit<ThreadDetailState> {
   final GetThread _getThread;
+  final ListRegardingPosts _listRegardingPosts;
   final PagingController<int, PostWithExtension> pagingController;
   final StreamController<Widget> overlayController;
 
@@ -35,7 +37,9 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
 
   ThreadDetailCubit({
     required GetThread getThread,
+    required ListRegardingPosts listRegardingPosts,
   })  : _getThread = getThread,
+        _listRegardingPosts = listRegardingPosts,
         pagingController = PagingController(firstPageKey: 1),
         overlayController = StreamController<Widget>.broadcast(),
         super(ThreadDetailState(
@@ -56,7 +60,7 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
       boardId: state.boardId,
       threadId: state.threadId,
     );
-    final regardingPostsF = _getThread.listRegardingPosts(
+    final regardingPostsF = _listRegardingPosts.call(
       extensionPkgName: state.extensionPkgName,
       siteId: state.siteId,
       boardId: state.boardId,
@@ -75,7 +79,7 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
         posts = [thread, ...regardingPosts];
         isLastPage = regardingPosts.length < _pageSize;
       } else {
-        posts = await _getThread.listRegardingPosts(
+        posts = await _listRegardingPosts.call(
           extensionPkgName: state.extensionPkgName,
           siteId: state.siteId,
           boardId: state.boardId,
@@ -142,7 +146,7 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
   void loadRegardingPosts(String postId) async {
     final newMap = Map.of(state.regardingPostsMap)..[postId] = Result.loading();
     safeEmit(state.copyWith(regardingPostsMap: newMap));
-    final regardingPostsMap = await _getThread.listRegardingPosts(
+    final regardingPostsMap = await _listRegardingPosts.call(
       extensionPkgName: state.extensionPkgName,
       siteId: state.siteId,
       boardId: state.boardId,
@@ -158,6 +162,8 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
   }
 
   void refresh() {
+    _getThread.refresh();
+    _listRegardingPosts.refresh();
     pagingController.refresh();
   }
 }
