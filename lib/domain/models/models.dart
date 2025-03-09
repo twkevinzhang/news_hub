@@ -190,7 +190,11 @@ abstract class Paragraph {
   Paragraph(this.type);
 }
 
-class ImageParagraph extends Paragraph {
+abstract class MediaParagraph extends Paragraph {
+  MediaParagraph(super.type);
+}
+
+class ImageParagraph extends MediaParagraph {
   final String? _thumb;
   final String raw;
 
@@ -205,7 +209,7 @@ class ImageParagraph extends Paragraph {
   }
 }
 
-class VideoParagraph extends Paragraph {
+class VideoParagraph extends MediaParagraph {
   final String? thumb;
   final String url;
 
@@ -257,6 +261,10 @@ class LinkParagraph extends Paragraph {
 extension ParagraphListEx on List<Paragraph> {
   List<ImageParagraph> images() {
     return whereType<ImageParagraph>().toList();
+  }
+
+  List<MediaParagraph> medias() {
+    return whereType<MediaParagraph>().toList();
   }
 }
 
