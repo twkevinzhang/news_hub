@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:dartx/dartx.dart';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/shared/constants.dart';
 import 'package:news_hub/shared/models.dart';
@@ -24,6 +25,7 @@ final _mockBoard1Posts = [
     contents: [
       TextParagraph(content: 'Text Content Maybe'),
       QuoteParagraph(content: 'i m quote'),
+      VideoParagraph(thumb: null, url: 'https://user-images.githubusercontent.com/28951144/229373695-22f88f13-d18f-4288-9bf1-c3e078d83722.mp4'),
       VideoParagraph(thumb: null, url: 'https://www.youtube.com/watch?v=_m7lYMTNQg8'),
       ImageParagraph(
         thumb: 'https://dummyimage.com/200x300/000/fff&text=thumb',
@@ -143,8 +145,8 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   @override
   Future<List<Post>> threadInfos(GetThreadInfosParams params) async {
     await Future.delayed(const Duration(seconds: 1));
-    if (params.boardsSorting?.keys.contains("1") == true) {
-      if (params.keywords?.isNotEmpty == true) {
+    if (params.boardsSorting != null) {
+      if (params.boardsSorting!.keys.contains("1")) {
         return _mockBoard1Posts.where((post) {
           return post.contents.any((content) {
             if (content is TextParagraph) {
@@ -154,11 +156,13 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
             }
           });
         }).toList();
+      } else if (params.boardsSorting!.keys.isEmpty) {
+        return _mockBoard1Posts;
       }
+    } else if (params.boardsSorting == null) {
       return _mockBoard1Posts;
-    } else {
-      return [];
     }
+    return [];
   }
 
   @override
@@ -184,39 +188,27 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   }
 
   @override
-  Future<void> refreshBoards() {
-    // TODO: implement refreshBoards
-    throw UnimplementedError();
+  Future<void> refreshBoards() async {
   }
 
   @override
-  Future<void> refreshComments() {
-    // TODO: implement refreshComments
-    throw UnimplementedError();
+  Future<void> refreshComments() async {
   }
 
   @override
-  Future<void> refreshRegardingPosts() {
-    // TODO: implement refreshRegardingPosts
-    throw UnimplementedError();
+  Future<void> refreshRegardingPosts() async {
   }
 
   @override
-  Future<void> refreshSite() {
-    // TODO: implement refreshSite
-    throw UnimplementedError();
+  Future<void> refreshSite() async {
   }
 
   @override
-  Future<void> refreshThread() {
-    // TODO: implement refreshThread
-    throw UnimplementedError();
+  Future<void> refreshThread() async {
   }
 
   @override
-  Future<void> refreshThreadInfos() {
-    // TODO: implement refreshThreadInfos
-    throw UnimplementedError();
+  Future<void> refreshThreadInfos() async {
   }
 
 }
