@@ -133,8 +133,8 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
         } else if (paragraph is domain.VideoParagraph) {
           // TODO
         } else if (paragraph is domain.ImageParagraph) {
-          final images = post.contents.images();
-          final index = images.indexOf(paragraph);
+          final medias = post.contents.medias();
+          final index = medias.indexOf(paragraph);
           _getPostGallery(context, cubit, post, index).show();
         } else if (paragraph is domain.QuoteParagraph) {
           // TODO
@@ -179,27 +179,23 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
   }
 
   SwipeImageGallery _getPostGallery(BuildContext context, ThreadDetailCubit cubit, domain.Post post, int initialIndex) {
-    final images = post.contents.images();
+    final medias = post.contents.medias();
     return SwipeImageGallery(
       overlayController: cubit.overlayController,
       context: context,
       dragEnabled: false,
-      children: images
-          .map((image) => CachedNetworkImage(
-                imageUrl: image.raw,
-                placeholder: (context, url) => const LoadingIndicator(),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-              ))
+      children: medias
+          .map((m) => GalleryItem(media: m))
           .toList(),
       onSwipe: (index) {
         cubit.overlayController.add(PostGalleryOverlay(
-          title: '${index + 1}/${images.length}',
+          title: '${index + 1}/${medias.length}',
           post: post,
         ));
       },
       initialIndex: initialIndex,
       initialOverlay: PostGalleryOverlay(
-        title: '${initialIndex + 1}/${images.length}',
+        title: '${initialIndex + 1}/${medias.length}',
         post: post,
       ),
     );

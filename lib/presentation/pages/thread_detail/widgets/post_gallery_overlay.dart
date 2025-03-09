@@ -1,6 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
+import 'package:news_hub/presentation/widgets/molecules/loading_indicator.dart';
+import 'package:news_hub/presentation/pages/thread_detail/widgets/video_paragraph.dart' as app;
 
 class PostGalleryOverlay extends StatelessWidget {
   const PostGalleryOverlay({
@@ -53,5 +56,34 @@ class PostGalleryOverlay extends StatelessWidget {
         ),
       ],
     ));
+  }
+}
+
+class GalleryItem extends StatelessWidget {
+  final domain.MediaParagraph media;
+  const GalleryItem({
+    super.key,
+    required this.media,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    switch (media) {
+      case domain.ImageParagraph image:
+        return CachedNetworkImage(
+          imageUrl: image.raw,
+          placeholder: (context, url) => const LoadingIndicator(),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
+        );
+      case domain.VideoParagraph video:
+        return Center(
+          child: FittedBox(
+            fit: BoxFit.contain, // ✅ 確保比例不變，且寬度最寬
+            child: app.VideoParagraph(videoUrl: video.url),
+          ),
+        );
+      default:
+        return const SizedBox();
+    }
   }
 }
