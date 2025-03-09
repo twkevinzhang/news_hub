@@ -23,7 +23,7 @@ class ThreadInfoCard extends StatelessWidget {
           onTap: () => _toDetail(context),
           child: Padding(
             padding: const EdgeInsets.all(8),
-            child: PostLayout(post: thread, onParagraphClick: null),
+            child: PostLayout(post: thread, onParagraphClick: null, disablePlay: true),
           )),
     );
   }
