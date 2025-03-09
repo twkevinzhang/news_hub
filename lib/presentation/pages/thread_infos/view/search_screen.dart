@@ -4,25 +4,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/domain/models/models.dart';
 
 import 'package:news_hub/locator.dart';
-import 'package:news_hub/presentation/pages/search/bloc/boards_picker_cubit.dart';
-import 'package:news_hub/presentation/pages/search/bloc/search_cubit.dart';
-import 'package:news_hub/presentation/pages/search/view/boards_picker_screen.dart';
-import 'package:news_hub/presentation/pages/search/view/search_bar_view.dart';
+import 'package:news_hub/presentation/pages/thread_infos/bloc/boards_picker_cubit.dart';
+import 'package:news_hub/presentation/pages/thread_infos/bloc/search_cubit.dart';
+import 'package:news_hub/presentation/pages/thread_infos/widgets/boards_picker_screen.dart';
+import 'package:news_hub/presentation/pages/thread_infos/widgets/search_bar_view.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
 
 @RoutePage()
-class SearchScreen extends StatelessWidget implements AutoRouteWrapper {
+class SearchScreen extends StatelessWidget {
   final _formKey = GlobalKey<FormState>(debugLabel: '_SearchScreen');
 
   SearchScreen({super.key});
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<SearchCubit>()..init(),
-      child: this,
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,7 +129,8 @@ class SearchScreen extends StatelessWidget implements AutoRouteWrapper {
   void _onSubmit(BuildContext context, SearchCubit cubit) {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
-      AutoRouter.of(context).popAndPush(ThreadInfosRoute(filter: cubit.state.filter));
+      cubit.refresh();
+      AutoRouter.of(context).navigate(ThreadInfosRoute());
     }
   }
 }

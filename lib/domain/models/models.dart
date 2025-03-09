@@ -172,6 +172,17 @@ class Post {
   });
 }
 
+extension PostListEx on List<Post> {
+  Iterable<Post> filterBy({ required String replyToId }) {
+    return where((post) => post.contents.any((p) {
+      if (p is ReplyToParagraph) {
+        return p.id == replyToId;
+      }
+      return false;
+    }));
+  }
+}
+
 enum ParagraphType { quote, replyTo, text, newLine, image, link, video }
 
 abstract class Paragraph {
@@ -179,7 +190,11 @@ abstract class Paragraph {
   Paragraph(this.type);
 }
 
-class ImageParagraph extends Paragraph {
+abstract class MediaParagraph extends Paragraph {
+  MediaParagraph(super.type);
+}
+
+class ImageParagraph extends MediaParagraph {
   final String? _thumb;
   final String raw;
 
@@ -194,11 +209,17 @@ class ImageParagraph extends Paragraph {
   }
 }
 
-class VideoParagraph extends Paragraph {
+class VideoParagraph extends MediaParagraph {
   final String? thumb;
   final String url;
 
   VideoParagraph({this.thumb, required this.url}) : super(ParagraphType.video);
+}
+
+extension VideoParagraphEx on VideoParagraph {
+  bool isYouTube() {
+    return url.startsWith("https://") && (url.contains('youtube.com') || url.contains('youtu.be'));
+  }
 }
 
 class TextParagraph extends Paragraph {
@@ -235,6 +256,16 @@ class LinkParagraph extends Paragraph {
   final String content;
 
   LinkParagraph({required this.content}) : super(ParagraphType.link);
+}
+
+extension ParagraphListEx on List<Paragraph> {
+  List<ImageParagraph> images() {
+    return whereType<ImageParagraph>().toList();
+  }
+
+  List<MediaParagraph> medias() {
+    return whereType<MediaParagraph>().toList();
+  }
 }
 
 class Comment {

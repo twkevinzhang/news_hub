@@ -11,21 +11,21 @@
 // ignore_for_file: no_leading_underscores_for_library_prefixes
 import 'package:auto_route/auto_route.dart' as _i10;
 import 'package:flutter/material.dart' as _i11;
-import 'package:news_hub/domain/models/models.dart' as _i12;
 import 'package:news_hub/presentation/pages/extension_repos/view/add_extension_repo_screen.dart'
     as _i1;
-import 'package:news_hub/presentation/pages/extension_repos/view/extension_repos_screen.dart'
-    as _i2;
+import 'package:news_hub/presentation/pages/extension_repos/view/extension_repos_screen.dart';
 import 'package:news_hub/presentation/pages/extensions/view/extensions_screen.dart'
-    as _i3;
-import 'package:news_hub/presentation/pages/home_screen.dart' as _i4;
-import 'package:news_hub/presentation/pages/search/view/search_screen.dart'
-    as _i5;
+    as _i2;
+import 'package:news_hub/presentation/pages/home_screen.dart' as _i3;
 import 'package:news_hub/presentation/pages/settings/view/settings_screen.dart'
-    as _i6;
+    as _i5;
 import 'package:news_hub/presentation/pages/thread_detail/view/thread_detail_screen.dart'
-    as _i7;
+    as _i6;
+import 'package:news_hub/presentation/pages/thread_infos/view/search_screen.dart'
+    as _i4;
 import 'package:news_hub/presentation/pages/thread_infos/view/thread_infos_screen.dart'
+    as _i7;
+import 'package:news_hub/presentation/pages/thread_infos/view/thread_infos_wrapper.dart'
     as _i8;
 import 'package:news_hub/presentation/router/wrapper_screen.dart' as _i9;
 
@@ -46,7 +46,7 @@ class AddExtensionRepoRoute extends _i10.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i2.ExtensionReposScreen]
+/// [ExtensionReposScreen]
 class ExtensionReposRoute extends _i10.PageRouteInfo<void> {
   const ExtensionReposRoute({List<_i10.PageRouteInfo>? children})
     : super(ExtensionReposRoute.name, initialChildren: children);
@@ -56,13 +56,13 @@ class ExtensionReposRoute extends _i10.PageRouteInfo<void> {
   static _i10.PageInfo page = _i10.PageInfo(
     name,
     builder: (data) {
-      return _i10.WrappedRoute(child: const _i2.ExtensionReposScreen());
+      return _i10.WrappedRoute(child: const ExtensionReposScreen());
     },
   );
 }
 
 /// generated route for
-/// [_i3.ExtensionsScreen]
+/// [_i2.ExtensionsScreen]
 class ExtensionsRoute extends _i10.PageRouteInfo<ExtensionsRouteArgs> {
   ExtensionsRoute({_i11.Key? key, List<_i10.PageRouteInfo>? children})
     : super(
@@ -79,7 +79,7 @@ class ExtensionsRoute extends _i10.PageRouteInfo<ExtensionsRouteArgs> {
       final args = data.argsAs<ExtensionsRouteArgs>(
         orElse: () => const ExtensionsRouteArgs(),
       );
-      return _i10.WrappedRoute(child: _i3.ExtensionsScreen(key: args.key));
+      return _i10.WrappedRoute(child: _i2.ExtensionsScreen(key: args.key));
     },
   );
 }
@@ -96,7 +96,7 @@ class ExtensionsRouteArgs {
 }
 
 /// generated route for
-/// [_i4.HomeScreen]
+/// [_i3.HomeScreen]
 class HomeRoute extends _i10.PageRouteInfo<void> {
   const HomeRoute({List<_i10.PageRouteInfo>? children})
     : super(HomeRoute.name, initialChildren: children);
@@ -106,13 +106,13 @@ class HomeRoute extends _i10.PageRouteInfo<void> {
   static _i10.PageInfo page = _i10.PageInfo(
     name,
     builder: (data) {
-      return const _i4.HomeScreen();
+      return const _i3.HomeScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i5.SearchScreen]
+/// [_i4.SearchScreen]
 class SearchRoute extends _i10.PageRouteInfo<SearchRouteArgs> {
   SearchRoute({_i11.Key? key, List<_i10.PageRouteInfo>? children})
     : super(
@@ -129,7 +129,7 @@ class SearchRoute extends _i10.PageRouteInfo<SearchRouteArgs> {
       final args = data.argsAs<SearchRouteArgs>(
         orElse: () => const SearchRouteArgs(),
       );
-      return _i10.WrappedRoute(child: _i5.SearchScreen(key: args.key));
+      return _i4.SearchScreen(key: args.key);
     },
   );
 }
@@ -146,7 +146,7 @@ class SearchRouteArgs {
 }
 
 /// generated route for
-/// [_i6.SettingsScreen]
+/// [_i5.SettingsScreen]
 class SettingsRoute extends _i10.PageRouteInfo<void> {
   const SettingsRoute({List<_i10.PageRouteInfo>? children})
     : super(SettingsRoute.name, initialChildren: children);
@@ -156,13 +156,13 @@ class SettingsRoute extends _i10.PageRouteInfo<void> {
   static _i10.PageInfo page = _i10.PageInfo(
     name,
     builder: (data) {
-      return const _i6.SettingsScreen();
+      return const _i5.SettingsScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i7.ThreadDetailScreen]
+/// [_i6.ThreadDetailScreen]
 class ThreadDetailRoute extends _i10.PageRouteInfo<ThreadDetailRouteArgs> {
   ThreadDetailRoute({
     _i11.Key? key,
@@ -190,7 +190,7 @@ class ThreadDetailRoute extends _i10.PageRouteInfo<ThreadDetailRouteArgs> {
     builder: (data) {
       final args = data.argsAs<ThreadDetailRouteArgs>();
       return _i10.WrappedRoute(
-        child: _i7.ThreadDetailScreen(
+        child: _i6.ThreadDetailScreen(
           key: args.key,
           threadId: args.threadId,
           extensionPkgName: args.extensionPkgName,
@@ -228,44 +228,35 @@ class ThreadDetailRouteArgs {
 }
 
 /// generated route for
-/// [_i8.ThreadInfosScreen]
-class ThreadInfosRoute extends _i10.PageRouteInfo<ThreadInfosRouteArgs> {
-  ThreadInfosRoute({
-    _i11.Key? key,
-    _i12.ThreadsFilter? filter,
-    List<_i10.PageRouteInfo>? children,
-  }) : super(
-         ThreadInfosRoute.name,
-         args: ThreadInfosRouteArgs(key: key, filter: filter),
-         initialChildren: children,
-       );
+/// [_i7.ThreadInfosScreen]
+class ThreadInfosRoute extends _i10.PageRouteInfo<void> {
+  const ThreadInfosRoute({List<_i10.PageRouteInfo>? children})
+    : super(ThreadInfosRoute.name, initialChildren: children);
 
   static const String name = 'ThreadInfosRoute';
 
   static _i10.PageInfo page = _i10.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<ThreadInfosRouteArgs>(
-        orElse: () => const ThreadInfosRouteArgs(),
-      );
-      return _i10.WrappedRoute(
-        child: _i8.ThreadInfosScreen(key: args.key, filter: args.filter),
-      );
+      return const _i7.ThreadInfosScreen();
     },
   );
 }
 
-class ThreadInfosRouteArgs {
-  const ThreadInfosRouteArgs({this.key, this.filter});
+/// generated route for
+/// [_i8.ThreadInfosWrapper]
+class ThreadInfosWrapper extends _i10.PageRouteInfo<void> {
+  const ThreadInfosWrapper({List<_i10.PageRouteInfo>? children})
+    : super(ThreadInfosWrapper.name, initialChildren: children);
 
-  final _i11.Key? key;
+  static const String name = 'ThreadInfosWrapper';
 
-  final _i12.ThreadsFilter? filter;
-
-  @override
-  String toString() {
-    return 'ThreadInfosRouteArgs{key: $key, filter: $filter}';
-  }
+  static _i10.PageInfo page = _i10.PageInfo(
+    name,
+    builder: (data) {
+      return _i10.WrappedRoute(child: const _i8.ThreadInfosWrapper());
+    },
+  );
 }
 
 /// generated route for
