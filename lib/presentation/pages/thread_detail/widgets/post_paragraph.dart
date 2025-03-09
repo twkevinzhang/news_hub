@@ -4,10 +4,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
+import 'package:news_hub/presentation/pages/thread_detail/widgets/youtube_paragraph.dart';
+import 'package:news_hub/presentation/pages/thread_detail/widgets/video_paragraph.dart' as app;
 import 'package:news_hub/presentation/widgets/molecules/loading_indicator.dart';
 import 'package:news_hub/shared/extensions.dart';
-import 'package:url_launcher/url_launcher.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
 
 class Article {
   List<Widget> children = [];
@@ -68,7 +70,7 @@ class ArticleWidget extends StatelessWidget {
           text: "${paragraph.content} ",
           style: textStyle.copyWith(
             fontStyle: FontStyle.italic,
-            color: theme.colorScheme.onSurfaceVariant.withOpacity(0.8),
+            color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
           ),
         ));
       } else if (paragraph is domain.LinkParagraph) {
@@ -97,10 +99,17 @@ class ArticleWidget extends StatelessWidget {
       } else if (paragraph is domain.ImageParagraph) {
         // 图片段落 - 添加为可点击的Image
         article.enter();
-        article.inputWidget(ImageParagraph(
-          imageUrl: paragraph.raw,
-          onClick: onParagraphClick != null ? () => onParagraphClick!.call(paragraph) : null,
-        ));
+        if (onParagraphClick != null) {
+          article.inputWidget(ImageParagraph(
+            imageUrl: paragraph.raw,
+            onClick: () => onParagraphClick!.call(paragraph),
+          ));
+        } else {
+          article.inputWidget(ImageParagraph(
+            imageUrl: paragraph.raw,
+            onClick: null,
+          ));
+        }
       } else if (paragraph is domain.VideoParagraph) {
         // 视频段落
         article.enter();
@@ -108,6 +117,7 @@ class ArticleWidget extends StatelessWidget {
           final clipId = YoutubePlayer.convertUrlToId(paragraph.url);
           if (clipId != null) {
             if (onParagraphClick != null) {
+              // thread detail 中 onParagraphClick != null
               article.inputWidget(YouTubeParagraph(
                 clipId: clipId,
               ));
@@ -123,10 +133,7 @@ class ArticleWidget extends StatelessWidget {
             ));
           }
         } else {
-          article.inputWidget(TextParagraph(
-            content: "Unsupported video format: ${paragraph.url}",
-            style: textStyle.copyWith(color: theme.colorScheme.error),
-          ));
+          article.inputWidget(app.VideoParagraph(videoUrl: paragraph.url, isPlayable: onParagraphClick != null));
         }
       }
     }
@@ -258,7 +265,10 @@ class ImageParagraph extends StatelessWidget {
         child: CachedNetworkImage(
       imageUrl: imageUrl,
       placeholder: (context, url) => const LoadingIndicator(),
-      errorWidget: (context, url, error) => const Icon(Icons.error),
+      errorWidget: (context, url, error) {
+        debugPrint("Failed to load image: $url");
+        return const Icon(Icons.error);
+      },
       fit: BoxFit.cover,
     ));
     if (onClick != null) {
@@ -269,96 +279,5 @@ class ImageParagraph extends StatelessWidget {
     } else {
       return child;
     }
-  }
-}
-
-class YouTubeParagraph extends StatefulWidget {
-  final String clipId;
-  const YouTubeParagraph({
-    super.key,
-    required this.clipId,
-  });
-
-  @override
-  State<YouTubeParagraph> createState() => _YouTubeParagraphState();
-}
-
-class _YouTubeParagraphState extends State<YouTubeParagraph> {
-  late YoutubePlayerController _controller;
-  late TextEditingController _idController;
-  late TextEditingController _seekToController;
-
-  late PlayerState _playerState;
-  late YoutubeMetaData _videoMetaData;
-  double _volume = 100;
-  bool _muted = false;
-  bool _isPlayerReady = false;
-
-  @override
-  void initState() {
-    _controller = YoutubePlayerController(
-      initialVideoId: widget.clipId,
-      flags: const YoutubePlayerFlags(
-        mute: false,
-        autoPlay: false,
-        disableDragSeek: false,
-        loop: false,
-        isLive: false,
-        forceHD: false,
-        enableCaption: true,
-      ),
-    )..addListener(_listener);
-    super.initState();
-  }
-
-  @override
-  void deactivate() {
-    // Pauses video while navigating to next page.
-    _controller.pause();
-    super.deactivate();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    _idController.dispose();
-    _seekToController.dispose();
-    super.dispose();
-  }
-
-  void _listener() {
-    if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {
-      setState(() {
-        _playerState = _controller.value.playerState;
-        _videoMetaData = _controller.metadata;
-      });
-    }
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return YoutubePlayer(
-      controller: _controller,
-      showVideoProgressIndicator: true,
-      onReady: () {
-        debugPrint('Player is ready.');
-      },
-      bottomActions: [
-        CurrentPosition(),
-        ProgressBar(isExpanded: true),
-        RemainingDuration(),
-        IconButton(
-          onPressed: () async {
-            _controller.pause();
-            final seconds = _controller.value.position.inSeconds;
-            final url = "https://www.youtube.com/watch?v=${widget.clipId}&t=$seconds";
-            if (!await launchUrl(Uri.parse(url))) {
-              debugPrint('Could not launch $url');
-            }
-          },
-          icon: Icon(Icons.open_in_new_outlined, color: Colors.white),
-        )
-      ],
-    );
   }
 }
