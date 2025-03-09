@@ -357,7 +357,7 @@ abstract class _GetBoardsParams implements GetBoardsParams {
 mixin _$GetThreadInfosParams {
   String get extensionPkgName => throw _privateConstructorUsedError;
   String get siteId => throw _privateConstructorUsedError;
-  String get boardId => throw _privateConstructorUsedError;
+  Map<String, String>? get boardsSorting => throw _privateConstructorUsedError;
   Pagination? get pagination => throw _privateConstructorUsedError;
   String? get sortBy => throw _privateConstructorUsedError;
   String? get keywords => throw _privateConstructorUsedError;
@@ -381,7 +381,7 @@ abstract class $GetThreadInfosParamsCopyWith<$Res> {
   $Res call(
       {String extensionPkgName,
       String siteId,
-      String boardId,
+      Map<String, String>? boardsSorting,
       Pagination? pagination,
       String? sortBy,
       String? keywords});
@@ -407,7 +407,7 @@ class _$GetThreadInfosParamsCopyWithImpl<$Res,
   $Res call({
     Object? extensionPkgName = null,
     Object? siteId = null,
-    Object? boardId = null,
+    Object? boardsSorting = freezed,
     Object? pagination = freezed,
     Object? sortBy = freezed,
     Object? keywords = freezed,
@@ -421,10 +421,10 @@ class _$GetThreadInfosParamsCopyWithImpl<$Res,
           ? _value.siteId
           : siteId // ignore: cast_nullable_to_non_nullable
               as String,
-      boardId: null == boardId
-          ? _value.boardId
-          : boardId // ignore: cast_nullable_to_non_nullable
-              as String,
+      boardsSorting: freezed == boardsSorting
+          ? _value.boardsSorting
+          : boardsSorting // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
       pagination: freezed == pagination
           ? _value.pagination
           : pagination // ignore: cast_nullable_to_non_nullable
@@ -466,7 +466,7 @@ abstract class _$$GetThreadInfosParamsImplCopyWith<$Res>
   $Res call(
       {String extensionPkgName,
       String siteId,
-      String boardId,
+      Map<String, String>? boardsSorting,
       Pagination? pagination,
       String? sortBy,
       String? keywords});
@@ -490,7 +490,7 @@ class __$$GetThreadInfosParamsImplCopyWithImpl<$Res>
   $Res call({
     Object? extensionPkgName = null,
     Object? siteId = null,
-    Object? boardId = null,
+    Object? boardsSorting = freezed,
     Object? pagination = freezed,
     Object? sortBy = freezed,
     Object? keywords = freezed,
@@ -504,10 +504,10 @@ class __$$GetThreadInfosParamsImplCopyWithImpl<$Res>
           ? _value.siteId
           : siteId // ignore: cast_nullable_to_non_nullable
               as String,
-      boardId: null == boardId
-          ? _value.boardId
-          : boardId // ignore: cast_nullable_to_non_nullable
-              as String,
+      boardsSorting: freezed == boardsSorting
+          ? _value._boardsSorting
+          : boardsSorting // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>?,
       pagination: freezed == pagination
           ? _value.pagination
           : pagination // ignore: cast_nullable_to_non_nullable
@@ -530,17 +530,26 @@ class _$GetThreadInfosParamsImpl implements _GetThreadInfosParams {
   const _$GetThreadInfosParamsImpl(
       {required this.extensionPkgName,
       required this.siteId,
-      required this.boardId,
+      required final Map<String, String>? boardsSorting,
       this.pagination,
       this.sortBy,
-      this.keywords});
+      this.keywords})
+      : _boardsSorting = boardsSorting;
 
   @override
   final String extensionPkgName;
   @override
   final String siteId;
+  final Map<String, String>? _boardsSorting;
   @override
-  final String boardId;
+  Map<String, String>? get boardsSorting {
+    final value = _boardsSorting;
+    if (value == null) return null;
+    if (_boardsSorting is EqualUnmodifiableMapView) return _boardsSorting;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(value);
+  }
+
   @override
   final Pagination? pagination;
   @override
@@ -550,7 +559,7 @@ class _$GetThreadInfosParamsImpl implements _GetThreadInfosParams {
 
   @override
   String toString() {
-    return 'GetThreadInfosParams(extensionPkgName: $extensionPkgName, siteId: $siteId, boardId: $boardId, pagination: $pagination, sortBy: $sortBy, keywords: $keywords)';
+    return 'GetThreadInfosParams(extensionPkgName: $extensionPkgName, siteId: $siteId, boardsSorting: $boardsSorting, pagination: $pagination, sortBy: $sortBy, keywords: $keywords)';
   }
 
   @override
@@ -561,7 +570,8 @@ class _$GetThreadInfosParamsImpl implements _GetThreadInfosParams {
             (identical(other.extensionPkgName, extensionPkgName) ||
                 other.extensionPkgName == extensionPkgName) &&
             (identical(other.siteId, siteId) || other.siteId == siteId) &&
-            (identical(other.boardId, boardId) || other.boardId == boardId) &&
+            const DeepCollectionEquality()
+                .equals(other._boardsSorting, _boardsSorting) &&
             (identical(other.pagination, pagination) ||
                 other.pagination == pagination) &&
             (identical(other.sortBy, sortBy) || other.sortBy == sortBy) &&
@@ -571,8 +581,14 @@ class _$GetThreadInfosParamsImpl implements _GetThreadInfosParams {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, extensionPkgName, siteId,
-      boardId, pagination, sortBy, keywords);
+  int get hashCode => Object.hash(
+      runtimeType,
+      extensionPkgName,
+      siteId,
+      const DeepCollectionEquality().hash(_boardsSorting),
+      pagination,
+      sortBy,
+      keywords);
 
   /// Create a copy of GetThreadInfosParams
   /// with the given fields replaced by the non-null parameter values.
@@ -596,7 +612,7 @@ abstract class _GetThreadInfosParams implements GetThreadInfosParams {
   const factory _GetThreadInfosParams(
       {required final String extensionPkgName,
       required final String siteId,
-      required final String boardId,
+      required final Map<String, String>? boardsSorting,
       final Pagination? pagination,
       final String? sortBy,
       final String? keywords}) = _$GetThreadInfosParamsImpl;
@@ -606,7 +622,7 @@ abstract class _GetThreadInfosParams implements GetThreadInfosParams {
   @override
   String get siteId;
   @override
-  String get boardId;
+  Map<String, String>? get boardsSorting;
   @override
   Pagination? get pagination;
   @override

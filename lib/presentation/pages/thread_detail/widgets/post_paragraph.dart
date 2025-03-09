@@ -4,7 +4,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
+import 'package:news_hub/presentation/pages/thread_detail/widgets/youtube_paragraph.dart';
+import 'package:news_hub/presentation/pages/thread_detail/widgets/video_paragraph.dart' as app;
+import 'package:news_hub/presentation/widgets/molecules/loading_indicator.dart';
 import 'package:news_hub/shared/extensions.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
+
 
 class Article {
   List<Widget> children = [];
@@ -29,12 +34,14 @@ class Article {
 class ArticleWidget extends StatelessWidget {
   final List<domain.Paragraph> contents;
   final int? textLengthMax;
+  final bool disablePlay;
   final FutureOr<void> Function(domain.Paragraph paragraph)? onParagraphClick;
 
   const ArticleWidget({
     super.key,
     required this.contents,
     this.textLengthMax,
+    this.disablePlay = false,
     required this.onParagraphClick,
   });
 
@@ -65,7 +72,7 @@ class ArticleWidget extends StatelessWidget {
           text: "${paragraph.content} ",
           style: textStyle.copyWith(
             fontStyle: FontStyle.italic,
-            color: theme.colorScheme.onSurfaceVariant.withOpacity(0.8),
+            color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
           ),
         ));
       } else if (paragraph is domain.LinkParagraph) {
@@ -76,39 +83,55 @@ class ArticleWidget extends StatelessWidget {
             color: theme.colorScheme.primary,
             decoration: TextDecoration.underline,
           ),
-          recognizer: TapGestureRecognizer()
-            ..onTap = () => onParagraphClick?.call(paragraph),
+          recognizer: TapGestureRecognizer()..onTap = () => onParagraphClick?.call(paragraph),
         ));
       } else if (paragraph is domain.ReplyToParagraph) {
         // 回复段落 - 添加为可点击的TextSpan
         article.enter();
-        final annotations = paragraph.preview.isEmpty
-            ? ">>${paragraph.authorName} "
-            : ">>${paragraph.authorName}(${paragraph.preview.truncate(7)}) ";
+        final annotations = paragraph.preview.isEmpty ? ">>${paragraph.authorName} " : ">>${paragraph.authorName}(${paragraph.preview.truncate(7)}) ";
         article.input(TextSpan(
           text: annotations,
           style: textStyle.copyWith(
             color: theme.colorScheme.secondary,
             decoration: TextDecoration.underline,
           ),
-          recognizer: TapGestureRecognizer()
-            ..onTap = () => onParagraphClick?.call(paragraph),
+          recognizer: TapGestureRecognizer()..onTap = () => onParagraphClick?.call(paragraph),
         ));
         article.enter();
       } else if (paragraph is domain.ImageParagraph) {
         // 图片段落 - 添加为可点击的Image
         article.enter();
-        article.inputWidget(ImageParagraph(
-          imageUrl: paragraph.thumb(),
-          onClick: () => onParagraphClick?.call(paragraph),
-        ));
+        if (onParagraphClick != null) {
+          article.inputWidget(ImageParagraph(
+            imageUrl: paragraph.raw,
+            onClick: () => onParagraphClick!.call(paragraph),
+          ));
+        } else {
+          article.inputWidget(ImageParagraph(
+            imageUrl: paragraph.raw,
+            onClick: null,
+          ));
+        }
       } else if (paragraph is domain.VideoParagraph) {
-        // 视频段落 - 添加为可点击的Video
+        // 视频段落
         article.enter();
-        article.inputWidget(VideoParagraph(
-          thumb: paragraph.thumb,
-          onClick: () => onParagraphClick?.call((paragraph)),
-        ));
+        if (paragraph.isYouTube()) {
+          final clipId = YoutubePlayer.convertUrlToId(paragraph.url);
+          if (clipId != null) {
+            if (disablePlay) {
+              article.inputWidget(ImageParagraph(imageUrl: YoutubePlayer.getThumbnail(videoId: clipId)));
+            } else {
+              article.inputWidget(YouTubeParagraph(clipId: clipId));
+            }
+          } else {
+            article.inputWidget(TextParagraph(
+              content: "Unsupported video format: ${paragraph.url}",
+              style: textStyle.copyWith(color: theme.colorScheme.error),
+            ));
+          }
+        } else {
+          article.inputWidget(app.VideoParagraph(videoUrl: paragraph.url, isPlayable: !disablePlay));
+        }
       }
     }
     article.enter();
@@ -125,11 +148,11 @@ class TextParagraph extends StatelessWidget {
   final TextStyle? style;
 
   const TextParagraph({
-    Key? key,
+    super.key,
     required this.content,
     this.maxLines,
     this.style,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -146,10 +169,10 @@ class QuoteParagraph extends StatelessWidget {
   final TextStyle? style;
 
   const QuoteParagraph({
-    Key? key,
+    super.key,
     required this.content,
     this.style,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -167,25 +190,21 @@ class QuoteParagraph extends StatelessWidget {
 }
 
 class ReplyToParagraph extends StatelessWidget {
-  final String id; // paragraph.id
+  final String targetName; // paragraph.id
   final String Function(String id) onPreviewReplyTo;
-  final VoidCallback onClick;
+  final void Function()? onClick;
 
   const ReplyToParagraph({
-    Key? key,
-    required this.id,
+    super.key,
+    required this.targetName,
     required this.onPreviewReplyTo,
-    this.onClick = defaultOnClick,
-  }) : super(key: key);
-
-  static void defaultOnClick() {
-    debugPrint("Link clicked!");
-  }
+    this.onClick,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final preview = onPreviewReplyTo(id);
-    final annotations = preview.isEmpty ? ">>${id}" : ">>${id}($preview...)";
+    final preview = onPreviewReplyTo(targetName);
+    final annotations = preview.isEmpty ? ">>$targetName" : ">>$targetName($preview...)";
 
     return LinkParagraph(
       text: annotations,
@@ -198,27 +217,32 @@ class ReplyToParagraph extends StatelessWidget {
 class LinkParagraph extends StatelessWidget {
   final String text;
   final Color? color;
-  final VoidCallback onClick;
+  final void Function()? onClick;
 
   const LinkParagraph({
-    Key? key,
+    super.key,
     required this.text,
     this.color,
     required this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onClick,
-      child: Text(
-        text,
-        style: TextStyle(
-          color: color ?? Theme.of(context).colorScheme.primary,
-          decoration: TextDecoration.underline,
-        ),
+    final child = Text(
+      text,
+      style: TextStyle(
+        color: color ?? Theme.of(context).colorScheme.primary,
+        decoration: TextDecoration.underline,
       ),
     );
+    if (onClick != null) {
+      return GestureDetector(
+        onTap: onClick,
+        child: child,
+      );
+    } else {
+      return child;
+    }
   }
 }
 
@@ -227,75 +251,30 @@ class ImageParagraph extends StatelessWidget {
   final VoidCallback? onClick;
 
   const ImageParagraph({
-    Key? key,
+    super.key,
     required this.imageUrl,
     this.onClick,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onClick,
-      child: SizedBox(
-        height: 80.0,
-        width: 80.0,
+    final child = FittedBox(
         child: CachedNetworkImage(
-          imageUrl: imageUrl,
-          placeholder: (context, url) => const Center(
-            child: CircularProgressIndicator(),
-          ),
-          errorWidget: (context, url, error) => const Icon(Icons.error),
-          fit: BoxFit.cover,
-        ),
-      ),
-    );
-  }
-}
-
-class VideoParagraph extends StatelessWidget {
-  final String? thumb;
-  final VoidCallback? onClick;
-
-  const VideoParagraph({
-    Key? key,
-    this.thumb,
-    this.onClick,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onClick,
-      child: Stack(
-        children: [
-          SizedBox(
-            height: 80.0,
-            width: 80.0,
-            child: CachedNetworkImage(
-              imageUrl: thumb ??
-                  'https://img.freepik.com/premium-vector/window-operating-system-error-warning-dialog-window-popup-message-with-system-failure-flat-design_812892-54.jpg?semt=ais_hybrid',
-              placeholder: (context, url) => const Center(
-                child: CircularProgressIndicator(),
-              ),
-              errorWidget: (context, url, error) => const Icon(Icons.error),
-              fit: BoxFit.cover,
-            ),
-          ),
-          Positioned(
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Center(
-              child: Icon(
-                Icons.play_circle_filled,
-                color: Colors.white.withOpacity(0.7),
-                size: 40.0,
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
+      imageUrl: imageUrl,
+      placeholder: (context, url) => const LoadingIndicator(),
+      errorWidget: (context, url, error) {
+        debugPrint("Failed to load image: $url");
+        return const Icon(Icons.error);
+      },
+      fit: BoxFit.cover,
+    ));
+    if (onClick != null) {
+      return GestureDetector(
+        onTap: onClick,
+        child: child,
+      );
+    } else {
+      return child;
+    }
   }
 }

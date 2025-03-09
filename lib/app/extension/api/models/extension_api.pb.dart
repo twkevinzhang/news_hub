@@ -681,23 +681,19 @@ class Board extends $pb.GeneratedMessage {
 class GetThreadInfosReq extends $pb.GeneratedMessage {
   factory GetThreadInfosReq({
     $core.String? siteId,
-    $core.String? boardId,
+    $core.Map<$core.String, $core.String>? boardsSorting,
     PaginationReq? page,
-    $core.String? sortBy,
     $core.String? keywords,
   }) {
     final $result = create();
     if (siteId != null) {
       $result.siteId = siteId;
     }
-    if (boardId != null) {
-      $result.boardId = boardId;
+    if (boardsSorting != null) {
+      $result.boardsSorting.addAll(boardsSorting);
     }
     if (page != null) {
       $result.page = page;
-    }
-    if (sortBy != null) {
-      $result.sortBy = sortBy;
     }
     if (keywords != null) {
       $result.keywords = keywords;
@@ -710,9 +706,8 @@ class GetThreadInfosReq extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetThreadInfosReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'siteId')
-    ..aOS(2, _omitFieldNames ? '' : 'boardId')
+    ..m<$core.String, $core.String>(2, _omitFieldNames ? '' : 'boardsSorting', entryClassName: 'GetThreadInfosReq.BoardsSortingEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('pb'))
     ..aOM<PaginationReq>(3, _omitFieldNames ? '' : 'page', subBuilder: PaginationReq.create)
-    ..aOS(4, _omitFieldNames ? '' : 'sortBy')
     ..aOS(5, _omitFieldNames ? '' : 'keywords')
     ..hasRequiredFields = false
   ;
@@ -748,13 +743,7 @@ class GetThreadInfosReq extends $pb.GeneratedMessage {
   void clearSiteId() => clearField(1);
 
   @$pb.TagNumber(2)
-  $core.String get boardId => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set boardId($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasBoardId() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearBoardId() => clearField(2);
+  $core.Map<$core.String, $core.String> get boardsSorting => $_getMap(1);
 
   @$pb.TagNumber(3)
   PaginationReq get page => $_getN(2);
@@ -767,21 +756,12 @@ class GetThreadInfosReq extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   PaginationReq ensurePage() => $_ensure(2);
 
-  @$pb.TagNumber(4)
-  $core.String get sortBy => $_getSZ(3);
-  @$pb.TagNumber(4)
-  set sortBy($core.String v) { $_setString(3, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasSortBy() => $_has(3);
-  @$pb.TagNumber(4)
-  void clearSortBy() => clearField(4);
-
   @$pb.TagNumber(5)
-  $core.String get keywords => $_getSZ(4);
+  $core.String get keywords => $_getSZ(3);
   @$pb.TagNumber(5)
-  set keywords($core.String v) { $_setString(4, v); }
+  set keywords($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(5)
-  $core.bool hasKeywords() => $_has(4);
+  $core.bool hasKeywords() => $_has(3);
   @$pb.TagNumber(5)
   void clearKeywords() => clearField(5);
 }

@@ -8,6 +8,7 @@ import 'package:news_hub/domain/models/models.dart' as domain;
 
 class PostLayout extends StatelessWidget {
   final domain.Post post;
+  final bool disablePlay;
   final FutureOr<void> Function(domain.Paragraph paragraph)? onParagraphClick;
   final FutureOr<void> Function()? onLikeClick;
   final FutureOr<void> Function()? onRegardingPostsClick;
@@ -15,6 +16,7 @@ class PostLayout extends StatelessWidget {
   const PostLayout({
     super.key,
     required this.post,
+    this.disablePlay = false,
     this.onParagraphClick,
     this.onLikeClick,
     this.onRegardingPostsClick,
@@ -33,6 +35,7 @@ class PostLayout extends StatelessWidget {
         ),
         ArticleWidget(
           contents: post.contents,
+          disablePlay: disablePlay,
           onParagraphClick: onParagraphClick,
         ),
         Container(height: 8),

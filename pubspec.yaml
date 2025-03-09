@@ -37,6 +37,11 @@ dependencies:
   injectable: ^2.5.0
   url_launcher: ^6.3.1
   cached_query: ^2.2.1
+  swipe_image_gallery: ^0.10.1
+  youtube_player_flutter: ^9.1.1
+  media_kit: ^1.1.11
+  media_kit_video: ^1.2.5
+  media_kit_libs_video: ^1.0.5
 
 dev_dependencies:
   flutter_test:

@@ -187,24 +187,35 @@ const GetThreadInfosReq$json = {
   '1': 'GetThreadInfosReq',
   '2': [
     {'1': 'site_id', '3': 1, '4': 1, '5': 9, '10': 'siteId'},
-    {'1': 'board_id', '3': 2, '4': 1, '5': 9, '10': 'boardId'},
+    {'1': 'boards_sorting', '3': 2, '4': 3, '5': 11, '6': '.pb.GetThreadInfosReq.BoardsSortingEntry', '10': 'boardsSorting'},
     {'1': 'page', '3': 3, '4': 1, '5': 11, '6': '.pb.PaginationReq', '9': 0, '10': 'page', '17': true},
-    {'1': 'sort_by', '3': 4, '4': 1, '5': 9, '9': 1, '10': 'sortBy', '17': true},
-    {'1': 'keywords', '3': 5, '4': 1, '5': 9, '9': 2, '10': 'keywords', '17': true},
+    {'1': 'keywords', '3': 5, '4': 1, '5': 9, '9': 1, '10': 'keywords', '17': true},
   ],
+  '3': [GetThreadInfosReq_BoardsSortingEntry$json],
   '8': [
     {'1': '_page'},
-    {'1': '_sort_by'},
     {'1': '_keywords'},
   ],
 };
 
+@$core.Deprecated('Use getThreadInfosReqDescriptor instead')
+const GetThreadInfosReq_BoardsSortingEntry$json = {
+  '1': 'BoardsSortingEntry',
+  '2': [
+    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
+    {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
+  ],
+  '7': {'7': true},
+};
+
 /// Descriptor for `GetThreadInfosReq`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List getThreadInfosReqDescriptor = $convert.base64Decode(
-    'ChFHZXRUaHJlYWRJbmZvc1JlcRIXCgdzaXRlX2lkGAEgASgJUgZzaXRlSWQSGQoIYm9hcmRfaW'
-    'QYAiABKAlSB2JvYXJkSWQSKgoEcGFnZRgDIAEoCzIRLnBiLlBhZ2luYXRpb25SZXFIAFIEcGFn'
-    'ZYgBARIcCgdzb3J0X2J5GAQgASgJSAFSBnNvcnRCeYgBARIfCghrZXl3b3JkcxgFIAEoCUgCUg'
-    'hrZXl3b3Jkc4gBAUIHCgVfcGFnZUIKCghfc29ydF9ieUILCglfa2V5d29yZHM=');
+    'ChFHZXRUaHJlYWRJbmZvc1JlcRIXCgdzaXRlX2lkGAEgASgJUgZzaXRlSWQSTwoOYm9hcmRzX3'
+    'NvcnRpbmcYAiADKAsyKC5wYi5HZXRUaHJlYWRJbmZvc1JlcS5Cb2FyZHNTb3J0aW5nRW50cnlS'
+    'DWJvYXJkc1NvcnRpbmcSKgoEcGFnZRgDIAEoCzIRLnBiLlBhZ2luYXRpb25SZXFIAFIEcGFnZY'
+    'gBARIfCghrZXl3b3JkcxgFIAEoCUgBUghrZXl3b3Jkc4gBARpAChJCb2FyZHNTb3J0aW5nRW50'
+    'cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4AUIHCgVfcGFnZU'
+    'ILCglfa2V5d29yZHM=');
 
 @$core.Deprecated('Use getThreadInfosResDescriptor instead')
 const GetThreadInfosRes$json = {

@@ -23,17 +23,17 @@ class SearchBarView extends StatelessWidget {
     final mockItems = [
       domain.Suggestion(
         id: "1",
-        keywords: 'test',
+        keywords: 'Text',
         latestUsedAt: DateTime.now(),
       ),
       domain.Suggestion(
         id: "2",
-        keywords: 'test2',
+        keywords: 'Content',
         latestUsedAt: DateTime.now(),
       ),
       domain.Suggestion(
         id: "3",
-        keywords: 'test3',
+        keywords: 'Maybe',
         latestUsedAt: DateTime.now(),
       ),
     ];
