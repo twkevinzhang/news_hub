@@ -132,8 +132,8 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.singleton<_i361.Dio>(() => appProvider.dio);
+    gh.singleton<_i158.CacheService>(() => _i158.CacheService());
     gh.lazySingleton<_i539.AppDatabase>(() => _i539.AppDatabase());
-    gh.lazySingleton<_i158.CacheService>(() => _i158.CacheService());
     gh.lazySingleton<_i475.ValidExtensionRepoUrl>(
         () => _i475.ValidExtensionRepoUrl());
     gh.lazySingleton<_i762.AppRouter>(() => _i762.AppRouter());
@@ -272,9 +272,7 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.lazySingleton<_i315.ExtensionApiService>(
       () => _i672.GrpcExtensionApiServiceImpl(
-        cacheService: gh<_i158.CacheService>(),
-        clientChannel: gh<_i1017.ClientChannel>(),
-      ),
+          clientChannel: gh<_i1017.ClientChannel>()),
       registerFor: {
         _demoExtension,
         _remoteExtension,
