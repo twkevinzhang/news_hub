@@ -11,6 +11,7 @@ build:
 
 .PHONY: clean
 clean:
+	cd android && ./gradlew clean && cd ..
 	fvm dart run build_runner clean
 
 .PHONY: proto
