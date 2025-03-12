@@ -27,13 +27,13 @@ class ListThreadInfos {
     final sites = extensions.map((e) => e.site);
 
     final threads = (await Future.wait(extensions.map((e) =>
-      _apiService.threadInfos(GetThreadInfosParams(
+      _apiService.threadInfos(
         extensionPkgName: e.pkgName,
         siteId: e.site.id,
         boardsSorting: filter?.boardsSorting,
         pagination: pagination,
         keywords: filter?.keywords,
-      ))
+      )
     )))
         .flatten();
 
@@ -43,10 +43,6 @@ class ListThreadInfos {
       final b = boards.firstWhere((b) => b.id == t.boardId);
       return PostWithExtension(post: t, board: b, extension: e, site: s);
     }).toList();
-  }
-
-  Future<void> refresh() async {
-    await _apiService.refreshThreadInfos();
   }
 }
 
