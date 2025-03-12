@@ -1,3 +1,4 @@
+import 'package:cached_query/cached_query.dart';
 import 'package:dartx/dartx.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
@@ -31,6 +32,7 @@ class SearchCubit extends Cubit<SearchState> {
   final UpdateSuggestionLatestUsedAt _updateSuggestionLatestUsedAt;
   final InsertSuggestion _insertSuggestion;
   final ListThreadInfos _listThreadInfos;
+  late final InfiniteQuery<List<PostWithExtension>, int> threadInfosQuery;
   final PagingController<int, PostWithExtension> pagingController;
 
   static const _pageSize = 10;
@@ -59,6 +61,22 @@ class SearchCubit extends Cubit<SearchState> {
             boardsOrder: [],
           ),
         )) {
+    threadInfosQuery = InfiniteQuery<List<PostWithExtension>, int>(
+        key: ["search", state.filter, state.sorting],
+        getNextArg: (state) {
+          if (state.lastPage?.isEmpty ?? false) return null;
+          return state.length + 1;
+        },
+        queryFn: (page) =>
+            _listThreadInfos.call(
+              filter: state.filter,
+              sorting: state.sorting,
+              pagination: Pagination(
+                page: page,
+                pageSize: _pageSize,
+              ),
+            )
+    );
     pagingController.addPageRequestListener(_loadThreadInfos);
   }
 
@@ -117,20 +135,18 @@ class SearchCubit extends Cubit<SearchState> {
 
   void _loadThreadInfos(int pageKey) async {
     try {
-      final result = await _listThreadInfos.call(
-        filter: state.filter,
-        sorting: state.sorting,
-        pagination: Pagination(
-          page: pageKey,
-          pageSize: _pageSize,
-        ),
-      );
-
-      final isLastPage = result.length < _pageSize;
-      if (isLastPage) {
-        pagingController.appendLastPage(result);
+      final queryState = await threadInfosQuery.getNextPage();
+      if (queryState?.error != null) {
+        throw queryState!.error!;
+      }
+      final newPage = threadInfosQuery.lastPage;
+      if (newPage == null) {
+        return;
+      }
+      if (threadInfosQuery.hasReachedMax()) {
+        pagingController.appendLastPage(newPage);
       } else {
-        pagingController.appendPage(result, pageKey + 1);
+        pagingController.appendPage(newPage, threadInfosQuery.state.length + 1);
       }
     } catch (e, s) {
       debugPrint('Exception: $e');
@@ -140,7 +156,7 @@ class SearchCubit extends Cubit<SearchState> {
   }
 
   void refresh() {
-    _listThreadInfos.refresh();
+    threadInfosQuery.refetch();
     pagingController.refresh();
   }
 
