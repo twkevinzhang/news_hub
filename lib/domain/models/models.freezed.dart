@@ -19,6 +19,9 @@ mixin _$ThreadsFilter {
   Map<String, String> get boardsSorting => throw _privateConstructorUsedError;
   String get keywords => throw _privateConstructorUsedError;
 
+  /// Serializes this ThreadsFilter to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+
   /// Create a copy of ThreadsFilter
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
@@ -107,7 +110,7 @@ class __$$ThreadsFilterImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable(createFactory: false)
 class _$ThreadsFilterImpl
     with DiagnosticableTreeMixin
     implements _ThreadsFilter {
@@ -152,6 +155,7 @@ class _$ThreadsFilterImpl
                 other.keywords == keywords));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType,
       const DeepCollectionEquality().hash(_boardsSorting), keywords);
@@ -163,6 +167,13 @@ class _$ThreadsFilterImpl
   @pragma('vm:prefer-inline')
   _$$ThreadsFilterImplCopyWith<_$ThreadsFilterImpl> get copyWith =>
       __$$ThreadsFilterImplCopyWithImpl<_$ThreadsFilterImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ThreadsFilterImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _ThreadsFilter implements ThreadsFilter {
@@ -186,6 +197,9 @@ abstract class _ThreadsFilter implements ThreadsFilter {
 /// @nodoc
 mixin _$ThreadsSorting {
   List<String> get boardsOrder => throw _privateConstructorUsedError;
+
+  /// Serializes this ThreadsSorting to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of ThreadsSorting
   /// with the given fields replaced by the non-null parameter values.
@@ -265,7 +279,7 @@ class __$$ThreadsSortingImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable(createFactory: false)
 class _$ThreadsSortingImpl
     with DiagnosticableTreeMixin
     implements _ThreadsSorting {
@@ -302,6 +316,7 @@ class _$ThreadsSortingImpl
                 .equals(other._boardsOrder, _boardsOrder));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, const DeepCollectionEquality().hash(_boardsOrder));
@@ -314,6 +329,13 @@ class _$ThreadsSortingImpl
   _$$ThreadsSortingImplCopyWith<_$ThreadsSortingImpl> get copyWith =>
       __$$ThreadsSortingImplCopyWithImpl<_$ThreadsSortingImpl>(
           this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ThreadsSortingImplToJson(
+      this,
+    );
+  }
 }
 
 abstract class _ThreadsSorting implements ThreadsSorting {

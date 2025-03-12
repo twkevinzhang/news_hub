@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'models.freezed.dart';
+part 'models.g.dart';
 
 class ExtensionRepo {
   final String? icon;
@@ -304,7 +305,7 @@ class Bookmark {
   });
 }
 
-@freezed
+@Freezed(toJson: true)
 class ThreadsFilter with _$ThreadsFilter {
   const factory ThreadsFilter({
     required Map<String, String> boardsSorting,
@@ -319,7 +320,7 @@ extension ThreadsFilterEx on ThreadsFilter {
   }
 }
 
-@freezed
+@Freezed(toJson: true)
 class ThreadsSorting with _$ThreadsSorting {
   const factory ThreadsSorting({
     required List<String> boardsOrder,

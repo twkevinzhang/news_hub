@@ -1,7 +1,7 @@
 import 'package:cached_query/cached_query.dart';
 import 'package:injectable/injectable.dart';
 
-@lazySingleton
+@singleton
 class CacheService {
   CacheService() {
     CachedQuery.instance.config(
