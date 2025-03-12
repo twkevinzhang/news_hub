@@ -56,7 +56,7 @@ abstract class AppProvider {
   @Environment(AppEnv.remoteExtension)
   @lazySingleton
   ClientChannel remote() => ClientChannel(
-    '10.158.9.161', // on my mac
+    '10.67.231.161', // on my mac
     port: 55001,
     options: const ChannelOptions(
       credentials: ChannelCredentials.insecure(),
@@ -199,7 +199,7 @@ class RemoteExtensionLauncher implements Launcher {
         pkgName: 'twkevinzhang_komica',
         displayName: 'Komica Ex',
         zipName: 'twkevinzhang_komica.zip',
-        address: 'http://10.158.9.161:55001',
+        address: 'http://10.67.231.161:55001',
         version: 1,
         pythonVersion: 1,
         isNsfw: false,
