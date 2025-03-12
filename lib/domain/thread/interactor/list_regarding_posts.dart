@@ -24,16 +24,16 @@ class ListRegardingPosts {
     Pagination? pagination,
   }) async {
     final extensionF = _installedExtensionRepository.get(extensionPkgName);
-    final siteF = _apiService.site(GetSiteParams(extensionPkgName: extensionPkgName));
-    final boardsF = _apiService.boards(GetBoardsParams(extensionPkgName: extensionPkgName, siteId: siteId));
-    final regardingPostsF = _apiService.regardingPosts(GetRegardingPostsParams(
+    final siteF = _apiService.site(extensionPkgName: extensionPkgName);
+    final boardsF = _apiService.boards(extensionPkgName: extensionPkgName, siteId: siteId);
+    final regardingPostsF = _apiService.regardingPosts(
       extensionPkgName: extensionPkgName,
       siteId: siteId,
       boardId: boardId,
       threadId: threadId,
       replyToId: replyToId,
       pagination: pagination,
-    ));
+    );
     final (extension, site, boards, regardingPosts) = await (extensionF, siteF, boardsF, regardingPostsF).wait;
     final board = boards.firstWhere((b) => b.id == boardId);
 
@@ -45,9 +45,5 @@ class ListRegardingPosts {
               extension: extension,
             ))
         .toList();
-  }
-
-  Future<void> refresh() async {
-    await _apiService.refreshRegardingPosts();
   }
 }

@@ -162,8 +162,6 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
   }
 
   void refresh() {
-    _getThread.refresh();
-    _listRegardingPosts.refresh();
     pagingController.refresh();
   }
 }

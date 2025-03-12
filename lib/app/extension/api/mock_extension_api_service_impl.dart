@@ -104,7 +104,9 @@ final _mockPost1Comments = [
 @LazySingleton(as: ExtensionApiService)
 class MockExtensionApiServiceImpl implements ExtensionApiService {
   @override
-  Future<Site> site(GetSiteParams params) async {
+  Future<Site> site({
+    required String extensionPkgName,
+  }) async {
     await Future.delayed(const Duration(seconds: 1));
     return Site(
       extensionPkgName: 'twkevinzhang_beeceptor',
@@ -116,7 +118,11 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   }
 
   @override
-  Future<List<Board>> boards(GetBoardsParams params) async {
+  Future<List<Board>> boards({
+    required String extensionPkgName,
+    required String siteId,
+    Pagination? pagination,
+  }) async {
     await Future.delayed(const Duration(seconds: 1));
     return [
       Board(
@@ -143,38 +149,58 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   }
 
   @override
-  Future<List<Post>> threadInfos(GetThreadInfosParams params) async {
+  Future<List<Post>> threadInfos({
+    required String extensionPkgName,
+    required String siteId,
+    required Map<String, String>? boardsSorting,
+    Pagination? pagination,
+    String? sortBy,
+    String? keywords,
+  }) async {
     await Future.delayed(const Duration(seconds: 1));
-    if (params.boardsSorting != null) {
-      if (params.boardsSorting!.keys.contains("1")) {
+    if (boardsSorting != null) {
+      if (boardsSorting.keys.contains("1")) {
         return _mockBoard1Posts.where((post) {
           return post.contents.any((content) {
             if (content is TextParagraph) {
-              return content.content.contains(params.keywords!);
+              return content.content.contains(keywords!);
             } else {
               return false;
             }
           });
         }).toList();
-      } else if (params.boardsSorting!.keys.isEmpty) {
+      } else if (boardsSorting.keys.isEmpty) {
         return _mockBoard1Posts;
       }
-    } else if (params.boardsSorting == null) {
+    } else if (boardsSorting == null) {
       return _mockBoard1Posts;
     }
     return [];
   }
 
   @override
-  Future<Post> thread(GetThreadParams params) async {
+  Future<Post> thread({
+    required String extensionPkgName,
+    required String siteId,
+    required String boardId,
+    required String threadId,
+    String? postId,
+  }) async {
     await Future.delayed(const Duration(seconds: 1));
-    return _mockBoard1Posts.firstWhere((post) => post.id == params.threadId);
+    return _mockBoard1Posts.firstWhere((post) => post.id == threadId);
   }
 
   @override
-  Future<List<Post>> regardingPosts(GetRegardingPostsParams params) async {
+  Future<List<Post>> regardingPosts({
+    required String extensionPkgName,
+    required String siteId,
+    required String boardId,
+    required String threadId,
+    String? replyToId,
+    Pagination? pagination,
+  }) async {
     await Future.delayed(const Duration(seconds: 1));
-    if (params.threadId == '1' && params.replyToId == null) {
+    if (threadId == '1' && replyToId == null) {
       return _mockPost1RegardingPosts;
     } else {
       return [];
@@ -182,33 +208,15 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   }
 
   @override
-  Future<List<Comment>> comments(GetCommentsParams params) async {
+  Future<List<Comment>> comments({
+    required String extensionPkgName,
+    required String siteId,
+    required String boardId,
+    required String threadId,
+    required String postId,
+    Pagination? pagination,
+  }) async {
     await Future.delayed(const Duration(seconds: 1));
     return _mockPost1Comments;
   }
-
-  @override
-  Future<void> refreshBoards() async {
-  }
-
-  @override
-  Future<void> refreshComments() async {
-  }
-
-  @override
-  Future<void> refreshRegardingPosts() async {
-  }
-
-  @override
-  Future<void> refreshSite() async {
-  }
-
-  @override
-  Future<void> refreshThread() async {
-  }
-
-  @override
-  Future<void> refreshThreadInfos() async {
-  }
-
 }
