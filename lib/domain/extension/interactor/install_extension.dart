@@ -57,7 +57,7 @@ class InstallExtension {
     }
     yield Pair(InstallStatus.testing, 0.0);
     await _extensionInstanceManager.runNew(extension);
-    final site = await _extensionApiService.site(GetSiteParams(extensionPkgName: extension.pkgName));
+    final site = await _extensionApiService.site(extensionPkgName: extension.pkgName);
     await _extensionInstanceManager.close(extension);
     await _extensionRepository.insert(
       repoBaseUrl: extension.repoBaseUrl,

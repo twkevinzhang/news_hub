@@ -136,7 +136,7 @@ class DemoExtensionLauncher implements Launcher {
       await _manager.close(mockExtension);
       await _manager.runNew(mockExtension);
       runApp(App());
-      final site = await _apiService.site(GetSiteParams(extensionPkgName: mockExtension.pkgName));
+      final site = await _apiService.site(extensionPkgName: mockExtension.pkgName);
       debugPrint('site: $site');
     } catch (e, s) {
       debugPrint('Exception: $e');
