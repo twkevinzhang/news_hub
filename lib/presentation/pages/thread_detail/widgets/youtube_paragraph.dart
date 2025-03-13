@@ -25,6 +25,7 @@ class _YouTubeParagraphState extends State<YouTubeParagraph> {
     _controller = YoutubePlayerController(
       initialVideoId: widget.clipId,
       flags: const YoutubePlayerFlags(
+        hideThumbnail: true,
         mute: false,
         autoPlay: false,
         disableDragSeek: true,
