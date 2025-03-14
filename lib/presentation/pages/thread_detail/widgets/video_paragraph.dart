@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:media_kit/media_kit.dart';
-import 'package:media_kit_video/media_kit_video.dart';
+import 'package:media_kit/media_kit.dart' as kit;
+import 'package:media_kit_video/media_kit_video.dart' as kit_video;
+import 'package:news_hub/presentation/pages/thread_detail/widgets/video_controls.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class VideoParagraph extends StatefulWidget {
@@ -13,13 +14,13 @@ class VideoParagraph extends StatefulWidget {
 }
 
 class _VideoParagraphState extends State<VideoParagraph> {
-  late final player = Player();
-  late final controller = VideoController(player);
+  late final player = kit.Player();
+  late final controller = kit_video.VideoController(player);
 
   @override
   void initState() {
     super.initState();
-    player.open(Media(widget.videoUrl), play: false);
+    player.open(kit.Media(widget.videoUrl), play: false);
   }
 
   @override
@@ -30,8 +31,9 @@ class _VideoParagraphState extends State<VideoParagraph> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialVideoControlsTheme(
-      normal: MaterialVideoControlsThemeData(
+    return AppVideoControlsTheme(
+      normal: AppVideoControlsThemeData(
+        visibleOnMount: true,
         bottomButtonBar: [
           MaterialPositionIndicator(),
           Spacer(),
@@ -47,16 +49,13 @@ class _VideoParagraphState extends State<VideoParagraph> {
         ],
         padding: EdgeInsets.only(bottom: 16.0),
       ),
-      fullscreen: const MaterialVideoControlsThemeData(
-        automaticallyImplySkipNextButton: false,
-        automaticallyImplySkipPreviousButton: false,
-      ),
+      fullscreen: const AppVideoControlsThemeData(),
       child: SizedBox(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.width * 9.0 / 16.0,
-        child: Video(
+        child: kit_video.Video(
           controller: controller,
-          controls: widget.isPlayable ? AdaptiveVideoControls : NoVideoControls,
+          controls: widget.isPlayable ? AppVideoControls : kit_video.NoVideoControls,
         ),
       ),
     );
