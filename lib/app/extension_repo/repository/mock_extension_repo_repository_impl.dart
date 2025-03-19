@@ -3,7 +3,7 @@ import 'package:news_hub/domain/extension_repo/extension_repo.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/shared/constants.dart';
 
-@Environment(AppEnv.mockExtension)
+@Environment(AppEnv.mockData)
 @LazySingleton(as: ExtensionRepoRepository)
 class MockExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
   @override

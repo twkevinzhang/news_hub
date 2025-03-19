@@ -20,4 +20,12 @@ proto:
 
 .PHONY: log
 log:
-	./adb.sh cat $(FILES_HOME)/extensions/twkevinzhang_komica/komica.log
+	./adb.sh cat $(FILES_HOME)/flet/adapter/dist/komica.log
+
+.PHONY: adapter
+adapter:
+# 	currently for Android
+	rm -rf $(SERIOUS_PYTHON_SITE_PACKAGES)
+	rm -rf adapter/dist && mkdir -p adapter/dist
+	cp -r {{ NEED_TO_SET }}/Projects/news_hub_extensions/twkevinzhang_komica/src/* {{ NEED_TO_SET }}/Projects/news_hub/adapter/src/extensions/twkevinzhang_komica/
+	fvm dart run serious_python:main package adapter/src -p Android --requirements -r,adapter/src/requirements.txt --asset adapter/dist/adapter.zip --verbose

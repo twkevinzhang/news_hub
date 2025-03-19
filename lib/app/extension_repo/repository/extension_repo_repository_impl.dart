@@ -7,8 +7,8 @@ import 'package:injectable/injectable.dart';
 import 'package:news_hub/shared/constants.dart';
 import 'package:news_hub/shared/exceptions.dart';
 
-@Environment(AppEnv.demoExtension)
-@Environment(AppEnv.remoteExtension)
+@Environment(AppEnv.localAdapter)
+@Environment(AppEnv.remoteAdapter)
 @LazySingleton(as: ExtensionRepoRepository)
 class ExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
   final AppDatabase _db;

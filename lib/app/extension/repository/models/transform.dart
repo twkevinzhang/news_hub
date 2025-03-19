@@ -8,7 +8,6 @@ extension ExtensionTransform on database.InstalledExtension {
       pkgName: pkgName,
       displayName: displayName,
       zipName: zipName, // Assuming zipName is not stored in the database
-      address: address, // Assuming address is not stored in the database
       version: version,
       pythonVersion:
           pythonVersion, // Assuming pythonVersion is not stored in the database

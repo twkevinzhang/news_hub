@@ -23,9 +23,9 @@ Browse between multiple forums.
 
 ## AppEnv
 可在 configureDependencies() 中選擇以下開發模式：
- - mockExtension mode：使用 [mock_extension_api_service_impl.dart]
- - demoExtension mode：使用 [demo_extension](demo_extension) 資料夾中的 grpc server
- - remoteExtension mode：跟遠端 grpc server 溝通來取得論壇資料
+ - mockData mode：使用 [mock_extension_api_service_impl.dart]
+ - localAdapter mode：使用 [adapter](adapter) 資料夾中的 grpc server
+ - remoteAdapter mode：跟遠端 grpc server 溝通來取得論壇資料
 
 [news_hub_extensions]: https://github.com/twkevinzhang/news_hub_extensions
 [news_hub_protos]: https://github.com/twkevinzhang/news_hub_protos

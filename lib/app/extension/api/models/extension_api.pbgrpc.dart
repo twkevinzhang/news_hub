@@ -21,9 +21,9 @@ export 'extension_api.pb.dart';
 
 @$pb.GrpcServiceName('pb.ExtensionApi')
 class ExtensionApiClient extends $grpc.Client {
-  static final _$getSite = $grpc.ClientMethod<$0.Empty, $0.GetSiteRes>(
+  static final _$getSite = $grpc.ClientMethod<$0.GetSiteReq, $0.GetSiteRes>(
       '/pb.ExtensionApi/GetSite',
-      ($0.Empty value) => value.writeToBuffer(),
+      ($0.GetSiteReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.GetSiteRes.fromBuffer(value));
   static final _$getBoards = $grpc.ClientMethod<$0.GetBoardsReq, $0.GetBoardsRes>(
       '/pb.ExtensionApi/GetBoards',
@@ -52,7 +52,7 @@ class ExtensionApiClient extends $grpc.Client {
       : super(channel, options: options,
         interceptors: interceptors);
 
-  $grpc.ResponseFuture<$0.GetSiteRes> getSite($0.Empty request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.GetSiteRes> getSite($0.GetSiteReq request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getSite, request, options: options);
   }
 
@@ -82,12 +82,12 @@ abstract class ExtensionApiServiceBase extends $grpc.Service {
   $core.String get $name => 'pb.ExtensionApi';
 
   ExtensionApiServiceBase() {
-    $addMethod($grpc.ServiceMethod<$0.Empty, $0.GetSiteRes>(
+    $addMethod($grpc.ServiceMethod<$0.GetSiteReq, $0.GetSiteRes>(
         'GetSite',
         getSite_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
+        ($core.List<$core.int> value) => $0.GetSiteReq.fromBuffer(value),
         ($0.GetSiteRes value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.GetBoardsReq, $0.GetBoardsRes>(
         'GetBoards',
@@ -126,7 +126,7 @@ abstract class ExtensionApiServiceBase extends $grpc.Service {
         ($0.GetCommentsRes value) => value.writeToBuffer()));
   }
 
-  $async.Future<$0.GetSiteRes> getSite_Pre($grpc.ServiceCall call, $async.Future<$0.Empty> request) async {
+  $async.Future<$0.GetSiteRes> getSite_Pre($grpc.ServiceCall call, $async.Future<$0.GetSiteReq> request) async {
     return getSite(call, await request);
   }
 
@@ -150,7 +150,7 @@ abstract class ExtensionApiServiceBase extends $grpc.Service {
     return getComments(call, await request);
   }
 
-  $async.Future<$0.GetSiteRes> getSite($grpc.ServiceCall call, $0.Empty request);
+  $async.Future<$0.GetSiteRes> getSite($grpc.ServiceCall call, $0.GetSiteReq request);
   $async.Future<$0.GetBoardsRes> getBoards($grpc.ServiceCall call, $0.GetBoardsReq request);
   $async.Future<$0.GetThreadInfosRes> getThreadInfos($grpc.ServiceCall call, $0.GetThreadInfosReq request);
   $async.Future<$0.GetThreadPostRes> getThreadPost($grpc.ServiceCall call, $0.GetThreadPostReq request);

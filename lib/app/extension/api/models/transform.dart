@@ -3,9 +3,9 @@ import 'package:news_hub/shared/extensions.dart';
 import 'extension_api.pb.dart' as pb;
 
 extension SiteTransform on pb.Site {
-  domain.Site toDomain(String extensionPkgName) {
+  domain.Site toDomain() {
     return domain.Site(
-      extensionPkgName: extensionPkgName,
+      extensionPkgName: pkgName,
       id: id,
       icon: icon,
       name: name,
@@ -15,12 +15,9 @@ extension SiteTransform on pb.Site {
 }
 
 extension BoardTransform on pb.Board {
-  domain.Board toDomain(
-    String extensionPkgName,
-    String siteId,
-  ) {
+  domain.Board toDomain() {
     return domain.Board(
-      extensionPkgName: extensionPkgName,
+      extensionPkgName: pkgName,
       id: id,
       name: name,
       siteId: siteId,
@@ -33,9 +30,9 @@ extension BoardTransform on pb.Board {
 }
 
 extension PostTransform on pb.Post {
-  domain.Post toDomain(String extensionPkgName) {
+  domain.Post toDomain() {
     return domain.Post(
-      extensionPkgName: extensionPkgName,
+      extensionPkgName: pkgName,
       id: id,
       threadId: threadId,
       boardId: boardId,
@@ -57,14 +54,14 @@ extension PostTransform on pb.Post {
 }
 
 extension CommentTransform on pb.Comment {
-  domain.Comment toDomain(String extensionPkgName) {
+  domain.Comment toDomain() {
     return domain.Comment(
       id: id,
       postId: postId,
       threadId: threadId,
       boardId: boardId,
       siteId: siteId,
-      extensionPkgName: extensionPkgName,
+      extensionPkgName: pkgName,
       contents: contents.map((e) => e.toDomain()).toList(),
       authorId: authorId,
       authorName: authorName,

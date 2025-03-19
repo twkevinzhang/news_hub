@@ -9,8 +9,8 @@ import 'package:news_hub/shared/models.dart';
 
 import 'models/extension_api.pbgrpc.dart';
 
-@Environment(AppEnv.demoExtension)
-@Environment(AppEnv.remoteExtension)
+@Environment(AppEnv.localAdapter)
+@Environment(AppEnv.remoteAdapter)
 @LazySingleton(as: ExtensionApiService)
 class GrpcExtensionApiServiceImpl implements ExtensionApiService {
   late final ExtensionApiClient _client;
@@ -23,8 +23,8 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
   Future<domain.Site> site({
     required String extensionPkgName,
   }) async {
-    final res = await _client.getSite(Empty());
-    return res.site.toDomain(extensionPkgName);
+    final res = await _client.getSite(GetSiteReq(pkgName: extensionPkgName));
+    return res.site.toDomain();
   }
 
   @override
@@ -34,18 +34,14 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
     Pagination? pagination,
   }) async {
     final res = await _client.getBoards(GetBoardsReq(
+      pkgName: extensionPkgName,
       siteId: siteId,
       page: PaginationReq(
         page: pagination?.page,
         pageSize: pagination?.pageSize,
       ),
     ));
-    return res.boards
-        .map((b) => b.toDomain(
-              extensionPkgName,
-              siteId,
-            ))
-        .toList();
+    return res.boards.map((b) => b.toDomain()).toList();
   }
 
   @override
@@ -58,6 +54,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
     String? keywords,
   }) async {
     final res = await _client.getThreadInfos(GetThreadInfosReq(
+      pkgName: extensionPkgName,
       siteId: siteId,
       boardsSorting: boardsSorting,
       page: PaginationReq(
@@ -66,7 +63,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
       ),
       keywords: keywords,
     ));
-    return res.threadInfos.map((t) => t.toDomain(extensionPkgName)).toList();
+    return res.threadInfos.map((t) => t.toDomain()).toList();
   }
 
   @override
@@ -78,12 +75,13 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
     String? postId,
   }) async {
     final res = await _client.getThreadPost(GetThreadPostReq(
+      pkgName: extensionPkgName,
       siteId: siteId,
       boardId: boardId,
       threadId: threadId,
       postId: postId,
     ));
-    return res.threadPost.toDomain(extensionPkgName);
+    return res.threadPost.toDomain();
   }
 
   @override
@@ -96,6 +94,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
     Pagination? pagination,
   }) async {
     final res = await _client.getRegardingPosts(GetRegardingPostsReq(
+      pkgName: extensionPkgName,
       siteId: siteId,
       boardId: boardId,
       threadId: threadId,
@@ -105,7 +104,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
         pageSize: pagination?.pageSize,
       ),
     ));
-    return res.regardingPosts.map((p) => p.toDomain(extensionPkgName)).toList();
+    return res.regardingPosts.map((p) => p.toDomain()).toList();
   }
 
   @override
@@ -118,6 +117,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
     Pagination? pagination,
   }) async {
     final res = await _client.getComments(GetCommentsReq(
+      pkgName: extensionPkgName,
       siteId: siteId,
       boardId: boardId,
       threadId: threadId,
@@ -127,6 +127,6 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
         pageSize: pagination?.pageSize,
       ),
     ));
-    return res.comments.map((c) => c.toDomain(extensionPkgName)).toList();
+    return res.comments.map((c) => c.toDomain()).toList();
   }
 }

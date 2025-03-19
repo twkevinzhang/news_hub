@@ -21,7 +21,6 @@ class InstalledExtensions extends Table {
   TextColumn get pkgName => text()();
   TextColumn get displayName => text()();
   TextColumn get zipName => text()();
-  TextColumn get address => text()();
   IntColumn get version => integer()();
   IntColumn get pythonVersion => integer()();
   TextColumn get lang => text().nullable()();

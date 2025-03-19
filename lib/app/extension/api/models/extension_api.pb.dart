@@ -266,6 +266,56 @@ class Empty extends $pb.GeneratedMessage {
   static Empty? _defaultInstance;
 }
 
+class GetSiteReq extends $pb.GeneratedMessage {
+  factory GetSiteReq({
+    $core.String? pkgName,
+  }) {
+    final $result = create();
+    if (pkgName != null) {
+      $result.pkgName = pkgName;
+    }
+    return $result;
+  }
+  GetSiteReq._() : super();
+  factory GetSiteReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetSiteReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetSiteReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'pkgName')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetSiteReq clone() => GetSiteReq()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetSiteReq copyWith(void Function(GetSiteReq) updates) => super.copyWith((message) => updates(message as GetSiteReq)) as GetSiteReq;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetSiteReq create() => GetSiteReq._();
+  GetSiteReq createEmptyInstance() => create();
+  static $pb.PbList<GetSiteReq> createRepeated() => $pb.PbList<GetSiteReq>();
+  @$core.pragma('dart2js:noInline')
+  static GetSiteReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetSiteReq>(create);
+  static GetSiteReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get pkgName => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set pkgName($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPkgName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPkgName() => clearField(1);
+}
+
 class GetSiteRes extends $pb.GeneratedMessage {
   factory GetSiteRes({
     Site? site,
@@ -325,6 +375,7 @@ class Site extends $pb.GeneratedMessage {
     $core.String? url,
     $core.String? id,
     $core.String? icon,
+    $core.String? pkgName,
   }) {
     final $result = create();
     if (name != null) {
@@ -342,6 +393,9 @@ class Site extends $pb.GeneratedMessage {
     if (icon != null) {
       $result.icon = icon;
     }
+    if (pkgName != null) {
+      $result.pkgName = pkgName;
+    }
     return $result;
   }
   Site._() : super();
@@ -354,6 +408,7 @@ class Site extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'url')
     ..aOS(4, _omitFieldNames ? '' : 'id')
     ..aOS(5, _omitFieldNames ? '' : 'icon')
+    ..aOS(6, _omitFieldNames ? '' : 'pkgName')
     ..hasRequiredFields = false
   ;
 
@@ -422,12 +477,22 @@ class Site extends $pb.GeneratedMessage {
   $core.bool hasIcon() => $_has(4);
   @$pb.TagNumber(5)
   void clearIcon() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get pkgName => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set pkgName($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasPkgName() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearPkgName() => clearField(6);
 }
 
 class GetBoardsReq extends $pb.GeneratedMessage {
   factory GetBoardsReq({
     $core.String? siteId,
     PaginationReq? page,
+    $core.String? pkgName,
   }) {
     final $result = create();
     if (siteId != null) {
@@ -435,6 +500,9 @@ class GetBoardsReq extends $pb.GeneratedMessage {
     }
     if (page != null) {
       $result.page = page;
+    }
+    if (pkgName != null) {
+      $result.pkgName = pkgName;
     }
     return $result;
   }
@@ -445,6 +513,7 @@ class GetBoardsReq extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetBoardsReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'siteId')
     ..aOM<PaginationReq>(2, _omitFieldNames ? '' : 'page', subBuilder: PaginationReq.create)
+    ..aOS(3, _omitFieldNames ? '' : 'pkgName')
     ..hasRequiredFields = false
   ;
 
@@ -488,6 +557,15 @@ class GetBoardsReq extends $pb.GeneratedMessage {
   void clearPage() => clearField(2);
   @$pb.TagNumber(2)
   PaginationReq ensurePage() => $_ensure(1);
+
+  @$pb.TagNumber(3)
+  $core.String get pkgName => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set pkgName($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasPkgName() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearPkgName() => clearField(3);
 }
 
 class GetBoardsRes extends $pb.GeneratedMessage {
@@ -559,6 +637,7 @@ class Board extends $pb.GeneratedMessage {
     $core.String? largeWelcomeImage,
     $core.String? url,
     $core.Iterable<$core.String>? supportedThreadsSorting,
+    $core.String? pkgName,
   }) {
     final $result = create();
     if (id != null) {
@@ -582,6 +661,9 @@ class Board extends $pb.GeneratedMessage {
     if (supportedThreadsSorting != null) {
       $result.supportedThreadsSorting.addAll(supportedThreadsSorting);
     }
+    if (pkgName != null) {
+      $result.pkgName = pkgName;
+    }
     return $result;
   }
   Board._() : super();
@@ -596,6 +678,7 @@ class Board extends $pb.GeneratedMessage {
     ..aOS(5, _omitFieldNames ? '' : 'largeWelcomeImage')
     ..aOS(6, _omitFieldNames ? '' : 'url')
     ..pPS(7, _omitFieldNames ? '' : 'supportedThreadsSorting')
+    ..aOS(8, _omitFieldNames ? '' : 'pkgName')
     ..hasRequiredFields = false
   ;
 
@@ -676,6 +759,15 @@ class Board extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(7)
   $core.List<$core.String> get supportedThreadsSorting => $_getList(6);
+
+  @$pb.TagNumber(8)
+  $core.String get pkgName => $_getSZ(7);
+  @$pb.TagNumber(8)
+  set pkgName($core.String v) { $_setString(7, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasPkgName() => $_has(7);
+  @$pb.TagNumber(8)
+  void clearPkgName() => clearField(8);
 }
 
 class GetThreadInfosReq extends $pb.GeneratedMessage {
@@ -684,6 +776,7 @@ class GetThreadInfosReq extends $pb.GeneratedMessage {
     $core.Map<$core.String, $core.String>? boardsSorting,
     PaginationReq? page,
     $core.String? keywords,
+    $core.String? pkgName,
   }) {
     final $result = create();
     if (siteId != null) {
@@ -698,6 +791,9 @@ class GetThreadInfosReq extends $pb.GeneratedMessage {
     if (keywords != null) {
       $result.keywords = keywords;
     }
+    if (pkgName != null) {
+      $result.pkgName = pkgName;
+    }
     return $result;
   }
   GetThreadInfosReq._() : super();
@@ -709,6 +805,7 @@ class GetThreadInfosReq extends $pb.GeneratedMessage {
     ..m<$core.String, $core.String>(2, _omitFieldNames ? '' : 'boardsSorting', entryClassName: 'GetThreadInfosReq.BoardsSortingEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('pb'))
     ..aOM<PaginationReq>(3, _omitFieldNames ? '' : 'page', subBuilder: PaginationReq.create)
     ..aOS(5, _omitFieldNames ? '' : 'keywords')
+    ..aOS(6, _omitFieldNames ? '' : 'pkgName')
     ..hasRequiredFields = false
   ;
 
@@ -764,6 +861,15 @@ class GetThreadInfosReq extends $pb.GeneratedMessage {
   $core.bool hasKeywords() => $_has(3);
   @$pb.TagNumber(5)
   void clearKeywords() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get pkgName => $_getSZ(4);
+  @$pb.TagNumber(6)
+  set pkgName($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasPkgName() => $_has(4);
+  @$pb.TagNumber(6)
+  void clearPkgName() => clearField(6);
 }
 
 class GetThreadInfosRes extends $pb.GeneratedMessage {
@@ -832,6 +938,7 @@ class GetThreadPostReq extends $pb.GeneratedMessage {
     $core.String? siteId,
     $core.String? boardId,
     $core.String? postId,
+    $core.String? pkgName,
   }) {
     final $result = create();
     if (threadId != null) {
@@ -846,6 +953,9 @@ class GetThreadPostReq extends $pb.GeneratedMessage {
     if (postId != null) {
       $result.postId = postId;
     }
+    if (pkgName != null) {
+      $result.pkgName = pkgName;
+    }
     return $result;
   }
   GetThreadPostReq._() : super();
@@ -857,6 +967,7 @@ class GetThreadPostReq extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'siteId')
     ..aOS(3, _omitFieldNames ? '' : 'boardId')
     ..aOS(4, _omitFieldNames ? '' : 'postId')
+    ..aOS(5, _omitFieldNames ? '' : 'pkgName')
     ..hasRequiredFields = false
   ;
 
@@ -916,6 +1027,15 @@ class GetThreadPostReq extends $pb.GeneratedMessage {
   $core.bool hasPostId() => $_has(3);
   @$pb.TagNumber(4)
   void clearPostId() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get pkgName => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set pkgName($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasPkgName() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearPkgName() => clearField(5);
 }
 
 class GetThreadPostRes extends $pb.GeneratedMessage {
@@ -977,6 +1097,7 @@ class GetRegardingPostsReq extends $pb.GeneratedMessage {
     $core.String? threadId,
     PaginationReq? page,
     $core.String? replyToId,
+    $core.String? pkgName,
   }) {
     final $result = create();
     if (siteId != null) {
@@ -994,6 +1115,9 @@ class GetRegardingPostsReq extends $pb.GeneratedMessage {
     if (replyToId != null) {
       $result.replyToId = replyToId;
     }
+    if (pkgName != null) {
+      $result.pkgName = pkgName;
+    }
     return $result;
   }
   GetRegardingPostsReq._() : super();
@@ -1006,6 +1130,7 @@ class GetRegardingPostsReq extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'threadId')
     ..aOM<PaginationReq>(4, _omitFieldNames ? '' : 'page', subBuilder: PaginationReq.create)
     ..aOS(5, _omitFieldNames ? '' : 'replyToId')
+    ..aOS(6, _omitFieldNames ? '' : 'pkgName')
     ..hasRequiredFields = false
   ;
 
@@ -1076,6 +1201,15 @@ class GetRegardingPostsReq extends $pb.GeneratedMessage {
   $core.bool hasReplyToId() => $_has(4);
   @$pb.TagNumber(5)
   void clearReplyToId() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get pkgName => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set pkgName($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasPkgName() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearPkgName() => clearField(6);
 }
 
 class GetRegardingPostsRes extends $pb.GeneratedMessage {
@@ -1738,6 +1872,7 @@ class Post extends $pb.GeneratedMessage {
     $core.String? boardId,
     $core.String? siteId,
     $core.String? authorName,
+    $core.String? pkgName,
     $fixnum.Int64? createdAt,
     $core.String? title,
     $core.String? authorId,
@@ -1765,6 +1900,9 @@ class Post extends $pb.GeneratedMessage {
     }
     if (authorName != null) {
       $result.authorName = authorName;
+    }
+    if (pkgName != null) {
+      $result.pkgName = pkgName;
     }
     if (createdAt != null) {
       $result.createdAt = createdAt;
@@ -1811,6 +1949,7 @@ class Post extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'boardId')
     ..aOS(4, _omitFieldNames ? '' : 'siteId')
     ..aOS(5, _omitFieldNames ? '' : 'authorName')
+    ..aOS(6, _omitFieldNames ? '' : 'pkgName')
     ..aInt64(7, _omitFieldNames ? '' : 'createdAt')
     ..aOS(9, _omitFieldNames ? '' : 'title')
     ..aOS(11, _omitFieldNames ? '' : 'authorId')
@@ -1891,90 +2030,99 @@ class Post extends $pb.GeneratedMessage {
   @$pb.TagNumber(5)
   void clearAuthorName() => clearField(5);
 
+  @$pb.TagNumber(6)
+  $core.String get pkgName => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set pkgName($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasPkgName() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearPkgName() => clearField(6);
+
   @$pb.TagNumber(7)
-  $fixnum.Int64 get createdAt => $_getI64(5);
+  $fixnum.Int64 get createdAt => $_getI64(6);
   @$pb.TagNumber(7)
-  set createdAt($fixnum.Int64 v) { $_setInt64(5, v); }
+  set createdAt($fixnum.Int64 v) { $_setInt64(6, v); }
   @$pb.TagNumber(7)
-  $core.bool hasCreatedAt() => $_has(5);
+  $core.bool hasCreatedAt() => $_has(6);
   @$pb.TagNumber(7)
   void clearCreatedAt() => clearField(7);
 
   @$pb.TagNumber(9)
-  $core.String get title => $_getSZ(6);
+  $core.String get title => $_getSZ(7);
   @$pb.TagNumber(9)
-  set title($core.String v) { $_setString(6, v); }
+  set title($core.String v) { $_setString(7, v); }
   @$pb.TagNumber(9)
-  $core.bool hasTitle() => $_has(6);
+  $core.bool hasTitle() => $_has(7);
   @$pb.TagNumber(9)
   void clearTitle() => clearField(9);
 
   @$pb.TagNumber(11)
-  $core.String get authorId => $_getSZ(7);
+  $core.String get authorId => $_getSZ(8);
   @$pb.TagNumber(11)
-  set authorId($core.String v) { $_setString(7, v); }
+  set authorId($core.String v) { $_setString(8, v); }
   @$pb.TagNumber(11)
-  $core.bool hasAuthorId() => $_has(7);
+  $core.bool hasAuthorId() => $_has(8);
   @$pb.TagNumber(11)
   void clearAuthorId() => clearField(11);
 
   @$pb.TagNumber(12)
-  $core.int get liked => $_getIZ(8);
+  $core.int get liked => $_getIZ(9);
   @$pb.TagNumber(12)
-  set liked($core.int v) { $_setSignedInt32(8, v); }
+  set liked($core.int v) { $_setSignedInt32(9, v); }
   @$pb.TagNumber(12)
-  $core.bool hasLiked() => $_has(8);
+  $core.bool hasLiked() => $_has(9);
   @$pb.TagNumber(12)
   void clearLiked() => clearField(12);
 
   @$pb.TagNumber(13)
-  $core.int get disliked => $_getIZ(9);
+  $core.int get disliked => $_getIZ(10);
   @$pb.TagNumber(13)
-  set disliked($core.int v) { $_setSignedInt32(9, v); }
+  set disliked($core.int v) { $_setSignedInt32(10, v); }
   @$pb.TagNumber(13)
-  $core.bool hasDisliked() => $_has(9);
+  $core.bool hasDisliked() => $_has(10);
   @$pb.TagNumber(13)
   void clearDisliked() => clearField(13);
 
   @$pb.TagNumber(14)
-  $core.int get comments => $_getIZ(10);
+  $core.int get comments => $_getIZ(11);
   @$pb.TagNumber(14)
-  set comments($core.int v) { $_setSignedInt32(10, v); }
+  set comments($core.int v) { $_setSignedInt32(11, v); }
   @$pb.TagNumber(14)
-  $core.bool hasComments() => $_has(10);
+  $core.bool hasComments() => $_has(11);
   @$pb.TagNumber(14)
   void clearComments() => clearField(14);
 
   @$pb.TagNumber(15)
-  $fixnum.Int64 get latestRegardingPostCreatedAt => $_getI64(11);
+  $fixnum.Int64 get latestRegardingPostCreatedAt => $_getI64(12);
   @$pb.TagNumber(15)
-  set latestRegardingPostCreatedAt($fixnum.Int64 v) { $_setInt64(11, v); }
+  set latestRegardingPostCreatedAt($fixnum.Int64 v) { $_setInt64(12, v); }
   @$pb.TagNumber(15)
-  $core.bool hasLatestRegardingPostCreatedAt() => $_has(11);
+  $core.bool hasLatestRegardingPostCreatedAt() => $_has(12);
   @$pb.TagNumber(15)
   void clearLatestRegardingPostCreatedAt() => clearField(15);
 
   @$pb.TagNumber(17)
-  $core.List<Paragraph> get contents => $_getList(12);
+  $core.List<Paragraph> get contents => $_getList(13);
 
   @$pb.TagNumber(18)
-  $core.List<$core.String> get tags => $_getList(13);
+  $core.List<$core.String> get tags => $_getList(14);
 
   @$pb.TagNumber(19)
-  $core.int get regardingPostsCount => $_getIZ(14);
+  $core.int get regardingPostsCount => $_getIZ(15);
   @$pb.TagNumber(19)
-  set regardingPostsCount($core.int v) { $_setSignedInt32(14, v); }
+  set regardingPostsCount($core.int v) { $_setSignedInt32(15, v); }
   @$pb.TagNumber(19)
-  $core.bool hasRegardingPostsCount() => $_has(14);
+  $core.bool hasRegardingPostsCount() => $_has(15);
   @$pb.TagNumber(19)
   void clearRegardingPostsCount() => clearField(19);
 
   @$pb.TagNumber(20)
-  $core.String get url => $_getSZ(15);
+  $core.String get url => $_getSZ(16);
   @$pb.TagNumber(20)
-  set url($core.String v) { $_setString(15, v); }
+  set url($core.String v) { $_setString(16, v); }
   @$pb.TagNumber(20)
-  $core.bool hasUrl() => $_has(15);
+  $core.bool hasUrl() => $_has(16);
   @$pb.TagNumber(20)
   void clearUrl() => clearField(20);
 }
@@ -1986,6 +2134,7 @@ class GetCommentsReq extends $pb.GeneratedMessage {
     $core.String? threadId,
     $core.String? postId,
     PaginationReq? page,
+    $core.String? pkgName,
   }) {
     final $result = create();
     if (siteId != null) {
@@ -2003,6 +2152,9 @@ class GetCommentsReq extends $pb.GeneratedMessage {
     if (page != null) {
       $result.page = page;
     }
+    if (pkgName != null) {
+      $result.pkgName = pkgName;
+    }
     return $result;
   }
   GetCommentsReq._() : super();
@@ -2015,6 +2167,7 @@ class GetCommentsReq extends $pb.GeneratedMessage {
     ..aOS(3, _omitFieldNames ? '' : 'threadId')
     ..aOS(4, _omitFieldNames ? '' : 'postId')
     ..aOM<PaginationReq>(5, _omitFieldNames ? '' : 'page', subBuilder: PaginationReq.create)
+    ..aOS(6, _omitFieldNames ? '' : 'pkgName')
     ..hasRequiredFields = false
   ;
 
@@ -2085,6 +2238,15 @@ class GetCommentsReq extends $pb.GeneratedMessage {
   void clearPage() => clearField(5);
   @$pb.TagNumber(5)
   PaginationReq ensurePage() => $_ensure(4);
+
+  @$pb.TagNumber(6)
+  $core.String get pkgName => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set pkgName($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasPkgName() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearPkgName() => clearField(6);
 }
 
 class GetCommentsRes extends $pb.GeneratedMessage {
@@ -2158,6 +2320,7 @@ class Comment extends $pb.GeneratedMessage {
     $fixnum.Int64? createdAt,
     $core.String? authorName,
     $core.Iterable<Paragraph>? contents,
+    $core.String? pkgName,
   }) {
     final $result = create();
     if (id != null) {
@@ -2187,6 +2350,9 @@ class Comment extends $pb.GeneratedMessage {
     if (contents != null) {
       $result.contents.addAll(contents);
     }
+    if (pkgName != null) {
+      $result.pkgName = pkgName;
+    }
     return $result;
   }
   Comment._() : super();
@@ -2203,6 +2369,7 @@ class Comment extends $pb.GeneratedMessage {
     ..aInt64(8, _omitFieldNames ? '' : 'createdAt')
     ..aOS(10, _omitFieldNames ? '' : 'authorName')
     ..pc<Paragraph>(11, _omitFieldNames ? '' : 'contents', $pb.PbFieldType.PM, subBuilder: Paragraph.create)
+    ..aOS(12, _omitFieldNames ? '' : 'pkgName')
     ..hasRequiredFields = false
   ;
 
@@ -2301,6 +2468,15 @@ class Comment extends $pb.GeneratedMessage {
 
   @$pb.TagNumber(11)
   $core.List<Paragraph> get contents => $_getList(8);
+
+  @$pb.TagNumber(12)
+  $core.String get pkgName => $_getSZ(9);
+  @$pb.TagNumber(12)
+  set pkgName($core.String v) { $_setString(9, v); }
+  @$pb.TagNumber(12)
+  $core.bool hasPkgName() => $_has(9);
+  @$pb.TagNumber(12)
+  void clearPkgName() => clearField(12);
 }
 
 
