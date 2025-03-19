@@ -9,19 +9,18 @@ abstract class InstalledExtensionRepository {
     required String pkgName,
     required String displayName,
     required String zipName,
-    required String address,
     required int version,
     required int pythonVersion,
     required String? lang,
     required bool isNsfw,
   });
+  Future<Extension> insertByModel(Extension ex);
   Future<void> delete(String pkgName);
   Future<Extension> upsert({
     required String repoBaseUrl,
     required String pkgName,
     required String displayName,
     required String zipName,
-    required String address,
     required int version,
     required int pythonVersion,
     required String? lang,

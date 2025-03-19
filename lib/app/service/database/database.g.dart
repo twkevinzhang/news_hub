@@ -356,12 +356,6 @@ class $InstalledExtensionsTable extends InstalledExtensions
   late final GeneratedColumn<String> zipName = GeneratedColumn<String>(
       'zip_name', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _addressMeta =
-      const VerificationMeta('address');
-  @override
-  late final GeneratedColumn<String> address = GeneratedColumn<String>(
-      'address', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _versionMeta =
       const VerificationMeta('version');
   @override
@@ -393,7 +387,6 @@ class $InstalledExtensionsTable extends InstalledExtensions
         pkgName,
         displayName,
         zipName,
-        address,
         version,
         pythonVersion,
         lang,
@@ -437,12 +430,6 @@ class $InstalledExtensionsTable extends InstalledExtensions
     } else if (isInserting) {
       context.missing(_zipNameMeta);
     }
-    if (data.containsKey('address')) {
-      context.handle(_addressMeta,
-          address.isAcceptableOrUnknown(data['address']!, _addressMeta));
-    } else if (isInserting) {
-      context.missing(_addressMeta);
-    }
     if (data.containsKey('version')) {
       context.handle(_versionMeta,
           version.isAcceptableOrUnknown(data['version']!, _versionMeta));
@@ -484,8 +471,6 @@ class $InstalledExtensionsTable extends InstalledExtensions
           .read(DriftSqlType.string, data['${effectivePrefix}display_name'])!,
       zipName: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}zip_name'])!,
-      address: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}address'])!,
       version: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}version'])!,
       pythonVersion: attachedDatabase.typeMapping
@@ -509,7 +494,6 @@ class InstalledExtension extends DataClass
   final String pkgName;
   final String displayName;
   final String zipName;
-  final String address;
   final int version;
   final int pythonVersion;
   final String? lang;
@@ -519,7 +503,6 @@ class InstalledExtension extends DataClass
       required this.pkgName,
       required this.displayName,
       required this.zipName,
-      required this.address,
       required this.version,
       required this.pythonVersion,
       this.lang,
@@ -531,7 +514,6 @@ class InstalledExtension extends DataClass
     map['pkg_name'] = Variable<String>(pkgName);
     map['display_name'] = Variable<String>(displayName);
     map['zip_name'] = Variable<String>(zipName);
-    map['address'] = Variable<String>(address);
     map['version'] = Variable<int>(version);
     map['python_version'] = Variable<int>(pythonVersion);
     if (!nullToAbsent || lang != null) {
@@ -547,7 +529,6 @@ class InstalledExtension extends DataClass
       pkgName: Value(pkgName),
       displayName: Value(displayName),
       zipName: Value(zipName),
-      address: Value(address),
       version: Value(version),
       pythonVersion: Value(pythonVersion),
       lang: lang == null && nullToAbsent ? const Value.absent() : Value(lang),
@@ -563,7 +544,6 @@ class InstalledExtension extends DataClass
       pkgName: serializer.fromJson<String>(json['pkgName']),
       displayName: serializer.fromJson<String>(json['displayName']),
       zipName: serializer.fromJson<String>(json['zipName']),
-      address: serializer.fromJson<String>(json['address']),
       version: serializer.fromJson<int>(json['version']),
       pythonVersion: serializer.fromJson<int>(json['pythonVersion']),
       lang: serializer.fromJson<String?>(json['lang']),
@@ -578,7 +558,6 @@ class InstalledExtension extends DataClass
       'pkgName': serializer.toJson<String>(pkgName),
       'displayName': serializer.toJson<String>(displayName),
       'zipName': serializer.toJson<String>(zipName),
-      'address': serializer.toJson<String>(address),
       'version': serializer.toJson<int>(version),
       'pythonVersion': serializer.toJson<int>(pythonVersion),
       'lang': serializer.toJson<String?>(lang),
@@ -591,7 +570,6 @@ class InstalledExtension extends DataClass
           String? pkgName,
           String? displayName,
           String? zipName,
-          String? address,
           int? version,
           int? pythonVersion,
           Value<String?> lang = const Value.absent(),
@@ -601,7 +579,6 @@ class InstalledExtension extends DataClass
         pkgName: pkgName ?? this.pkgName,
         displayName: displayName ?? this.displayName,
         zipName: zipName ?? this.zipName,
-        address: address ?? this.address,
         version: version ?? this.version,
         pythonVersion: pythonVersion ?? this.pythonVersion,
         lang: lang.present ? lang.value : this.lang,
@@ -615,7 +592,6 @@ class InstalledExtension extends DataClass
       displayName:
           data.displayName.present ? data.displayName.value : this.displayName,
       zipName: data.zipName.present ? data.zipName.value : this.zipName,
-      address: data.address.present ? data.address.value : this.address,
       version: data.version.present ? data.version.value : this.version,
       pythonVersion: data.pythonVersion.present
           ? data.pythonVersion.value
@@ -632,7 +608,6 @@ class InstalledExtension extends DataClass
           ..write('pkgName: $pkgName, ')
           ..write('displayName: $displayName, ')
           ..write('zipName: $zipName, ')
-          ..write('address: $address, ')
           ..write('version: $version, ')
           ..write('pythonVersion: $pythonVersion, ')
           ..write('lang: $lang, ')
@@ -643,7 +618,7 @@ class InstalledExtension extends DataClass
 
   @override
   int get hashCode => Object.hash(repoBaseUrl, pkgName, displayName, zipName,
-      address, version, pythonVersion, lang, isNsfw);
+      version, pythonVersion, lang, isNsfw);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -652,7 +627,6 @@ class InstalledExtension extends DataClass
           other.pkgName == this.pkgName &&
           other.displayName == this.displayName &&
           other.zipName == this.zipName &&
-          other.address == this.address &&
           other.version == this.version &&
           other.pythonVersion == this.pythonVersion &&
           other.lang == this.lang &&
@@ -664,7 +638,6 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
   final Value<String> pkgName;
   final Value<String> displayName;
   final Value<String> zipName;
-  final Value<String> address;
   final Value<int> version;
   final Value<int> pythonVersion;
   final Value<String?> lang;
@@ -675,7 +648,6 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
     this.pkgName = const Value.absent(),
     this.displayName = const Value.absent(),
     this.zipName = const Value.absent(),
-    this.address = const Value.absent(),
     this.version = const Value.absent(),
     this.pythonVersion = const Value.absent(),
     this.lang = const Value.absent(),
@@ -687,7 +659,6 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
     required String pkgName,
     required String displayName,
     required String zipName,
-    required String address,
     required int version,
     required int pythonVersion,
     this.lang = const Value.absent(),
@@ -697,7 +668,6 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
         pkgName = Value(pkgName),
         displayName = Value(displayName),
         zipName = Value(zipName),
-        address = Value(address),
         version = Value(version),
         pythonVersion = Value(pythonVersion),
         isNsfw = Value(isNsfw);
@@ -706,7 +676,6 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
     Expression<String>? pkgName,
     Expression<String>? displayName,
     Expression<String>? zipName,
-    Expression<String>? address,
     Expression<int>? version,
     Expression<int>? pythonVersion,
     Expression<String>? lang,
@@ -718,7 +687,6 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
       if (pkgName != null) 'pkg_name': pkgName,
       if (displayName != null) 'display_name': displayName,
       if (zipName != null) 'zip_name': zipName,
-      if (address != null) 'address': address,
       if (version != null) 'version': version,
       if (pythonVersion != null) 'python_version': pythonVersion,
       if (lang != null) 'lang': lang,
@@ -732,7 +700,6 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
       Value<String>? pkgName,
       Value<String>? displayName,
       Value<String>? zipName,
-      Value<String>? address,
       Value<int>? version,
       Value<int>? pythonVersion,
       Value<String?>? lang,
@@ -743,7 +710,6 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
       pkgName: pkgName ?? this.pkgName,
       displayName: displayName ?? this.displayName,
       zipName: zipName ?? this.zipName,
-      address: address ?? this.address,
       version: version ?? this.version,
       pythonVersion: pythonVersion ?? this.pythonVersion,
       lang: lang ?? this.lang,
@@ -766,9 +732,6 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
     }
     if (zipName.present) {
       map['zip_name'] = Variable<String>(zipName.value);
-    }
-    if (address.present) {
-      map['address'] = Variable<String>(address.value);
     }
     if (version.present) {
       map['version'] = Variable<int>(version.value);
@@ -795,7 +758,6 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
           ..write('pkgName: $pkgName, ')
           ..write('displayName: $displayName, ')
           ..write('zipName: $zipName, ')
-          ..write('address: $address, ')
           ..write('version: $version, ')
           ..write('pythonVersion: $pythonVersion, ')
           ..write('lang: $lang, ')
@@ -1236,7 +1198,6 @@ typedef $$InstalledExtensionsTableCreateCompanionBuilder
   required String pkgName,
   required String displayName,
   required String zipName,
-  required String address,
   required int version,
   required int pythonVersion,
   Value<String?> lang,
@@ -1249,7 +1210,6 @@ typedef $$InstalledExtensionsTableUpdateCompanionBuilder
   Value<String> pkgName,
   Value<String> displayName,
   Value<String> zipName,
-  Value<String> address,
   Value<int> version,
   Value<int> pythonVersion,
   Value<String?> lang,
@@ -1277,9 +1237,6 @@ class $$InstalledExtensionsTableFilterComposer
 
   ColumnFilters<String> get zipName => $composableBuilder(
       column: $table.zipName, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get address => $composableBuilder(
-      column: $table.address, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<int> get version => $composableBuilder(
       column: $table.version, builder: (column) => ColumnFilters(column));
@@ -1315,9 +1272,6 @@ class $$InstalledExtensionsTableOrderingComposer
   ColumnOrderings<String> get zipName => $composableBuilder(
       column: $table.zipName, builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get address => $composableBuilder(
-      column: $table.address, builder: (column) => ColumnOrderings(column));
-
   ColumnOrderings<int> get version => $composableBuilder(
       column: $table.version, builder: (column) => ColumnOrderings(column));
 
@@ -1352,9 +1306,6 @@ class $$InstalledExtensionsTableAnnotationComposer
 
   GeneratedColumn<String> get zipName =>
       $composableBuilder(column: $table.zipName, builder: (column) => column);
-
-  GeneratedColumn<String> get address =>
-      $composableBuilder(column: $table.address, builder: (column) => column);
 
   GeneratedColumn<int> get version =>
       $composableBuilder(column: $table.version, builder: (column) => column);
@@ -1403,7 +1354,6 @@ class $$InstalledExtensionsTableTableManager extends RootTableManager<
             Value<String> pkgName = const Value.absent(),
             Value<String> displayName = const Value.absent(),
             Value<String> zipName = const Value.absent(),
-            Value<String> address = const Value.absent(),
             Value<int> version = const Value.absent(),
             Value<int> pythonVersion = const Value.absent(),
             Value<String?> lang = const Value.absent(),
@@ -1415,7 +1365,6 @@ class $$InstalledExtensionsTableTableManager extends RootTableManager<
             pkgName: pkgName,
             displayName: displayName,
             zipName: zipName,
-            address: address,
             version: version,
             pythonVersion: pythonVersion,
             lang: lang,
@@ -1427,7 +1376,6 @@ class $$InstalledExtensionsTableTableManager extends RootTableManager<
             required String pkgName,
             required String displayName,
             required String zipName,
-            required String address,
             required int version,
             required int pythonVersion,
             Value<String?> lang = const Value.absent(),
@@ -1439,7 +1387,6 @@ class $$InstalledExtensionsTableTableManager extends RootTableManager<
             pkgName: pkgName,
             displayName: displayName,
             zipName: zipName,
-            address: address,
             version: version,
             pythonVersion: pythonVersion,
             lang: lang,

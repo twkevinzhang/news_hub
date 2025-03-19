@@ -3,7 +3,7 @@ import 'package:news_hub/domain/extension_repo/extension_repo.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/shared/constants.dart';
 
-@Environment(AppEnv.mockExtension)
+@Environment(AppEnv.mockData)
 @LazySingleton(as: ExtensionRepoApiService)
 class MockExtensionRepoApiServiceImpl implements ExtensionRepoApiService {
   @override
@@ -26,7 +26,6 @@ class MockExtensionRepoApiServiceImpl implements ExtensionRepoApiService {
         pkgName: 'twkevinzhang_beeceptor',
         displayName: 'Beeceptor Ex',
         zipName: 'beeceptor.zip',
-        address: 'http://127.0.0.1:55001',
         version: 1,
         pythonVersion: 1,
         isNsfw: false,

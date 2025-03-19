@@ -8,40 +8,25 @@ import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/shared/constants.dart';
 import 'package:news_hub/shared/extensions.dart';
 
-@Environment(AppEnv.mockExtension)
+@Environment(AppEnv.mockData)
 @preResolve
 @LazySingleton(as: ExtensionInstallService)
 class MockExtensionInstallServiceImpl implements ExtensionInstallService {
-  final Uri _downloadFolder;
-  final Uri _installFolder;
-
-  MockExtensionInstallServiceImpl._(this._downloadFolder, this._installFolder);
+  MockExtensionInstallServiceImpl._();
   @factoryMethod
   static Future<ExtensionInstallService> create() async {
-    WidgetsFlutterBinding.ensureInitialized();
-    final directory = await getApplicationSupportDirectory();
-    final d = directory.uri.resolve(downloadedFileFolder);
-    final i = directory.uri.resolve(installedFileFolder);
-    return MockExtensionInstallServiceImpl._(d, i);
+    return MockExtensionInstallServiceImpl._();
   }
 
   @override
-  Stream<int> download(String zipUrl, Extension extension) {
+  Stream<int> downloadAndInstall(String zipUrl, Extension extension) {
+    // TODO: implement downloadAndInstall
     throw UnimplementedError();
   }
 
   @override
-  Future<void> uninstall(Extension extension) async {
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<void> removeZip(Extension extension) {
-    throw UnimplementedError();
-  }
-
-  @override
-  Stream<ZipStatus> install(Extension extension) {
+  Future<void> uninstall(Extension extension) {
+    // TODO: implement uninstall
     throw UnimplementedError();
   }
 }

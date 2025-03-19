@@ -25,7 +25,6 @@ class Extension {
   final String pkgName;
   final String displayName;
   final String zipName;
-  final String address;
   final int version;
   final int pythonVersion;
   final String? lang;
@@ -36,7 +35,6 @@ class Extension {
     required this.pkgName,
     required this.displayName,
     required this.zipName,
-    required this.address,
     required this.version,
     required this.pythonVersion,
     this.lang,
@@ -53,7 +51,6 @@ class RemoteExtension extends Extension {
     required super.pkgName,
     required super.displayName,
     required super.zipName,
-    required super.address,
     required super.version,
     required super.pythonVersion,
     required super.lang,
@@ -69,7 +66,6 @@ extension RemoteExtensionEx on RemoteExtension {
     String? pkgName,
     String? displayName,
     String? zipName,
-    String? address,
     int? version,
     int? pythonVersion,
     String? lang,
@@ -84,7 +80,6 @@ extension RemoteExtensionEx on RemoteExtension {
       pkgName: pkgName ?? this.pkgName,
       displayName: displayName ?? this.displayName,
       zipName: zipName ?? this.zipName,
-      address: address ?? this.address,
       version: version ?? this.version,
       pythonVersion: pythonVersion ?? this.pythonVersion,
       lang: lang ?? this.lang,

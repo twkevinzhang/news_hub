@@ -8,7 +8,7 @@ import 'package:news_hub/shared/constants.dart';
 import 'package:news_hub/shared/exceptions.dart';
 import 'package:uuid/uuid.dart';
 
-@Environment(AppEnv.mockExtension)
+@Environment(AppEnv.mockData)
 @LazySingleton(as: InstalledExtensionRepository)
 class MockInstalledExtensionRepositoryImpl implements InstalledExtensionRepository {
   final List<domain.Extension> _extensions = [
@@ -17,7 +17,6 @@ class MockInstalledExtensionRepositoryImpl implements InstalledExtensionReposito
       pkgName: 'twkevinzhang_beeceptor',
       displayName: 'Beeceptor',
       zipName: 'twkevinzhang_beeceptor.zip',
-      address: 'example',
       version: 1,
       pythonVersion: 3,
       lang: 'en',
@@ -41,7 +40,6 @@ class MockInstalledExtensionRepositoryImpl implements InstalledExtensionReposito
     required String pkgName,
     required String displayName,
     required String zipName,
-    required String address,
     required int version,
     required int pythonVersion,
     required String? lang,
@@ -52,7 +50,6 @@ class MockInstalledExtensionRepositoryImpl implements InstalledExtensionReposito
       pkgName: pkgName,
       displayName: displayName,
       zipName: zipName,
-      address: address,
       version: version,
       pythonVersion: pythonVersion,
       lang: lang,
@@ -78,7 +75,6 @@ class MockInstalledExtensionRepositoryImpl implements InstalledExtensionReposito
     required String pkgName,
     required String displayName,
     required String zipName,
-    required String address,
     required int version,
     required int pythonVersion,
     required String? lang,
@@ -94,11 +90,16 @@ class MockInstalledExtensionRepositoryImpl implements InstalledExtensionReposito
       pkgName: pkgName,
       displayName: displayName,
       zipName: zipName,
-      address: address,
       version: version,
       pythonVersion: pythonVersion,
       lang: lang,
       isNsfw: isNsfw,
     );
+  }
+
+  @override
+  Future<domain.Extension> insertByModel(domain.Extension ex) {
+    // TODO: implement insertByModel
+    throw UnimplementedError();
   }
 }

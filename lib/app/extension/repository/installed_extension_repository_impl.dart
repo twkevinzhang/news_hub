@@ -8,8 +8,8 @@ import 'package:news_hub/shared/constants.dart';
 import 'package:news_hub/shared/exceptions.dart';
 import 'package:uuid/uuid.dart';
 
-@Environment(AppEnv.demoExtension)
-@Environment(AppEnv.remoteExtension)
+@Environment(AppEnv.localAdapter)
+@Environment(AppEnv.remoteAdapter)
 @LazySingleton(as: InstalledExtensionRepository)
 class InstalledExtensionRepositoryImpl implements InstalledExtensionRepository {
   final AppDatabase _db;
@@ -47,7 +47,6 @@ class InstalledExtensionRepositoryImpl implements InstalledExtensionRepository {
     required String pkgName,
     required String displayName,
     required String zipName,
-    required String address,
     required int version,
     required int pythonVersion,
     required String? lang,
@@ -58,7 +57,6 @@ class InstalledExtensionRepositoryImpl implements InstalledExtensionRepository {
       pkgName: pkgName,
       displayName: displayName,
       zipName: zipName,
-      address: address,
       version: version,
       pythonVersion: pythonVersion,
       lang: Value(lang),
@@ -82,7 +80,6 @@ class InstalledExtensionRepositoryImpl implements InstalledExtensionRepository {
     required String pkgName,
     required String displayName,
     required String zipName,
-    required String address,
     required int version,
     required int pythonVersion,
     required String? lang,
@@ -93,7 +90,6 @@ class InstalledExtensionRepositoryImpl implements InstalledExtensionRepository {
       pkgName: Value(pkgName),
       displayName: Value(displayName),
       zipName: Value(zipName),
-      address: Value(address),
       version: Value(version),
       pythonVersion: Value(pythonVersion),
       lang: Value(lang),
@@ -101,5 +97,19 @@ class InstalledExtensionRepositoryImpl implements InstalledExtensionRepository {
     );
     await _db.into(_db.installedExtensions).insertOnConflictUpdate(extension);
     return get(pkgName);
+  }
+
+  @override
+  Future<domain.Extension> insertByModel(domain.Extension ex) {
+    return insert(
+      repoBaseUrl: ex.repoBaseUrl,
+      pkgName: ex.pkgName,
+      displayName: ex.displayName,
+      zipName: ex.zipName,
+      version: ex.version,
+      pythonVersion: ex.pythonVersion,
+      lang: ex.lang,
+      isNsfw: ex.isNsfw,
+    );
   }
 }

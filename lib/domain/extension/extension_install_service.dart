@@ -6,11 +6,7 @@ enum ZipStatus {
 }
 
 abstract class ExtensionInstallService {
-  Stream<int> download(String zipUrl, Extension extension);
-
-  Stream<ZipStatus> install(Extension extension);
-
-  Future<void> removeZip(Extension extension);
+  Stream<int> downloadAndInstall(String zipUrl, Extension extension);
 
   Future<void> uninstall(Extension extension);
 }

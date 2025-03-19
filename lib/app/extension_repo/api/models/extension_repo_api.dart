@@ -93,7 +93,6 @@ extension GetExtensionsContentItemDtoEx on GetExtensionsContentItemDto {
       pkgName: pkgName,
       displayName: displayName,
       zipName: zipName,
-      address: address,
       version: version,
       pythonVersion: pythonVersion,
       lang: lang,

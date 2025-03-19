@@ -1,7 +1,6 @@
 import 'package:injectable/injectable.dart' as injectable;
 
-const String downloadedFileFolder = "extension_zips/";
-const String installedFileFolder = "extensions/";
+const String adapterAsset = "adapter/dist/adapter.zip";
 
 class AppEnv {
   /// name of the environment
@@ -19,12 +18,12 @@ class AppEnv {
   /// preset of common env name 'test'
   static const test = injectable.Environment.test;
 
-  /// preset of common env name 'mockExtension'
-  static const mockExtension = 'mockExtension';
+  /// preset of common env name 'mockData'
+  static const mockData = 'mockData';
 
-  /// preset of common env name 'demoExtension'
-  static const demoExtension = 'demoExtension';
+  /// preset of common env name 'localAdapter'
+  static const localAdapter = 'localAdapter';
 
-  /// preset of common env name 'remoteExtension'
-  static const remoteExtension = 'remoteExtension';
+  /// preset of common env name 'remoteAdapter'
+  static const remoteAdapter = 'remoteAdapter';
 }

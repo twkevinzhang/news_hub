@@ -100,7 +100,7 @@ final _mockPost1Comments = [
   ),
 ];
 
-@Environment(AppEnv.mockExtension)
+@Environment(AppEnv.mockData)
 @LazySingleton(as: ExtensionApiService)
 class MockExtensionApiServiceImpl implements ExtensionApiService {
   @override
