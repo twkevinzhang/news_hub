@@ -90,7 +90,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
             child: Card(
                 child: Padding(
               padding: const EdgeInsets.all(8),
-              child: _getPostLayout(context, cubit, post, disableRegardingPostsClick: index == 0),
+              child: _buildPostLayout(context, cubit, post, disableRegardingPostsClick: index == 0),
             )),
           ),
           noItemsFoundIndicatorBuilder: (context) => Center(
@@ -106,61 +106,73 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
     );
   }
 
-  Widget _getPostLayout(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post, {bool disableRegardingPostsClick = false}) {
+  Widget _buildPostLayout(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post, {bool disableRegardingPostsClick = false}) {
     return ArticlePostLayout(
       post: post,
       onParagraphClick: (paragraph) async {
         if (paragraph is domain.LinkParagraph) {
-          final url = paragraph.content;
-          if (!await launchUrl(Uri.parse(url))) {
-            debugPrint('Could not launch $url');
-          }
+          _onLinkParagraphClick(paragraph);
         } else if (paragraph is domain.ReplyToParagraph) {
-          showDialog(
-            context: context,
-            builder: (context) => _getDialog(
-              cubit: cubit,
-              builder: (context, state) => state.threadMap[paragraph.id]!.maybeWhen(
-                orElse: () => const LoadingIndicator(),
-                completed: (thread) => SingleChildScrollView(child: _getPostLayout(context, cubit, thread)),
-              ),
-            ),
-          );
+          _onReplyToParagraphClick(context, cubit, paragraph);
         } else if (paragraph is domain.VideoParagraph) {
           // TODO
         } else if (paragraph is domain.ImageParagraph) {
-          final medias = post.contents.medias();
-          final index = medias.indexOf(paragraph);
-          _getPostGallery(context, cubit, post, index).show();
+          _onImageParagraphClick(context, cubit, post, paragraph);
         } else if (paragraph is domain.QuoteParagraph) {
           // TODO
         }
       },
-      onRegardingPostsClick: !disableRegardingPostsClick
-          ? () {
-              showDialog(
-                context: context,
-                builder: (context) => _getDialog(
-                  cubit: cubit,
-                  builder: (context, state) => state.regardingPostsMap[post.id]!.maybeWhen(
-                    orElse: () => const LoadingIndicator(),
-                    completed: (regardingPosts) => SingleChildScrollView(
-                      child: Padding(
-                        padding: EdgeInsets.symmetric(vertical: 16),
-                        child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: regardingPosts.map((regardingPost) => _getPostLayout(context, cubit, regardingPost)).toList()),
-                      ),
-                    ),
-                  ),
-                ),
-              );
-            }
-          : null,
+      onRegardingPostsClick: !disableRegardingPostsClick ? () => _onRegardingPostsClick(context, cubit, post) : null,
     );
   }
 
-  BlocProvider _getDialog({
+  void _onLinkParagraphClick(domain.LinkParagraph paragraph) async {
+    final url = paragraph.content;
+    if (!await launchUrl(Uri.parse(url))) {
+      debugPrint('Could not launch $url');
+    }
+  }
+
+  void _onReplyToParagraphClick(BuildContext context, ThreadDetailCubit cubit, domain.ReplyToParagraph paragraph) {
+    showDialog(
+      context: context,
+      builder: (context) => _buildDialog(
+        cubit: cubit,
+        builder: (context, state) => state.threadMap[paragraph.id]!.maybeWhen(
+          orElse: () => const LoadingIndicator(),
+          completed: (thread) => SingleChildScrollView(child: _buildPostLayout(context, cubit, thread)),
+        ),
+      ),
+    );
+  }
+
+  void _onImageParagraphClick(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post, domain.ImageParagraph paragraph) {
+    final medias = post.contents.medias();
+    final index = medias.indexOf(paragraph);
+    _buildPostGallery(context, cubit, post, index).show();
+  }
+
+  void _onRegardingPostsClick(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post) {
+    showDialog(
+      context: context,
+      builder: (context) => _buildDialog(
+        cubit: cubit,
+        builder: (context, state) => state.regardingPostsMap[post.id]!.maybeWhen(
+          orElse: () => const LoadingIndicator(),
+          completed: (regardingPosts) => SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 16),
+              child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: regardingPosts.map((regardingPost) => _buildPostLayout(context, cubit, regardingPost)).toList()),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  BlocProvider _buildDialog({
     required ThreadDetailCubit cubit,
     required Widget Function(BuildContext context, ThreadDetailState state) builder,
   }) {
@@ -176,7 +188,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
     );
   }
 
-  SwipeImageGallery _getPostGallery(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post, int initialIndex) {
+  SwipeImageGallery _buildPostGallery(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post, int initialIndex) {
     final medias = post.contents.medias();
     return SwipeImageGallery(
       overlayController: cubit.overlayController,
