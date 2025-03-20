@@ -72,14 +72,14 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
     );
 
     try {
-      List<ArticlePostWithExtension> posts;
+      List<ArticlePostWithExtension> newPosts;
       bool isLastPage = false;
       if (pageKey == 1) {
         final (thread, regardingPosts) = await(threadF, regardingPostsF).wait;
-        posts = [thread, ...regardingPosts];
+        newPosts = [thread, ...regardingPosts];
         isLastPage = regardingPosts.length < _pageSize;
       } else {
-        posts = await _listRegardingPosts.call(
+        newPosts = await _listRegardingPosts.call(
           extensionPkgName: state.extensionPkgName,
           siteId: state.siteId,
           boardId: state.boardId,
@@ -89,22 +89,23 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
             pageSize: _pageSize,
           ),
         );
-        isLastPage = posts.length < _pageSize;
+        isLastPage = newPosts.length < _pageSize;
       }
       final newMap = Map.of(state.threadMap);
       final newMap2 = Map.of(state.regardingPostsMap);
-      for (final post in posts) {
+      final allPosts = newMap.completedResults().toList() + newPosts;
+      for (final post in allPosts) {
         newMap[post.id] = Result.completed(post);
         if (post.regardingPostsCount.isPositive) {
-          newMap2[post.id] = Result.completed(posts.filterBy(replyToId: post.id).toList());
+          newMap2[post.id] = Result.completed(allPosts.filterBy(targetId: post.id).toList());
         }
       }
       safeEmit(state.copyWith(threadMap: newMap));
       safeEmit(state.copyWith(regardingPostsMap: newMap2));
       if (isLastPage) {
-        pagingController.appendLastPage(posts);
+        pagingController.appendLastPage(newPosts);
       } else {
-        pagingController.appendPage(posts, pageKey + 1);
+        pagingController.appendPage(newPosts, pageKey + 1);
       }
     } on Exception catch (e, s) {
       debugPrint('Exception: $e');

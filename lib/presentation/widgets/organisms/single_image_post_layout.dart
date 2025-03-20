@@ -3,12 +3,11 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:news_hub/domain/thread/interactor/list_thread_infos.dart';
+import 'package:news_hub/presentation/widgets/molecules/loading_indicator.dart';
 import 'package:news_hub/presentation/widgets/organisms/article_post_layout.dart';
 import 'package:news_hub/presentation/pages/thread_detail/widgets/post_paragraph.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
-
-import '../molecules/loading_indicator.dart';
 
 class SingleImagePostCard extends StatelessWidget {
   final SingleImagePostWithExtension thread;
