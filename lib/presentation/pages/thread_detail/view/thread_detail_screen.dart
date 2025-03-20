@@ -90,7 +90,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
             child: Card(
                 child: Padding(
               padding: const EdgeInsets.all(8),
-              child: _getPostLayout(context, cubit, post),
+              child: _getPostLayout(context, cubit, post, disableRegardingPostsClick: index == 0),
             )),
           ),
           noItemsFoundIndicatorBuilder: (context) => Center(
@@ -106,11 +106,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
     );
   }
 
-  Widget _getPostLayout(
-    BuildContext context,
-    ThreadDetailCubit cubit,
-    domain.ArticlePost post,
-  ) {
+  Widget _getPostLayout(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post, {bool disableRegardingPostsClick = false}) {
     return ArticlePostLayout(
       post: post,
       onParagraphClick: (paragraph) async {
@@ -140,25 +136,27 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
           // TODO
         }
       },
-      onRegardingPostsClick: () {
-        showDialog(
-          context: context,
-          builder: (context) => _getDialog(
-            cubit: cubit,
-            builder: (context, state) => state.regardingPostsMap[post.id]!.maybeWhen(
-              orElse: () => const LoadingIndicator(),
-              completed: (regardingPosts) => SingleChildScrollView(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(vertical: 16),
-                  child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: regardingPosts.map((regardingPost) => _getPostLayout(context, cubit, regardingPost)).toList()),
+      onRegardingPostsClick: !disableRegardingPostsClick
+          ? () {
+              showDialog(
+                context: context,
+                builder: (context) => _getDialog(
+                  cubit: cubit,
+                  builder: (context, state) => state.regardingPostsMap[post.id]!.maybeWhen(
+                    orElse: () => const LoadingIndicator(),
+                    completed: (regardingPosts) => SingleChildScrollView(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 16),
+                        child: Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: regardingPosts.map((regardingPost) => _getPostLayout(context, cubit, regardingPost)).toList()),
+                      ),
+                    ),
+                  ),
                 ),
-              ),
-            ),
-          ),
-        );
-      },
+              );
+            }
+          : null,
     );
   }
 
@@ -184,9 +182,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
       overlayController: cubit.overlayController,
       context: context,
       dragEnabled: false,
-      children: medias
-          .map((m) => GalleryItem(media: m))
-          .toList(),
+      children: medias.map((m) => GalleryItem(media: m)).toList(),
       onSwipe: (index) {
         cubit.overlayController.add(PostGalleryOverlay(
           title: '${index + 1}/${medias.length}',

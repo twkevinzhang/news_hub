@@ -21,3 +21,9 @@ abstract class Result<R> with _$Result<R> {
   const factory Result.completed(R data) = ResultCompleted;
   const factory Result.error(Exception exception) = ResultError;
 }
+
+extension MapEx<T> on Map<String, Result<T>> {
+  Iterable<T> completedResults() {
+    return values.whereType<ResultCompleted<T>>().map((result) => result.data);
+  }
+}

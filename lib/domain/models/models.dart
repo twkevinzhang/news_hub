@@ -224,10 +224,10 @@ class ArticlePost extends Post {
 }
 
 extension ArticlePostListEx on List<ArticlePost> {
-  Iterable<ArticlePost> filterBy({ required String replyToId }) {
+  Iterable<ArticlePost> filterBy({ required String targetId }) {
     return where((post) => post.contents.any((p) {
       if (p is ReplyToParagraph) {
-        return p.id == replyToId;
+        return p.id == targetId;
       }
       return false;
     }));
