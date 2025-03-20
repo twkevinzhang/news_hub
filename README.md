@@ -7,7 +7,7 @@ Browse between multiple forums.
 - [x] Open Url in Browser
 - [x] 像Pitt的點擊開圖
 - [x] 將「播放影片」跟「點擊開圖」結合
-- [ ] 後端可以決定顯示多變的 Post layout
+- [x] 後端可以決定顯示多變的 Post layout
 - [ ] 偵測連結開啟App
 - [ ] 閱讀歷史
 - [ ] 收藏、備份
