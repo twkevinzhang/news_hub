@@ -35,13 +35,30 @@ class TextOnlyArticle {
   final List<Widget> children = [];
   final List<InlineSpan> _spans = [];
   final int? _textLengthMax;
-  TextOnlyArticle({int? textLengthMax}) : _textLengthMax = textLengthMax;
+  final BuildContext _context;
+  bool hasReachedMax = false;
+  TextOnlyArticle(context, {int? textLengthMax}) : _textLengthMax = textLengthMax, _context = context;
 
   int get textLength => _spans.map((s) => s.toPlainText()).join().length;
 
   void input(InlineSpan span) {
     if (_textLengthMax != null) {
+      if (hasReachedMax) {
+        return;
+      }
       if (textLength >= _textLengthMax) {
+        hasReachedMax = true;
+        final theme = Theme.of(_context);
+        _spans.add(TextSpan(
+          text: "...",
+          style: span.style,
+        ));
+        _spans.add(TextSpan(
+          text: "查看更多",
+          style: span.style?.copyWith(
+            color: theme.colorScheme.primary,
+          ),
+        ));
         return;
       }
       final position = min(_textLengthMax - textLength, span.toPlainText().length);
@@ -59,14 +76,6 @@ class TextOnlyArticle {
     if (_spans.isNotEmpty) {
       children.add(RichText(text: TextSpan(children: [..._spans])));
       _spans.clear();
-    }
-  }
-
-  void calculate() {
-    if (_textLengthMax != null) {
-      if (textLength - _textLengthMax > 0) {
-        children.add(Text("...查看更多"));
-      }
     }
   }
 }
@@ -201,7 +210,7 @@ class TextOnlyContent extends StatelessWidget {
       height: 1.5,
     );
 
-    final article = TextOnlyArticle(textLengthMax: 100);
+    final article = TextOnlyArticle(context, textLengthMax: 100);
     for (var paragraph in contents) {
       if (paragraph is domain.TextParagraph) {
         // 纯文本段落 - 添加为TextSpan
@@ -269,7 +278,6 @@ class TextOnlyContent extends StatelessWidget {
       }
     }
     article.enter();
-    article.calculate();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: article.children,
