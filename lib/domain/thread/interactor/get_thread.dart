@@ -17,7 +17,7 @@ class GetThread {
   })  : _apiService = apiService,
         _installedExtensionRepository = installedExtensionRepository;
 
-  Future<PostWithExtension> call({
+  Future<ArticlePostWithExtension> call({
     required String extensionPkgName,
     required String siteId,
     required String boardId,
@@ -36,8 +36,8 @@ class GetThread {
     );
     final (extension, site, boards, thread) = await (extensionF, siteF, boardsF, threadF).wait;
     final board = boards.firstWhere((b) => b.id == boardId);
-    return PostWithExtension(
-      post: thread,
+    return ArticlePostWithExtension(
+      post: thread as ArticlePost,
       board: board,
       site: site,
       extension: extension,
@@ -45,13 +45,13 @@ class GetThread {
   }
 }
 
-class PostWithExtension extends Post {
+class ArticlePostWithExtension extends ArticlePost {
   final Extension extension;
   final Site site;
   final Board board;
 
-  PostWithExtension({
-    required Post post,
+  ArticlePostWithExtension({
+    required ArticlePost post,
     required this.site,
     required this.extension,
     required this.board,
@@ -68,7 +68,6 @@ class PostWithExtension extends Post {
           authorName: post.authorName,
           liked: post.liked,
           disliked: post.disliked,
-          comments: post.comments,
           contents: post.contents,
           tags: post.tags,
           latestRegardingPostCreatedAt: post.latestRegardingPostCreatedAt,

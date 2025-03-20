@@ -134,18 +134,6 @@ class Post {
   final String boardId;
   final String threadId;
   final String id;
-  final String? title;
-  final String? url;
-  final DateTime createdAt;
-  final String authorId;
-  final String authorName;
-  final int? liked;
-  final int? disliked;
-  final int? comments;
-  final List<String>? tags;
-  final List<Paragraph> contents;
-  final DateTime? latestRegardingPostCreatedAt;
-  final int? regardingPostsCount;
 
   Post({
     required this.extensionPkgName,
@@ -153,6 +141,29 @@ class Post {
     required this.boardId,
     required this.threadId,
     required this.id,
+  });
+}
+
+class SingleImagePost extends Post {
+  final String? title;
+  final String? url;
+  final DateTime createdAt;
+  final String authorId;
+  final String authorName;
+  final int? liked;
+  final int? disliked;
+  final List<String>? tags;
+  final ImageParagraph? image;
+  final List<Paragraph> contents;
+  final DateTime? latestRegardingPostCreatedAt;
+  final int? regardingPostsCount;
+
+  SingleImagePost({
+    required super.extensionPkgName,
+    required super.siteId,
+    required super.boardId,
+    required super.threadId,
+    required super.id,
     this.title,
     this.url,
     required this.createdAt,
@@ -160,7 +171,7 @@ class Post {
     required this.authorName,
     required this.liked,
     required this.disliked,
-    required this.comments,
+    required this.image,
     required this.contents,
     this.latestRegardingPostCreatedAt,
     this.regardingPostsCount,
@@ -168,8 +179,52 @@ class Post {
   });
 }
 
-extension PostListEx on List<Post> {
+extension SingleImagePostListEx on List<SingleImagePost> {
   Iterable<Post> filterBy({ required String replyToId }) {
+    return where((post) => post.contents.any((p) {
+      if (p is ReplyToParagraph) {
+        return p.id == replyToId;
+      }
+      return false;
+    }));
+  }
+}
+
+class ArticlePost extends Post {
+  final String? title;
+  final String? url;
+  final DateTime createdAt;
+  final String authorId;
+  final String authorName;
+  final int? liked;
+  final int? disliked;
+  final List<String>? tags;
+  final List<Paragraph> contents;
+  final DateTime? latestRegardingPostCreatedAt;
+  final int? regardingPostsCount;
+
+  ArticlePost({
+    required super.extensionPkgName,
+    required super.siteId,
+    required super.boardId,
+    required super.threadId,
+    required super.id,
+    this.title,
+    this.url,
+    required this.createdAt,
+    required this.authorId,
+    required this.authorName,
+    required this.liked,
+    required this.disliked,
+    required this.contents,
+    this.latestRegardingPostCreatedAt,
+    this.regardingPostsCount,
+    required this.tags,
+  });
+}
+
+extension ArticlePostListEx on List<ArticlePost> {
+  Iterable<ArticlePost> filterBy({ required String replyToId }) {
     return where((post) => post.contents.any((p) {
       if (p is ReplyToParagraph) {
         return p.id == replyToId;

@@ -52,7 +52,7 @@ abstract class AppProvider {
   @Environment(AppEnv.remoteAdapter)
   @lazySingleton
   ClientChannel remote() => ClientChannel(
-        '10.67.231.161', // on my mac
+        '10.44.125.161', // on my mac
         port: 55001,
         options: const ChannelOptions(
           credentials: ChannelCredentials.insecure(),

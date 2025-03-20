@@ -1865,25 +1865,21 @@ class LinkParagraph extends $pb.GeneratedMessage {
   void clearContent() => clearField(1);
 }
 
+enum Post_Content {
+  articlePost, 
+  singleImagePost, 
+  notSet
+}
+
 class Post extends $pb.GeneratedMessage {
   factory Post({
     $core.String? id,
     $core.String? threadId,
     $core.String? boardId,
     $core.String? siteId,
-    $core.String? authorName,
     $core.String? pkgName,
-    $fixnum.Int64? createdAt,
-    $core.String? title,
-    $core.String? authorId,
-    $core.int? liked,
-    $core.int? disliked,
-    $core.int? comments,
-    $fixnum.Int64? latestRegardingPostCreatedAt,
-    $core.Iterable<Paragraph>? contents,
-    $core.Iterable<$core.String>? tags,
-    $core.int? regardingPostsCount,
-    $core.String? url,
+    ArticlePost? articlePost,
+    SingleImagePost? singleImagePost,
   }) {
     final $result = create();
     if (id != null) {
@@ -1898,44 +1894,14 @@ class Post extends $pb.GeneratedMessage {
     if (siteId != null) {
       $result.siteId = siteId;
     }
-    if (authorName != null) {
-      $result.authorName = authorName;
-    }
     if (pkgName != null) {
       $result.pkgName = pkgName;
     }
-    if (createdAt != null) {
-      $result.createdAt = createdAt;
+    if (articlePost != null) {
+      $result.articlePost = articlePost;
     }
-    if (title != null) {
-      $result.title = title;
-    }
-    if (authorId != null) {
-      $result.authorId = authorId;
-    }
-    if (liked != null) {
-      $result.liked = liked;
-    }
-    if (disliked != null) {
-      $result.disliked = disliked;
-    }
-    if (comments != null) {
-      $result.comments = comments;
-    }
-    if (latestRegardingPostCreatedAt != null) {
-      $result.latestRegardingPostCreatedAt = latestRegardingPostCreatedAt;
-    }
-    if (contents != null) {
-      $result.contents.addAll(contents);
-    }
-    if (tags != null) {
-      $result.tags.addAll(tags);
-    }
-    if (regardingPostsCount != null) {
-      $result.regardingPostsCount = regardingPostsCount;
-    }
-    if (url != null) {
-      $result.url = url;
+    if (singleImagePost != null) {
+      $result.singleImagePost = singleImagePost;
     }
     return $result;
   }
@@ -1943,24 +1909,20 @@ class Post extends $pb.GeneratedMessage {
   factory Post.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
   factory Post.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
+  static const $core.Map<$core.int, Post_Content> _Post_ContentByTag = {
+    7 : Post_Content.articlePost,
+    8 : Post_Content.singleImagePost,
+    0 : Post_Content.notSet
+  };
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Post', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..oo(0, [7, 8])
     ..aOS(1, _omitFieldNames ? '' : 'id')
     ..aOS(2, _omitFieldNames ? '' : 'threadId')
     ..aOS(3, _omitFieldNames ? '' : 'boardId')
     ..aOS(4, _omitFieldNames ? '' : 'siteId')
-    ..aOS(5, _omitFieldNames ? '' : 'authorName')
     ..aOS(6, _omitFieldNames ? '' : 'pkgName')
-    ..aInt64(7, _omitFieldNames ? '' : 'createdAt')
-    ..aOS(9, _omitFieldNames ? '' : 'title')
-    ..aOS(11, _omitFieldNames ? '' : 'authorId')
-    ..a<$core.int>(12, _omitFieldNames ? '' : 'liked', $pb.PbFieldType.O3)
-    ..a<$core.int>(13, _omitFieldNames ? '' : 'disliked', $pb.PbFieldType.O3)
-    ..a<$core.int>(14, _omitFieldNames ? '' : 'comments', $pb.PbFieldType.O3)
-    ..aInt64(15, _omitFieldNames ? '' : 'latestRegardingPostCreatedAt')
-    ..pc<Paragraph>(17, _omitFieldNames ? '' : 'contents', $pb.PbFieldType.PM, subBuilder: Paragraph.create)
-    ..pPS(18, _omitFieldNames ? '' : 'tags')
-    ..a<$core.int>(19, _omitFieldNames ? '' : 'regardingPostsCount', $pb.PbFieldType.O3)
-    ..aOS(20, _omitFieldNames ? '' : 'url')
+    ..aOM<ArticlePost>(7, _omitFieldNames ? '' : 'articlePost', subBuilder: ArticlePost.create)
+    ..aOM<SingleImagePost>(8, _omitFieldNames ? '' : 'singleImagePost', subBuilder: SingleImagePost.create)
     ..hasRequiredFields = false
   ;
 
@@ -1984,6 +1946,9 @@ class Post extends $pb.GeneratedMessage {
   @$core.pragma('dart2js:noInline')
   static Post getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<Post>(create);
   static Post? _defaultInstance;
+
+  Post_Content whichContent() => _Post_ContentByTag[$_whichOneof(0)]!;
+  void clearContent() => clearField($_whichOneof(0));
 
   @$pb.TagNumber(1)
   $core.String get id => $_getSZ(0);
@@ -2021,110 +1986,408 @@ class Post extends $pb.GeneratedMessage {
   @$pb.TagNumber(4)
   void clearSiteId() => clearField(4);
 
-  @$pb.TagNumber(5)
-  $core.String get authorName => $_getSZ(4);
-  @$pb.TagNumber(5)
-  set authorName($core.String v) { $_setString(4, v); }
-  @$pb.TagNumber(5)
-  $core.bool hasAuthorName() => $_has(4);
-  @$pb.TagNumber(5)
-  void clearAuthorName() => clearField(5);
-
   @$pb.TagNumber(6)
-  $core.String get pkgName => $_getSZ(5);
+  $core.String get pkgName => $_getSZ(4);
   @$pb.TagNumber(6)
-  set pkgName($core.String v) { $_setString(5, v); }
+  set pkgName($core.String v) { $_setString(4, v); }
   @$pb.TagNumber(6)
-  $core.bool hasPkgName() => $_has(5);
+  $core.bool hasPkgName() => $_has(4);
   @$pb.TagNumber(6)
   void clearPkgName() => clearField(6);
 
   @$pb.TagNumber(7)
-  $fixnum.Int64 get createdAt => $_getI64(6);
+  ArticlePost get articlePost => $_getN(5);
   @$pb.TagNumber(7)
-  set createdAt($fixnum.Int64 v) { $_setInt64(6, v); }
+  set articlePost(ArticlePost v) { setField(7, v); }
   @$pb.TagNumber(7)
-  $core.bool hasCreatedAt() => $_has(6);
+  $core.bool hasArticlePost() => $_has(5);
+  @$pb.TagNumber(7)
+  void clearArticlePost() => clearField(7);
+  @$pb.TagNumber(7)
+  ArticlePost ensureArticlePost() => $_ensure(5);
+
+  @$pb.TagNumber(8)
+  SingleImagePost get singleImagePost => $_getN(6);
+  @$pb.TagNumber(8)
+  set singleImagePost(SingleImagePost v) { setField(8, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasSingleImagePost() => $_has(6);
+  @$pb.TagNumber(8)
+  void clearSingleImagePost() => clearField(8);
+  @$pb.TagNumber(8)
+  SingleImagePost ensureSingleImagePost() => $_ensure(6);
+}
+
+class ArticlePost extends $pb.GeneratedMessage {
+  factory ArticlePost({
+    $core.String? authorName,
+    $fixnum.Int64? createdAt,
+    $core.String? title,
+    $core.String? authorId,
+    $core.int? liked,
+    $core.int? disliked,
+    $fixnum.Int64? latestRegardingPostCreatedAt,
+    $core.Iterable<Paragraph>? contents,
+    $core.Iterable<$core.String>? tags,
+    $core.int? regardingPostsCount,
+    $core.String? url,
+  }) {
+    final $result = create();
+    if (authorName != null) {
+      $result.authorName = authorName;
+    }
+    if (createdAt != null) {
+      $result.createdAt = createdAt;
+    }
+    if (title != null) {
+      $result.title = title;
+    }
+    if (authorId != null) {
+      $result.authorId = authorId;
+    }
+    if (liked != null) {
+      $result.liked = liked;
+    }
+    if (disliked != null) {
+      $result.disliked = disliked;
+    }
+    if (latestRegardingPostCreatedAt != null) {
+      $result.latestRegardingPostCreatedAt = latestRegardingPostCreatedAt;
+    }
+    if (contents != null) {
+      $result.contents.addAll(contents);
+    }
+    if (tags != null) {
+      $result.tags.addAll(tags);
+    }
+    if (regardingPostsCount != null) {
+      $result.regardingPostsCount = regardingPostsCount;
+    }
+    if (url != null) {
+      $result.url = url;
+    }
+    return $result;
+  }
+  ArticlePost._() : super();
+  factory ArticlePost.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory ArticlePost.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ArticlePost', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..aOS(5, _omitFieldNames ? '' : 'authorName')
+    ..aInt64(7, _omitFieldNames ? '' : 'createdAt')
+    ..aOS(9, _omitFieldNames ? '' : 'title')
+    ..aOS(11, _omitFieldNames ? '' : 'authorId')
+    ..a<$core.int>(12, _omitFieldNames ? '' : 'liked', $pb.PbFieldType.O3)
+    ..a<$core.int>(13, _omitFieldNames ? '' : 'disliked', $pb.PbFieldType.O3)
+    ..aInt64(15, _omitFieldNames ? '' : 'latestRegardingPostCreatedAt')
+    ..pc<Paragraph>(17, _omitFieldNames ? '' : 'contents', $pb.PbFieldType.PM, subBuilder: Paragraph.create)
+    ..pPS(18, _omitFieldNames ? '' : 'tags')
+    ..a<$core.int>(19, _omitFieldNames ? '' : 'regardingPostsCount', $pb.PbFieldType.O3)
+    ..aOS(20, _omitFieldNames ? '' : 'url')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  ArticlePost clone() => ArticlePost()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  ArticlePost copyWith(void Function(ArticlePost) updates) => super.copyWith((message) => updates(message as ArticlePost)) as ArticlePost;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static ArticlePost create() => ArticlePost._();
+  ArticlePost createEmptyInstance() => create();
+  static $pb.PbList<ArticlePost> createRepeated() => $pb.PbList<ArticlePost>();
+  @$core.pragma('dart2js:noInline')
+  static ArticlePost getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<ArticlePost>(create);
+  static ArticlePost? _defaultInstance;
+
+  @$pb.TagNumber(5)
+  $core.String get authorName => $_getSZ(0);
+  @$pb.TagNumber(5)
+  set authorName($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasAuthorName() => $_has(0);
+  @$pb.TagNumber(5)
+  void clearAuthorName() => clearField(5);
+
+  @$pb.TagNumber(7)
+  $fixnum.Int64 get createdAt => $_getI64(1);
+  @$pb.TagNumber(7)
+  set createdAt($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasCreatedAt() => $_has(1);
   @$pb.TagNumber(7)
   void clearCreatedAt() => clearField(7);
 
   @$pb.TagNumber(9)
-  $core.String get title => $_getSZ(7);
+  $core.String get title => $_getSZ(2);
   @$pb.TagNumber(9)
-  set title($core.String v) { $_setString(7, v); }
+  set title($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(9)
-  $core.bool hasTitle() => $_has(7);
+  $core.bool hasTitle() => $_has(2);
   @$pb.TagNumber(9)
   void clearTitle() => clearField(9);
 
   @$pb.TagNumber(11)
-  $core.String get authorId => $_getSZ(8);
+  $core.String get authorId => $_getSZ(3);
   @$pb.TagNumber(11)
-  set authorId($core.String v) { $_setString(8, v); }
+  set authorId($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(11)
-  $core.bool hasAuthorId() => $_has(8);
+  $core.bool hasAuthorId() => $_has(3);
   @$pb.TagNumber(11)
   void clearAuthorId() => clearField(11);
 
   @$pb.TagNumber(12)
-  $core.int get liked => $_getIZ(9);
+  $core.int get liked => $_getIZ(4);
   @$pb.TagNumber(12)
-  set liked($core.int v) { $_setSignedInt32(9, v); }
+  set liked($core.int v) { $_setSignedInt32(4, v); }
   @$pb.TagNumber(12)
-  $core.bool hasLiked() => $_has(9);
+  $core.bool hasLiked() => $_has(4);
   @$pb.TagNumber(12)
   void clearLiked() => clearField(12);
 
   @$pb.TagNumber(13)
-  $core.int get disliked => $_getIZ(10);
+  $core.int get disliked => $_getIZ(5);
   @$pb.TagNumber(13)
-  set disliked($core.int v) { $_setSignedInt32(10, v); }
+  set disliked($core.int v) { $_setSignedInt32(5, v); }
   @$pb.TagNumber(13)
-  $core.bool hasDisliked() => $_has(10);
+  $core.bool hasDisliked() => $_has(5);
   @$pb.TagNumber(13)
   void clearDisliked() => clearField(13);
 
-  @$pb.TagNumber(14)
-  $core.int get comments => $_getIZ(11);
-  @$pb.TagNumber(14)
-  set comments($core.int v) { $_setSignedInt32(11, v); }
-  @$pb.TagNumber(14)
-  $core.bool hasComments() => $_has(11);
-  @$pb.TagNumber(14)
-  void clearComments() => clearField(14);
-
   @$pb.TagNumber(15)
-  $fixnum.Int64 get latestRegardingPostCreatedAt => $_getI64(12);
+  $fixnum.Int64 get latestRegardingPostCreatedAt => $_getI64(6);
   @$pb.TagNumber(15)
-  set latestRegardingPostCreatedAt($fixnum.Int64 v) { $_setInt64(12, v); }
+  set latestRegardingPostCreatedAt($fixnum.Int64 v) { $_setInt64(6, v); }
   @$pb.TagNumber(15)
-  $core.bool hasLatestRegardingPostCreatedAt() => $_has(12);
+  $core.bool hasLatestRegardingPostCreatedAt() => $_has(6);
   @$pb.TagNumber(15)
   void clearLatestRegardingPostCreatedAt() => clearField(15);
 
   @$pb.TagNumber(17)
-  $core.List<Paragraph> get contents => $_getList(13);
+  $core.List<Paragraph> get contents => $_getList(7);
 
   @$pb.TagNumber(18)
-  $core.List<$core.String> get tags => $_getList(14);
+  $core.List<$core.String> get tags => $_getList(8);
 
   @$pb.TagNumber(19)
-  $core.int get regardingPostsCount => $_getIZ(15);
+  $core.int get regardingPostsCount => $_getIZ(9);
   @$pb.TagNumber(19)
-  set regardingPostsCount($core.int v) { $_setSignedInt32(15, v); }
+  set regardingPostsCount($core.int v) { $_setSignedInt32(9, v); }
   @$pb.TagNumber(19)
-  $core.bool hasRegardingPostsCount() => $_has(15);
+  $core.bool hasRegardingPostsCount() => $_has(9);
   @$pb.TagNumber(19)
   void clearRegardingPostsCount() => clearField(19);
 
   @$pb.TagNumber(20)
-  $core.String get url => $_getSZ(16);
+  $core.String get url => $_getSZ(10);
   @$pb.TagNumber(20)
-  set url($core.String v) { $_setString(16, v); }
+  set url($core.String v) { $_setString(10, v); }
   @$pb.TagNumber(20)
-  $core.bool hasUrl() => $_has(16);
+  $core.bool hasUrl() => $_has(10);
   @$pb.TagNumber(20)
   void clearUrl() => clearField(20);
+}
+
+class SingleImagePost extends $pb.GeneratedMessage {
+  factory SingleImagePost({
+    $core.String? authorName,
+    $fixnum.Int64? createdAt,
+    $core.String? title,
+    $core.String? authorId,
+    $core.int? liked,
+    $core.int? disliked,
+    $fixnum.Int64? latestRegardingPostCreatedAt,
+    $core.Iterable<Paragraph>? contents,
+    $core.Iterable<$core.String>? tags,
+    $core.int? regardingPostsCount,
+    $core.String? url,
+    ImageParagraph? image,
+  }) {
+    final $result = create();
+    if (authorName != null) {
+      $result.authorName = authorName;
+    }
+    if (createdAt != null) {
+      $result.createdAt = createdAt;
+    }
+    if (title != null) {
+      $result.title = title;
+    }
+    if (authorId != null) {
+      $result.authorId = authorId;
+    }
+    if (liked != null) {
+      $result.liked = liked;
+    }
+    if (disliked != null) {
+      $result.disliked = disliked;
+    }
+    if (latestRegardingPostCreatedAt != null) {
+      $result.latestRegardingPostCreatedAt = latestRegardingPostCreatedAt;
+    }
+    if (contents != null) {
+      $result.contents.addAll(contents);
+    }
+    if (tags != null) {
+      $result.tags.addAll(tags);
+    }
+    if (regardingPostsCount != null) {
+      $result.regardingPostsCount = regardingPostsCount;
+    }
+    if (url != null) {
+      $result.url = url;
+    }
+    if (image != null) {
+      $result.image = image;
+    }
+    return $result;
+  }
+  SingleImagePost._() : super();
+  factory SingleImagePost.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SingleImagePost.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SingleImagePost', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..aOS(5, _omitFieldNames ? '' : 'authorName')
+    ..aInt64(7, _omitFieldNames ? '' : 'createdAt')
+    ..aOS(9, _omitFieldNames ? '' : 'title')
+    ..aOS(11, _omitFieldNames ? '' : 'authorId')
+    ..a<$core.int>(12, _omitFieldNames ? '' : 'liked', $pb.PbFieldType.O3)
+    ..a<$core.int>(13, _omitFieldNames ? '' : 'disliked', $pb.PbFieldType.O3)
+    ..aInt64(15, _omitFieldNames ? '' : 'latestRegardingPostCreatedAt')
+    ..pc<Paragraph>(17, _omitFieldNames ? '' : 'contents', $pb.PbFieldType.PM, subBuilder: Paragraph.create)
+    ..pPS(18, _omitFieldNames ? '' : 'tags')
+    ..a<$core.int>(19, _omitFieldNames ? '' : 'regardingPostsCount', $pb.PbFieldType.O3)
+    ..aOS(20, _omitFieldNames ? '' : 'url')
+    ..aOM<ImageParagraph>(21, _omitFieldNames ? '' : 'image', subBuilder: ImageParagraph.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SingleImagePost clone() => SingleImagePost()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SingleImagePost copyWith(void Function(SingleImagePost) updates) => super.copyWith((message) => updates(message as SingleImagePost)) as SingleImagePost;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SingleImagePost create() => SingleImagePost._();
+  SingleImagePost createEmptyInstance() => create();
+  static $pb.PbList<SingleImagePost> createRepeated() => $pb.PbList<SingleImagePost>();
+  @$core.pragma('dart2js:noInline')
+  static SingleImagePost getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SingleImagePost>(create);
+  static SingleImagePost? _defaultInstance;
+
+  @$pb.TagNumber(5)
+  $core.String get authorName => $_getSZ(0);
+  @$pb.TagNumber(5)
+  set authorName($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasAuthorName() => $_has(0);
+  @$pb.TagNumber(5)
+  void clearAuthorName() => clearField(5);
+
+  @$pb.TagNumber(7)
+  $fixnum.Int64 get createdAt => $_getI64(1);
+  @$pb.TagNumber(7)
+  set createdAt($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasCreatedAt() => $_has(1);
+  @$pb.TagNumber(7)
+  void clearCreatedAt() => clearField(7);
+
+  @$pb.TagNumber(9)
+  $core.String get title => $_getSZ(2);
+  @$pb.TagNumber(9)
+  set title($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(9)
+  $core.bool hasTitle() => $_has(2);
+  @$pb.TagNumber(9)
+  void clearTitle() => clearField(9);
+
+  @$pb.TagNumber(11)
+  $core.String get authorId => $_getSZ(3);
+  @$pb.TagNumber(11)
+  set authorId($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(11)
+  $core.bool hasAuthorId() => $_has(3);
+  @$pb.TagNumber(11)
+  void clearAuthorId() => clearField(11);
+
+  @$pb.TagNumber(12)
+  $core.int get liked => $_getIZ(4);
+  @$pb.TagNumber(12)
+  set liked($core.int v) { $_setSignedInt32(4, v); }
+  @$pb.TagNumber(12)
+  $core.bool hasLiked() => $_has(4);
+  @$pb.TagNumber(12)
+  void clearLiked() => clearField(12);
+
+  @$pb.TagNumber(13)
+  $core.int get disliked => $_getIZ(5);
+  @$pb.TagNumber(13)
+  set disliked($core.int v) { $_setSignedInt32(5, v); }
+  @$pb.TagNumber(13)
+  $core.bool hasDisliked() => $_has(5);
+  @$pb.TagNumber(13)
+  void clearDisliked() => clearField(13);
+
+  @$pb.TagNumber(15)
+  $fixnum.Int64 get latestRegardingPostCreatedAt => $_getI64(6);
+  @$pb.TagNumber(15)
+  set latestRegardingPostCreatedAt($fixnum.Int64 v) { $_setInt64(6, v); }
+  @$pb.TagNumber(15)
+  $core.bool hasLatestRegardingPostCreatedAt() => $_has(6);
+  @$pb.TagNumber(15)
+  void clearLatestRegardingPostCreatedAt() => clearField(15);
+
+  @$pb.TagNumber(17)
+  $core.List<Paragraph> get contents => $_getList(7);
+
+  @$pb.TagNumber(18)
+  $core.List<$core.String> get tags => $_getList(8);
+
+  @$pb.TagNumber(19)
+  $core.int get regardingPostsCount => $_getIZ(9);
+  @$pb.TagNumber(19)
+  set regardingPostsCount($core.int v) { $_setSignedInt32(9, v); }
+  @$pb.TagNumber(19)
+  $core.bool hasRegardingPostsCount() => $_has(9);
+  @$pb.TagNumber(19)
+  void clearRegardingPostsCount() => clearField(19);
+
+  @$pb.TagNumber(20)
+  $core.String get url => $_getSZ(10);
+  @$pb.TagNumber(20)
+  set url($core.String v) { $_setString(10, v); }
+  @$pb.TagNumber(20)
+  $core.bool hasUrl() => $_has(10);
+  @$pb.TagNumber(20)
+  void clearUrl() => clearField(20);
+
+  @$pb.TagNumber(21)
+  ImageParagraph get image => $_getN(11);
+  @$pb.TagNumber(21)
+  set image(ImageParagraph v) { setField(21, v); }
+  @$pb.TagNumber(21)
+  $core.bool hasImage() => $_has(11);
+  @$pb.TagNumber(21)
+  void clearImage() => clearField(21);
+  @$pb.TagNumber(21)
+  ImageParagraph ensureImage() => $_ensure(11);
 }
 
 class GetCommentsReq extends $pb.GeneratedMessage {

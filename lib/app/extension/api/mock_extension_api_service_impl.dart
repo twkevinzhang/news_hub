@@ -9,7 +9,7 @@ import 'package:news_hub/domain/models/models.dart';
 
 final _mockBoard1Posts = [
   // only this one post in board 1
-  Post(
+  ArticlePost(
     extensionPkgName: 'twkevinzhang_beeceptor',
     siteId: '1',
     boardId: '1',
@@ -20,7 +20,6 @@ final _mockBoard1Posts = [
     authorName: '無名',
     liked: 0,
     disliked: null,
-    comments: _mockPost1Comments.length,
     regardingPostsCount: _mockPost1RegardingPosts.length,
     contents: [
       TextParagraph(content: 'Text Content Maybe'),
@@ -43,7 +42,7 @@ final _mockBoard1Posts = [
 
 final _mockPost1RegardingPosts = [
   // The post is a regarding post of the mock post 1
-  Post(
+  ArticlePost(
     extensionPkgName: 'twkevinzhang_beeceptor',
     siteId: '1',
     boardId: '1',
@@ -54,7 +53,6 @@ final _mockPost1RegardingPosts = [
     authorName: '無名',
     liked: 0,
     disliked: null,
-    comments: null,
     regardingPostsCount: null,
     contents: [
       ReplyToParagraph(id: '1', authorName: '無名', preview: 'Text Content Maybe'),

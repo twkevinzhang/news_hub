@@ -15,5 +15,4 @@ clean:
 
 .PHONY: proto
 proto:
-	python -m grpc_tools.protoc -I../news_hub_protos --python_out=src/downloaded/komica --pyi_out=src/downloaded/komica --grpc_python_out=src/downloaded/komica ../news_hub_protos/*.proto
 	python -m grpc_tools.protoc -I../news_hub_protos --python_out=src --pyi_out=src --grpc_python_out=src ../news_hub_protos/*.proto

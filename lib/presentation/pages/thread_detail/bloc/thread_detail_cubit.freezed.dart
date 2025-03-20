@@ -20,8 +20,9 @@ mixin _$ThreadDetailState {
   String get siteId => throw _privateConstructorUsedError;
   String get boardId => throw _privateConstructorUsedError;
   String get threadId => throw _privateConstructorUsedError;
-  Map<String, Result<Post>> get threadMap => throw _privateConstructorUsedError;
-  Map<String, Result<List<Post>>> get regardingPostsMap =>
+  Map<String, Result<ArticlePost>> get threadMap =>
+      throw _privateConstructorUsedError;
+  Map<String, Result<List<ArticlePost>>> get regardingPostsMap =>
       throw _privateConstructorUsedError;
 
   /// Create a copy of ThreadDetailState
@@ -42,8 +43,8 @@ abstract class $ThreadDetailStateCopyWith<$Res> {
       String siteId,
       String boardId,
       String threadId,
-      Map<String, Result<Post>> threadMap,
-      Map<String, Result<List<Post>>> regardingPostsMap});
+      Map<String, Result<ArticlePost>> threadMap,
+      Map<String, Result<List<ArticlePost>>> regardingPostsMap});
 }
 
 /// @nodoc
@@ -88,11 +89,11 @@ class _$ThreadDetailStateCopyWithImpl<$Res, $Val extends ThreadDetailState>
       threadMap: null == threadMap
           ? _value.threadMap
           : threadMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, Result<Post>>,
+              as Map<String, Result<ArticlePost>>,
       regardingPostsMap: null == regardingPostsMap
           ? _value.regardingPostsMap
           : regardingPostsMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, Result<List<Post>>>,
+              as Map<String, Result<List<ArticlePost>>>,
     ) as $Val);
   }
 }
@@ -110,8 +111,8 @@ abstract class _$$ThreadDetailStateImplCopyWith<$Res>
       String siteId,
       String boardId,
       String threadId,
-      Map<String, Result<Post>> threadMap,
-      Map<String, Result<List<Post>>> regardingPostsMap});
+      Map<String, Result<ArticlePost>> threadMap,
+      Map<String, Result<List<ArticlePost>>> regardingPostsMap});
 }
 
 /// @nodoc
@@ -154,11 +155,11 @@ class __$$ThreadDetailStateImplCopyWithImpl<$Res>
       threadMap: null == threadMap
           ? _value._threadMap
           : threadMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, Result<Post>>,
+              as Map<String, Result<ArticlePost>>,
       regardingPostsMap: null == regardingPostsMap
           ? _value._regardingPostsMap
           : regardingPostsMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, Result<List<Post>>>,
+              as Map<String, Result<List<ArticlePost>>>,
     ));
   }
 }
@@ -173,8 +174,8 @@ class _$ThreadDetailStateImpl
       required this.siteId,
       required this.boardId,
       required this.threadId,
-      required final Map<String, Result<Post>> threadMap,
-      required final Map<String, Result<List<Post>>> regardingPostsMap})
+      required final Map<String, Result<ArticlePost>> threadMap,
+      required final Map<String, Result<List<ArticlePost>>> regardingPostsMap})
       : _threadMap = threadMap,
         _regardingPostsMap = regardingPostsMap;
 
@@ -186,17 +187,17 @@ class _$ThreadDetailStateImpl
   final String boardId;
   @override
   final String threadId;
-  final Map<String, Result<Post>> _threadMap;
+  final Map<String, Result<ArticlePost>> _threadMap;
   @override
-  Map<String, Result<Post>> get threadMap {
+  Map<String, Result<ArticlePost>> get threadMap {
     if (_threadMap is EqualUnmodifiableMapView) return _threadMap;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_threadMap);
   }
 
-  final Map<String, Result<List<Post>>> _regardingPostsMap;
+  final Map<String, Result<List<ArticlePost>>> _regardingPostsMap;
   @override
-  Map<String, Result<List<Post>>> get regardingPostsMap {
+  Map<String, Result<List<ArticlePost>>> get regardingPostsMap {
     if (_regardingPostsMap is EqualUnmodifiableMapView)
       return _regardingPostsMap;
     // ignore: implicit_dynamic_type
@@ -260,13 +261,13 @@ class _$ThreadDetailStateImpl
 
 abstract class _ThreadDetailState implements ThreadDetailState {
   const factory _ThreadDetailState(
-          {required final String extensionPkgName,
-          required final String siteId,
-          required final String boardId,
-          required final String threadId,
-          required final Map<String, Result<Post>> threadMap,
-          required final Map<String, Result<List<Post>>> regardingPostsMap}) =
-      _$ThreadDetailStateImpl;
+      {required final String extensionPkgName,
+      required final String siteId,
+      required final String boardId,
+      required final String threadId,
+      required final Map<String, Result<ArticlePost>> threadMap,
+      required final Map<String, Result<List<ArticlePost>>>
+          regardingPostsMap}) = _$ThreadDetailStateImpl;
 
   @override
   String get extensionPkgName;
@@ -277,9 +278,9 @@ abstract class _ThreadDetailState implements ThreadDetailState {
   @override
   String get threadId;
   @override
-  Map<String, Result<Post>> get threadMap;
+  Map<String, Result<ArticlePost>> get threadMap;
   @override
-  Map<String, Result<List<Post>>> get regardingPostsMap;
+  Map<String, Result<List<ArticlePost>>> get regardingPostsMap;
 
   /// Create a copy of ThreadDetailState
   /// with the given fields replaced by the non-null parameter values.

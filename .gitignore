@@ -45,3 +45,4 @@ beeceptor/dist/*
 android/app/.cxx/Debug
 .fvm/flutter_sdk
 /adapter/src/extensions/
+adapter/venv

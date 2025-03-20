@@ -3,6 +3,7 @@ import 'package:news_hub/domain/extension/extension_api_service.dart';
 import 'package:news_hub/domain/extension/extension_repository.dart';
 import 'package:news_hub/domain/thread/interactor/get_thread.dart';
 import 'package:news_hub/shared/models.dart';
+import 'package:news_hub/domain/models/models.dart';
 
 @lazySingleton
 class ListRegardingPosts {
@@ -15,7 +16,7 @@ class ListRegardingPosts {
   })  : _apiService = apiService,
         _installedExtensionRepository = installedExtensionRepository;
 
-  Future<List<PostWithExtension>> call({
+  Future<List<ArticlePostWithExtension>> call({
     required String extensionPkgName,
     required String siteId,
     required String boardId,
@@ -38,8 +39,8 @@ class ListRegardingPosts {
     final board = boards.firstWhere((b) => b.id == boardId);
 
     return regardingPosts
-        .map((p) => PostWithExtension(
-              post: p,
+        .map((p) => ArticlePostWithExtension(
+              post: p as ArticlePost,
               board: board,
               site: site,
               extension: extension,
