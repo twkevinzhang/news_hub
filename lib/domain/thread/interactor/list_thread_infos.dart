@@ -18,7 +18,7 @@ class ListThreadInfos {
   })  : _apiService = apiService,
         _listInstalledExtensions = listInstalledExtensions;
 
-  Future<List<PostWithExtension>> call({
+  Future<List<SingleImagePostWithExtension>> call({
     Pagination? pagination,
     ThreadsFilter? filter,
     ThreadsSorting? sorting,
@@ -38,8 +38,38 @@ class ListThreadInfos {
     return threads.map((t) {
       final e = extensions.firstWhere((e) => e.pkgName == t.extensionPkgName);
       final b = e.boards.firstWhere((b) => b.id == t.boardId);
-      return PostWithExtension(post: t, board: b, extension: e, site: e.site);
+      return SingleImagePostWithExtension(post: t as SingleImagePost, board: b, extension: e, site: e.site);
     }).toList();
   }
 }
 
+class SingleImagePostWithExtension extends SingleImagePost {
+  final Extension extension;
+  final Site site;
+  final Board board;
+
+  SingleImagePostWithExtension({
+    required SingleImagePost post,
+    required this.site,
+    required this.extension,
+    required this.board,
+  }) : super(
+    extensionPkgName: post.extensionPkgName,
+    siteId: post.siteId,
+    boardId: post.boardId,
+    threadId: post.threadId,
+    id: post.id,
+    title: post.title,
+    url: post.url,
+    createdAt: post.createdAt,
+    authorId: post.authorId,
+    authorName: post.authorName,
+    liked: post.liked,
+    disliked: post.disliked,
+    image: post.image,
+    contents: post.contents,
+    tags: post.tags,
+    latestRegardingPostCreatedAt: post.latestRegardingPostCreatedAt,
+    regardingPostsCount: post.regardingPostsCount,
+  );
+}

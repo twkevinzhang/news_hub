@@ -1,11 +1,9 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/domain/thread/interactor/get_thread.dart' show PostWithExtension;
-import 'package:news_hub/locator.dart';
+import 'package:news_hub/domain/thread/interactor/list_thread_infos.dart';
 import 'package:news_hub/presentation/pages/thread_infos/bloc/search_cubit.dart';
-import 'package:news_hub/presentation/pages/thread_infos/widgets/thread_info_card.dart';
+import 'package:news_hub/presentation/widgets/organisms/single_image_post_layout.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
 import 'package:news_hub/presentation/widgets/widgets.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -35,12 +33,12 @@ class ThreadInfosScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: PagedListView<int, PostWithExtension>(
+      body: PagedListView<int, SingleImagePostWithExtension>(
         pagingController: cubit.pagingController,
-        builderDelegate: PagedChildBuilderDelegate<PostWithExtension>(
+        builderDelegate: PagedChildBuilderDelegate<SingleImagePostWithExtension>(
           itemBuilder: (context, thread, index) => Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
-            child: ThreadInfoCard(thread: thread),
+            child: SingleImagePostCard(thread: thread),
           ),
           noItemsFoundIndicatorBuilder: (context) => Column(
             mainAxisAlignment: MainAxisAlignment.center,

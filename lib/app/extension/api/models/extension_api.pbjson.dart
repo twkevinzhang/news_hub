@@ -454,13 +454,32 @@ const Post$json = {
     {'1': 'board_id', '3': 3, '4': 1, '5': 9, '10': 'boardId'},
     {'1': 'thread_id', '3': 2, '4': 1, '5': 9, '10': 'threadId'},
     {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {'1': 'article_post', '3': 7, '4': 1, '5': 11, '6': '.pb.ArticlePost', '9': 0, '10': 'articlePost'},
+    {'1': 'single_image_post', '3': 8, '4': 1, '5': 11, '6': '.pb.SingleImagePost', '9': 0, '10': 'singleImagePost'},
+  ],
+  '8': [
+    {'1': 'content'},
+  ],
+};
+
+/// Descriptor for `Post`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List postDescriptor = $convert.base64Decode(
+    'CgRQb3N0EhkKCHBrZ19uYW1lGAYgASgJUgdwa2dOYW1lEhcKB3NpdGVfaWQYBCABKAlSBnNpdG'
+    'VJZBIZCghib2FyZF9pZBgDIAEoCVIHYm9hcmRJZBIbCgl0aHJlYWRfaWQYAiABKAlSCHRocmVh'
+    'ZElkEg4KAmlkGAEgASgJUgJpZBI0CgxhcnRpY2xlX3Bvc3QYByABKAsyDy5wYi5BcnRpY2xlUG'
+    '9zdEgAUgthcnRpY2xlUG9zdBJBChFzaW5nbGVfaW1hZ2VfcG9zdBgIIAEoCzITLnBiLlNpbmds'
+    'ZUltYWdlUG9zdEgAUg9zaW5nbGVJbWFnZVBvc3RCCQoHY29udGVudA==');
+
+@$core.Deprecated('Use articlePostDescriptor instead')
+const ArticlePost$json = {
+  '1': 'ArticlePost',
+  '2': [
     {'1': 'author_id', '3': 11, '4': 1, '5': 9, '10': 'authorId'},
     {'1': 'author_name', '3': 5, '4': 1, '5': 9, '10': 'authorName'},
     {'1': 'created_at', '3': 7, '4': 1, '5': 3, '10': 'createdAt'},
     {'1': 'title', '3': 9, '4': 1, '5': 9, '10': 'title'},
     {'1': 'liked', '3': 12, '4': 1, '5': 5, '10': 'liked'},
     {'1': 'disliked', '3': 13, '4': 1, '5': 5, '10': 'disliked'},
-    {'1': 'comments', '3': 14, '4': 1, '5': 5, '10': 'comments'},
     {'1': 'contents', '3': 17, '4': 3, '5': 11, '6': '.pb.Paragraph', '10': 'contents'},
     {'1': 'tags', '3': 18, '4': 3, '5': 9, '10': 'tags'},
     {'1': 'latest_regarding_post_created_at', '3': 15, '4': 1, '5': 3, '10': 'latestRegardingPostCreatedAt'},
@@ -469,18 +488,45 @@ const Post$json = {
   ],
 };
 
-/// Descriptor for `Post`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List postDescriptor = $convert.base64Decode(
-    'CgRQb3N0EhkKCHBrZ19uYW1lGAYgASgJUgdwa2dOYW1lEhcKB3NpdGVfaWQYBCABKAlSBnNpdG'
-    'VJZBIZCghib2FyZF9pZBgDIAEoCVIHYm9hcmRJZBIbCgl0aHJlYWRfaWQYAiABKAlSCHRocmVh'
-    'ZElkEg4KAmlkGAEgASgJUgJpZBIbCglhdXRob3JfaWQYCyABKAlSCGF1dGhvcklkEh8KC2F1dG'
-    'hvcl9uYW1lGAUgASgJUgphdXRob3JOYW1lEh0KCmNyZWF0ZWRfYXQYByABKANSCWNyZWF0ZWRB'
-    'dBIUCgV0aXRsZRgJIAEoCVIFdGl0bGUSFAoFbGlrZWQYDCABKAVSBWxpa2VkEhoKCGRpc2xpa2'
-    'VkGA0gASgFUghkaXNsaWtlZBIaCghjb21tZW50cxgOIAEoBVIIY29tbWVudHMSKQoIY29udGVu'
-    'dHMYESADKAsyDS5wYi5QYXJhZ3JhcGhSCGNvbnRlbnRzEhIKBHRhZ3MYEiADKAlSBHRhZ3MSRg'
-    'ogbGF0ZXN0X3JlZ2FyZGluZ19wb3N0X2NyZWF0ZWRfYXQYDyABKANSHGxhdGVzdFJlZ2FyZGlu'
-    'Z1Bvc3RDcmVhdGVkQXQSMgoVcmVnYXJkaW5nX3Bvc3RzX2NvdW50GBMgASgFUhNyZWdhcmRpbm'
-    'dQb3N0c0NvdW50EhAKA3VybBgUIAEoCVIDdXJs');
+/// Descriptor for `ArticlePost`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List articlePostDescriptor = $convert.base64Decode(
+    'CgtBcnRpY2xlUG9zdBIbCglhdXRob3JfaWQYCyABKAlSCGF1dGhvcklkEh8KC2F1dGhvcl9uYW'
+    '1lGAUgASgJUgphdXRob3JOYW1lEh0KCmNyZWF0ZWRfYXQYByABKANSCWNyZWF0ZWRBdBIUCgV0'
+    'aXRsZRgJIAEoCVIFdGl0bGUSFAoFbGlrZWQYDCABKAVSBWxpa2VkEhoKCGRpc2xpa2VkGA0gAS'
+    'gFUghkaXNsaWtlZBIpCghjb250ZW50cxgRIAMoCzINLnBiLlBhcmFncmFwaFIIY29udGVudHMS'
+    'EgoEdGFncxgSIAMoCVIEdGFncxJGCiBsYXRlc3RfcmVnYXJkaW5nX3Bvc3RfY3JlYXRlZF9hdB'
+    'gPIAEoA1IcbGF0ZXN0UmVnYXJkaW5nUG9zdENyZWF0ZWRBdBIyChVyZWdhcmRpbmdfcG9zdHNf'
+    'Y291bnQYEyABKAVSE3JlZ2FyZGluZ1Bvc3RzQ291bnQSEAoDdXJsGBQgASgJUgN1cmw=');
+
+@$core.Deprecated('Use singleImagePostDescriptor instead')
+const SingleImagePost$json = {
+  '1': 'SingleImagePost',
+  '2': [
+    {'1': 'author_id', '3': 11, '4': 1, '5': 9, '10': 'authorId'},
+    {'1': 'author_name', '3': 5, '4': 1, '5': 9, '10': 'authorName'},
+    {'1': 'created_at', '3': 7, '4': 1, '5': 3, '10': 'createdAt'},
+    {'1': 'title', '3': 9, '4': 1, '5': 9, '10': 'title'},
+    {'1': 'liked', '3': 12, '4': 1, '5': 5, '10': 'liked'},
+    {'1': 'disliked', '3': 13, '4': 1, '5': 5, '10': 'disliked'},
+    {'1': 'image', '3': 21, '4': 1, '5': 11, '6': '.pb.ImageParagraph', '10': 'image'},
+    {'1': 'contents', '3': 17, '4': 3, '5': 11, '6': '.pb.Paragraph', '10': 'contents'},
+    {'1': 'tags', '3': 18, '4': 3, '5': 9, '10': 'tags'},
+    {'1': 'latest_regarding_post_created_at', '3': 15, '4': 1, '5': 3, '10': 'latestRegardingPostCreatedAt'},
+    {'1': 'regarding_posts_count', '3': 19, '4': 1, '5': 5, '10': 'regardingPostsCount'},
+    {'1': 'url', '3': 20, '4': 1, '5': 9, '10': 'url'},
+  ],
+};
+
+/// Descriptor for `SingleImagePost`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List singleImagePostDescriptor = $convert.base64Decode(
+    'Cg9TaW5nbGVJbWFnZVBvc3QSGwoJYXV0aG9yX2lkGAsgASgJUghhdXRob3JJZBIfCgthdXRob3'
+    'JfbmFtZRgFIAEoCVIKYXV0aG9yTmFtZRIdCgpjcmVhdGVkX2F0GAcgASgDUgljcmVhdGVkQXQS'
+    'FAoFdGl0bGUYCSABKAlSBXRpdGxlEhQKBWxpa2VkGAwgASgFUgVsaWtlZBIaCghkaXNsaWtlZB'
+    'gNIAEoBVIIZGlzbGlrZWQSKAoFaW1hZ2UYFSABKAsyEi5wYi5JbWFnZVBhcmFncmFwaFIFaW1h'
+    'Z2USKQoIY29udGVudHMYESADKAsyDS5wYi5QYXJhZ3JhcGhSCGNvbnRlbnRzEhIKBHRhZ3MYEi'
+    'ADKAlSBHRhZ3MSRgogbGF0ZXN0X3JlZ2FyZGluZ19wb3N0X2NyZWF0ZWRfYXQYDyABKANSHGxh'
+    'dGVzdFJlZ2FyZGluZ1Bvc3RDcmVhdGVkQXQSMgoVcmVnYXJkaW5nX3Bvc3RzX2NvdW50GBMgAS'
+    'gFUhNyZWdhcmRpbmdQb3N0c0NvdW50EhAKA3VybBgUIAEoCVIDdXJs');
 
 @$core.Deprecated('Use getCommentsReqDescriptor instead')
 const GetCommentsReq$json = {

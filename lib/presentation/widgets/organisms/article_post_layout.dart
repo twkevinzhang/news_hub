@@ -1,19 +1,19 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:news_hub/presentation/pages/thread_detail/widgets/post_paragraph.dart';
 import 'package:news_hub/shared/extensions.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:news_hub/domain/models/models.dart' as domain;
 
-class PostLayout extends StatelessWidget {
-  final domain.Post post;
+/// 模仿 Android app Omnichan
+class ArticlePostLayout extends StatelessWidget {
+  final domain.ArticlePost post;
   final bool disablePlay;
   final FutureOr<void> Function(domain.Paragraph paragraph)? onParagraphClick;
   final FutureOr<void> Function()? onLikeClick;
   final FutureOr<void> Function()? onRegardingPostsClick;
   final FutureOr<void> Function()? onCommentsClick;
-  const PostLayout({
+  const ArticlePostLayout({
     super.key,
     required this.post,
     this.disablePlay = false,
@@ -33,7 +33,7 @@ class PostLayout extends StatelessWidget {
           createdAt: post.createdAt,
           category: null,
         ),
-        ArticleWidget(
+        RichContent(
           contents: post.contents,
           disablePlay: disablePlay,
           onParagraphClick: onParagraphClick,
@@ -42,7 +42,7 @@ class PostLayout extends StatelessWidget {
         PostActions(
           liked: post.liked,
           regardingPosts: post.regardingPostsCount,
-          comments: post.comments,
+          comments: null,
           onLikeClick: onLikeClick,
           onRegardingPostsClick: onRegardingPostsClick,
           onCommentsClick: onCommentsClick,
@@ -109,7 +109,7 @@ class PostActions extends StatelessWidget {
   final FutureOr<void> Function()? onLikeClick;
   final FutureOr<void> Function()? onRegardingPostsClick;
   final FutureOr<void> Function()? onCommentsClick;
-  const PostActions({
+  const PostActions({super.key,
     this.liked,
     this.regardingPosts,
     this.comments,
@@ -123,12 +123,9 @@ class PostActions extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        if (liked.isPositive)
-          ..._getAction(context, Icons.thumb_up_alt_outlined, onLikeClick, liked.toString()),
-        if (regardingPosts.isPositive)
-          ..._getAction(context, Icons.comment_outlined, onRegardingPostsClick, regardingPosts.toString()),
-        if (comments.isPositive)
-          ..._getAction(context, Icons.bubble_chart_outlined, onCommentsClick, comments.toString()),
+        if (liked.isPositive) ..._getAction(context, Icons.thumb_up_alt_outlined, onLikeClick, liked.toString()),
+        if (regardingPosts.isPositive) ..._getAction(context, Icons.comment_outlined, onRegardingPostsClick, regardingPosts.toString()),
+        if (comments.isPositive) ..._getAction(context, Icons.bubble_chart_outlined, onCommentsClick, comments.toString()),
       ],
     );
   }

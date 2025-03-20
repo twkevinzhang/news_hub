@@ -1,3 +1,4 @@
+import 'package:dartx/dartx.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 import 'package:news_hub/shared/extensions.dart';
 import 'extension_api.pb.dart' as pb;
@@ -31,24 +32,60 @@ extension BoardTransform on pb.Board {
 
 extension PostTransform on pb.Post {
   domain.Post toDomain() {
-    return domain.Post(
-      extensionPkgName: pkgName,
-      id: id,
-      threadId: threadId,
-      boardId: boardId,
-      siteId: siteId,
+    switch (whichContent()) {
+      case pb.Post_Content.articlePost:
+        return articlePost.toDomain(this);
+      case pb.Post_Content.singleImagePost:
+        return singleImagePost.toDomain(this);
+      default:
+        return articlePost.toDomain(this);
+    }
+  }
+}
+
+extension ArticlePostTransform on pb.ArticlePost {
+  domain.ArticlePost toDomain(pb.Post post) {
+    return domain.ArticlePost(
+      extensionPkgName: post.pkgName,
+      siteId: post.siteId,
+      boardId: post.boardId,
+      threadId: post.threadId,
+      id: post.id,
+      createdAt: createdAt.toDateTime(),
       authorId: authorId,
       authorName: authorName,
-      contents: contents.map((e) => e.toDomain()).toList(),
-      createdAt: createdAt.toDateTime(),
-      title: title,
       liked: liked,
       disliked: disliked,
-      comments: comments,
-      tags: [],
-      regardingPostsCount: regardingPostsCount,
-      latestRegardingPostCreatedAt: latestRegardingPostCreatedAt.toDateTime(),
+      contents: contents.map((e) => e.toDomain()).toList(),
+      tags: tags,
       url: url,
+      title: title,
+      latestRegardingPostCreatedAt: latestRegardingPostCreatedAt.toDateTime(),
+      regardingPostsCount: regardingPostsCount,
+    );
+  }
+}
+
+extension SingleImagePostTransform on pb.SingleImagePost {
+  domain.SingleImagePost toDomain(pb.Post post) {
+    return domain.SingleImagePost(
+      extensionPkgName: post.pkgName,
+      siteId: post.siteId,
+      boardId: post.boardId,
+      threadId: post.threadId,
+      id: post.id,
+      createdAt: createdAt.toDateTime(),
+      authorId: authorId,
+      authorName: authorName,
+      liked: liked,
+      disliked: disliked,
+      image: image.toDomain(),
+      contents: contents.map((e) => e.toDomain()).toList(),
+      tags: tags,
+      url: url,
+      title: title,
+      latestRegardingPostCreatedAt: latestRegardingPostCreatedAt.toDateTime(),
+      regardingPostsCount: regardingPostsCount,
     );
   }
 }

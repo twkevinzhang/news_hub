@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/domain/thread/interactor/get_thread.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/thread_detail/bloc/thread_detail_cubit.dart';
-import 'package:news_hub/presentation/pages/thread_detail/widgets/post_card.dart';
+import 'package:news_hub/presentation/widgets/organisms/article_post_layout.dart';
 import 'package:news_hub/presentation/pages/thread_detail/widgets/post_gallery_overlay.dart';
 import 'package:news_hub/presentation/widgets/widgets.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
@@ -82,9 +82,9 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
               ];
             }),
       ),
-      body: PagedListView<int, PostWithExtension>(
+      body: PagedListView<int, ArticlePostWithExtension>(
         pagingController: cubit.pagingController,
-        builderDelegate: PagedChildBuilderDelegate<PostWithExtension>(
+        builderDelegate: PagedChildBuilderDelegate<ArticlePostWithExtension>(
           itemBuilder: (context, post, index) => Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
             child: Card(
@@ -109,9 +109,9 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
   Widget _getPostLayout(
     BuildContext context,
     ThreadDetailCubit cubit,
-    domain.Post post,
+    domain.ArticlePost post,
   ) {
-    return PostLayout(
+    return ArticlePostLayout(
       post: post,
       onParagraphClick: (paragraph) async {
         if (paragraph is domain.LinkParagraph) {
@@ -178,7 +178,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
     );
   }
 
-  SwipeImageGallery _getPostGallery(BuildContext context, ThreadDetailCubit cubit, domain.Post post, int initialIndex) {
+  SwipeImageGallery _getPostGallery(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post, int initialIndex) {
     final medias = post.contents.medias();
     return SwipeImageGallery(
       overlayController: cubit.overlayController,

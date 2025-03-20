@@ -21,8 +21,8 @@ class ThreadDetailState with _$ThreadDetailState {
     required String siteId,
     required String boardId,
     required String threadId,
-    required Map<String, Result<Post>> threadMap,
-    required Map<String, Result<List<Post>>> regardingPostsMap,
+    required Map<String, Result<ArticlePost>> threadMap,
+    required Map<String, Result<List<ArticlePost>>> regardingPostsMap,
   }) = _ThreadDetailState;
 }
 
@@ -30,7 +30,7 @@ class ThreadDetailState with _$ThreadDetailState {
 class ThreadDetailCubit extends Cubit<ThreadDetailState> {
   final GetThread _getThread;
   final ListRegardingPosts _listRegardingPosts;
-  final PagingController<int, PostWithExtension> pagingController;
+  final PagingController<int, ArticlePostWithExtension> pagingController;
   final StreamController<Widget> overlayController;
 
   static const _pageSize = 10;
@@ -72,7 +72,7 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
     );
 
     try {
-      List<PostWithExtension> posts;
+      List<ArticlePostWithExtension> posts;
       bool isLastPage = false;
       if (pageKey == 1) {
         final (thread, regardingPosts) = await(threadF, regardingPostsF).wait;

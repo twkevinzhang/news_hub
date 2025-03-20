@@ -32,8 +32,8 @@ class SearchCubit extends Cubit<SearchState> {
   final UpdateSuggestionLatestUsedAt _updateSuggestionLatestUsedAt;
   final InsertSuggestion _insertSuggestion;
   final ListThreadInfos _listThreadInfos;
-  late final InfiniteQuery<List<PostWithExtension>, int> threadInfosQuery;
-  final PagingController<int, PostWithExtension> pagingController;
+  late final InfiniteQuery<List<SingleImagePostWithExtension>, int> threadInfosQuery;
+  final PagingController<int, SingleImagePostWithExtension> pagingController;
 
   static const _pageSize = 10;
 
@@ -61,7 +61,7 @@ class SearchCubit extends Cubit<SearchState> {
             boardsOrder: [],
           ),
         )) {
-    threadInfosQuery = InfiniteQuery<List<PostWithExtension>, int>(
+    threadInfosQuery = InfiniteQuery<List<SingleImagePostWithExtension>, int>(
         key: ["search", state.filter, state.sorting],
         getNextArg: (state) {
           if (state.lastPage?.isEmpty ?? false) return null;

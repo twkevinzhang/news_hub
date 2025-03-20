@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/gestures.dart';
@@ -9,7 +10,6 @@ import 'package:news_hub/presentation/pages/thread_detail/widgets/video_paragrap
 import 'package:news_hub/presentation/widgets/molecules/loading_indicator.dart';
 import 'package:news_hub/shared/extensions.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-
 
 class Article {
   List<Widget> children = [];
@@ -31,16 +31,54 @@ class Article {
   }
 }
 
-class ArticleWidget extends StatelessWidget {
+class TextOnlyArticle {
+  final List<Widget> children = [];
+  final List<InlineSpan> _spans = [];
+  final int? _textLengthMax;
+  TextOnlyArticle({int? textLengthMax}) : _textLengthMax = textLengthMax;
+
+  int get textLength => _spans.map((s) => s.toPlainText()).join().length;
+
+  void input(InlineSpan span) {
+    if (_textLengthMax != null) {
+      if (textLength >= _textLengthMax) {
+        return;
+      }
+      final position = min(_textLengthMax - textLength, span.toPlainText().length);
+      final remaining = span.toPlainText().substring(0, position);
+      _spans.add(TextSpan(
+        text: remaining,
+        style: span.style,
+      ));
+    } else {
+      _spans.add(span);
+    }
+  }
+
+  void enter() {
+    if (_spans.isNotEmpty) {
+      children.add(RichText(text: TextSpan(children: [..._spans])));
+      _spans.clear();
+    }
+  }
+
+  void calculate() {
+    if (_textLengthMax != null) {
+      if (textLength - _textLengthMax > 0) {
+        children.add(Text("...查看更多"));
+      }
+    }
+  }
+}
+
+class RichContent extends StatelessWidget {
   final List<domain.Paragraph> contents;
-  final int? textLengthMax;
   final bool disablePlay;
   final FutureOr<void> Function(domain.Paragraph paragraph)? onParagraphClick;
 
-  const ArticleWidget({
+  const RichContent({
     super.key,
     required this.contents,
-    this.textLengthMax,
     this.disablePlay = false,
     required this.onParagraphClick,
   });
@@ -52,7 +90,7 @@ class ArticleWidget extends StatelessWidget {
       height: 1.5,
     );
 
-    Article article = Article();
+    final article = Article();
     for (var paragraph in contents) {
       if (paragraph is domain.TextParagraph) {
         // 纯文本段落 - 添加为TextSpan
@@ -135,6 +173,103 @@ class ArticleWidget extends StatelessWidget {
       }
     }
     article.enter();
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: article.children,
+    );
+  }
+}
+
+class TextOnlyContent extends StatelessWidget {
+  final List<domain.Paragraph> contents;
+  final int? textLengthMax;
+  final bool disablePlay;
+  final FutureOr<void> Function(domain.Paragraph paragraph)? onParagraphClick;
+
+  const TextOnlyContent({
+    super.key,
+    required this.contents,
+    this.textLengthMax,
+    this.disablePlay = false,
+    required this.onParagraphClick,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final textStyle = theme.textTheme.bodyMedium!.copyWith(
+      height: 1.5,
+    );
+
+    final article = TextOnlyArticle(textLengthMax: 100);
+    for (var paragraph in contents) {
+      if (paragraph is domain.TextParagraph) {
+        // 纯文本段落 - 添加为TextSpan
+        article.input(TextSpan(
+          text: "${paragraph.content} ",
+          style: textStyle,
+        ));
+      } else if (paragraph is domain.NewLineParagraph) {
+        // 纯文本段落 - 添加为TextSpan
+        article.input(TextSpan(
+          text: paragraph.symbol,
+          style: textStyle,
+        ));
+      } else if (paragraph is domain.QuoteParagraph) {
+        // 引用段落 - 使用斜体样式
+        article.input(TextSpan(
+          text: "${paragraph.content} ",
+          style: textStyle.copyWith(
+            fontStyle: FontStyle.italic,
+            color: theme.colorScheme.onSurfaceVariant.withValues(alpha: 0.8),
+          ),
+        ));
+      } else if (paragraph is domain.LinkParagraph) {
+        // 链接段落 - 添加为可点击的TextSpan
+        article.input(TextSpan(
+          text: "${paragraph.content} ",
+          style: textStyle.copyWith(
+            color: theme.colorScheme.primary,
+            decoration: TextDecoration.underline,
+          ),
+          recognizer: TapGestureRecognizer()..onTap = () => onParagraphClick?.call(paragraph),
+        ));
+      } else if (paragraph is domain.ReplyToParagraph) {
+        // 回复段落 - 添加为可点击的TextSpan
+        article.enter();
+        final annotations = paragraph.preview.isEmpty ? ">>${paragraph.authorName} " : ">>${paragraph.authorName}(${paragraph.preview.truncate(7)}) ";
+        article.input(TextSpan(
+          text: annotations,
+          style: textStyle.copyWith(
+            color: theme.colorScheme.secondary,
+            decoration: TextDecoration.underline,
+          ),
+          recognizer: TapGestureRecognizer()..onTap = () => onParagraphClick?.call(paragraph),
+        ));
+        article.enter();
+      } else if (paragraph is domain.ImageParagraph) {
+        article.input(TextSpan(
+          text: "[圖片]",
+          style: textStyle,
+        ));
+      } else if (paragraph is domain.VideoParagraph) {
+        // 视频段落
+        article.enter();
+        if (paragraph.isYouTube()) {
+          article.input(TextSpan(
+            text: "[YouTube影片]",
+            style: textStyle,
+          ));
+        } else {
+          article.input(TextSpan(
+            text: "[影片]",
+            style: textStyle,
+          ));
+        }
+      }
+    }
+    article.enter();
+    article.calculate();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: article.children,
