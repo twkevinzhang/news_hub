@@ -129,6 +129,7 @@ class SearchScreen extends StatelessWidget {
   void _onSubmit(BuildContext context, SearchCubit cubit) {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
+      cubit.submit();
       cubit.refresh();
       AutoRouter.of(context).navigate(ThreadInfosRoute());
     }
