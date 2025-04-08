@@ -9,6 +9,7 @@ class AppSearchBar extends StatelessWidget {
   final Function(String?) onChanged;
   final Function(domain.Suggestion) onSelected;
   final Function() onClear;
+
   const AppSearchBar({
     super.key,
     required this.value,
@@ -45,13 +46,14 @@ class AppSearchBar extends StatelessWidget {
               focusNode: focusNode,
               decoration: InputDecoration(
                 label: Text('在 $boardsTotal 個版面中搜尋'),
-                helperText: '請輸入關鍵字',
                 prefixIcon: Icon(Icons.search_outlined),
                 border: OutlineInputBorder(),
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.cancel_outlined),
-                  onPressed: onClear,
-                ),
+                suffixIcon: value.isNotEmpty
+                    ? IconButton(
+                        icon: Icon(Icons.cancel_outlined),
+                        onPressed: onClear,
+                      )
+                    : null,
               ),
               value: value,
               onChanged: onChanged,

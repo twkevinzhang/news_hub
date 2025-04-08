@@ -104,6 +104,8 @@ import 'package:news_hub/presentation/pages/thread_infos/bloc/boards_picker_cubi
     as _i415;
 import 'package:news_hub/presentation/pages/thread_infos/bloc/search_cubit.dart'
     as _i955;
+import 'package:news_hub/presentation/pages/thread_infos/bloc/thread_infos_cubit.dart'
+    as _i181;
 import 'package:news_hub/presentation/router/router.dart' as _i762;
 import 'package:rx_shared_preferences/rx_shared_preferences.dart' as _i579;
 
@@ -295,6 +297,10 @@ extension GetItInjectableX on _i174.GetIt {
               gh<_i650.UpdateSuggestionLatestUsedAt>(),
           insertSuggestion: gh<_i446.InsertSuggestion>(),
           listThreadInfos: gh<_i952.ListThreadInfos>(),
+        ));
+    gh.factory<_i181.ThreadInfosCubit>(() => _i181.ThreadInfosCubit(
+          listThreadInfos: gh<_i952.ListThreadInfos>(),
+          listExtensions: gh<_i351.ListInstalledExtensions>(),
         ));
     gh.factory<_i415.BoardsPickerCubit>(
         () => _i415.BoardsPickerCubit(gh<_i351.ListInstalledExtensions>()));
