@@ -128,8 +128,8 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.singleton<_i361.Dio>(() => appProvider.dio);
+    gh.singleton<_i539.AppDatabase>(() => _i539.AppDatabase());
     gh.singleton<_i158.CacheService>(() => _i158.CacheService());
-    gh.lazySingleton<_i539.AppDatabase>(() => _i539.AppDatabase());
     gh.lazySingleton<_i475.ValidExtensionRepoUrl>(
         () => _i475.ValidExtensionRepoUrl());
     gh.lazySingleton<_i762.AppRouter>(() => _i762.AppRouter());

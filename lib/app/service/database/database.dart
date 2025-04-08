@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:drift/drift.dart';
+import 'package:drift/native.dart';
 import 'package:drift_flutter/drift_flutter.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:injectable/injectable.dart';
+import 'package:path/path.dart' as p;
 
 part 'database.g.dart';
 
@@ -39,20 +43,20 @@ class Suggestions extends Table {
   Set<Column> get primaryKey => {id};
 }
 
-@lazySingleton
+@singleton
 @DriftDatabase(tables: [ExtensionRepos, InstalledExtensions, Suggestions])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
   int get schemaVersion => 1;
+}
 
-  static QueryExecutor _openConnection() {
-    return driftDatabase(
-      name: 'news_hub',
-      native: const DriftNativeOptions(
-        databaseDirectory: getApplicationDocumentsDirectory,
-      ),
-    );
-  }
+LazyDatabase _openConnection() {
+  return LazyDatabase(() async {
+    final dbFolder = await getApplicationDocumentsDirectory();
+    final file = File(p.join(dbFolder.path, 'db.sqlite'));
+
+    return NativeDatabase.createInBackground(file);
+  });
 }
