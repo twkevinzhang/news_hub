@@ -7,7 +7,7 @@ import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/thread_infos/bloc/boards_picker_cubit.dart';
 import 'package:news_hub/presentation/pages/thread_infos/bloc/search_cubit.dart';
 import 'package:news_hub/presentation/pages/thread_infos/widgets/boards_picker_screen.dart';
-import 'package:news_hub/presentation/pages/thread_infos/widgets/search_bar_view.dart';
+import 'package:news_hub/presentation/pages/thread_infos/widgets/search_bar.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
 
 @RoutePage()
@@ -70,7 +70,7 @@ class SearchScreen extends StatelessWidget {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                    child: SearchBarView(
+                    child: AppSearchBar(
                       value: cubit.state.filter.keywords ?? '',
                       boardsTotal: cubit.state.filter.boardsTotal(),
                       onChanged: (value) => cubit.setKeywords(value ?? ''),

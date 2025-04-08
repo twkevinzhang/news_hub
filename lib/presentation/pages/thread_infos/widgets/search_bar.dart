@@ -3,13 +3,13 @@ import 'package:news_hub/presentation/widgets/molecules/reactive_text_form_field
 import 'package:news_hub/presentation/widgets/molecules/text_field_anchor.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 
-class SearchBarView extends StatelessWidget {
+class AppSearchBar extends StatelessWidget {
   final int boardsTotal;
   final String value;
   final Function(String?) onChanged;
   final Function(domain.Suggestion) onSelected;
   final Function() onClear;
-  const SearchBarView({
+  const AppSearchBar({
     super.key,
     required this.value,
     required this.boardsTotal,

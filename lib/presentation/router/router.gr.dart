@@ -24,9 +24,9 @@ import 'package:news_hub/presentation/pages/thread_detail/view/thread_detail_scr
     as _i7;
 import 'package:news_hub/presentation/pages/thread_infos/view/search_screen.dart'
     as _i5;
-import 'package:news_hub/presentation/pages/thread_infos/view/thread_infos_screen.dart'
+import 'package:news_hub/presentation/pages/thread_infos/view/thread_infos_list_screen.dart'
     as _i8;
-import 'package:news_hub/presentation/pages/thread_infos/view/thread_infos_wrapper.dart'
+import 'package:news_hub/presentation/pages/thread_infos/view/thread_infos_screen.dart'
     as _i9;
 import 'package:news_hub/presentation/router/wrapper_screen.dart' as _i10;
 
@@ -229,7 +229,23 @@ class ThreadDetailRouteArgs {
 }
 
 /// generated route for
-/// [_i8.ThreadInfosScreen]
+/// [_i8.ThreadInfosListScreen]
+class ThreadInfosListRoute extends _i11.PageRouteInfo<void> {
+  const ThreadInfosListRoute({List<_i11.PageRouteInfo>? children})
+    : super(ThreadInfosListRoute.name, initialChildren: children);
+
+  static const String name = 'ThreadInfosListRoute';
+
+  static _i11.PageInfo page = _i11.PageInfo(
+    name,
+    builder: (data) {
+      return const _i8.ThreadInfosListScreen();
+    },
+  );
+}
+
+/// generated route for
+/// [_i9.ThreadInfosScreen]
 class ThreadInfosRoute extends _i11.PageRouteInfo<void> {
   const ThreadInfosRoute({List<_i11.PageRouteInfo>? children})
     : super(ThreadInfosRoute.name, initialChildren: children);
@@ -239,23 +255,7 @@ class ThreadInfosRoute extends _i11.PageRouteInfo<void> {
   static _i11.PageInfo page = _i11.PageInfo(
     name,
     builder: (data) {
-      return const _i8.ThreadInfosScreen();
-    },
-  );
-}
-
-/// generated route for
-/// [_i9.ThreadInfosWrapper]
-class ThreadInfosWrapper extends _i11.PageRouteInfo<void> {
-  const ThreadInfosWrapper({List<_i11.PageRouteInfo>? children})
-    : super(ThreadInfosWrapper.name, initialChildren: children);
-
-  static const String name = 'ThreadInfosWrapper';
-
-  static _i11.PageInfo page = _i11.PageInfo(
-    name,
-    builder: (data) {
-      return _i11.WrappedRoute(child: const _i9.ThreadInfosWrapper());
+      return _i11.WrappedRoute(child: const _i9.ThreadInfosScreen());
     },
   );
 }
