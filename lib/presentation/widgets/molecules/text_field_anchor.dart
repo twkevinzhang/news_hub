@@ -1,4 +1,3 @@
-// history_input_field.dart
 import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 
@@ -45,20 +44,34 @@ class _TextFieldAnchorState extends State<TextFieldAnchor> {
 
   void _onFocusChange() {
     if (_focusNode.hasFocus) {
-      setState(() {
-        visibility = true;
+      // Don't call setState() directly - use post-frame callback
+      // to avoid build-phase state changes
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          setState(() {
+            visibility = true;
+          });
+          _showOverlay();
+        }
       });
-      _showOverlay();
     } else {
-      setState(() {
-        visibility = false;
+      // Don't call setState() directly - use post-frame callback
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          setState(() {
+            visibility = false;
+          });
+          _removeOverlay();
+        }
       });
-      _removeOverlay();
     }
   }
 
   void _showOverlay() {
     _removeOverlay();
+
+    // Check if context is still valid
+    if (!mounted) return;
 
     final overlay = Overlay.of(context);
     final renderBox = context.findRenderObject() as RenderBox;
@@ -67,7 +80,7 @@ class _TextFieldAnchorState extends State<TextFieldAnchor> {
     _overlayEntry = OverlayEntry(
       builder: (context) => Stack(
         children: [
-          // 添加一個透明的全屏 GestureDetector 來處理外部點擊
+          // Add transparent full-screen GestureDetector to handle outside clicks
           Positioned.fill(
             child: GestureDetector(
               behavior: HitTestBehavior.translucent,
@@ -76,7 +89,7 @@ class _TextFieldAnchorState extends State<TextFieldAnchor> {
               },
             ),
           ),
-          // 清單
+          // List
           Positioned(
             width: size.width,
             child: CompositedTransformFollower(
@@ -86,8 +99,7 @@ class _TextFieldAnchorState extends State<TextFieldAnchor> {
               child: Material(
                 elevation: 8,
                 borderRadius: BorderRadius.circular(8),
-                child:
-                !visibility || widget.items.isEmpty
+                child: !visibility || widget.items.isEmpty
                     ? const SizedBox.shrink()
                     : Column(
                   mainAxisSize: MainAxisSize.min,
@@ -126,8 +138,10 @@ class _TextFieldAnchorState extends State<TextFieldAnchor> {
   }
 
   void _removeOverlay() {
-    _overlayEntry?.remove();
-    _overlayEntry = null;
+    if (_overlayEntry != null) {
+      _overlayEntry?.remove();
+      _overlayEntry = null;
+    }
   }
 
   @override
