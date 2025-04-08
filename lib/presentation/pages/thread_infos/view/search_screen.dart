@@ -11,10 +11,18 @@ import 'package:news_hub/presentation/pages/thread_infos/widgets/search_bar.dart
 import 'package:news_hub/presentation/router/router.gr.dart';
 
 @RoutePage()
-class SearchScreen extends StatelessWidget {
+class SearchScreen extends StatelessWidget implements AutoRouteWrapper {
   final _formKey = GlobalKey<FormState>(debugLabel: '_SearchScreen');
 
   SearchScreen({super.key});
+
+  @override
+  Widget wrappedRoute(BuildContext context) {
+    return BlocProvider(
+      create: (context) => sl<SearchCubit>()..init(),
+      child: this,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -130,8 +138,8 @@ class SearchScreen extends StatelessWidget {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       cubit.submit();
-      cubit.refresh();
-      AutoRouter.of(context).navigate(ThreadInfosRoute());
+      final state = cubit.state;
+      AutoRouter.of(context).push(ThreadInfosRoute(filter: state.filter, sorting: state.sorting));
     }
   }
 }

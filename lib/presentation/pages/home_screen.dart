@@ -10,7 +10,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return AutoTabsScaffold(
         routes: [
-          ThreadInfosRoute(),
+          SearchRoute(),
           ExtensionsRoute(),
           SettingsRoute(),
         ],
@@ -18,7 +18,7 @@ class HomeScreen extends StatelessWidget {
           return BottomNavigationBar(
             items: const <BottomNavigationBarItem>[
               BottomNavigationBarItem(
-                  icon: Icon(Icons.newspaper), label: 'Threads'),
+                  icon: Icon(Icons.search), label: 'Search'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.extension), label: 'Extensions'),
               BottomNavigationBarItem(

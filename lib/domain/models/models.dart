@@ -368,6 +368,10 @@ extension ThreadsFilterEx on ThreadsFilter {
     final boardIds = boardsSorting.keys.toSet();
     return boardIds.length;
   }
+
+  bool get isEmpty {
+    return boardsSorting.isEmpty && keywords.isEmpty;
+  }
 }
 
 @Freezed(toJson: true)

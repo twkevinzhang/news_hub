@@ -9,7 +9,6 @@ import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/suggestion/interactor/insert_suggestion.dart' show InsertSuggestion;
 import 'package:news_hub/domain/suggestion/interactor/list_suggestions.dart';
 import 'package:news_hub/domain/suggestion/interactor/update_suggestion_latest_used_at.dart';
-import 'package:news_hub/domain/thread/interactor/get_thread.dart';
 import 'package:news_hub/domain/thread/interactor/list_thread_infos.dart';
 import 'package:news_hub/shared/extensions.dart';
 import 'package:news_hub/shared/models.dart';
@@ -31,11 +30,6 @@ class SearchCubit extends Cubit<SearchState> {
   final ListSuggestions _listSuggestions;
   final UpdateSuggestionLatestUsedAt _updateSuggestionLatestUsedAt;
   final InsertSuggestion _insertSuggestion;
-  final ListThreadInfos _listThreadInfos;
-  late final InfiniteQuery<List<SingleImagePostWithExtension>, int> threadInfosQuery;
-  final PagingController<int, SingleImagePostWithExtension> pagingController;
-
-  static const _pageSize = 10;
 
   SearchCubit({
     required ListSuggestions listSuggestions,
@@ -45,8 +39,6 @@ class SearchCubit extends Cubit<SearchState> {
   })  : _listSuggestions = listSuggestions,
         _updateSuggestionLatestUsedAt = updateSuggestionLatestUsedAt,
         _insertSuggestion = insertSuggestion,
-        _listThreadInfos = listThreadInfos,
-        pagingController = PagingController(firstPageKey: 1),
         super(SearchState(
           suggestions: Result.initial(),
           filter: ThreadsFilter(
@@ -60,25 +52,7 @@ class SearchCubit extends Cubit<SearchState> {
           sorting: ThreadsSorting(
             boardsOrder: [],
           ),
-        )) {
-    threadInfosQuery = InfiniteQuery<List<SingleImagePostWithExtension>, int>(
-        key: ["search", state.filter, state.sorting],
-        getNextArg: (state) {
-          if (state.lastPage?.isEmpty ?? false) return null;
-          return state.length + 1;
-        },
-        queryFn: (page) =>
-            _listThreadInfos.call(
-              filter: state.filter,
-              sorting: state.sorting,
-              pagination: Pagination(
-                page: page,
-                pageSize: _pageSize,
-              ),
-            )
-    );
-    pagingController.addPageRequestListener(_loadThreadInfos);
-  }
+        ));
 
   void init() async {
     safeEmit(state.copyWith(
@@ -131,38 +105,5 @@ class SearchCubit extends Cubit<SearchState> {
 
   void submit() {
     safeEmit(state.copyWith(submittedFilter: state.filter));
-  }
-
-  void _loadThreadInfos(int pageKey) async {
-    try {
-      final queryState = await threadInfosQuery.getNextPage();
-      if (queryState?.error != null) {
-        throw queryState!.error!;
-      }
-      final newPage = threadInfosQuery.lastPage;
-      if (newPage == null) {
-        return;
-      }
-      if (threadInfosQuery.hasReachedMax()) {
-        pagingController.appendLastPage(newPage);
-      } else {
-        pagingController.appendPage(newPage, threadInfosQuery.state.length + 1);
-      }
-    } catch (e, s) {
-      debugPrint('Exception: $e');
-      debugPrint('StackTrace: $s');
-      pagingController.error = e;
-    }
-  }
-
-  void refresh() {
-    threadInfosQuery.refetch();
-    pagingController.refresh();
-  }
-
-  @override
-  Future<void> close() {
-    pagingController.dispose();
-    return super.close();
   }
 }
