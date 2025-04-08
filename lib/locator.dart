@@ -23,7 +23,7 @@ final sl = GetIt.instance;
 Future<void> configureDependencies() => sl.init(
       environmentFilter: const NoEnvOrContainsAny(
         // kReleaseMode ? {Environment.prod} : {Environment.dev},
-        {AppEnv.localAdapter},
+        {AppEnv.remoteAdapter},
       ),
     );
 
@@ -52,7 +52,7 @@ abstract class AppProvider {
   @Environment(AppEnv.remoteAdapter)
   @lazySingleton
   ClientChannel remote() => ClientChannel(
-        '10.44.125.161', // on my mac
+        '127.0.0.1'
         port: 55001,
         options: const ChannelOptions(
           credentials: ChannelCredentials.insecure(),
