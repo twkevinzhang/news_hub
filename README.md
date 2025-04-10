@@ -12,8 +12,9 @@ Browse between multiple forums.
 - [ ] 閱讀歷史
 - [ ] 收藏、備份
 - [ ] 儲存搜尋條件作為書籤
+- [ ] Web 登入取得 session cookies
 - [ ] iOS App
-- [ ] CI/CD (Github Action)
+- [ ] CI/CD (Github Action) integrate Renovate Bot or Sourcegraph Cody
 
 ## Development Method
 1. 使用 python、lxml 撰寫爬蟲：[news_hub_extensions]
