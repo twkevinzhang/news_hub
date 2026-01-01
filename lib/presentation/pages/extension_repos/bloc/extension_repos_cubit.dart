@@ -9,7 +9,7 @@ import 'package:news_hub/domain/extension_repo/interactor/create_extension_repo.
 import 'package:news_hub/domain/extension_repo/interactor/delete_extension_repo.dart';
 import 'package:news_hub/domain/extension_repo/interactor/list_extension_repos.dart';
 import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/presentation/widgets/widgets.dart';
+import 'package:news_hub/presentation/shared/shared.dart';
 import 'package:news_hub/shared/extensions.dart';
 import 'package:news_hub/shared/models.dart';
 

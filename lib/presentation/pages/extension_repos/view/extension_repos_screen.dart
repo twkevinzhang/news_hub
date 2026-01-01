@@ -6,7 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/extension_repos/bloc/extension_repos_cubit.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
-import 'package:news_hub/presentation/widgets/widgets.dart';
+import 'package:news_hub/presentation/shared/shared.dart';
 
 @RoutePage()
 class ExtensionReposScreen extends StatelessWidget implements AutoRouteWrapper {

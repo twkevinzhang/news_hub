@@ -147,7 +147,7 @@ class MockExtensionApiServiceImpl implements ExtensionApiService {
   }
 
   @override
-  Future<List<Post>> threadInfos({
+  Future<List<Post>> threadList({
     required String extensionPkgName,
     required String siteId,
     required Map<String, String>? boardsSorting,

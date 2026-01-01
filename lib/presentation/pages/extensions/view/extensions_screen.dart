@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/extensions/bloc/extensions_cubit.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
-import 'package:news_hub/presentation/widgets/widgets.dart';
+import 'package:news_hub/presentation/shared/shared.dart';
 
 @RoutePage()
 class ExtensionsScreen extends StatelessWidget implements AutoRouteWrapper {

@@ -11,18 +11,7 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(
-          path: '/',
-          page: HomeRoute.page,
-          children: [
-            AutoRoute(path: 'search', page: SearchRoute.page),
-            AutoRoute(path: 'extensions', page: ExtensionsRoute.page),
-            AutoRoute(path: 'settings', page: SettingsRoute.page),
-            AutoRoute(path: 'collection/:collectionId', page: CollectionRoute.page),
-          ],
-        ),
-        AutoRoute(path: '/sidecar-logs', page: SidecarLogsRoute.page),
-        AutoRoute(path: '/thread-infos', page: ThreadInfosRoute.page),
+        AutoRoute(path: '/thread-list', page: ThreadListRoute.page),
         AutoRoute(path: '/thread-detail', page: ThreadDetailRoute.page),
         AutoRoute(path: '/extension-repos', page: WrapperRoute.page, children: [
           AutoRoute(path: '', page: ExtensionReposRoute.page),

@@ -11,7 +11,7 @@ import 'package:news_hub/domain/extension/extension.dart';
 import 'package:news_hub/domain/extension/interactor/install_extension.dart';
 import 'package:news_hub/domain/extension_repo/extension_repo.dart';
 import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/presentation/widgets/widgets.dart';
+import 'package:news_hub/presentation/shared/shared.dart';
 import 'package:news_hub/shared/extensions.dart';
 import 'package:news_hub/shared/models.dart';
 

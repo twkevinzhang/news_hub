@@ -1,6 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:news_hub/presentation/widgets/pages/pages.dart';
+import 'package:news_hub/presentation/shared/shared.dart';
 
 @RoutePage()
 class SettingsScreen extends StatelessWidget {

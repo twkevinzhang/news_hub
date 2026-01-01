@@ -17,7 +17,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
 
   GrpcExtensionApiServiceImpl({
     required ClientChannel clientChannel,
-  })  : _client = ExtensionApiClient(clientChannel);
+  }) : _client = ExtensionApiClient(clientChannel);
 
   @override
   Future<domain.Site> site({
@@ -45,7 +45,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
   }
 
   @override
-  Future<List<domain.Post>> threadInfos({
+  Future<List<domain.Post>> threadList({
     required String extensionPkgName,
     required String siteId,
     required Map<String, String>? boardsSorting,
@@ -53,7 +53,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
     String? sortBy,
     String? keywords,
   }) async {
-    final res = await _client.getThreadInfos(GetThreadInfosReq(
+    final res = await _client.getThreadList(GetThreadListReq(
       pkgName: extensionPkgName,
       siteId: siteId,
       boardsSorting: boardsSorting,
@@ -63,7 +63,7 @@ class GrpcExtensionApiServiceImpl implements ExtensionApiService {
       ),
       keywords: keywords,
     ));
-    return res.threadInfos.map((t) => t.toDomain()).toList();
+    return res.threadList.map((t) => t.toDomain()).toList();
   }
 
   @override
