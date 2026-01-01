@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:grpc/grpc.dart';
-import 'package:news_hub/app/extension/api/models/transform.dart';
+import 'package:news_hub/app/service/api/models/transform.dart';
 import 'package:news_hub/domain/extension/extension.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 import 'package:news_hub/shared/constants.dart';
@@ -9,15 +9,13 @@ import 'package:news_hub/shared/models.dart';
 
 import 'models/extension_api.pbgrpc.dart';
 
-@Environment(AppEnv.localAdapter)
-@Environment(AppEnv.remoteAdapter)
-@LazySingleton(as: ExtensionApiService)
-class GrpcExtensionApiServiceImpl implements ExtensionApiService {
-  late final ExtensionApiClient _client;
+@lazySingleton
+class SidecarApi {
+  late final SidecarApiClient _client;
 
-  GrpcExtensionApiServiceImpl({
+  SidecarApi({
     required ClientChannel clientChannel,
-  }) : _client = ExtensionApiClient(clientChannel);
+  }) : _client = SidecarApiClient(clientChannel);
 
   @override
   Future<domain.Site> site({
