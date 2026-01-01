@@ -26,12 +26,6 @@ class ExtensionScreen extends StatelessWidget implements AutoRouteWrapper {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Extensions'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.add_outlined),
-            onPressed: () => AutoRouter.of(context).push(ExtensionReposRoute()),
-          ),
-        ],
       ),
       body: cubit.state.extensions.when(
         completed: (data) => ListView(

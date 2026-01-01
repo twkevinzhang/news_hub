@@ -18,7 +18,7 @@ import 'package:news_hub/shared/models.dart';
 part 'extension_cubit.freezed.dart';
 
 @freezed
-class ExtensionState with _$ExtensionsState {
+class ExtensionState with _$ExtensionState {
   const factory ExtensionState({
     required String? keyword,
     required Result<Extensions> extensions,
@@ -32,8 +32,7 @@ class ExtensionCubit extends Cubit<ExtensionState> {
   final InstallExtension _installExtension;
   final UninstallExtension _uninstallExtension;
   final ExtensionRepoApiService _extensionRepoApiService;
-  final Map<String, StreamSubscription>
-      _installingStream; // pkgName -> StreamSubscription
+  final Map<String, StreamSubscription> _installingStream; // pkgName -> StreamSubscription
 
   ExtensionCubit({
     required ListExtensions listExtensions,
@@ -79,23 +78,19 @@ class ExtensionCubit extends Cubit<ExtensionState> {
   Future<void> updateExtension(Extension extension) async {
     final zipUrl = await _extensionRepoApiService.zipUrl(extension);
     await _uninstallExtension.call(extension);
-    final sub =
-        _installExtension.downloadAndInstall(zipUrl, extension).listen((pair) {
-      final newInstallingExtensions = state.installingExtensions
-        ..addAll({extension.pkgName: pair});
+    final sub = _installExtension.downloadAndInstall(zipUrl, extension).listen((pair) {
+      final newInstallingExtensions = state.installingExtensions..addAll({extension.pkgName: pair});
       safeEmit(state.copyWith(installingExtensions: newInstallingExtensions));
     }, onError: (error) {
-        debugPrint(error);
+      debugPrint(error);
     });
     _installingStream[extension.pkgName] = sub;
   }
 
   Future<void> installExtension(Extension extension) async {
     final zipUrl = await _extensionRepoApiService.zipUrl(extension);
-    final sub =
-        _installExtension.downloadAndInstall(zipUrl, extension).listen((pair) {
-      final newInstallingExtensions = state.installingExtensions
-        ..addAll({extension.pkgName: pair});
+    final sub = _installExtension.downloadAndInstall(zipUrl, extension).listen((pair) {
+      final newInstallingExtensions = state.installingExtensions..addAll({extension.pkgName: pair});
       safeEmit(state.copyWith(installingExtensions: newInstallingExtensions));
     }, onError: (error) {
       debugPrint(error);

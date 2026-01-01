@@ -26,7 +26,7 @@ class CreateCollectionPage extends StatelessWidget implements AutoRouteWrapper {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(content: Text('集合已建立')),
           );
-          context.router.pop();
+          context.maybePop();
         }
         if (state.errorMessage != null) {
           ScaffoldMessenger.of(context).showSnackBar(
