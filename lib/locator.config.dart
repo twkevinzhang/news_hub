@@ -24,6 +24,8 @@ import 'package:news_hub/app/extension/installer/mock_extension_install_service_
     as _i863;
 import 'package:news_hub/app/extension/preferences/extension_preferences_service_impl.dart'
     as _i29;
+import 'package:news_hub/app/extension/repository/collection_repository_impl.dart'
+    as _i548;
 import 'package:news_hub/app/extension/repository/installed_extension_repository_impl.dart'
     as _i753;
 import 'package:news_hub/app/extension/repository/mock_installed_extension_repository_impl.dart'
@@ -45,6 +47,7 @@ import 'package:news_hub/app/suggestion/repository/suggestion_repository_impl.da
 import 'package:news_hub/domain/bookmark/bookmark_repository.dart' as _i521;
 import 'package:news_hub/domain/bookmark/interactor/list_bookmarks.dart'
     as _i1049;
+import 'package:news_hub/domain/extension/collection_repository.dart' as _i682;
 import 'package:news_hub/domain/extension/extension.dart' as _i315;
 import 'package:news_hub/domain/extension/extension_api_service.dart' as _i892;
 import 'package:news_hub/domain/extension/extension_install_service.dart'
@@ -180,6 +183,13 @@ extension GetItInjectableX on _i174.GetIt {
         _remoteAdapter,
       },
       preResolve: true,
+    );
+    gh.lazySingleton<_i682.CollectionRepository>(
+      () => _i548.CollectionRepositoryImpl(db: gh<_i539.AppDatabase>()),
+      registerFor: {
+        _localAdapter,
+        _remoteAdapter,
+      },
     );
     gh.lazySingleton<_i581.GetExtensionRepo>(() =>
         _i581.GetExtensionRepo(repo: gh<_i623.ExtensionRepoRepository>()));

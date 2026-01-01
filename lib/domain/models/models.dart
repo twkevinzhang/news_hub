@@ -392,3 +392,15 @@ class Suggestion {
     required this.latestUsedAt,
   });
 }
+
+class Collection {
+  final String id;
+  final String name;
+  final List<Board> boards;
+
+  Collection({
+    required this.id,
+    required this.name,
+    required this.boards,
+  });
+}

@@ -43,13 +43,37 @@ class Suggestions extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+class Collections extends Table {
+  TextColumn get id => text()();
+  TextColumn get name => text()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class CollectionBoardRefs extends Table {
+  TextColumn get collectionId => text()();
+  TextColumn get extensionPkgName => text()();
+  TextColumn get siteId => text()();
+  TextColumn get boardId => text()();
+
+  @override
+  Set<Column> get primaryKey => {collectionId, extensionPkgName, siteId, boardId};
+}
+
 @singleton
-@DriftDatabase(tables: [ExtensionRepos, InstalledExtensions, Suggestions])
+@DriftDatabase(tables: [
+  ExtensionRepos,
+  InstalledExtensions,
+  Suggestions,
+  Collections,
+  CollectionBoardRefs
+])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
 }
 
 LazyDatabase _openConnection() {
