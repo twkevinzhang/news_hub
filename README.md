@@ -23,12 +23,6 @@ Browse between multiple forums.
 4. 使用 flutter lib [flet-dev/serious-python] 將 python file 打包成 App
 5. 在本 repo 中使用開發 UI 介面，得到最終產品
 
-## AppEnv
-可在 configureDependencies() 中選擇以下開發模式：
- - mockData mode：使用 [mock_extension_api_service_impl.dart]
- - localAdapter mode：使用 [adapter](adapter) 資料夾中的 grpc server
- - remoteAdapter mode：跟遠端 grpc server 溝通來取得論壇資料
-
 [news_hub_extensions]: https://github.com/twkevinzhang/news_hub_extensions
 [news_hub_protos]: https://github.com/twkevinzhang/news_hub_protos
 [flet-dev/serious-python]: https://github.com/flet-dev/serious-python
