@@ -6,12 +6,14 @@ import 'package:news_hub/presentation/sidecar/sidecar_cubit.dart';
 
 class AppNavigationDrawer extends StatefulWidget {
   final Function(Collection) onCollectionSelected;
+  final Function() onCreateCollectionPressed;
   final Function(Board) onBoardSelected;
   final VoidCallback onStatusPressed;
 
   const AppNavigationDrawer({
     super.key,
     required this.onCollectionSelected,
+    required this.onCreateCollectionPressed,
     required this.onBoardSelected,
     required this.onStatusPressed,
   });
@@ -32,31 +34,32 @@ class _AppNavigationDrawerState extends State<AppNavigationDrawer> {
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
+                // App Logo
                 Padding(
                   padding: const EdgeInsets.fromLTRB(28, 64, 16, 10),
                   child: Text(
                     'NewsHub',
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                      color: Theme.of(context).colorScheme.primary,
-                    ),
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.primary,
+                        ),
                   ),
                 ),
-                const Divider(indent: 28, endIndent: 28),
+                // Collection List
                 BlocBuilder<CollectionListBloc, CollectionListState>(
                   builder: (context, state) {
                     if (state.isLoading && state.collections.isEmpty) {
                       return const Center(
                           child: Padding(
-                            padding: EdgeInsets.all(16.0),
-                            child: CircularProgressIndicator(),
-                          ));
+                        padding: EdgeInsets.all(16.0),
+                        child: CircularProgressIndicator(),
+                      ));
                     }
                     return Column(
                       children: state.collections.map((collection) {
                         final controller = _controllers.putIfAbsent(
                           collection.id,
-                              () => ExpansionTileController(),
+                          () => ExpansionTileController(),
                         );
 
                         return ExpansionTile(
@@ -93,6 +96,13 @@ class _AppNavigationDrawerState extends State<AppNavigationDrawer> {
                       }).toList(),
                     );
                   },
+                ),
+                // Create Collection Button
+                ListTile(
+                  contentPadding: const EdgeInsets.fromLTRB(28, 16, 16, 16),
+                  leading: const Icon(Icons.add_outlined),
+                  title: const Text('Create Collection'),
+                  onTap: () => widget.onCreateCollectionPressed(),
                 ),
               ],
             ),
