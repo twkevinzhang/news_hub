@@ -54,7 +54,9 @@ class ThreadListCubit extends Cubit<ThreadListState> {
     pagingController.addPageRequestListener(_loadThreadList);
   }
 
-  void init(ThreadsFilter filter, ThreadsSorting sorting) async {
+  void init(ThreadsFilter? filter, ThreadsSorting? sorting) async {
+    filter ??= ThreadsFilter(boardsSorting: {}, keywords: '');
+    sorting ??= ThreadsSorting(boardsOrder: []);
     final extensions = await _listExtensions.withBoards();
     Map<String, Board> newBoards = {};
     for (final extension in extensions) {

@@ -9,16 +9,17 @@ import 'package:news_hub/presentation/pages/thread/list/bloc/thread_list_cubit.d
 import 'package:news_hub/presentation/router/router.gr.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:news_hub/presentation/shared/shared.dart';
+import 'package:news_hub/presentation/pages/home/widgets/app_top_bar.dart';
 
 @RoutePage()
 class ThreadListScreen extends StatelessWidget implements AutoRouteWrapper {
-  final ThreadsFilter filter;
-  final ThreadsSorting sorting;
+  final ThreadsFilter? filter;
+  final ThreadsSorting? sorting;
 
   const ThreadListScreen({
     super.key,
-    required this.filter,
-    required this.sorting,
+    this.filter,
+    this.sorting,
   });
 
   @override
@@ -33,7 +34,7 @@ class ThreadListScreen extends StatelessWidget implements AutoRouteWrapper {
   Widget build(BuildContext context) {
     final cubit = context.watch<ThreadListCubit>();
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppTopBar(
         title: Text(cubit.title),
         actions: [
           IconButton(
