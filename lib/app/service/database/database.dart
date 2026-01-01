@@ -43,13 +43,51 @@ class Suggestions extends Table {
   Set<Column> get primaryKey => {id};
 }
 
+class Collections extends Table {
+  TextColumn get id => text()();
+  TextColumn get name => text()();
+
+  @override
+  Set<Column> get primaryKey => {id};
+}
+
+class CollectionBoardRefs extends Table {
+  TextColumn get collectionId => text().references(Collections, #id)();
+  TextColumn get extensionPkgName => text()();
+  TextColumn get siteId => text()();
+  TextColumn get boardId => text()();
+  TextColumn get boardName => text().withDefault(const Constant(''))();
+
+  @override
+  Set<Column> get primaryKey => {collectionId, extensionPkgName, siteId, boardId};
+}
+
 @singleton
-@DriftDatabase(tables: [ExtensionRepos, InstalledExtensions, Suggestions])
+@DriftDatabase(tables: [
+  ExtensionRepos,
+  InstalledExtensions,
+  Suggestions,
+  Collections,
+  CollectionBoardRefs,
+])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 1;
+  int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration => MigrationStrategy(
+        onCreate: (m) async {
+          await m.createAll();
+        },
+        onUpgrade: (m, from, to) async {
+          if (from < 2) {
+            await m.createTable(collections);
+            await m.createTable(collectionBoardRefs);
+          }
+        },
+      );
 }
 
 LazyDatabase _openConnection() {

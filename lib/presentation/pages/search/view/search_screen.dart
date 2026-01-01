@@ -1,11 +1,13 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_hub/app/extension/api/models/extension_api.pb.dart';
 import 'package:news_hub/domain/models/models.dart';
 
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
 import 'package:news_hub/presentation/shared/boards_picker/boards_picker.dart';
+import 'package:news_hub/presentation/shared/view/empty_screen.dart';
 
 import '../bloc/search_cubit.dart';
 
@@ -123,7 +125,7 @@ class SearchScreen extends StatelessWidget implements AutoRouteWrapper {
         return Dialog.fullscreen(
           child: BlocProvider<BoardsPickerCubit>(
             create: (context) => sl<BoardsPickerCubit>()..init(initialChosenBoardsSorting: cubit.state.filter.boardsSorting),
-            child: BoardsPickerScreen(),
+            child: EmptyScreen(),
           ),
         );
       },

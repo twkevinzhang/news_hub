@@ -77,6 +77,14 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                           },
                           leading: const Icon(Icons.collections_bookmark_outlined),
                           title: Text(collection.name),
+                          subtitle: collection.boards.isNotEmpty
+                              ? Text(
+                                  _getBoardsSummary(collection.boards),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: Theme.of(context).textTheme.bodySmall,
+                                )
+                              : null,
                           children: [
                             ListTile(
                               contentPadding: const EdgeInsets.only(left: 72),
@@ -87,7 +95,7 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
                               return ListTile(
                                 contentPadding: const EdgeInsets.only(left: 72),
                                 leading: const Icon(Icons.dashboard_outlined, size: 20),
-                                title: Text(board.id),
+                                title: Text(board.name),
                                 onTap: () => widget.onBoardSelected(board),
                               );
                             }),
@@ -130,6 +138,15 @@ class _NavigationDrawerState extends State<NavigationDrawer> {
         ],
       ),
     );
+  }
+
+  String _getBoardsSummary(List<Board> boards) {
+    if (boards.isEmpty) return '';
+    final names = boards.take(2).map((b) => b.name).join(' + ');
+    if (boards.length > 2) {
+      return '$names...等 (${boards.length})';
+    }
+    return '$names (${boards.length})';
   }
 
   @override

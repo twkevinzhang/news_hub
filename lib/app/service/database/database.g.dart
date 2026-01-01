@@ -1001,6 +1001,516 @@ class SuggestionsCompanion extends UpdateCompanion<Suggestion> {
   }
 }
 
+class $CollectionsTable extends Collections
+    with TableInfo<$CollectionsTable, Collection> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CollectionsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _idMeta = const VerificationMeta('id');
+  @override
+  late final GeneratedColumn<String> id = GeneratedColumn<String>(
+      'id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _nameMeta = const VerificationMeta('name');
+  @override
+  late final GeneratedColumn<String> name = GeneratedColumn<String>(
+      'name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  @override
+  List<GeneratedColumn> get $columns => [id, name];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'collections';
+  @override
+  VerificationContext validateIntegrity(Insertable<Collection> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('id')) {
+      context.handle(_idMeta, id.isAcceptableOrUnknown(data['id']!, _idMeta));
+    } else if (isInserting) {
+      context.missing(_idMeta);
+    }
+    if (data.containsKey('name')) {
+      context.handle(
+          _nameMeta, name.isAcceptableOrUnknown(data['name']!, _nameMeta));
+    } else if (isInserting) {
+      context.missing(_nameMeta);
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey => {id};
+  @override
+  Collection map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return Collection(
+      id: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
+      name: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+    );
+  }
+
+  @override
+  $CollectionsTable createAlias(String alias) {
+    return $CollectionsTable(attachedDatabase, alias);
+  }
+}
+
+class Collection extends DataClass implements Insertable<Collection> {
+  final String id;
+  final String name;
+  const Collection({required this.id, required this.name});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['id'] = Variable<String>(id);
+    map['name'] = Variable<String>(name);
+    return map;
+  }
+
+  CollectionsCompanion toCompanion(bool nullToAbsent) {
+    return CollectionsCompanion(
+      id: Value(id),
+      name: Value(name),
+    );
+  }
+
+  factory Collection.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return Collection(
+      id: serializer.fromJson<String>(json['id']),
+      name: serializer.fromJson<String>(json['name']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'id': serializer.toJson<String>(id),
+      'name': serializer.toJson<String>(name),
+    };
+  }
+
+  Collection copyWith({String? id, String? name}) => Collection(
+        id: id ?? this.id,
+        name: name ?? this.name,
+      );
+  Collection copyWithCompanion(CollectionsCompanion data) {
+    return Collection(
+      id: data.id.present ? data.id.value : this.id,
+      name: data.name.present ? data.name.value : this.name,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('Collection(')
+          ..write('id: $id, ')
+          ..write('name: $name')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode => Object.hash(id, name);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is Collection && other.id == this.id && other.name == this.name);
+}
+
+class CollectionsCompanion extends UpdateCompanion<Collection> {
+  final Value<String> id;
+  final Value<String> name;
+  final Value<int> rowid;
+  const CollectionsCompanion({
+    this.id = const Value.absent(),
+    this.name = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CollectionsCompanion.insert({
+    required String id,
+    required String name,
+    this.rowid = const Value.absent(),
+  })  : id = Value(id),
+        name = Value(name);
+  static Insertable<Collection> custom({
+    Expression<String>? id,
+    Expression<String>? name,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (id != null) 'id': id,
+      if (name != null) 'name': name,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CollectionsCompanion copyWith(
+      {Value<String>? id, Value<String>? name, Value<int>? rowid}) {
+    return CollectionsCompanion(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (id.present) {
+      map['id'] = Variable<String>(id.value);
+    }
+    if (name.present) {
+      map['name'] = Variable<String>(name.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CollectionsCompanion(')
+          ..write('id: $id, ')
+          ..write('name: $name, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
+class $CollectionBoardRefsTable extends CollectionBoardRefs
+    with TableInfo<$CollectionBoardRefsTable, CollectionBoardRef> {
+  @override
+  final GeneratedDatabase attachedDatabase;
+  final String? _alias;
+  $CollectionBoardRefsTable(this.attachedDatabase, [this._alias]);
+  static const VerificationMeta _collectionIdMeta =
+      const VerificationMeta('collectionId');
+  @override
+  late final GeneratedColumn<String> collectionId = GeneratedColumn<String>(
+      'collection_id', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: true,
+      defaultConstraints:
+          GeneratedColumn.constraintIsAlways('REFERENCES collections (id)'));
+  static const VerificationMeta _extensionPkgNameMeta =
+      const VerificationMeta('extensionPkgName');
+  @override
+  late final GeneratedColumn<String> extensionPkgName = GeneratedColumn<String>(
+      'extension_pkg_name', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _siteIdMeta = const VerificationMeta('siteId');
+  @override
+  late final GeneratedColumn<String> siteId = GeneratedColumn<String>(
+      'site_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _boardIdMeta =
+      const VerificationMeta('boardId');
+  @override
+  late final GeneratedColumn<String> boardId = GeneratedColumn<String>(
+      'board_id', aliasedName, false,
+      type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _boardNameMeta =
+      const VerificationMeta('boardName');
+  @override
+  late final GeneratedColumn<String> boardName = GeneratedColumn<String>(
+      'board_name', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(''));
+  @override
+  List<GeneratedColumn> get $columns =>
+      [collectionId, extensionPkgName, siteId, boardId, boardName];
+  @override
+  String get aliasedName => _alias ?? actualTableName;
+  @override
+  String get actualTableName => $name;
+  static const String $name = 'collection_board_refs';
+  @override
+  VerificationContext validateIntegrity(Insertable<CollectionBoardRef> instance,
+      {bool isInserting = false}) {
+    final context = VerificationContext();
+    final data = instance.toColumns(true);
+    if (data.containsKey('collection_id')) {
+      context.handle(
+          _collectionIdMeta,
+          collectionId.isAcceptableOrUnknown(
+              data['collection_id']!, _collectionIdMeta));
+    } else if (isInserting) {
+      context.missing(_collectionIdMeta);
+    }
+    if (data.containsKey('extension_pkg_name')) {
+      context.handle(
+          _extensionPkgNameMeta,
+          extensionPkgName.isAcceptableOrUnknown(
+              data['extension_pkg_name']!, _extensionPkgNameMeta));
+    } else if (isInserting) {
+      context.missing(_extensionPkgNameMeta);
+    }
+    if (data.containsKey('site_id')) {
+      context.handle(_siteIdMeta,
+          siteId.isAcceptableOrUnknown(data['site_id']!, _siteIdMeta));
+    } else if (isInserting) {
+      context.missing(_siteIdMeta);
+    }
+    if (data.containsKey('board_id')) {
+      context.handle(_boardIdMeta,
+          boardId.isAcceptableOrUnknown(data['board_id']!, _boardIdMeta));
+    } else if (isInserting) {
+      context.missing(_boardIdMeta);
+    }
+    if (data.containsKey('board_name')) {
+      context.handle(_boardNameMeta,
+          boardName.isAcceptableOrUnknown(data['board_name']!, _boardNameMeta));
+    }
+    return context;
+  }
+
+  @override
+  Set<GeneratedColumn> get $primaryKey =>
+      {collectionId, extensionPkgName, siteId, boardId};
+  @override
+  CollectionBoardRef map(Map<String, dynamic> data, {String? tablePrefix}) {
+    final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
+    return CollectionBoardRef(
+      collectionId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}collection_id'])!,
+      extensionPkgName: attachedDatabase.typeMapping.read(
+          DriftSqlType.string, data['${effectivePrefix}extension_pkg_name'])!,
+      siteId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}site_id'])!,
+      boardId: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}board_id'])!,
+      boardName: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}board_name'])!,
+    );
+  }
+
+  @override
+  $CollectionBoardRefsTable createAlias(String alias) {
+    return $CollectionBoardRefsTable(attachedDatabase, alias);
+  }
+}
+
+class CollectionBoardRef extends DataClass
+    implements Insertable<CollectionBoardRef> {
+  final String collectionId;
+  final String extensionPkgName;
+  final String siteId;
+  final String boardId;
+  final String boardName;
+  const CollectionBoardRef(
+      {required this.collectionId,
+      required this.extensionPkgName,
+      required this.siteId,
+      required this.boardId,
+      required this.boardName});
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    map['collection_id'] = Variable<String>(collectionId);
+    map['extension_pkg_name'] = Variable<String>(extensionPkgName);
+    map['site_id'] = Variable<String>(siteId);
+    map['board_id'] = Variable<String>(boardId);
+    map['board_name'] = Variable<String>(boardName);
+    return map;
+  }
+
+  CollectionBoardRefsCompanion toCompanion(bool nullToAbsent) {
+    return CollectionBoardRefsCompanion(
+      collectionId: Value(collectionId),
+      extensionPkgName: Value(extensionPkgName),
+      siteId: Value(siteId),
+      boardId: Value(boardId),
+      boardName: Value(boardName),
+    );
+  }
+
+  factory CollectionBoardRef.fromJson(Map<String, dynamic> json,
+      {ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return CollectionBoardRef(
+      collectionId: serializer.fromJson<String>(json['collectionId']),
+      extensionPkgName: serializer.fromJson<String>(json['extensionPkgName']),
+      siteId: serializer.fromJson<String>(json['siteId']),
+      boardId: serializer.fromJson<String>(json['boardId']),
+      boardName: serializer.fromJson<String>(json['boardName']),
+    );
+  }
+  @override
+  Map<String, dynamic> toJson({ValueSerializer? serializer}) {
+    serializer ??= driftRuntimeOptions.defaultSerializer;
+    return <String, dynamic>{
+      'collectionId': serializer.toJson<String>(collectionId),
+      'extensionPkgName': serializer.toJson<String>(extensionPkgName),
+      'siteId': serializer.toJson<String>(siteId),
+      'boardId': serializer.toJson<String>(boardId),
+      'boardName': serializer.toJson<String>(boardName),
+    };
+  }
+
+  CollectionBoardRef copyWith(
+          {String? collectionId,
+          String? extensionPkgName,
+          String? siteId,
+          String? boardId,
+          String? boardName}) =>
+      CollectionBoardRef(
+        collectionId: collectionId ?? this.collectionId,
+        extensionPkgName: extensionPkgName ?? this.extensionPkgName,
+        siteId: siteId ?? this.siteId,
+        boardId: boardId ?? this.boardId,
+        boardName: boardName ?? this.boardName,
+      );
+  CollectionBoardRef copyWithCompanion(CollectionBoardRefsCompanion data) {
+    return CollectionBoardRef(
+      collectionId: data.collectionId.present
+          ? data.collectionId.value
+          : this.collectionId,
+      extensionPkgName: data.extensionPkgName.present
+          ? data.extensionPkgName.value
+          : this.extensionPkgName,
+      siteId: data.siteId.present ? data.siteId.value : this.siteId,
+      boardId: data.boardId.present ? data.boardId.value : this.boardId,
+      boardName: data.boardName.present ? data.boardName.value : this.boardName,
+    );
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CollectionBoardRef(')
+          ..write('collectionId: $collectionId, ')
+          ..write('extensionPkgName: $extensionPkgName, ')
+          ..write('siteId: $siteId, ')
+          ..write('boardId: $boardId, ')
+          ..write('boardName: $boardName')
+          ..write(')'))
+        .toString();
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(collectionId, extensionPkgName, siteId, boardId, boardName);
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      (other is CollectionBoardRef &&
+          other.collectionId == this.collectionId &&
+          other.extensionPkgName == this.extensionPkgName &&
+          other.siteId == this.siteId &&
+          other.boardId == this.boardId &&
+          other.boardName == this.boardName);
+}
+
+class CollectionBoardRefsCompanion extends UpdateCompanion<CollectionBoardRef> {
+  final Value<String> collectionId;
+  final Value<String> extensionPkgName;
+  final Value<String> siteId;
+  final Value<String> boardId;
+  final Value<String> boardName;
+  final Value<int> rowid;
+  const CollectionBoardRefsCompanion({
+    this.collectionId = const Value.absent(),
+    this.extensionPkgName = const Value.absent(),
+    this.siteId = const Value.absent(),
+    this.boardId = const Value.absent(),
+    this.boardName = const Value.absent(),
+    this.rowid = const Value.absent(),
+  });
+  CollectionBoardRefsCompanion.insert({
+    required String collectionId,
+    required String extensionPkgName,
+    required String siteId,
+    required String boardId,
+    this.boardName = const Value.absent(),
+    this.rowid = const Value.absent(),
+  })  : collectionId = Value(collectionId),
+        extensionPkgName = Value(extensionPkgName),
+        siteId = Value(siteId),
+        boardId = Value(boardId);
+  static Insertable<CollectionBoardRef> custom({
+    Expression<String>? collectionId,
+    Expression<String>? extensionPkgName,
+    Expression<String>? siteId,
+    Expression<String>? boardId,
+    Expression<String>? boardName,
+    Expression<int>? rowid,
+  }) {
+    return RawValuesInsertable({
+      if (collectionId != null) 'collection_id': collectionId,
+      if (extensionPkgName != null) 'extension_pkg_name': extensionPkgName,
+      if (siteId != null) 'site_id': siteId,
+      if (boardId != null) 'board_id': boardId,
+      if (boardName != null) 'board_name': boardName,
+      if (rowid != null) 'rowid': rowid,
+    });
+  }
+
+  CollectionBoardRefsCompanion copyWith(
+      {Value<String>? collectionId,
+      Value<String>? extensionPkgName,
+      Value<String>? siteId,
+      Value<String>? boardId,
+      Value<String>? boardName,
+      Value<int>? rowid}) {
+    return CollectionBoardRefsCompanion(
+      collectionId: collectionId ?? this.collectionId,
+      extensionPkgName: extensionPkgName ?? this.extensionPkgName,
+      siteId: siteId ?? this.siteId,
+      boardId: boardId ?? this.boardId,
+      boardName: boardName ?? this.boardName,
+      rowid: rowid ?? this.rowid,
+    );
+  }
+
+  @override
+  Map<String, Expression> toColumns(bool nullToAbsent) {
+    final map = <String, Expression>{};
+    if (collectionId.present) {
+      map['collection_id'] = Variable<String>(collectionId.value);
+    }
+    if (extensionPkgName.present) {
+      map['extension_pkg_name'] = Variable<String>(extensionPkgName.value);
+    }
+    if (siteId.present) {
+      map['site_id'] = Variable<String>(siteId.value);
+    }
+    if (boardId.present) {
+      map['board_id'] = Variable<String>(boardId.value);
+    }
+    if (boardName.present) {
+      map['board_name'] = Variable<String>(boardName.value);
+    }
+    if (rowid.present) {
+      map['rowid'] = Variable<int>(rowid.value);
+    }
+    return map;
+  }
+
+  @override
+  String toString() {
+    return (StringBuffer('CollectionBoardRefsCompanion(')
+          ..write('collectionId: $collectionId, ')
+          ..write('extensionPkgName: $extensionPkgName, ')
+          ..write('siteId: $siteId, ')
+          ..write('boardId: $boardId, ')
+          ..write('boardName: $boardName, ')
+          ..write('rowid: $rowid')
+          ..write(')'))
+        .toString();
+  }
+}
+
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
@@ -1008,12 +1518,20 @@ abstract class _$AppDatabase extends GeneratedDatabase {
   late final $InstalledExtensionsTable installedExtensions =
       $InstalledExtensionsTable(this);
   late final $SuggestionsTable suggestions = $SuggestionsTable(this);
+  late final $CollectionsTable collections = $CollectionsTable(this);
+  late final $CollectionBoardRefsTable collectionBoardRefs =
+      $CollectionBoardRefsTable(this);
   @override
   Iterable<TableInfo<Table, Object?>> get allTables =>
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
-  List<DatabaseSchemaEntity> get allSchemaEntities =>
-      [extensionRepos, installedExtensions, suggestions];
+  List<DatabaseSchemaEntity> get allSchemaEntities => [
+        extensionRepos,
+        installedExtensions,
+        suggestions,
+        collections,
+        collectionBoardRefs
+      ];
 }
 
 typedef $$ExtensionReposTableCreateCompanionBuilder = ExtensionReposCompanion
@@ -1554,6 +2072,505 @@ typedef $$SuggestionsTableProcessedTableManager = ProcessedTableManager<
     (Suggestion, BaseReferences<_$AppDatabase, $SuggestionsTable, Suggestion>),
     Suggestion,
     PrefetchHooks Function()>;
+typedef $$CollectionsTableCreateCompanionBuilder = CollectionsCompanion
+    Function({
+  required String id,
+  required String name,
+  Value<int> rowid,
+});
+typedef $$CollectionsTableUpdateCompanionBuilder = CollectionsCompanion
+    Function({
+  Value<String> id,
+  Value<String> name,
+  Value<int> rowid,
+});
+
+final class $$CollectionsTableReferences
+    extends BaseReferences<_$AppDatabase, $CollectionsTable, Collection> {
+  $$CollectionsTableReferences(super.$_db, super.$_table, super.$_typedResult);
+
+  static MultiTypedResultKey<$CollectionBoardRefsTable,
+      List<CollectionBoardRef>> _collectionBoardRefsRefsTable(
+          _$AppDatabase db) =>
+      MultiTypedResultKey.fromTable(db.collectionBoardRefs,
+          aliasName: $_aliasNameGenerator(
+              db.collections.id, db.collectionBoardRefs.collectionId));
+
+  $$CollectionBoardRefsTableProcessedTableManager get collectionBoardRefsRefs {
+    final manager = $$CollectionBoardRefsTableTableManager(
+            $_db, $_db.collectionBoardRefs)
+        .filter(
+            (f) => f.collectionId.id.sqlEquals($_itemColumn<String>('id')!));
+
+    final cache =
+        $_typedResult.readTableOrNull(_collectionBoardRefsRefsTable($_db));
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: cache));
+  }
+}
+
+class $$CollectionsTableFilterComposer
+    extends Composer<_$AppDatabase, $CollectionsTable> {
+  $$CollectionsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnFilters(column));
+
+  Expression<bool> collectionBoardRefsRefs(
+      Expression<bool> Function($$CollectionBoardRefsTableFilterComposer f) f) {
+    final $$CollectionBoardRefsTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.id,
+        referencedTable: $db.collectionBoardRefs,
+        getReferencedColumn: (t) => t.collectionId,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$CollectionBoardRefsTableFilterComposer(
+              $db: $db,
+              $table: $db.collectionBoardRefs,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return f(composer);
+  }
+}
+
+class $$CollectionsTableOrderingComposer
+    extends Composer<_$AppDatabase, $CollectionsTable> {
+  $$CollectionsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get id => $composableBuilder(
+      column: $table.id, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get name => $composableBuilder(
+      column: $table.name, builder: (column) => ColumnOrderings(column));
+}
+
+class $$CollectionsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CollectionsTable> {
+  $$CollectionsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get id =>
+      $composableBuilder(column: $table.id, builder: (column) => column);
+
+  GeneratedColumn<String> get name =>
+      $composableBuilder(column: $table.name, builder: (column) => column);
+
+  Expression<T> collectionBoardRefsRefs<T extends Object>(
+      Expression<T> Function($$CollectionBoardRefsTableAnnotationComposer a)
+          f) {
+    final $$CollectionBoardRefsTableAnnotationComposer composer =
+        $composerBuilder(
+            composer: this,
+            getCurrentColumn: (t) => t.id,
+            referencedTable: $db.collectionBoardRefs,
+            getReferencedColumn: (t) => t.collectionId,
+            builder: (joinBuilder,
+                    {$addJoinBuilderToRootComposer,
+                    $removeJoinBuilderFromRootComposer}) =>
+                $$CollectionBoardRefsTableAnnotationComposer(
+                  $db: $db,
+                  $table: $db.collectionBoardRefs,
+                  $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+                  joinBuilder: joinBuilder,
+                  $removeJoinBuilderFromRootComposer:
+                      $removeJoinBuilderFromRootComposer,
+                ));
+    return f(composer);
+  }
+}
+
+class $$CollectionsTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $CollectionsTable,
+    Collection,
+    $$CollectionsTableFilterComposer,
+    $$CollectionsTableOrderingComposer,
+    $$CollectionsTableAnnotationComposer,
+    $$CollectionsTableCreateCompanionBuilder,
+    $$CollectionsTableUpdateCompanionBuilder,
+    (Collection, $$CollectionsTableReferences),
+    Collection,
+    PrefetchHooks Function({bool collectionBoardRefsRefs})> {
+  $$CollectionsTableTableManager(_$AppDatabase db, $CollectionsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CollectionsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CollectionsTableOrderingComposer($db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CollectionsTableAnnotationComposer($db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> id = const Value.absent(),
+            Value<String> name = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              CollectionsCompanion(
+            id: id,
+            name: name,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String id,
+            required String name,
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              CollectionsCompanion.insert(
+            id: id,
+            name: name,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$CollectionsTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: ({collectionBoardRefsRefs = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [
+                if (collectionBoardRefsRefs) db.collectionBoardRefs
+              ],
+              addJoins: null,
+              getPrefetchedDataCallback: (items) async {
+                return [
+                  if (collectionBoardRefsRefs)
+                    await $_getPrefetchedData<Collection, $CollectionsTable, CollectionBoardRef>(
+                        currentTable: table,
+                        referencedTable: $$CollectionsTableReferences
+                            ._collectionBoardRefsRefsTable(db),
+                        managerFromTypedResult: (p0) =>
+                            $$CollectionsTableReferences(db, table, p0)
+                                .collectionBoardRefsRefs,
+                        referencedItemsForCurrentItem:
+                            (item, referencedItems) => referencedItems
+                                .where((e) => e.collectionId == item.id),
+                        typedResults: items)
+                ];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$CollectionsTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $CollectionsTable,
+    Collection,
+    $$CollectionsTableFilterComposer,
+    $$CollectionsTableOrderingComposer,
+    $$CollectionsTableAnnotationComposer,
+    $$CollectionsTableCreateCompanionBuilder,
+    $$CollectionsTableUpdateCompanionBuilder,
+    (Collection, $$CollectionsTableReferences),
+    Collection,
+    PrefetchHooks Function({bool collectionBoardRefsRefs})>;
+typedef $$CollectionBoardRefsTableCreateCompanionBuilder
+    = CollectionBoardRefsCompanion Function({
+  required String collectionId,
+  required String extensionPkgName,
+  required String siteId,
+  required String boardId,
+  Value<String> boardName,
+  Value<int> rowid,
+});
+typedef $$CollectionBoardRefsTableUpdateCompanionBuilder
+    = CollectionBoardRefsCompanion Function({
+  Value<String> collectionId,
+  Value<String> extensionPkgName,
+  Value<String> siteId,
+  Value<String> boardId,
+  Value<String> boardName,
+  Value<int> rowid,
+});
+
+final class $$CollectionBoardRefsTableReferences extends BaseReferences<
+    _$AppDatabase, $CollectionBoardRefsTable, CollectionBoardRef> {
+  $$CollectionBoardRefsTableReferences(
+      super.$_db, super.$_table, super.$_typedResult);
+
+  static $CollectionsTable _collectionIdTable(_$AppDatabase db) =>
+      db.collections.createAlias($_aliasNameGenerator(
+          db.collectionBoardRefs.collectionId, db.collections.id));
+
+  $$CollectionsTableProcessedTableManager get collectionId {
+    final $_column = $_itemColumn<String>('collection_id')!;
+
+    final manager = $$CollectionsTableTableManager($_db, $_db.collections)
+        .filter((f) => f.id.sqlEquals($_column));
+    final item = $_typedResult.readTableOrNull(_collectionIdTable($_db));
+    if (item == null) return manager;
+    return ProcessedTableManager(
+        manager.$state.copyWith(prefetchedData: [item]));
+  }
+}
+
+class $$CollectionBoardRefsTableFilterComposer
+    extends Composer<_$AppDatabase, $CollectionBoardRefsTable> {
+  $$CollectionBoardRefsTableFilterComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnFilters<String> get extensionPkgName => $composableBuilder(
+      column: $table.extensionPkgName,
+      builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get siteId => $composableBuilder(
+      column: $table.siteId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get boardId => $composableBuilder(
+      column: $table.boardId, builder: (column) => ColumnFilters(column));
+
+  ColumnFilters<String> get boardName => $composableBuilder(
+      column: $table.boardName, builder: (column) => ColumnFilters(column));
+
+  $$CollectionsTableFilterComposer get collectionId {
+    final $$CollectionsTableFilterComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.collectionId,
+        referencedTable: $db.collections,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$CollectionsTableFilterComposer(
+              $db: $db,
+              $table: $db.collections,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$CollectionBoardRefsTableOrderingComposer
+    extends Composer<_$AppDatabase, $CollectionBoardRefsTable> {
+  $$CollectionBoardRefsTableOrderingComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  ColumnOrderings<String> get extensionPkgName => $composableBuilder(
+      column: $table.extensionPkgName,
+      builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get siteId => $composableBuilder(
+      column: $table.siteId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get boardId => $composableBuilder(
+      column: $table.boardId, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<String> get boardName => $composableBuilder(
+      column: $table.boardName, builder: (column) => ColumnOrderings(column));
+
+  $$CollectionsTableOrderingComposer get collectionId {
+    final $$CollectionsTableOrderingComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.collectionId,
+        referencedTable: $db.collections,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$CollectionsTableOrderingComposer(
+              $db: $db,
+              $table: $db.collections,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$CollectionBoardRefsTableAnnotationComposer
+    extends Composer<_$AppDatabase, $CollectionBoardRefsTable> {
+  $$CollectionBoardRefsTableAnnotationComposer({
+    required super.$db,
+    required super.$table,
+    super.joinBuilder,
+    super.$addJoinBuilderToRootComposer,
+    super.$removeJoinBuilderFromRootComposer,
+  });
+  GeneratedColumn<String> get extensionPkgName => $composableBuilder(
+      column: $table.extensionPkgName, builder: (column) => column);
+
+  GeneratedColumn<String> get siteId =>
+      $composableBuilder(column: $table.siteId, builder: (column) => column);
+
+  GeneratedColumn<String> get boardId =>
+      $composableBuilder(column: $table.boardId, builder: (column) => column);
+
+  GeneratedColumn<String> get boardName =>
+      $composableBuilder(column: $table.boardName, builder: (column) => column);
+
+  $$CollectionsTableAnnotationComposer get collectionId {
+    final $$CollectionsTableAnnotationComposer composer = $composerBuilder(
+        composer: this,
+        getCurrentColumn: (t) => t.collectionId,
+        referencedTable: $db.collections,
+        getReferencedColumn: (t) => t.id,
+        builder: (joinBuilder,
+                {$addJoinBuilderToRootComposer,
+                $removeJoinBuilderFromRootComposer}) =>
+            $$CollectionsTableAnnotationComposer(
+              $db: $db,
+              $table: $db.collections,
+              $addJoinBuilderToRootComposer: $addJoinBuilderToRootComposer,
+              joinBuilder: joinBuilder,
+              $removeJoinBuilderFromRootComposer:
+                  $removeJoinBuilderFromRootComposer,
+            ));
+    return composer;
+  }
+}
+
+class $$CollectionBoardRefsTableTableManager extends RootTableManager<
+    _$AppDatabase,
+    $CollectionBoardRefsTable,
+    CollectionBoardRef,
+    $$CollectionBoardRefsTableFilterComposer,
+    $$CollectionBoardRefsTableOrderingComposer,
+    $$CollectionBoardRefsTableAnnotationComposer,
+    $$CollectionBoardRefsTableCreateCompanionBuilder,
+    $$CollectionBoardRefsTableUpdateCompanionBuilder,
+    (CollectionBoardRef, $$CollectionBoardRefsTableReferences),
+    CollectionBoardRef,
+    PrefetchHooks Function({bool collectionId})> {
+  $$CollectionBoardRefsTableTableManager(
+      _$AppDatabase db, $CollectionBoardRefsTable table)
+      : super(TableManagerState(
+          db: db,
+          table: table,
+          createFilteringComposer: () =>
+              $$CollectionBoardRefsTableFilterComposer($db: db, $table: table),
+          createOrderingComposer: () =>
+              $$CollectionBoardRefsTableOrderingComposer(
+                  $db: db, $table: table),
+          createComputedFieldComposer: () =>
+              $$CollectionBoardRefsTableAnnotationComposer(
+                  $db: db, $table: table),
+          updateCompanionCallback: ({
+            Value<String> collectionId = const Value.absent(),
+            Value<String> extensionPkgName = const Value.absent(),
+            Value<String> siteId = const Value.absent(),
+            Value<String> boardId = const Value.absent(),
+            Value<String> boardName = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              CollectionBoardRefsCompanion(
+            collectionId: collectionId,
+            extensionPkgName: extensionPkgName,
+            siteId: siteId,
+            boardId: boardId,
+            boardName: boardName,
+            rowid: rowid,
+          ),
+          createCompanionCallback: ({
+            required String collectionId,
+            required String extensionPkgName,
+            required String siteId,
+            required String boardId,
+            Value<String> boardName = const Value.absent(),
+            Value<int> rowid = const Value.absent(),
+          }) =>
+              CollectionBoardRefsCompanion.insert(
+            collectionId: collectionId,
+            extensionPkgName: extensionPkgName,
+            siteId: siteId,
+            boardId: boardId,
+            boardName: boardName,
+            rowid: rowid,
+          ),
+          withReferenceMapper: (p0) => p0
+              .map((e) => (
+                    e.readTable(table),
+                    $$CollectionBoardRefsTableReferences(db, table, e)
+                  ))
+              .toList(),
+          prefetchHooksCallback: ({collectionId = false}) {
+            return PrefetchHooks(
+              db: db,
+              explicitlyWatchedTables: [],
+              addJoins: <
+                  T extends TableManagerState<
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic,
+                      dynamic>>(state) {
+                if (collectionId) {
+                  state = state.withJoin(
+                    currentTable: table,
+                    currentColumn: table.collectionId,
+                    referencedTable: $$CollectionBoardRefsTableReferences
+                        ._collectionIdTable(db),
+                    referencedColumn: $$CollectionBoardRefsTableReferences
+                        ._collectionIdTable(db)
+                        .id,
+                  ) as T;
+                }
+
+                return state;
+              },
+              getPrefetchedDataCallback: (items) async {
+                return [];
+              },
+            );
+          },
+        ));
+}
+
+typedef $$CollectionBoardRefsTableProcessedTableManager = ProcessedTableManager<
+    _$AppDatabase,
+    $CollectionBoardRefsTable,
+    CollectionBoardRef,
+    $$CollectionBoardRefsTableFilterComposer,
+    $$CollectionBoardRefsTableOrderingComposer,
+    $$CollectionBoardRefsTableAnnotationComposer,
+    $$CollectionBoardRefsTableCreateCompanionBuilder,
+    $$CollectionBoardRefsTableUpdateCompanionBuilder,
+    (CollectionBoardRef, $$CollectionBoardRefsTableReferences),
+    CollectionBoardRef,
+    PrefetchHooks Function({bool collectionId})>;
 
 class $AppDatabaseManager {
   final _$AppDatabase _db;
@@ -1564,4 +2581,8 @@ class $AppDatabaseManager {
       $$InstalledExtensionsTableTableManager(_db, _db.installedExtensions);
   $$SuggestionsTableTableManager get suggestions =>
       $$SuggestionsTableTableManager(_db, _db.suggestions);
+  $$CollectionsTableTableManager get collections =>
+      $$CollectionsTableTableManager(_db, _db.collections);
+  $$CollectionBoardRefsTableTableManager get collectionBoardRefs =>
+      $$CollectionBoardRefsTableTableManager(_db, _db.collectionBoardRefs);
 }

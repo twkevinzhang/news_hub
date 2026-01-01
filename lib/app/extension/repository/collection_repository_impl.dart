@@ -34,7 +34,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
                       extensionPkgName: r.extensionPkgName,
                       siteId: r.siteId,
                       id: r.boardId,
-                      name: '', // Metadata would need to be fetched separately
+                      name: r.boardName,
                       icon: '',
                       largeWelcomeImage: '',
                       url: '',
@@ -65,7 +65,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
                   extensionPkgName: r.extensionPkgName,
                   siteId: r.siteId,
                   id: r.boardId,
-                  name: '',
+                  name: r.boardName,
                   icon: '',
                   largeWelcomeImage: '',
                   url: '',
@@ -91,6 +91,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
               extensionPkgName: board.extensionPkgName,
               siteId: board.siteId,
               boardId: board.id,
+              boardName: Value(board.name),
             ));
       }
     });

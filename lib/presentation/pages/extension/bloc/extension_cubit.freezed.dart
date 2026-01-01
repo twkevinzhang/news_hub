@@ -15,24 +15,24 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$ExtensionsState {
+mixin _$ExtensionState {
   String? get keyword => throw _privateConstructorUsedError;
   Result<Extensions> get extensions => throw _privateConstructorUsedError;
   Map<String, Pair<InstallStatus, double>> get installingExtensions =>
       throw _privateConstructorUsedError;
 
-  /// Create a copy of ExtensionsState
+  /// Create a copy of ExtensionState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ExtensionsStateCopyWith<ExtensionState> get copyWith =>
+  $ExtensionStateCopyWith<ExtensionState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ExtensionsStateCopyWith<$Res> {
-  factory $ExtensionsStateCopyWith(
+abstract class $ExtensionStateCopyWith<$Res> {
+  factory $ExtensionStateCopyWith(
           ExtensionState value, $Res Function(ExtensionState) then) =
-      _$ExtensionsStateCopyWithImpl<$Res, ExtensionState>;
+      _$ExtensionStateCopyWithImpl<$Res, ExtensionState>;
   @useResult
   $Res call(
       {String? keyword,
@@ -43,16 +43,16 @@ abstract class $ExtensionsStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ExtensionsStateCopyWithImpl<$Res, $Val extends ExtensionState>
-    implements $ExtensionsStateCopyWith<$Res> {
-  _$ExtensionsStateCopyWithImpl(this._value, this._then);
+class _$ExtensionStateCopyWithImpl<$Res, $Val extends ExtensionState>
+    implements $ExtensionStateCopyWith<$Res> {
+  _$ExtensionStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of ExtensionsState
+  /// Create a copy of ExtensionState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -77,7 +77,7 @@ class _$ExtensionsStateCopyWithImpl<$Res, $Val extends ExtensionState>
     ) as $Val);
   }
 
-  /// Create a copy of ExtensionsState
+  /// Create a copy of ExtensionState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -90,7 +90,7 @@ class _$ExtensionsStateCopyWithImpl<$Res, $Val extends ExtensionState>
 
 /// @nodoc
 abstract class _$$ExtensionsStateImplCopyWith<$Res>
-    implements $ExtensionsStateCopyWith<$Res> {
+    implements $ExtensionStateCopyWith<$Res> {
   factory _$$ExtensionsStateImplCopyWith(_$ExtensionsStateImpl value,
           $Res Function(_$ExtensionsStateImpl) then) =
       __$$ExtensionsStateImplCopyWithImpl<$Res>;
@@ -107,13 +107,13 @@ abstract class _$$ExtensionsStateImplCopyWith<$Res>
 
 /// @nodoc
 class __$$ExtensionsStateImplCopyWithImpl<$Res>
-    extends _$ExtensionsStateCopyWithImpl<$Res, _$ExtensionsStateImpl>
+    extends _$ExtensionStateCopyWithImpl<$Res, _$ExtensionsStateImpl>
     implements _$$ExtensionsStateImplCopyWith<$Res> {
   __$$ExtensionsStateImplCopyWithImpl(
       _$ExtensionsStateImpl _value, $Res Function(_$ExtensionsStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of ExtensionsState
+  /// Create a copy of ExtensionState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -164,7 +164,7 @@ class _$ExtensionsStateImpl implements _ExtensionsState {
 
   @override
   String toString() {
-    return 'ExtensionsState(keyword: $keyword, extensions: $extensions, installingExtensions: $installingExtensions)';
+    return 'ExtensionState(keyword: $keyword, extensions: $extensions, installingExtensions: $installingExtensions)';
   }
 
   @override
@@ -183,7 +183,7 @@ class _$ExtensionsStateImpl implements _ExtensionsState {
   int get hashCode => Object.hash(runtimeType, keyword, extensions,
       const DeepCollectionEquality().hash(_installingExtensions));
 
-  /// Create a copy of ExtensionsState
+  /// Create a copy of ExtensionState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
@@ -207,7 +207,7 @@ abstract class _ExtensionsState implements ExtensionState {
   @override
   Map<String, Pair<InstallStatus, double>> get installingExtensions;
 
-  /// Create a copy of ExtensionsState
+  /// Create a copy of ExtensionState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
