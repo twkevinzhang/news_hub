@@ -1,10 +1,11 @@
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/extension/extension_api_service.dart';
 import 'package:news_hub/domain/extension/extension_install_service.dart';
-import 'package:news_hub/domain/extension/extension_repository.dart';
+import 'package:news_hub/domain/extension/installed_extension_repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 
 @lazySingleton
+// TODO: 從 sidecar 取得已安裝 extension 清單
 class ListInstalledExtensions {
   final ExtensionApiService _apiService;
   final InstalledExtensionRepository _extensionRepo;

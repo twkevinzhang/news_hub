@@ -2,7 +2,7 @@ import 'package:dartx/dartx.dart';
 import 'package:news_hub/domain/extension/extension_api_service.dart';
 import 'package:news_hub/domain/extension/extension_install_service.dart'
     as installer;
-import 'package:news_hub/domain/extension/extension_repository.dart';
+import 'package:news_hub/domain/extension/installed_extension_repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:injectable/injectable.dart';
 
@@ -15,6 +15,7 @@ enum InstallStatus {
 }
 
 @lazySingleton
+// TODO: 呼叫 sidecar 自行從 github 下載 class 並安裝
 class InstallExtension {
   final ExtensionApiService _extensionApiService;
   final installer.ExtensionInstallService _installService;

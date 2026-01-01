@@ -9,7 +9,7 @@ import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/suggestion/interactor/insert_suggestion.dart' show InsertSuggestion;
 import 'package:news_hub/domain/suggestion/interactor/list_suggestions.dart';
 import 'package:news_hub/domain/suggestion/interactor/update_suggestion_latest_used_at.dart';
-import 'package:news_hub/domain/thread/interactor/get_thread_list.dart';
+import 'package:news_hub/domain/thread/interactor/list_threads.dart';
 import 'package:news_hub/shared/extensions.dart';
 import 'package:news_hub/shared/models.dart';
 
@@ -35,7 +35,7 @@ class SearchCubit extends Cubit<SearchState> {
     required ListSuggestions listSuggestions,
     required UpdateSuggestionLatestUsedAt updateSuggestionLatestUsedAt,
     required InsertSuggestion insertSuggestion,
-    required GetThreadList listThreadList,
+    required ListThreads listThreadList,
   })  : _listSuggestions = listSuggestions,
         _updateSuggestionLatestUsedAt = updateSuggestionLatestUsedAt,
         _insertSuggestion = insertSuggestion,

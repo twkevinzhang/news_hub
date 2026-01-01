@@ -1,7 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/extension/extension_api_service.dart';
-import 'package:news_hub/domain/extension/extension_repository.dart';
+import 'package:news_hub/domain/extension/installed_extension_repository.dart';
 import 'package:news_hub/domain/extension/interactor/list_installed_extensions.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/shared/models.dart';

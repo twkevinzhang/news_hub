@@ -1,6 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:news_hub/domain/extension/collection_repository.dart';
+import 'package:news_hub/domain/collection/collection_repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:injectable/injectable.dart';
 

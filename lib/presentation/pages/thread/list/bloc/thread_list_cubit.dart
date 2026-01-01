@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/domain/extension/interactor/list_installed_extensions.dart';
 import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/domain/thread/interactor/get_thread_list.dart';
+import 'package:news_hub/domain/thread/interactor/list_threads.dart';
 import 'package:news_hub/shared/extensions.dart';
 import 'package:news_hub/shared/models.dart';
 
@@ -25,7 +25,7 @@ class ThreadListState with _$ThreadListState {
 
 @injectable
 class ThreadListCubit extends Cubit<ThreadListState> {
-  final GetThreadList _listThreadList;
+  final ListThreads _listThreadList;
   final ListInstalledExtensions _listExtensions;
   late InfiniteQuery<List<SingleImagePostWithExtension>, int> threadListQuery;
   final PagingController<int, SingleImagePostWithExtension> pagingController;
@@ -35,7 +35,7 @@ class ThreadListCubit extends Cubit<ThreadListState> {
   static const _pageSize = 10;
 
   ThreadListCubit({
-    required GetThreadList listThreadList,
+    required ListThreads listThreadList,
     required ListInstalledExtensions listExtensions,
   })  : _listThreadList = listThreadList,
         _listExtensions = listExtensions,

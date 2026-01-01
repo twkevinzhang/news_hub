@@ -2,7 +2,7 @@ import 'package:drift/drift.dart';
 import 'package:news_hub/app/extension/repository/models/transform.dart';
 import 'package:news_hub/app/service/database/database.dart';
 import 'package:news_hub/app/suggestion/repository/models/transform.dart';
-import 'package:news_hub/domain/extension/extension_repository.dart';
+import 'package:news_hub/domain/extension/installed_extension_repository.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/suggestion/suggestion_repository.dart';
