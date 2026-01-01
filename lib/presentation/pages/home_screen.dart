@@ -13,7 +13,9 @@ import 'package:news_hub/domain/models/models.dart';
 
 @RoutePage()
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  HomeScreen({super.key});
+
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -22,40 +24,39 @@ class HomeScreen extends StatelessWidget {
         BlocProvider(create: (context) => sl<SidecarCubit>()),
         BlocProvider(create: (context) => sl<CollectionBloc>()..add(LoadCollections())),
       ],
-      child: Builder(builder: (context) {
-        return Scaffold(
-          appBar: NewsHubTopAppBar(
-            title: 'NewsHub',
-            onMenuPressed: () {
-              Scaffold.of(context).openDrawer();
-            },
-            onSearchPressed: () {
-              context.pushRoute(SearchRoute());
-            },
-            onSettingsPressed: () {
-              context.pushRoute(const SettingsRoute());
-            },
-          ),
-          drawer: NewsHubNavigationDrawer(
-            onCollectionSelected: (collection) {
-              context.router.push(CollectionRoute(collectionId: collection.id));
-            },
-            onBoardSelected: (board) {
-              context.router.push(ThreadInfosRoute(
-                filter: ThreadsFilter(
-                  boardsSorting: {board.id: ''},
-                  keywords: '',
-                ),
-                sorting: const ThreadsSorting(boardsOrder: []),
-              ));
-            },
-            onStatusPressed: () {
-              context.pushRoute(const SidecarLogsRoute());
-            },
-          ),
-          body: const AutoRouter(),
-        );
-      }),
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: NewsHubTopAppBar(
+          title: 'NewsHub',
+          onMenuPressed: () {
+            _scaffoldKey.currentState?.openDrawer();
+          },
+          onSearchPressed: () {
+            context.pushRoute(SearchRoute());
+          },
+          onSettingsPressed: () {
+            context.pushRoute(const SettingsRoute());
+          },
+        ),
+        drawer: NewsHubNavigationDrawer(
+          onCollectionSelected: (collection) {
+            context.router.push(CollectionRoute(collectionId: collection.id));
+          },
+          onBoardSelected: (board) {
+            context.router.push(ThreadInfosRoute(
+              filter: ThreadsFilter(
+                boardsSorting: {board.id: ''},
+                keywords: '',
+              ),
+              sorting: const ThreadsSorting(boardsOrder: []),
+            ));
+          },
+          onStatusPressed: () {
+            context.pushRoute(const SidecarLogsRoute());
+          },
+        ),
+        body: const AutoRouter(),
+      ),
     );
   }
 }

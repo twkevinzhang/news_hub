@@ -138,18 +138,36 @@ class ExtensionsRouteArgs {
 
 /// generated route for
 /// [_i5.HomeScreen]
-class HomeRoute extends _i12.PageRouteInfo<void> {
-  const HomeRoute({List<_i12.PageRouteInfo>? children})
-    : super(HomeRoute.name, initialChildren: children);
+class HomeRoute extends _i12.PageRouteInfo<HomeRouteArgs> {
+  HomeRoute({_i13.Key? key, List<_i12.PageRouteInfo>? children})
+    : super(
+        HomeRoute.name,
+        args: HomeRouteArgs(key: key),
+        initialChildren: children,
+      );
 
   static const String name = 'HomeRoute';
 
   static _i12.PageInfo page = _i12.PageInfo(
     name,
     builder: (data) {
-      return const _i5.HomeScreen();
+      final args = data.argsAs<HomeRouteArgs>(
+        orElse: () => const HomeRouteArgs(),
+      );
+      return _i5.HomeScreen(key: args.key);
     },
   );
+}
+
+class HomeRouteArgs {
+  const HomeRouteArgs({this.key});
+
+  final _i13.Key? key;
+
+  @override
+  String toString() {
+    return 'HomeRouteArgs{key: $key}';
+  }
 }
 
 /// generated route for

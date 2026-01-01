@@ -62,18 +62,27 @@ class CollectionBoardRefs extends Table {
 }
 
 @singleton
-@DriftDatabase(tables: [
-  ExtensionRepos,
-  InstalledExtensions,
-  Suggestions,
-  Collections,
-  CollectionBoardRefs
-])
+@DriftDatabase(tables: [ExtensionRepos, InstalledExtensions, Suggestions, Collections, CollectionBoardRefs])
 class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
   int get schemaVersion => 2;
+
+  @override
+  MigrationStrategy get migration {
+    return MigrationStrategy(
+      onCreate: (m) async {
+        await m.createAll();
+      },
+      onUpgrade: (m, from, to) async {
+        if (from < 2) {
+          await m.createTable(collections);
+          await m.createTable(collectionBoardRefs);
+        }
+      },
+    );
+  }
 }
 
 LazyDatabase _openConnection() {
