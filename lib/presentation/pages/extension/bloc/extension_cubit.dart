@@ -15,11 +15,11 @@ import 'package:news_hub/presentation/shared/shared.dart';
 import 'package:news_hub/shared/extensions.dart';
 import 'package:news_hub/shared/models.dart';
 
-part 'extensions_cubit.freezed.dart';
+part 'extension_cubit.freezed.dart';
 
 @freezed
-class ExtensionsState with _$ExtensionsState {
-  const factory ExtensionsState({
+class ExtensionState with _$ExtensionsState {
+  const factory ExtensionState({
     required String? keyword,
     required Result<Extensions> extensions,
     required Map<String, Pair<InstallStatus, double>> installingExtensions,
@@ -27,7 +27,7 @@ class ExtensionsState with _$ExtensionsState {
 }
 
 @injectable
-class ExtensionsCubit extends Cubit<ExtensionsState> {
+class ExtensionCubit extends Cubit<ExtensionState> {
   final ListExtensions _listExtensions;
   final InstallExtension _installExtension;
   final UninstallExtension _uninstallExtension;
@@ -35,7 +35,7 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
   final Map<String, StreamSubscription>
       _installingStream; // pkgName -> StreamSubscription
 
-  ExtensionsCubit({
+  ExtensionCubit({
     required ListExtensions listExtensions,
     required InstallExtension installExtension,
     required UninstallExtension uninstallExtension,
@@ -45,7 +45,7 @@ class ExtensionsCubit extends Cubit<ExtensionsState> {
         _uninstallExtension = uninstallExtension,
         _extensionRepoApiService = extensionRepoApiService,
         _installingStream = {},
-        super(ExtensionsState(
+        super(ExtensionState(
           keyword: null,
           extensions: Result.initial(),
           installingExtensions: {},

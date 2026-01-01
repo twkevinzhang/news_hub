@@ -3,25 +3,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:news_hub/locator.dart';
-import 'package:news_hub/presentation/pages/extensions/bloc/extensions_cubit.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
 import 'package:news_hub/presentation/shared/shared.dart';
 
+import '../bloc/extension_cubit.dart';
+
 @RoutePage()
-class ExtensionsScreen extends StatelessWidget implements AutoRouteWrapper {
-  ExtensionsScreen({super.key});
+class ExtensionScreen extends StatelessWidget implements AutoRouteWrapper {
+  ExtensionScreen({super.key});
 
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<ExtensionsCubit>()..init(),
+      create: (context) => sl<ExtensionCubit>()..init(),
       child: this,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.watch<ExtensionsCubit>();
+    final cubit = context.watch<ExtensionCubit>();
     return Scaffold(
       appBar: AppBar(
         title: const Text('Extensions'),

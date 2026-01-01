@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'extensions_cubit.dart';
+part of 'extension_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -24,15 +24,15 @@ mixin _$ExtensionsState {
   /// Create a copy of ExtensionsState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ExtensionsStateCopyWith<ExtensionsState> get copyWith =>
+  $ExtensionsStateCopyWith<ExtensionState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
 abstract class $ExtensionsStateCopyWith<$Res> {
   factory $ExtensionsStateCopyWith(
-          ExtensionsState value, $Res Function(ExtensionsState) then) =
-      _$ExtensionsStateCopyWithImpl<$Res, ExtensionsState>;
+          ExtensionState value, $Res Function(ExtensionState) then) =
+      _$ExtensionsStateCopyWithImpl<$Res, ExtensionState>;
   @useResult
   $Res call(
       {String? keyword,
@@ -43,7 +43,7 @@ abstract class $ExtensionsStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$ExtensionsStateCopyWithImpl<$Res, $Val extends ExtensionsState>
+class _$ExtensionsStateCopyWithImpl<$Res, $Val extends ExtensionState>
     implements $ExtensionsStateCopyWith<$Res> {
   _$ExtensionsStateCopyWithImpl(this._value, this._then);
 
@@ -193,7 +193,7 @@ class _$ExtensionsStateImpl implements _ExtensionsState {
           this, _$identity);
 }
 
-abstract class _ExtensionsState implements ExtensionsState {
+abstract class _ExtensionsState implements ExtensionState {
   const factory _ExtensionsState(
       {required final String? keyword,
       required final Result<Extensions> extensions,
