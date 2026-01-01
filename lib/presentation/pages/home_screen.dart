@@ -9,6 +9,8 @@ import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/collections/collection_bloc.dart';
 import 'package:news_hub/presentation/sidecar/sidecar_cubit.dart';
 
+import 'package:news_hub/domain/models/models.dart';
+
 @RoutePage()
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -28,7 +30,7 @@ class HomeScreen extends StatelessWidget {
               Scaffold.of(context).openDrawer();
             },
             onSearchPressed: () {
-              context.pushRoute(const SearchRoute());
+              context.pushRoute(SearchRoute());
             },
             onSettingsPressed: () {
               context.pushRoute(const SettingsRoute());
@@ -40,9 +42,11 @@ class HomeScreen extends StatelessWidget {
             },
             onBoardSelected: (board) {
               context.router.push(ThreadInfosRoute(
-                extensionPkgName: board.extensionPkgName,
-                siteId: board.siteId,
-                boardsSorting: {board.id: ''},
+                filter: ThreadsFilter(
+                  boardsSorting: {board.id: ''},
+                  keywords: '',
+                ),
+                sorting: const ThreadsSorting(boardsOrder: []),
               ));
             },
             onStatusPressed: () {

@@ -23,11 +23,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
       if (collections.isEmpty) return Stream.value([]);
 
       final collectionIds = collections.map((c) => c.id).toList();
-      return _db
-          .select(_db.collectionBoardRefs)
-          .where((tbl) => tbl.collectionId.isIn(collectionIds))
-          .watch()
-          .map((refs) {
+      return (_db.select(_db.collectionBoardRefs)..where((tbl) => tbl.collectionId.isIn(collectionIds))).watch().map((refs) {
         return collections.map((c) {
           final boardRefs = refs.where((r) => r.collectionId == c.id).toList();
           return domain.Collection(
@@ -57,9 +53,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
     if (collections.isEmpty) return [];
 
     final collectionIds = collections.map((c) => c.id).toList();
-    final refs = await (_db.select(_db.collectionBoardRefs)
-          ..where((tbl) => tbl.collectionId.isIn(collectionIds)))
-        .get();
+    final refs = await (_db.select(_db.collectionBoardRefs)..where((tbl) => tbl.collectionId.isIn(collectionIds))).get();
 
     return collections.map((c) {
       final boardRefs = refs.where((r) => r.collectionId == c.id).toList();
@@ -105,9 +99,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
   @override
   Future<void> deleteCollection(String id) async {
     await _db.transaction(() async {
-      await (_db.delete(_db.collectionBoardRefs)
-            ..where((tbl) => tbl.collectionId.equals(id)))
-          .go();
+      await (_db.delete(_db.collectionBoardRefs)..where((tbl) => tbl.collectionId.equals(id))).go();
       await (_db.delete(_db.collections)..where((tbl) => tbl.id.equals(id))).go();
     });
   }
@@ -115,14 +107,11 @@ class CollectionRepositoryImpl implements CollectionRepository {
   @override
   Future<void> updateCollection(domain.Collection collection) async {
     await _db.transaction(() async {
-      await (_db.update(_db.collections)..where((tbl) => tbl.id.equals(collection.id)))
-          .write(CollectionsCompanion(
+      await (_db.update(_db.collections)..where((tbl) => tbl.id.equals(collection.id))).write(CollectionsCompanion(
         name: Value(collection.name),
       ));
 
-      await (_db.delete(_db.collectionBoardRefs)
-            ..where((tbl) => tbl.collectionId.equals(collection.id)))
-          .go();
+      await (_db.delete(_db.collectionBoardRefs)..where((tbl) => tbl.collectionId.equals(collection.id))).go();
 
       for (final board in collection.boards) {
         await _db.into(_db.collectionBoardRefs).insert(CollectionBoardRefsCompanion.insert(

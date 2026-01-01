@@ -95,6 +95,8 @@ import 'package:news_hub/domain/thread/interactor/list_regarding_posts.dart'
 import 'package:news_hub/domain/thread/interactor/list_thread_infos.dart'
     as _i952;
 import 'package:news_hub/locator.dart' as _i56;
+import 'package:news_hub/presentation/collections/collection_bloc.dart'
+    as _i418;
 import 'package:news_hub/presentation/pages/extension_repos/bloc/add_extension_repo_cubit.dart'
     as _i875;
 import 'package:news_hub/presentation/pages/extension_repos/bloc/extension_repos_cubit.dart'
@@ -110,6 +112,7 @@ import 'package:news_hub/presentation/pages/thread_infos/bloc/search_cubit.dart'
 import 'package:news_hub/presentation/pages/thread_infos/bloc/thread_infos_cubit.dart'
     as _i181;
 import 'package:news_hub/presentation/router/router.dart' as _i762;
+import 'package:news_hub/presentation/sidecar/sidecar_cubit.dart' as _i487;
 import 'package:rx_shared_preferences/rx_shared_preferences.dart' as _i579;
 
 const String _mockData = 'mockData';
@@ -138,6 +141,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i475.ValidExtensionRepoUrl>(
         () => _i475.ValidExtensionRepoUrl());
     gh.lazySingleton<_i762.AppRouter>(() => _i762.AppRouter());
+    gh.lazySingleton<_i487.SidecarCubit>(() => _i487.SidecarCubit());
     gh.factory<_i56.Launcher>(
       () => _i56.MockDataLauncher(),
       registerFor: {_mockData},
@@ -295,6 +299,8 @@ extension GetItInjectableX on _i174.GetIt {
           apiService: gh<_i892.ExtensionApiService>(),
           listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
         ));
+    gh.factory<_i418.CollectionBloc>(
+        () => _i418.CollectionBloc(gh<_i682.CollectionRepository>()));
     gh.factory<_i875.AddExtensionRepoCubit>(() => _i875.AddExtensionRepoCubit(
           validExtensionRepoUrl: gh<_i475.ValidExtensionRepoUrl>(),
           getExtensionRepo: gh<_i581.GetExtensionRepo>(),
