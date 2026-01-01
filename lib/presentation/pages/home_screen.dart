@@ -22,11 +22,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late final CollectionBloc _collectionBloc;
+  late final SidecarCubit _sidecarCubit;
   late final ValueNotifier<String> _titleNotifier;
 
   @override
   void initState() {
     super.initState();
+    _sidecarCubit = sl<SidecarCubit>();
     _collectionBloc = sl<CollectionBloc>()..add(const CollectionEvent.load());
     _titleNotifier = ValueNotifier<String>('NewsHub');
 
@@ -70,6 +72,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
+    _sidecarCubit.close();
     _collectionBloc.close();
     _titleNotifier.dispose();
     super.dispose();
@@ -79,7 +82,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (context) => sl<SidecarCubit>()),
+        BlocProvider.value(value: _sidecarCubit),
         BlocProvider.value(value: _collectionBloc),
       ],
       child: Scaffold(
@@ -92,8 +95,8 @@ class _HomeScreenState extends State<HomeScreen> {
               return NewsHubTopAppBar(
                 title: title,
                 onMenuPressed: () => _scaffoldKey.currentState?.openDrawer(),
-                onSearchPressed: () => context.pushRoute(SearchRoute()),
-                onSettingsPressed: () => context.pushRoute(const SettingsRoute()),
+                onSearchPressed: () => context.router.push(SearchRoute()),
+                onSettingsPressed: () => context.router.push(const SettingsRoute()),
               );
             },
           ),
@@ -112,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 )));
           },
           onStatusPressed: () {
-            _safeNavigate(() => context.pushRoute(const SidecarLogsRoute()));
+            _safeNavigate(() => context.router.push(const SidecarLogsRoute()));
           },
         ),
         body: const AutoRouter(),
