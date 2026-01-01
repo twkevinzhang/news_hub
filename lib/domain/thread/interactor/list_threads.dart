@@ -8,11 +8,11 @@ import 'package:news_hub/domain/thread/interactor/get_thread.dart';
 import 'package:news_hub/shared/models.dart';
 
 @lazySingleton
-class GetThreadList {
+class ListThreads {
   final ExtensionApiService _apiService;
   final ListInstalledExtensions _listInstalledExtensions;
 
-  GetThreadList({
+  ListThreads({
     required ExtensionApiService apiService,
     required ListInstalledExtensions listInstalledExtensions,
   })  : _apiService = apiService,
