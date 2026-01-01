@@ -7,9 +7,6 @@ class SidecarLogsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Sidecar Logs')),
-      body: const Center(child: Text('Sidecar Logs Placeholder')),
-    );
+    return const Center(child: Text('Sidecar Logs Placeholder'));
   }
 }
