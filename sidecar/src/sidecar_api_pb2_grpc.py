@@ -3,7 +3,7 @@
 import grpc
 import warnings
 
-import extension_api_pb2 as extension__api__pb2
+import sidecar_api_pb2 as sidecar__api__pb2
 
 GRPC_GENERATED_VERSION = '1.67.1'
 GRPC_VERSION = grpc.__version__
@@ -18,14 +18,14 @@ except ImportError:
 if _version_not_supported:
     raise RuntimeError(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in extension_api_pb2_grpc.py depends on'
+        + f' but the generated code in sidecar_api_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
     )
 
 
-class ExtensionApiStub(object):
+class SidecarApiStub(object):
     """Missing associated documentation comment in .proto file."""
 
     def __init__(self, channel):
@@ -35,38 +35,38 @@ class ExtensionApiStub(object):
             channel: A grpc.Channel.
         """
         self.GetSite = channel.unary_unary(
-                '/pb.ExtensionApi/GetSite',
-                request_serializer=extension__api__pb2.GetSiteReq.SerializeToString,
-                response_deserializer=extension__api__pb2.GetSiteRes.FromString,
+                '/pb.SidecarApi/GetSite',
+                request_serializer=sidecar__api__pb2.GetSiteReq.SerializeToString,
+                response_deserializer=sidecar__api__pb2.GetSiteRes.FromString,
                 _registered_method=True)
         self.GetBoards = channel.unary_unary(
-                '/pb.ExtensionApi/GetBoards',
-                request_serializer=extension__api__pb2.GetBoardsReq.SerializeToString,
-                response_deserializer=extension__api__pb2.GetBoardsRes.FromString,
+                '/pb.SidecarApi/GetBoards',
+                request_serializer=sidecar__api__pb2.GetBoardsReq.SerializeToString,
+                response_deserializer=sidecar__api__pb2.GetBoardsRes.FromString,
                 _registered_method=True)
         self.GetThreadInfos = channel.unary_unary(
-                '/pb.ExtensionApi/GetThreadInfos',
-                request_serializer=extension__api__pb2.GetThreadInfosReq.SerializeToString,
-                response_deserializer=extension__api__pb2.GetThreadInfosRes.FromString,
+                '/pb.SidecarApi/GetThreadInfos',
+                request_serializer=sidecar__api__pb2.GetThreadInfosReq.SerializeToString,
+                response_deserializer=sidecar__api__pb2.GetThreadInfosRes.FromString,
                 _registered_method=True)
         self.GetThreadPost = channel.unary_unary(
-                '/pb.ExtensionApi/GetThreadPost',
-                request_serializer=extension__api__pb2.GetThreadPostReq.SerializeToString,
-                response_deserializer=extension__api__pb2.GetThreadPostRes.FromString,
+                '/pb.SidecarApi/GetThreadPost',
+                request_serializer=sidecar__api__pb2.GetThreadPostReq.SerializeToString,
+                response_deserializer=sidecar__api__pb2.GetThreadPostRes.FromString,
                 _registered_method=True)
         self.GetRegardingPosts = channel.unary_unary(
-                '/pb.ExtensionApi/GetRegardingPosts',
-                request_serializer=extension__api__pb2.GetRegardingPostsReq.SerializeToString,
-                response_deserializer=extension__api__pb2.GetRegardingPostsRes.FromString,
+                '/pb.SidecarApi/GetRegardingPosts',
+                request_serializer=sidecar__api__pb2.GetRegardingPostsReq.SerializeToString,
+                response_deserializer=sidecar__api__pb2.GetRegardingPostsRes.FromString,
                 _registered_method=True)
         self.GetComments = channel.unary_unary(
-                '/pb.ExtensionApi/GetComments',
-                request_serializer=extension__api__pb2.GetCommentsReq.SerializeToString,
-                response_deserializer=extension__api__pb2.GetCommentsRes.FromString,
+                '/pb.SidecarApi/GetComments',
+                request_serializer=sidecar__api__pb2.GetCommentsReq.SerializeToString,
+                response_deserializer=sidecar__api__pb2.GetCommentsRes.FromString,
                 _registered_method=True)
 
 
-class ExtensionApiServicer(object):
+class SidecarApiServicer(object):
     """Missing associated documentation comment in .proto file."""
 
     def GetSite(self, request, context):
@@ -106,47 +106,47 @@ class ExtensionApiServicer(object):
         raise NotImplementedError('Method not implemented!')
 
 
-def add_ExtensionApiServicer_to_server(servicer, server):
+def add_SidecarApiServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'GetSite': grpc.unary_unary_rpc_method_handler(
                     servicer.GetSite,
-                    request_deserializer=extension__api__pb2.GetSiteReq.FromString,
-                    response_serializer=extension__api__pb2.GetSiteRes.SerializeToString,
+                    request_deserializer=sidecar__api__pb2.GetSiteReq.FromString,
+                    response_serializer=sidecar__api__pb2.GetSiteRes.SerializeToString,
             ),
             'GetBoards': grpc.unary_unary_rpc_method_handler(
                     servicer.GetBoards,
-                    request_deserializer=extension__api__pb2.GetBoardsReq.FromString,
-                    response_serializer=extension__api__pb2.GetBoardsRes.SerializeToString,
+                    request_deserializer=sidecar__api__pb2.GetBoardsReq.FromString,
+                    response_serializer=sidecar__api__pb2.GetBoardsRes.SerializeToString,
             ),
             'GetThreadInfos': grpc.unary_unary_rpc_method_handler(
                     servicer.GetThreadInfos,
-                    request_deserializer=extension__api__pb2.GetThreadInfosReq.FromString,
-                    response_serializer=extension__api__pb2.GetThreadInfosRes.SerializeToString,
+                    request_deserializer=sidecar__api__pb2.GetThreadInfosReq.FromString,
+                    response_serializer=sidecar__api__pb2.GetThreadInfosRes.SerializeToString,
             ),
             'GetThreadPost': grpc.unary_unary_rpc_method_handler(
                     servicer.GetThreadPost,
-                    request_deserializer=extension__api__pb2.GetThreadPostReq.FromString,
-                    response_serializer=extension__api__pb2.GetThreadPostRes.SerializeToString,
+                    request_deserializer=sidecar__api__pb2.GetThreadPostReq.FromString,
+                    response_serializer=sidecar__api__pb2.GetThreadPostRes.SerializeToString,
             ),
             'GetRegardingPosts': grpc.unary_unary_rpc_method_handler(
                     servicer.GetRegardingPosts,
-                    request_deserializer=extension__api__pb2.GetRegardingPostsReq.FromString,
-                    response_serializer=extension__api__pb2.GetRegardingPostsRes.SerializeToString,
+                    request_deserializer=sidecar__api__pb2.GetRegardingPostsReq.FromString,
+                    response_serializer=sidecar__api__pb2.GetRegardingPostsRes.SerializeToString,
             ),
             'GetComments': grpc.unary_unary_rpc_method_handler(
                     servicer.GetComments,
-                    request_deserializer=extension__api__pb2.GetCommentsReq.FromString,
-                    response_serializer=extension__api__pb2.GetCommentsRes.SerializeToString,
+                    request_deserializer=sidecar__api__pb2.GetCommentsReq.FromString,
+                    response_serializer=sidecar__api__pb2.GetCommentsRes.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'pb.ExtensionApi', rpc_method_handlers)
+            'pb.SidecarApi', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('pb.ExtensionApi', rpc_method_handlers)
+    server.add_registered_method_handlers('pb.SidecarApi', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
-class ExtensionApi(object):
+class SidecarApi(object):
     """Missing associated documentation comment in .proto file."""
 
     @staticmethod
@@ -163,9 +163,9 @@ class ExtensionApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.ExtensionApi/GetSite',
-            extension__api__pb2.GetSiteReq.SerializeToString,
-            extension__api__pb2.GetSiteRes.FromString,
+            '/pb.SidecarApi/GetSite',
+            sidecar__api__pb2.GetSiteReq.SerializeToString,
+            sidecar__api__pb2.GetSiteRes.FromString,
             options,
             channel_credentials,
             insecure,
@@ -190,9 +190,9 @@ class ExtensionApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.ExtensionApi/GetBoards',
-            extension__api__pb2.GetBoardsReq.SerializeToString,
-            extension__api__pb2.GetBoardsRes.FromString,
+            '/pb.SidecarApi/GetBoards',
+            sidecar__api__pb2.GetBoardsReq.SerializeToString,
+            sidecar__api__pb2.GetBoardsRes.FromString,
             options,
             channel_credentials,
             insecure,
@@ -217,9 +217,9 @@ class ExtensionApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.ExtensionApi/GetThreadInfos',
-            extension__api__pb2.GetThreadInfosReq.SerializeToString,
-            extension__api__pb2.GetThreadInfosRes.FromString,
+            '/pb.SidecarApi/GetThreadInfos',
+            sidecar__api__pb2.GetThreadInfosReq.SerializeToString,
+            sidecar__api__pb2.GetThreadInfosRes.FromString,
             options,
             channel_credentials,
             insecure,
@@ -244,9 +244,9 @@ class ExtensionApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.ExtensionApi/GetThreadPost',
-            extension__api__pb2.GetThreadPostReq.SerializeToString,
-            extension__api__pb2.GetThreadPostRes.FromString,
+            '/pb.SidecarApi/GetThreadPost',
+            sidecar__api__pb2.GetThreadPostReq.SerializeToString,
+            sidecar__api__pb2.GetThreadPostRes.FromString,
             options,
             channel_credentials,
             insecure,
@@ -271,9 +271,9 @@ class ExtensionApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.ExtensionApi/GetRegardingPosts',
-            extension__api__pb2.GetRegardingPostsReq.SerializeToString,
-            extension__api__pb2.GetRegardingPostsRes.FromString,
+            '/pb.SidecarApi/GetRegardingPosts',
+            sidecar__api__pb2.GetRegardingPostsReq.SerializeToString,
+            sidecar__api__pb2.GetRegardingPostsRes.FromString,
             options,
             channel_credentials,
             insecure,
@@ -298,9 +298,9 @@ class ExtensionApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.ExtensionApi/GetComments',
-            extension__api__pb2.GetCommentsReq.SerializeToString,
-            extension__api__pb2.GetCommentsRes.FromString,
+            '/pb.SidecarApi/GetComments',
+            sidecar__api__pb2.GetCommentsReq.SerializeToString,
+            sidecar__api__pb2.GetCommentsRes.FromString,
             options,
             channel_credentials,
             insecure,
