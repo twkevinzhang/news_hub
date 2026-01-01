@@ -4,16 +4,16 @@ export SAMPLE_EXTENSION_SOURCE_CODE_PATH := {{ NEED_TO_SET }}/Projects/news_hub/
 
 .PHONY: run
 run:
-	fvm flutter run
+	flutter run
 
 .PHONY: build
 build:
-	fvm dart run build_runner build --delete-conflicting-outputs
+	dart run build_runner build --delete-conflicting-outputs
 
 .PHONY: clean
 clean:
 	cd android && ./gradlew clean && cd ..
-	fvm dart run build_runner clean
+	dart run build_runner clean
 
 .PHONY: proto
 proto:
@@ -33,4 +33,4 @@ adapter:
 	rm -rf adapter/dist && mkdir -p adapter/dist
 	rm -rf $(SAMPLE_EXTENSION_SOURCE_CODE_PATH) && mkdir -p $(SAMPLE_EXTENSION_SOURCE_CODE_PATH)
 	cp -r {{ NEED_TO_SET }}/Projects/news_hub_extensions/twkevinzhang_komica/src/* $(SAMPLE_EXTENSION_SOURCE_CODE_PATH)
-	fvm dart run serious_python:main package adapter/src -p Android --requirements -r,adapter/src/requirements.txt --asset adapter/dist/adapter.zip --verbose
+	dart run serious_python:main package adapter/src -p Android --requirements -r,adapter/src/requirements.txt --asset adapter/dist/adapter.zip --verbose
