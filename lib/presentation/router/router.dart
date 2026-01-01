@@ -19,9 +19,9 @@ class AppRouter extends RootStackRouter {
             AutoRoute(path: 'extensions', page: ExtensionsRoute.page),
             AutoRoute(path: 'settings', page: SettingsRoute.page),
             AutoRoute(path: 'collection/:collectionId', page: CollectionRoute.page),
-            AutoRoute(path: 'sidecar-logs', page: SidecarLogsRoute.page),
           ],
         ),
+        AutoRoute(path: '/sidecar-logs', page: SidecarLogsRoute.page),
         AutoRoute(path: '/thread-infos', page: ThreadInfosRoute.page),
         AutoRoute(path: '/thread-detail', page: ThreadDetailRoute.page),
         AutoRoute(path: '/extension-repos', page: WrapperRoute.page, children: [
