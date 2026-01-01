@@ -1,14 +1,12 @@
 import 'package:drift/drift.dart';
 import 'package:news_hub/app/service/database/database.dart';
-import 'package:news_hub/domain/extension/collection_repository.dart';
+import 'package:news_hub/domain/collection/collection_repository.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/shared/constants.dart';
 import 'package:uuid/uuid.dart';
 import 'package:rxdart/rxdart.dart';
 
-@Environment(AppEnv.localAdapter)
-@Environment(AppEnv.remoteAdapter)
 @LazySingleton(as: CollectionRepository)
 class CollectionRepositoryImpl implements CollectionRepository {
   final AppDatabase _db;
