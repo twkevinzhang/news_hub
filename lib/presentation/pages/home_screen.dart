@@ -65,9 +65,11 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             drawer: NewsHubNavigationDrawer(
               onCollectionSelected: (collection) {
+                _scaffoldKey.currentState?.closeDrawer();
                 context.router.push(CollectionRoute(collectionId: collection.id));
               },
               onBoardSelected: (board) {
+                _scaffoldKey.currentState?.closeDrawer();
                 context.router.push(ThreadInfosRoute(
                   filter: ThreadsFilter(
                     boardsSorting: {board.id: ''},
@@ -77,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ));
               },
               onStatusPressed: () {
+                _scaffoldKey.currentState?.closeDrawer();
                 context.pushRoute(const SidecarLogsRoute());
               },
             ),
