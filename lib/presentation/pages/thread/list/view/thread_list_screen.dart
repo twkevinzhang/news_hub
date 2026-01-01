@@ -33,44 +33,29 @@ class ThreadListScreen extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget build(BuildContext context) {
     final cubit = context.watch<ThreadListCubit>();
-    return Scaffold(
-      appBar: AppTopBar(
-        title: Text(cubit.title),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.search_outlined),
-            onPressed: () => AutoRouter.of(context).push(SearchRoute()),
-          ),
-          IconButton(
-            icon: const Icon(Icons.refresh_outlined),
-            onPressed: () => cubit.refresh(),
-          ),
-        ],
-      ),
-      body: PagedListView<int, SingleImagePostWithExtension>(
-        pagingController: cubit.pagingController,
-        builderDelegate: PagedChildBuilderDelegate<SingleImagePostWithExtension>(
-          itemBuilder: (context, thread, index) => Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
-            child: SingleImagePostCard(thread: thread),
-          ),
-          noItemsFoundIndicatorBuilder: (context) => Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Text("Empty"),
-              ElevatedButton(
-                onPressed: () => cubit.refresh(),
-                child: const Text("Refresh"),
-              ),
-            ],
-          ),
-          firstPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
-          newPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
-          noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
-          transitionDuration: const Duration(seconds: 1),
-          animateTransitions: true,
+    return PagedListView<int, SingleImagePostWithExtension>(
+      pagingController: cubit.pagingController,
+      builderDelegate: PagedChildBuilderDelegate<SingleImagePostWithExtension>(
+        itemBuilder: (context, thread, index) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
+          child: SingleImagePostCard(thread: thread),
         ),
+        noItemsFoundIndicatorBuilder: (context) => Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Text("Empty"),
+            ElevatedButton(
+              onPressed: () => cubit.refresh(),
+              child: const Text("Refresh"),
+            ),
+          ],
+        ),
+        firstPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
+        newPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
+        noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
+        transitionDuration: const Duration(seconds: 1),
+        animateTransitions: true,
       ),
     );
   }
