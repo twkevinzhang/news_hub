@@ -17,13 +17,4 @@ class AppEnv {
 
   /// preset of common env name 'test'
   static const test = injectable.Environment.test;
-
-  /// preset of common env name 'mockData'
-  static const mockData = 'mockData';
-
-  /// preset of common env name 'localAdapter'
-  static const localAdapter = 'localAdapter';
-
-  /// preset of common env name 'remoteAdapter'
-  static const remoteAdapter = 'remoteAdapter';
 }
