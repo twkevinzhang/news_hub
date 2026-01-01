@@ -21,6 +21,31 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  late final CollectionBloc _collectionBloc;
+  late final ValueNotifier<String> _titleNotifier;
+
+  @override
+  void initState() {
+    super.initState();
+    _collectionBloc = sl<CollectionBloc>()..add(const CollectionEvent.load());
+    _titleNotifier = ValueNotifier<String>('NewsHub');
+
+    // Sync title with router state
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      final router = context.router;
+      final innerRouter = router.innerRouterOf(HomeRoute.name);
+      _updateTitle(innerRouter?.current);
+      (innerRouter ?? router).addListener(() {
+        if (mounted) {
+          _updateTitle(innerRouter?.current);
+        }
+      });
+    });
+  }
+
+  void _updateTitle(RouteData? route) {
+    _titleNotifier.value = _getRouteTitle(route);
+  }
 
   String _getRouteTitle(RouteData? route) {
     if (route == null) return 'NewsHub';
@@ -32,61 +57,66 @@ class _HomeScreenState extends State<HomeScreen> {
     return 'NewsHub';
   }
 
+  Future<void> _safeNavigate(VoidCallback navigate) async {
+    // 1. Close drawer first
+    _scaffoldKey.currentState?.closeDrawer();
+    // 2. Wait for drawer closing animation (standard is ~250-300ms)
+    await Future.delayed(const Duration(milliseconds: 250));
+    // 3. Execute navigation if still mounted
+    if (mounted) {
+      navigate();
+    }
+  }
+
+  @override
+  void dispose() {
+    _collectionBloc.close();
+    _titleNotifier.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    final router = context.router;
-    final innerRouter = router.innerRouterOf(HomeRoute.name);
-
-    // Use ListenableBuilder to rebuild when the inner router changes
-    return ListenableBuilder(
-      listenable: innerRouter ?? router,
-      builder: (context, _) {
-        final currentChild = innerRouter?.current;
-        final title = _getRouteTitle(currentChild);
-
-        return MultiBlocProvider(
-          providers: [
-            BlocProvider(create: (context) => sl<SidecarCubit>()),
-            BlocProvider(create: (context) => sl<CollectionBloc>()..add(LoadCollections())),
-          ],
-          child: Scaffold(
-            key: _scaffoldKey,
-            appBar: NewsHubTopAppBar(
-              title: title,
-              onMenuPressed: () {
-                _scaffoldKey.currentState?.openDrawer();
-              },
-              onSearchPressed: () {
-                context.pushRoute(SearchRoute());
-              },
-              onSettingsPressed: () {
-                context.pushRoute(const SettingsRoute());
-              },
-            ),
-            drawer: NewsHubNavigationDrawer(
-              onCollectionSelected: (collection) {
-                _scaffoldKey.currentState?.closeDrawer();
-                context.router.push(CollectionRoute(collectionId: collection.id));
-              },
-              onBoardSelected: (board) {
-                _scaffoldKey.currentState?.closeDrawer();
-                context.router.push(ThreadInfosRoute(
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(create: (context) => sl<SidecarCubit>()),
+        BlocProvider.value(value: _collectionBloc),
+      ],
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: ValueListenableBuilder<String>(
+            valueListenable: _titleNotifier,
+            builder: (context, title, _) {
+              return NewsHubTopAppBar(
+                title: title,
+                onMenuPressed: () => _scaffoldKey.currentState?.openDrawer(),
+                onSearchPressed: () => context.pushRoute(SearchRoute()),
+                onSettingsPressed: () => context.pushRoute(const SettingsRoute()),
+              );
+            },
+          ),
+        ),
+        drawer: NewsHubNavigationDrawer(
+          onCollectionSelected: (collection) {
+            _safeNavigate(() => context.router.push(CollectionRoute(collectionId: collection.id)));
+          },
+          onBoardSelected: (board) {
+            _safeNavigate(() => context.router.push(ThreadInfosRoute(
                   filter: ThreadsFilter(
                     boardsSorting: {board.id: ''},
                     keywords: '',
                   ),
                   sorting: const ThreadsSorting(boardsOrder: []),
-                ));
-              },
-              onStatusPressed: () {
-                _scaffoldKey.currentState?.closeDrawer();
-                context.pushRoute(const SidecarLogsRoute());
-              },
-            ),
-            body: const AutoRouter(),
-          ),
-        );
-      },
+                )));
+          },
+          onStatusPressed: () {
+            _safeNavigate(() => context.pushRoute(const SidecarLogsRoute()));
+          },
+        ),
+        body: const AutoRouter(),
+      ),
     );
   }
 }

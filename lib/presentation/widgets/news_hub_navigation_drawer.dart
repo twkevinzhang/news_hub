@@ -21,7 +21,7 @@ class NewsHubNavigationDrawer extends StatefulWidget {
 }
 
 class _NewsHubNavigationDrawerState extends State<NewsHubNavigationDrawer> {
-  String? _expandedCollectionId;
+  final Map<String, ExpansionTileController> _controllers = {};
 
   @override
   Widget build(BuildContext context) {
@@ -46,25 +46,30 @@ class _NewsHubNavigationDrawerState extends State<NewsHubNavigationDrawer> {
                 BlocBuilder<CollectionBloc, CollectionState>(
                   builder: (context, state) {
                     if (state.isLoading && state.collections.isEmpty) {
-                      return const Center(child: Padding(
+                      return const Center(
+                          child: Padding(
                         padding: EdgeInsets.all(16.0),
                         child: CircularProgressIndicator(),
                       ));
                     }
                     return Column(
                       children: state.collections.map((collection) {
+                        final controller = _controllers.putIfAbsent(
+                          collection.id,
+                          () => ExpansionTileController(),
+                        );
+
                         return ExpansionTile(
                           key: Key(collection.id),
-                          initiallyExpanded: _expandedCollectionId == collection.id,
+                          controller: controller,
                           onExpansionChanged: (expanded) {
                             if (expanded) {
-                              setState(() {
-                                _expandedCollectionId = collection.id;
-                              });
-                            } else if (_expandedCollectionId == collection.id) {
-                              setState(() {
-                                _expandedCollectionId = null;
-                              });
+                              // Collapse others
+                              for (final entry in _controllers.entries) {
+                                if (entry.key != collection.id) {
+                                  entry.value.collapse();
+                                }
+                              }
                             }
                           },
                           leading: const Icon(Icons.collections_bookmark_outlined),
@@ -102,9 +107,7 @@ class _NewsHubNavigationDrawerState extends State<NewsHubNavigationDrawer> {
                   height: 12,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: state.status == SidecarStatus.online
-                        ? Colors.green
-                        : (state.status == SidecarStatus.starting ? Colors.orange : Colors.red),
+                    color: state.statusColor,
                   ),
                 ),
                 title: Text(
@@ -119,5 +122,11 @@ class _NewsHubNavigationDrawerState extends State<NewsHubNavigationDrawer> {
         ],
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controllers.clear();
+    super.dispose();
   }
 }

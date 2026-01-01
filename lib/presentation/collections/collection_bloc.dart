@@ -1,27 +1,38 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:news_hub/domain/extension/collection_repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:injectable/injectable.dart';
 
-abstract class CollectionEvent {}
-class LoadCollections extends CollectionEvent {}
+part 'collection_bloc.freezed.dart';
 
-class CollectionState {
-  final List<Collection> collections;
-  final bool isLoading;
+@freezed
+class CollectionEvent with _$CollectionEvent {
+  const factory CollectionEvent.load() = LoadCollections;
+}
 
-  CollectionState({required this.collections, this.isLoading = false});
+@freezed
+class CollectionState with _$CollectionState {
+  const factory CollectionState({
+    @Default([]) List<Collection> collections,
+    @Default(false) bool isLoading,
+    String? errorMessage,
+  }) = _CollectionState;
 }
 
 @injectable
 class CollectionBloc extends Bloc<CollectionEvent, CollectionState> {
   final CollectionRepository _repository;
 
-  CollectionBloc(this._repository) : super(CollectionState(collections: [])) {
+  CollectionBloc(this._repository) : super(const CollectionState()) {
     on<LoadCollections>((event, emit) async {
-      emit(CollectionState(collections: state.collections, isLoading: true));
-      final collections = await _repository.getCollections();
-      emit(CollectionState(collections: collections, isLoading: false));
+      emit(state.copyWith(isLoading: true));
+      try {
+        final collections = await _repository.getCollections();
+        emit(state.copyWith(collections: collections, isLoading: false));
+      } catch (e) {
+        emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
+      }
     });
   }
 }
