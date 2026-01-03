@@ -13,7 +13,7 @@ initLogger()
 if __name__ == "__main__" or __name__ == "main":
     try:
         from api_server_impl import ApiServerImpl
-        import extension_api_pb2_grpc as pb2_grpc
+        import sidecar_api_pb2_grpc as pb2_grpc
 
         logging.debug(f'grpc modules imported')
 

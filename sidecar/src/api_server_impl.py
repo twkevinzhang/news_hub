@@ -2,8 +2,8 @@ import os
 import sys
 import importlib.util
 from pathlib import Path
-import extension_api_pb2 as pb2
-import extension_api_pb2_grpc as pb2_grpc
+import sidecar_api_pb2 as pb2
+import sidecar_api_pb2_grpc as pb2_grpc
 
 
 # 動態載入模組
