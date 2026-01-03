@@ -1,6 +1,12 @@
-export SERIOUS_PYTHON_SITE_PACKAGES := {{ NEED_TO_SET }}/Projects/news_hub_extensions/twkevinzhang_komica/build/site-packages
+# Project directories
+PROJECT_DIR := $(CURDIR)
+EXTENSIONS_DIR ?= $(PROJECT_DIR)/../news_hub_extensions
+EXTENSION_NAME ?= twkevinzhang_komica
+
+# Paths
+export SERIOUS_PYTHON_SITE_PACKAGES := $(EXTENSIONS_DIR)/$(EXTENSION_NAME)/build/site-packages
 export FILES_HOME := /data/user/0/tw.kevinzhang.news_hub/files
-export SAMPLE_EXTENSION_SOURCE_CODE_PATH := {{ NEED_TO_SET }}/Projects/news_hub/sidecar/src/extensions/twkevinzhang_komica/
+export SAMPLE_EXTENSION_SOURCE_CODE_PATH := $(PROJECT_DIR)/sidecar/src/extensions/$(EXTENSION_NAME)/
 
 .PHONY: run
 run:
@@ -32,5 +38,5 @@ sidecar:
 	rm -rf $(SERIOUS_PYTHON_SITE_PACKAGES)
 	rm -rf sidecar/dist && mkdir -p sidecar/dist
 	rm -rf $(SAMPLE_EXTENSION_SOURCE_CODE_PATH) && mkdir -p $(SAMPLE_EXTENSION_SOURCE_CODE_PATH)
-	cp -r {{ NEED_TO_SET }}/Projects/news_hub_extensions/twkevinzhang_komica/src/* $(SAMPLE_EXTENSION_SOURCE_CODE_PATH)
-	dart run serious_python:main package sidecar/src -p Android --requirements -r,sidecar/src/requirements.txt --asset sidecar/dist/sidecar.zip --verbose
+	cp -r $(EXTENSIONS_DIR)/$(EXTENSION_NAME)/src/* $(SAMPLE_EXTENSION_SOURCE_CODE_PATH)
+	dart run serious_python:main package sidecar/src -p Android --requirements -r,sidecar/requirements.txt --asset sidecar/dist/sidecar.zip --verbose
