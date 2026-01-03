@@ -6,10 +6,11 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_hub/domain/api_service.dart';
 
-import 'package:news_hub/domain/extension/extension.dart';
 import 'package:news_hub/domain/extension/interactor/install_extension.dart';
-import 'package:news_hub/domain/extension_repo/extension_repo.dart';
+import 'package:news_hub/domain/extension/interactor/list_extensions.dart';
+import 'package:news_hub/domain/extension/interactor/uninstall_extension.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/presentation/shared/shared.dart';
 import 'package:news_hub/shared/extensions.dart';
@@ -31,18 +32,18 @@ class ExtensionCubit extends Cubit<ExtensionState> {
   final ListExtensions _listExtensions;
   final InstallExtension _installExtension;
   final UninstallExtension _uninstallExtension;
-  final ExtensionRepoApiService _extensionRepoApiService;
+  final ApiService _apiService;
   final Map<String, StreamSubscription> _installingStream; // pkgName -> StreamSubscription
 
   ExtensionCubit({
     required ListExtensions listExtensions,
     required InstallExtension installExtension,
     required UninstallExtension uninstallExtension,
-    required ExtensionRepoApiService extensionRepoApiService,
+    required ApiService apiService,
   })  : _listExtensions = listExtensions,
         _installExtension = installExtension,
         _uninstallExtension = uninstallExtension,
-        _extensionRepoApiService = extensionRepoApiService,
+        _apiService = apiService,
         _installingStream = {},
         super(ExtensionState(
           keyword: null,
@@ -76,20 +77,11 @@ class ExtensionCubit extends Cubit<ExtensionState> {
   }
 
   Future<void> updateExtension(Extension extension) async {
-    final zipUrl = await _extensionRepoApiService.zipUrl(extension);
-    await _uninstallExtension.call(extension);
-    final sub = _installExtension.downloadAndInstall(zipUrl, extension).listen((pair) {
-      final newInstallingExtensions = state.installingExtensions..addAll({extension.pkgName: pair});
-      safeEmit(state.copyWith(installingExtensions: newInstallingExtensions));
-    }, onError: (error) {
-      debugPrint(error);
-    });
-    _installingStream[extension.pkgName] = sub;
+    // not implement yet
   }
 
   Future<void> installExtension(Extension extension) async {
-    final zipUrl = await _extensionRepoApiService.zipUrl(extension);
-    final sub = _installExtension.downloadAndInstall(zipUrl, extension).listen((pair) {
+    final sub = _installExtension.call(extension).listen((pair) {
       final newInstallingExtensions = state.installingExtensions..addAll({extension.pkgName: pair});
       safeEmit(state.copyWith(installingExtensions: newInstallingExtensions));
     }, onError: (error) {
