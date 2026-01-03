@@ -23,7 +23,7 @@ import 'package:news_hub/presentation/pages/search/view/search_screen.dart'
     as _i5;
 import 'package:news_hub/presentation/pages/settings/view/settings_screen.dart'
     as _i6;
-import 'package:news_hub/presentation/pages/sidecar/sidecar_logs_page.dart'
+import 'package:news_hub/presentation/pages/sidecar/view/sidecar_logs_screen.dart'
     as _i7;
 import 'package:news_hub/presentation/pages/thread/detail/view/thread_detail_screen.dart'
     as _i8;
@@ -146,7 +146,7 @@ class SettingsRoute extends _i11.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i7.SidecarLogsPage]
+/// [_i7.SidecarLogsScreen]
 class SidecarLogsRoute extends _i11.PageRouteInfo<void> {
   const SidecarLogsRoute({List<_i11.PageRouteInfo>? children})
     : super(SidecarLogsRoute.name, initialChildren: children);
@@ -156,7 +156,7 @@ class SidecarLogsRoute extends _i11.PageRouteInfo<void> {
   static _i11.PageInfo page = _i11.PageInfo(
     name,
     builder: (data) {
-      return const _i7.SidecarLogsPage();
+      return const _i7.SidecarLogsScreen();
     },
   );
 }

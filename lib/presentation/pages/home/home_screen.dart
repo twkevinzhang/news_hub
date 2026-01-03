@@ -6,8 +6,8 @@ import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/collection/list/bloc/collection_list_bloc.dart';
 import 'package:news_hub/presentation/pages/home/widgets/app_navigation_drawer.dart';
 import 'package:news_hub/presentation/pages/home/widgets/app_top_bar.dart';
+import 'package:news_hub/presentation/pages/sidecar/bloc/sidecar_cubit.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
-import 'package:news_hub/presentation/sidecar/sidecar_cubit.dart';
 
 @RoutePage()
 class HomeScreen extends StatefulWidget {
@@ -25,9 +25,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    _sidecarCubit = sl<SidecarCubit>();
-    _collectionListBloc = sl<CollectionListBloc>()
-      ..add(const CollectionListEvent.load());
+    _sidecarCubit = sl<SidecarCubit>()..startHealthWatch();
+    _collectionListBloc = sl<CollectionListBloc>()..add(const CollectionListEvent.load());
   }
 
   Future<void> _safeNavigate(VoidCallback navigate) async {

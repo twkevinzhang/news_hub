@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/presentation/sidecar/sidecar_cubit.dart';
+import 'package:news_hub/presentation/pages/sidecar/bloc/sidecar_cubit.dart';
 
 import '../bloc/collection_list_bloc.dart';
 

@@ -28,6 +28,13 @@ class SettingsScreen extends StatelessWidget {
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.router.push(const CollectionListRoute()),
           ),
+          ListTile(
+            leading: const Icon(Icons.terminal),
+            title: const Text('Sidecar Logs'),
+            subtitle: const Text('View system logs and status'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.router.push(const SidecarLogsRoute()),
+          ),
         ],
       ),
     );

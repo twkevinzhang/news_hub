@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
-import 'package:injectable/injectable.dart' show Environment, InjectableInit, NoEnvOrContainsAny, module, preResolve, singleton, Injectable;
+import 'package:injectable/injectable.dart' show Environment, InjectableInit, NoEnvOrContainsAny, module, preResolve, singleton, Injectable, lazySingleton;
+import 'package:logger/logger.dart';
 import 'package:news_hub/presentation/app.dart';
 import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 import 'package:serious_python/serious_python.dart';
 import 'package:news_hub/shared/constants.dart';
+import 'package:news_hub/domain/api_service.dart';
+import 'package:news_hub/app/service/api/sidecar_api_impl.dart';
 import 'locator.config.dart';
 
 final sl = GetIt.instance;
