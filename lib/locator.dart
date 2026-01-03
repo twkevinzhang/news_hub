@@ -1,9 +1,13 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/material.dart';
 import 'package:grpc/grpc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
-import 'package:injectable/injectable.dart' show Environment, InjectableInit, NoEnvOrContainsAny, module, preResolve, singleton;
+import 'package:injectable/injectable.dart' show Environment, InjectableInit, NoEnvOrContainsAny, module, preResolve, singleton, Injectable;
+import 'package:news_hub/presentation/app.dart';
 import 'package:rx_shared_preferences/rx_shared_preferences.dart';
+import 'package:serious_python/serious_python.dart';
+import 'package:news_hub/shared/constants.dart';
 import 'locator.config.dart';
 
 final sl = GetIt.instance;
@@ -41,4 +45,23 @@ abstract class AppProvider {
 
 abstract class Launcher {
   Future<void> call();
+}
+
+@Injectable(as: Launcher)
+class AppLauncher implements Launcher {
+  @override
+  Future<void> call() async {
+    try {
+      // Start sidecar service
+      SeriousPython.run(sidecarAsset);
+      await Future.delayed(const Duration(seconds: 3));
+      debugPrint('Sidecar service started successfully');
+      runApp(App());
+    } catch (e, s) {
+      debugPrint('Exception starting sidecar: $e');
+      debugPrint('StackTrace: $s');
+      // Run app anyway even if sidecar fails to start
+      runApp(App());
+    }
+  }
 }

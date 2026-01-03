@@ -106,10 +106,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i1017.ClientChannel>(() => appProvider.clientChannel);
     gh.singleton<_i539.AppDatabase>(() => _i539.AppDatabase());
     gh.singleton<_i158.CacheService>(() => _i158.CacheService());
-    gh.lazySingleton<_i762.AppRouter>(() => _i762.AppRouter());
     gh.lazySingleton<_i487.SidecarCubit>(() => _i487.SidecarCubit());
+    gh.lazySingleton<_i762.AppRouter>(() => _i762.AppRouter());
     gh.lazySingleton<_i677.SuggestionRepository>(
         () => _i530.SuggestionRepositoryImpl(db: gh<_i539.AppDatabase>()));
+    gh.factory<_i56.Launcher>(() => _i56.AppLauncher());
     gh.lazySingleton<_i920.CollectionRepository>(
         () => _i815.CollectionRepositoryImpl(db: gh<_i539.AppDatabase>()));
     gh.lazySingleton<_i521.BookmarkRepository>(
@@ -179,15 +180,14 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i919.BoardsPickerCubit>(
         () => _i919.BoardsPickerCubit(gh<_i351.ListInstalledExtensions>()));
+    gh.factory<_i994.ThreadDetailCubit>(() => _i994.ThreadDetailCubit(
+          getThread: gh<_i616.GetThread>(),
+          listRegardingPosts: gh<_i492.ListRegardingPosts>(),
+        ));
     gh.factory<_i558.ExtensionCubit>(() => _i558.ExtensionCubit(
           listExtensions: gh<_i214.ListExtensions>(),
           installExtension: gh<_i783.InstallExtension>(),
           uninstallExtension: gh<_i517.UninstallExtension>(),
-          apiService: gh<_i113.ApiService>(),
-        ));
-    gh.factory<_i994.ThreadDetailCubit>(() => _i994.ThreadDetailCubit(
-          getThread: gh<_i616.GetThread>(),
-          listRegardingPosts: gh<_i492.ListRegardingPosts>(),
         ));
     gh.factory<_i21.SearchCubit>(() => _i21.SearchCubit(
           listSuggestions: gh<_i643.ListSuggestions>(),
