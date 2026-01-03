@@ -23,7 +23,7 @@ if __name__ == "__main__" or __name__ == "main":
                 ('grpc.logging_verbosity', 'DEBUG'),
             ]
         )
-        pb2_grpc.add_ExtensionApiServicer_to_server(ApiServerImpl(), server)
+        pb2_grpc.add_SidecarApiServicer_to_server(ApiServerImpl(), server)
         server.add_insecure_port(f'[::]:{port}')
         server.start()
         logging.info("gRPC server running...")

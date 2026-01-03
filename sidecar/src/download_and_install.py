@@ -30,8 +30,14 @@ def unzip_file(pkg_name):
     """
     解壓縮至 [EXTENSION_FOLDER]/{pkg_name} 資料夾
     """
+    if not os.path.exists(DOWNLOAD_FOLDER):
+        os.makedirs(DOWNLOAD_FOLDER, exist_ok=True)
+    if not os.path.exists(EXTENSION_FOLDER):
+        os.makedirs(EXTENSION_FOLDER, exist_ok=True)
+        
     dist = f'{EXTENSION_FOLDER}/{pkg_name}'
-    shutil.rmtree(dist)
+    if os.path.exists(dist):
+        shutil.rmtree(dist)
     with zipfile.ZipFile(f'{DOWNLOAD_FOLDER}/{pkg_name}.zip', 'r') as zip_ref:
         zip_ref.extractall(dist)
 
@@ -40,7 +46,9 @@ def install_requirements(pkg_name):
     """
     安裝 {pkg_name}/requirements.txt 中的套件
     """
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', '-r', f'{EXTENSION_FOLDER}/{pkg_name}/requirements.txt'])
+    req_path = f'{EXTENSION_FOLDER}/{pkg_name}/requirements.txt'
+    if os.path.exists(req_path):
+        subprocess.check_call([sys.executable, '-m', 'pip', 'install', '-r', req_path])
 
 
 initLogger()
