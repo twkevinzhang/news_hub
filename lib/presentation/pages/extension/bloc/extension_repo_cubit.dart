@@ -62,16 +62,20 @@ class ExtensionRepoCubit extends Cubit<ExtensionRepoState> {
         website: website,
         signingKeyFingerprint: signingKeyFingerprint,
       );
+      // Refresh repos list after adding
+      init();
     } catch (e) {
-      // Handle error
+      safeEmit(state.copyWith(repos: Result.error(e as Exception)));
     }
   }
 
   Future<void> removeRepo(String baseUrl) async {
     try {
       await _removeExtensionRepo(baseUrl);
+      // Refresh repos list after removing
+      init();
     } catch (e) {
-      // Handle error
+      safeEmit(state.copyWith(repos: Result.error(e as Exception)));
     }
   }
 
