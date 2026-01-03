@@ -25,6 +25,8 @@ class AppRouter extends RootStackRouter {
           page: SettingsRoute.page,
         ),
         AutoRoute(path: '/search', page: SearchRoute.page),
+        AutoRoute(path: '/extension/manage', page: ExtensionManageRoute.page),
+        AutoRoute(path: '/collection/list', page: CollectionListRoute.page),
       ];
 
   @override

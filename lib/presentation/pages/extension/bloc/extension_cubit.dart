@@ -6,14 +6,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_hub/domain/api_service.dart';
-
-import 'package:news_hub/domain/extension/interactor/install_extension.dart';
-import 'package:news_hub/domain/extension/interactor/list_extensions.dart';
-import 'package:news_hub/domain/extension/interactor/uninstall_extension.dart';
 import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/presentation/shared/shared.dart';
-import 'package:news_hub/shared/extensions.dart';
 import 'package:news_hub/shared/models.dart';
 
 part 'extension_cubit.freezed.dart';
@@ -32,18 +25,15 @@ class ExtensionCubit extends Cubit<ExtensionState> {
   final ListExtensions _listExtensions;
   final InstallExtension _installExtension;
   final UninstallExtension _uninstallExtension;
-  final ApiService _apiService;
   final Map<String, StreamSubscription> _installingStream; // pkgName -> StreamSubscription
 
   ExtensionCubit({
     required ListExtensions listExtensions,
     required InstallExtension installExtension,
     required UninstallExtension uninstallExtension,
-    required ApiService apiService,
   })  : _listExtensions = listExtensions,
         _installExtension = installExtension,
         _uninstallExtension = uninstallExtension,
-        _apiService = apiService,
         _installingStream = {},
         super(ExtensionState(
           keyword: null,
@@ -82,11 +72,32 @@ class ExtensionCubit extends Cubit<ExtensionState> {
 
   Future<void> installExtension(Extension extension) async {
     final sub = _installExtension.call(extension).listen((pair) {
-      final newInstallingExtensions = state.installingExtensions..addAll({extension.pkgName: pair});
+      final newInstallingExtensions = Map<String, Pair<InstallStatus, double>>.from(state.installingExtensions)..addAll({extension.pkgName: pair});
       safeEmit(state.copyWith(installingExtensions: newInstallingExtensions));
+      if (pair.first == InstallStatus.completed || pair.first == InstallStatus.failed) {
+        _installingStream[extension.pkgName]?.cancel();
+        _installingStream.remove(extension.pkgName);
+        loadExtensions();
+      }
     }, onError: (error) {
-      debugPrint(error);
+      debugPrint(error.toString());
     });
     _installingStream[extension.pkgName] = sub;
+  }
+
+  Future<void> uninstallExtension(Extension extension) async {
+    try {
+      if (state.installingExtensions.containsKey(extension.pkgName)) {
+        return;
+      }
+      await _uninstallExtension.call(extension);
+      await loadExtensions();
+    } catch (e) {
+      debugPrint(e.toString());
+    }
+  }
+
+  void safeEmit(ExtensionState state) {
+    if (!isClosed) emit(state);
   }
 }
