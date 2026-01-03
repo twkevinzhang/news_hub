@@ -1,8 +1,6 @@
 import 'package:drift/drift.dart';
-import 'package:news_hub/app/extension/repository/models/transform.dart';
 import 'package:news_hub/app/service/database/database.dart';
 import 'package:news_hub/app/suggestion/repository/models/transform.dart';
-import 'package:news_hub/domain/extension/installed_extension_repository.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/suggestion/suggestion_repository.dart';
@@ -24,9 +22,7 @@ class SuggestionRepositoryImpl implements SuggestionRepository {
 
   @override
   Future<void> delete(String id) async {
-    await (_db.delete(_db.suggestions)
-      ..where((tbl) => tbl.id.equals(id)))
-        .go();
+    await (_db.delete(_db.suggestions)..where((tbl) => tbl.id.equals(id))).go();
   }
 
   @override
@@ -61,18 +57,14 @@ class SuggestionRepositoryImpl implements SuggestionRepository {
   }
 
   Future<domain.Suggestion> get(String id) async {
-    final suggestion = await (_db.select(_db.suggestions)
-      ..where((tbl) => tbl.id.equals(id)))
-        .getSingleOrNull();
+    final suggestion = await (_db.select(_db.suggestions)..where((tbl) => tbl.id.equals(id))).getSingleOrNull();
     if (suggestion == null) throw NotFoundException();
     return suggestion.toDomain();
   }
 
   @override
   Future<void> updateLatestUsedAt(String id) {
-    return (_db.update(_db.suggestions)
-      ..where((tbl) => tbl.id.equals(id)))
-        .write(SuggestionsCompanion(
+    return (_db.update(_db.suggestions)..where((tbl) => tbl.id.equals(id))).write(SuggestionsCompanion(
       latestUsedAt: Value(DateTime.now()),
     ));
   }
