@@ -1,5 +1,0 @@
-protobuf
-grpcio===1.67.1
-lxml
-aiohttp
-beautifulsoup4
