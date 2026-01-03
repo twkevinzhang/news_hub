@@ -75,4 +75,15 @@ abstract class ApiService {
   Future<List<RemoteExtension>> listRemoteExtensions({
     required String repoBaseUrl,
   });
+
+  // Extension Repository operations
+  Future<List<ExtensionRepo>> listExtensionRepos();
+
+  Future<void> addExtensionRepo({
+    required String url,
+  });
+
+  Future<void> removeExtensionRepo({
+    required String url,
+  });
 }

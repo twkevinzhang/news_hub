@@ -221,6 +221,18 @@ extension RemoteExtensionTransform on pb.RemoteExtension {
   }
 }
 
+extension ExtensionRepoTransform on pb.ExtensionRepo {
+  domain.ExtensionRepo toExtensionRepoDomain() {
+    return domain.ExtensionRepo(
+      baseUrl: url,
+      displayName: url,
+      website: url,
+      signingKeyFingerprint: '',
+      icon: null,
+    );
+  }
+}
+
 extension HealthCheckResTransform on pb.HealthCheckRes {
   domain.HealthCheckResult toHealthCheckResultDomain() {
     final _status = switch (status.value) {

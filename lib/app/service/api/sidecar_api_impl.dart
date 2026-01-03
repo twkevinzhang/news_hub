@@ -184,4 +184,21 @@ class SidecarApiImpl implements ApiService {
     final res = _client.watchLogs(pb.WatchLogsReq(minLevel: minLevel.toPbLogLevel()));
     return res.map((l) => l.toLogEntryDomain());
   }
+
+  // Extension Repository operations
+  @override
+  Future<List<domain.ExtensionRepo>> listExtensionRepos() async {
+    final res = await _client.listExtensionRepos(pb.Empty());
+    return res.repos.map((r) => r.toExtensionRepoDomain()).toList();
+  }
+
+  @override
+  Future<void> addExtensionRepo({required String url}) async {
+    await _client.addExtensionRepo(pb.AddExtensionRepoReq(url: url));
+  }
+
+  @override
+  Future<void> removeExtensionRepo({required String url}) async {
+    await _client.removeExtensionRepo(pb.RemoveExtensionRepoReq(url: url));
+  }
 }
