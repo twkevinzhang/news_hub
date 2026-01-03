@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
@@ -22,7 +21,6 @@ class ExtensionRepoCubit extends Cubit<ExtensionRepoState> {
   final ListExtensionRepos _listExtensionRepos;
   final AddExtensionRepo _addExtensionRepo;
   final RemoveExtensionRepo _removeExtensionRepo;
-  StreamSubscription? _subscription;
 
   ExtensionRepoCubit({
     required ListExtensionRepos listExtensionRepos,
@@ -31,39 +29,25 @@ class ExtensionRepoCubit extends Cubit<ExtensionRepoState> {
   })  : _listExtensionRepos = listExtensionRepos,
         _addExtensionRepo = addExtensionRepo,
         _removeExtensionRepo = removeExtensionRepo,
-        super(const ExtensionRepoState(repos: Result.initial()));
+        super(ExtensionRepoState(repos: Result.initial()));
 
-  void init() {
-    _subscription?.cancel();
-    safeEmit(state.copyWith(repos: const Result.loading()));
-    _subscription = _listExtensionRepos().listen((repos) {
+  Future<void> init() async {
+    try {
+      safeEmit(state.copyWith(repos: const Result.loading()));
+      final repos = await _listExtensionRepos();
       safeEmit(state.copyWith(repos: Result.completed(repos)));
-    }, onError: (e) {
+    } catch (e) {
       safeEmit(state.copyWith(repos: Result.error(e as Exception)));
-    });
-  }
-
-  @override
-  Future<void> close() {
-    _subscription?.cancel();
-    return super.close();
+    }
   }
 
   Future<void> addRepo({
-    required String baseUrl,
-    required String displayName,
-    required String website,
-    required String signingKeyFingerprint,
+    required String url,
   }) async {
     try {
-      await _addExtensionRepo(
-        baseUrl: baseUrl,
-        displayName: displayName,
-        website: website,
-        signingKeyFingerprint: signingKeyFingerprint,
-      );
+      await _addExtensionRepo(url: url);
       // Refresh repos list after adding
-      init();
+      await init();
     } catch (e) {
       safeEmit(state.copyWith(repos: Result.error(e as Exception)));
     }
@@ -73,7 +57,7 @@ class ExtensionRepoCubit extends Cubit<ExtensionRepoState> {
     try {
       await _removeExtensionRepo(baseUrl);
       // Refresh repos list after removing
-      init();
+      await init();
     } catch (e) {
       safeEmit(state.copyWith(repos: Result.error(e as Exception)));
     }

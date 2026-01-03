@@ -152,7 +152,11 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             repo = self.add_repo_uc.execute(request.url)
             return pb2.AddExtensionRepoRes(
                 url=repo.url,
-                added_at=int(repo.added_at.timestamp() * 1000)
+                added_at=int(repo.added_at.timestamp() * 1000),
+                display_name=repo.display_name,
+                website=repo.website,
+                signing_key_fingerprint=repo.signing_key_fingerprint,
+                icon=repo.icon if repo.icon else ""
             )
         except ValueError as e:
             logger.warning(f"AddExtensionRepo validation error: {e}")
@@ -188,7 +192,11 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             pb_repos = [
                 pb2.ExtensionRepo(
                     url=repo.url,
-                    added_at=int(repo.added_at.timestamp() * 1000)
+                    added_at=int(repo.added_at.timestamp() * 1000),
+                    display_name=repo.display_name,
+                    website=repo.website,
+                    signing_key_fingerprint=repo.signing_key_fingerprint,
+                    icon=repo.icon if repo.icon else ""
                 )
                 for repo in repos
             ]

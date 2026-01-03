@@ -131,8 +131,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i235.CreateCollectionCubit(gh<_i920.CollectionRepository>()));
     gh.lazySingleton<_i1049.ListBookmarks>(
         () => _i1049.ListBookmarks(repo: gh<_i521.BookmarkRepository>()));
-    gh.lazySingleton<_i163.ExtensionRepoRepository>(
-        () => _i795.ExtensionRepoRepositoryImpl(gh<_i539.AppDatabase>()));
     gh.lazySingleton<_i365.PreferenceStore>(
         () => _i842.PreferenceStoreImpl(prefs: gh<_i579.SharedPreferences>()));
     gh.lazySingleton<_i515.ExtensionPreferencesService>(() =>
@@ -149,6 +147,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i75.SidecarApiImpl(clientChannel: gh<_i1017.ClientChannel>()));
     gh.lazySingleton<_i466.SidecarRepository>(
         () => _i757.SidecarRepositoryImpl(gh<_i113.ApiService>()));
+    gh.lazySingleton<_i163.ExtensionRepoRepository>(
+        () => _i795.ExtensionRepoRepositoryImpl(gh<_i113.ApiService>()));
     gh.factory<_i672.CollectionListBloc>(
         () => _i672.CollectionListBloc(gh<_i920.CollectionRepository>()));
     gh.factory<_i503.WatchHealthUseCase>(

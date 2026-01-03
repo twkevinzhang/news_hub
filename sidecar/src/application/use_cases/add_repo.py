@@ -36,11 +36,18 @@ class AddRepoUseCase:
         """
         logger.info(f"Adding repository: {url}")
 
-        # Create repo entity for validation
-        repo = Repo(url=url, added_at=datetime.now())
+        # Create temporary repo entity for validation
+        temp_repo = Repo(
+            url=url,
+            added_at=datetime.now(),
+            display_name="",
+            website="",
+            signing_key_fingerprint="",
+            icon=None
+        )
 
         # Validate GitHub URL
-        if not repo.is_github_url():
+        if not temp_repo.is_github_url():
             raise ValueError(f"Invalid GitHub URL: {url}")
 
         # Check if already added
@@ -52,6 +59,19 @@ class AddRepoUseCase:
 
         # Validate extensions.json exists in remote repository
         self._validate_extensions_json(url)
+
+        # Fetch and parse repo.json metadata
+        metadata = self._fetch_repo_metadata(url)
+
+        # Create repo with metadata
+        repo = Repo(
+            url=url,
+            added_at=datetime.now(),
+            display_name=metadata.get("displayName", url),
+            website=metadata.get("website", url),
+            signing_key_fingerprint=metadata.get("signingKeyFingerprint", ""),
+            icon=metadata.get("icon")
+        )
 
         # Save to repository
         self.repository.add(repo)
@@ -87,8 +107,8 @@ class AddRepoUseCase:
             raw_url = f"https://raw.githubusercontent.com/{owner}/{repo_name}/{branch}/extensions.json"
             try:
                 logger.debug(f"Checking for extensions.json at {raw_url}")
-                response = self.downloader.download(raw_url)
-                if response and len(response) > 0:
+                response = self.downloader.fetch_json_sync(raw_url)
+                if response:
                     logger.debug(f"Found extensions.json in {repo_url}")
                     return
             except Exception as e:
@@ -97,5 +117,49 @@ class AddRepoUseCase:
 
         raise ValueError(
             f"No extensions.json found in repository root "
+            f"for {repo_url} (tried main and master branches)"
+        )
+
+    def _fetch_repo_metadata(self, repo_url: str) -> dict:
+        """
+        Fetch and parse repo.json from GitHub repository root
+
+        Args:
+            repo_url: GitHub repository URL
+
+        Returns:
+            dict: Metadata from repo.json
+
+        Raises:
+            ValueError: If repo.json doesn't exist or is invalid
+        """
+        # Remove trailing slash and .git suffix if present
+        base_url = repo_url.rstrip("/")
+        if base_url.endswith(".git"):
+            base_url = base_url[:-4]
+
+        # Extract owner and repo name
+        parts = base_url.split("/")
+        if len(parts) < 2:
+            raise ValueError(f"Invalid GitHub URL format: {repo_url}")
+
+        owner = parts[-2]
+        repo_name = parts[-1]
+
+        # Try common branch names
+        for branch in ["main", "master"]:
+            raw_url = f"https://raw.githubusercontent.com/{owner}/{repo_name}/{branch}/repo.json"
+            try:
+                logger.debug(f"Fetching repo.json from {raw_url}")
+                metadata = self.downloader.fetch_json_sync(raw_url)
+                if metadata:
+                    logger.debug(f"Successfully fetched repo.json from {repo_url}")
+                    return metadata
+            except Exception as e:
+                logger.debug(f"Failed to fetch repo.json from {branch}: {e}")
+                continue
+
+        raise ValueError(
+            f"No repo.json found in repository root "
             f"for {repo_url} (tried main and master branches)"
         )

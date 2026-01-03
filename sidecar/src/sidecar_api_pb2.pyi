@@ -488,12 +488,20 @@ class Extension(_message.Message):
     def __init__(self, repo_base_url: _Optional[str] = ..., pkg_name: _Optional[str] = ..., display_name: _Optional[str] = ..., zip_name: _Optional[str] = ..., version: _Optional[int] = ..., python_version: _Optional[int] = ..., lang: _Optional[str] = ..., is_nsfw: bool = ...) -> None: ...
 
 class ExtensionRepo(_message.Message):
-    __slots__ = ("url", "added_at")
+    __slots__ = ("url", "added_at", "display_name", "website", "signing_key_fingerprint", "icon")
     URL_FIELD_NUMBER: _ClassVar[int]
     ADDED_AT_FIELD_NUMBER: _ClassVar[int]
+    DISPLAY_NAME_FIELD_NUMBER: _ClassVar[int]
+    WEBSITE_FIELD_NUMBER: _ClassVar[int]
+    SIGNING_KEY_FINGERPRINT_FIELD_NUMBER: _ClassVar[int]
+    ICON_FIELD_NUMBER: _ClassVar[int]
     url: str
     added_at: int
-    def __init__(self, url: _Optional[str] = ..., added_at: _Optional[int] = ...) -> None: ...
+    display_name: str
+    website: str
+    signing_key_fingerprint: str
+    icon: str
+    def __init__(self, url: _Optional[str] = ..., added_at: _Optional[int] = ..., display_name: _Optional[str] = ..., website: _Optional[str] = ..., signing_key_fingerprint: _Optional[str] = ..., icon: _Optional[str] = ...) -> None: ...
 
 class AddExtensionRepoReq(_message.Message):
     __slots__ = ("url",)
@@ -502,12 +510,20 @@ class AddExtensionRepoReq(_message.Message):
     def __init__(self, url: _Optional[str] = ...) -> None: ...
 
 class AddExtensionRepoRes(_message.Message):
-    __slots__ = ("url", "added_at")
+    __slots__ = ("url", "added_at", "display_name", "website", "signing_key_fingerprint", "icon")
     URL_FIELD_NUMBER: _ClassVar[int]
     ADDED_AT_FIELD_NUMBER: _ClassVar[int]
+    DISPLAY_NAME_FIELD_NUMBER: _ClassVar[int]
+    WEBSITE_FIELD_NUMBER: _ClassVar[int]
+    SIGNING_KEY_FINGERPRINT_FIELD_NUMBER: _ClassVar[int]
+    ICON_FIELD_NUMBER: _ClassVar[int]
     url: str
     added_at: int
-    def __init__(self, url: _Optional[str] = ..., added_at: _Optional[int] = ...) -> None: ...
+    display_name: str
+    website: str
+    signing_key_fingerprint: str
+    icon: str
+    def __init__(self, url: _Optional[str] = ..., added_at: _Optional[int] = ..., display_name: _Optional[str] = ..., website: _Optional[str] = ..., signing_key_fingerprint: _Optional[str] = ..., icon: _Optional[str] = ...) -> None: ...
 
 class RemoveExtensionRepoReq(_message.Message):
     __slots__ = ("url",)

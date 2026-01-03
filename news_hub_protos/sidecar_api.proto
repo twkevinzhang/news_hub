@@ -316,6 +316,10 @@ message Extension {
 message ExtensionRepo {
   string url = 1;
   int64 added_at = 2;  // milliseconds since epoch
+  string display_name = 3;
+  string website = 4;
+  string signing_key_fingerprint = 5;
+  optional string icon = 6;
 }
 
 message AddExtensionRepoReq {
@@ -325,6 +329,10 @@ message AddExtensionRepoReq {
 message AddExtensionRepoRes {
   string url = 1;
   int64 added_at = 2;  // milliseconds since epoch
+  string display_name = 3;
+  string website = 4;
+  string signing_key_fingerprint = 5;
+  optional string icon = 6;
 }
 
 message RemoveExtensionRepoReq {

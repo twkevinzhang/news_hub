@@ -1,53 +1,26 @@
-import 'package:drift/drift.dart';
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/app/service/database/database.dart';
+import 'package:news_hub/domain/api_service.dart';
 import 'package:news_hub/domain/extension/repository/extension_repo_repository.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 
 @LazySingleton(as: ExtensionRepoRepository)
 class ExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
-  final AppDatabase _db;
+  final ApiService _apiService;
 
-  ExtensionRepoRepositoryImpl(this._db);
+  ExtensionRepoRepositoryImpl(this._apiService);
 
   @override
   Future<List<domain.ExtensionRepo>> list() async {
-    final rows = await _db.select(_db.extensionRepos).get();
-    return rows.map((row) => _toDomain(row)).toList();
+    return await _apiService.listExtensionRepos();
   }
 
   @override
-  Stream<List<domain.ExtensionRepo>> stream() {
-    return _db.select(_db.extensionRepos).watch().map(
-          (rows) => rows.map((row) => _toDomain(row)).toList(),
-        );
+  Future<void> insert(String url) async {
+    await _apiService.addExtensionRepo(url: url);
   }
 
   @override
-  Future<void> insert(domain.ExtensionRepo repo) {
-    return _db.into(_db.extensionRepos).insertOnConflictUpdate(
-          ExtensionReposCompanion.insert(
-            baseUrl: repo.baseUrl,
-            displayName: repo.displayName,
-            website: repo.website,
-            signingKeyFingerprint: repo.signingKeyFingerprint,
-            icon: Value(repo.icon),
-          ),
-        );
-  }
-
-  @override
-  Future<void> delete(String baseUrl) {
-    return (_db.delete(_db.extensionRepos)..where((t) => t.baseUrl.equals(baseUrl))).go();
-  }
-
-  domain.ExtensionRepo _toDomain(ExtensionRepo row) {
-    return domain.ExtensionRepo(
-      baseUrl: row.baseUrl,
-      displayName: row.displayName,
-      website: row.website,
-      signingKeyFingerprint: row.signingKeyFingerprint,
-      icon: row.icon,
-    );
+  Future<void> delete(String baseUrl) async {
+    await _apiService.removeExtensionRepo(url: baseUrl);
   }
 }

@@ -3437,6 +3437,10 @@ class ExtensionRepo extends $pb.GeneratedMessage {
   factory ExtensionRepo({
     $core.String? url,
     $fixnum.Int64? addedAt,
+    $core.String? displayName,
+    $core.String? website,
+    $core.String? signingKeyFingerprint,
+    $core.String? icon,
   }) {
     final result = create();
     if (url != null) {
@@ -3444,6 +3448,18 @@ class ExtensionRepo extends $pb.GeneratedMessage {
     }
     if (addedAt != null) {
       result.addedAt = addedAt;
+    }
+    if (displayName != null) {
+      result.displayName = displayName;
+    }
+    if (website != null) {
+      result.website = website;
+    }
+    if (signingKeyFingerprint != null) {
+      result.signingKeyFingerprint = signingKeyFingerprint;
+    }
+    if (icon != null) {
+      result.icon = icon;
     }
     return result;
   }
@@ -3454,6 +3470,10 @@ class ExtensionRepo extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ExtensionRepo', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'url')
     ..aInt64(2, _omitFieldNames ? '' : 'addedAt')
+    ..aOS(3, _omitFieldNames ? '' : 'displayName')
+    ..aOS(4, _omitFieldNames ? '' : 'website')
+    ..aOS(5, _omitFieldNames ? '' : 'signingKeyFingerprint')
+    ..aOS(6, _omitFieldNames ? '' : 'icon')
     ..hasRequiredFields = false
   ;
 
@@ -3495,6 +3515,42 @@ class ExtensionRepo extends $pb.GeneratedMessage {
   $core.bool hasAddedAt() => $_has(1);
   @$pb.TagNumber(2)
   void clearAddedAt() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get displayName => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set displayName($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasDisplayName() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDisplayName() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get website => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set website($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasWebsite() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearWebsite() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get signingKeyFingerprint => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set signingKeyFingerprint($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasSigningKeyFingerprint() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearSigningKeyFingerprint() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get icon => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set icon($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasIcon() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearIcon() => clearField(6);
 }
 
 class AddExtensionRepoReq extends $pb.GeneratedMessage {
@@ -3551,6 +3607,10 @@ class AddExtensionRepoRes extends $pb.GeneratedMessage {
   factory AddExtensionRepoRes({
     $core.String? url,
     $fixnum.Int64? addedAt,
+    $core.String? displayName,
+    $core.String? website,
+    $core.String? signingKeyFingerprint,
+    $core.String? icon,
   }) {
     final result = create();
     if (url != null) {
@@ -3558,6 +3618,18 @@ class AddExtensionRepoRes extends $pb.GeneratedMessage {
     }
     if (addedAt != null) {
       result.addedAt = addedAt;
+    }
+    if (displayName != null) {
+      result.displayName = displayName;
+    }
+    if (website != null) {
+      result.website = website;
+    }
+    if (signingKeyFingerprint != null) {
+      result.signingKeyFingerprint = signingKeyFingerprint;
+    }
+    if (icon != null) {
+      result.icon = icon;
     }
     return result;
   }
@@ -3568,6 +3640,10 @@ class AddExtensionRepoRes extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddExtensionRepoRes', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'url')
     ..aInt64(2, _omitFieldNames ? '' : 'addedAt')
+    ..aOS(3, _omitFieldNames ? '' : 'displayName')
+    ..aOS(4, _omitFieldNames ? '' : 'website')
+    ..aOS(5, _omitFieldNames ? '' : 'signingKeyFingerprint')
+    ..aOS(6, _omitFieldNames ? '' : 'icon')
     ..hasRequiredFields = false
   ;
 
@@ -3609,6 +3685,42 @@ class AddExtensionRepoRes extends $pb.GeneratedMessage {
   $core.bool hasAddedAt() => $_has(1);
   @$pb.TagNumber(2)
   void clearAddedAt() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get displayName => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set displayName($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasDisplayName() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearDisplayName() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get website => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set website($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasWebsite() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearWebsite() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get signingKeyFingerprint => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set signingKeyFingerprint($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasSigningKeyFingerprint() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearSigningKeyFingerprint() => clearField(5);
+
+  @$pb.TagNumber(6)
+  $core.String get icon => $_getSZ(5);
+  @$pb.TagNumber(6)
+  set icon($core.String v) { $_setString(5, v); }
+  @$pb.TagNumber(6)
+  $core.bool hasIcon() => $_has(5);
+  @$pb.TagNumber(6)
+  void clearIcon() => clearField(6);
 }
 
 class RemoveExtensionRepoReq extends $pb.GeneratedMessage {

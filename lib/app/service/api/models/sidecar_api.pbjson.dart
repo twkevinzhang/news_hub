@@ -771,13 +771,22 @@ const ExtensionRepo$json = {
   '2': [
     {'1': 'url', '3': 1, '4': 1, '5': 9, '10': 'url'},
     {'1': 'added_at', '3': 2, '4': 1, '5': 3, '10': 'addedAt'},
+    {'1': 'display_name', '3': 3, '4': 1, '5': 9, '10': 'displayName'},
+    {'1': 'website', '3': 4, '4': 1, '5': 9, '10': 'website'},
+    {'1': 'signing_key_fingerprint', '3': 5, '4': 1, '5': 9, '10': 'signingKeyFingerprint'},
+    {'1': 'icon', '3': 6, '4': 1, '5': 9, '9': 0, '10': 'icon', '17': true},
+  ],
+  '8': [
+    {'1': '_icon'},
   ],
 };
 
 /// Descriptor for `ExtensionRepo`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List extensionRepoDescriptor = $convert.base64Decode(
     'Cg1FeHRlbnNpb25SZXBvEhAKA3VybBgBIAEoCVIDdXJsEhkKCGFkZGVkX2F0GAIgASgDUgdhZG'
-    'RlZEF0');
+    'RlZEF0EiEKDGRpc3BsYXlfbmFtZRgDIAEoCVILZGlzcGxheU5hbWUSGAoHd2Vic2l0ZRgEIAEo'
+    'CVIHd2Vic2l0ZRI2ChdzaWduaW5nX2tleV9maW5nZXJwcmludBgFIAEoCVIVc2lnbmluZ0tleU'
+    'ZpbmdlcnByaW50EhcKBGljb24YBiABKAlIAFIEaWNvbogBAUIHCgVfaWNvbg==');
 
 @$core.Deprecated('Use addExtensionRepoReqDescriptor instead')
 const AddExtensionRepoReq$json = {
@@ -797,13 +806,22 @@ const AddExtensionRepoRes$json = {
   '2': [
     {'1': 'url', '3': 1, '4': 1, '5': 9, '10': 'url'},
     {'1': 'added_at', '3': 2, '4': 1, '5': 3, '10': 'addedAt'},
+    {'1': 'display_name', '3': 3, '4': 1, '5': 9, '10': 'displayName'},
+    {'1': 'website', '3': 4, '4': 1, '5': 9, '10': 'website'},
+    {'1': 'signing_key_fingerprint', '3': 5, '4': 1, '5': 9, '10': 'signingKeyFingerprint'},
+    {'1': 'icon', '3': 6, '4': 1, '5': 9, '9': 0, '10': 'icon', '17': true},
+  ],
+  '8': [
+    {'1': '_icon'},
   ],
 };
 
 /// Descriptor for `AddExtensionRepoRes`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List addExtensionRepoResDescriptor = $convert.base64Decode(
     'ChNBZGRFeHRlbnNpb25SZXBvUmVzEhAKA3VybBgBIAEoCVIDdXJsEhkKCGFkZGVkX2F0GAIgAS'
-    'gDUgdhZGRlZEF0');
+    'gDUgdhZGRlZEF0EiEKDGRpc3BsYXlfbmFtZRgDIAEoCVILZGlzcGxheU5hbWUSGAoHd2Vic2l0'
+    'ZRgEIAEoCVIHd2Vic2l0ZRI2ChdzaWduaW5nX2tleV9maW5nZXJwcmludBgFIAEoCVIVc2lnbm'
+    'luZ0tleUZpbmdlcnByaW50EhcKBGljb24YBiABKAlIAFIEaWNvbogBAUIHCgVfaWNvbg==');
 
 @$core.Deprecated('Use removeExtensionRepoReqDescriptor instead')
 const RemoveExtensionRepoReq$json = {

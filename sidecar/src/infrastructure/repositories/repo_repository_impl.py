@@ -32,7 +32,11 @@ class RepoRepositoryImpl(RepoRepository):
 
         repos.append({
             "url": repo.url,
-            "added_at": repo.added_at.isoformat()
+            "added_at": repo.added_at.isoformat(),
+            "display_name": repo.display_name,
+            "website": repo.website,
+            "signing_key_fingerprint": repo.signing_key_fingerprint,
+            "icon": repo.icon
         })
         self._save_repos(repos)
         logger.info(f"Added repository: {repo.url}")
@@ -97,5 +101,9 @@ class RepoRepositoryImpl(RepoRepository):
         """Convert dictionary to Repo entity"""
         return Repo(
             url=repo_dict["url"],
-            added_at=datetime.fromisoformat(repo_dict["added_at"])
+            added_at=datetime.fromisoformat(repo_dict["added_at"]),
+            display_name=repo_dict.get("display_name", ""),
+            website=repo_dict.get("website", ""),
+            signing_key_fingerprint=repo_dict.get("signing_key_fingerprint", ""),
+            icon=repo_dict.get("icon")
         )

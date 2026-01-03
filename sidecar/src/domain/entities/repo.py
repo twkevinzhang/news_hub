@@ -10,6 +10,10 @@ class Repo:
 
     url: str
     added_at: datetime
+    display_name: str
+    website: str
+    signing_key_fingerprint: str
+    icon: str = None
 
     def is_github_url(self) -> bool:
         """Check if the URL is a valid GitHub repository URL"""

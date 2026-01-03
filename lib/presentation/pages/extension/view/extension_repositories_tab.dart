@@ -78,10 +78,7 @@ class ExtensionRepositoriesTab extends StatelessWidget {
           TextButton(
             onPressed: () {
               cubit.addRepo(
-                baseUrl: urlController.text,
-                displayName: nameController.text,
-                website: '', // TODO
-                signingKeyFingerprint: '', // TODO
+                url: urlController.text,
               );
               Navigator.pop(context);
             },

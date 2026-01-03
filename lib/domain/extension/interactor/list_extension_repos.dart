@@ -7,5 +7,5 @@ class ListExtensionRepos {
   final ExtensionRepoRepository _repo;
   ListExtensionRepos(this._repo);
 
-  Stream<List<ExtensionRepo>> call() => _repo.stream();
+  Future<List<ExtensionRepo>> call() => _repo.list();
 }

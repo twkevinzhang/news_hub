@@ -225,10 +225,10 @@ extension ExtensionRepoTransform on pb.ExtensionRepo {
   domain.ExtensionRepo toExtensionRepoDomain() {
     return domain.ExtensionRepo(
       baseUrl: url,
-      displayName: url,
-      website: url,
-      signingKeyFingerprint: '',
-      icon: null,
+      displayName: displayName.isNotEmpty ? displayName : url,
+      website: website.isNotEmpty ? website : url,
+      signingKeyFingerprint: signingKeyFingerprint,
+      icon: icon.isNotEmpty ? icon : null,
     );
   }
 }
