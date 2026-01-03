@@ -9,46 +9,82 @@
 // coverage:ignore-file
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:auto_route/auto_route.dart' as _i10;
-import 'package:flutter/material.dart' as _i11;
-import 'package:news_hub/domain/models/models.dart' as _i12;
+import 'package:auto_route/auto_route.dart' as _i12;
+import 'package:flutter/material.dart' as _i13;
+import 'package:news_hub/domain/models/models.dart' as _i14;
 import 'package:news_hub/presentation/pages/collection/create/view/create_collection_page.dart'
-    as _i1;
-import 'package:news_hub/presentation/pages/extension/view/extension_screen.dart'
     as _i2;
-import 'package:news_hub/presentation/pages/home/home_screen.dart' as _i3;
-import 'package:news_hub/presentation/pages/search/view/search_screen.dart'
+import 'package:news_hub/presentation/pages/collection/list/view/collection_list_screen.dart'
+    as _i1;
+import 'package:news_hub/presentation/pages/extension/view/extension_manage_screen.dart'
+    as _i3;
+import 'package:news_hub/presentation/pages/extension/view/extension_screen.dart'
     as _i4;
-import 'package:news_hub/presentation/pages/settings/view/settings_screen.dart'
-    as _i5;
-import 'package:news_hub/presentation/pages/sidecar/sidecar_logs_page.dart'
+import 'package:news_hub/presentation/pages/home/home_screen.dart' as _i5;
+import 'package:news_hub/presentation/pages/search/view/search_screen.dart'
     as _i6;
-import 'package:news_hub/presentation/pages/thread/detail/view/thread_detail_screen.dart'
+import 'package:news_hub/presentation/pages/settings/view/settings_screen.dart'
     as _i7;
-import 'package:news_hub/presentation/pages/thread/list/view/thread_list_screen.dart'
+import 'package:news_hub/presentation/pages/sidecar/sidecar_logs_page.dart'
     as _i8;
-import 'package:news_hub/presentation/router/wrapper_screen.dart' as _i9;
+import 'package:news_hub/presentation/pages/thread/detail/view/thread_detail_screen.dart'
+    as _i9;
+import 'package:news_hub/presentation/pages/thread/list/view/thread_list_screen.dart'
+    as _i10;
+import 'package:news_hub/presentation/router/wrapper_screen.dart' as _i11;
 
 /// generated route for
-/// [_i1.CreateCollectionPage]
-class CreateCollectionRoute extends _i10.PageRouteInfo<void> {
-  const CreateCollectionRoute({List<_i10.PageRouteInfo>? children})
-    : super(CreateCollectionRoute.name, initialChildren: children);
+/// [_i1.CollectionListScreen]
+class CollectionListRoute extends _i12.PageRouteInfo<void> {
+  const CollectionListRoute({List<_i12.PageRouteInfo>? children})
+    : super(CollectionListRoute.name, initialChildren: children);
 
-  static const String name = 'CreateCollectionRoute';
+  static const String name = 'CollectionListRoute';
 
-  static _i10.PageInfo page = _i10.PageInfo(
+  static _i12.PageInfo page = _i12.PageInfo(
     name,
     builder: (data) {
-      return _i10.WrappedRoute(child: const _i1.CreateCollectionPage());
+      return const _i1.CollectionListScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i2.ExtensionScreen]
-class ExtensionRoute extends _i10.PageRouteInfo<ExtensionRouteArgs> {
-  ExtensionRoute({_i11.Key? key, List<_i10.PageRouteInfo>? children})
+/// [_i2.CreateCollectionPage]
+class CreateCollectionRoute extends _i12.PageRouteInfo<void> {
+  const CreateCollectionRoute({List<_i12.PageRouteInfo>? children})
+    : super(CreateCollectionRoute.name, initialChildren: children);
+
+  static const String name = 'CreateCollectionRoute';
+
+  static _i12.PageInfo page = _i12.PageInfo(
+    name,
+    builder: (data) {
+      return _i12.WrappedRoute(child: const _i2.CreateCollectionPage());
+    },
+  );
+}
+
+/// generated route for
+/// [_i3.ExtensionManageScreen]
+class ExtensionManageRoute extends _i12.PageRouteInfo<void> {
+  const ExtensionManageRoute({List<_i12.PageRouteInfo>? children})
+    : super(ExtensionManageRoute.name, initialChildren: children);
+
+  static const String name = 'ExtensionManageRoute';
+
+  static _i12.PageInfo page = _i12.PageInfo(
+    name,
+    builder: (data) {
+      return _i12.WrappedRoute(child: const _i3.ExtensionManageScreen());
+    },
+  );
+}
+
+/// generated route for
+/// [_i4.ExtensionScreen]
+class ExtensionRoute extends _i12.PageRouteInfo<ExtensionRouteArgs> {
+  ExtensionRoute({_i13.Key? key, List<_i12.PageRouteInfo>? children})
     : super(
         ExtensionRoute.name,
         args: ExtensionRouteArgs(key: key),
@@ -57,13 +93,13 @@ class ExtensionRoute extends _i10.PageRouteInfo<ExtensionRouteArgs> {
 
   static const String name = 'ExtensionRoute';
 
-  static _i10.PageInfo page = _i10.PageInfo(
+  static _i12.PageInfo page = _i12.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<ExtensionRouteArgs>(
         orElse: () => const ExtensionRouteArgs(),
       );
-      return _i10.WrappedRoute(child: _i2.ExtensionScreen(key: args.key));
+      return _i12.WrappedRoute(child: _i4.ExtensionScreen(key: args.key));
     },
   );
 }
@@ -71,7 +107,7 @@ class ExtensionRoute extends _i10.PageRouteInfo<ExtensionRouteArgs> {
 class ExtensionRouteArgs {
   const ExtensionRouteArgs({this.key});
 
-  final _i11.Key? key;
+  final _i13.Key? key;
 
   @override
   String toString() {
@@ -80,25 +116,25 @@ class ExtensionRouteArgs {
 }
 
 /// generated route for
-/// [_i3.HomeScreen]
-class HomeRoute extends _i10.PageRouteInfo<void> {
-  const HomeRoute({List<_i10.PageRouteInfo>? children})
+/// [_i5.HomeScreen]
+class HomeRoute extends _i12.PageRouteInfo<void> {
+  const HomeRoute({List<_i12.PageRouteInfo>? children})
     : super(HomeRoute.name, initialChildren: children);
 
   static const String name = 'HomeRoute';
 
-  static _i10.PageInfo page = _i10.PageInfo(
+  static _i12.PageInfo page = _i12.PageInfo(
     name,
     builder: (data) {
-      return const _i3.HomeScreen();
+      return const _i5.HomeScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i4.SearchScreen]
-class SearchRoute extends _i10.PageRouteInfo<SearchRouteArgs> {
-  SearchRoute({_i11.Key? key, List<_i10.PageRouteInfo>? children})
+/// [_i6.SearchScreen]
+class SearchRoute extends _i12.PageRouteInfo<SearchRouteArgs> {
+  SearchRoute({_i13.Key? key, List<_i12.PageRouteInfo>? children})
     : super(
         SearchRoute.name,
         args: SearchRouteArgs(key: key),
@@ -107,13 +143,13 @@ class SearchRoute extends _i10.PageRouteInfo<SearchRouteArgs> {
 
   static const String name = 'SearchRoute';
 
-  static _i10.PageInfo page = _i10.PageInfo(
+  static _i12.PageInfo page = _i12.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<SearchRouteArgs>(
         orElse: () => const SearchRouteArgs(),
       );
-      return _i10.WrappedRoute(child: _i4.SearchScreen(key: args.key));
+      return _i12.WrappedRoute(child: _i6.SearchScreen(key: args.key));
     },
   );
 }
@@ -121,7 +157,7 @@ class SearchRoute extends _i10.PageRouteInfo<SearchRouteArgs> {
 class SearchRouteArgs {
   const SearchRouteArgs({this.key});
 
-  final _i11.Key? key;
+  final _i13.Key? key;
 
   @override
   String toString() {
@@ -130,47 +166,47 @@ class SearchRouteArgs {
 }
 
 /// generated route for
-/// [_i5.SettingsScreen]
-class SettingsRoute extends _i10.PageRouteInfo<void> {
-  const SettingsRoute({List<_i10.PageRouteInfo>? children})
+/// [_i7.SettingsScreen]
+class SettingsRoute extends _i12.PageRouteInfo<void> {
+  const SettingsRoute({List<_i12.PageRouteInfo>? children})
     : super(SettingsRoute.name, initialChildren: children);
 
   static const String name = 'SettingsRoute';
 
-  static _i10.PageInfo page = _i10.PageInfo(
+  static _i12.PageInfo page = _i12.PageInfo(
     name,
     builder: (data) {
-      return const _i5.SettingsScreen();
+      return const _i7.SettingsScreen();
     },
   );
 }
 
 /// generated route for
-/// [_i6.SidecarLogsPage]
-class SidecarLogsRoute extends _i10.PageRouteInfo<void> {
-  const SidecarLogsRoute({List<_i10.PageRouteInfo>? children})
+/// [_i8.SidecarLogsPage]
+class SidecarLogsRoute extends _i12.PageRouteInfo<void> {
+  const SidecarLogsRoute({List<_i12.PageRouteInfo>? children})
     : super(SidecarLogsRoute.name, initialChildren: children);
 
   static const String name = 'SidecarLogsRoute';
 
-  static _i10.PageInfo page = _i10.PageInfo(
+  static _i12.PageInfo page = _i12.PageInfo(
     name,
     builder: (data) {
-      return const _i6.SidecarLogsPage();
+      return const _i8.SidecarLogsPage();
     },
   );
 }
 
 /// generated route for
-/// [_i7.ThreadDetailScreen]
-class ThreadDetailRoute extends _i10.PageRouteInfo<ThreadDetailRouteArgs> {
+/// [_i9.ThreadDetailScreen]
+class ThreadDetailRoute extends _i12.PageRouteInfo<ThreadDetailRouteArgs> {
   ThreadDetailRoute({
-    _i11.Key? key,
+    _i13.Key? key,
     required String threadId,
     required String extensionPkgName,
     required String siteId,
     required String boardId,
-    List<_i10.PageRouteInfo>? children,
+    List<_i12.PageRouteInfo>? children,
   }) : super(
          ThreadDetailRoute.name,
          args: ThreadDetailRouteArgs(
@@ -185,12 +221,12 @@ class ThreadDetailRoute extends _i10.PageRouteInfo<ThreadDetailRouteArgs> {
 
   static const String name = 'ThreadDetailRoute';
 
-  static _i10.PageInfo page = _i10.PageInfo(
+  static _i12.PageInfo page = _i12.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<ThreadDetailRouteArgs>();
-      return _i10.WrappedRoute(
-        child: _i7.ThreadDetailScreen(
+      return _i12.WrappedRoute(
+        child: _i9.ThreadDetailScreen(
           key: args.key,
           threadId: args.threadId,
           extensionPkgName: args.extensionPkgName,
@@ -211,7 +247,7 @@ class ThreadDetailRouteArgs {
     required this.boardId,
   });
 
-  final _i11.Key? key;
+  final _i13.Key? key;
 
   final String threadId;
 
@@ -228,13 +264,13 @@ class ThreadDetailRouteArgs {
 }
 
 /// generated route for
-/// [_i8.ThreadListScreen]
-class ThreadListRoute extends _i10.PageRouteInfo<ThreadListRouteArgs> {
+/// [_i10.ThreadListScreen]
+class ThreadListRoute extends _i12.PageRouteInfo<ThreadListRouteArgs> {
   ThreadListRoute({
-    _i11.Key? key,
-    _i12.ThreadsFilter? filter,
-    _i12.ThreadsSorting? sorting,
-    List<_i10.PageRouteInfo>? children,
+    _i13.Key? key,
+    _i14.ThreadsFilter? filter,
+    _i14.ThreadsSorting? sorting,
+    List<_i12.PageRouteInfo>? children,
   }) : super(
          ThreadListRoute.name,
          args: ThreadListRouteArgs(key: key, filter: filter, sorting: sorting),
@@ -243,14 +279,14 @@ class ThreadListRoute extends _i10.PageRouteInfo<ThreadListRouteArgs> {
 
   static const String name = 'ThreadListRoute';
 
-  static _i10.PageInfo page = _i10.PageInfo(
+  static _i12.PageInfo page = _i12.PageInfo(
     name,
     builder: (data) {
       final args = data.argsAs<ThreadListRouteArgs>(
         orElse: () => const ThreadListRouteArgs(),
       );
-      return _i10.WrappedRoute(
-        child: _i8.ThreadListScreen(
+      return _i12.WrappedRoute(
+        child: _i10.ThreadListScreen(
           key: args.key,
           filter: args.filter,
           sorting: args.sorting,
@@ -263,11 +299,11 @@ class ThreadListRoute extends _i10.PageRouteInfo<ThreadListRouteArgs> {
 class ThreadListRouteArgs {
   const ThreadListRouteArgs({this.key, this.filter, this.sorting});
 
-  final _i11.Key? key;
+  final _i13.Key? key;
 
-  final _i12.ThreadsFilter? filter;
+  final _i14.ThreadsFilter? filter;
 
-  final _i12.ThreadsSorting? sorting;
+  final _i14.ThreadsSorting? sorting;
 
   @override
   String toString() {
@@ -276,17 +312,17 @@ class ThreadListRouteArgs {
 }
 
 /// generated route for
-/// [_i9.WrapperScreen]
-class WrapperRoute extends _i10.PageRouteInfo<void> {
-  const WrapperRoute({List<_i10.PageRouteInfo>? children})
+/// [_i11.WrapperScreen]
+class WrapperRoute extends _i12.PageRouteInfo<void> {
+  const WrapperRoute({List<_i12.PageRouteInfo>? children})
     : super(WrapperRoute.name, initialChildren: children);
 
   static const String name = 'WrapperRoute';
 
-  static _i10.PageInfo page = _i10.PageInfo(
+  static _i12.PageInfo page = _i12.PageInfo(
     name,
     builder: (data) {
-      return const _i9.WrapperScreen();
+      return const _i11.WrapperScreen();
     },
   );
 }

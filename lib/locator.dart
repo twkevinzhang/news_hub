@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:grpc/grpc.dart';
 import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart' show Environment, InjectableInit, NoEnvOrContainsAny, module, preResolve, singleton;
@@ -26,8 +27,17 @@ abstract class AppProvider {
 
   @singleton
   Dio get dio => Dio();
-}
 
+  @singleton
+  ClientChannel get clientChannel => ClientChannel(
+        '127.0.0.1',
+        port: 55001,
+        options: const ChannelOptions(
+          credentials: ChannelCredentials.insecure(),
+          connectTimeout: Duration(seconds: 5),
+        ),
+      );
+}
 
 abstract class Launcher {
   Future<void> call();
