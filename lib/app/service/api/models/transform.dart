@@ -4,7 +4,7 @@ import 'package:news_hub/shared/extensions.dart';
 import 'sidecar_api.pb.dart' as pb;
 
 extension SiteTransform on pb.Site {
-  domain.Site toDomain() {
+  domain.Site toSiteDomain() {
     return domain.Site(
       extensionPkgName: pkgName,
       id: id,
@@ -16,7 +16,7 @@ extension SiteTransform on pb.Site {
 }
 
 extension BoardTransform on pb.Board {
-  domain.Board toDomain() {
+  domain.Board toBoardDomain() {
     return domain.Board(
       extensionPkgName: pkgName,
       id: id,
@@ -31,20 +31,20 @@ extension BoardTransform on pb.Board {
 }
 
 extension PostTransform on pb.Post {
-  domain.Post toDomain() {
+  domain.Post toPostDomain() {
     switch (whichContent()) {
       case pb.Post_Content.articlePost:
-        return articlePost.toDomain(this);
+        return articlePost.toArticlePostDomain(this);
       case pb.Post_Content.singleImagePost:
-        return singleImagePost.toDomain(this);
+        return singleImagePost.toSingleImagePostDomain(this);
       default:
-        return articlePost.toDomain(this);
+        return articlePost.toArticlePostDomain(this);
     }
   }
 }
 
 extension ArticlePostTransform on pb.ArticlePost {
-  domain.ArticlePost toDomain(pb.Post post) {
+  domain.ArticlePost toArticlePostDomain(pb.Post post) {
     return domain.ArticlePost(
       extensionPkgName: post.pkgName,
       siteId: post.siteId,
@@ -56,7 +56,7 @@ extension ArticlePostTransform on pb.ArticlePost {
       authorName: authorName,
       liked: liked,
       disliked: disliked,
-      contents: contents.map((e) => e.toDomain()).toList(),
+      contents: contents.map((e) => e.toParagraphDomain()).toList(),
       tags: tags,
       url: url,
       title: title,
@@ -67,7 +67,7 @@ extension ArticlePostTransform on pb.ArticlePost {
 }
 
 extension SingleImagePostTransform on pb.SingleImagePost {
-  domain.SingleImagePost toDomain(pb.Post post) {
+  domain.SingleImagePost toSingleImagePostDomain(pb.Post post) {
     return domain.SingleImagePost(
       extensionPkgName: post.pkgName,
       siteId: post.siteId,
@@ -79,8 +79,8 @@ extension SingleImagePostTransform on pb.SingleImagePost {
       authorName: authorName,
       liked: liked,
       disliked: disliked,
-      image: image.toDomain(),
-      contents: contents.map((e) => e.toDomain()).toList(),
+      image: image.toImageParagraphDomain(),
+      contents: contents.map((e) => e.toParagraphDomain()).toList(),
       tags: tags,
       url: url,
       title: title,
@@ -91,7 +91,7 @@ extension SingleImagePostTransform on pb.SingleImagePost {
 }
 
 extension CommentTransform on pb.Comment {
-  domain.Comment toDomain() {
+  domain.Comment toCommentDomain() {
     return domain.Comment(
       id: id,
       postId: postId,
@@ -99,7 +99,7 @@ extension CommentTransform on pb.Comment {
       boardId: boardId,
       siteId: siteId,
       extensionPkgName: pkgName,
-      contents: contents.map((e) => e.toDomain()).toList(),
+      contents: contents.map((e) => e.toParagraphDomain()).toList(),
       authorId: authorId,
       authorName: authorName,
     );
@@ -107,30 +107,30 @@ extension CommentTransform on pb.Comment {
 }
 
 extension ParagraphTransform on pb.Paragraph {
-  domain.Paragraph toDomain() {
+  domain.Paragraph toParagraphDomain() {
     switch (whichContent()) {
       case pb.Paragraph_Content.image:
-        return image.toDomain();
+        return image.toImageParagraphDomain();
       case pb.Paragraph_Content.video:
-        return video.toDomain();
+        return video.toVideoParagraphDomain();
       case pb.Paragraph_Content.text:
-        return text.toDomain();
+        return text.toTextParagraphDomain();
       case pb.Paragraph_Content.newLine:
-        return newLine.toDomain();
+        return newLine.toNewLineParagraphDomain();
       case pb.Paragraph_Content.quote:
-        return quote.toDomain();
+        return quote.toQuoteParagraphDomain();
       case pb.Paragraph_Content.replyTo:
-        return replyTo.toDomain();
+        return replyTo.toReplyToParagraphDomain();
       case pb.Paragraph_Content.link:
-        return link.toDomain();
+        return link.toLinkParagraphDomain();
       default:
-        return text.toDomain();
+        return text.toTextParagraphDomain();
     }
   }
 }
 
 extension ImageParagraphTransform on pb.ImageParagraph {
-  domain.ImageParagraph toDomain() {
+  domain.ImageParagraph toImageParagraphDomain() {
     return domain.ImageParagraph(
       thumb: thumb,
       raw: raw,
@@ -139,7 +139,7 @@ extension ImageParagraphTransform on pb.ImageParagraph {
 }
 
 extension VideoParagraphTransform on pb.VideoParagraph {
-  domain.VideoParagraph toDomain() {
+  domain.VideoParagraph toVideoParagraphDomain() {
     return domain.VideoParagraph(
       thumb: thumb,
       url: url,
@@ -148,7 +148,7 @@ extension VideoParagraphTransform on pb.VideoParagraph {
 }
 
 extension TextParagraphTransform on pb.TextParagraph {
-  domain.TextParagraph toDomain() {
+  domain.TextParagraph toTextParagraphDomain() {
     return domain.TextParagraph(
       content: content,
     );
@@ -156,7 +156,7 @@ extension TextParagraphTransform on pb.TextParagraph {
 }
 
 extension NewLineParagraphTransform on pb.NewLineParagraph {
-  domain.NewLineParagraph toDomain() {
+  domain.NewLineParagraph toNewLineParagraphDomain() {
     return domain.NewLineParagraph(
       symbol: symbol,
     );
@@ -164,7 +164,7 @@ extension NewLineParagraphTransform on pb.NewLineParagraph {
 }
 
 extension QuoteParagraphTransform on pb.QuoteParagraph {
-  domain.QuoteParagraph toDomain() {
+  domain.QuoteParagraph toQuoteParagraphDomain() {
     return domain.QuoteParagraph(
       content: content,
     );
@@ -172,7 +172,7 @@ extension QuoteParagraphTransform on pb.QuoteParagraph {
 }
 
 extension ReplyToParagraphTransform on pb.ReplyToParagraph {
-  domain.ReplyToParagraph toDomain() {
+  domain.ReplyToParagraph toReplyToParagraphDomain() {
     return domain.ReplyToParagraph(
       id: id,
       authorName: authorName,
@@ -182,9 +182,41 @@ extension ReplyToParagraphTransform on pb.ReplyToParagraph {
 }
 
 extension LinkParagraphTransform on pb.LinkParagraph {
-  domain.LinkParagraph toDomain() {
+  domain.LinkParagraph toLinkParagraphDomain() {
     return domain.LinkParagraph(
       content: content,
+    );
+  }
+}
+
+extension ExtensionTransform on pb.Extension {
+  domain.Extension toExtensionDomain() {
+    return domain.Extension(
+      repoBaseUrl: repoBaseUrl,
+      pkgName: pkgName,
+      displayName: displayName,
+      zipName: zipName,
+      version: version,
+      pythonVersion: pythonVersion,
+      lang: hasLang() ? lang : null,
+      isNsfw: isNsfw,
+    );
+  }
+}
+
+extension RemoteExtensionTransform on pb.RemoteExtension {
+  domain.RemoteExtension toRemoteExtensionDomain() {
+    return domain.RemoteExtension(
+      repoBaseUrl: base.repoBaseUrl,
+      pkgName: base.pkgName,
+      displayName: base.displayName,
+      zipName: base.zipName,
+      version: base.version,
+      pythonVersion: base.pythonVersion,
+      lang: base.hasLang() ? base.lang : null,
+      isNsfw: base.isNsfw,
+      iconUrl: iconUrl,
+      repoUrl: repoUrl,
     );
   }
 }

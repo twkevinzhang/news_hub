@@ -385,3 +385,91 @@ class Comment(_message.Message):
     contents: _containers.RepeatedCompositeFieldContainer[Paragraph]
     created_at: int
     def __init__(self, pkg_name: _Optional[str] = ..., site_id: _Optional[str] = ..., board_id: _Optional[str] = ..., thread_id: _Optional[str] = ..., post_id: _Optional[str] = ..., id: _Optional[str] = ..., author_id: _Optional[str] = ..., author_name: _Optional[str] = ..., contents: _Optional[_Iterable[_Union[Paragraph, _Mapping]]] = ..., created_at: _Optional[int] = ...) -> None: ...
+
+class ListInstalledExtensionsRes(_message.Message):
+    __slots__ = ("extensions",)
+    EXTENSIONS_FIELD_NUMBER: _ClassVar[int]
+    extensions: _containers.RepeatedCompositeFieldContainer[Extension]
+    def __init__(self, extensions: _Optional[_Iterable[_Union[Extension, _Mapping]]] = ...) -> None: ...
+
+class GetInstalledExtensionReq(_message.Message):
+    __slots__ = ("pkg_name",)
+    PKG_NAME_FIELD_NUMBER: _ClassVar[int]
+    pkg_name: str
+    def __init__(self, pkg_name: _Optional[str] = ...) -> None: ...
+
+class GetInstalledExtensionRes(_message.Message):
+    __slots__ = ("extension",)
+    EXTENSION_FIELD_NUMBER: _ClassVar[int]
+    extension: Extension
+    def __init__(self, extension: _Optional[_Union[Extension, _Mapping]] = ...) -> None: ...
+
+class InstallExtensionReq(_message.Message):
+    __slots__ = ("pkg_name", "zip_name", "repo_base_url")
+    PKG_NAME_FIELD_NUMBER: _ClassVar[int]
+    ZIP_NAME_FIELD_NUMBER: _ClassVar[int]
+    REPO_BASE_URL_FIELD_NUMBER: _ClassVar[int]
+    pkg_name: str
+    zip_name: str
+    repo_base_url: str
+    def __init__(self, pkg_name: _Optional[str] = ..., zip_name: _Optional[str] = ..., repo_base_url: _Optional[str] = ...) -> None: ...
+
+class UninstallExtensionReq(_message.Message):
+    __slots__ = ("pkg_name",)
+    PKG_NAME_FIELD_NUMBER: _ClassVar[int]
+    pkg_name: str
+    def __init__(self, pkg_name: _Optional[str] = ...) -> None: ...
+
+class GetInstallProgressReq(_message.Message):
+    __slots__ = ("pkg_name",)
+    PKG_NAME_FIELD_NUMBER: _ClassVar[int]
+    pkg_name: str
+    def __init__(self, pkg_name: _Optional[str] = ...) -> None: ...
+
+class GetInstallProgressRes(_message.Message):
+    __slots__ = ("sites",)
+    SITES_FIELD_NUMBER: _ClassVar[int]
+    sites: _containers.RepeatedCompositeFieldContainer[Site]
+    def __init__(self, sites: _Optional[_Iterable[_Union[Site, _Mapping]]] = ...) -> None: ...
+
+class ListRemoteExtensionsReq(_message.Message):
+    __slots__ = ("repo_base_url",)
+    REPO_BASE_URL_FIELD_NUMBER: _ClassVar[int]
+    repo_base_url: str
+    def __init__(self, repo_base_url: _Optional[str] = ...) -> None: ...
+
+class ListRemoteExtensionsRes(_message.Message):
+    __slots__ = ("extensions",)
+    EXTENSIONS_FIELD_NUMBER: _ClassVar[int]
+    extensions: _containers.RepeatedCompositeFieldContainer[RemoteExtension]
+    def __init__(self, extensions: _Optional[_Iterable[_Union[RemoteExtension, _Mapping]]] = ...) -> None: ...
+
+class RemoteExtension(_message.Message):
+    __slots__ = ("base", "icon_url", "repo_url")
+    BASE_FIELD_NUMBER: _ClassVar[int]
+    ICON_URL_FIELD_NUMBER: _ClassVar[int]
+    REPO_URL_FIELD_NUMBER: _ClassVar[int]
+    base: Extension
+    icon_url: str
+    repo_url: str
+    def __init__(self, base: _Optional[_Union[Extension, _Mapping]] = ..., icon_url: _Optional[str] = ..., repo_url: _Optional[str] = ...) -> None: ...
+
+class Extension(_message.Message):
+    __slots__ = ("repo_base_url", "pkg_name", "display_name", "zip_name", "version", "python_version", "lang", "is_nsfw")
+    REPO_BASE_URL_FIELD_NUMBER: _ClassVar[int]
+    PKG_NAME_FIELD_NUMBER: _ClassVar[int]
+    DISPLAY_NAME_FIELD_NUMBER: _ClassVar[int]
+    ZIP_NAME_FIELD_NUMBER: _ClassVar[int]
+    VERSION_FIELD_NUMBER: _ClassVar[int]
+    PYTHON_VERSION_FIELD_NUMBER: _ClassVar[int]
+    LANG_FIELD_NUMBER: _ClassVar[int]
+    IS_NSFW_FIELD_NUMBER: _ClassVar[int]
+    repo_base_url: str
+    pkg_name: str
+    display_name: str
+    zip_name: str
+    version: int
+    python_version: int
+    lang: str
+    is_nsfw: bool
+    def __init__(self, repo_base_url: _Optional[str] = ..., pkg_name: _Optional[str] = ..., display_name: _Optional[str] = ..., zip_name: _Optional[str] = ..., version: _Optional[int] = ..., python_version: _Optional[int] = ..., lang: _Optional[str] = ..., is_nsfw: bool = ...) -> None: ...

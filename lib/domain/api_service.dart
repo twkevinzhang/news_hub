@@ -3,12 +3,11 @@ import 'package:news_hub/shared/models.dart';
 import 'models/models.dart';
 
 abstract class ApiService {
-
   Future<List<Extension>> listInstalledExtensions();
 
   Future<Extension> getInstalledExtension({
     required String extensionPkgName,
-});
+  });
 
   Future<void> installExtension({
     required Extension extension,
@@ -65,5 +64,9 @@ abstract class ApiService {
     required String threadId,
     required String postId,
     Pagination? pagination,
+  });
+
+  Future<List<RemoteExtension>> listRemoteExtensions({
+    required String repoBaseUrl,
   });
 }

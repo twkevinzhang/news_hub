@@ -118,6 +118,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
               extensionPkgName: board.extensionPkgName,
               siteId: board.siteId,
               boardId: board.id,
+              boardName: Value(board.name),
             ));
       }
     });

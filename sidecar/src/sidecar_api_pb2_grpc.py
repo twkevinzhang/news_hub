@@ -64,6 +64,36 @@ class SidecarApiStub(object):
                 request_serializer=sidecar__api__pb2.GetCommentsReq.SerializeToString,
                 response_deserializer=sidecar__api__pb2.GetCommentsRes.FromString,
                 _registered_method=True)
+        self.ListInstalledExtensions = channel.unary_unary(
+                '/pb.SidecarApi/ListInstalledExtensions',
+                request_serializer=sidecar__api__pb2.Empty.SerializeToString,
+                response_deserializer=sidecar__api__pb2.ListInstalledExtensionsRes.FromString,
+                _registered_method=True)
+        self.GetInstalledExtension = channel.unary_unary(
+                '/pb.SidecarApi/GetInstalledExtension',
+                request_serializer=sidecar__api__pb2.GetInstalledExtensionReq.SerializeToString,
+                response_deserializer=sidecar__api__pb2.GetInstalledExtensionRes.FromString,
+                _registered_method=True)
+        self.InstallExtension = channel.unary_unary(
+                '/pb.SidecarApi/InstallExtension',
+                request_serializer=sidecar__api__pb2.InstallExtensionReq.SerializeToString,
+                response_deserializer=sidecar__api__pb2.Empty.FromString,
+                _registered_method=True)
+        self.UninstallExtension = channel.unary_unary(
+                '/pb.SidecarApi/UninstallExtension',
+                request_serializer=sidecar__api__pb2.UninstallExtensionReq.SerializeToString,
+                response_deserializer=sidecar__api__pb2.Empty.FromString,
+                _registered_method=True)
+        self.GetInstallProgress = channel.unary_unary(
+                '/pb.SidecarApi/GetInstallProgress',
+                request_serializer=sidecar__api__pb2.GetInstallProgressReq.SerializeToString,
+                response_deserializer=sidecar__api__pb2.GetInstallProgressRes.FromString,
+                _registered_method=True)
+        self.ListRemoteExtensions = channel.unary_unary(
+                '/pb.SidecarApi/ListRemoteExtensions',
+                request_serializer=sidecar__api__pb2.ListRemoteExtensionsReq.SerializeToString,
+                response_deserializer=sidecar__api__pb2.ListRemoteExtensionsRes.FromString,
+                _registered_method=True)
 
 
 class SidecarApiServicer(object):
@@ -105,6 +135,42 @@ class SidecarApiServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ListInstalledExtensions(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetInstalledExtension(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def InstallExtension(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def UninstallExtension(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetInstallProgress(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def ListRemoteExtensions(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_SidecarApiServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -137,6 +203,36 @@ def add_SidecarApiServicer_to_server(servicer, server):
                     servicer.GetComments,
                     request_deserializer=sidecar__api__pb2.GetCommentsReq.FromString,
                     response_serializer=sidecar__api__pb2.GetCommentsRes.SerializeToString,
+            ),
+            'ListInstalledExtensions': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListInstalledExtensions,
+                    request_deserializer=sidecar__api__pb2.Empty.FromString,
+                    response_serializer=sidecar__api__pb2.ListInstalledExtensionsRes.SerializeToString,
+            ),
+            'GetInstalledExtension': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetInstalledExtension,
+                    request_deserializer=sidecar__api__pb2.GetInstalledExtensionReq.FromString,
+                    response_serializer=sidecar__api__pb2.GetInstalledExtensionRes.SerializeToString,
+            ),
+            'InstallExtension': grpc.unary_unary_rpc_method_handler(
+                    servicer.InstallExtension,
+                    request_deserializer=sidecar__api__pb2.InstallExtensionReq.FromString,
+                    response_serializer=sidecar__api__pb2.Empty.SerializeToString,
+            ),
+            'UninstallExtension': grpc.unary_unary_rpc_method_handler(
+                    servicer.UninstallExtension,
+                    request_deserializer=sidecar__api__pb2.UninstallExtensionReq.FromString,
+                    response_serializer=sidecar__api__pb2.Empty.SerializeToString,
+            ),
+            'GetInstallProgress': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetInstallProgress,
+                    request_deserializer=sidecar__api__pb2.GetInstallProgressReq.FromString,
+                    response_serializer=sidecar__api__pb2.GetInstallProgressRes.SerializeToString,
+            ),
+            'ListRemoteExtensions': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListRemoteExtensions,
+                    request_deserializer=sidecar__api__pb2.ListRemoteExtensionsReq.FromString,
+                    response_serializer=sidecar__api__pb2.ListRemoteExtensionsRes.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -301,6 +397,168 @@ class SidecarApi(object):
             '/pb.SidecarApi/GetComments',
             sidecar__api__pb2.GetCommentsReq.SerializeToString,
             sidecar__api__pb2.GetCommentsRes.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ListInstalledExtensions(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/pb.SidecarApi/ListInstalledExtensions',
+            sidecar__api__pb2.Empty.SerializeToString,
+            sidecar__api__pb2.ListInstalledExtensionsRes.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetInstalledExtension(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/pb.SidecarApi/GetInstalledExtension',
+            sidecar__api__pb2.GetInstalledExtensionReq.SerializeToString,
+            sidecar__api__pb2.GetInstalledExtensionRes.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def InstallExtension(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/pb.SidecarApi/InstallExtension',
+            sidecar__api__pb2.InstallExtensionReq.SerializeToString,
+            sidecar__api__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def UninstallExtension(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/pb.SidecarApi/UninstallExtension',
+            sidecar__api__pb2.UninstallExtensionReq.SerializeToString,
+            sidecar__api__pb2.Empty.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetInstallProgress(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/pb.SidecarApi/GetInstallProgress',
+            sidecar__api__pb2.GetInstallProgressReq.SerializeToString,
+            sidecar__api__pb2.GetInstallProgressRes.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ListRemoteExtensions(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/pb.SidecarApi/ListRemoteExtensions',
+            sidecar__api__pb2.ListRemoteExtensionsReq.SerializeToString,
+            sidecar__api__pb2.ListRemoteExtensionsRes.FromString,
             options,
             channel_credentials,
             insecure,

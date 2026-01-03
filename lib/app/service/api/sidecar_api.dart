@@ -3,13 +3,13 @@ import 'package:grpc/grpc.dart';
 import 'package:news_hub/app/service/api/models/transform.dart';
 import 'package:news_hub/domain/api_service.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
-import 'package:news_hub/shared/constants.dart';
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/shared/models.dart';
 
 import 'models/sidecar_api.pbgrpc.dart';
+import 'models/sidecar_api.pb.dart' as pb;
 
-@lazySingleton
+@LazySingleton(as: ApiService)
 class SidecarApi implements ApiService {
   late final SidecarApiClient _client;
 
@@ -21,8 +21,8 @@ class SidecarApi implements ApiService {
   Future<domain.Site> getSite({
     required String extensionPkgName,
   }) async {
-    final res = await _client.getSite(GetSiteReq(pkgName: extensionPkgName));
-    return res.site.toDomain();
+    final res = await _client.getSite(pb.GetSiteReq(pkgName: extensionPkgName));
+    return res.site.toSiteDomain();
   }
 
   @override
@@ -31,15 +31,15 @@ class SidecarApi implements ApiService {
     required String siteId,
     Pagination? pagination,
   }) async {
-    final res = await _client.getBoards(GetBoardsReq(
+    final res = await _client.getBoards(pb.GetBoardsReq(
       pkgName: extensionPkgName,
       siteId: siteId,
-      page: PaginationReq(
+      page: pb.PaginationReq(
         page: pagination?.page,
         pageSize: pagination?.pageSize,
       ),
     ));
-    return res.boards.map((b) => b.toDomain()).toList();
+    return res.boards.map((b) => b.toBoardDomain()).toList();
   }
 
   @override
@@ -51,17 +51,17 @@ class SidecarApi implements ApiService {
     String? sortBy,
     String? keywords,
   }) async {
-    final res = await _client.getThreadInfos(GetThreadInfosReq(
+    final res = await _client.getThreadInfos(pb.GetThreadInfosReq(
       pkgName: extensionPkgName,
       siteId: siteId,
-      boardsSorting: boardsSorting,
-      page: PaginationReq(
+      boardsSorting: boardsSorting?.entries,
+      page: pb.PaginationReq(
         page: pagination?.page,
         pageSize: pagination?.pageSize,
       ),
       keywords: keywords,
     ));
-    return res.listThreads.map((t) => t.toDomain()).toList();
+    return res.threadInfos.map((t) => t.toPostDomain()).toList();
   }
 
   @override
@@ -72,14 +72,14 @@ class SidecarApi implements ApiService {
     required String threadId,
     String? postId,
   }) async {
-    final res = await _client.getThreadPost(GetThreadPostReq(
+    final res = await _client.getThreadPost(pb.GetThreadPostReq(
       pkgName: extensionPkgName,
       siteId: siteId,
       boardId: boardId,
       threadId: threadId,
       postId: postId,
     ));
-    return res.threadPost.toDomain();
+    return res.threadPost.toPostDomain();
   }
 
   @override
@@ -91,18 +91,18 @@ class SidecarApi implements ApiService {
     String? replyToId,
     Pagination? pagination,
   }) async {
-    final res = await _client.getRegardingPosts(GetRegardingPostsReq(
+    final res = await _client.getRegardingPosts(pb.GetRegardingPostsReq(
       pkgName: extensionPkgName,
       siteId: siteId,
       boardId: boardId,
       threadId: threadId,
       replyToId: replyToId,
-      page: PaginationReq(
+      page: pb.PaginationReq(
         page: pagination?.page,
         pageSize: pagination?.pageSize,
       ),
     ));
-    return res.regardingPosts.map((p) => p.toDomain()).toList();
+    return res.regardingPosts.map((p) => p.toPostDomain()).toList();
   }
 
   @override
@@ -114,47 +114,55 @@ class SidecarApi implements ApiService {
     required String postId,
     Pagination? pagination,
   }) async {
-    final res = await _client.getComments(GetCommentsReq(
+    final res = await _client.getComments(pb.GetCommentsReq(
       pkgName: extensionPkgName,
       siteId: siteId,
       boardId: boardId,
       threadId: threadId,
       postId: postId,
-      page: PaginationReq(
+      page: pb.PaginationReq(
         page: pagination?.page,
         pageSize: pagination?.pageSize,
       ),
     ));
-    return res.comments.map((c) => c.toDomain()).toList();
+    return res.comments.map((c) => c.toCommentDomain()).toList();
   }
 
   @override
-  Future<List<domain.Site>> getInstallProgress({required String extensionPkgName}) {
-    // TODO: implement getInstallProgress
-    throw UnimplementedError();
+  Future<List<domain.Site>> getInstallProgress({required String extensionPkgName}) async {
+    final res = await _client.getInstallProgress(pb.GetInstallProgressReq(pkgName: extensionPkgName));
+    return res.sites.map((s) => s.toSiteDomain()).toList();
   }
 
   @override
-  Future<domain.Extension> getInstalledExtension({required String extensionPkgName}) {
-    // TODO: implement getInstalledExtension
-    throw UnimplementedError();
+  Future<domain.Extension> getInstalledExtension({required String extensionPkgName}) async {
+    final res = await _client.getInstalledExtension(pb.GetInstalledExtensionReq(pkgName: extensionPkgName));
+    return res.extension.toExtensionDomain();
   }
 
   @override
-  Future<void> installExtension({required domain.Extension extension}) {
-    // TODO: implement installExtension
-    throw UnimplementedError();
+  Future<void> installExtension({required domain.Extension extension}) async {
+    await _client.installExtension(pb.InstallExtensionReq(
+      pkgName: extension.pkgName,
+      zipName: extension.zipName,
+      repoBaseUrl: extension.repoBaseUrl,
+    ));
   }
 
   @override
-  Future<List<domain.Extension>> listInstalledExtensions() {
-    // TODO: implement listInstalledExtensions
-    throw UnimplementedError();
+  Future<List<domain.Extension>> listInstalledExtensions() async {
+    final res = await _client.listInstalledExtensions(pb.Empty());
+    return res.extensions.map((e) => e.toExtensionDomain()).toList();
   }
 
   @override
-  Future<void> uninstallExtension({required domain.Extension extension}) {
-    // TODO: implement uninstallExtension
-    throw UnimplementedError();
+  Future<void> uninstallExtension({required domain.Extension extension}) async {
+    await _client.uninstallExtension(pb.UninstallExtensionReq(pkgName: extension.pkgName));
+  }
+
+  @override
+  Future<List<domain.RemoteExtension>> listRemoteExtensions({required String repoBaseUrl}) async {
+    final res = await _client.listRemoteExtensions(pb.ListRemoteExtensionsReq(repoBaseUrl: repoBaseUrl));
+    return res.extensions.map((e) => e.toRemoteExtensionDomain()).toList();
   }
 }

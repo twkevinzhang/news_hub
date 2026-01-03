@@ -914,3 +914,188 @@ final $typed_data.Uint8List commentDescriptor = $convert.base64Decode(
     '9yX2lkGAYgASgJUghhdXRob3JJZBIfCgthdXRob3JfbmFtZRgKIAEoCVIKYXV0aG9yTmFtZRIp'
     'Cghjb250ZW50cxgLIAMoCzINLnBiLlBhcmFncmFwaFIIY29udGVudHMSHQoKY3JlYXRlZF9hdB'
     'gIIAEoA1IJY3JlYXRlZEF0');
+
+@$core.Deprecated('Use listInstalledExtensionsResDescriptor instead')
+const ListInstalledExtensionsRes$json = {
+  '1': 'ListInstalledExtensionsRes',
+  '2': [
+    {
+      '1': 'extensions',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.pb.Extension',
+      '10': 'extensions'
+    },
+  ],
+};
+
+/// Descriptor for `ListInstalledExtensionsRes`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listInstalledExtensionsResDescriptor =
+    $convert.base64Decode(
+        'ChpMaXN0SW5zdGFsbGVkRXh0ZW5zaW9uc1JlcxItCgpleHRlbnNpb25zGAEgAygLMg0ucGIuRX'
+        'h0ZW5zaW9uUgpleHRlbnNpb25z');
+
+@$core.Deprecated('Use getInstalledExtensionReqDescriptor instead')
+const GetInstalledExtensionReq$json = {
+  '1': 'GetInstalledExtensionReq',
+  '2': [
+    {'1': 'pkg_name', '3': 1, '4': 1, '5': 9, '10': 'pkgName'},
+  ],
+};
+
+/// Descriptor for `GetInstalledExtensionReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getInstalledExtensionReqDescriptor =
+    $convert.base64Decode(
+        'ChhHZXRJbnN0YWxsZWRFeHRlbnNpb25SZXESGQoIcGtnX25hbWUYASABKAlSB3BrZ05hbWU=');
+
+@$core.Deprecated('Use getInstalledExtensionResDescriptor instead')
+const GetInstalledExtensionRes$json = {
+  '1': 'GetInstalledExtensionRes',
+  '2': [
+    {
+      '1': 'extension',
+      '3': 1,
+      '4': 1,
+      '5': 11,
+      '6': '.pb.Extension',
+      '10': 'extension'
+    },
+  ],
+};
+
+/// Descriptor for `GetInstalledExtensionRes`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getInstalledExtensionResDescriptor =
+    $convert.base64Decode(
+        'ChhHZXRJbnN0YWxsZWRFeHRlbnNpb25SZXMSKwoJZXh0ZW5zaW9uGAEgASgLMg0ucGIuRXh0ZW'
+        '5zaW9uUglleHRlbnNpb24=');
+
+@$core.Deprecated('Use installExtensionReqDescriptor instead')
+const InstallExtensionReq$json = {
+  '1': 'InstallExtensionReq',
+  '2': [
+    {'1': 'pkg_name', '3': 1, '4': 1, '5': 9, '10': 'pkgName'},
+    {'1': 'zip_name', '3': 2, '4': 1, '5': 9, '10': 'zipName'},
+    {'1': 'repo_base_url', '3': 3, '4': 1, '5': 9, '10': 'repoBaseUrl'},
+  ],
+};
+
+/// Descriptor for `InstallExtensionReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List installExtensionReqDescriptor = $convert.base64Decode(
+    'ChNJbnN0YWxsRXh0ZW5zaW9uUmVxEhkKCHBrZ19uYW1lGAEgASgJUgdwa2dOYW1lEhkKCHppcF'
+    '9uYW1lGAIgASgJUgd6aXBOYW1lEiIKDXJlcG9fYmFzZV91cmwYAyABKAlSC3JlcG9CYXNlVXJs');
+
+@$core.Deprecated('Use uninstallExtensionReqDescriptor instead')
+const UninstallExtensionReq$json = {
+  '1': 'UninstallExtensionReq',
+  '2': [
+    {'1': 'pkg_name', '3': 1, '4': 1, '5': 9, '10': 'pkgName'},
+  ],
+};
+
+/// Descriptor for `UninstallExtensionReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List uninstallExtensionReqDescriptor =
+    $convert.base64Decode(
+        'ChVVbmluc3RhbGxFeHRlbnNpb25SZXESGQoIcGtnX25hbWUYASABKAlSB3BrZ05hbWU=');
+
+@$core.Deprecated('Use getInstallProgressReqDescriptor instead')
+const GetInstallProgressReq$json = {
+  '1': 'GetInstallProgressReq',
+  '2': [
+    {'1': 'pkg_name', '3': 1, '4': 1, '5': 9, '10': 'pkgName'},
+  ],
+};
+
+/// Descriptor for `GetInstallProgressReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getInstallProgressReqDescriptor =
+    $convert.base64Decode(
+        'ChVHZXRJbnN0YWxsUHJvZ3Jlc3NSZXESGQoIcGtnX25hbWUYASABKAlSB3BrZ05hbWU=');
+
+@$core.Deprecated('Use getInstallProgressResDescriptor instead')
+const GetInstallProgressRes$json = {
+  '1': 'GetInstallProgressRes',
+  '2': [
+    {'1': 'sites', '3': 1, '4': 3, '5': 11, '6': '.pb.Site', '10': 'sites'},
+  ],
+};
+
+/// Descriptor for `GetInstallProgressRes`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getInstallProgressResDescriptor = $convert.base64Decode(
+    'ChVHZXRJbnN0YWxsUHJvZ3Jlc3NSZXMSHgoFc2l0ZXMYASADKAsyCC5wYi5TaXRlUgVzaXRlcw'
+    '==');
+
+@$core.Deprecated('Use listRemoteExtensionsReqDescriptor instead')
+const ListRemoteExtensionsReq$json = {
+  '1': 'ListRemoteExtensionsReq',
+  '2': [
+    {'1': 'repo_base_url', '3': 1, '4': 1, '5': 9, '10': 'repoBaseUrl'},
+  ],
+};
+
+/// Descriptor for `ListRemoteExtensionsReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listRemoteExtensionsReqDescriptor =
+    $convert.base64Decode(
+        'ChdMaXN0UmVtb3RlRXh0ZW5zaW9uc1JlcRIiCg1yZXBvX2Jhc2VfdXJsGAEgASgJUgtyZXBvQm'
+        'FzZVVybA==');
+
+@$core.Deprecated('Use listRemoteExtensionsResDescriptor instead')
+const ListRemoteExtensionsRes$json = {
+  '1': 'ListRemoteExtensionsRes',
+  '2': [
+    {
+      '1': 'extensions',
+      '3': 1,
+      '4': 3,
+      '5': 11,
+      '6': '.pb.RemoteExtension',
+      '10': 'extensions'
+    },
+  ],
+};
+
+/// Descriptor for `ListRemoteExtensionsRes`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List listRemoteExtensionsResDescriptor =
+    $convert.base64Decode(
+        'ChdMaXN0UmVtb3RlRXh0ZW5zaW9uc1JlcxIzCgpleHRlbnNpb25zGAEgAygLMhMucGIuUmVtb3'
+        'RlRXh0ZW5zaW9uUgpleHRlbnNpb25z');
+
+@$core.Deprecated('Use remoteExtensionDescriptor instead')
+const RemoteExtension$json = {
+  '1': 'RemoteExtension',
+  '2': [
+    {'1': 'base', '3': 1, '4': 1, '5': 11, '6': '.pb.Extension', '10': 'base'},
+    {'1': 'icon_url', '3': 2, '4': 1, '5': 9, '10': 'iconUrl'},
+    {'1': 'repo_url', '3': 3, '4': 1, '5': 9, '10': 'repoUrl'},
+  ],
+};
+
+/// Descriptor for `RemoteExtension`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List remoteExtensionDescriptor = $convert.base64Decode(
+    'Cg9SZW1vdGVFeHRlbnNpb24SIQoEYmFzZRgBIAEoCzINLnBiLkV4dGVuc2lvblIEYmFzZRIZCg'
+    'hpY29uX3VybBgCIAEoCVIHaWNvblVybBIZCghyZXBvX3VybBgDIAEoCVIHcmVwb1VybA==');
+
+@$core.Deprecated('Use extensionDescriptor instead')
+const Extension$json = {
+  '1': 'Extension',
+  '2': [
+    {'1': 'repo_base_url', '3': 1, '4': 1, '5': 9, '10': 'repoBaseUrl'},
+    {'1': 'pkg_name', '3': 2, '4': 1, '5': 9, '10': 'pkgName'},
+    {'1': 'display_name', '3': 3, '4': 1, '5': 9, '10': 'displayName'},
+    {'1': 'zip_name', '3': 4, '4': 1, '5': 9, '10': 'zipName'},
+    {'1': 'version', '3': 5, '4': 1, '5': 5, '10': 'version'},
+    {'1': 'python_version', '3': 6, '4': 1, '5': 5, '10': 'pythonVersion'},
+    {'1': 'lang', '3': 7, '4': 1, '5': 9, '9': 0, '10': 'lang', '17': true},
+    {'1': 'is_nsfw', '3': 8, '4': 1, '5': 8, '10': 'isNsfw'},
+  ],
+  '8': [
+    {'1': '_lang'},
+  ],
+};
+
+/// Descriptor for `Extension`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List extensionDescriptor = $convert.base64Decode(
+    'CglFeHRlbnNpb24SIgoNcmVwb19iYXNlX3VybBgBIAEoCVILcmVwb0Jhc2VVcmwSGQoIcGtnX2'
+    '5hbWUYAiABKAlSB3BrZ05hbWUSIQoMZGlzcGxheV9uYW1lGAMgASgJUgtkaXNwbGF5TmFtZRIZ'
+    'Cgh6aXBfbmFtZRgEIAEoCVIHemlwTmFtZRIYCgd2ZXJzaW9uGAUgASgFUgd2ZXJzaW9uEiUKDn'
+    'B5dGhvbl92ZXJzaW9uGAYgASgFUg1weXRob25WZXJzaW9uEhcKBGxhbmcYByABKAlIAFIEbGFu'
+    'Z4gBARIXCgdpc19uc2Z3GAggASgIUgZpc05zZndCBwoFX2xhbmc=');
