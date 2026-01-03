@@ -191,6 +191,7 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
                 ],
               ),
               floatingActionButton: Column(
+                mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   FloatingActionButton.small(
