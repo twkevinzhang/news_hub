@@ -6,6 +6,10 @@ protobuf==4.25.1
 # HTTP client
 aiohttp==3.9.1
 
+# HTML/XML parsing
+lxml==5.1.0
+beautifulsoup4==4.12.2
+
 # Testing
 pytest==7.4.3
 pytest-cov==4.1.0
