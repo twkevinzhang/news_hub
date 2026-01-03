@@ -94,6 +94,31 @@ class SidecarApiStub(object):
                 request_serializer=sidecar__api__pb2.ListRemoteExtensionsReq.SerializeToString,
                 response_deserializer=sidecar__api__pb2.ListRemoteExtensionsRes.FromString,
                 _registered_method=True)
+        self.HealthCheck = channel.unary_unary(
+                '/pb.SidecarApi/HealthCheck',
+                request_serializer=sidecar__api__pb2.HealthCheckRequest.SerializeToString,
+                response_deserializer=sidecar__api__pb2.HealthCheckResponse.FromString,
+                _registered_method=True)
+        self.WatchHealth = channel.unary_stream(
+                '/pb.SidecarApi/WatchHealth',
+                request_serializer=sidecar__api__pb2.HealthCheckRequest.SerializeToString,
+                response_deserializer=sidecar__api__pb2.HealthCheckResponse.FromString,
+                _registered_method=True)
+        self.StreamLogs = channel.unary_stream(
+                '/pb.SidecarApi/StreamLogs',
+                request_serializer=sidecar__api__pb2.StreamLogsRequest.SerializeToString,
+                response_deserializer=sidecar__api__pb2.LogEntry.FromString,
+                _registered_method=True)
+        self.GetLogs = channel.unary_unary(
+                '/pb.SidecarApi/GetLogs',
+                request_serializer=sidecar__api__pb2.GetLogsRequest.SerializeToString,
+                response_deserializer=sidecar__api__pb2.GetLogsResponse.FromString,
+                _registered_method=True)
+        self.SetLogLevel = channel.unary_unary(
+                '/pb.SidecarApi/SetLogLevel',
+                request_serializer=sidecar__api__pb2.SetLogLevelRequest.SerializeToString,
+                response_deserializer=sidecar__api__pb2.Empty.FromString,
+                _registered_method=True)
 
 
 class SidecarApiServicer(object):
@@ -171,6 +196,38 @@ class SidecarApiServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def HealthCheck(self, request, context):
+        """Health Check
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def WatchHealth(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def StreamLogs(self, request, context):
+        """Logs
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetLogs(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def SetLogLevel(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_SidecarApiServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -233,6 +290,31 @@ def add_SidecarApiServicer_to_server(servicer, server):
                     servicer.ListRemoteExtensions,
                     request_deserializer=sidecar__api__pb2.ListRemoteExtensionsReq.FromString,
                     response_serializer=sidecar__api__pb2.ListRemoteExtensionsRes.SerializeToString,
+            ),
+            'HealthCheck': grpc.unary_unary_rpc_method_handler(
+                    servicer.HealthCheck,
+                    request_deserializer=sidecar__api__pb2.HealthCheckRequest.FromString,
+                    response_serializer=sidecar__api__pb2.HealthCheckResponse.SerializeToString,
+            ),
+            'WatchHealth': grpc.unary_stream_rpc_method_handler(
+                    servicer.WatchHealth,
+                    request_deserializer=sidecar__api__pb2.HealthCheckRequest.FromString,
+                    response_serializer=sidecar__api__pb2.HealthCheckResponse.SerializeToString,
+            ),
+            'StreamLogs': grpc.unary_stream_rpc_method_handler(
+                    servicer.StreamLogs,
+                    request_deserializer=sidecar__api__pb2.StreamLogsRequest.FromString,
+                    response_serializer=sidecar__api__pb2.LogEntry.SerializeToString,
+            ),
+            'GetLogs': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetLogs,
+                    request_deserializer=sidecar__api__pb2.GetLogsRequest.FromString,
+                    response_serializer=sidecar__api__pb2.GetLogsResponse.SerializeToString,
+            ),
+            'SetLogLevel': grpc.unary_unary_rpc_method_handler(
+                    servicer.SetLogLevel,
+                    request_deserializer=sidecar__api__pb2.SetLogLevelRequest.FromString,
+                    response_serializer=sidecar__api__pb2.Empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -559,6 +641,141 @@ class SidecarApi(object):
             '/pb.SidecarApi/ListRemoteExtensions',
             sidecar__api__pb2.ListRemoteExtensionsReq.SerializeToString,
             sidecar__api__pb2.ListRemoteExtensionsRes.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def HealthCheck(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/pb.SidecarApi/HealthCheck',
+            sidecar__api__pb2.HealthCheckRequest.SerializeToString,
+            sidecar__api__pb2.HealthCheckResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def WatchHealth(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(
+            request,
+            target,
+            '/pb.SidecarApi/WatchHealth',
+            sidecar__api__pb2.HealthCheckRequest.SerializeToString,
+            sidecar__api__pb2.HealthCheckResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def StreamLogs(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_stream(
+            request,
+            target,
+            '/pb.SidecarApi/StreamLogs',
+            sidecar__api__pb2.StreamLogsRequest.SerializeToString,
+            sidecar__api__pb2.LogEntry.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetLogs(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/pb.SidecarApi/GetLogs',
+            sidecar__api__pb2.GetLogsRequest.SerializeToString,
+            sidecar__api__pb2.GetLogsResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def SetLogLevel(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/pb.SidecarApi/SetLogLevel',
+            sidecar__api__pb2.SetLogLevelRequest.SerializeToString,
+            sidecar__api__pb2.Empty.FromString,
             options,
             channel_credentials,
             insecure,

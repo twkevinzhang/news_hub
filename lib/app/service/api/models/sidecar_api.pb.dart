@@ -3432,6 +3432,491 @@ class Extension extends $pb.GeneratedMessage {
   void clearIsNsfw() => clearField(8);
 }
 
+/// Health Check Messages
+class HealthCheckRequest extends $pb.GeneratedMessage {
+  factory HealthCheckRequest({
+    $core.String? service,
+  }) {
+    final $result = create();
+    if (service != null) {
+      $result.service = service;
+    }
+    return $result;
+  }
+  HealthCheckRequest._() : super();
+  factory HealthCheckRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory HealthCheckRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'HealthCheckRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'service')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  HealthCheckRequest clone() => HealthCheckRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  HealthCheckRequest copyWith(void Function(HealthCheckRequest) updates) => super.copyWith((message) => updates(message as HealthCheckRequest)) as HealthCheckRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static HealthCheckRequest create() => HealthCheckRequest._();
+  HealthCheckRequest createEmptyInstance() => create();
+  static $pb.PbList<HealthCheckRequest> createRepeated() => $pb.PbList<HealthCheckRequest>();
+  @$core.pragma('dart2js:noInline')
+  static HealthCheckRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HealthCheckRequest>(create);
+  static HealthCheckRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get service => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set service($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasService() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearService() => clearField(1);
+}
+
+class HealthCheckResponse extends $pb.GeneratedMessage {
+  factory HealthCheckResponse({
+    HealthCheckResponse_ServingStatus? status,
+    $core.String? message,
+  }) {
+    final $result = create();
+    if (status != null) {
+      $result.status = status;
+    }
+    if (message != null) {
+      $result.message = message;
+    }
+    return $result;
+  }
+  HealthCheckResponse._() : super();
+  factory HealthCheckResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory HealthCheckResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'HealthCheckResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..e<HealthCheckResponse_ServingStatus>(1, _omitFieldNames ? '' : 'status', $pb.PbFieldType.OE, defaultOrMaker: HealthCheckResponse_ServingStatus.UNKNOWN, valueOf: HealthCheckResponse_ServingStatus.valueOf, enumValues: HealthCheckResponse_ServingStatus.values)
+    ..aOS(2, _omitFieldNames ? '' : 'message')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  HealthCheckResponse clone() => HealthCheckResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  HealthCheckResponse copyWith(void Function(HealthCheckResponse) updates) => super.copyWith((message) => updates(message as HealthCheckResponse)) as HealthCheckResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static HealthCheckResponse create() => HealthCheckResponse._();
+  HealthCheckResponse createEmptyInstance() => create();
+  static $pb.PbList<HealthCheckResponse> createRepeated() => $pb.PbList<HealthCheckResponse>();
+  @$core.pragma('dart2js:noInline')
+  static HealthCheckResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HealthCheckResponse>(create);
+  static HealthCheckResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  HealthCheckResponse_ServingStatus get status => $_getN(0);
+  @$pb.TagNumber(1)
+  set status(HealthCheckResponse_ServingStatus v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasStatus() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearStatus() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get message => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set message($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasMessage() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearMessage() => clearField(2);
+}
+
+class LogEntry extends $pb.GeneratedMessage {
+  factory LogEntry({
+    $fixnum.Int64? timestamp,
+    LogLevel? level,
+    $core.String? loggerName,
+    $core.String? message,
+    $core.String? exception,
+  }) {
+    final $result = create();
+    if (timestamp != null) {
+      $result.timestamp = timestamp;
+    }
+    if (level != null) {
+      $result.level = level;
+    }
+    if (loggerName != null) {
+      $result.loggerName = loggerName;
+    }
+    if (message != null) {
+      $result.message = message;
+    }
+    if (exception != null) {
+      $result.exception = exception;
+    }
+    return $result;
+  }
+  LogEntry._() : super();
+  factory LogEntry.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory LogEntry.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'LogEntry', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'timestamp')
+    ..e<LogLevel>(2, _omitFieldNames ? '' : 'level', $pb.PbFieldType.OE, defaultOrMaker: LogLevel.DEBUG, valueOf: LogLevel.valueOf, enumValues: LogLevel.values)
+    ..aOS(3, _omitFieldNames ? '' : 'loggerName')
+    ..aOS(4, _omitFieldNames ? '' : 'message')
+    ..aOS(5, _omitFieldNames ? '' : 'exception')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  LogEntry clone() => LogEntry()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  LogEntry copyWith(void Function(LogEntry) updates) => super.copyWith((message) => updates(message as LogEntry)) as LogEntry;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static LogEntry create() => LogEntry._();
+  LogEntry createEmptyInstance() => create();
+  static $pb.PbList<LogEntry> createRepeated() => $pb.PbList<LogEntry>();
+  @$core.pragma('dart2js:noInline')
+  static LogEntry getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<LogEntry>(create);
+  static LogEntry? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get timestamp => $_getI64(0);
+  @$pb.TagNumber(1)
+  set timestamp($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasTimestamp() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearTimestamp() => clearField(1);
+
+  @$pb.TagNumber(2)
+  LogLevel get level => $_getN(1);
+  @$pb.TagNumber(2)
+  set level(LogLevel v) { setField(2, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasLevel() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearLevel() => clearField(2);
+
+  @$pb.TagNumber(3)
+  $core.String get loggerName => $_getSZ(2);
+  @$pb.TagNumber(3)
+  set loggerName($core.String v) { $_setString(2, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasLoggerName() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearLoggerName() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get message => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set message($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasMessage() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearMessage() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.String get exception => $_getSZ(4);
+  @$pb.TagNumber(5)
+  set exception($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasException() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearException() => clearField(5);
+}
+
+class StreamLogsRequest extends $pb.GeneratedMessage {
+  factory StreamLogsRequest({
+    LogLevel? minLevel,
+    $core.String? loggerFilter,
+  }) {
+    final $result = create();
+    if (minLevel != null) {
+      $result.minLevel = minLevel;
+    }
+    if (loggerFilter != null) {
+      $result.loggerFilter = loggerFilter;
+    }
+    return $result;
+  }
+  StreamLogsRequest._() : super();
+  factory StreamLogsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory StreamLogsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'StreamLogsRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..e<LogLevel>(1, _omitFieldNames ? '' : 'minLevel', $pb.PbFieldType.OE, defaultOrMaker: LogLevel.DEBUG, valueOf: LogLevel.valueOf, enumValues: LogLevel.values)
+    ..aOS(2, _omitFieldNames ? '' : 'loggerFilter')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  StreamLogsRequest clone() => StreamLogsRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  StreamLogsRequest copyWith(void Function(StreamLogsRequest) updates) => super.copyWith((message) => updates(message as StreamLogsRequest)) as StreamLogsRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static StreamLogsRequest create() => StreamLogsRequest._();
+  StreamLogsRequest createEmptyInstance() => create();
+  static $pb.PbList<StreamLogsRequest> createRepeated() => $pb.PbList<StreamLogsRequest>();
+  @$core.pragma('dart2js:noInline')
+  static StreamLogsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StreamLogsRequest>(create);
+  static StreamLogsRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  LogLevel get minLevel => $_getN(0);
+  @$pb.TagNumber(1)
+  set minLevel(LogLevel v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasMinLevel() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearMinLevel() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get loggerFilter => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set loggerFilter($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasLoggerFilter() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearLoggerFilter() => clearField(2);
+}
+
+class GetLogsRequest extends $pb.GeneratedMessage {
+  factory GetLogsRequest({
+    $fixnum.Int64? startTime,
+    $fixnum.Int64? endTime,
+    LogLevel? minLevel,
+    $core.String? loggerFilter,
+    $core.int? limit,
+  }) {
+    final $result = create();
+    if (startTime != null) {
+      $result.startTime = startTime;
+    }
+    if (endTime != null) {
+      $result.endTime = endTime;
+    }
+    if (minLevel != null) {
+      $result.minLevel = minLevel;
+    }
+    if (loggerFilter != null) {
+      $result.loggerFilter = loggerFilter;
+    }
+    if (limit != null) {
+      $result.limit = limit;
+    }
+    return $result;
+  }
+  GetLogsRequest._() : super();
+  factory GetLogsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetLogsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetLogsRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..aInt64(1, _omitFieldNames ? '' : 'startTime')
+    ..aInt64(2, _omitFieldNames ? '' : 'endTime')
+    ..e<LogLevel>(3, _omitFieldNames ? '' : 'minLevel', $pb.PbFieldType.OE, defaultOrMaker: LogLevel.DEBUG, valueOf: LogLevel.valueOf, enumValues: LogLevel.values)
+    ..aOS(4, _omitFieldNames ? '' : 'loggerFilter')
+    ..a<$core.int>(5, _omitFieldNames ? '' : 'limit', $pb.PbFieldType.O3)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetLogsRequest clone() => GetLogsRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetLogsRequest copyWith(void Function(GetLogsRequest) updates) => super.copyWith((message) => updates(message as GetLogsRequest)) as GetLogsRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetLogsRequest create() => GetLogsRequest._();
+  GetLogsRequest createEmptyInstance() => create();
+  static $pb.PbList<GetLogsRequest> createRepeated() => $pb.PbList<GetLogsRequest>();
+  @$core.pragma('dart2js:noInline')
+  static GetLogsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetLogsRequest>(create);
+  static GetLogsRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $fixnum.Int64 get startTime => $_getI64(0);
+  @$pb.TagNumber(1)
+  set startTime($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasStartTime() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearStartTime() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get endTime => $_getI64(1);
+  @$pb.TagNumber(2)
+  set endTime($fixnum.Int64 v) { $_setInt64(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasEndTime() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearEndTime() => clearField(2);
+
+  @$pb.TagNumber(3)
+  LogLevel get minLevel => $_getN(2);
+  @$pb.TagNumber(3)
+  set minLevel(LogLevel v) { setField(3, v); }
+  @$pb.TagNumber(3)
+  $core.bool hasMinLevel() => $_has(2);
+  @$pb.TagNumber(3)
+  void clearMinLevel() => clearField(3);
+
+  @$pb.TagNumber(4)
+  $core.String get loggerFilter => $_getSZ(3);
+  @$pb.TagNumber(4)
+  set loggerFilter($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(4)
+  $core.bool hasLoggerFilter() => $_has(3);
+  @$pb.TagNumber(4)
+  void clearLoggerFilter() => clearField(4);
+
+  @$pb.TagNumber(5)
+  $core.int get limit => $_getIZ(4);
+  @$pb.TagNumber(5)
+  set limit($core.int v) { $_setSignedInt32(4, v); }
+  @$pb.TagNumber(5)
+  $core.bool hasLimit() => $_has(4);
+  @$pb.TagNumber(5)
+  void clearLimit() => clearField(5);
+}
+
+class GetLogsResponse extends $pb.GeneratedMessage {
+  factory GetLogsResponse({
+    $core.Iterable<LogEntry>? entries,
+  }) {
+    final $result = create();
+    if (entries != null) {
+      $result.entries.addAll(entries);
+    }
+    return $result;
+  }
+  GetLogsResponse._() : super();
+  factory GetLogsResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetLogsResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetLogsResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..pc<LogEntry>(1, _omitFieldNames ? '' : 'entries', $pb.PbFieldType.PM, subBuilder: LogEntry.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetLogsResponse clone() => GetLogsResponse()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetLogsResponse copyWith(void Function(GetLogsResponse) updates) => super.copyWith((message) => updates(message as GetLogsResponse)) as GetLogsResponse;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetLogsResponse create() => GetLogsResponse._();
+  GetLogsResponse createEmptyInstance() => create();
+  static $pb.PbList<GetLogsResponse> createRepeated() => $pb.PbList<GetLogsResponse>();
+  @$core.pragma('dart2js:noInline')
+  static GetLogsResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetLogsResponse>(create);
+  static GetLogsResponse? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<LogEntry> get entries => $_getList(0);
+}
+
+class SetLogLevelRequest extends $pb.GeneratedMessage {
+  factory SetLogLevelRequest({
+    LogLevel? level,
+  }) {
+    final $result = create();
+    if (level != null) {
+      $result.level = level;
+    }
+    return $result;
+  }
+  SetLogLevelRequest._() : super();
+  factory SetLogLevelRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SetLogLevelRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SetLogLevelRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..e<LogLevel>(1, _omitFieldNames ? '' : 'level', $pb.PbFieldType.OE, defaultOrMaker: LogLevel.DEBUG, valueOf: LogLevel.valueOf, enumValues: LogLevel.values)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  SetLogLevelRequest clone() => SetLogLevelRequest()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  SetLogLevelRequest copyWith(void Function(SetLogLevelRequest) updates) => super.copyWith((message) => updates(message as SetLogLevelRequest)) as SetLogLevelRequest;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static SetLogLevelRequest create() => SetLogLevelRequest._();
+  SetLogLevelRequest createEmptyInstance() => create();
+  static $pb.PbList<SetLogLevelRequest> createRepeated() => $pb.PbList<SetLogLevelRequest>();
+  @$core.pragma('dart2js:noInline')
+  static SetLogLevelRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetLogLevelRequest>(create);
+  static SetLogLevelRequest? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  LogLevel get level => $_getN(0);
+  @$pb.TagNumber(1)
+  set level(LogLevel v) { setField(1, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasLevel() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearLevel() => clearField(1);
+}
+
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
 const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

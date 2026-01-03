@@ -16,6 +16,14 @@ class ParagraphType(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
     PARAGRAPH_TYPE_IMAGE: _ClassVar[ParagraphType]
     PARAGRAPH_TYPE_LINK: _ClassVar[ParagraphType]
     PARAGRAPH_TYPE_VIDEO: _ClassVar[ParagraphType]
+
+class LogLevel(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+    __slots__ = ()
+    DEBUG: _ClassVar[LogLevel]
+    INFO: _ClassVar[LogLevel]
+    WARNING: _ClassVar[LogLevel]
+    ERROR: _ClassVar[LogLevel]
+    CRITICAL: _ClassVar[LogLevel]
 PARAGRAPH_TYPE_UNSPECIFIED: ParagraphType
 PARAGRAPH_TYPE_QUOTE: ParagraphType
 PARAGRAPH_TYPE_REPLY_TO: ParagraphType
@@ -24,6 +32,11 @@ PARAGRAPH_TYPE_NEW_LINE: ParagraphType
 PARAGRAPH_TYPE_IMAGE: ParagraphType
 PARAGRAPH_TYPE_LINK: ParagraphType
 PARAGRAPH_TYPE_VIDEO: ParagraphType
+DEBUG: LogLevel
+INFO: LogLevel
+WARNING: LogLevel
+ERROR: LogLevel
+CRITICAL: LogLevel
 
 class PaginationReq(_message.Message):
     __slots__ = ("page", "page_size", "limit", "prev_cursor", "next_cursor")
@@ -473,3 +486,75 @@ class Extension(_message.Message):
     lang: str
     is_nsfw: bool
     def __init__(self, repo_base_url: _Optional[str] = ..., pkg_name: _Optional[str] = ..., display_name: _Optional[str] = ..., zip_name: _Optional[str] = ..., version: _Optional[int] = ..., python_version: _Optional[int] = ..., lang: _Optional[str] = ..., is_nsfw: bool = ...) -> None: ...
+
+class HealthCheckRequest(_message.Message):
+    __slots__ = ("service",)
+    SERVICE_FIELD_NUMBER: _ClassVar[int]
+    service: str
+    def __init__(self, service: _Optional[str] = ...) -> None: ...
+
+class HealthCheckResponse(_message.Message):
+    __slots__ = ("status", "message")
+    class ServingStatus(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
+        __slots__ = ()
+        UNKNOWN: _ClassVar[HealthCheckResponse.ServingStatus]
+        SERVING: _ClassVar[HealthCheckResponse.ServingStatus]
+        NOT_SERVING: _ClassVar[HealthCheckResponse.ServingStatus]
+        SERVICE_UNKNOWN: _ClassVar[HealthCheckResponse.ServingStatus]
+    UNKNOWN: HealthCheckResponse.ServingStatus
+    SERVING: HealthCheckResponse.ServingStatus
+    NOT_SERVING: HealthCheckResponse.ServingStatus
+    SERVICE_UNKNOWN: HealthCheckResponse.ServingStatus
+    STATUS_FIELD_NUMBER: _ClassVar[int]
+    MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    status: HealthCheckResponse.ServingStatus
+    message: str
+    def __init__(self, status: _Optional[_Union[HealthCheckResponse.ServingStatus, str]] = ..., message: _Optional[str] = ...) -> None: ...
+
+class LogEntry(_message.Message):
+    __slots__ = ("timestamp", "level", "logger_name", "message", "exception")
+    TIMESTAMP_FIELD_NUMBER: _ClassVar[int]
+    LEVEL_FIELD_NUMBER: _ClassVar[int]
+    LOGGER_NAME_FIELD_NUMBER: _ClassVar[int]
+    MESSAGE_FIELD_NUMBER: _ClassVar[int]
+    EXCEPTION_FIELD_NUMBER: _ClassVar[int]
+    timestamp: int
+    level: LogLevel
+    logger_name: str
+    message: str
+    exception: str
+    def __init__(self, timestamp: _Optional[int] = ..., level: _Optional[_Union[LogLevel, str]] = ..., logger_name: _Optional[str] = ..., message: _Optional[str] = ..., exception: _Optional[str] = ...) -> None: ...
+
+class StreamLogsRequest(_message.Message):
+    __slots__ = ("min_level", "logger_filter")
+    MIN_LEVEL_FIELD_NUMBER: _ClassVar[int]
+    LOGGER_FILTER_FIELD_NUMBER: _ClassVar[int]
+    min_level: LogLevel
+    logger_filter: str
+    def __init__(self, min_level: _Optional[_Union[LogLevel, str]] = ..., logger_filter: _Optional[str] = ...) -> None: ...
+
+class GetLogsRequest(_message.Message):
+    __slots__ = ("start_time", "end_time", "min_level", "logger_filter", "limit")
+    START_TIME_FIELD_NUMBER: _ClassVar[int]
+    END_TIME_FIELD_NUMBER: _ClassVar[int]
+    MIN_LEVEL_FIELD_NUMBER: _ClassVar[int]
+    LOGGER_FILTER_FIELD_NUMBER: _ClassVar[int]
+    LIMIT_FIELD_NUMBER: _ClassVar[int]
+    start_time: int
+    end_time: int
+    min_level: LogLevel
+    logger_filter: str
+    limit: int
+    def __init__(self, start_time: _Optional[int] = ..., end_time: _Optional[int] = ..., min_level: _Optional[_Union[LogLevel, str]] = ..., logger_filter: _Optional[str] = ..., limit: _Optional[int] = ...) -> None: ...
+
+class GetLogsResponse(_message.Message):
+    __slots__ = ("entries",)
+    ENTRIES_FIELD_NUMBER: _ClassVar[int]
+    entries: _containers.RepeatedCompositeFieldContainer[LogEntry]
+    def __init__(self, entries: _Optional[_Iterable[_Union[LogEntry, _Mapping]]] = ...) -> None: ...
+
+class SetLogLevelRequest(_message.Message):
+    __slots__ = ("level",)
+    LEVEL_FIELD_NUMBER: _ClassVar[int]
+    level: LogLevel
+    def __init__(self, level: _Optional[_Union[LogLevel, str]] = ...) -> None: ...
