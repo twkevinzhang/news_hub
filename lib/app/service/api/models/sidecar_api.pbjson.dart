@@ -1,15 +1,13 @@
-// This is a generated file - do not edit.
 //
-// Generated from sidecar_api.proto.
-
-// @dart = 3.3
+//  Generated code. Do not modify.
+//  source: sidecar_api.proto
+//
+// @dart = 2.12
 
 // ignore_for_file: annotate_overrides, camel_case_types, comment_references
-// ignore_for_file: constant_identifier_names
-// ignore_for_file: curly_braces_in_flow_control_structures
-// ignore_for_file: deprecated_member_use_from_same_package, library_prefixes
-// ignore_for_file: non_constant_identifier_names, prefer_relative_imports
-// ignore_for_file: unused_import
+// ignore_for_file: constant_identifier_names, library_prefixes
+// ignore_for_file: non_constant_identifier_names, prefer_final_fields
+// ignore_for_file: unnecessary_import, unnecessary_this, unused_import
 
 import 'dart:convert' as $convert;
 import 'dart:core' as $core;
@@ -43,34 +41,10 @@ const PaginationReq$json = {
   '1': 'PaginationReq',
   '2': [
     {'1': 'page', '3': 1, '4': 1, '5': 5, '9': 0, '10': 'page', '17': true},
-    {
-      '1': 'page_size',
-      '3': 3,
-      '4': 1,
-      '5': 5,
-      '9': 1,
-      '10': 'pageSize',
-      '17': true
-    },
+    {'1': 'page_size', '3': 3, '4': 1, '5': 5, '9': 1, '10': 'pageSize', '17': true},
     {'1': 'limit', '3': 2, '4': 1, '5': 5, '9': 2, '10': 'limit', '17': true},
-    {
-      '1': 'prev_cursor',
-      '3': 4,
-      '4': 1,
-      '5': 9,
-      '9': 3,
-      '10': 'prevCursor',
-      '17': true
-    },
-    {
-      '1': 'next_cursor',
-      '3': 5,
-      '4': 1,
-      '5': 9,
-      '9': 4,
-      '10': 'nextCursor',
-      '17': true
-    },
+    {'1': 'prev_cursor', '3': 4, '4': 1, '5': 9, '9': 3, '10': 'prevCursor', '17': true},
+    {'1': 'next_cursor', '3': 5, '4': 1, '5': 9, '9': 4, '10': 'nextCursor', '17': true},
   ],
   '8': [
     {'1': '_page'},
@@ -93,51 +67,11 @@ final $typed_data.Uint8List paginationReqDescriptor = $convert.base64Decode(
 const PaginationRes$json = {
   '1': 'PaginationRes',
   '2': [
-    {
-      '1': 'total_page',
-      '3': 1,
-      '4': 1,
-      '5': 5,
-      '9': 0,
-      '10': 'totalPage',
-      '17': true
-    },
-    {
-      '1': 'current_page',
-      '3': 2,
-      '4': 1,
-      '5': 5,
-      '9': 1,
-      '10': 'currentPage',
-      '17': true
-    },
-    {
-      '1': 'page_size',
-      '3': 3,
-      '4': 1,
-      '5': 5,
-      '9': 2,
-      '10': 'pageSize',
-      '17': true
-    },
-    {
-      '1': 'prev_cursor',
-      '3': 4,
-      '4': 1,
-      '5': 9,
-      '9': 3,
-      '10': 'prevCursor',
-      '17': true
-    },
-    {
-      '1': 'next_cursor',
-      '3': 5,
-      '4': 1,
-      '5': 9,
-      '9': 4,
-      '10': 'nextCursor',
-      '17': true
-    },
+    {'1': 'total_page', '3': 1, '4': 1, '5': 5, '9': 0, '10': 'totalPage', '17': true},
+    {'1': 'current_page', '3': 2, '4': 1, '5': 5, '9': 1, '10': 'currentPage', '17': true},
+    {'1': 'page_size', '3': 3, '4': 1, '5': 5, '9': 2, '10': 'pageSize', '17': true},
+    {'1': 'prev_cursor', '3': 4, '4': 1, '5': 9, '9': 3, '10': 'prevCursor', '17': true},
+    {'1': 'next_cursor', '3': 5, '4': 1, '5': 9, '9': 4, '10': 'nextCursor', '17': true},
   ],
   '8': [
     {'1': '_total_page'},
@@ -163,8 +97,8 @@ const Empty$json = {
 };
 
 /// Descriptor for `Empty`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List emptyDescriptor =
-    $convert.base64Decode('CgVFbXB0eQ==');
+final $typed_data.Uint8List emptyDescriptor = $convert.base64Decode(
+    'CgVFbXB0eQ==');
 
 @$core.Deprecated('Use getSiteReqDescriptor instead')
 const GetSiteReq$json = {
@@ -175,8 +109,8 @@ const GetSiteReq$json = {
 };
 
 /// Descriptor for `GetSiteReq`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getSiteReqDescriptor = $convert
-    .base64Decode('CgpHZXRTaXRlUmVxEhkKCHBrZ19uYW1lGAEgASgJUgdwa2dOYW1l');
+final $typed_data.Uint8List getSiteReqDescriptor = $convert.base64Decode(
+    'CgpHZXRTaXRlUmVxEhkKCHBrZ19uYW1lGAEgASgJUgdwa2dOYW1l');
 
 @$core.Deprecated('Use getSiteResDescriptor instead')
 const GetSiteRes$json = {
@@ -187,8 +121,8 @@ const GetSiteRes$json = {
 };
 
 /// Descriptor for `GetSiteRes`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getSiteResDescriptor = $convert
-    .base64Decode('CgpHZXRTaXRlUmVzEhwKBHNpdGUYASABKAsyCC5wYi5TaXRlUgRzaXRl');
+final $typed_data.Uint8List getSiteResDescriptor = $convert.base64Decode(
+    'CgpHZXRTaXRlUmVzEhwKBHNpdGUYASABKAsyCC5wYi5TaXRlUgRzaXRl');
 
 @$core.Deprecated('Use siteDescriptor instead')
 const Site$json = {
@@ -215,16 +149,7 @@ const GetBoardsReq$json = {
   '2': [
     {'1': 'pkg_name', '3': 3, '4': 1, '5': 9, '10': 'pkgName'},
     {'1': 'site_id', '3': 1, '4': 1, '5': 9, '10': 'siteId'},
-    {
-      '1': 'page',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.PaginationReq',
-      '9': 0,
-      '10': 'page',
-      '17': true
-    },
+    {'1': 'page', '3': 2, '4': 1, '5': 11, '6': '.pb.PaginationReq', '9': 0, '10': 'page', '17': true},
   ],
   '8': [
     {'1': '_page'},
@@ -242,14 +167,7 @@ const GetBoardsRes$json = {
   '1': 'GetBoardsRes',
   '2': [
     {'1': 'boards', '3': 1, '4': 3, '5': 11, '6': '.pb.Board', '10': 'boards'},
-    {
-      '1': 'page',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.PaginationRes',
-      '10': 'page'
-    },
+    {'1': 'page', '3': 2, '4': 1, '5': 11, '6': '.pb.PaginationRes', '10': 'page'},
   ],
 };
 
@@ -267,21 +185,9 @@ const Board$json = {
     {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     {'1': 'name', '3': 3, '4': 1, '5': 9, '10': 'name'},
     {'1': 'icon', '3': 4, '4': 1, '5': 9, '10': 'icon'},
-    {
-      '1': 'large_welcome_image',
-      '3': 5,
-      '4': 1,
-      '5': 9,
-      '10': 'largeWelcomeImage'
-    },
+    {'1': 'large_welcome_image', '3': 5, '4': 1, '5': 9, '10': 'largeWelcomeImage'},
     {'1': 'url', '3': 6, '4': 1, '5': 9, '10': 'url'},
-    {
-      '1': 'supported_threads_sorting',
-      '3': 7,
-      '4': 3,
-      '5': 9,
-      '10': 'supportedThreadsSorting'
-    },
+    {'1': 'supported_threads_sorting', '3': 7, '4': 3, '5': 9, '10': 'supportedThreadsSorting'},
   ],
 };
 
@@ -299,33 +205,9 @@ const GetThreadInfosReq$json = {
   '2': [
     {'1': 'pkg_name', '3': 6, '4': 1, '5': 9, '10': 'pkgName'},
     {'1': 'site_id', '3': 1, '4': 1, '5': 9, '10': 'siteId'},
-    {
-      '1': 'boards_sorting',
-      '3': 2,
-      '4': 3,
-      '5': 11,
-      '6': '.pb.GetThreadInfosReq.BoardsSortingEntry',
-      '10': 'boardsSorting'
-    },
-    {
-      '1': 'page',
-      '3': 3,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.PaginationReq',
-      '9': 0,
-      '10': 'page',
-      '17': true
-    },
-    {
-      '1': 'keywords',
-      '3': 5,
-      '4': 1,
-      '5': 9,
-      '9': 1,
-      '10': 'keywords',
-      '17': true
-    },
+    {'1': 'boards_sorting', '3': 2, '4': 3, '5': 11, '6': '.pb.GetThreadInfosReq.BoardsSortingEntry', '10': 'boardsSorting'},
+    {'1': 'page', '3': 3, '4': 1, '5': 11, '6': '.pb.PaginationReq', '9': 0, '10': 'page', '17': true},
+    {'1': 'keywords', '3': 5, '4': 1, '5': 9, '9': 1, '10': 'keywords', '17': true},
   ],
   '3': [GetThreadInfosReq_BoardsSortingEntry$json],
   '8': [
@@ -357,22 +239,8 @@ final $typed_data.Uint8List getThreadInfosReqDescriptor = $convert.base64Decode(
 const GetThreadInfosRes$json = {
   '1': 'GetThreadInfosRes',
   '2': [
-    {
-      '1': 'thread_infos',
-      '3': 1,
-      '4': 3,
-      '5': 11,
-      '6': '.pb.Post',
-      '10': 'threadInfos'
-    },
-    {
-      '1': 'page',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.PaginationRes',
-      '10': 'page'
-    },
+    {'1': 'thread_infos', '3': 1, '4': 3, '5': 11, '6': '.pb.Post', '10': 'threadInfos'},
+    {'1': 'page', '3': 2, '4': 1, '5': 11, '6': '.pb.PaginationRes', '10': 'page'},
   ],
 };
 
@@ -403,14 +271,7 @@ final $typed_data.Uint8List getThreadPostReqDescriptor = $convert.base64Decode(
 const GetThreadPostRes$json = {
   '1': 'GetThreadPostRes',
   '2': [
-    {
-      '1': 'thread_post',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.Post',
-      '10': 'threadPost'
-    },
+    {'1': 'thread_post', '3': 1, '4': 1, '5': 11, '6': '.pb.Post', '10': 'threadPost'},
   ],
 };
 
@@ -427,25 +288,8 @@ const GetRegardingPostsReq$json = {
     {'1': 'site_id', '3': 1, '4': 1, '5': 9, '10': 'siteId'},
     {'1': 'board_id', '3': 2, '4': 1, '5': 9, '10': 'boardId'},
     {'1': 'thread_id', '3': 3, '4': 1, '5': 9, '10': 'threadId'},
-    {
-      '1': 'reply_to_id',
-      '3': 5,
-      '4': 1,
-      '5': 9,
-      '9': 0,
-      '10': 'replyToId',
-      '17': true
-    },
-    {
-      '1': 'page',
-      '3': 4,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.PaginationReq',
-      '9': 1,
-      '10': 'page',
-      '17': true
-    },
+    {'1': 'reply_to_id', '3': 5, '4': 1, '5': 9, '9': 0, '10': 'replyToId', '17': true},
+    {'1': 'page', '3': 4, '4': 1, '5': 11, '6': '.pb.PaginationReq', '9': 1, '10': 'page', '17': true},
   ],
   '8': [
     {'1': '_reply_to_id'},
@@ -465,22 +309,8 @@ final $typed_data.Uint8List getRegardingPostsReqDescriptor = $convert.base64Deco
 const GetRegardingPostsRes$json = {
   '1': 'GetRegardingPostsRes',
   '2': [
-    {
-      '1': 'regarding_posts',
-      '3': 1,
-      '4': 3,
-      '5': 11,
-      '6': '.pb.Post',
-      '10': 'regardingPosts'
-    },
-    {
-      '1': 'page',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.PaginationRes',
-      '10': 'page'
-    },
+    {'1': 'regarding_posts', '3': 1, '4': 3, '5': 11, '6': '.pb.Post', '10': 'regardingPosts'},
+    {'1': 'page', '3': 2, '4': 1, '5': 11, '6': '.pb.PaginationRes', '10': 'page'},
   ],
 };
 
@@ -494,77 +324,14 @@ final $typed_data.Uint8List getRegardingPostsResDescriptor = $convert.base64Deco
 const Paragraph$json = {
   '1': 'Paragraph',
   '2': [
-    {
-      '1': 'type',
-      '3': 1,
-      '4': 1,
-      '5': 14,
-      '6': '.pb.ParagraphType',
-      '10': 'type'
-    },
-    {
-      '1': 'image',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.ImageParagraph',
-      '9': 0,
-      '10': 'image'
-    },
-    {
-      '1': 'video',
-      '3': 3,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.VideoParagraph',
-      '9': 0,
-      '10': 'video'
-    },
-    {
-      '1': 'text',
-      '3': 4,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.TextParagraph',
-      '9': 0,
-      '10': 'text'
-    },
-    {
-      '1': 'new_line',
-      '3': 8,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.NewLineParagraph',
-      '9': 0,
-      '10': 'newLine'
-    },
-    {
-      '1': 'quote',
-      '3': 5,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.QuoteParagraph',
-      '9': 0,
-      '10': 'quote'
-    },
-    {
-      '1': 'reply_to',
-      '3': 6,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.ReplyToParagraph',
-      '9': 0,
-      '10': 'replyTo'
-    },
-    {
-      '1': 'link',
-      '3': 7,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.LinkParagraph',
-      '9': 0,
-      '10': 'link'
-    },
+    {'1': 'type', '3': 1, '4': 1, '5': 14, '6': '.pb.ParagraphType', '10': 'type'},
+    {'1': 'image', '3': 2, '4': 1, '5': 11, '6': '.pb.ImageParagraph', '9': 0, '10': 'image'},
+    {'1': 'video', '3': 3, '4': 1, '5': 11, '6': '.pb.VideoParagraph', '9': 0, '10': 'video'},
+    {'1': 'text', '3': 4, '4': 1, '5': 11, '6': '.pb.TextParagraph', '9': 0, '10': 'text'},
+    {'1': 'new_line', '3': 8, '4': 1, '5': 11, '6': '.pb.NewLineParagraph', '9': 0, '10': 'newLine'},
+    {'1': 'quote', '3': 5, '4': 1, '5': 11, '6': '.pb.QuoteParagraph', '9': 0, '10': 'quote'},
+    {'1': 'reply_to', '3': 6, '4': 1, '5': 11, '6': '.pb.ReplyToParagraph', '9': 0, '10': 'replyTo'},
+    {'1': 'link', '3': 7, '4': 1, '5': 11, '6': '.pb.LinkParagraph', '9': 0, '10': 'link'},
   ],
   '8': [
     {'1': 'content'},
@@ -624,8 +391,8 @@ const TextParagraph$json = {
 };
 
 /// Descriptor for `TextParagraph`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List textParagraphDescriptor = $convert
-    .base64Decode('Cg1UZXh0UGFyYWdyYXBoEhgKB2NvbnRlbnQYASABKAlSB2NvbnRlbnQ=');
+final $typed_data.Uint8List textParagraphDescriptor = $convert.base64Decode(
+    'Cg1UZXh0UGFyYWdyYXBoEhgKB2NvbnRlbnQYASABKAlSB2NvbnRlbnQ=');
 
 @$core.Deprecated('Use newLineParagraphDescriptor instead')
 const NewLineParagraph$json = {
@@ -636,8 +403,8 @@ const NewLineParagraph$json = {
 };
 
 /// Descriptor for `NewLineParagraph`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List newLineParagraphDescriptor = $convert
-    .base64Decode('ChBOZXdMaW5lUGFyYWdyYXBoEhYKBnN5bWJvbBgBIAEoCVIGc3ltYm9s');
+final $typed_data.Uint8List newLineParagraphDescriptor = $convert.base64Decode(
+    'ChBOZXdMaW5lUGFyYWdyYXBoEhYKBnN5bWJvbBgBIAEoCVIGc3ltYm9s');
 
 @$core.Deprecated('Use quoteParagraphDescriptor instead')
 const QuoteParagraph$json = {
@@ -648,8 +415,8 @@ const QuoteParagraph$json = {
 };
 
 /// Descriptor for `QuoteParagraph`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List quoteParagraphDescriptor = $convert
-    .base64Decode('Cg5RdW90ZVBhcmFncmFwaBIYCgdjb250ZW50GAEgASgJUgdjb250ZW50');
+final $typed_data.Uint8List quoteParagraphDescriptor = $convert.base64Decode(
+    'Cg5RdW90ZVBhcmFncmFwaBIYCgdjb250ZW50GAEgASgJUgdjb250ZW50');
 
 @$core.Deprecated('Use replyToParagraphDescriptor instead')
 const ReplyToParagraph$json = {
@@ -675,8 +442,8 @@ const LinkParagraph$json = {
 };
 
 /// Descriptor for `LinkParagraph`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List linkParagraphDescriptor = $convert
-    .base64Decode('Cg1MaW5rUGFyYWdyYXBoEhgKB2NvbnRlbnQYASABKAlSB2NvbnRlbnQ=');
+final $typed_data.Uint8List linkParagraphDescriptor = $convert.base64Decode(
+    'Cg1MaW5rUGFyYWdyYXBoEhgKB2NvbnRlbnQYASABKAlSB2NvbnRlbnQ=');
 
 @$core.Deprecated('Use postDescriptor instead')
 const Post$json = {
@@ -687,24 +454,8 @@ const Post$json = {
     {'1': 'board_id', '3': 3, '4': 1, '5': 9, '10': 'boardId'},
     {'1': 'thread_id', '3': 2, '4': 1, '5': 9, '10': 'threadId'},
     {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
-    {
-      '1': 'article_post',
-      '3': 7,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.ArticlePost',
-      '9': 0,
-      '10': 'articlePost'
-    },
-    {
-      '1': 'single_image_post',
-      '3': 8,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.SingleImagePost',
-      '9': 0,
-      '10': 'singleImagePost'
-    },
+    {'1': 'article_post', '3': 7, '4': 1, '5': 11, '6': '.pb.ArticlePost', '9': 0, '10': 'articlePost'},
+    {'1': 'single_image_post', '3': 8, '4': 1, '5': 11, '6': '.pb.SingleImagePost', '9': 0, '10': 'singleImagePost'},
   ],
   '8': [
     {'1': 'content'},
@@ -729,29 +480,10 @@ const ArticlePost$json = {
     {'1': 'title', '3': 9, '4': 1, '5': 9, '10': 'title'},
     {'1': 'liked', '3': 12, '4': 1, '5': 5, '10': 'liked'},
     {'1': 'disliked', '3': 13, '4': 1, '5': 5, '10': 'disliked'},
-    {
-      '1': 'contents',
-      '3': 17,
-      '4': 3,
-      '5': 11,
-      '6': '.pb.Paragraph',
-      '10': 'contents'
-    },
+    {'1': 'contents', '3': 17, '4': 3, '5': 11, '6': '.pb.Paragraph', '10': 'contents'},
     {'1': 'tags', '3': 18, '4': 3, '5': 9, '10': 'tags'},
-    {
-      '1': 'latest_regarding_post_created_at',
-      '3': 15,
-      '4': 1,
-      '5': 3,
-      '10': 'latestRegardingPostCreatedAt'
-    },
-    {
-      '1': 'regarding_posts_count',
-      '3': 19,
-      '4': 1,
-      '5': 5,
-      '10': 'regardingPostsCount'
-    },
+    {'1': 'latest_regarding_post_created_at', '3': 15, '4': 1, '5': 3, '10': 'latestRegardingPostCreatedAt'},
+    {'1': 'regarding_posts_count', '3': 19, '4': 1, '5': 5, '10': 'regardingPostsCount'},
     {'1': 'url', '3': 20, '4': 1, '5': 9, '10': 'url'},
   ],
 };
@@ -776,37 +508,11 @@ const SingleImagePost$json = {
     {'1': 'title', '3': 9, '4': 1, '5': 9, '10': 'title'},
     {'1': 'liked', '3': 12, '4': 1, '5': 5, '10': 'liked'},
     {'1': 'disliked', '3': 13, '4': 1, '5': 5, '10': 'disliked'},
-    {
-      '1': 'image',
-      '3': 21,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.ImageParagraph',
-      '10': 'image'
-    },
-    {
-      '1': 'contents',
-      '3': 17,
-      '4': 3,
-      '5': 11,
-      '6': '.pb.Paragraph',
-      '10': 'contents'
-    },
+    {'1': 'image', '3': 21, '4': 1, '5': 11, '6': '.pb.ImageParagraph', '10': 'image'},
+    {'1': 'contents', '3': 17, '4': 3, '5': 11, '6': '.pb.Paragraph', '10': 'contents'},
     {'1': 'tags', '3': 18, '4': 3, '5': 9, '10': 'tags'},
-    {
-      '1': 'latest_regarding_post_created_at',
-      '3': 15,
-      '4': 1,
-      '5': 3,
-      '10': 'latestRegardingPostCreatedAt'
-    },
-    {
-      '1': 'regarding_posts_count',
-      '3': 19,
-      '4': 1,
-      '5': 5,
-      '10': 'regardingPostsCount'
-    },
+    {'1': 'latest_regarding_post_created_at', '3': 15, '4': 1, '5': 3, '10': 'latestRegardingPostCreatedAt'},
+    {'1': 'regarding_posts_count', '3': 19, '4': 1, '5': 5, '10': 'regardingPostsCount'},
     {'1': 'url', '3': 20, '4': 1, '5': 9, '10': 'url'},
   ],
 };
@@ -831,16 +537,7 @@ const GetCommentsReq$json = {
     {'1': 'board_id', '3': 2, '4': 1, '5': 9, '10': 'boardId'},
     {'1': 'thread_id', '3': 3, '4': 1, '5': 9, '10': 'threadId'},
     {'1': 'post_id', '3': 4, '4': 1, '5': 9, '10': 'postId'},
-    {
-      '1': 'page',
-      '3': 5,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.PaginationReq',
-      '9': 0,
-      '10': 'page',
-      '17': true
-    },
+    {'1': 'page', '3': 5, '4': 1, '5': 11, '6': '.pb.PaginationReq', '9': 0, '10': 'page', '17': true},
   ],
   '8': [
     {'1': '_page'},
@@ -858,22 +555,8 @@ final $typed_data.Uint8List getCommentsReqDescriptor = $convert.base64Decode(
 const GetCommentsRes$json = {
   '1': 'GetCommentsRes',
   '2': [
-    {
-      '1': 'comments',
-      '3': 1,
-      '4': 3,
-      '5': 11,
-      '6': '.pb.Comment',
-      '10': 'comments'
-    },
-    {
-      '1': 'page',
-      '3': 2,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.PaginationRes',
-      '10': 'page'
-    },
+    {'1': 'comments', '3': 1, '4': 3, '5': 11, '6': '.pb.Comment', '10': 'comments'},
+    {'1': 'page', '3': 2, '4': 1, '5': 11, '6': '.pb.PaginationRes', '10': 'page'},
   ],
 };
 
@@ -894,14 +577,7 @@ const Comment$json = {
     {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     {'1': 'author_id', '3': 6, '4': 1, '5': 9, '10': 'authorId'},
     {'1': 'author_name', '3': 10, '4': 1, '5': 9, '10': 'authorName'},
-    {
-      '1': 'contents',
-      '3': 11,
-      '4': 3,
-      '5': 11,
-      '6': '.pb.Paragraph',
-      '10': 'contents'
-    },
+    {'1': 'contents', '3': 11, '4': 3, '5': 11, '6': '.pb.Paragraph', '10': 'contents'},
     {'1': 'created_at', '3': 8, '4': 1, '5': 3, '10': 'createdAt'},
   ],
 };
@@ -919,22 +595,14 @@ final $typed_data.Uint8List commentDescriptor = $convert.base64Decode(
 const ListInstalledExtensionsRes$json = {
   '1': 'ListInstalledExtensionsRes',
   '2': [
-    {
-      '1': 'extensions',
-      '3': 1,
-      '4': 3,
-      '5': 11,
-      '6': '.pb.Extension',
-      '10': 'extensions'
-    },
+    {'1': 'extensions', '3': 1, '4': 3, '5': 11, '6': '.pb.Extension', '10': 'extensions'},
   ],
 };
 
 /// Descriptor for `ListInstalledExtensionsRes`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List listInstalledExtensionsResDescriptor =
-    $convert.base64Decode(
-        'ChpMaXN0SW5zdGFsbGVkRXh0ZW5zaW9uc1JlcxItCgpleHRlbnNpb25zGAEgAygLMg0ucGIuRX'
-        'h0ZW5zaW9uUgpleHRlbnNpb25z');
+final $typed_data.Uint8List listInstalledExtensionsResDescriptor = $convert.base64Decode(
+    'ChpMaXN0SW5zdGFsbGVkRXh0ZW5zaW9uc1JlcxItCgpleHRlbnNpb25zGAEgAygLMg0ucGIuRX'
+    'h0ZW5zaW9uUgpleHRlbnNpb25z');
 
 @$core.Deprecated('Use getInstalledExtensionReqDescriptor instead')
 const GetInstalledExtensionReq$json = {
@@ -945,30 +613,21 @@ const GetInstalledExtensionReq$json = {
 };
 
 /// Descriptor for `GetInstalledExtensionReq`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getInstalledExtensionReqDescriptor =
-    $convert.base64Decode(
-        'ChhHZXRJbnN0YWxsZWRFeHRlbnNpb25SZXESGQoIcGtnX25hbWUYASABKAlSB3BrZ05hbWU=');
+final $typed_data.Uint8List getInstalledExtensionReqDescriptor = $convert.base64Decode(
+    'ChhHZXRJbnN0YWxsZWRFeHRlbnNpb25SZXESGQoIcGtnX25hbWUYASABKAlSB3BrZ05hbWU=');
 
 @$core.Deprecated('Use getInstalledExtensionResDescriptor instead')
 const GetInstalledExtensionRes$json = {
   '1': 'GetInstalledExtensionRes',
   '2': [
-    {
-      '1': 'extension',
-      '3': 1,
-      '4': 1,
-      '5': 11,
-      '6': '.pb.Extension',
-      '10': 'extension'
-    },
+    {'1': 'extension', '3': 1, '4': 1, '5': 11, '6': '.pb.Extension', '10': 'extension'},
   ],
 };
 
 /// Descriptor for `GetInstalledExtensionRes`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getInstalledExtensionResDescriptor =
-    $convert.base64Decode(
-        'ChhHZXRJbnN0YWxsZWRFeHRlbnNpb25SZXMSKwoJZXh0ZW5zaW9uGAEgASgLMg0ucGIuRXh0ZW'
-        '5zaW9uUglleHRlbnNpb24=');
+final $typed_data.Uint8List getInstalledExtensionResDescriptor = $convert.base64Decode(
+    'ChhHZXRJbnN0YWxsZWRFeHRlbnNpb25SZXMSKwoJZXh0ZW5zaW9uGAEgASgLMg0ucGIuRXh0ZW'
+    '5zaW9uUglleHRlbnNpb24=');
 
 @$core.Deprecated('Use installExtensionReqDescriptor instead')
 const InstallExtensionReq$json = {
@@ -994,9 +653,8 @@ const UninstallExtensionReq$json = {
 };
 
 /// Descriptor for `UninstallExtensionReq`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List uninstallExtensionReqDescriptor =
-    $convert.base64Decode(
-        'ChVVbmluc3RhbGxFeHRlbnNpb25SZXESGQoIcGtnX25hbWUYASABKAlSB3BrZ05hbWU=');
+final $typed_data.Uint8List uninstallExtensionReqDescriptor = $convert.base64Decode(
+    'ChVVbmluc3RhbGxFeHRlbnNpb25SZXESGQoIcGtnX25hbWUYASABKAlSB3BrZ05hbWU=');
 
 @$core.Deprecated('Use getInstallProgressReqDescriptor instead')
 const GetInstallProgressReq$json = {
@@ -1007,9 +665,8 @@ const GetInstallProgressReq$json = {
 };
 
 /// Descriptor for `GetInstallProgressReq`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getInstallProgressReqDescriptor =
-    $convert.base64Decode(
-        'ChVHZXRJbnN0YWxsUHJvZ3Jlc3NSZXESGQoIcGtnX25hbWUYASABKAlSB3BrZ05hbWU=');
+final $typed_data.Uint8List getInstallProgressReqDescriptor = $convert.base64Decode(
+    'ChVHZXRJbnN0YWxsUHJvZ3Jlc3NSZXESGQoIcGtnX25hbWUYASABKAlSB3BrZ05hbWU=');
 
 @$core.Deprecated('Use getInstallProgressResDescriptor instead')
 const GetInstallProgressRes$json = {
@@ -1033,31 +690,22 @@ const ListRemoteExtensionsReq$json = {
 };
 
 /// Descriptor for `ListRemoteExtensionsReq`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List listRemoteExtensionsReqDescriptor =
-    $convert.base64Decode(
-        'ChdMaXN0UmVtb3RlRXh0ZW5zaW9uc1JlcRIiCg1yZXBvX2Jhc2VfdXJsGAEgASgJUgtyZXBvQm'
-        'FzZVVybA==');
+final $typed_data.Uint8List listRemoteExtensionsReqDescriptor = $convert.base64Decode(
+    'ChdMaXN0UmVtb3RlRXh0ZW5zaW9uc1JlcRIiCg1yZXBvX2Jhc2VfdXJsGAEgASgJUgtyZXBvQm'
+    'FzZVVybA==');
 
 @$core.Deprecated('Use listRemoteExtensionsResDescriptor instead')
 const ListRemoteExtensionsRes$json = {
   '1': 'ListRemoteExtensionsRes',
   '2': [
-    {
-      '1': 'extensions',
-      '3': 1,
-      '4': 3,
-      '5': 11,
-      '6': '.pb.RemoteExtension',
-      '10': 'extensions'
-    },
+    {'1': 'extensions', '3': 1, '4': 3, '5': 11, '6': '.pb.RemoteExtension', '10': 'extensions'},
   ],
 };
 
 /// Descriptor for `ListRemoteExtensionsRes`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List listRemoteExtensionsResDescriptor =
-    $convert.base64Decode(
-        'ChdMaXN0UmVtb3RlRXh0ZW5zaW9uc1JlcxIzCgpleHRlbnNpb25zGAEgAygLMhMucGIuUmVtb3'
-        'RlRXh0ZW5zaW9uUgpleHRlbnNpb25z');
+final $typed_data.Uint8List listRemoteExtensionsResDescriptor = $convert.base64Decode(
+    'ChdMaXN0UmVtb3RlRXh0ZW5zaW9uc1JlcxIzCgpleHRlbnNpb25zGAEgAygLMhMucGIuUmVtb3'
+    'RlRXh0ZW5zaW9uUgpleHRlbnNpb25z');
 
 @$core.Deprecated('Use remoteExtensionDescriptor instead')
 const RemoteExtension$json = {
@@ -1099,3 +747,4 @@ final $typed_data.Uint8List extensionDescriptor = $convert.base64Decode(
     'Cgh6aXBfbmFtZRgEIAEoCVIHemlwTmFtZRIYCgd2ZXJzaW9uGAUgASgFUgd2ZXJzaW9uEiUKDn'
     'B5dGhvbl92ZXJzaW9uGAYgASgFUg1weXRob25WZXJzaW9uEhcKBGxhbmcYByABKAlIAFIEbGFu'
     'Z4gBARIXCgdpc19uc2Z3GAggASgIUgZpc05zZndCBwoFX2xhbmc=');
+
