@@ -11,8 +11,11 @@ from application.use_cases.uninstall_extension import UninstallExtensionUseCase
 from application.use_cases.list_installed_extensions import ListInstalledExtensionsUseCase
 from application.use_cases.list_remote_extensions import ListRemoteExtensionsUseCase
 from application.use_cases.get_installed_extension import GetInstalledExtensionUseCase
+from application.use_cases.add_repo import AddRepoUseCase
+from application.use_cases.remove_repo import RemoveRepoUseCase
 from application.services.extension_loader import ExtensionLoader
 from domain.repositories.extension_repository import ExtensionRepository
+from domain.repositories.repo_repository import RepoRepository
 from infrastructure.health_check_service import HealthCheckService
 from infrastructure.logging_service import LoggingService, python_level_to_proto, proto_level_to_python
 
@@ -30,8 +33,11 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
         list_installed_uc: ListInstalledExtensionsUseCase,
         list_remote_uc: ListRemoteExtensionsUseCase,
         get_installed_uc: GetInstalledExtensionUseCase,
+        add_repo_uc: AddRepoUseCase,
+        remove_repo_uc: RemoveRepoUseCase,
         extension_loader: ExtensionLoader,
         extension_repository: ExtensionRepository,
+        repo_repository: RepoRepository,
         health_check_service: HealthCheckService,
         logging_service: LoggingService
     ):
@@ -40,8 +46,11 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
         self.list_installed_uc = list_installed_uc
         self.list_remote_uc = list_remote_uc
         self.get_installed_uc = get_installed_uc
+        self.add_repo_uc = add_repo_uc
+        self.remove_repo_uc = remove_repo_uc
         self.extension_loader = extension_loader
         self.extension_repository = extension_repository
+        self.repo_repository = repo_repository
         self.health_check_service = health_check_service
         self.logging_service = logging_service
 
@@ -136,6 +145,59 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
     def GetInstallProgress(self, request, context):
         """Get installation progress (placeholder)"""
         return pb2.GetInstallProgressRes(sites=[])
+
+    def AddExtensionRepo(self, request, context):
+        """Add a new extension repository"""
+        try:
+            repo = self.add_repo_uc.execute(request.url)
+            return pb2.AddExtensionRepoRes(
+                url=repo.url,
+                added_at=int(repo.added_at.timestamp() * 1000)
+            )
+        except ValueError as e:
+            logger.warning(f"AddExtensionRepo validation error: {e}")
+            context.set_code(grpc.StatusCode.INVALID_ARGUMENT)
+            context.set_details(str(e))
+            return pb2.AddExtensionRepoRes()
+        except Exception as e:
+            logger.error(f"AddExtensionRepo error: {e}", exc_info=True)
+            context.set_code(grpc.StatusCode.INTERNAL)
+            context.set_details(str(e))
+            return pb2.AddExtensionRepoRes()
+
+    def RemoveExtensionRepo(self, request, context):
+        """Remove an extension repository"""
+        try:
+            self.remove_repo_uc.execute(request.url)
+            return pb2.Empty()
+        except ValueError as e:
+            logger.warning(f"RemoveExtensionRepo validation error: {e}")
+            context.set_code(grpc.StatusCode.NOT_FOUND)
+            context.set_details(str(e))
+            return pb2.Empty()
+        except Exception as e:
+            logger.error(f"RemoveExtensionRepo error: {e}", exc_info=True)
+            context.set_code(grpc.StatusCode.INTERNAL)
+            context.set_details(str(e))
+            return pb2.Empty()
+
+    def ListExtensionRepos(self, request, context):
+        """List all extension repositories"""
+        try:
+            repos = self.repo_repository.find_all()
+            pb_repos = [
+                pb2.ExtensionRepo(
+                    url=repo.url,
+                    added_at=int(repo.added_at.timestamp() * 1000)
+                )
+                for repo in repos
+            ]
+            return pb2.ListExtensionReposRes(repos=pb_repos)
+        except Exception as e:
+            logger.error(f"ListExtensionRepos error: {e}", exc_info=True)
+            context.set_code(grpc.StatusCode.INTERNAL)
+            context.set_details(str(e))
+            return pb2.ListExtensionReposRes()
 
     def GetSite(self, request, context):
         """Delegate to extension resolver"""

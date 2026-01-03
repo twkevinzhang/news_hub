@@ -92,8 +92,11 @@ class DependencyContainer:
             list_installed_uc=self.list_installed_uc,
             list_remote_uc=self.list_remote_uc,
             get_installed_uc=self.get_installed_uc,
+            add_repo_uc=self.add_repo_uc,
+            remove_repo_uc=self.remove_repo_uc,
             extension_loader=self.extension_loader,
             extension_repository=self.extension_repository,
+            repo_repository=self.repo_repository,
             health_check_service=self.health_check_service,
             logging_service=self.logging_service
         )
