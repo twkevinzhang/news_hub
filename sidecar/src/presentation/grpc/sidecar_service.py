@@ -1,5 +1,6 @@
 """gRPC Service Implementation"""
 import logging
+import time
 import sidecar_api_pb2 as pb2
 import sidecar_api_pb2_grpc as pb2_grpc
 import grpc
@@ -12,6 +13,8 @@ from application.use_cases.list_remote_extensions import ListRemoteExtensionsUse
 from application.use_cases.get_installed_extension import GetInstalledExtensionUseCase
 from application.services.extension_loader import ExtensionLoader
 from domain.repositories.extension_repository import ExtensionRepository
+from infrastructure.health_check_service import HealthCheckService
+from infrastructure.logging_service import LoggingService, python_level_to_proto, proto_level_to_python
 
 
 logger = logging.getLogger(__name__)
@@ -28,7 +31,9 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
         list_remote_uc: ListRemoteExtensionsUseCase,
         get_installed_uc: GetInstalledExtensionUseCase,
         extension_loader: ExtensionLoader,
-        extension_repository: ExtensionRepository
+        extension_repository: ExtensionRepository,
+        health_check_service: HealthCheckService,
+        logging_service: LoggingService
     ):
         self.install_extension_uc = install_extension_uc
         self.uninstall_extension_uc = uninstall_extension_uc
@@ -37,6 +42,8 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
         self.get_installed_uc = get_installed_uc
         self.extension_loader = extension_loader
         self.extension_repository = extension_repository
+        self.health_check_service = health_check_service
+        self.logging_service = logging_service
 
     def ListInstalledExtensions(self, request, context):
         """List all installed extensions"""
@@ -188,3 +195,96 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             lang=extension.metadata.lang,
             is_nsfw=extension.metadata.is_nsfw
         )
+
+    # Health Check Methods
+    def HealthCheck(self, request, context):
+        """Perform health check"""
+        try:
+            return self.health_check_service.check(request.service)
+        except Exception as e:
+            logger.error(f"HealthCheck error: {e}", exc_info=True)
+            return pb2.HealthCheckResponse(
+                status=pb2.HealthCheckResponse.UNKNOWN,
+                message=str(e)
+            )
+
+    def WatchHealth(self, request, context):
+        """Stream health status changes"""
+        try:
+            # Send initial status
+            yield self.health_check_service.check(request.service)
+            
+            # Keep connection alive and send periodic updates
+            while context.is_active():
+                time.sleep(5)  # Check every 5 seconds
+                yield self.health_check_service.check(request.service)
+        except Exception as e:
+            logger.error(f"WatchHealth error: {e}", exc_info=True)
+
+    # Logs Methods
+    def StreamLogs(self, request, context):
+        """Stream logs in real-time"""
+        log_queue = None
+        try:
+            min_level = proto_level_to_python(request.min_level)
+            log_queue = self.logging_service.subscribe_stream(min_level)
+            
+            while context.is_active():
+                try:
+                    # Wait for new log entry (with timeout)
+                    entry = log_queue.get(timeout=1.0)
+                    
+                    yield pb2.LogEntry(
+                        timestamp=entry.timestamp,
+                        level=python_level_to_proto(entry.level),
+                        logger_name=entry.logger_name,
+                        message=entry.message,
+                        exception=entry.exception or ""
+                    )
+                except:
+                    # Timeout or queue empty, continue
+                    continue
+        except Exception as e:
+            logger.error(f"StreamLogs error: {e}", exc_info=True)
+        finally:
+            if log_queue:
+                self.logging_service.unsubscribe_stream(log_queue)
+
+    def GetLogs(self, request, context):
+        """Get historical logs"""
+        try:
+            min_level = proto_level_to_python(request.min_level)
+            entries = self.logging_service.get_logs(
+                start_time=request.start_time,
+                end_time=request.end_time,
+                min_level=min_level,
+                limit=request.limit if request.limit > 0 else None
+            )
+            
+            pb_entries = [
+                pb2.LogEntry(
+                    timestamp=entry.timestamp,
+                    level=python_level_to_proto(entry.level),
+                    logger_name=entry.logger_name,
+                    message=entry.message,
+                    exception=entry.exception or ""
+                )
+                for entry in entries
+            ]
+            
+            return pb2.GetLogsResponse(entries=pb_entries)
+        except Exception as e:
+            logger.error(f"GetLogs error: {e}", exc_info=True)
+            return pb2.GetLogsResponse()
+
+    def SetLogLevel(self, request, context):
+        """Set log level"""
+        try:
+            level = proto_level_to_python(request.level)
+            self.logging_service.set_level(level)
+            return pb2.Empty()
+        except Exception as e:
+            logger.error(f"SetLogLevel error: {e}", exc_info=True)
+            context.set_code(grpc.StatusCode.INTERNAL)
+            context.set_details(str(e))
+            return pb2.Empty()

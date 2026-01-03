@@ -4,6 +4,8 @@ from infrastructure.downloaders.http_downloader import HttpDownloader
 from infrastructure.file_system.extension_file_manager import ExtensionFileManager
 from infrastructure.repositories.extension_repository_impl import ExtensionRepositoryImpl
 from infrastructure.repositories.remote_extension_repository_impl import RemoteExtensionRepositoryImpl
+from infrastructure.health_check_service import HealthCheckService, HealthStatus
+from infrastructure.logging_service import LoggingService
 from application.services.extension_installer import ExtensionInstaller
 from application.services.extension_loader import ExtensionLoader
 from application.use_cases.install_extension import InstallExtensionUseCase
@@ -21,7 +23,17 @@ class DependencyContainer:
         # Ensure directories exist
         Config.ensure_directories()
 
-        # Infrastructure
+        # Infrastructure - Logging (must be first)
+        self.logging_service = LoggingService(
+            log_dir=Config.LOG_DIR,
+            retention_days=Config.LOG_RETENTION_DAYS
+        )
+
+        # Infrastructure - Health Check
+        self.health_check_service = HealthCheckService()
+        self.health_check_service.set_status(HealthStatus.SERVING, "Initializing...")
+
+        # Infrastructure - Others
         self.http_downloader = HttpDownloader(timeout=Config.DOWNLOAD_TIMEOUT)
         self.file_manager = ExtensionFileManager(
             extensions_dir=Config.EXTENSIONS_DIR,
@@ -68,5 +80,11 @@ class DependencyContainer:
             list_remote_uc=self.list_remote_uc,
             get_installed_uc=self.get_installed_uc,
             extension_loader=self.extension_loader,
-            extension_repository=self.extension_repository
+            extension_repository=self.extension_repository,
+            health_check_service=self.health_check_service,
+            logging_service=self.logging_service
         )
+
+        # Mark as fully initialized
+        self.health_check_service.set_status(HealthStatus.SERVING, "Ready")
+
