@@ -47,3 +47,4 @@ android/app/.cxx/Debug
 /sidecar/src/extensions/
 sidecar/venv
 sidecar/dist
+sidecar/build
