@@ -15,6 +15,13 @@ class SettingsScreen extends StatelessWidget {
       body: ListView(
         children: [
           ListTile(
+            leading: const Icon(Icons.collections),
+            title: const Text('Collections'),
+            subtitle: const Text('Manage your board collections'),
+            trailing: const Icon(Icons.chevron_right),
+            onTap: () => context.router.push(const CollectionListRoute()),
+          ),
+          ListTile(
             leading: const Icon(Icons.extension),
             title: const Text('Repo & Extensions'),
             subtitle: const Text('Manage your repositories and extensions'),
@@ -22,16 +29,8 @@ class SettingsScreen extends StatelessWidget {
             onTap: () => context.router.push(const ExtensionManageRoute()),
           ),
           ListTile(
-            leading: const Icon(Icons.collections),
-            title: const Text('Collections'),
-            subtitle: const Text('Manage your data collections'),
-            trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.router.push(const CollectionListRoute()),
-          ),
-          const Divider(),
-          ListTile(
             leading: const Icon(Icons.monitor_heart_outlined),
-            title: const Text('Sidecar Settings'),
+            title: const Text('Sidecar Logs'),
             subtitle: const Text('Manage logs and system status settings'),
             trailing: const Icon(Icons.chevron_right),
             onTap: () => context.router.push(const SidecarManageRoute()),

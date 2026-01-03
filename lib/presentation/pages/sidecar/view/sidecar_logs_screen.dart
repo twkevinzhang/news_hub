@@ -140,6 +140,16 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
               ),
               body: Column(
                 children: [
+                  _StatusBar(
+                    autoScroll: _autoScroll,
+                    logCount: state.filteredLogs.length,
+                    onAutoScrollChanged: (value) async {
+                      await _preferences.autoScroll.set(value);
+                      setState(() {
+                        _autoScroll = value;
+                      });
+                    },
+                  ),
                   Expanded(
                     child: state.filteredLogs.isEmpty
                         ? Center(
@@ -177,16 +187,6 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
                               );
                             },
                           ),
-                  ),
-                  _BottomStatusBar(
-                    autoScroll: _autoScroll,
-                    logCount: state.filteredLogs.length,
-                    onAutoScrollChanged: (value) async {
-                      await _preferences.autoScroll.set(value);
-                      setState(() {
-                        _autoScroll = value;
-                      });
-                    },
                   ),
                 ],
               ),
@@ -401,13 +401,13 @@ class _DetailItem extends StatelessWidget {
   }
 }
 
-/// 底部狀態與工具列
-class _BottomStatusBar extends StatelessWidget {
+/// 狀態與工具列
+class _StatusBar extends StatelessWidget {
   final bool autoScroll;
   final int logCount;
   final ValueChanged<bool> onAutoScrollChanged;
 
-  const _BottomStatusBar({
+  const _StatusBar({
     required this.autoScroll,
     required this.logCount,
     required this.onAutoScrollChanged,
@@ -419,7 +419,7 @@ class _BottomStatusBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainerHigh,
-        border: Border(top: BorderSide(color: Theme.of(context).dividerColor)),
+        border: Border(bottom: BorderSide(color: Theme.of(context).dividerColor)),
       ),
       child: Row(
         children: [
