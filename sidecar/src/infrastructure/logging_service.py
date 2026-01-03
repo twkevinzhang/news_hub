@@ -5,6 +5,7 @@ from pathlib import Path
 from datetime import datetime, timedelta
 from typing import Optional, List
 import threading
+import sys
 import queue
 from dataclasses import dataclass
 import sidecar_api_pb2 as pb2
@@ -72,47 +73,61 @@ class LoggingService:
     
     def __init__(self, log_dir: Path, retention_days: int = 7):
         self.log_dir = log_dir
-        self.log_dir.mkdir(parents=True, exist_ok=True)
         self.retention_days = retention_days
         self.stream_handler = LogStreamHandler()
         self._current_level = logging.INFO
+        
+        # Try to create log directory, but don't crash if it fails
+        try:
+            self.log_dir.mkdir(parents=True, exist_ok=True)
+            self.file_logging_available = True
+        except Exception as e:
+            print(f"Warning: Could not create log directory {log_dir}: {e}")
+            self.file_logging_available = False
+            
         self._setup_logging()
     
     def _setup_logging(self):
         """Setup logging configuration"""
+        root_logger = logging.getLogger()
+        
         # Create formatter
         formatter = logging.Formatter(
             '[%(asctime)s] %(levelname)s in %(name)s: %(message)s',
             datefmt='%Y-%m-%d %H:%M:%S'
         )
         
-        # Console handler
-        console_handler = logging.StreamHandler()
+        # Console handler (standard output for Flutter capture)
+        console_handler = logging.StreamHandler(sys.stdout)
         console_handler.setLevel(logging.DEBUG)
         console_handler.setFormatter(formatter)
+        root_logger.addHandler(console_handler)
+        
+        # Set root logger level
+        root_logger.setLevel(logging.INFO)
         
         # File handler with daily rotation (UTC+8)
-        log_file = self.log_dir / f"sidecar_{datetime.now().strftime('%Y%m%d')}.log"
-        file_handler = logging.handlers.TimedRotatingFileHandler(
-            filename=log_file,
-            when='midnight',
-            interval=1,
-            backupCount=self.retention_days,
-            encoding='utf-8',
-            utc=False  # Use local time (UTC+8)
-        )
-        file_handler.setLevel(logging.DEBUG)
-        file_handler.setFormatter(formatter)
+        if self.file_logging_available:
+            try:
+                log_file = self.log_dir / f"sidecar_{datetime.now().strftime('%Y%m%d')}.log"
+                file_handler = logging.handlers.TimedRotatingFileHandler(
+                    filename=log_file,
+                    when='midnight',
+                    interval=1,
+                    backupCount=self.retention_days,
+                    encoding='utf-8',
+                    utc=False  # Use local time (UTC+8)
+                )
+                file_handler.setLevel(logging.DEBUG)
+                file_handler.setFormatter(formatter)
+                root_logger.addHandler(file_handler)
+            except Exception as e:
+                print(f"Warning: Could not setup file logging: {e}")
+                self.file_logging_available = False
         
         # Stream handler for gRPC streaming
         self.stream_handler.setLevel(logging.DEBUG)
         self.stream_handler.setFormatter(formatter)
-        
-        # Configure root logger
-        root_logger = logging.getLogger()
-        root_logger.setLevel(logging.DEBUG)
-        root_logger.addHandler(console_handler)
-        root_logger.addHandler(file_handler)
         root_logger.addHandler(self.stream_handler)
         
         logging.info("Logging service initialized")

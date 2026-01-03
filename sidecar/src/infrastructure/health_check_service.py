@@ -7,10 +7,10 @@ import sidecar_api_pb2 as pb2
 
 class HealthStatus(Enum):
     """Health status enumeration"""
-    UNKNOWN = pb2.HealthCheckResponse.UNKNOWN
-    SERVING = pb2.HealthCheckResponse.SERVING
-    NOT_SERVING = pb2.HealthCheckResponse.NOT_SERVING
-    SERVICE_UNKNOWN = pb2.HealthCheckResponse.SERVICE_UNKNOWN
+    UNKNOWN = pb2.HealthCheckRes.UNKNOWN
+    SERVING = pb2.HealthCheckRes.SERVING
+    NOT_SERVING = pb2.HealthCheckRes.NOT_SERVING
+    SERVICE_UNKNOWN = pb2.HealthCheckRes.SERVICE_UNKNOWN
 
 
 class HealthCheckService:
@@ -31,19 +31,19 @@ class HealthCheckService:
         """Get current health status"""
         return self._status, self._message
     
-    def check(self, service_name: Optional[str] = None) -> pb2.HealthCheckResponse:
+    def check(self, service_name: Optional[str] = None) -> pb2.HealthCheckRes:
         """Perform health check"""
         if service_name and service_name != "":
             # Check specific service
             # For now, we only have one service, so return SERVICE_UNKNOWN for others
-            return pb2.HealthCheckResponse(
-                status=pb2.HealthCheckResponse.SERVICE_UNKNOWN,
+            return pb2.HealthCheckRes(
+                status=pb2.HealthCheckRes.SERVICE_UNKNOWN,
                 message=f"Service '{service_name}' not found"
             )
         
         # Check overall health
         status, message = self.get_status()
-        return pb2.HealthCheckResponse(
+        return pb2.HealthCheckRes(
             status=status.value,
             message=message or ""
         )

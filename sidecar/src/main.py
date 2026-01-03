@@ -3,16 +3,14 @@ import logging
 from concurrent import futures
 import grpc
 
-from shared.config import Config
-from shared.dependency_container import DependencyContainer
-from logger import initLogger
-import sidecar_api_pb2_grpc as pb2_grpc
-
-
 def main():
     """Start the gRPC server"""
-    # Initialize logger
-    initLogger()
+    print("Sidecar starting...", flush=True)
+    from shared.config import Config
+    from shared.dependency_container import DependencyContainer
+    import sidecar_api_pb2_grpc as pb2_grpc
+
+    # Note: Logging is initialized inside DependencyContainer via LoggingService
     logger = logging.getLogger(__name__)
 
     try:
@@ -46,4 +44,9 @@ def main():
 
 
 if __name__ == "__main__" or __name__ == "main":
-    main()
+    try:
+        main()
+    except Exception as e:
+        # Fallback logging if logger isn't initialized
+        print(f"Fatal startup error: {e}")
+        raise
