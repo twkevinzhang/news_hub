@@ -1,21 +1,19 @@
 import 'package:dartx/dartx.dart';
-import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/domain/extension/extension_api_service.dart';
+import 'package:news_hub/domain/api_service.dart';
 import 'package:news_hub/domain/extension/interactor/list_installed_extensions.dart';
 import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/domain/thread/interactor/get_thread.dart';
 import 'package:news_hub/shared/models.dart';
 
 @lazySingleton
 class ListThreads {
-  final ExtensionApiService _apiService;
+  final ApiService _service;
   final ListInstalledExtensions _listInstalledExtensions;
 
   ListThreads({
-    required ExtensionApiService apiService,
+    required ApiService apiService,
     required ListInstalledExtensions listInstalledExtensions,
-  })  : _apiService = apiService,
+  })  : _service = apiService,
         _listInstalledExtensions = listInstalledExtensions;
 
   Future<List<SingleImagePostWithExtension>> call({
@@ -24,7 +22,7 @@ class ListThreads {
     ThreadsSorting? sorting,
   }) async {
     final extensions = await _listInstalledExtensions.withBoards();
-    final threads = (await Future.wait(extensions.map((e) => _apiService.threadList(
+    final threads = (await Future.wait(extensions.map((e) => _service.listThreads(
               extensionPkgName: e.pkgName,
               siteId: e.site.id,
               boardsSorting: filter?.boardsSorting,

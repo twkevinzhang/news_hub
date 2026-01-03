@@ -1,20 +1,20 @@
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/domain/extension/extension_api_service.dart';
-import 'package:news_hub/domain/extension/installed_extension_repository.dart';
+import 'package:news_hub/domain/api_service.dart';
+import 'package:news_hub/domain/extension/interactor/get_installed_extension.dart';
 import 'package:news_hub/domain/thread/interactor/get_thread.dart';
 import 'package:news_hub/shared/models.dart';
 import 'package:news_hub/domain/models/models.dart';
 
 @lazySingleton
 class ListRegardingPosts {
-  final InstalledExtensionRepository _installedExtensionRepository;
-  final ExtensionApiService _apiService;
+  final GetInstalledExtension _getInstalledExtension;
+  final ApiService _service;
 
   ListRegardingPosts({
-    required ExtensionApiService apiService,
-    required InstalledExtensionRepository installedExtensionRepository,
-  })  : _apiService = apiService,
-        _installedExtensionRepository = installedExtensionRepository;
+    required ApiService apiService,
+    required GetInstalledExtension installedExtensionRepository,
+  })  : _service = apiService,
+        _getInstalledExtension = installedExtensionRepository;
 
   Future<List<ArticlePostWithExtension>> call({
     required String extensionPkgName,
@@ -24,10 +24,10 @@ class ListRegardingPosts {
     String? replyToId,
     Pagination? pagination,
   }) async {
-    final extensionF = _installedExtensionRepository.get(extensionPkgName);
-    final siteF = _apiService.site(extensionPkgName: extensionPkgName);
-    final boardsF = _apiService.boards(extensionPkgName: extensionPkgName, siteId: siteId);
-    final regardingPostsF = _apiService.regardingPosts(
+    final extensionF = _getInstalledExtension.get(extensionPkgName);
+    final siteF = _service.getSite(extensionPkgName: extensionPkgName);
+    final boardsF = _service.listBoards(extensionPkgName: extensionPkgName, siteId: siteId);
+    final regardingPostsF = _service.listRegardingPosts(
       extensionPkgName: extensionPkgName,
       siteId: siteId,
       boardId: boardId,

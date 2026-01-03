@@ -1,21 +1,18 @@
-import 'package:dartx/dartx.dart';
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/domain/extension/extension_api_service.dart';
-import 'package:news_hub/domain/extension/installed_extension_repository.dart';
-import 'package:news_hub/domain/extension/interactor/list_installed_extensions.dart';
+import 'package:news_hub/domain/api_service.dart';
+import 'package:news_hub/domain/extension/interactor/get_installed_extension.dart';
 import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/shared/models.dart';
 
 @lazySingleton
 class GetThread {
-  final InstalledExtensionRepository _installedExtensionRepository;
-  final ExtensionApiService _apiService;
+  final GetInstalledExtension _getInstalledExtension;
+  final ApiService _service;
 
   GetThread({
-    required ExtensionApiService apiService,
-    required InstalledExtensionRepository installedExtensionRepository,
-  })  : _apiService = apiService,
-        _installedExtensionRepository = installedExtensionRepository;
+    required ApiService apiService,
+    required GetInstalledExtension installedExtensionRepository,
+  })  : _service = apiService,
+        _getInstalledExtension = installedExtensionRepository;
 
   Future<ArticlePostWithExtension> call({
     required String extensionPkgName,
@@ -24,10 +21,10 @@ class GetThread {
     required String threadId,
     String? postId,
   }) async {
-    final extensionF = _installedExtensionRepository.get(extensionPkgName);
-    final siteF = _apiService.site(extensionPkgName: extensionPkgName);
-    final boardsF = _apiService.boards(extensionPkgName: extensionPkgName, siteId: siteId);
-    final threadF = _apiService.thread(
+    final extensionF = _getInstalledExtension.get(extensionPkgName);
+    final siteF = _service.getSite(extensionPkgName: extensionPkgName);
+    final boardsF = _service.listBoards(extensionPkgName: extensionPkgName, siteId: siteId);
+    final threadF = _service.getThread(
       extensionPkgName: extensionPkgName,
       siteId: siteId,
       boardId: boardId,
