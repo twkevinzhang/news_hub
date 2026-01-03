@@ -4,6 +4,47 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'models.freezed.dart';
 part 'models.g.dart';
 
+enum ServingStatus {
+  unknown,
+  serving,
+  notServing,
+  serviceUnknown,
+}
+
+class HealthCheckResult {
+  final ServingStatus status;
+  final String? message;
+
+  HealthCheckResult({
+    required this.status,
+    this.message,
+  });
+}
+
+enum LogLevel {
+  debug,
+  info,
+  warn,
+  error,
+  critical,
+}
+
+class LogEntry {
+  final DateTime timestamp;
+  final LogLevel level;
+  final String loggerName;
+  final String message;
+  final String exception;
+
+  LogEntry({
+    required this.timestamp,
+    required this.level,
+    required this.loggerName,
+    required this.message,
+    required this.exception,
+  });
+}
+
 class ExtensionRepo {
   final String? icon;
   final String baseUrl;
@@ -192,13 +233,13 @@ class SingleImagePost extends Post {
 }
 
 extension SingleImagePostListEx on List<SingleImagePost> {
-  Iterable<Post> filterBy({ required String replyToId }) {
+  Iterable<Post> filterBy({required String replyToId}) {
     return where((post) => post.contents.any((p) {
-      if (p is ReplyToParagraph) {
-        return p.id == replyToId;
-      }
-      return false;
-    }));
+          if (p is ReplyToParagraph) {
+            return p.id == replyToId;
+          }
+          return false;
+        }));
   }
 }
 
@@ -236,13 +277,13 @@ class ArticlePost extends Post {
 }
 
 extension ArticlePostListEx on List<ArticlePost> {
-  Iterable<ArticlePost> filterBy({ required String targetId }) {
+  Iterable<ArticlePost> filterBy({required String targetId}) {
     return where((post) => post.contents.any((p) {
-      if (p is ReplyToParagraph) {
-        return p.id == targetId;
-      }
-      return false;
-    }));
+          if (p is ReplyToParagraph) {
+            return p.id == targetId;
+          }
+          return false;
+        }));
   }
 }
 

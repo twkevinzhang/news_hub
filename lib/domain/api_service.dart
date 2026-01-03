@@ -3,6 +3,12 @@ import 'package:news_hub/shared/models.dart';
 import 'models/models.dart';
 
 abstract class ApiService {
+  Stream<HealthCheckResult> watchHealth();
+
+  Future<HealthCheckResult> healthCheck();
+
+  Stream<LogEntry> watchLogs({LogLevel minLevel});
+
   Future<List<Extension>> listInstalledExtensions();
 
   Future<Extension> getInstalledExtension({
