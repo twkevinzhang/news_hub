@@ -3433,8 +3433,8 @@ class Extension extends $pb.GeneratedMessage {
 }
 
 /// Health Check Messages
-class HealthCheckRequest extends $pb.GeneratedMessage {
-  factory HealthCheckRequest({
+class HealthCheckReq extends $pb.GeneratedMessage {
+  factory HealthCheckReq({
     $core.String? service,
   }) {
     final $result = create();
@@ -3443,11 +3443,11 @@ class HealthCheckRequest extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  HealthCheckRequest._() : super();
-  factory HealthCheckRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory HealthCheckRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  HealthCheckReq._() : super();
+  factory HealthCheckReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory HealthCheckReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'HealthCheckRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'HealthCheckReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'service')
     ..hasRequiredFields = false
   ;
@@ -3456,22 +3456,22 @@ class HealthCheckRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  HealthCheckRequest clone() => HealthCheckRequest()..mergeFromMessage(this);
+  HealthCheckReq clone() => HealthCheckReq()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  HealthCheckRequest copyWith(void Function(HealthCheckRequest) updates) => super.copyWith((message) => updates(message as HealthCheckRequest)) as HealthCheckRequest;
+  HealthCheckReq copyWith(void Function(HealthCheckReq) updates) => super.copyWith((message) => updates(message as HealthCheckReq)) as HealthCheckReq;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static HealthCheckRequest create() => HealthCheckRequest._();
-  HealthCheckRequest createEmptyInstance() => create();
-  static $pb.PbList<HealthCheckRequest> createRepeated() => $pb.PbList<HealthCheckRequest>();
+  static HealthCheckReq create() => HealthCheckReq._();
+  HealthCheckReq createEmptyInstance() => create();
+  static $pb.PbList<HealthCheckReq> createRepeated() => $pb.PbList<HealthCheckReq>();
   @$core.pragma('dart2js:noInline')
-  static HealthCheckRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HealthCheckRequest>(create);
-  static HealthCheckRequest? _defaultInstance;
+  static HealthCheckReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HealthCheckReq>(create);
+  static HealthCheckReq? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.String get service => $_getSZ(0);
@@ -3483,9 +3483,9 @@ class HealthCheckRequest extends $pb.GeneratedMessage {
   void clearService() => clearField(1);
 }
 
-class HealthCheckResponse extends $pb.GeneratedMessage {
-  factory HealthCheckResponse({
-    HealthCheckResponse_ServingStatus? status,
+class HealthCheckRes extends $pb.GeneratedMessage {
+  factory HealthCheckRes({
+    HealthCheckRes_ServingStatus? status,
     $core.String? message,
   }) {
     final $result = create();
@@ -3497,12 +3497,12 @@ class HealthCheckResponse extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  HealthCheckResponse._() : super();
-  factory HealthCheckResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory HealthCheckResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  HealthCheckRes._() : super();
+  factory HealthCheckRes.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory HealthCheckRes.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'HealthCheckResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
-    ..e<HealthCheckResponse_ServingStatus>(1, _omitFieldNames ? '' : 'status', $pb.PbFieldType.OE, defaultOrMaker: HealthCheckResponse_ServingStatus.UNKNOWN, valueOf: HealthCheckResponse_ServingStatus.valueOf, enumValues: HealthCheckResponse_ServingStatus.values)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'HealthCheckRes', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+    ..e<HealthCheckRes_ServingStatus>(1, _omitFieldNames ? '' : 'status', $pb.PbFieldType.OE, defaultOrMaker: HealthCheckRes_ServingStatus.UNKNOWN, valueOf: HealthCheckRes_ServingStatus.valueOf, enumValues: HealthCheckRes_ServingStatus.values)
     ..aOS(2, _omitFieldNames ? '' : 'message')
     ..hasRequiredFields = false
   ;
@@ -3511,27 +3511,27 @@ class HealthCheckResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  HealthCheckResponse clone() => HealthCheckResponse()..mergeFromMessage(this);
+  HealthCheckRes clone() => HealthCheckRes()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  HealthCheckResponse copyWith(void Function(HealthCheckResponse) updates) => super.copyWith((message) => updates(message as HealthCheckResponse)) as HealthCheckResponse;
+  HealthCheckRes copyWith(void Function(HealthCheckRes) updates) => super.copyWith((message) => updates(message as HealthCheckRes)) as HealthCheckRes;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static HealthCheckResponse create() => HealthCheckResponse._();
-  HealthCheckResponse createEmptyInstance() => create();
-  static $pb.PbList<HealthCheckResponse> createRepeated() => $pb.PbList<HealthCheckResponse>();
+  static HealthCheckRes create() => HealthCheckRes._();
+  HealthCheckRes createEmptyInstance() => create();
+  static $pb.PbList<HealthCheckRes> createRepeated() => $pb.PbList<HealthCheckRes>();
   @$core.pragma('dart2js:noInline')
-  static HealthCheckResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HealthCheckResponse>(create);
-  static HealthCheckResponse? _defaultInstance;
+  static HealthCheckRes getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<HealthCheckRes>(create);
+  static HealthCheckRes? _defaultInstance;
 
   @$pb.TagNumber(1)
-  HealthCheckResponse_ServingStatus get status => $_getN(0);
+  HealthCheckRes_ServingStatus get status => $_getN(0);
   @$pb.TagNumber(1)
-  set status(HealthCheckResponse_ServingStatus v) { setField(1, v); }
+  set status(HealthCheckRes_ServingStatus v) { setField(1, v); }
   @$pb.TagNumber(1)
   $core.bool hasStatus() => $_has(0);
   @$pb.TagNumber(1)
@@ -3653,8 +3653,8 @@ class LogEntry extends $pb.GeneratedMessage {
   void clearException() => clearField(5);
 }
 
-class StreamLogsRequest extends $pb.GeneratedMessage {
-  factory StreamLogsRequest({
+class WatchLogsReq extends $pb.GeneratedMessage {
+  factory WatchLogsReq({
     LogLevel? minLevel,
     $core.String? loggerFilter,
   }) {
@@ -3667,11 +3667,11 @@ class StreamLogsRequest extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  StreamLogsRequest._() : super();
-  factory StreamLogsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory StreamLogsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  WatchLogsReq._() : super();
+  factory WatchLogsReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory WatchLogsReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'StreamLogsRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'WatchLogsReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..e<LogLevel>(1, _omitFieldNames ? '' : 'minLevel', $pb.PbFieldType.OE, defaultOrMaker: LogLevel.DEBUG, valueOf: LogLevel.valueOf, enumValues: LogLevel.values)
     ..aOS(2, _omitFieldNames ? '' : 'loggerFilter')
     ..hasRequiredFields = false
@@ -3681,22 +3681,22 @@ class StreamLogsRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  StreamLogsRequest clone() => StreamLogsRequest()..mergeFromMessage(this);
+  WatchLogsReq clone() => WatchLogsReq()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  StreamLogsRequest copyWith(void Function(StreamLogsRequest) updates) => super.copyWith((message) => updates(message as StreamLogsRequest)) as StreamLogsRequest;
+  WatchLogsReq copyWith(void Function(WatchLogsReq) updates) => super.copyWith((message) => updates(message as WatchLogsReq)) as WatchLogsReq;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static StreamLogsRequest create() => StreamLogsRequest._();
-  StreamLogsRequest createEmptyInstance() => create();
-  static $pb.PbList<StreamLogsRequest> createRepeated() => $pb.PbList<StreamLogsRequest>();
+  static WatchLogsReq create() => WatchLogsReq._();
+  WatchLogsReq createEmptyInstance() => create();
+  static $pb.PbList<WatchLogsReq> createRepeated() => $pb.PbList<WatchLogsReq>();
   @$core.pragma('dart2js:noInline')
-  static StreamLogsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<StreamLogsRequest>(create);
-  static StreamLogsRequest? _defaultInstance;
+  static WatchLogsReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<WatchLogsReq>(create);
+  static WatchLogsReq? _defaultInstance;
 
   @$pb.TagNumber(1)
   LogLevel get minLevel => $_getN(0);
@@ -3717,8 +3717,8 @@ class StreamLogsRequest extends $pb.GeneratedMessage {
   void clearLoggerFilter() => clearField(2);
 }
 
-class GetLogsRequest extends $pb.GeneratedMessage {
-  factory GetLogsRequest({
+class GetLogsReq extends $pb.GeneratedMessage {
+  factory GetLogsReq({
     $fixnum.Int64? startTime,
     $fixnum.Int64? endTime,
     LogLevel? minLevel,
@@ -3743,11 +3743,11 @@ class GetLogsRequest extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  GetLogsRequest._() : super();
-  factory GetLogsRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GetLogsRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  GetLogsReq._() : super();
+  factory GetLogsReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetLogsReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetLogsRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetLogsReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..aInt64(1, _omitFieldNames ? '' : 'startTime')
     ..aInt64(2, _omitFieldNames ? '' : 'endTime')
     ..e<LogLevel>(3, _omitFieldNames ? '' : 'minLevel', $pb.PbFieldType.OE, defaultOrMaker: LogLevel.DEBUG, valueOf: LogLevel.valueOf, enumValues: LogLevel.values)
@@ -3760,22 +3760,22 @@ class GetLogsRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  GetLogsRequest clone() => GetLogsRequest()..mergeFromMessage(this);
+  GetLogsReq clone() => GetLogsReq()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetLogsRequest copyWith(void Function(GetLogsRequest) updates) => super.copyWith((message) => updates(message as GetLogsRequest)) as GetLogsRequest;
+  GetLogsReq copyWith(void Function(GetLogsReq) updates) => super.copyWith((message) => updates(message as GetLogsReq)) as GetLogsReq;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static GetLogsRequest create() => GetLogsRequest._();
-  GetLogsRequest createEmptyInstance() => create();
-  static $pb.PbList<GetLogsRequest> createRepeated() => $pb.PbList<GetLogsRequest>();
+  static GetLogsReq create() => GetLogsReq._();
+  GetLogsReq createEmptyInstance() => create();
+  static $pb.PbList<GetLogsReq> createRepeated() => $pb.PbList<GetLogsReq>();
   @$core.pragma('dart2js:noInline')
-  static GetLogsRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetLogsRequest>(create);
-  static GetLogsRequest? _defaultInstance;
+  static GetLogsReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetLogsReq>(create);
+  static GetLogsReq? _defaultInstance;
 
   @$pb.TagNumber(1)
   $fixnum.Int64 get startTime => $_getI64(0);
@@ -3823,8 +3823,8 @@ class GetLogsRequest extends $pb.GeneratedMessage {
   void clearLimit() => clearField(5);
 }
 
-class GetLogsResponse extends $pb.GeneratedMessage {
-  factory GetLogsResponse({
+class GetLogsRes extends $pb.GeneratedMessage {
+  factory GetLogsRes({
     $core.Iterable<LogEntry>? entries,
   }) {
     final $result = create();
@@ -3833,11 +3833,11 @@ class GetLogsResponse extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  GetLogsResponse._() : super();
-  factory GetLogsResponse.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GetLogsResponse.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  GetLogsRes._() : super();
+  factory GetLogsRes.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetLogsRes.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetLogsResponse', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetLogsRes', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..pc<LogEntry>(1, _omitFieldNames ? '' : 'entries', $pb.PbFieldType.PM, subBuilder: LogEntry.create)
     ..hasRequiredFields = false
   ;
@@ -3846,29 +3846,29 @@ class GetLogsResponse extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  GetLogsResponse clone() => GetLogsResponse()..mergeFromMessage(this);
+  GetLogsRes clone() => GetLogsRes()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  GetLogsResponse copyWith(void Function(GetLogsResponse) updates) => super.copyWith((message) => updates(message as GetLogsResponse)) as GetLogsResponse;
+  GetLogsRes copyWith(void Function(GetLogsRes) updates) => super.copyWith((message) => updates(message as GetLogsRes)) as GetLogsRes;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static GetLogsResponse create() => GetLogsResponse._();
-  GetLogsResponse createEmptyInstance() => create();
-  static $pb.PbList<GetLogsResponse> createRepeated() => $pb.PbList<GetLogsResponse>();
+  static GetLogsRes create() => GetLogsRes._();
+  GetLogsRes createEmptyInstance() => create();
+  static $pb.PbList<GetLogsRes> createRepeated() => $pb.PbList<GetLogsRes>();
   @$core.pragma('dart2js:noInline')
-  static GetLogsResponse getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetLogsResponse>(create);
-  static GetLogsResponse? _defaultInstance;
+  static GetLogsRes getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetLogsRes>(create);
+  static GetLogsRes? _defaultInstance;
 
   @$pb.TagNumber(1)
   $core.List<LogEntry> get entries => $_getList(0);
 }
 
-class SetLogLevelRequest extends $pb.GeneratedMessage {
-  factory SetLogLevelRequest({
+class SetLogLevelReq extends $pb.GeneratedMessage {
+  factory SetLogLevelReq({
     LogLevel? level,
   }) {
     final $result = create();
@@ -3877,11 +3877,11 @@ class SetLogLevelRequest extends $pb.GeneratedMessage {
     }
     return $result;
   }
-  SetLogLevelRequest._() : super();
-  factory SetLogLevelRequest.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory SetLogLevelRequest.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+  SetLogLevelReq._() : super();
+  factory SetLogLevelReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory SetLogLevelReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SetLogLevelRequest', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'SetLogLevelReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..e<LogLevel>(1, _omitFieldNames ? '' : 'level', $pb.PbFieldType.OE, defaultOrMaker: LogLevel.DEBUG, valueOf: LogLevel.valueOf, enumValues: LogLevel.values)
     ..hasRequiredFields = false
   ;
@@ -3890,22 +3890,22 @@ class SetLogLevelRequest extends $pb.GeneratedMessage {
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
   'Will be removed in next major version')
-  SetLogLevelRequest clone() => SetLogLevelRequest()..mergeFromMessage(this);
+  SetLogLevelReq clone() => SetLogLevelReq()..mergeFromMessage(this);
   @$core.Deprecated(
   'Using this can add significant overhead to your binary. '
   'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
   'Will be removed in next major version')
-  SetLogLevelRequest copyWith(void Function(SetLogLevelRequest) updates) => super.copyWith((message) => updates(message as SetLogLevelRequest)) as SetLogLevelRequest;
+  SetLogLevelReq copyWith(void Function(SetLogLevelReq) updates) => super.copyWith((message) => updates(message as SetLogLevelReq)) as SetLogLevelReq;
 
   $pb.BuilderInfo get info_ => _i;
 
   @$core.pragma('dart2js:noInline')
-  static SetLogLevelRequest create() => SetLogLevelRequest._();
-  SetLogLevelRequest createEmptyInstance() => create();
-  static $pb.PbList<SetLogLevelRequest> createRepeated() => $pb.PbList<SetLogLevelRequest>();
+  static SetLogLevelReq create() => SetLogLevelReq._();
+  SetLogLevelReq createEmptyInstance() => create();
+  static $pb.PbList<SetLogLevelReq> createRepeated() => $pb.PbList<SetLogLevelReq>();
   @$core.pragma('dart2js:noInline')
-  static SetLogLevelRequest getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetLogLevelRequest>(create);
-  static SetLogLevelRequest? _defaultInstance;
+  static SetLogLevelReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<SetLogLevelReq>(create);
+  static SetLogLevelReq? _defaultInstance;
 
   @$pb.TagNumber(1)
   LogLevel get level => $_getN(0);

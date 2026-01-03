@@ -62,23 +62,23 @@ class LogLevel extends $pb.ProtobufEnum {
   const LogLevel._($core.int v, $core.String n) : super(v, n);
 }
 
-class HealthCheckResponse_ServingStatus extends $pb.ProtobufEnum {
-  static const HealthCheckResponse_ServingStatus UNKNOWN = HealthCheckResponse_ServingStatus._(0, _omitEnumNames ? '' : 'UNKNOWN');
-  static const HealthCheckResponse_ServingStatus SERVING = HealthCheckResponse_ServingStatus._(1, _omitEnumNames ? '' : 'SERVING');
-  static const HealthCheckResponse_ServingStatus NOT_SERVING = HealthCheckResponse_ServingStatus._(2, _omitEnumNames ? '' : 'NOT_SERVING');
-  static const HealthCheckResponse_ServingStatus SERVICE_UNKNOWN = HealthCheckResponse_ServingStatus._(3, _omitEnumNames ? '' : 'SERVICE_UNKNOWN');
+class HealthCheckRes_ServingStatus extends $pb.ProtobufEnum {
+  static const HealthCheckRes_ServingStatus UNKNOWN = HealthCheckRes_ServingStatus._(0, _omitEnumNames ? '' : 'UNKNOWN');
+  static const HealthCheckRes_ServingStatus SERVING = HealthCheckRes_ServingStatus._(1, _omitEnumNames ? '' : 'SERVING');
+  static const HealthCheckRes_ServingStatus NOT_SERVING = HealthCheckRes_ServingStatus._(2, _omitEnumNames ? '' : 'NOT_SERVING');
+  static const HealthCheckRes_ServingStatus SERVICE_UNKNOWN = HealthCheckRes_ServingStatus._(3, _omitEnumNames ? '' : 'SERVICE_UNKNOWN');
 
-  static const $core.List<HealthCheckResponse_ServingStatus> values = <HealthCheckResponse_ServingStatus> [
+  static const $core.List<HealthCheckRes_ServingStatus> values = <HealthCheckRes_ServingStatus> [
     UNKNOWN,
     SERVING,
     NOT_SERVING,
     SERVICE_UNKNOWN,
   ];
 
-  static final $core.Map<$core.int, HealthCheckResponse_ServingStatus> _byValue = $pb.ProtobufEnum.initByValue(values);
-  static HealthCheckResponse_ServingStatus? valueOf($core.int value) => _byValue[value];
+  static final $core.Map<$core.int, HealthCheckRes_ServingStatus> _byValue = $pb.ProtobufEnum.initByValue(values);
+  static HealthCheckRes_ServingStatus? valueOf($core.int value) => _byValue[value];
 
-  const HealthCheckResponse_ServingStatus._($core.int v, $core.String n) : super(v, n);
+  const HealthCheckRes_ServingStatus._($core.int v, $core.String n) : super(v, n);
 }
 
 

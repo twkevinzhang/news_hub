@@ -220,3 +220,50 @@ extension RemoteExtensionTransform on pb.RemoteExtension {
     );
   }
 }
+
+extension HealthCheckResTransform on pb.HealthCheckRes {
+  domain.HealthCheckResult toHealthCheckResultDomain() {
+    final _status = switch (status.value) {
+      0 => domain.ServingStatus.unknown,
+      1 => domain.ServingStatus.serving,
+      2 => domain.ServingStatus.notServing,
+      3 => domain.ServingStatus.serviceUnknown,
+      _ => throw Exception('Unknown status value: ${status.value}'),
+    };
+    return domain.HealthCheckResult(
+      status: _status,
+      message: message,
+    );
+  }
+}
+
+extension LogEntryTransform on pb.LogEntry {
+  domain.LogEntry toLogEntryDomain() {
+    return domain.LogEntry(
+      timestamp: timestamp.toDateTime(),
+      level: switch (level.value) {
+        0 => domain.LogLevel.debug,
+        1 => domain.LogLevel.info,
+        2 => domain.LogLevel.warn,
+        3 => domain.LogLevel.error,
+        4 => domain.LogLevel.critical,
+        _ => throw Exception('Unknown log level value: ${level.value}'),
+      },
+      loggerName: loggerName,
+      message: message,
+      exception: exception,
+    );
+  }
+}
+
+extension DomainLogLevelTransform on domain.LogLevel {
+  pb.LogLevel toPbLogLevel(){
+    return switch (this) {
+      domain.LogLevel.debug => pb.LogLevel.DEBUG,
+      domain.LogLevel.info => pb.LogLevel.INFO,
+      domain.LogLevel.warn => pb.LogLevel.WARNING,
+      domain.LogLevel.error => pb.LogLevel.ERROR,
+      domain.LogLevel.critical => pb.LogLevel.CRITICAL,
+    };
+  }
+}

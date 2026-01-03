@@ -10,10 +10,10 @@ import 'models/sidecar_api.pbgrpc.dart';
 import 'models/sidecar_api.pb.dart' as pb;
 
 @LazySingleton(as: ApiService)
-class SidecarApi implements ApiService {
+class SidecarApiImpl implements ApiService {
   late final SidecarApiClient _client;
 
-  SidecarApi({
+  SidecarApiImpl({
     required ClientChannel clientChannel,
   }) : _client = SidecarApiClient(clientChannel);
 
@@ -167,20 +167,21 @@ class SidecarApi implements ApiService {
   }
 
   // Health Check
-  Stream<pb.HealthCheckResponse> watchHealth() {
-    return _client.watchHealth(pb.HealthCheckRequest());
+  @override
+  Stream<domain.HealthCheckResult> watchHealth() {
+    return _client.watchHealth(pb.HealthCheckReq()).map((res) => res.toHealthCheckResultDomain());
   }
 
-  Future<pb.HealthCheckResponse> healthCheck() async {
-    return await _client.healthCheck(pb.HealthCheckRequest());
+  @override
+  Future<domain.HealthCheckResult> healthCheck() async {
+    final res = await _client.healthCheck(pb.HealthCheckReq());
+    return res.toHealthCheckResultDomain();
   }
 
   // Logs
-  Stream<pb.LogEntry> streamLogs({pb.LogLevel minLevel = pb.LogLevel.INFO}) {
-    return _client.streamLogs(pb.StreamLogsRequest(minLevel: minLevel));
-  }
-
-  Future<void> setLogLevel(pb.LogLevel level) async {
-    await _client.setLogLevel(pb.SetLogLevelRequest(level: level));
+  @override
+  Stream<domain.LogEntry> watchLogs({domain.LogLevel minLevel = domain.LogLevel.info}) {
+    final res = _client.watchLogs(pb.WatchLogsReq(minLevel: minLevel.toPbLogLevel()));
+    return res.map((l) => l.toLogEntryDomain());
   }
 }

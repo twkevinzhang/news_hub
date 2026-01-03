@@ -765,33 +765,33 @@ final $typed_data.Uint8List extensionDescriptor = $convert.base64Decode(
     'B5dGhvbl92ZXJzaW9uGAYgASgFUg1weXRob25WZXJzaW9uEhcKBGxhbmcYByABKAlIAFIEbGFu'
     'Z4gBARIXCgdpc19uc2Z3GAggASgIUgZpc05zZndCBwoFX2xhbmc=');
 
-@$core.Deprecated('Use healthCheckRequestDescriptor instead')
-const HealthCheckRequest$json = {
-  '1': 'HealthCheckRequest',
+@$core.Deprecated('Use healthCheckReqDescriptor instead')
+const HealthCheckReq$json = {
+  '1': 'HealthCheckReq',
   '2': [
     {'1': 'service', '3': 1, '4': 1, '5': 9, '10': 'service'},
   ],
 };
 
-/// Descriptor for `HealthCheckRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List healthCheckRequestDescriptor = $convert.base64Decode(
-    'ChJIZWFsdGhDaGVja1JlcXVlc3QSGAoHc2VydmljZRgBIAEoCVIHc2VydmljZQ==');
+/// Descriptor for `HealthCheckReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List healthCheckReqDescriptor = $convert.base64Decode(
+    'Cg5IZWFsdGhDaGVja1JlcRIYCgdzZXJ2aWNlGAEgASgJUgdzZXJ2aWNl');
 
-@$core.Deprecated('Use healthCheckResponseDescriptor instead')
-const HealthCheckResponse$json = {
-  '1': 'HealthCheckResponse',
+@$core.Deprecated('Use healthCheckResDescriptor instead')
+const HealthCheckRes$json = {
+  '1': 'HealthCheckRes',
   '2': [
-    {'1': 'status', '3': 1, '4': 1, '5': 14, '6': '.pb.HealthCheckResponse.ServingStatus', '10': 'status'},
+    {'1': 'status', '3': 1, '4': 1, '5': 14, '6': '.pb.HealthCheckRes.ServingStatus', '10': 'status'},
     {'1': 'message', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'message', '17': true},
   ],
-  '4': [HealthCheckResponse_ServingStatus$json],
+  '4': [HealthCheckRes_ServingStatus$json],
   '8': [
     {'1': '_message'},
   ],
 };
 
-@$core.Deprecated('Use healthCheckResponseDescriptor instead')
-const HealthCheckResponse_ServingStatus$json = {
+@$core.Deprecated('Use healthCheckResDescriptor instead')
+const HealthCheckRes_ServingStatus$json = {
   '1': 'ServingStatus',
   '2': [
     {'1': 'UNKNOWN', '2': 0},
@@ -801,12 +801,12 @@ const HealthCheckResponse_ServingStatus$json = {
   ],
 };
 
-/// Descriptor for `HealthCheckResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List healthCheckResponseDescriptor = $convert.base64Decode(
-    'ChNIZWFsdGhDaGVja1Jlc3BvbnNlEj0KBnN0YXR1cxgBIAEoDjIlLnBiLkhlYWx0aENoZWNrUm'
-    'VzcG9uc2UuU2VydmluZ1N0YXR1c1IGc3RhdHVzEh0KB21lc3NhZ2UYAiABKAlIAFIHbWVzc2Fn'
-    'ZYgBASJPCg1TZXJ2aW5nU3RhdHVzEgsKB1VOS05PV04QABILCgdTRVJWSU5HEAESDwoLTk9UX1'
-    'NFUlZJTkcQAhITCg9TRVJWSUNFX1VOS05PV04QA0IKCghfbWVzc2FnZQ==');
+/// Descriptor for `HealthCheckRes`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List healthCheckResDescriptor = $convert.base64Decode(
+    'Cg5IZWFsdGhDaGVja1JlcxI4CgZzdGF0dXMYASABKA4yIC5wYi5IZWFsdGhDaGVja1Jlcy5TZX'
+    'J2aW5nU3RhdHVzUgZzdGF0dXMSHQoHbWVzc2FnZRgCIAEoCUgAUgdtZXNzYWdliAEBIk8KDVNl'
+    'cnZpbmdTdGF0dXMSCwoHVU5LTk9XThAAEgsKB1NFUlZJTkcQARIPCgtOT1RfU0VSVklORxACEh'
+    'MKD1NFUlZJQ0VfVU5LTk9XThADQgoKCF9tZXNzYWdl');
 
 @$core.Deprecated('Use logEntryDescriptor instead')
 const LogEntry$json = {
@@ -830,9 +830,9 @@ final $typed_data.Uint8List logEntryDescriptor = $convert.base64Decode(
     'CgdtZXNzYWdlGAQgASgJUgdtZXNzYWdlEiEKCWV4Y2VwdGlvbhgFIAEoCUgAUglleGNlcHRpb2'
     '6IAQFCDAoKX2V4Y2VwdGlvbg==');
 
-@$core.Deprecated('Use streamLogsRequestDescriptor instead')
-const StreamLogsRequest$json = {
-  '1': 'StreamLogsRequest',
+@$core.Deprecated('Use watchLogsReqDescriptor instead')
+const WatchLogsReq$json = {
+  '1': 'WatchLogsReq',
   '2': [
     {'1': 'min_level', '3': 1, '4': 1, '5': 14, '6': '.pb.LogLevel', '10': 'minLevel'},
     {'1': 'logger_filter', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'loggerFilter', '17': true},
@@ -842,15 +842,15 @@ const StreamLogsRequest$json = {
   ],
 };
 
-/// Descriptor for `StreamLogsRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List streamLogsRequestDescriptor = $convert.base64Decode(
-    'ChFTdHJlYW1Mb2dzUmVxdWVzdBIpCgltaW5fbGV2ZWwYASABKA4yDC5wYi5Mb2dMZXZlbFIIbW'
-    'luTGV2ZWwSKAoNbG9nZ2VyX2ZpbHRlchgCIAEoCUgAUgxsb2dnZXJGaWx0ZXKIAQFCEAoOX2xv'
-    'Z2dlcl9maWx0ZXI=');
+/// Descriptor for `WatchLogsReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List watchLogsReqDescriptor = $convert.base64Decode(
+    'CgxXYXRjaExvZ3NSZXESKQoJbWluX2xldmVsGAEgASgOMgwucGIuTG9nTGV2ZWxSCG1pbkxldm'
+    'VsEigKDWxvZ2dlcl9maWx0ZXIYAiABKAlIAFIMbG9nZ2VyRmlsdGVyiAEBQhAKDl9sb2dnZXJf'
+    'ZmlsdGVy');
 
-@$core.Deprecated('Use getLogsRequestDescriptor instead')
-const GetLogsRequest$json = {
-  '1': 'GetLogsRequest',
+@$core.Deprecated('Use getLogsReqDescriptor instead')
+const GetLogsReq$json = {
+  '1': 'GetLogsReq',
   '2': [
     {'1': 'start_time', '3': 1, '4': 1, '5': 3, '10': 'startTime'},
     {'1': 'end_time', '3': 2, '4': 1, '5': 3, '10': 'endTime'},
@@ -864,36 +864,34 @@ const GetLogsRequest$json = {
   ],
 };
 
-/// Descriptor for `GetLogsRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getLogsRequestDescriptor = $convert.base64Decode(
-    'Cg5HZXRMb2dzUmVxdWVzdBIdCgpzdGFydF90aW1lGAEgASgDUglzdGFydFRpbWUSGQoIZW5kX3'
-    'RpbWUYAiABKANSB2VuZFRpbWUSKQoJbWluX2xldmVsGAMgASgOMgwucGIuTG9nTGV2ZWxSCG1p'
-    'bkxldmVsEigKDWxvZ2dlcl9maWx0ZXIYBCABKAlIAFIMbG9nZ2VyRmlsdGVyiAEBEhkKBWxpbW'
-    'l0GAUgASgFSAFSBWxpbWl0iAEBQhAKDl9sb2dnZXJfZmlsdGVyQggKBl9saW1pdA==');
+/// Descriptor for `GetLogsReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getLogsReqDescriptor = $convert.base64Decode(
+    'CgpHZXRMb2dzUmVxEh0KCnN0YXJ0X3RpbWUYASABKANSCXN0YXJ0VGltZRIZCghlbmRfdGltZR'
+    'gCIAEoA1IHZW5kVGltZRIpCgltaW5fbGV2ZWwYAyABKA4yDC5wYi5Mb2dMZXZlbFIIbWluTGV2'
+    'ZWwSKAoNbG9nZ2VyX2ZpbHRlchgEIAEoCUgAUgxsb2dnZXJGaWx0ZXKIAQESGQoFbGltaXQYBS'
+    'ABKAVIAVIFbGltaXSIAQFCEAoOX2xvZ2dlcl9maWx0ZXJCCAoGX2xpbWl0');
 
-@$core.Deprecated('Use getLogsResponseDescriptor instead')
-const GetLogsResponse$json = {
-  '1': 'GetLogsResponse',
+@$core.Deprecated('Use getLogsResDescriptor instead')
+const GetLogsRes$json = {
+  '1': 'GetLogsRes',
   '2': [
     {'1': 'entries', '3': 1, '4': 3, '5': 11, '6': '.pb.LogEntry', '10': 'entries'},
   ],
 };
 
-/// Descriptor for `GetLogsResponse`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getLogsResponseDescriptor = $convert.base64Decode(
-    'Cg9HZXRMb2dzUmVzcG9uc2USJgoHZW50cmllcxgBIAMoCzIMLnBiLkxvZ0VudHJ5UgdlbnRyaW'
-    'Vz');
+/// Descriptor for `GetLogsRes`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getLogsResDescriptor = $convert.base64Decode(
+    'CgpHZXRMb2dzUmVzEiYKB2VudHJpZXMYASADKAsyDC5wYi5Mb2dFbnRyeVIHZW50cmllcw==');
 
-@$core.Deprecated('Use setLogLevelRequestDescriptor instead')
-const SetLogLevelRequest$json = {
-  '1': 'SetLogLevelRequest',
+@$core.Deprecated('Use setLogLevelReqDescriptor instead')
+const SetLogLevelReq$json = {
+  '1': 'SetLogLevelReq',
   '2': [
     {'1': 'level', '3': 1, '4': 1, '5': 14, '6': '.pb.LogLevel', '10': 'level'},
   ],
 };
 
-/// Descriptor for `SetLogLevelRequest`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List setLogLevelRequestDescriptor = $convert.base64Decode(
-    'ChJTZXRMb2dMZXZlbFJlcXVlc3QSIgoFbGV2ZWwYASABKA4yDC5wYi5Mb2dMZXZlbFIFbGV2ZW'
-    'w=');
+/// Descriptor for `SetLogLevelReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List setLogLevelReqDescriptor = $convert.base64Decode(
+    'Cg5TZXRMb2dMZXZlbFJlcRIiCgVsZXZlbBgBIAEoDjIMLnBiLkxvZ0xldmVsUgVsZXZlbA==');
 

@@ -69,25 +69,25 @@ class SidecarApiClient extends $grpc.Client {
       '/pb.SidecarApi/ListRemoteExtensions',
       ($0.ListRemoteExtensionsReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.ListRemoteExtensionsRes.fromBuffer(value));
-  static final _$healthCheck = $grpc.ClientMethod<$0.HealthCheckRequest, $0.HealthCheckResponse>(
+  static final _$healthCheck = $grpc.ClientMethod<$0.HealthCheckReq, $0.HealthCheckRes>(
       '/pb.SidecarApi/HealthCheck',
-      ($0.HealthCheckRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.HealthCheckResponse.fromBuffer(value));
-  static final _$watchHealth = $grpc.ClientMethod<$0.HealthCheckRequest, $0.HealthCheckResponse>(
+      ($0.HealthCheckReq value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.HealthCheckRes.fromBuffer(value));
+  static final _$watchHealth = $grpc.ClientMethod<$0.HealthCheckReq, $0.HealthCheckRes>(
       '/pb.SidecarApi/WatchHealth',
-      ($0.HealthCheckRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.HealthCheckResponse.fromBuffer(value));
-  static final _$streamLogs = $grpc.ClientMethod<$0.StreamLogsRequest, $0.LogEntry>(
-      '/pb.SidecarApi/StreamLogs',
-      ($0.StreamLogsRequest value) => value.writeToBuffer(),
+      ($0.HealthCheckReq value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.HealthCheckRes.fromBuffer(value));
+  static final _$watchLogs = $grpc.ClientMethod<$0.WatchLogsReq, $0.LogEntry>(
+      '/pb.SidecarApi/WatchLogs',
+      ($0.WatchLogsReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.LogEntry.fromBuffer(value));
-  static final _$getLogs = $grpc.ClientMethod<$0.GetLogsRequest, $0.GetLogsResponse>(
+  static final _$getLogs = $grpc.ClientMethod<$0.GetLogsReq, $0.GetLogsRes>(
       '/pb.SidecarApi/GetLogs',
-      ($0.GetLogsRequest value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.GetLogsResponse.fromBuffer(value));
-  static final _$setLogLevel = $grpc.ClientMethod<$0.SetLogLevelRequest, $0.Empty>(
+      ($0.GetLogsReq value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.GetLogsRes.fromBuffer(value));
+  static final _$setLogLevel = $grpc.ClientMethod<$0.SetLogLevelReq, $0.Empty>(
       '/pb.SidecarApi/SetLogLevel',
-      ($0.SetLogLevelRequest value) => value.writeToBuffer(),
+      ($0.SetLogLevelReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
 
   SidecarApiClient($grpc.ClientChannel channel,
@@ -144,23 +144,23 @@ class SidecarApiClient extends $grpc.Client {
     return $createUnaryCall(_$listRemoteExtensions, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.HealthCheckResponse> healthCheck($0.HealthCheckRequest request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.HealthCheckRes> healthCheck($0.HealthCheckReq request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$healthCheck, request, options: options);
   }
 
-  $grpc.ResponseStream<$0.HealthCheckResponse> watchHealth($0.HealthCheckRequest request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseStream<$0.HealthCheckRes> watchHealth($0.HealthCheckReq request, {$grpc.CallOptions? options}) {
     return $createStreamingCall(_$watchHealth, $async.Stream.fromIterable([request]), options: options);
   }
 
-  $grpc.ResponseStream<$0.LogEntry> streamLogs($0.StreamLogsRequest request, {$grpc.CallOptions? options}) {
-    return $createStreamingCall(_$streamLogs, $async.Stream.fromIterable([request]), options: options);
+  $grpc.ResponseStream<$0.LogEntry> watchLogs($0.WatchLogsReq request, {$grpc.CallOptions? options}) {
+    return $createStreamingCall(_$watchLogs, $async.Stream.fromIterable([request]), options: options);
   }
 
-  $grpc.ResponseFuture<$0.GetLogsResponse> getLogs($0.GetLogsRequest request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.GetLogsRes> getLogs($0.GetLogsReq request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getLogs, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Empty> setLogLevel($0.SetLogLevelRequest request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.Empty> setLogLevel($0.SetLogLevelReq request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$setLogLevel, request, options: options);
   }
 }
@@ -254,40 +254,40 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.ListRemoteExtensionsReq.fromBuffer(value),
         ($0.ListRemoteExtensionsRes value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.HealthCheckRequest, $0.HealthCheckResponse>(
+    $addMethod($grpc.ServiceMethod<$0.HealthCheckReq, $0.HealthCheckRes>(
         'HealthCheck',
         healthCheck_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.HealthCheckRequest.fromBuffer(value),
-        ($0.HealthCheckResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.HealthCheckRequest, $0.HealthCheckResponse>(
+        ($core.List<$core.int> value) => $0.HealthCheckReq.fromBuffer(value),
+        ($0.HealthCheckRes value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.HealthCheckReq, $0.HealthCheckRes>(
         'WatchHealth',
         watchHealth_Pre,
         false,
         true,
-        ($core.List<$core.int> value) => $0.HealthCheckRequest.fromBuffer(value),
-        ($0.HealthCheckResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.StreamLogsRequest, $0.LogEntry>(
-        'StreamLogs',
-        streamLogs_Pre,
+        ($core.List<$core.int> value) => $0.HealthCheckReq.fromBuffer(value),
+        ($0.HealthCheckRes value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.WatchLogsReq, $0.LogEntry>(
+        'WatchLogs',
+        watchLogs_Pre,
         false,
         true,
-        ($core.List<$core.int> value) => $0.StreamLogsRequest.fromBuffer(value),
+        ($core.List<$core.int> value) => $0.WatchLogsReq.fromBuffer(value),
         ($0.LogEntry value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.GetLogsRequest, $0.GetLogsResponse>(
+    $addMethod($grpc.ServiceMethod<$0.GetLogsReq, $0.GetLogsRes>(
         'GetLogs',
         getLogs_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.GetLogsRequest.fromBuffer(value),
-        ($0.GetLogsResponse value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.SetLogLevelRequest, $0.Empty>(
+        ($core.List<$core.int> value) => $0.GetLogsReq.fromBuffer(value),
+        ($0.GetLogsRes value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.SetLogLevelReq, $0.Empty>(
         'SetLogLevel',
         setLogLevel_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.SetLogLevelRequest.fromBuffer(value),
+        ($core.List<$core.int> value) => $0.SetLogLevelReq.fromBuffer(value),
         ($0.Empty value) => value.writeToBuffer()));
   }
 
@@ -339,23 +339,23 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
     return listRemoteExtensions(call, await request);
   }
 
-  $async.Future<$0.HealthCheckResponse> healthCheck_Pre($grpc.ServiceCall call, $async.Future<$0.HealthCheckRequest> request) async {
+  $async.Future<$0.HealthCheckRes> healthCheck_Pre($grpc.ServiceCall call, $async.Future<$0.HealthCheckReq> request) async {
     return healthCheck(call, await request);
   }
 
-  $async.Stream<$0.HealthCheckResponse> watchHealth_Pre($grpc.ServiceCall call, $async.Future<$0.HealthCheckRequest> request) async* {
+  $async.Stream<$0.HealthCheckRes> watchHealth_Pre($grpc.ServiceCall call, $async.Future<$0.HealthCheckReq> request) async* {
     yield* watchHealth(call, await request);
   }
 
-  $async.Stream<$0.LogEntry> streamLogs_Pre($grpc.ServiceCall call, $async.Future<$0.StreamLogsRequest> request) async* {
-    yield* streamLogs(call, await request);
+  $async.Stream<$0.LogEntry> watchLogs_Pre($grpc.ServiceCall call, $async.Future<$0.WatchLogsReq> request) async* {
+    yield* watchLogs(call, await request);
   }
 
-  $async.Future<$0.GetLogsResponse> getLogs_Pre($grpc.ServiceCall call, $async.Future<$0.GetLogsRequest> request) async {
+  $async.Future<$0.GetLogsRes> getLogs_Pre($grpc.ServiceCall call, $async.Future<$0.GetLogsReq> request) async {
     return getLogs(call, await request);
   }
 
-  $async.Future<$0.Empty> setLogLevel_Pre($grpc.ServiceCall call, $async.Future<$0.SetLogLevelRequest> request) async {
+  $async.Future<$0.Empty> setLogLevel_Pre($grpc.ServiceCall call, $async.Future<$0.SetLogLevelReq> request) async {
     return setLogLevel(call, await request);
   }
 
@@ -371,9 +371,9 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
   $async.Future<$0.Empty> uninstallExtension($grpc.ServiceCall call, $0.UninstallExtensionReq request);
   $async.Future<$0.GetInstallProgressRes> getInstallProgress($grpc.ServiceCall call, $0.GetInstallProgressReq request);
   $async.Future<$0.ListRemoteExtensionsRes> listRemoteExtensions($grpc.ServiceCall call, $0.ListRemoteExtensionsReq request);
-  $async.Future<$0.HealthCheckResponse> healthCheck($grpc.ServiceCall call, $0.HealthCheckRequest request);
-  $async.Stream<$0.HealthCheckResponse> watchHealth($grpc.ServiceCall call, $0.HealthCheckRequest request);
-  $async.Stream<$0.LogEntry> streamLogs($grpc.ServiceCall call, $0.StreamLogsRequest request);
-  $async.Future<$0.GetLogsResponse> getLogs($grpc.ServiceCall call, $0.GetLogsRequest request);
-  $async.Future<$0.Empty> setLogLevel($grpc.ServiceCall call, $0.SetLogLevelRequest request);
+  $async.Future<$0.HealthCheckRes> healthCheck($grpc.ServiceCall call, $0.HealthCheckReq request);
+  $async.Stream<$0.HealthCheckRes> watchHealth($grpc.ServiceCall call, $0.HealthCheckReq request);
+  $async.Stream<$0.LogEntry> watchLogs($grpc.ServiceCall call, $0.WatchLogsReq request);
+  $async.Future<$0.GetLogsRes> getLogs($grpc.ServiceCall call, $0.GetLogsReq request);
+  $async.Future<$0.Empty> setLogLevel($grpc.ServiceCall call, $0.SetLogLevelReq request);
 }
