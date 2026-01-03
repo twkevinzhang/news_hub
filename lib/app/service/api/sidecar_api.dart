@@ -54,7 +54,7 @@ class SidecarApi implements ApiService {
     final res = await _client.getThreadInfos(pb.GetThreadInfosReq(
       pkgName: extensionPkgName,
       siteId: siteId,
-      boardsSorting: boardsSorting?.entries,
+      boardsSorting: boardsSorting,
       page: pb.PaginationReq(
         page: pagination?.page,
         pageSize: pagination?.pageSize,
@@ -137,7 +137,7 @@ class SidecarApi implements ApiService {
   @override
   Future<domain.Extension> getInstalledExtension({required String extensionPkgName}) async {
     final res = await _client.getInstalledExtension(pb.GetInstalledExtensionReq(pkgName: extensionPkgName));
-    return res.extension.toExtensionDomain();
+    return res.extension_1.toExtensionDomain();
   }
 
   @override
