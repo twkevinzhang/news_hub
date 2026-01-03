@@ -487,29 +487,29 @@ class Extension(_message.Message):
     is_nsfw: bool
     def __init__(self, repo_base_url: _Optional[str] = ..., pkg_name: _Optional[str] = ..., display_name: _Optional[str] = ..., zip_name: _Optional[str] = ..., version: _Optional[int] = ..., python_version: _Optional[int] = ..., lang: _Optional[str] = ..., is_nsfw: bool = ...) -> None: ...
 
-class HealthCheckRequest(_message.Message):
+class HealthCheckReq(_message.Message):
     __slots__ = ("service",)
     SERVICE_FIELD_NUMBER: _ClassVar[int]
     service: str
     def __init__(self, service: _Optional[str] = ...) -> None: ...
 
-class HealthCheckResponse(_message.Message):
+class HealthCheckRes(_message.Message):
     __slots__ = ("status", "message")
     class ServingStatus(int, metaclass=_enum_type_wrapper.EnumTypeWrapper):
         __slots__ = ()
-        UNKNOWN: _ClassVar[HealthCheckResponse.ServingStatus]
-        SERVING: _ClassVar[HealthCheckResponse.ServingStatus]
-        NOT_SERVING: _ClassVar[HealthCheckResponse.ServingStatus]
-        SERVICE_UNKNOWN: _ClassVar[HealthCheckResponse.ServingStatus]
-    UNKNOWN: HealthCheckResponse.ServingStatus
-    SERVING: HealthCheckResponse.ServingStatus
-    NOT_SERVING: HealthCheckResponse.ServingStatus
-    SERVICE_UNKNOWN: HealthCheckResponse.ServingStatus
+        UNKNOWN: _ClassVar[HealthCheckRes.ServingStatus]
+        SERVING: _ClassVar[HealthCheckRes.ServingStatus]
+        NOT_SERVING: _ClassVar[HealthCheckRes.ServingStatus]
+        SERVICE_UNKNOWN: _ClassVar[HealthCheckRes.ServingStatus]
+    UNKNOWN: HealthCheckRes.ServingStatus
+    SERVING: HealthCheckRes.ServingStatus
+    NOT_SERVING: HealthCheckRes.ServingStatus
+    SERVICE_UNKNOWN: HealthCheckRes.ServingStatus
     STATUS_FIELD_NUMBER: _ClassVar[int]
     MESSAGE_FIELD_NUMBER: _ClassVar[int]
-    status: HealthCheckResponse.ServingStatus
+    status: HealthCheckRes.ServingStatus
     message: str
-    def __init__(self, status: _Optional[_Union[HealthCheckResponse.ServingStatus, str]] = ..., message: _Optional[str] = ...) -> None: ...
+    def __init__(self, status: _Optional[_Union[HealthCheckRes.ServingStatus, str]] = ..., message: _Optional[str] = ...) -> None: ...
 
 class LogEntry(_message.Message):
     __slots__ = ("timestamp", "level", "logger_name", "message", "exception")
@@ -525,7 +525,7 @@ class LogEntry(_message.Message):
     exception: str
     def __init__(self, timestamp: _Optional[int] = ..., level: _Optional[_Union[LogLevel, str]] = ..., logger_name: _Optional[str] = ..., message: _Optional[str] = ..., exception: _Optional[str] = ...) -> None: ...
 
-class StreamLogsRequest(_message.Message):
+class WatchLogsReq(_message.Message):
     __slots__ = ("min_level", "logger_filter")
     MIN_LEVEL_FIELD_NUMBER: _ClassVar[int]
     LOGGER_FILTER_FIELD_NUMBER: _ClassVar[int]
@@ -533,7 +533,7 @@ class StreamLogsRequest(_message.Message):
     logger_filter: str
     def __init__(self, min_level: _Optional[_Union[LogLevel, str]] = ..., logger_filter: _Optional[str] = ...) -> None: ...
 
-class GetLogsRequest(_message.Message):
+class GetLogsReq(_message.Message):
     __slots__ = ("start_time", "end_time", "min_level", "logger_filter", "limit")
     START_TIME_FIELD_NUMBER: _ClassVar[int]
     END_TIME_FIELD_NUMBER: _ClassVar[int]
@@ -547,13 +547,13 @@ class GetLogsRequest(_message.Message):
     limit: int
     def __init__(self, start_time: _Optional[int] = ..., end_time: _Optional[int] = ..., min_level: _Optional[_Union[LogLevel, str]] = ..., logger_filter: _Optional[str] = ..., limit: _Optional[int] = ...) -> None: ...
 
-class GetLogsResponse(_message.Message):
+class GetLogsRes(_message.Message):
     __slots__ = ("entries",)
     ENTRIES_FIELD_NUMBER: _ClassVar[int]
     entries: _containers.RepeatedCompositeFieldContainer[LogEntry]
     def __init__(self, entries: _Optional[_Iterable[_Union[LogEntry, _Mapping]]] = ...) -> None: ...
 
-class SetLogLevelRequest(_message.Message):
+class SetLogLevelReq(_message.Message):
     __slots__ = ("level",)
     LEVEL_FIELD_NUMBER: _ClassVar[int]
     level: LogLevel

@@ -46,3 +46,4 @@ android/app/.cxx/Debug
 .fvm/flutter_sdk
 /sidecar/src/extensions/
 sidecar/venv
+sidecar/dist

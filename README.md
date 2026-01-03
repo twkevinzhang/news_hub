@@ -24,6 +24,4 @@ Browse between multiple forums.
 5. 在本 repo 中使用開發 UI 介面，得到最終產品
 
 [news_hub_extensions]: https://github.com/twkevinzhang/news_hub_extensions
-[news_hub_protos]: https://github.com/twkevinzhang/news_hub_protos
 [flet-dev/serious-python]: https://github.com/flet-dev/serious-python
-[mock_sidecar_api_service_impl.dart]: lib/app/extension/api/mock_sidecar_api_service_impl.dart
