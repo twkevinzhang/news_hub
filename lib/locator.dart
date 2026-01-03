@@ -61,17 +61,8 @@ abstract class Launcher {
 class AppLauncher implements Launcher {
   @override
   Future<void> call() async {
-    try {
-      // Start sidecar service
-      SeriousPython.run(sidecarAsset);
-      await Future.delayed(const Duration(seconds: 3));
-      debugPrint('Sidecar service started successfully');
-      runApp(App());
-    } catch (e, s) {
-      debugPrint('Exception starting sidecar: $e');
-      debugPrint('StackTrace: $s');
-      // Run app anyway even if sidecar fails to start
-      runApp(App());
-    }
+    debugPrint('Sidecar asset: $sidecarAsset');
+    SeriousPython.run(sidecarAsset);
+    runApp(App());
   }
 }

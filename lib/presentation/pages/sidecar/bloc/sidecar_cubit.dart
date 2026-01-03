@@ -73,30 +73,66 @@ class SidecarState with _$SidecarState {
 class SidecarCubit extends Cubit<SidecarState> {
   final WatchHealthUseCase _watchHealth;
   StreamSubscription<HealthCheckResult>? _healthSubscription;
+  Timer? _startupTimer;
 
-  SidecarCubit(this._watchHealth)
-      : super(const SidecarState(status: SidecarStatus.starting));
+  SidecarCubit(this._watchHealth) : super(const SidecarState(status: SidecarStatus.starting));
 
   /// 開始監聽 Sidecar 健康狀態
-  ///
-  /// 訂閱健康狀態串流，當狀態變更時自動更新 UI。
-  /// 如果已有訂閱，會先取消舊訂閱再建立新訂閱。
   void startHealthWatch() {
     _healthSubscription?.cancel();
+    _startupTimer?.cancel();
 
+    // 啟動 7 秒全域超時計時器（僅在初次啟動時設定）
+    _startupTimer = Timer(const Duration(seconds: 7), () {
+      if (state.status == SidecarStatus.starting) {
+        emit(state.copyWith(
+          status: SidecarStatus.offline,
+          message: state.message ?? 'Connection timeout: Sidecar service is not responding.',
+        ));
+      }
+    });
+
+    _subscribeToHealth();
+  }
+
+  /// 內部的訂閱邏輯，支援在啟動期間出錯時重試
+  void _subscribeToHealth() {
+    _healthSubscription?.cancel();
     _healthSubscription = _watchHealth().listen(
       (response) {
         final status = _mapHealthStatus(response.status);
-        emit(state.copyWith(
-          status: status,
-          message: response.message,
-        ));
+        if (status == SidecarStatus.online) {
+          _startupTimer?.cancel();
+          emit(state.copyWith(
+            status: status,
+            message: response.message,
+          ));
+        } else {
+          // 在啟動期間內，即使收到 offline 回應也不變更狀態，只更新預覽訊息
+          final isStarting = _startupTimer?.isActive ?? false;
+          emit(state.copyWith(
+            status: isStarting ? SidecarStatus.starting : SidecarStatus.offline,
+            message: response.message,
+          ));
+        }
       },
       onError: (error) {
+        // 在啟動期間內忽略錯誤造成的離線切換，但保留訊息
+        final isStarting = _startupTimer?.isActive ?? false;
         emit(state.copyWith(
-          status: SidecarStatus.offline,
+          status: isStarting ? SidecarStatus.starting : SidecarStatus.offline,
           message: 'Connection error: $error',
         ));
+
+        // 如果連線失敗且還在啟動期間，過一秒後重試訂閱
+        if (isStarting) {
+          Future.delayed(const Duration(seconds: 1), () {
+            // 只有在超時器還沒結束，且狀態還是 starting 的情況下才重試
+            if ((_startupTimer?.isActive ?? false) && state.status == SidecarStatus.starting) {
+              _subscribeToHealth();
+            }
+          });
+        }
       },
     );
   }
@@ -121,6 +157,7 @@ class SidecarCubit extends Cubit<SidecarState> {
   @override
   Future<void> close() {
     _healthSubscription?.cancel();
+    _startupTimer?.cancel();
     return super.close();
   }
 }
