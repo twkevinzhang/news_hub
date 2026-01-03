@@ -100,9 +100,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i762.AppRouter>(() => _i762.AppRouter());
     gh.lazySingleton<_i487.SidecarCubit>(() => _i487.SidecarCubit());
     gh.lazySingleton<_i783.InstallExtension>(() => _i783.InstallExtension(
-          extensionApiService: gh<InvalidType>(),
           installService: gh<_i103.ExtensionInstallService>(),
-          extensionRepository: gh<_i217.InstalledExtensionRepository>(),
+          extensionRepository: gh<_i217.GetInstalledExtension>(),
         ));
     gh.lazySingleton<_i677.SuggestionRepository>(
         () => _i530.SuggestionRepositoryImpl(db: gh<_i539.AppDatabase>()));
@@ -119,7 +118,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i351.ListInstalledExtensions>(
         () => _i351.ListInstalledExtensions(
               apiService: gh<InvalidType>(),
-              extensionRepo: gh<_i217.InstalledExtensionRepository>(),
+              extensionRepo: gh<_i217.GetInstalledExtension>(),
             ));
     gh.factory<_i919.BoardsPickerCubit>(
         () => _i919.BoardsPickerCubit(gh<_i351.ListInstalledExtensions>()));
@@ -128,12 +127,12 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i616.GetThread>(() => _i616.GetThread(
           apiService: gh<InvalidType>(),
           installedExtensionRepository:
-              gh<_i217.InstalledExtensionRepository>(),
+              gh<_i217.GetInstalledExtension>(),
         ));
     gh.lazySingleton<_i492.ListRegardingPosts>(() => _i492.ListRegardingPosts(
           apiService: gh<InvalidType>(),
           installedExtensionRepository:
-              gh<_i217.InstalledExtensionRepository>(),
+              gh<_i217.GetInstalledExtension>(),
         ));
     gh.lazySingleton<_i979.SidecarApi>(
         () => _i979.SidecarApi(clientChannel: gh<_i1017.ClientChannel>()));
