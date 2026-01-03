@@ -18,6 +18,7 @@ class AppRouter extends RootStackRouter {
         AutoRoute(path: '/collection/create', page: CreateCollectionRoute.page),
         AutoRoute(path: '/thread/list', page: ThreadListRoute.page),
         AutoRoute(path: '/sidecar/logs', page: SidecarLogsRoute.page),
+        AutoRoute(path: '/sidecar/manage', page: SidecarManageRoute.page),
 
         // TopAppBar
         AutoRoute(
