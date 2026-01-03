@@ -1,10 +1,17 @@
 import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/app/sidecar/preferences/sidecar_preferences.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/sidecar/interactor/watch_logs.dart';
+import 'package:news_hub/locator.dart';
+import 'package:news_hub/presentation/router/router.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 part 'sidecar_logs_cubit.freezed.dart';
 
@@ -48,8 +55,7 @@ class SidecarLogsState with _$SidecarLogsState {
 
     final lowerQuery = searchQuery.toLowerCase();
     return logs.where((log) {
-      return log.message.toLowerCase().contains(lowerQuery) ||
-          log.loggerName.toLowerCase().contains(lowerQuery);
+      return log.message.toLowerCase().contains(lowerQuery) || log.loggerName.toLowerCase().contains(lowerQuery);
     }).toList();
   }
 }
@@ -148,6 +154,61 @@ class SidecarLogsCubit extends Cubit<SidecarLogsState> {
       isSearching: !state.isSearching,
       searchQuery: state.isSearching ? '' : state.searchQuery,
     ));
+  }
+
+  /// 將所有日誌匯出為 JSON 檔案
+  ///
+  /// 此方法會：
+  /// 1. 請求存儲權限（目前僅 Android 需處理，桌面端由路徑選擇決定）
+  /// 2. 將日誌列表轉換為 JSON 格式
+  /// 3. 儲存到 App 文件目錄下的 sidecar_logs_[timestamp].json
+  Future<void> exportLogsToJson() async {
+    try {
+      // 1. 請求權限 (針對 Android)
+      // 注意：iOS 和桌面通常不需要手動請求 storage 權限來寫入 App Documents 目錄
+      if (Theme.of(sl<AppRouter>().navigatorKey.currentContext!).platform == TargetPlatform.android) {
+        final status = await Permission.storage.request();
+        if (!status.isGranted) {
+          emit(state.copyWith(error: '無法匯出：未獲得存儲權限'));
+          return;
+        }
+      }
+
+      // 2. 轉換為 JSON
+      final logsJson = state.logs
+          .map((log) => {
+                'timestamp': log.timestamp.toIso8601String(),
+                'level': log.level.name,
+                'logger': log.loggerName,
+                'message': log.message,
+                'exception': log.exception,
+              })
+          .toList();
+
+      final jsonString = const JsonEncoder.withIndent('  ').convert(logsJson);
+
+      // 3. 確定儲存路徑
+      final directory = await getApplicationDocumentsDirectory();
+      final timestamp = DateTime.now().toIso8601String().replaceAll(':', '-');
+      final fileName = 'sidecar_logs_$timestamp.json';
+      final file = File('${directory.path}/$fileName');
+
+      // 4. 寫入檔案
+      await file.writeAsString(jsonString);
+
+      // 5. 更新狀態
+      emit(state.copyWith(
+        exportSuccess: true,
+        exportPath: file.path,
+        error: null,
+      ));
+
+      // 重設成功標記（避免下次進頁面重複顯示提示）
+      await Future.delayed(const Duration(seconds: 2));
+      emit(state.copyWith(exportSuccess: false));
+    } catch (e) {
+      emit(state.copyWith(error: '匯出失敗: $e'));
+    }
   }
 
   /// 將日誌等級字串映射到 LogLevel enum
