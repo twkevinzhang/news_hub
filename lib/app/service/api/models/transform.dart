@@ -1,7 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 import 'package:news_hub/shared/extensions.dart';
-import 'extension_api.pb.dart' as pb;
+import 'sidecar_api.pb.dart' as pb;
 
 extension SiteTransform on pb.Site {
   domain.Site toDomain() {

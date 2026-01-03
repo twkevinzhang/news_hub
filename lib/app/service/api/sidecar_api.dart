@@ -1,16 +1,16 @@
 import 'dart:async';
 import 'package:grpc/grpc.dart';
 import 'package:news_hub/app/service/api/models/transform.dart';
-import 'package:news_hub/domain/extension/extension.dart';
+import 'package:news_hub/domain/api_service.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 import 'package:news_hub/shared/constants.dart';
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/shared/models.dart';
 
-import 'models/extension_api.pbgrpc.dart';
+import 'models/sidecar_api.pbgrpc.dart';
 
 @lazySingleton
-class SidecarApi {
+class SidecarApi implements ApiService {
   late final SidecarApiClient _client;
 
   SidecarApi({
@@ -18,7 +18,7 @@ class SidecarApi {
   }) : _client = SidecarApiClient(clientChannel);
 
   @override
-  Future<domain.Site> site({
+  Future<domain.Site> getSite({
     required String extensionPkgName,
   }) async {
     final res = await _client.getSite(GetSiteReq(pkgName: extensionPkgName));
@@ -26,7 +26,7 @@ class SidecarApi {
   }
 
   @override
-  Future<List<domain.Board>> boards({
+  Future<List<domain.Board>> listBoards({
     required String extensionPkgName,
     required String siteId,
     Pagination? pagination,
@@ -43,7 +43,7 @@ class SidecarApi {
   }
 
   @override
-  Future<List<domain.Post>> threadList({
+  Future<List<domain.Post>> listThreads({
     required String extensionPkgName,
     required String siteId,
     required Map<String, String>? boardsSorting,
@@ -51,7 +51,7 @@ class SidecarApi {
     String? sortBy,
     String? keywords,
   }) async {
-    final res = await _client.getThreadList(GetThreadListReq(
+    final res = await _client.getThreadInfos(GetThreadInfosReq(
       pkgName: extensionPkgName,
       siteId: siteId,
       boardsSorting: boardsSorting,
@@ -61,11 +61,11 @@ class SidecarApi {
       ),
       keywords: keywords,
     ));
-    return res.threadList.map((t) => t.toDomain()).toList();
+    return res.listThreads.map((t) => t.toDomain()).toList();
   }
 
   @override
-  Future<domain.Post> thread({
+  Future<domain.Post> getThread({
     required String extensionPkgName,
     required String siteId,
     required String boardId,
@@ -83,7 +83,7 @@ class SidecarApi {
   }
 
   @override
-  Future<List<domain.Post>> regardingPosts({
+  Future<List<domain.Post>> listRegardingPosts({
     required String extensionPkgName,
     required String siteId,
     required String boardId,
@@ -106,7 +106,7 @@ class SidecarApi {
   }
 
   @override
-  Future<List<domain.Comment>> comments({
+  Future<List<domain.Comment>> listComments({
     required String extensionPkgName,
     required String siteId,
     required String boardId,
@@ -126,5 +126,35 @@ class SidecarApi {
       ),
     ));
     return res.comments.map((c) => c.toDomain()).toList();
+  }
+
+  @override
+  Future<List<domain.Site>> getInstallProgress({required String extensionPkgName}) {
+    // TODO: implement getInstallProgress
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<domain.Extension> getInstalledExtension({required String extensionPkgName}) {
+    // TODO: implement getInstalledExtension
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> installExtension({required domain.Extension extension}) {
+    // TODO: implement installExtension
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<List<domain.Extension>> listInstalledExtensions() {
+    // TODO: implement listInstalledExtensions
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<void> uninstallExtension({required domain.Extension extension}) {
+    // TODO: implement uninstallExtension
+    throw UnimplementedError();
   }
 }
