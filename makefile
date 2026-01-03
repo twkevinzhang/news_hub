@@ -1,12 +1,15 @@
 # Project directories
 PROJECT_DIR := $(CURDIR)
-EXTENSIONS_DIR ?= $(PROJECT_DIR)/../news_hub_extensions
-EXTENSION_NAME ?= twkevinzhang_komica
+ADD_REPO =
+ADD_EXTENSION =
 
 # Paths
-export SERIOUS_PYTHON_SITE_PACKAGES := $(EXTENSIONS_DIR)/$(EXTENSION_NAME)/build/site-packages
+export SERIOUS_PYTHON_SITE_PACKAGES = $(PROJECT_DIR)/sidecar/build/site-packages
 export FILES_HOME := /data/user/0/tw.kevinzhang.news_hub/files
-export SAMPLE_EXTENSION_SOURCE_CODE_PATH := $(PROJECT_DIR)/sidecar/src/extensions/$(EXTENSION_NAME)/
+
+.PHONY: install
+install:
+	flutter pub get
 
 .PHONY: run
 run:
@@ -31,15 +34,21 @@ proto:
 
 .PHONY: log
 log:
-#   currently for Android
+#   currently for Android. Note: log path might need update based on extension
 	./adb.sh cat $(FILES_HOME)/flet/sidecar/dist/komica.log
 
 .PHONY: sidecar
 sidecar:
-#   currently for Android
+	$(MAKE) -C sidecar clean
 	$(MAKE) -C sidecar lint
-	rm -rf $(SERIOUS_PYTHON_SITE_PACKAGES)
-	rm -rf sidecar/dist && mkdir -p sidecar/dist
-	rm -rf $(SAMPLE_EXTENSION_SOURCE_CODE_PATH) && mkdir -p $(SAMPLE_EXTENSION_SOURCE_CODE_PATH)
-	cp -r $(EXTENSIONS_DIR)/$(EXTENSION_NAME)/src/* $(SAMPLE_EXTENSION_SOURCE_CODE_PATH)
-	dart run serious_python:main package sidecar/src -p Android --requirements -r,sidecar/requirements.txt --asset sidecar/dist/sidecar.zip --verbose
+ifeq ($(ADD_REPO)$(ADD_EXTENSION),)
+	$(MAKE) -C sidecar merge_requirements
+	$(MAKE) -C sidecar prepare_extension
+else
+	$(MAKE) -C sidecar clone_repo REPO_URL=$(ADD_REPO) EXTENSION=$(ADD_EXTENSION)
+	$(MAKE) -C sidecar merge_requirements EXTENSION=$(ADD_EXTENSION)
+	$(MAKE) -C sidecar prepare_extension EXTENSION=$(ADD_EXTENSION)
+endif
+	$(MAKE) -C sidecar lint
+#   currently for Android
+	dart run serious_python:main package sidecar/src -p Android --requirements -r,sidecar/build/requirements.txt --asset sidecar/dist/sidecar.zip --verbose
