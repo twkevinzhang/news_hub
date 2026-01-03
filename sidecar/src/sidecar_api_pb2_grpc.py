@@ -94,6 +94,21 @@ class SidecarApiStub(object):
                 request_serializer=sidecar__api__pb2.ListRemoteExtensionsReq.SerializeToString,
                 response_deserializer=sidecar__api__pb2.ListRemoteExtensionsRes.FromString,
                 _registered_method=True)
+        self.ListExtensionRepos = channel.unary_unary(
+                '/pb.SidecarApi/ListExtensionRepos',
+                request_serializer=sidecar__api__pb2.Empty.SerializeToString,
+                response_deserializer=sidecar__api__pb2.ListExtensionReposRes.FromString,
+                _registered_method=True)
+        self.AddExtensionRepo = channel.unary_unary(
+                '/pb.SidecarApi/AddExtensionRepo',
+                request_serializer=sidecar__api__pb2.AddExtensionRepoReq.SerializeToString,
+                response_deserializer=sidecar__api__pb2.AddExtensionRepoRes.FromString,
+                _registered_method=True)
+        self.RemoveExtensionRepo = channel.unary_unary(
+                '/pb.SidecarApi/RemoveExtensionRepo',
+                request_serializer=sidecar__api__pb2.RemoveExtensionRepoReq.SerializeToString,
+                response_deserializer=sidecar__api__pb2.Empty.FromString,
+                _registered_method=True)
         self.HealthCheck = channel.unary_unary(
                 '/pb.SidecarApi/HealthCheck',
                 request_serializer=sidecar__api__pb2.HealthCheckReq.SerializeToString,
@@ -197,6 +212,25 @@ class SidecarApiServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def ListExtensionRepos(self, request, context):
+        """Extension Repository operations
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def AddExtensionRepo(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def RemoveExtensionRepo(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
     def HealthCheck(self, request, context):
         """Health check
         """
@@ -291,6 +325,21 @@ def add_SidecarApiServicer_to_server(servicer, server):
                     servicer.ListRemoteExtensions,
                     request_deserializer=sidecar__api__pb2.ListRemoteExtensionsReq.FromString,
                     response_serializer=sidecar__api__pb2.ListRemoteExtensionsRes.SerializeToString,
+            ),
+            'ListExtensionRepos': grpc.unary_unary_rpc_method_handler(
+                    servicer.ListExtensionRepos,
+                    request_deserializer=sidecar__api__pb2.Empty.FromString,
+                    response_serializer=sidecar__api__pb2.ListExtensionReposRes.SerializeToString,
+            ),
+            'AddExtensionRepo': grpc.unary_unary_rpc_method_handler(
+                    servicer.AddExtensionRepo,
+                    request_deserializer=sidecar__api__pb2.AddExtensionRepoReq.FromString,
+                    response_serializer=sidecar__api__pb2.AddExtensionRepoRes.SerializeToString,
+            ),
+            'RemoveExtensionRepo': grpc.unary_unary_rpc_method_handler(
+                    servicer.RemoveExtensionRepo,
+                    request_deserializer=sidecar__api__pb2.RemoveExtensionRepoReq.FromString,
+                    response_serializer=sidecar__api__pb2.Empty.SerializeToString,
             ),
             'HealthCheck': grpc.unary_unary_rpc_method_handler(
                     servicer.HealthCheck,
@@ -642,6 +691,87 @@ class SidecarApi(object):
             '/pb.SidecarApi/ListRemoteExtensions',
             sidecar__api__pb2.ListRemoteExtensionsReq.SerializeToString,
             sidecar__api__pb2.ListRemoteExtensionsRes.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def ListExtensionRepos(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/pb.SidecarApi/ListExtensionRepos',
+            sidecar__api__pb2.Empty.SerializeToString,
+            sidecar__api__pb2.ListExtensionReposRes.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def AddExtensionRepo(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/pb.SidecarApi/AddExtensionRepo',
+            sidecar__api__pb2.AddExtensionRepoReq.SerializeToString,
+            sidecar__api__pb2.AddExtensionRepoRes.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def RemoveExtensionRepo(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/pb.SidecarApi/RemoveExtensionRepo',
+            sidecar__api__pb2.RemoveExtensionRepoReq.SerializeToString,
+            sidecar__api__pb2.Empty.FromString,
             options,
             channel_credentials,
             insecure,

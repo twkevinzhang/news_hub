@@ -17,6 +17,11 @@ service SidecarApi {
   rpc GetInstallProgress (GetInstallProgressReq) returns (GetInstallProgressRes);
   rpc ListRemoteExtensions (ListRemoteExtensionsReq) returns (ListRemoteExtensionsRes);
 
+  // Extension Repository operations
+  rpc ListExtensionRepos (Empty) returns (ListExtensionReposRes);
+  rpc AddExtensionRepo (AddExtensionRepoReq) returns (AddExtensionRepoRes);
+  rpc RemoveExtensionRepo (RemoveExtensionRepoReq) returns (Empty);
+
   // Health check
   rpc HealthCheck (HealthCheckReq) returns (HealthCheckRes);
   rpc WatchHealth (HealthCheckReq) returns (stream HealthCheckRes);
