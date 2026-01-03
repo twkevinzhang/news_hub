@@ -18,6 +18,7 @@ build:
 
 .PHONY: clean
 clean:
+#   currently for Android
 	cd android && ./gradlew clean && cd ..
 	dart run build_runner clean
 
@@ -30,11 +31,13 @@ proto:
 
 .PHONY: log
 log:
+#   currently for Android
 	./adb.sh cat $(FILES_HOME)/flet/sidecar/dist/komica.log
 
 .PHONY: sidecar
 sidecar:
-# 	currently for Android
+#   currently for Android
+	$(MAKE) -C sidecar lint
 	rm -rf $(SERIOUS_PYTHON_SITE_PACKAGES)
 	rm -rf sidecar/dist && mkdir -p sidecar/dist
 	rm -rf $(SAMPLE_EXTENSION_SOURCE_CODE_PATH) && mkdir -p $(SAMPLE_EXTENSION_SOURCE_CODE_PATH)
