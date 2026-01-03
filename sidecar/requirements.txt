@@ -1,21 +1,5 @@
-# Core dependencies
-grpcio==1.67.1
-grpcio-tools==1.67.1
-protobuf==4.25.1
-
-# HTTP client
-aiohttp==3.9.1
-
-# HTML/XML parsing
-lxml==5.1.0
-beautifulsoup4==4.12.2
-
-# Testing
-pytest==7.4.3
-pytest-cov==4.1.0
-pytest-asyncio==0.21.1
-
-# Code quality (optional)
-black==23.12.1
-mypy==1.7.1
-flake8==7.0.0
+protobuf
+grpcio===1.67.1
+lxml
+aiohttp
+beautifulsoup4
