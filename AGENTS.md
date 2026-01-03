@@ -12,6 +12,7 @@
     - 每完成一個獨立功能或重大階段性修改後,必須執行 git commit
     - Commit 時使用指定作者: `git commit --author="Gemini 3 Flash <noreply@google.com>" -m "commit message"`
     - Commit message 應清楚描述變更內容
+    - Commit 第一行的格式應該遵循 Angular Commit Message 格式: https://www.conventionalcommits.org/en/v1.0.0-beta.4/
 
 3. **需求確認機制**
     - 當功能需求中使用的組件可能不是最佳選擇時,先列出:
