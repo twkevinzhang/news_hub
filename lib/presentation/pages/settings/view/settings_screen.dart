@@ -19,7 +19,7 @@ class SettingsScreen extends StatelessWidget {
             title: const Text('Repo & Extensions'),
             subtitle: const Text('Manage your repositories and extensions'),
             trailing: const Icon(Icons.chevron_right),
-            onPressed: () => context.router.push(const ExtensionManageRoute()),
+            onTap: () => context.router.push(const ExtensionManageRoute()),
           ),
           ListTile(
             leading: const Icon(Icons.collections),
