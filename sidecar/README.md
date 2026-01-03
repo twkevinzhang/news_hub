@@ -27,7 +27,7 @@ pip install -r requirements.txt
 ### Running the Service
 
 ```bash
-python main_new.py
+python main.py
 ```
 
 The gRPC server will start on port `55001`.
@@ -118,7 +118,3 @@ Edit `shared/config.py` to configure:
 3. Ensure all tests pass
 4. Follow Python type hints
 5. Document public APIs
-
-## License
-
-[Your License Here]

@@ -1,9 +1,5 @@
 # Sidecar Service Architecture
 
-## Overview
-
-The Sidecar service is refactored using **Domain-Driven Design (DDD)** principles with a clean, layered architecture that ensures testability, maintainability, and separation of concerns.
-
 ## Architecture Layers
 
 ```
@@ -244,12 +240,12 @@ Benefits:
 
 ### Old → New Mapping
 
-| Old | New |
-|-----|-----|
-| `api_server_impl.py` | `presentation/grpc/sidecar_service.py` |
+| Old                    | New                                                    |
+|------------------------|--------------------------------------------------------|
+| `api_server_impl.py`   | `presentation/grpc/sidecar_service.py`                 |
 | Direct file operations | `infrastructure/file_system/extension_file_manager.py` |
-| HTTP in API server | `infrastructure/downloaders/http_downloader.py` |
-| Mixed concerns | Separated into layers |
+| HTTP in API server     | `infrastructure/downloaders/http_downloader.py`        |
+| Mixed concerns         | Separated into layers                                  |
 
 ### Running the New Service
 
