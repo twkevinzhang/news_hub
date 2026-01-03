@@ -14,7 +14,6 @@ import 'dart:core' as $core;
 
 import 'package:protobuf/protobuf.dart' as $pb;
 
-/// Paragraph types
 class ParagraphType extends $pb.ProtobufEnum {
   static const ParagraphType PARAGRAPH_TYPE_UNSPECIFIED =
       ParagraphType._(0, _omitEnumNames ? '' : 'PARAGRAPH_TYPE_UNSPECIFIED');

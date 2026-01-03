@@ -1,28 +1,55 @@
 syntax = "proto3";
-
 package pb;
 
-// Pagination messages
+service SidecarApi {
+  rpc GetSite (GetSiteReq) returns (GetSiteRes) {}
+  rpc GetBoards (GetBoardsReq) returns (GetBoardsRes) {}
+  rpc GetThreadInfos (GetThreadInfosReq) returns (GetThreadInfosRes) {}
+  rpc GetThreadPost (GetThreadPostReq) returns (GetThreadPostRes) {}
+  rpc GetRegardingPosts (GetRegardingPostsReq) returns (GetRegardingPostsRes) {}
+  rpc GetComments (GetCommentsReq) returns (GetCommentsRes) {}
+
+   // Extension operations
+  rpc ListInstalledExtensions (Empty) returns (ListInstalledExtensionsRes);
+  rpc GetInstalledExtension (GetInstalledExtensionReq) returns (GetInstalledExtensionRes);
+  rpc InstallExtension (InstallExtensionReq) returns (Empty);
+  rpc UninstallExtension (UninstallExtensionReq) returns (Empty);
+  rpc GetInstallProgress (GetInstallProgressReq) returns (GetInstallProgressRes);
+  rpc ListRemoteExtensions (ListRemoteExtensionsReq) returns (ListRemoteExtensionsRes);
+
+  // Health check
+  rpc HealthCheck (HealthCheckReq) returns (HealthCheckRes);
+  rpc WatchHealth (HealthCheckReq) returns (stream HealthCheckRes);
+
+  // Logs
+  rpc WatchLogs (WatchLogsReq) returns (stream LogEntry);
+  rpc GetLogs (GetLogsReq) returns (GetLogsRes);
+  rpc SetLogLevel (SetLogLevelReq) returns (Empty);
+}
+
 message PaginationReq {
+  // for offset-based pagination
   optional int32 page = 1;
   optional int32 page_size = 3;
+  // for cursor-based pagination
   optional int32 limit = 2;
   optional string prev_cursor = 4;
   optional string next_cursor = 5;
 }
 
 message PaginationRes {
+  // for offset-based pagination
   optional int32 total_page = 1;
   optional int32 current_page = 2;
   optional int32 page_size = 3;
+  // for cursor-based pagination
   optional string prev_cursor = 4;
   optional string next_cursor = 5;
 }
 
-// Common messages
-message Empty {}
+message Empty {
+}
 
-// Site and Board messages
 message GetSiteReq {
   string pkg_name = 1;
 }
@@ -62,7 +89,6 @@ message Board {
   repeated string supported_threads_sorting = 7;
 }
 
-// Thread and Post messages
 message GetThreadInfosReq {
   string pkg_name = 6;
   string site_id = 1;
@@ -102,7 +128,6 @@ message GetRegardingPostsRes {
   PaginationRes page = 2;
 }
 
-// Paragraph types
 enum ParagraphType {
   PARAGRAPH_TYPE_UNSPECIFIED = 0;
   PARAGRAPH_TYPE_QUOTE = 1;
@@ -227,7 +252,6 @@ message Comment {
   int64 created_at = 8;
 }
 
-// Extension messages
 message ListInstalledExtensionsRes {
   repeated Extension extensions = 1;
 }
@@ -360,35 +384,3 @@ message SetLogLevelReq {
   LogLevel level = 1;
 }
 
-// Main RPC Service
-service SidecarApi {
-  // Site and Board operations
-  rpc GetSite (GetSiteReq) returns (GetSiteRes);
-  rpc GetBoards (GetBoardsReq) returns (GetBoardsRes);
-  rpc GetThreadInfos (GetThreadInfosReq) returns (GetThreadInfosRes);
-  rpc GetThreadPost (GetThreadPostReq) returns (GetThreadPostRes);
-  rpc GetRegardingPosts (GetRegardingPostsReq) returns (GetRegardingPostsRes);
-  rpc GetComments (GetCommentsReq) returns (GetCommentsRes);
-
-  // Extension operations
-  rpc ListInstalledExtensions (Empty) returns (ListInstalledExtensionsRes);
-  rpc GetInstalledExtension (GetInstalledExtensionReq) returns (GetInstalledExtensionRes);
-  rpc InstallExtension (InstallExtensionReq) returns (Empty);
-  rpc UninstallExtension (UninstallExtensionReq) returns (Empty);
-  rpc GetInstallProgress (GetInstallProgressReq) returns (GetInstallProgressRes);
-  rpc ListRemoteExtensions (ListRemoteExtensionsReq) returns (ListRemoteExtensionsRes);
-
-  // Extension Repo operations
-  rpc AddExtensionRepo (AddExtensionRepoReq) returns (AddExtensionRepoRes);
-  rpc RemoveExtensionRepo (RemoveExtensionRepoReq) returns (Empty);
-  rpc ListExtensionRepos (Empty) returns (ListExtensionReposRes);
-
-  // Health check
-  rpc HealthCheck (HealthCheckReq) returns (HealthCheckRes);
-  rpc WatchHealth (HealthCheckReq) returns (stream HealthCheckRes);
-
-  // Logs
-  rpc WatchLogs (WatchLogsReq) returns (stream LogEntry);
-  rpc GetLogs (GetLogsReq) returns (GetLogsRes);
-  rpc SetLogLevel (SetLogLevelReq) returns (Empty);
-}

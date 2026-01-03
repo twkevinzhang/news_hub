@@ -487,6 +487,40 @@ class Extension(_message.Message):
     is_nsfw: bool
     def __init__(self, repo_base_url: _Optional[str] = ..., pkg_name: _Optional[str] = ..., display_name: _Optional[str] = ..., zip_name: _Optional[str] = ..., version: _Optional[int] = ..., python_version: _Optional[int] = ..., lang: _Optional[str] = ..., is_nsfw: bool = ...) -> None: ...
 
+class ExtensionRepo(_message.Message):
+    __slots__ = ("url", "added_at")
+    URL_FIELD_NUMBER: _ClassVar[int]
+    ADDED_AT_FIELD_NUMBER: _ClassVar[int]
+    url: str
+    added_at: int
+    def __init__(self, url: _Optional[str] = ..., added_at: _Optional[int] = ...) -> None: ...
+
+class AddExtensionRepoReq(_message.Message):
+    __slots__ = ("url",)
+    URL_FIELD_NUMBER: _ClassVar[int]
+    url: str
+    def __init__(self, url: _Optional[str] = ...) -> None: ...
+
+class AddExtensionRepoRes(_message.Message):
+    __slots__ = ("url", "added_at")
+    URL_FIELD_NUMBER: _ClassVar[int]
+    ADDED_AT_FIELD_NUMBER: _ClassVar[int]
+    url: str
+    added_at: int
+    def __init__(self, url: _Optional[str] = ..., added_at: _Optional[int] = ...) -> None: ...
+
+class RemoveExtensionRepoReq(_message.Message):
+    __slots__ = ("url",)
+    URL_FIELD_NUMBER: _ClassVar[int]
+    url: str
+    def __init__(self, url: _Optional[str] = ...) -> None: ...
+
+class ListExtensionReposRes(_message.Message):
+    __slots__ = ("repos",)
+    REPOS_FIELD_NUMBER: _ClassVar[int]
+    repos: _containers.RepeatedCompositeFieldContainer[ExtensionRepo]
+    def __init__(self, repos: _Optional[_Iterable[_Union[ExtensionRepo, _Mapping]]] = ...) -> None: ...
+
 class HealthCheckReq(_message.Message):
     __slots__ = ("service",)
     SERVICE_FIELD_NUMBER: _ClassVar[int]

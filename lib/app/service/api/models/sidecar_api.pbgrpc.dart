@@ -20,7 +20,6 @@ import 'sidecar_api.pb.dart' as $0;
 
 export 'sidecar_api.pb.dart';
 
-/// Main RPC Service
 @$pb.GrpcServiceName('pb.SidecarApi')
 class SidecarApiClient extends $grpc.Client {
   /// The hostname for this service.
@@ -33,7 +32,6 @@ class SidecarApiClient extends $grpc.Client {
 
   SidecarApiClient(super.channel, {super.options, super.interceptors});
 
-  /// Site and Board operations
   $grpc.ResponseFuture<$0.GetSiteRes> getSite(
     $0.GetSiteReq request, {
     $grpc.CallOptions? options,
@@ -118,28 +116,6 @@ class SidecarApiClient extends $grpc.Client {
     $grpc.CallOptions? options,
   }) {
     return $createUnaryCall(_$listRemoteExtensions, request, options: options);
-  }
-
-  /// Extension Repo operations
-  $grpc.ResponseFuture<$0.AddExtensionRepoRes> addExtensionRepo(
-    $0.AddExtensionRepoReq request, {
-    $grpc.CallOptions? options,
-  }) {
-    return $createUnaryCall(_$addExtensionRepo, request, options: options);
-  }
-
-  $grpc.ResponseFuture<$0.Empty> removeExtensionRepo(
-    $0.RemoveExtensionRepoReq request, {
-    $grpc.CallOptions? options,
-  }) {
-    return $createUnaryCall(_$removeExtensionRepo, request, options: options);
-  }
-
-  $grpc.ResponseFuture<$0.ListExtensionReposRes> listExtensionRepos(
-    $0.Empty request, {
-    $grpc.CallOptions? options,
-  }) {
-    return $createUnaryCall(_$listExtensionRepos, request, options: options);
   }
 
   /// Health check
@@ -244,21 +220,6 @@ class SidecarApiClient extends $grpc.Client {
       '/pb.SidecarApi/ListRemoteExtensions',
       ($0.ListRemoteExtensionsReq value) => value.writeToBuffer(),
       $0.ListRemoteExtensionsRes.fromBuffer);
-  static final _$addExtensionRepo =
-      $grpc.ClientMethod<$0.AddExtensionRepoReq, $0.AddExtensionRepoRes>(
-          '/pb.SidecarApi/AddExtensionRepo',
-          ($0.AddExtensionRepoReq value) => value.writeToBuffer(),
-          $0.AddExtensionRepoRes.fromBuffer);
-  static final _$removeExtensionRepo =
-      $grpc.ClientMethod<$0.RemoveExtensionRepoReq, $0.Empty>(
-          '/pb.SidecarApi/RemoveExtensionRepo',
-          ($0.RemoveExtensionRepoReq value) => value.writeToBuffer(),
-          $0.Empty.fromBuffer);
-  static final _$listExtensionRepos =
-      $grpc.ClientMethod<$0.Empty, $0.ListExtensionReposRes>(
-          '/pb.SidecarApi/ListExtensionRepos',
-          ($0.Empty value) => value.writeToBuffer(),
-          $0.ListExtensionReposRes.fromBuffer);
   static final _$healthCheck =
       $grpc.ClientMethod<$0.HealthCheckReq, $0.HealthCheckRes>(
           '/pb.SidecarApi/HealthCheck',
@@ -382,30 +343,6 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
         ($core.List<$core.int> value) =>
             $0.ListRemoteExtensionsReq.fromBuffer(value),
         ($0.ListRemoteExtensionsRes value) => value.writeToBuffer()));
-    $addMethod(
-        $grpc.ServiceMethod<$0.AddExtensionRepoReq, $0.AddExtensionRepoRes>(
-            'AddExtensionRepo',
-            addExtensionRepo_Pre,
-            false,
-            false,
-            ($core.List<$core.int> value) =>
-                $0.AddExtensionRepoReq.fromBuffer(value),
-            ($0.AddExtensionRepoRes value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.RemoveExtensionRepoReq, $0.Empty>(
-        'RemoveExtensionRepo',
-        removeExtensionRepo_Pre,
-        false,
-        false,
-        ($core.List<$core.int> value) =>
-            $0.RemoveExtensionRepoReq.fromBuffer(value),
-        ($0.Empty value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.Empty, $0.ListExtensionReposRes>(
-        'ListExtensionRepos',
-        listExtensionRepos_Pre,
-        false,
-        false,
-        ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
-        ($0.ListExtensionReposRes value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.HealthCheckReq, $0.HealthCheckRes>(
         'HealthCheck',
         healthCheck_Pre,
@@ -543,31 +480,6 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
 
   $async.Future<$0.ListRemoteExtensionsRes> listRemoteExtensions(
       $grpc.ServiceCall call, $0.ListRemoteExtensionsReq request);
-
-  $async.Future<$0.AddExtensionRepoRes> addExtensionRepo_Pre(
-      $grpc.ServiceCall $call,
-      $async.Future<$0.AddExtensionRepoReq> $request) async {
-    return addExtensionRepo($call, await $request);
-  }
-
-  $async.Future<$0.AddExtensionRepoRes> addExtensionRepo(
-      $grpc.ServiceCall call, $0.AddExtensionRepoReq request);
-
-  $async.Future<$0.Empty> removeExtensionRepo_Pre($grpc.ServiceCall $call,
-      $async.Future<$0.RemoveExtensionRepoReq> $request) async {
-    return removeExtensionRepo($call, await $request);
-  }
-
-  $async.Future<$0.Empty> removeExtensionRepo(
-      $grpc.ServiceCall call, $0.RemoveExtensionRepoReq request);
-
-  $async.Future<$0.ListExtensionReposRes> listExtensionRepos_Pre(
-      $grpc.ServiceCall $call, $async.Future<$0.Empty> $request) async {
-    return listExtensionRepos($call, await $request);
-  }
-
-  $async.Future<$0.ListExtensionReposRes> listExtensionRepos(
-      $grpc.ServiceCall call, $0.Empty request);
 
   $async.Future<$0.HealthCheckRes> healthCheck_Pre($grpc.ServiceCall $call,
       $async.Future<$0.HealthCheckReq> $request) async {

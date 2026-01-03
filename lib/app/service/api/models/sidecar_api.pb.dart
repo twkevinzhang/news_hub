@@ -21,7 +21,6 @@ export 'package:protobuf/protobuf.dart' show GeneratedMessageGenericExtensions;
 
 export 'sidecar_api.pbenum.dart';
 
-/// Pagination messages
 class PaginationReq extends $pb.GeneratedMessage {
   factory PaginationReq({
     $core.int? page,
@@ -78,6 +77,7 @@ class PaginationReq extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<PaginationReq>(create);
   static PaginationReq? _defaultInstance;
 
+  /// for offset-based pagination
   @$pb.TagNumber(1)
   $core.int get page => $_getIZ(0);
   @$pb.TagNumber(1)
@@ -87,6 +87,7 @@ class PaginationReq extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearPage() => $_clearField(1);
 
+  /// for cursor-based pagination
   @$pb.TagNumber(2)
   $core.int get limit => $_getIZ(1);
   @$pb.TagNumber(2)
@@ -180,6 +181,7 @@ class PaginationRes extends $pb.GeneratedMessage {
       $pb.GeneratedMessage.$_defaultFor<PaginationRes>(create);
   static PaginationRes? _defaultInstance;
 
+  /// for offset-based pagination
   @$pb.TagNumber(1)
   $core.int get totalPage => $_getIZ(0);
   @$pb.TagNumber(1)
@@ -207,6 +209,7 @@ class PaginationRes extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearPageSize() => $_clearField(3);
 
+  /// for cursor-based pagination
   @$pb.TagNumber(4)
   $core.String get prevCursor => $_getSZ(3);
   @$pb.TagNumber(4)
@@ -226,7 +229,6 @@ class PaginationRes extends $pb.GeneratedMessage {
   void clearNextCursor() => $_clearField(5);
 }
 
-/// Common messages
 class Empty extends $pb.GeneratedMessage {
   factory Empty() => create();
 
@@ -264,7 +266,6 @@ class Empty extends $pb.GeneratedMessage {
   static Empty? _defaultInstance;
 }
 
-/// Site and Board messages
 class GetSiteReq extends $pb.GeneratedMessage {
   factory GetSiteReq({
     $core.String? pkgName,
@@ -762,7 +763,6 @@ class Board extends $pb.GeneratedMessage {
   void clearPkgName() => $_clearField(8);
 }
 
-/// Thread and Post messages
 class GetThreadInfosReq extends $pb.GeneratedMessage {
   factory GetThreadInfosReq({
     $core.String? siteId,
@@ -2722,7 +2722,6 @@ class Comment extends $pb.GeneratedMessage {
   void clearPkgName() => $_clearField(12);
 }
 
-/// Extension messages
 class ListInstalledExtensionsRes extends $pb.GeneratedMessage {
   factory ListInstalledExtensionsRes({
     $core.Iterable<Extension>? extensions,
