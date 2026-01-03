@@ -18,8 +18,6 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$SidecarState {
   SidecarStatus get status => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
-  List<LogEntry> get logs => throw _privateConstructorUsedError;
-  bool get autoScroll => throw _privateConstructorUsedError;
 
   /// Create a copy of SidecarState
   /// with the given fields replaced by the non-null parameter values.
@@ -34,11 +32,7 @@ abstract class $SidecarStateCopyWith<$Res> {
           SidecarState value, $Res Function(SidecarState) then) =
       _$SidecarStateCopyWithImpl<$Res, SidecarState>;
   @useResult
-  $Res call(
-      {SidecarStatus status,
-      String? message,
-      List<LogEntry> logs,
-      bool autoScroll});
+  $Res call({SidecarStatus status, String? message});
 }
 
 /// @nodoc
@@ -58,8 +52,6 @@ class _$SidecarStateCopyWithImpl<$Res, $Val extends SidecarState>
   $Res call({
     Object? status = null,
     Object? message = freezed,
-    Object? logs = null,
-    Object? autoScroll = null,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -70,14 +62,6 @@ class _$SidecarStateCopyWithImpl<$Res, $Val extends SidecarState>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
-      logs: null == logs
-          ? _value.logs
-          : logs // ignore: cast_nullable_to_non_nullable
-              as List<LogEntry>,
-      autoScroll: null == autoScroll
-          ? _value.autoScroll
-          : autoScroll // ignore: cast_nullable_to_non_nullable
-              as bool,
     ) as $Val);
   }
 }
@@ -90,11 +74,7 @@ abstract class _$$SidecarStateImplCopyWith<$Res>
       __$$SidecarStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {SidecarStatus status,
-      String? message,
-      List<LogEntry> logs,
-      bool autoScroll});
+  $Res call({SidecarStatus status, String? message});
 }
 
 /// @nodoc
@@ -112,8 +92,6 @@ class __$$SidecarStateImplCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
     Object? message = freezed,
-    Object? logs = null,
-    Object? autoScroll = null,
   }) {
     return _then(_$SidecarStateImpl(
       status: null == status
@@ -124,14 +102,6 @@ class __$$SidecarStateImplCopyWithImpl<$Res>
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
               as String?,
-      logs: null == logs
-          ? _value._logs
-          : logs // ignore: cast_nullable_to_non_nullable
-              as List<LogEntry>,
-      autoScroll: null == autoScroll
-          ? _value.autoScroll
-          : autoScroll // ignore: cast_nullable_to_non_nullable
-              as bool,
     ));
   }
 }
@@ -139,34 +109,16 @@ class __$$SidecarStateImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$SidecarStateImpl extends _SidecarState {
-  const _$SidecarStateImpl(
-      {required this.status,
-      this.message,
-      final List<LogEntry> logs = const [],
-      this.autoScroll = true})
-      : _logs = logs,
-        super._();
+  const _$SidecarStateImpl({required this.status, this.message}) : super._();
 
   @override
   final SidecarStatus status;
   @override
   final String? message;
-  final List<LogEntry> _logs;
-  @override
-  @JsonKey()
-  List<LogEntry> get logs {
-    if (_logs is EqualUnmodifiableListView) return _logs;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_logs);
-  }
-
-  @override
-  @JsonKey()
-  final bool autoScroll;
 
   @override
   String toString() {
-    return 'SidecarState(status: $status, message: $message, logs: $logs, autoScroll: $autoScroll)';
+    return 'SidecarState(status: $status, message: $message)';
   }
 
   @override
@@ -175,15 +127,11 @@ class _$SidecarStateImpl extends _SidecarState {
         (other.runtimeType == runtimeType &&
             other is _$SidecarStateImpl &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.message, message) || other.message == message) &&
-            const DeepCollectionEquality().equals(other._logs, _logs) &&
-            (identical(other.autoScroll, autoScroll) ||
-                other.autoScroll == autoScroll));
+            (identical(other.message, message) || other.message == message));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, status, message,
-      const DeepCollectionEquality().hash(_logs), autoScroll);
+  int get hashCode => Object.hash(runtimeType, status, message);
 
   /// Create a copy of SidecarState
   /// with the given fields replaced by the non-null parameter values.
@@ -197,19 +145,13 @@ class _$SidecarStateImpl extends _SidecarState {
 abstract class _SidecarState extends SidecarState {
   const factory _SidecarState(
       {required final SidecarStatus status,
-      final String? message,
-      final List<LogEntry> logs,
-      final bool autoScroll}) = _$SidecarStateImpl;
+      final String? message}) = _$SidecarStateImpl;
   const _SidecarState._() : super._();
 
   @override
   SidecarStatus get status;
   @override
   String? get message;
-  @override
-  List<LogEntry> get logs;
-  @override
-  bool get autoScroll;
 
   /// Create a copy of SidecarState
   /// with the given fields replaced by the non-null parameter values.

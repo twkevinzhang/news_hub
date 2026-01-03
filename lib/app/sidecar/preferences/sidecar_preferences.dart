@@ -1,0 +1,70 @@
+import 'package:news_hub/app/service/preferences/store.dart';
+
+/// Sidecar 相關的使用者偏好設定
+///
+/// 管理所有與 Sidecar 監控功能相關的設定，包括：
+/// - 日誌等級過濾
+/// - 最大日誌條數
+/// - 自動滾動開關
+///
+/// 所有設定都持久化儲存在本地，使用 [PreferenceStore] 作為底層儲存。
+class SidecarPreferences {
+  final PreferenceStore _store;
+
+  /// 日誌等級設定
+  ///
+  /// 可選值：'DEBUG', 'INFO', 'WARN', 'ERROR', 'CRITICAL'
+  /// 預設值：'INFO'
+  ///
+  /// 使用範例：
+  /// ```dart
+  /// final level = await sidecarPrefs.logLevel.get();
+  /// await sidecarPrefs.logLevel.set('DEBUG');
+  /// ```
+  late final Preference<String> logLevel;
+
+  /// 最大日誌條數設定
+  ///
+  /// 限制在記憶體中保留的日誌條數，避免記憶體溢出。
+  /// 範圍：100 ~ 5000
+  /// 預設值：1000
+  ///
+  /// 使用範例：
+  /// ```dart
+  /// final maxEntries = await sidecarPrefs.maxLogEntries.get();
+  /// await sidecarPrefs.maxLogEntries.set(2000);
+  /// ```
+  late final Preference<int> maxLogEntries;
+
+  /// 自動滾動開關
+  ///
+  /// 控制日誌頁面是否自動滾動到最新日誌。
+  /// 預設值：true
+  ///
+  /// 使用範例：
+  /// ```dart
+  /// final autoScroll = await sidecarPrefs.autoScroll.get();
+  /// await sidecarPrefs.autoScroll.set(false);
+  /// ```
+  late final Preference<bool> autoScroll;
+
+  SidecarPreferences(this._store) {
+    logLevel = StringPrimitive(
+      store: _store,
+      key: 'sidecar.log_level',
+      defaultValue: 'INFO',
+    );
+
+    maxLogEntries = IntPrimitive(
+      store: _store,
+      key: 'sidecar.max_log_entries',
+      defaultValue: 1000,
+    );
+
+    autoScroll = BooleanPrimitive(
+      store: _store,
+      key: 'sidecar.auto_scroll',
+      defaultValue: true,
+    );
+  }
+}

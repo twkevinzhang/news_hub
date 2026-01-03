@@ -25,6 +25,10 @@ import 'package:news_hub/app/service/cache/cache.dart' as _i158;
 import 'package:news_hub/app/service/database/database.dart' as _i539;
 import 'package:news_hub/app/service/preferences/store.dart' as _i365;
 import 'package:news_hub/app/service/preferences/store_impl.dart' as _i842;
+import 'package:news_hub/app/sidecar/preferences/sidecar_preferences.dart'
+    as _i280;
+import 'package:news_hub/app/sidecar/repository/sidecar_repository_impl.dart'
+    as _i757;
 import 'package:news_hub/app/suggestion/repository/suggestion_repository_impl.dart'
     as _i530;
 import 'package:news_hub/domain/api_service.dart' as _i113;
@@ -54,6 +58,12 @@ import 'package:news_hub/domain/extension/interactor/uninstall_extension.dart'
     as _i517;
 import 'package:news_hub/domain/extension/repository/extension_repo_repository.dart'
     as _i163;
+import 'package:news_hub/domain/sidecar/interactor/get_health_status.dart'
+    as _i800;
+import 'package:news_hub/domain/sidecar/interactor/watch_health.dart' as _i503;
+import 'package:news_hub/domain/sidecar/interactor/watch_logs.dart' as _i617;
+import 'package:news_hub/domain/sidecar/repository/sidecar_repository.dart'
+    as _i466;
 import 'package:news_hub/domain/suggestion/interactor/insert_suggestion.dart'
     as _i446;
 import 'package:news_hub/domain/suggestion/interactor/list_suggestions.dart'
@@ -78,6 +88,8 @@ import 'package:news_hub/presentation/pages/search/bloc/search_cubit.dart'
     as _i21;
 import 'package:news_hub/presentation/pages/sidecar/bloc/sidecar_cubit.dart'
     as _i164;
+import 'package:news_hub/presentation/pages/sidecar/bloc/sidecar_logs_cubit.dart'
+    as _i987;
 import 'package:news_hub/presentation/pages/thread/detail/bloc/thread_detail_cubit.dart'
     as _i994;
 import 'package:news_hub/presentation/pages/thread/list/bloc/thread_list_cubit.dart'
@@ -135,10 +147,18 @@ extension GetItInjectableX on _i174.GetIt {
         suggestionRepo: gh<_i677.SuggestionRepository>()));
     gh.lazySingleton<_i113.ApiService>(
         () => _i75.SidecarApiImpl(clientChannel: gh<_i1017.ClientChannel>()));
-    gh.factory<_i164.SidecarCubit>(
-        () => _i164.SidecarCubit(gh<_i113.ApiService>()));
+    gh.lazySingleton<_i466.SidecarRepository>(
+        () => _i757.SidecarRepositoryImpl(gh<_i113.ApiService>()));
     gh.factory<_i672.CollectionListBloc>(
         () => _i672.CollectionListBloc(gh<_i920.CollectionRepository>()));
+    gh.factory<_i503.WatchHealthUseCase>(
+        () => _i503.WatchHealthUseCase(gh<_i466.SidecarRepository>()));
+    gh.factory<_i800.GetHealthStatusUseCase>(
+        () => _i800.GetHealthStatusUseCase(gh<_i466.SidecarRepository>()));
+    gh.factory<_i617.WatchLogsUseCase>(
+        () => _i617.WatchLogsUseCase(gh<_i466.SidecarRepository>()));
+    gh.singleton<_i280.SidecarPreferences>(
+        () => appProvider.sidecarPreferences(gh<_i365.PreferenceStore>()));
     gh.lazySingleton<_i45.AddExtensionRepo>(
         () => _i45.AddExtensionRepo(gh<_i163.ExtensionRepoRepository>()));
     gh.lazySingleton<_i428.RemoveExtensionRepo>(
@@ -163,6 +183,8 @@ extension GetItInjectableX on _i174.GetIt {
           addExtensionRepo: gh<_i45.AddExtensionRepo>(),
           removeExtensionRepo: gh<_i428.RemoveExtensionRepo>(),
         ));
+    gh.factory<_i164.SidecarCubit>(
+        () => _i164.SidecarCubit(gh<_i503.WatchHealthUseCase>()));
     gh.lazySingleton<_i616.GetThread>(() => _i616.GetThread(
           apiService: gh<_i113.ApiService>(),
           installedExtensionRepository: gh<_i266.GetInstalledExtension>(),
@@ -170,6 +192,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i492.ListRegardingPosts>(() => _i492.ListRegardingPosts(
           apiService: gh<_i113.ApiService>(),
           installedExtensionRepository: gh<_i266.GetInstalledExtension>(),
+        ));
+    gh.factory<_i987.SidecarLogsCubit>(() => _i987.SidecarLogsCubit(
+          gh<_i617.WatchLogsUseCase>(),
+          gh<_i280.SidecarPreferences>(),
         ));
     gh.lazySingleton<_i214.ListExtensions>(() => _i214.ListExtensions(
           prefService: gh<_i515.ExtensionPreferencesService>(),
