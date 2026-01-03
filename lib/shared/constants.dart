@@ -1,6 +1,6 @@
 import 'package:injectable/injectable.dart' as injectable;
 
-const String adapterAsset = "adapter/dist/adapter.zip";
+const String adapterAsset = "sidecar/dist/sidecar.zip";
 
 class AppEnv {
   /// name of the environment

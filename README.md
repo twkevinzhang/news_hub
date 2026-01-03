@@ -26,4 +26,4 @@ Browse between multiple forums.
 [news_hub_extensions]: https://github.com/twkevinzhang/news_hub_extensions
 [news_hub_protos]: https://github.com/twkevinzhang/news_hub_protos
 [flet-dev/serious-python]: https://github.com/flet-dev/serious-python
-[mock_extension_api_service_impl.dart]: lib/app/extension/api/mock_extension_api_service_impl.dart
+[mock_sidecar_api_service_impl.dart]: lib/app/extension/api/mock_sidecar_api_service_impl.dart
