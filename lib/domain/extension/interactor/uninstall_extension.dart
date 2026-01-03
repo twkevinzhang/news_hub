@@ -1,16 +1,15 @@
-import 'package:news_hub/domain/extension/extension_install_service.dart';
+import 'package:news_hub/domain/api_service.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
-// TODO: 呼叫 sidecar 解除安裝
 class UninstallExtension {
-  final ExtensionInstallService _installService;
+  final ApiService _service;
   UninstallExtension({
-    required ExtensionInstallService installService,
-  }) : _installService = installService;
+    required ApiService service,
+  })  : _service = service;
 
   Future<void> call(Extension extension) {
-    return _installService.uninstall(extension);
+    return _service.uninstallExtension(extension: extension);
   }
 }
