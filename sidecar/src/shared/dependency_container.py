@@ -13,6 +13,9 @@ from application.use_cases.uninstall_extension import UninstallExtensionUseCase
 from application.use_cases.list_installed_extensions import ListInstalledExtensionsUseCase
 from application.use_cases.list_remote_extensions import ListRemoteExtensionsUseCase
 from application.use_cases.get_installed_extension import GetInstalledExtensionUseCase
+from application.use_cases.add_repo import AddRepoUseCase
+from application.use_cases.remove_repo import RemoveRepoUseCase
+from infrastructure.repositories.repo_repository_impl import RepoRepositoryImpl
 from presentation.grpc.sidecar_service import SidecarService
 
 
@@ -45,6 +48,9 @@ class DependencyContainer:
         self.remote_extension_repository = RemoteExtensionRepositoryImpl(
             self.http_downloader
         )
+        self.repo_repository = RepoRepositoryImpl(
+            persistent_dir=Config.PERSISTENT_DIR
+        )
 
         # Application Services
         self.extension_installer = ExtensionInstaller(
@@ -70,6 +76,13 @@ class DependencyContainer:
         )
         self.get_installed_uc = GetInstalledExtensionUseCase(
             repository=self.extension_repository
+        )
+        self.add_repo_uc = AddRepoUseCase(
+            repository=self.repo_repository,
+            downloader=self.http_downloader
+        )
+        self.remove_repo_uc = RemoveRepoUseCase(
+            repository=self.repo_repository
         )
 
         # Presentation

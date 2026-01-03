@@ -10,6 +10,7 @@ class Config:
     EXTENSIONS_DIR = BASE_DIR / "extensions"
     DOWNLOAD_DIR = BASE_DIR / "download"
     LOG_DIR = BASE_DIR / "logs"
+    PERSISTENT_DIR = BASE_DIR / "persistent"
 
     # Server
     GRPC_PORT = 55001
@@ -28,4 +29,5 @@ class Config:
         cls.EXTENSIONS_DIR.mkdir(exist_ok=True)
         cls.DOWNLOAD_DIR.mkdir(exist_ok=True)
         cls.LOG_DIR.mkdir(exist_ok=True)
+        cls.PERSISTENT_DIR.mkdir(exist_ok=True)
 
