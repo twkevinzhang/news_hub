@@ -165,4 +165,22 @@ class SidecarApi implements ApiService {
     final res = await _client.listRemoteExtensions(pb.ListRemoteExtensionsReq(repoBaseUrl: repoBaseUrl));
     return res.extensions.map((e) => e.toRemoteExtensionDomain()).toList();
   }
+
+  // Health Check
+  Stream<pb.HealthCheckResponse> watchHealth() {
+    return _client.watchHealth(pb.HealthCheckRequest());
+  }
+
+  Future<pb.HealthCheckResponse> healthCheck() async {
+    return await _client.healthCheck(pb.HealthCheckRequest());
+  }
+
+  // Logs
+  Stream<pb.LogEntry> streamLogs({pb.LogLevel minLevel = pb.LogLevel.INFO}) {
+    return _client.streamLogs(pb.StreamLogsRequest(minLevel: minLevel));
+  }
+
+  Future<void> setLogLevel(pb.LogLevel level) async {
+    await _client.setLogLevel(pb.SetLogLevelRequest(level: level));
+  }
 }
