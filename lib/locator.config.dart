@@ -23,6 +23,8 @@ import 'package:news_hub/app/extension/repository/extension_repo_repository_impl
 import 'package:news_hub/app/service/api/sidecar_api_impl.dart' as _i75;
 import 'package:news_hub/app/service/cache/cache.dart' as _i158;
 import 'package:news_hub/app/service/database/database.dart' as _i539;
+import 'package:news_hub/app/service/grpc/grpc_connection_manager.dart'
+    as _i790;
 import 'package:news_hub/app/service/preferences/store.dart' as _i365;
 import 'package:news_hub/app/service/preferences/store_impl.dart' as _i842;
 import 'package:news_hub/app/sidecar/preferences/sidecar_preferences.dart'
@@ -116,13 +118,15 @@ extension GetItInjectableX on _i174.GetIt {
       preResolve: true,
     );
     gh.singleton<_i361.Dio>(() => appProvider.dio);
-    gh.singleton<_i1017.ClientChannel>(() => appProvider.clientChannel);
     gh.singleton<_i539.AppDatabase>(() => _i539.AppDatabase());
     gh.singleton<_i158.CacheService>(() => _i158.CacheService());
+    gh.singleton<_i790.GrpcConnectionManager>(
+        () => _i790.GrpcConnectionManager());
     gh.lazySingleton<_i762.AppRouter>(() => _i762.AppRouter());
+    gh.singleton<_i1017.ClientChannel>(
+        () => appProvider.clientChannel(gh<_i790.GrpcConnectionManager>()));
     gh.lazySingleton<_i677.SuggestionRepository>(
         () => _i530.SuggestionRepositoryImpl(db: gh<_i539.AppDatabase>()));
-    gh.factory<_i56.Launcher>(() => _i56.AppLauncher());
     gh.lazySingleton<_i920.CollectionRepository>(
         () => _i815.CollectionRepositoryImpl(db: gh<_i539.AppDatabase>()));
     gh.lazySingleton<_i521.BookmarkRepository>(
@@ -131,6 +135,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i235.CreateCollectionCubit(gh<_i920.CollectionRepository>()));
     gh.lazySingleton<_i1049.ListBookmarks>(
         () => _i1049.ListBookmarks(repo: gh<_i521.BookmarkRepository>()));
+    gh.factory<_i56.Launcher>(
+        () => _i56.AppLauncher(gh<_i790.GrpcConnectionManager>()));
     gh.lazySingleton<_i365.PreferenceStore>(
         () => _i842.PreferenceStoreImpl(prefs: gh<_i579.SharedPreferences>()));
     gh.lazySingleton<_i515.ExtensionPreferencesService>(() =>
@@ -145,18 +151,17 @@ extension GetItInjectableX on _i174.GetIt {
         suggestionRepo: gh<_i677.SuggestionRepository>()));
     gh.lazySingleton<_i113.ApiService>(
         () => _i75.SidecarApiImpl(clientChannel: gh<_i1017.ClientChannel>()));
-    gh.lazySingleton<_i466.SidecarRepository>(
-        () => _i757.SidecarRepositoryImpl(gh<_i113.ApiService>()));
-    gh.lazySingleton<_i163.ExtensionRepoRepository>(
-        () => _i795.ExtensionRepoRepositoryImpl(gh<_i113.ApiService>()));
     gh.factory<_i672.CollectionListBloc>(
         () => _i672.CollectionListBloc(gh<_i920.CollectionRepository>()));
-    gh.factory<_i503.WatchHealthUseCase>(
-        () => _i503.WatchHealthUseCase(gh<_i466.SidecarRepository>()));
-    gh.factory<_i800.GetHealthStatusUseCase>(
-        () => _i800.GetHealthStatusUseCase(gh<_i466.SidecarRepository>()));
-    gh.factory<_i617.WatchLogsUseCase>(
-        () => _i617.WatchLogsUseCase(gh<_i466.SidecarRepository>()));
+    gh.lazySingleton<_i163.ExtensionRepoRepository>(
+        () => _i795.ExtensionRepoRepositoryImpl(
+              gh<_i113.ApiService>(),
+              gh<_i790.GrpcConnectionManager>(),
+            ));
+    gh.lazySingleton<_i466.SidecarRepository>(() => _i757.SidecarRepositoryImpl(
+          gh<_i113.ApiService>(),
+          gh<_i790.GrpcConnectionManager>(),
+        ));
     gh.singleton<_i280.SidecarPreferences>(
         () => appProvider.sidecarPreferences(gh<_i365.PreferenceStore>()));
     gh.lazySingleton<_i45.AddExtensionRepo>(
@@ -183,8 +188,6 @@ extension GetItInjectableX on _i174.GetIt {
           addExtensionRepo: gh<_i45.AddExtensionRepo>(),
           removeExtensionRepo: gh<_i428.RemoveExtensionRepo>(),
         ));
-    gh.factory<_i164.SidecarCubit>(
-        () => _i164.SidecarCubit(gh<_i503.WatchHealthUseCase>()));
     gh.lazySingleton<_i616.GetThread>(() => _i616.GetThread(
           apiService: gh<_i113.ApiService>(),
           installedExtensionRepository: gh<_i266.GetInstalledExtension>(),
@@ -193,6 +196,12 @@ extension GetItInjectableX on _i174.GetIt {
           apiService: gh<_i113.ApiService>(),
           installedExtensionRepository: gh<_i266.GetInstalledExtension>(),
         ));
+    gh.factory<_i503.WatchHealthUseCase>(
+        () => _i503.WatchHealthUseCase(gh<_i466.SidecarRepository>()));
+    gh.factory<_i800.GetHealthStatusUseCase>(
+        () => _i800.GetHealthStatusUseCase(gh<_i466.SidecarRepository>()));
+    gh.factory<_i617.WatchLogsUseCase>(
+        () => _i617.WatchLogsUseCase(gh<_i466.SidecarRepository>()));
     gh.factory<_i987.SidecarLogsCubit>(() => _i987.SidecarLogsCubit(
           gh<_i617.WatchLogsUseCase>(),
           gh<_i280.SidecarPreferences>(),
@@ -217,6 +226,8 @@ extension GetItInjectableX on _i174.GetIt {
           installExtension: gh<_i783.InstallExtension>(),
           uninstallExtension: gh<_i517.UninstallExtension>(),
         ));
+    gh.factory<_i164.SidecarCubit>(
+        () => _i164.SidecarCubit(gh<_i503.WatchHealthUseCase>()));
     gh.factory<_i21.SearchCubit>(() => _i21.SearchCubit(
           listSuggestions: gh<_i643.ListSuggestions>(),
           updateSuggestionLatestUsedAt:

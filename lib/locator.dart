@@ -11,6 +11,7 @@ import 'package:serious_python/serious_python.dart';
 import 'package:news_hub/shared/constants.dart';
 import 'package:news_hub/domain/api_service.dart';
 import 'package:news_hub/app/service/api/sidecar_api_impl.dart';
+import 'package:news_hub/app/service/grpc/grpc_connection_manager.dart';
 import 'package:news_hub/app/service/preferences/store.dart';
 import 'package:news_hub/app/sidecar/preferences/sidecar_preferences.dart';
 import 'locator.config.dart';
@@ -38,26 +39,10 @@ abstract class AppProvider {
   Dio get dio => Dio();
 
   @singleton
-  ClientChannel get clientChannel {
-    // 優先順序：
-    // 1. 編譯時環境變數 (--dart-define) - 開發者使用
-    // 2. 預設值 (127.0.0.1:55001)
-    //
-    // 注意：使用者偏好設定需要在 runtime 動態讀取
-    // 如果需要使用 App 內設定，請在使用 ClientChannel 的地方重新建立連線
-    const envHost = String.fromEnvironment('SIDECAR_HOST', defaultValue: '127.0.0.1');
-    const envPort = int.fromEnvironment('SIDECAR_PORT', defaultValue: 55001);
-
-    debugPrint('Sidecar gRPC connecting to: $envHost:$envPort');
-
-    return ClientChannel(
-      envHost,
-      port: envPort,
-      options: const ChannelOptions(
-        credentials: ChannelCredentials.insecure(),
-        connectTimeout: Duration(seconds: 5),
-      ),
-    );
+  ClientChannel clientChannel(GrpcConnectionManager manager) {
+    // 透過連接管理器獲取 Channel
+    // 連接管理器會處理生命週期、重連等邏輯
+    return manager.getChannel();
   }
 
   @singleton
@@ -72,9 +57,25 @@ abstract class Launcher {
 
 @Injectable(as: Launcher)
 class AppLauncher implements Launcher {
+  final GrpcConnectionManager _connectionManager;
+
+  AppLauncher(this._connectionManager);
+
   @override
   Future<void> call() async {
     debugPrint('Sidecar asset: $sidecarAsset');
+
+    // 初始化 gRPC 連接管理器（異步，不阻塞 App 啟動）
+    const envHost = String.fromEnvironment('SIDECAR_HOST', defaultValue: '127.0.0.1');
+    const envPort = int.fromEnvironment('SIDECAR_PORT', defaultValue: 55001);
+
+    debugPrint('Initializing gRPC connection to: $envHost:$envPort');
+    _connectionManager.initialize(
+      host: envHost,
+      port: envPort,
+      autoReconnect: true,
+    );
+
     SeriousPython.run(sidecarAsset);
     runApp(App());
   }
