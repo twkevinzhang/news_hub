@@ -67,9 +67,9 @@ class GrpcConnectionManager {
       );
 
       _updateState(GrpcConnectionState.connected);
-      debugPrint('[GrpcConnectionManager] ✓ Connection established');
+      debugPrint('[GrpcConnectionManager] Connection established');
     } catch (e) {
-      debugPrint('[GrpcConnectionManager] ✗ Connection failed: $e');
+      debugPrint('[GrpcConnectionManager] Connection failed: $e');
       _updateState(GrpcConnectionState.failed);
       _scheduleReconnect();
     }
