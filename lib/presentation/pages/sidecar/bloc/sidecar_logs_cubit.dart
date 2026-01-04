@@ -97,7 +97,7 @@ class SidecarLogsCubit extends Cubit<SidecarLogsState> {
     final minLevel = _parseLogLevel(logLevelStr);
 
     // 取消舊訂閱
-    await stopWatching();
+    await _logsSubscription?.cancel();
 
     // 訂閱日誌串流
     _logsSubscription = _watchLogs(minLevel: minLevel).listen(
