@@ -10,6 +10,8 @@ import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 import 'package:serious_python/serious_python.dart';
 import 'package:news_hub/shared/constants.dart';
 import 'package:news_hub/domain/api_service.dart';
+import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/domain/sidecar/repository/sidecar_repository.dart';
 import 'package:news_hub/app/service/api/sidecar_api_impl.dart';
 import 'package:news_hub/app/service/grpc/grpc_connection_manager.dart';
 import 'package:news_hub/app/service/preferences/store.dart';
@@ -58,8 +60,14 @@ abstract class Launcher {
 @Injectable(as: Launcher)
 class AppLauncher implements Launcher {
   final GrpcConnectionManager _connectionManager;
+  final SidecarRepository _sidecarRepository;
+  final SidecarPreferences _sidecarPreferences;
 
-  AppLauncher(this._connectionManager);
+  AppLauncher(
+    this._connectionManager,
+    this._sidecarRepository,
+    this._sidecarPreferences,
+  );
 
   @override
   Future<void> call() async {
@@ -68,14 +76,27 @@ class AppLauncher implements Launcher {
     const envHost = String.fromEnvironment('SIDECAR_HOST', defaultValue: '127.0.0.1');
     const envPort = int.fromEnvironment('SIDECAR_PORT', defaultValue: 55001);
 
-    debugPrint('Initializing gRPC connection to: $envHost:$envPort');
+    final logLevelStr = await _sidecarPreferences.logLevel.get();
+    final initialLogLevel = _parseLogLevel(logLevelStr);
+
+    debugPrint('Initializing gRPC connection to: $envHost:$envPort with log level: $initialLogLevel');
     _connectionManager.initialize(
       host: envHost,
       port: envPort,
       autoReconnect: true,
+      sidecarRepository: _sidecarRepository,
+      initialLogLevel: initialLogLevel,
     );
 
     SeriousPython.run(sidecarAsset);
     runApp(App());
+  }
+
+  LogLevel _parseLogLevel(String levelStr) {
+    try {
+      return LogLevel.values.byName(levelStr.toLowerCase());
+    } catch (e) {
+      return LogLevel.info;
+    }
   }
 }

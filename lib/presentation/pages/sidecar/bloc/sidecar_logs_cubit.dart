@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:news_hub/app/service/grpc/grpc_connection_manager.dart';
 import 'package:news_hub/app/sidecar/preferences/sidecar_preferences.dart';
 import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/domain/sidecar/interactor/watch_logs.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/router/router.dart';
 import 'package:path_provider/path_provider.dart';
@@ -41,29 +41,28 @@ class SidecarLogsState with _$SidecarLogsState {
 
 @injectable
 class SidecarLogsCubit extends Cubit<SidecarLogsState> {
-  final WatchLogsUseCase _watchLogs;
+  final GrpcConnectionManager _connectionManager;
   final SidecarPreferences _preferences;
 
   StreamSubscription<LogEntry>? _logsSubscription;
+  int _maxEntries = 1000;
 
   SidecarLogsCubit(
-    this._watchLogs,
+    this._connectionManager,
     this._preferences,
   ) : super(const SidecarLogsState());
 
   Future<void> startWatching() async {
-    final logLevelStr = await _preferences.logLevel.get();
-    final maxEntries = await _preferences.maxLogEntries.get();
-    final minLevel = _parseLogLevel(logLevelStr);
+    _maxEntries = await _preferences.maxLogEntries.get();
 
-    print('[SidecarLogsCubit] Starting to watch logs with minLevel: $minLevel, maxEntries: $maxEntries');
+    print('[SidecarLogsCubit] Starting to watch logs from manager, maxEntries: $_maxEntries');
 
     await _logsSubscription?.cancel();
 
-    _logsSubscription = _watchLogs(minLevel: minLevel).listen(
+    _logsSubscription = _connectionManager.logsStream.listen(
       (logEntry) {
-        print('[SidecarLogsCubit] Received log entry: ${logEntry.level} - ${logEntry.message}');
-        final updatedLogs = _addLogWithLimit(logEntry, maxEntries);
+        print('[SidecarLogsCubit] Received log entry from manager: ${logEntry.level} - ${logEntry.message}');
+        final updatedLogs = _addLogWithLimit(logEntry);
         emit(state.copyWith(logs: updatedLogs));
       },
       onError: (error) {
@@ -73,9 +72,9 @@ class SidecarLogsCubit extends Cubit<SidecarLogsState> {
     );
   }
 
-  List<LogEntry> _addLogWithLimit(LogEntry newLog, int maxEntries) {
+  List<LogEntry> _addLogWithLimit(LogEntry newLog) {
     final updatedLogs = List<LogEntry>.from(state.logs)..add(newLog);
-    if (updatedLogs.length > maxEntries) {
+    if (updatedLogs.length > _maxEntries) {
       updatedLogs.removeAt(0);
     }
     return updatedLogs;
@@ -87,8 +86,11 @@ class SidecarLogsCubit extends Cubit<SidecarLogsState> {
   }
 
   Future<void> restartWithNewLevel() async {
-    await stopWatching();
-    await startWatching();
+    final logLevelStr = await _preferences.logLevel.get();
+    final newLevel = _parseLogLevel(logLevelStr);
+
+    print('[SidecarLogsCubit] Updating log level to: $newLevel');
+    _connectionManager.updateLogLevel(newLevel);
   }
 
   void clearLogs() {

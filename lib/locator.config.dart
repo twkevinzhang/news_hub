@@ -139,8 +139,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i235.CreateCollectionCubit(gh<_i920.CollectionRepository>()));
     gh.lazySingleton<_i1049.ListBookmarks>(
         () => _i1049.ListBookmarks(repo: gh<_i521.BookmarkRepository>()));
-    gh.factory<_i56.Launcher>(
-        () => _i56.AppLauncher(gh<_i790.GrpcConnectionManager>()));
     gh.lazySingleton<_i365.PreferenceStore>(
         () => _i842.PreferenceStoreImpl(prefs: gh<_i579.SharedPreferences>()));
     gh.lazySingleton<_i515.ExtensionPreferencesService>(() =>
@@ -168,6 +166,15 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.singleton<_i280.SidecarPreferences>(
         () => appProvider.sidecarPreferences(gh<_i365.PreferenceStore>()));
+    gh.factory<_i56.Launcher>(() => _i56.AppLauncher(
+          gh<_i790.GrpcConnectionManager>(),
+          gh<_i466.SidecarRepository>(),
+          gh<_i280.SidecarPreferences>(),
+        ));
+    gh.factory<_i987.SidecarLogsCubit>(() => _i987.SidecarLogsCubit(
+          gh<_i790.GrpcConnectionManager>(),
+          gh<_i280.SidecarPreferences>(),
+        ));
     gh.lazySingleton<_i45.AddExtensionRepo>(
         () => _i45.AddExtensionRepo(gh<_i163.ExtensionRepoRepository>()));
     gh.lazySingleton<_i428.RemoveExtensionRepo>(
@@ -214,10 +221,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i800.GetHealthStatusUseCase(gh<_i466.SidecarRepository>()));
     gh.factory<_i617.WatchLogsUseCase>(
         () => _i617.WatchLogsUseCase(gh<_i466.SidecarRepository>()));
-    gh.factory<_i987.SidecarLogsCubit>(() => _i987.SidecarLogsCubit(
-          gh<_i617.WatchLogsUseCase>(),
-          gh<_i280.SidecarPreferences>(),
-        ));
     gh.lazySingleton<_i214.ListExtensions>(() => _i214.ListExtensions(
           prefService: gh<_i515.ExtensionPreferencesService>(),
           listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),

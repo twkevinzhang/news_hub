@@ -16,22 +16,11 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SidecarLogsState {
-  /// 所有日誌條目（未過濾）
   List<LogEntry> get logs => throw _privateConstructorUsedError;
-
-  /// 搜尋查詢字串
   String get searchQuery => throw _privateConstructorUsedError;
-
-  /// 是否正在搜尋模式
   bool get isSearching => throw _privateConstructorUsedError;
-
-  /// 匯出是否成功
   bool get exportSuccess => throw _privateConstructorUsedError;
-
-  /// 匯出的檔案路徑
   String? get exportPath => throw _privateConstructorUsedError;
-
-  /// 錯誤訊息
   String? get error => throw _privateConstructorUsedError;
 
   /// Create a copy of SidecarLogsState
@@ -186,10 +175,7 @@ class _$SidecarLogsStateImpl extends _SidecarLogsState {
       : _logs = logs,
         super._();
 
-  /// 所有日誌條目（未過濾）
   final List<LogEntry> _logs;
-
-  /// 所有日誌條目（未過濾）
   @override
   @JsonKey()
   List<LogEntry> get logs {
@@ -198,26 +184,17 @@ class _$SidecarLogsStateImpl extends _SidecarLogsState {
     return EqualUnmodifiableListView(_logs);
   }
 
-  /// 搜尋查詢字串
   @override
   @JsonKey()
   final String searchQuery;
-
-  /// 是否正在搜尋模式
   @override
   @JsonKey()
   final bool isSearching;
-
-  /// 匯出是否成功
   @override
   @JsonKey()
   final bool exportSuccess;
-
-  /// 匯出的檔案路徑
   @override
   final String? exportPath;
-
-  /// 錯誤訊息
   @override
   final String? error;
 
@@ -273,27 +250,16 @@ abstract class _SidecarLogsState extends SidecarLogsState {
       final String? error}) = _$SidecarLogsStateImpl;
   const _SidecarLogsState._() : super._();
 
-  /// 所有日誌條目（未過濾）
   @override
   List<LogEntry> get logs;
-
-  /// 搜尋查詢字串
   @override
   String get searchQuery;
-
-  /// 是否正在搜尋模式
   @override
   bool get isSearching;
-
-  /// 匯出是否成功
   @override
   bool get exportSuccess;
-
-  /// 匯出的檔案路徑
   @override
   String? get exportPath;
-
-  /// 錯誤訊息
   @override
   String? get error;
 

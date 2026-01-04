@@ -2,6 +2,8 @@ import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:grpc/grpc.dart';
 import 'package:injectable/injectable.dart';
+import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/domain/sidecar/repository/sidecar_repository.dart';
 
 enum GrpcConnectionState {
   uninitialized,
@@ -20,10 +22,15 @@ class GrpcConnectionManager {
   int _port = 55001;
 
   final _stateController = StreamController<GrpcConnectionState>.broadcast();
+  final _logsController = StreamController<LogEntry>.broadcast();
   Timer? _reconnectTimer;
   Timer? _healthCheckTimer;
+  StreamSubscription<LogEntry>? _logsSubscription;
+  SidecarRepository? _sidecarRepository;
+  LogLevel _currentLogLevel = LogLevel.info;
 
   Stream<GrpcConnectionState> get stateStream => _stateController.stream;
+  Stream<LogEntry> get logsStream => _logsController.stream;
   GrpcConnectionState get state => _state;
   ClientChannel? get channel => _channel;
 
@@ -31,17 +38,61 @@ class GrpcConnectionManager {
     required String host,
     required int port,
     bool autoReconnect = true,
+    SidecarRepository? sidecarRepository,
+    LogLevel initialLogLevel = LogLevel.info,
   }) {
     debugPrint('[GrpcConnectionManager] Initializing connection to $host:$port');
 
     _host = host;
     _port = port;
+    _sidecarRepository = sidecarRepository;
+    _currentLogLevel = initialLogLevel;
 
     _connect();
 
     if (autoReconnect) {
       _startHealthCheck();
     }
+
+    if (_sidecarRepository != null) {
+      _startWatchingLogs();
+    }
+  }
+
+  void _startWatchingLogs() {
+    if (_sidecarRepository == null) {
+      debugPrint('[GrpcConnectionManager] No repository provided, skipping log watching');
+      return;
+    }
+
+    _logsSubscription?.cancel();
+
+    debugPrint('[GrpcConnectionManager] Starting to watch logs with minLevel: $_currentLogLevel');
+
+    _logsSubscription = _sidecarRepository!
+        .watchLogs(minLevel: _currentLogLevel)
+        .listen(
+      (logEntry) {
+        debugPrint('[GrpcConnectionManager] Received log: ${logEntry.level} - ${logEntry.message}');
+        _logsController.add(logEntry);
+      },
+      onError: (error) {
+        debugPrint('[GrpcConnectionManager] Error in log stream: $error');
+      },
+      onDone: () {
+        debugPrint('[GrpcConnectionManager] Log stream completed');
+      },
+    );
+  }
+
+  void updateLogLevel(LogLevel newLevel) {
+    if (_currentLogLevel == newLevel) {
+      return;
+    }
+
+    debugPrint('[GrpcConnectionManager] Updating log level from $_currentLogLevel to $newLevel');
+    _currentLogLevel = newLevel;
+    _startWatchingLogs();
   }
 
   Future<void> _connect() async {
@@ -150,11 +201,13 @@ class GrpcConnectionManager {
 
     _reconnectTimer?.cancel();
     _healthCheckTimer?.cancel();
+    await _logsSubscription?.cancel();
 
     await _closeChannel();
 
     _updateState(GrpcConnectionState.closed);
     await _stateController.close();
+    await _logsController.close();
   }
 
   ClientChannel getChannel() {
