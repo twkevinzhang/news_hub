@@ -1,24 +1,28 @@
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/api_service.dart';
+import 'package:news_hub/domain/extension/repository/installed_extension_repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 
 @lazySingleton
-// TODO: 從 sidecar 取得已安裝 extension 清單
 class ListInstalledExtensions {
-  final ApiService _service;
+  final InstalledExtensionRepository _repository;
+  final ApiService _apiService;
+
   ListInstalledExtensions({
-    required ApiService service,
-  })  : _service = service;
+    required InstalledExtensionRepository repository,
+    required ApiService apiService,
+  })  : _repository = repository,
+        _apiService = apiService;
 
   Future<List<Extension>> call() {
-    return _service.listInstalledExtensions();
+    return _repository.listInstalled();
   }
 
   Future<List<ExtensionWithBoards>> withBoards() async {
     final extensions = await call();
     final promises = extensions.map((e) async {
-      final site = await _service.getSite(extensionPkgName: e.pkgName);
-      final boards = await _service.listBoards(extensionPkgName: e.pkgName, siteId: site.id);
+      final site = await _apiService.getSite(extensionPkgName: e.pkgName);
+      final boards = await _apiService.listBoards(extensionPkgName: e.pkgName, siteId: site.id);
       return ExtensionWithBoards(
         repoBaseUrl: e.repoBaseUrl,
         pkgName: e.pkgName,

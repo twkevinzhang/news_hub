@@ -1,31 +1,16 @@
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/domain/api_service.dart';
+import 'package:news_hub/domain/extension/repository/installed_extension_repository.dart';
 import 'package:news_hub/domain/models/models.dart';
-
-import 'package:news_hub/domain/extension/repository/extension_repo_repository.dart';
 
 @lazySingleton
 class ListRemoteExtensions {
-  final ApiService _service;
-  final ExtensionRepoRepository _repo;
+  final InstalledExtensionRepository _repository;
 
   ListRemoteExtensions({
-    required ApiService service,
-    required ExtensionRepoRepository repo,
-  })  : _service = service,
-        _repo = repo;
+    required InstalledExtensionRepository repository,
+  }) : _repository = repository;
 
-  Future<List<RemoteExtension>> call() async {
-    final repos = await _repo.list();
-    final List<RemoteExtension> results = [];
-    for (final repo in repos) {
-      try {
-        final remotes = await _service.listRemoteExtensions(repoBaseUrl: repo.baseUrl);
-        results.addAll(remotes);
-      } catch (e) {
-        // Skip failed repos
-      }
-    }
-    return results;
+  Future<List<RemoteExtension>> call() {
+    return _repository.listRemote();
   }
 }

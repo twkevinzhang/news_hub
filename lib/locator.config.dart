@@ -20,6 +20,8 @@ import 'package:news_hub/app/extension/preferences/extension_preferences_service
     as _i29;
 import 'package:news_hub/app/extension/repository/extension_repo_repository_impl.dart'
     as _i795;
+import 'package:news_hub/app/extension/repository/installed_extension_repository_impl.dart'
+    as _i753;
 import 'package:news_hub/app/service/api/sidecar_api_impl.dart' as _i75;
 import 'package:news_hub/app/service/cache/cache.dart' as _i158;
 import 'package:news_hub/app/service/database/database.dart' as _i539;
@@ -60,6 +62,8 @@ import 'package:news_hub/domain/extension/interactor/uninstall_extension.dart'
     as _i517;
 import 'package:news_hub/domain/extension/repository/extension_repo_repository.dart'
     as _i163;
+import 'package:news_hub/domain/extension/repository/installed_extension_repository.dart'
+    as _i37;
 import 'package:news_hub/domain/sidecar/interactor/get_health_status.dart'
     as _i800;
 import 'package:news_hub/domain/sidecar/interactor/watch_health.dart' as _i503;
@@ -170,24 +174,32 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i428.RemoveExtensionRepo(gh<_i163.ExtensionRepoRepository>()));
     gh.lazySingleton<_i443.ListExtensionRepos>(
         () => _i443.ListExtensionRepos(gh<_i163.ExtensionRepoRepository>()));
-    gh.lazySingleton<_i915.ListRemoteExtensions>(
-        () => _i915.ListRemoteExtensions(
-              service: gh<_i113.ApiService>(),
-              repo: gh<_i163.ExtensionRepoRepository>(),
+    gh.lazySingleton<_i37.InstalledExtensionRepository>(
+        () => _i753.InstalledExtensionRepositoryImpl(
+              gh<_i113.ApiService>(),
+              gh<_i790.GrpcConnectionManager>(),
+              gh<_i163.ExtensionRepoRepository>(),
             ));
-    gh.lazySingleton<_i783.InstallExtension>(
-        () => _i783.InstallExtension(service: gh<_i113.ApiService>()));
-    gh.lazySingleton<_i351.ListInstalledExtensions>(
-        () => _i351.ListInstalledExtensions(service: gh<_i113.ApiService>()));
-    gh.lazySingleton<_i517.UninstallExtension>(
-        () => _i517.UninstallExtension(service: gh<_i113.ApiService>()));
-    gh.lazySingleton<_i266.GetInstalledExtension>(
-        () => _i266.GetInstalledExtension(service: gh<_i113.ApiService>()));
     gh.factory<_i186.ExtensionRepoCubit>(() => _i186.ExtensionRepoCubit(
           listExtensionRepos: gh<_i443.ListExtensionRepos>(),
           addExtensionRepo: gh<_i45.AddExtensionRepo>(),
           removeExtensionRepo: gh<_i428.RemoveExtensionRepo>(),
         ));
+    gh.lazySingleton<_i351.ListInstalledExtensions>(
+        () => _i351.ListInstalledExtensions(
+              repository: gh<_i37.InstalledExtensionRepository>(),
+              apiService: gh<_i113.ApiService>(),
+            ));
+    gh.lazySingleton<_i783.InstallExtension>(() => _i783.InstallExtension(
+        repository: gh<_i37.InstalledExtensionRepository>()));
+    gh.lazySingleton<_i517.UninstallExtension>(() => _i517.UninstallExtension(
+        repository: gh<_i37.InstalledExtensionRepository>()));
+    gh.lazySingleton<_i266.GetInstalledExtension>(() =>
+        _i266.GetInstalledExtension(
+            repository: gh<_i37.InstalledExtensionRepository>()));
+    gh.lazySingleton<_i915.ListRemoteExtensions>(() =>
+        _i915.ListRemoteExtensions(
+            repository: gh<_i37.InstalledExtensionRepository>()));
     gh.lazySingleton<_i616.GetThread>(() => _i616.GetThread(
           apiService: gh<_i113.ApiService>(),
           installedExtensionRepository: gh<_i266.GetInstalledExtension>(),
