@@ -6,10 +6,10 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_hub/app/service/api/models/transform.dart';
 import 'package:news_hub/domain/extension/interactor/install_extension.dart';
 import 'package:news_hub/domain/extension/interactor/list_extensions.dart';
 import 'package:news_hub/domain/extension/interactor/uninstall_extension.dart';
+import 'package:news_hub/domain/extension/repository/installed_extension_repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/shared/models.dart';
 
