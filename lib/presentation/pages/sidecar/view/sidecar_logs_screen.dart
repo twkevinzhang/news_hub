@@ -193,10 +193,16 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
                   ),
                   const SizedBox(height: 16),
                   FloatingActionButton(
-                    heroTag: 'search_toggle',
-                    onPressed: () => _cubit.toggleSearch(),
-                    tooltip: '搜尋日誌',
-                    child: Icon(state.isSearching ? Icons.search_off : Icons.search),
+                    heroTag: 'retry_connection',
+                    onPressed: state.isConnected ? null : () => _cubit.retryConnection(),
+                    tooltip: state.isConnected ? '連線正常' : '重試連線',
+                    backgroundColor: state.isConnected
+                        ? Theme.of(context).colorScheme.surfaceContainerHighest
+                        : Theme.of(context).colorScheme.errorContainer,
+                    foregroundColor: state.isConnected
+                        ? Theme.of(context).disabledColor
+                        : Theme.of(context).colorScheme.onErrorContainer,
+                    child: Icon(state.isConnected ? Icons.check : Icons.refresh),
                   ),
                 ],
               ),

@@ -24,6 +24,7 @@ class SidecarLogsState with _$SidecarLogsState {
     @Default('') String searchQuery,
     @Default(false) bool isSearching,
     @Default(false) bool exportSuccess,
+    @Default(GrpcConnectionState.uninitialized) GrpcConnectionState connectionState,
     String? exportPath,
     String? error,
   }) = _SidecarLogsState;
@@ -37,6 +38,8 @@ class SidecarLogsState with _$SidecarLogsState {
       log.loggerName.toLowerCase().contains(lowerQuery)
     ).toList();
   }
+
+  bool get isConnected => connectionState == GrpcConnectionState.connected;
 }
 
 @injectable
@@ -45,6 +48,7 @@ class SidecarLogsCubit extends Cubit<SidecarLogsState> {
   final SidecarPreferences _preferences;
 
   StreamSubscription<LogEntry>? _logsSubscription;
+  StreamSubscription<GrpcConnectionState>? _stateSubscription;
   int _maxEntries = 1000;
 
   SidecarLogsCubit(
@@ -57,7 +61,10 @@ class SidecarLogsCubit extends Cubit<SidecarLogsState> {
 
     print('[SidecarLogsCubit] Starting to watch logs from manager, maxEntries: $_maxEntries');
 
+    emit(state.copyWith(connectionState: _connectionManager.state));
+
     await _logsSubscription?.cancel();
+    await _stateSubscription?.cancel();
 
     _logsSubscription = _connectionManager.logsStream.listen(
       (logEntry) {
@@ -70,6 +77,15 @@ class SidecarLogsCubit extends Cubit<SidecarLogsState> {
         emit(state.copyWith(error: 'Failed to fetch logs: $error'));
       },
     );
+
+    _stateSubscription = _connectionManager.stateStream.listen(
+      (connectionState) {
+        print('[SidecarLogsCubit] Connection state changed: $connectionState');
+        emit(state.copyWith(connectionState: connectionState));
+      },
+    );
+
+    print('[SidecarLogsCubit] Log subscription created');
   }
 
   List<LogEntry> _addLogWithLimit(LogEntry newLog) {
@@ -82,7 +98,9 @@ class SidecarLogsCubit extends Cubit<SidecarLogsState> {
 
   Future<void> stopWatching() async {
     await _logsSubscription?.cancel();
+    await _stateSubscription?.cancel();
     _logsSubscription = null;
+    _stateSubscription = null;
   }
 
   Future<void> restartWithNewLevel() async {
@@ -91,6 +109,11 @@ class SidecarLogsCubit extends Cubit<SidecarLogsState> {
 
     print('[SidecarLogsCubit] Updating log level to: $newLevel');
     _connectionManager.updateLogLevel(newLevel);
+  }
+
+  Future<void> retryConnection() async {
+    print('[SidecarLogsCubit] Retrying connection');
+    await _connectionManager.reconnect();
   }
 
   void clearLogs() {
@@ -180,6 +203,7 @@ class SidecarLogsCubit extends Cubit<SidecarLogsState> {
   @override
   Future<void> close() {
     _logsSubscription?.cancel();
+    _stateSubscription?.cancel();
     return super.close();
   }
 }

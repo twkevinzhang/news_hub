@@ -20,6 +20,7 @@ mixin _$SidecarLogsState {
   String get searchQuery => throw _privateConstructorUsedError;
   bool get isSearching => throw _privateConstructorUsedError;
   bool get exportSuccess => throw _privateConstructorUsedError;
+  GrpcConnectionState get connectionState => throw _privateConstructorUsedError;
   String? get exportPath => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
 
@@ -41,6 +42,7 @@ abstract class $SidecarLogsStateCopyWith<$Res> {
       String searchQuery,
       bool isSearching,
       bool exportSuccess,
+      GrpcConnectionState connectionState,
       String? exportPath,
       String? error});
 }
@@ -64,6 +66,7 @@ class _$SidecarLogsStateCopyWithImpl<$Res, $Val extends SidecarLogsState>
     Object? searchQuery = null,
     Object? isSearching = null,
     Object? exportSuccess = null,
+    Object? connectionState = null,
     Object? exportPath = freezed,
     Object? error = freezed,
   }) {
@@ -84,6 +87,10 @@ class _$SidecarLogsStateCopyWithImpl<$Res, $Val extends SidecarLogsState>
           ? _value.exportSuccess
           : exportSuccess // ignore: cast_nullable_to_non_nullable
               as bool,
+      connectionState: null == connectionState
+          ? _value.connectionState
+          : connectionState // ignore: cast_nullable_to_non_nullable
+              as GrpcConnectionState,
       exportPath: freezed == exportPath
           ? _value.exportPath
           : exportPath // ignore: cast_nullable_to_non_nullable
@@ -109,6 +116,7 @@ abstract class _$$SidecarLogsStateImplCopyWith<$Res>
       String searchQuery,
       bool isSearching,
       bool exportSuccess,
+      GrpcConnectionState connectionState,
       String? exportPath,
       String? error});
 }
@@ -130,6 +138,7 @@ class __$$SidecarLogsStateImplCopyWithImpl<$Res>
     Object? searchQuery = null,
     Object? isSearching = null,
     Object? exportSuccess = null,
+    Object? connectionState = null,
     Object? exportPath = freezed,
     Object? error = freezed,
   }) {
@@ -150,6 +159,10 @@ class __$$SidecarLogsStateImplCopyWithImpl<$Res>
           ? _value.exportSuccess
           : exportSuccess // ignore: cast_nullable_to_non_nullable
               as bool,
+      connectionState: null == connectionState
+          ? _value.connectionState
+          : connectionState // ignore: cast_nullable_to_non_nullable
+              as GrpcConnectionState,
       exportPath: freezed == exportPath
           ? _value.exportPath
           : exportPath // ignore: cast_nullable_to_non_nullable
@@ -170,6 +183,7 @@ class _$SidecarLogsStateImpl extends _SidecarLogsState {
       this.searchQuery = '',
       this.isSearching = false,
       this.exportSuccess = false,
+      this.connectionState = GrpcConnectionState.uninitialized,
       this.exportPath,
       this.error})
       : _logs = logs,
@@ -194,13 +208,16 @@ class _$SidecarLogsStateImpl extends _SidecarLogsState {
   @JsonKey()
   final bool exportSuccess;
   @override
+  @JsonKey()
+  final GrpcConnectionState connectionState;
+  @override
   final String? exportPath;
   @override
   final String? error;
 
   @override
   String toString() {
-    return 'SidecarLogsState(logs: $logs, searchQuery: $searchQuery, isSearching: $isSearching, exportSuccess: $exportSuccess, exportPath: $exportPath, error: $error)';
+    return 'SidecarLogsState(logs: $logs, searchQuery: $searchQuery, isSearching: $isSearching, exportSuccess: $exportSuccess, connectionState: $connectionState, exportPath: $exportPath, error: $error)';
   }
 
   @override
@@ -215,6 +232,8 @@ class _$SidecarLogsStateImpl extends _SidecarLogsState {
                 other.isSearching == isSearching) &&
             (identical(other.exportSuccess, exportSuccess) ||
                 other.exportSuccess == exportSuccess) &&
+            (identical(other.connectionState, connectionState) ||
+                other.connectionState == connectionState) &&
             (identical(other.exportPath, exportPath) ||
                 other.exportPath == exportPath) &&
             (identical(other.error, error) || other.error == error));
@@ -227,6 +246,7 @@ class _$SidecarLogsStateImpl extends _SidecarLogsState {
       searchQuery,
       isSearching,
       exportSuccess,
+      connectionState,
       exportPath,
       error);
 
@@ -246,6 +266,7 @@ abstract class _SidecarLogsState extends SidecarLogsState {
       final String searchQuery,
       final bool isSearching,
       final bool exportSuccess,
+      final GrpcConnectionState connectionState,
       final String? exportPath,
       final String? error}) = _$SidecarLogsStateImpl;
   const _SidecarLogsState._() : super._();
@@ -258,6 +279,8 @@ abstract class _SidecarLogsState extends SidecarLogsState {
   bool get isSearching;
   @override
   bool get exportSuccess;
+  @override
+  GrpcConnectionState get connectionState;
   @override
   String? get exportPath;
   @override
