@@ -4,13 +4,8 @@ import 'package:news_hub/app/sidecar/preferences/sidecar_preferences.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/sidecar/bloc/sidecar_logs_cubit.dart';
 
-/// Sidecar 管理與設定頁面
-///
-/// 允許使用者設定日誌等級、最大日誌條數等參數。
-/// 遵循 Material Design 3 規範，使用 M3 組件。
 @RoutePage()
 class SidecarManageScreen extends StatelessWidget {
-  /// 建構子
   const SidecarManageScreen({super.key});
 
   @override
@@ -32,7 +27,6 @@ class SidecarManageScreen extends StatelessWidget {
   }
 }
 
-/// 日誌等級設定項目
 class _LogLevelSetting extends StatefulWidget {
   const _LogLevelSetting();
 
@@ -82,7 +76,6 @@ class _LogLevelSettingState extends State<_LogLevelSetting> {
                   setState(() {
                     _currentLevel = newLevel;
                   });
-                  // 觸發日誌流重啟以應用新等級設定
                   if (sl.isRegistered<SidecarLogsCubit>()) {
                     sl<SidecarLogsCubit>().restartWithNewLevel();
                   }
@@ -93,7 +86,6 @@ class _LogLevelSettingState extends State<_LogLevelSetting> {
   }
 }
 
-/// 最大日誌條數設定項目
 class _MaxLogEntriesSetting extends StatefulWidget {
   const _MaxLogEntriesSetting();
 
@@ -159,7 +151,6 @@ class _MaxLogEntriesSettingState extends State<_MaxLogEntriesSetting> {
   }
 }
 
-/// 自動滾動預設設定項目
 class _AutoScrollSetting extends StatefulWidget {
   const _AutoScrollSetting();
 

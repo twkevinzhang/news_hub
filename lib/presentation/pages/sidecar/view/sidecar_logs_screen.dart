@@ -6,13 +6,8 @@ import 'package:news_hub/locator.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/presentation/pages/sidecar/bloc/sidecar_logs_cubit.dart';
 
-/// Sidecar 日誌查看頁面
-///
-/// 顯示即時串流日誌，支援搜尋、匯出、清除與自動滾動功能。
-/// 遵循 Material Design 3 規範與 BLoC 模式。
 @RoutePage()
 class SidecarLogsScreen extends StatefulWidget {
-  /// 建構子
   const SidecarLogsScreen({super.key});
 
   @override
@@ -42,7 +37,6 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
     }
   }
 
-  /// 獲取日誌等級對應的顏色
   Color _getLevelColor(LogLevel? level) {
     switch (level) {
       case LogLevel.debug:
@@ -66,7 +60,6 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
       value: _cubit,
       child: BlocListener<SidecarLogsCubit, SidecarLogsState>(
         listener: (context, state) {
-          // 處理匯出成功提示
           if (state.exportSuccess && state.exportPath != null) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -80,7 +73,6 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
             );
           }
 
-          // 處理錯誤提示
           if (state.error != null) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(
@@ -91,7 +83,6 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
             );
           }
 
-          // 自動滾動邏輯
           if (_autoScroll && _scrollController.hasClients && state.logs.isNotEmpty) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (_scrollController.hasClients) {
@@ -247,7 +238,6 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
   }
 }
 
-/// 個別日誌條目的 Widget
 class _LogEntryTile extends StatelessWidget {
   final LogEntry log;
   final String timeStr;
@@ -401,7 +391,6 @@ class _DetailItem extends StatelessWidget {
   }
 }
 
-/// 狀態與工具列
 class _StatusBar extends StatelessWidget {
   final bool autoScroll;
   final int logCount;
