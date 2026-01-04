@@ -65,7 +65,6 @@ class AppLauncher implements Launcher {
   Future<void> call() async {
     debugPrint('Sidecar asset: $sidecarAsset');
 
-    // 初始化 gRPC 連接管理器（異步，不阻塞 App 啟動）
     const envHost = String.fromEnvironment('SIDECAR_HOST', defaultValue: '127.0.0.1');
     const envPort = int.fromEnvironment('SIDECAR_PORT', defaultValue: 55001);
 
