@@ -123,7 +123,7 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i790.GrpcConnectionManager>(
         () => _i790.GrpcConnectionManager());
     gh.lazySingleton<_i762.AppRouter>(() => _i762.AppRouter());
-    gh.singleton<_i1017.ClientChannel>(
+    gh.lazySingleton<_i1017.ClientChannel>(
         () => appProvider.clientChannel(gh<_i790.GrpcConnectionManager>()));
     gh.lazySingleton<_i677.SuggestionRepository>(
         () => _i530.SuggestionRepositoryImpl(db: gh<_i539.AppDatabase>()));

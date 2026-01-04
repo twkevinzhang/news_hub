@@ -38,11 +38,11 @@ abstract class AppProvider {
   @singleton
   Dio get dio => Dio();
 
-  @singleton
+  @lazySingleton
   ClientChannel clientChannel(GrpcConnectionManager manager) {
-    // 透過連接管理器獲取 Channel
-    // 連接管理器會處理生命週期、重連等邏輯
-    return manager.getChannel();
+    return manager.channel ??
+      ClientChannel('127.0.0.1', port: 55001,
+        options: const ChannelOptions(credentials: ChannelCredentials.insecure()));
   }
 
   @singleton
