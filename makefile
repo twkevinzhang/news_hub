@@ -3,6 +3,12 @@ PROJECT_DIR := $(CURDIR)
 ADD_REPO =
 ADD_EXTENSION =
 
+# Sidecar configuration
+# 預設不設定 SIDECAR_HOST (使用 Flutter 預設的 127.0.0.1)
+# 只有手動指定時才會連接，例如: make run SIDECAR_HOST=192.168.1.100
+SIDECAR_HOST ?=
+SIDECAR_PORT ?= 55001
+
 # Paths
 export SERIOUS_PYTHON_SITE_PACKAGES = $(PROJECT_DIR)/sidecar/build/site-packages
 export FILES_HOME := /data/user/0/tw.kevinzhang.news_hub/files
@@ -11,9 +17,35 @@ export FILES_HOME := /data/user/0/tw.kevinzhang.news_hub/files
 install:
 	flutter pub get
 
+.PHONY: sidecar-info
+sidecar-info:
+	@echo "=========================================="
+	@echo "  Sidecar 網路資訊"
+	@echo "=========================================="
+	@echo "本機 mDNS 名稱: $$(scutil --get LocalHostName 2>/dev/null).local"
+	@echo "本機 IP 位址:"
+	@ifconfig | grep "inet " | grep -v 127.0.0.1 | awk '{print "  - " $$2}'
+	@echo ""
+	@echo "使用方式："
+	@echo "  make run                                    # 使用預設 (127.0.0.1:55001)"
+	@echo "  make run SIDECAR_HOST=<mDNS或IP>           # 連接到指定伺服器"
+	@echo ""
+	@echo "範例："
+	@echo "  make run SIDECAR_HOST=$$(scutil --get LocalHostName 2>/dev/null).local"
+	@echo "  make run SIDECAR_HOST=$$(ifconfig | grep 'inet ' | grep -v 127.0.0.1 | head -1 | awk '{print $$2}')"
+	@echo "=========================================="
+
 .PHONY: run
 run:
+ifdef SIDECAR_HOST
+	@echo "🚀 Starting Flutter with Sidecar: $(SIDECAR_HOST):$(SIDECAR_PORT)"
+	flutter run \
+		--dart-define=SIDECAR_HOST=$(SIDECAR_HOST) \
+		--dart-define=SIDECAR_PORT=$(SIDECAR_PORT)
+else
+	@echo "🚀 Starting Flutter (使用預設 127.0.0.1:55001)"
 	flutter run
+endif
 
 .PHONY: build
 build:

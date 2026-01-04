@@ -19,6 +19,7 @@ Browse between multiple forums.
 - [ ] CI/CD (Github Action) integrate Renovate Bot or Sourcegraph Cody
 
 ## Development Method
+關於如何啟動、開發專案，請見[DEVELOPMENT.md]
 
 1. 使用 python、lxml 撰寫爬蟲 Sidecar：[news_hub_extensions]
 2. 使用 protobuf 定義資料結構：[news_hub_protos]
@@ -38,3 +39,4 @@ make run  # 執行 App 以及 Sidecar
 
 [news_hub_extensions]: https://github.com/twkevinzhang/news_hub_extensions
 [flet-dev/serious-python]: https://github.com/flet-dev/serious-python
+[DEVELOPMENT.md]: ./DEVELOPMENT.md

@@ -38,10 +38,21 @@ abstract class AppProvider {
   Dio get dio => Dio();
 
   @singleton
-  ClientChannel clientChannel(SidecarPreferences sidecarPreferences) {
+  ClientChannel get clientChannel {
+    // 優先順序：
+    // 1. 編譯時環境變數 (--dart-define) - 開發者使用
+    // 2. 預設值 (127.0.0.1:55001)
+    //
+    // 注意：使用者偏好設定需要在 runtime 動態讀取
+    // 如果需要使用 App 內設定，請在使用 ClientChannel 的地方重新建立連線
+    const envHost = String.fromEnvironment('SIDECAR_HOST', defaultValue: '127.0.0.1');
+    const envPort = int.fromEnvironment('SIDECAR_PORT', defaultValue: 55001);
+
+    debugPrint('Sidecar gRPC connecting to: $envHost:$envPort');
+
     return ClientChannel(
-      sidecarPreferences.host.getValue(),
-      port: sidecarPreferences.port.getValue(),
+      envHost,
+      port: envPort,
       options: const ChannelOptions(
         credentials: ChannelCredentials.insecure(),
         connectTimeout: Duration(seconds: 5),
