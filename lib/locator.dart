@@ -38,14 +38,16 @@ abstract class AppProvider {
   Dio get dio => Dio();
 
   @singleton
-  ClientChannel get clientChannel => ClientChannel(
-        '127.0.0.1',
-        port: 55001,
-        options: const ChannelOptions(
-          credentials: ChannelCredentials.insecure(),
-          connectTimeout: Duration(seconds: 5),
-        ),
-      );
+  ClientChannel clientChannel(SidecarPreferences sidecarPreferences) {
+    return ClientChannel(
+      sidecarPreferences.host.getValue(),
+      port: sidecarPreferences.port.getValue(),
+      options: const ChannelOptions(
+        credentials: ChannelCredentials.insecure(),
+        connectTimeout: Duration(seconds: 5),
+      ),
+    );
+  }
 
   @singleton
   SidecarPreferences sidecarPreferences(PreferenceStore store) {

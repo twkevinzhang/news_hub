@@ -31,6 +31,18 @@ class SidecarPreferences {
   /// 預設值：true
   late final Preference<bool> autoScroll;
 
+  /// Sidecar 伺服器主機位址
+  ///
+  /// gRPC 伺服器的 IP 位址或主機名稱。
+  /// 預設值：'127.0.0.1' (本地)
+  late final Preference<String> host;
+
+  /// Sidecar 伺服器埠號
+  ///
+  /// gRPC 伺服器的埠號。
+  /// 預設值：55001
+  late final Preference<int> port;
+
   SidecarPreferences(this._store) {
     logLevel = _store.getString(
       'sidecar.log_level',
@@ -45,6 +57,16 @@ class SidecarPreferences {
     autoScroll = _store.getBoolean(
       'sidecar.auto_scroll',
       defaultValue: true,
+    );
+
+    host = _store.getString(
+      'sidecar.host',
+      defaultValue: '127.0.0.1',
+    );
+
+    port = _store.getInt(
+      'sidecar.port',
+      defaultValue: 55001,
     );
   }
 }
