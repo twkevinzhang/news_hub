@@ -33,9 +33,6 @@
      - 技術實現方案有多種選擇
    - 詢問時應列出可能的理解方向供選擇
 
-5. **溝通語言**
-   - 所有回覆、思考過程、代碼註解統一使用繁體中文
-
 ## 狀態管理規範
 
 6. **BLoC 模式實作細則**
@@ -76,9 +73,7 @@
 
    - **文件註解要求**:
 
-     - 所有公開 API (public classes, methods, properties) 必須有 Dart Doc 註解
-     - 註解應說明功能、參數意義、返回值、可能的異常
-     - 使用 `///` 格式撰寫文件註解,支援 IDE 智能提示
+     - 盡可能不要寫「做了什麼」的註解，用 bob 著作 Clean Code 的方法，用 function 呼叫邏輯以及命名來表達邏輯。
 
    - **錯誤處理**:
      - 使用 `Either`、`Result` 等類型處理可預期的錯誤
@@ -156,11 +151,6 @@
       - 修復所有 error 級別問題
       - 處理重要的 warning 和 info 提示
 
-    - API 文件完整性
-
-      - 所有 public classes、methods、properties 必須有文件註解
-      - 使用 `dartdoc` 生成 API 文件驗證完整性
-
     - CI/CD 檢查
       - 所有提交必須通過自動化測試
       - 通過程式碼風格檢查 (如 `flutter format`)
@@ -199,7 +189,6 @@
 
 - [ ] 執行 `flutter analyze`,確認 0 error 和 0 critical warning
 - [ ] 執行 `flutter test --coverage`,確認測試覆蓋率 > 80%
-- [ ] 所有公開 API 已添加文件註解
 - [ ] 代碼符合 Clean Code 原則 (命名、方法長度、職責分離)
 
 ### 架構規範
