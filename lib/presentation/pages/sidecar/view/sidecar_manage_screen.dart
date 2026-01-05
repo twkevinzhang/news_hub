@@ -2,7 +2,6 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:news_hub/app/sidecar/preferences/sidecar_preferences.dart';
 import 'package:news_hub/locator.dart';
-import 'package:news_hub/presentation/pages/sidecar/bloc/sidecar_logs_cubit.dart';
 
 @RoutePage()
 class SidecarManageScreen extends StatelessWidget {
@@ -76,9 +75,6 @@ class _LogLevelSettingState extends State<_LogLevelSetting> {
                   setState(() {
                     _currentLevel = newLevel;
                   });
-                  if (sl.isRegistered<SidecarLogsCubit>()) {
-                    sl<SidecarLogsCubit>().restartWithNewLevel();
-                  }
                 }
               },
             ),

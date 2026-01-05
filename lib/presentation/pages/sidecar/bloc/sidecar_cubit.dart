@@ -4,43 +4,47 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/domain/sidecar/interactor/watch_health.dart';
+import 'package:news_hub/domain/sidecar/repository/sidecar_repository.dart';
+import 'package:news_hub/domain/sidecar/service/sidecar_connection_manager.dart';
 
 part 'sidecar_cubit.freezed.dart';
-
-enum SidecarStatus {
-  online,
-  offline,
-  starting,
-}
 
 @freezed
 class SidecarState with _$SidecarState {
   const SidecarState._();
 
   const factory SidecarState({
-    required SidecarStatus status,
+    required SidecarConnectionState status,
     String? message,
   }) = _SidecarState;
 
   String get label {
     switch (status) {
-      case SidecarStatus.online:
-        return 'Sidecar: Online';
-      case SidecarStatus.offline:
-        return 'Sidecar: Offline';
-      case SidecarStatus.starting:
-        return 'Sidecar: Starting';
+      case SidecarConnectionState.connected:
+        return 'Sidecar: Connected';
+      case SidecarConnectionState.connecting:
+        return 'Sidecar: Connecting';
+      case SidecarConnectionState.retrying:
+        return 'Sidecar: Retrying';
+      case SidecarConnectionState.uninitialized:
+        return 'Sidecar: Uninitialized';
+      case SidecarConnectionState.failed:
+        return 'Sidecar: Failed';
+      case SidecarConnectionState.closed:
+        return 'Sidecar: Closed';
     }
   }
 
   Color get statusColor {
     switch (status) {
-      case SidecarStatus.online:
+      case SidecarConnectionState.connected:
         return Colors.green;
-      case SidecarStatus.starting:
+      case SidecarConnectionState.connecting:
+      case SidecarConnectionState.retrying:
+      case SidecarConnectionState.uninitialized:
         return Colors.orange;
-      case SidecarStatus.offline:
+      case SidecarConnectionState.failed:
+      case SidecarConnectionState.closed:
         return Colors.red;
     }
   }
@@ -48,46 +52,33 @@ class SidecarState with _$SidecarState {
 
 @injectable
 class SidecarCubit extends Cubit<SidecarState> {
-  final WatchHealthUseCase _watchHealth;
+  final SidecarRepository _repository;
 
-  StreamSubscription<HealthCheckResult>? _healthSubscription;
+  StreamSubscription<SidecarConnectionState>? _healthSubscription;
 
   SidecarCubit(
-    this._watchHealth,
-  ) : super(const SidecarState(status: SidecarStatus.starting));
+    this._repository,
+  ) : super(const SidecarState(status: SidecarConnectionState.uninitialized));
 
   void startHealthWatch() {
     _healthSubscription?.cancel();
-
-    _healthSubscription = _watchHealth().listen(
-      (response) {
-        final status = _mapHealthStatus(response.status);
+    _healthSubscription = _repository.watchHealth().listen(
+      (status) {
         emit(state.copyWith(
           status: status,
-          message: response.message,
+          message: null,
         ));
       },
       onError: (error) {
         emit(state.copyWith(
-          status: SidecarStatus.offline,
+          status: SidecarConnectionState.failed,
           message: 'Connection error: $error',
         ));
       },
     );
   }
 
-  SidecarStatus _mapHealthStatus(ServingStatus status) {
-    switch (status) {
-      case ServingStatus.serving:
-        return SidecarStatus.online;
-      case ServingStatus.notServing:
-        return SidecarStatus.offline;
-      default:
-        return SidecarStatus.starting;
-    }
-  }
-
-  void updateStatus(SidecarStatus status) {
+  void updateStatus(SidecarConnectionState status) {
     emit(state.copyWith(status: status));
   }
 

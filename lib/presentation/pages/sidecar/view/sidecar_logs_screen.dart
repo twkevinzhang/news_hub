@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_hub/app/sidecar/preferences/sidecar_preferences.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/presentation/pages/sidecar/bloc/sidecar_logs_cubit.dart';
@@ -17,24 +16,12 @@ class SidecarLogsScreen extends StatefulWidget {
 class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
   final ScrollController _scrollController = ScrollController();
   late final SidecarLogsCubit _cubit;
-  final _preferences = sl<SidecarPreferences>();
-  bool _autoScroll = true;
 
   @override
   void initState() {
     super.initState();
     _cubit = sl<SidecarLogsCubit>();
     _cubit.startWatching();
-    _loadPreferences();
-  }
-
-  Future<void> _loadPreferences() async {
-    final autoScroll = await _preferences.autoScroll.get();
-    if (mounted) {
-      setState(() {
-        _autoScroll = autoScroll;
-      });
-    }
   }
 
   Color _getLevelColor(LogLevel? level) {
@@ -83,7 +70,7 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
             );
           }
 
-          if (_autoScroll && _scrollController.hasClients && state.logs.isNotEmpty) {
+          if (state.autoScroll && _scrollController.hasClients && state.logs.isNotEmpty) {
             WidgetsBinding.instance.addPostFrameCallback((_) {
               if (_scrollController.hasClients) {
                 _scrollController.animateTo(
@@ -132,13 +119,10 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
               body: Column(
                 children: [
                   _StatusBar(
-                    autoScroll: _autoScroll,
+                    autoScroll: state.autoScroll,
                     logCount: state.filteredLogs.length,
-                    onAutoScrollChanged: (value) async {
-                      await _preferences.autoScroll.set(value);
-                      setState(() {
-                        _autoScroll = value;
-                      });
+                    onAutoScrollChanged: (value) {
+                      _cubit.toggleAutoScroll(value);
                     },
                   ),
                   Expanded(
@@ -194,15 +178,15 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
                   const SizedBox(height: 16),
                   FloatingActionButton(
                     heroTag: 'retry_connection',
-                    onPressed: state.isConnected ? null : () => _cubit.retryConnection(),
-                    tooltip: state.isConnected ? '連線正常' : '重試連線',
+                    onPressed: state.isReconnectable ? () => _cubit.retryConnection() : null,
+                    tooltip: state.isReconnectable ? '重試連線' : (state.isConnected ? '連線正常' : '連線中...'),
                     backgroundColor: state.isConnected
                         ? Theme.of(context).colorScheme.surfaceContainerHighest
-                        : Theme.of(context).colorScheme.errorContainer,
+                        : (state.isReconnectable ? Theme.of(context).colorScheme.errorContainer : Theme.of(context).colorScheme.surfaceContainerHighest),
                     foregroundColor: state.isConnected
                         ? Theme.of(context).disabledColor
-                        : Theme.of(context).colorScheme.onErrorContainer,
-                    child: Icon(state.isConnected ? Icons.check : Icons.refresh),
+                        : (state.isReconnectable ? Theme.of(context).colorScheme.onErrorContainer : Theme.of(context).disabledColor),
+                    child: const Icon(Icons.refresh),
                   ),
                 ],
               ),

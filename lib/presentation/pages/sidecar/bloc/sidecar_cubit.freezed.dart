@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$SidecarState {
-  SidecarStatus get status => throw _privateConstructorUsedError;
+  SidecarConnectionState get status => throw _privateConstructorUsedError;
   String? get message => throw _privateConstructorUsedError;
 
   /// Create a copy of SidecarState
@@ -32,7 +32,7 @@ abstract class $SidecarStateCopyWith<$Res> {
           SidecarState value, $Res Function(SidecarState) then) =
       _$SidecarStateCopyWithImpl<$Res, SidecarState>;
   @useResult
-  $Res call({SidecarStatus status, String? message});
+  $Res call({SidecarConnectionState status, String? message});
 }
 
 /// @nodoc
@@ -57,7 +57,7 @@ class _$SidecarStateCopyWithImpl<$Res, $Val extends SidecarState>
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as SidecarStatus,
+              as SidecarConnectionState,
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -74,7 +74,7 @@ abstract class _$$SidecarStateImplCopyWith<$Res>
       __$$SidecarStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({SidecarStatus status, String? message});
+  $Res call({SidecarConnectionState status, String? message});
 }
 
 /// @nodoc
@@ -97,7 +97,7 @@ class __$$SidecarStateImplCopyWithImpl<$Res>
       status: null == status
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
-              as SidecarStatus,
+              as SidecarConnectionState,
       message: freezed == message
           ? _value.message
           : message // ignore: cast_nullable_to_non_nullable
@@ -112,7 +112,7 @@ class _$SidecarStateImpl extends _SidecarState {
   const _$SidecarStateImpl({required this.status, this.message}) : super._();
 
   @override
-  final SidecarStatus status;
+  final SidecarConnectionState status;
   @override
   final String? message;
 
@@ -144,12 +144,12 @@ class _$SidecarStateImpl extends _SidecarState {
 
 abstract class _SidecarState extends SidecarState {
   const factory _SidecarState(
-      {required final SidecarStatus status,
+      {required final SidecarConnectionState status,
       final String? message}) = _$SidecarStateImpl;
   const _SidecarState._() : super._();
 
   @override
-  SidecarStatus get status;
+  SidecarConnectionState get status;
   @override
   String? get message;
 

@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/app/service/grpc/grpc_connection_manager.dart';
-import 'package:news_hub/app/sidecar/preferences/sidecar_preferences.dart';
 import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/domain/sidecar/repository/sidecar_repository.dart';
+import 'package:news_hub/domain/sidecar/service/sidecar_connection_manager.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/router/router.dart';
 import 'package:path_provider/path_provider.dart';
@@ -24,7 +24,8 @@ class SidecarLogsState with _$SidecarLogsState {
     @Default('') String searchQuery,
     @Default(false) bool isSearching,
     @Default(false) bool exportSuccess,
-    @Default(GrpcConnectionState.uninitialized) GrpcConnectionState connectionState,
+    @Default(SidecarConnectionState.uninitialized) SidecarConnectionState connectionStatus,
+    @Default(true) bool autoScroll,
     String? exportPath,
     String? error,
   }) = _SidecarLogsState;
@@ -33,59 +34,55 @@ class SidecarLogsState with _$SidecarLogsState {
     if (searchQuery.isEmpty) return logs;
 
     final lowerQuery = searchQuery.toLowerCase();
-    return logs.where((log) =>
-      log.message.toLowerCase().contains(lowerQuery) ||
-      log.loggerName.toLowerCase().contains(lowerQuery)
-    ).toList();
+    return logs.where((log) => log.message.toLowerCase().contains(lowerQuery) || log.loggerName.toLowerCase().contains(lowerQuery)).toList();
   }
 
-  bool get isConnected => connectionState == GrpcConnectionState.connected;
+  bool get isConnected => connectionStatus == SidecarConnectionState.connected;
+  bool get isReconnectable => connectionStatus == SidecarConnectionState.failed || connectionStatus == SidecarConnectionState.closed;
 }
 
 @injectable
 class SidecarLogsCubit extends Cubit<SidecarLogsState> {
-  final GrpcConnectionManager _connectionManager;
-  final SidecarPreferences _preferences;
+  final SidecarRepository _repository;
+  final SidecarConnectionManager _connectionManager;
 
   StreamSubscription<LogEntry>? _logsSubscription;
-  StreamSubscription<GrpcConnectionState>? _stateSubscription;
+  StreamSubscription<SidecarConnectionState>? _healthSubscription;
   int _maxEntries = 1000;
 
   SidecarLogsCubit(
+    this._repository,
     this._connectionManager,
-    this._preferences,
   ) : super(const SidecarLogsState());
 
   Future<void> startWatching() async {
-    _maxEntries = await _preferences.maxLogEntries.get();
+    final settings = await _repository.getSettings();
+    _maxEntries = settings.maxLogEntries;
 
-    print('[SidecarLogsCubit] Starting to watch logs from manager, maxEntries: $_maxEntries');
-
-    emit(state.copyWith(connectionState: _connectionManager.state));
+    emit(state.copyWith(autoScroll: settings.autoScroll));
 
     await _logsSubscription?.cancel();
-    await _stateSubscription?.cancel();
+    await _healthSubscription?.cancel();
 
-    _logsSubscription = _connectionManager.logsStream.listen(
+    print('[SidecarLogsCubit] Subscribing to watchLogs with minLevel: ${settings.logLevel.name}');
+    _logsSubscription = _repository.watchLogs(minLevel: settings.logLevel).listen(
       (logEntry) {
-        print('[SidecarLogsCubit] Received log entry from manager: ${logEntry.level} - ${logEntry.message}');
+        print('[SidecarLogsCubit] Received log: ${logEntry.level.name} - ${logEntry.message}');
         final updatedLogs = _addLogWithLimit(logEntry);
         emit(state.copyWith(logs: updatedLogs));
       },
       onError: (error) {
-        print('[SidecarLogsCubit] Error receiving logs: $error');
+        print('[SidecarLogsCubit] Error: $error');
         emit(state.copyWith(error: 'Failed to fetch logs: $error'));
       },
     );
+    print('[SidecarLogsCubit] Subscription created, current logs count: ${state.logs.length}');
 
-    _stateSubscription = _connectionManager.stateStream.listen(
-      (connectionState) {
-        print('[SidecarLogsCubit] Connection state changed: $connectionState');
-        emit(state.copyWith(connectionState: connectionState));
+    _healthSubscription = _repository.watchHealth().listen(
+      (status) {
+        emit(state.copyWith(connectionStatus: status));
       },
     );
-
-    print('[SidecarLogsCubit] Log subscription created');
   }
 
   List<LogEntry> _addLogWithLimit(LogEntry newLog) {
@@ -98,26 +95,22 @@ class SidecarLogsCubit extends Cubit<SidecarLogsState> {
 
   Future<void> stopWatching() async {
     await _logsSubscription?.cancel();
-    await _stateSubscription?.cancel();
+    await _healthSubscription?.cancel();
     _logsSubscription = null;
-    _stateSubscription = null;
-  }
-
-  Future<void> restartWithNewLevel() async {
-    final logLevelStr = await _preferences.logLevel.get();
-    final newLevel = _parseLogLevel(logLevelStr);
-
-    print('[SidecarLogsCubit] Updating log level to: $newLevel');
-    _connectionManager.updateLogLevel(newLevel);
+    _healthSubscription = null;
   }
 
   Future<void> retryConnection() async {
-    print('[SidecarLogsCubit] Retrying connection');
     await _connectionManager.reconnect();
   }
 
   void clearLogs() {
     emit(state.copyWith(logs: []));
+  }
+
+  void toggleAutoScroll(bool value) {
+    emit(state.copyWith(autoScroll: value));
+    // TODO: Should probably save this via a UseCase if we want it to persist
   }
 
   void setSearchQuery(String query) {
@@ -166,13 +159,15 @@ class SidecarLogsCubit extends Cubit<SidecarLogsState> {
   }
 
   String _convertLogsToJson() {
-    final logsJson = state.logs.map((log) => {
-      'timestamp': log.timestamp.toIso8601String(),
-      'level': log.level.name,
-      'logger': log.loggerName,
-      'message': log.message,
-      'exception': log.exception,
-    }).toList();
+    final logsJson = state.logs
+        .map((log) => {
+              'timestamp': log.timestamp.toIso8601String(),
+              'level': log.level.name,
+              'logger': log.loggerName,
+              'message': log.message,
+              'exception': log.exception,
+            })
+        .toList();
 
     return const JsonEncoder.withIndent('  ').convert(logsJson);
   }
@@ -192,18 +187,10 @@ class SidecarLogsCubit extends Cubit<SidecarLogsState> {
     emit(state.copyWith(exportSuccess: false));
   }
 
-  LogLevel _parseLogLevel(String levelStr) {
-    try {
-      return LogLevel.values.byName(levelStr.toLowerCase());
-    } catch (e) {
-      return LogLevel.info;
-    }
-  }
-
   @override
   Future<void> close() {
     _logsSubscription?.cancel();
-    _stateSubscription?.cancel();
+    _healthSubscription?.cancel();
     return super.close();
   }
 }
