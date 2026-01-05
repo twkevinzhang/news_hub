@@ -12,25 +12,26 @@
 import 'package:auto_route/auto_route.dart' as _i12;
 import 'package:flutter/material.dart' as _i13;
 import 'package:news_hub/domain/models/models.dart' as _i14;
-import 'package:news_hub/presentation/pages/collection/create/view/create_collection_page.dart'
-    as _i2;
-import 'package:news_hub/presentation/pages/collection/list/view/collection_list_screen.dart'
-    as _i1;
-import 'package:news_hub/presentation/pages/extension/view/extension_manage_screen.dart'
-    as _i3;
-import 'package:news_hub/presentation/pages/home/home_screen.dart' as _i4;
-import 'package:news_hub/presentation/pages/search/view/search_screen.dart'
-    as _i5;
-import 'package:news_hub/presentation/pages/settings/view/settings_screen.dart'
+import 'package:news_hub/presentation/pages/app-shell/home/home_screen.dart'
+    as _i4;
+import 'package:news_hub/presentation/pages/app-shell/settings/view/settings_screen.dart'
     as _i6;
-import 'package:news_hub/presentation/pages/sidecar/view/sidecar_logs_screen.dart'
-    as _i7;
-import 'package:news_hub/presentation/pages/sidecar/view/sidecar_manage_screen.dart'
-    as _i8;
-import 'package:news_hub/presentation/pages/thread/detail/view/thread_detail_screen.dart'
-    as _i9;
-import 'package:news_hub/presentation/pages/thread/list/view/thread_list_screen.dart'
+import 'package:news_hub/presentation/pages/content-discovery/browse-threads/view/thread_list_screen.dart'
     as _i10;
+import 'package:news_hub/presentation/pages/content-discovery/read-thread/view/thread_detail_screen.dart'
+    as _i9;
+import 'package:news_hub/presentation/pages/content-discovery/search-threads/view/search_screen.dart'
+    as _i5;
+import 'package:news_hub/presentation/pages/content-organization/create-collection/view/create_collection_page.dart'
+    as _i2;
+import 'package:news_hub/presentation/pages/content-organization/manage-collections/view/collection_list_screen.dart'
+    as _i1;
+import 'package:news_hub/presentation/pages/extension-marketplace/manage-extensions/view/extension_manage_screen.dart'
+    as _i3;
+import 'package:news_hub/presentation/pages/system-operations/configure-sidecar/sidecar_manage_screen.dart'
+    as _i8;
+import 'package:news_hub/presentation/pages/system-operations/monitor-sidecar/sidecar_logs_screen.dart'
+    as _i7;
 import 'package:news_hub/presentation/router/wrapper_screen.dart' as _i11;
 
 /// generated route for
