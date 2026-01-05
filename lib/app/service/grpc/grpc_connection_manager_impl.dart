@@ -58,7 +58,6 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
 
     // Listen for limit changes
     _logLimitSubscription = _sidecarPreferences.maxLogEntries.changes().listen((newLimit) {
-      debugPrint('[GrpcConnectionManager] [Logs] Max log entries changed to $newLimit');
       _resizeLogBuffer(newLimit);
     });
 
@@ -83,10 +82,6 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
     }
 
     _logsSubjectWrapper.add(newSubject);
-    // We don't necessarily need to close the old subject immediately as switchMap handles unsubscription,
-    // but cleaning up is good practice after a small delay to ensure switchMap has switched?
-    // Actually switchMap disposes subscription to inner stream synchronously when switching.
-    // So we can close existing subject.
     oldSubject.close();
   }
 
@@ -110,14 +105,7 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
 
   void _startHealthCheckSubscription() {
     _stateSubscription?.cancel();
-    _stateSubscription = stateStream.startWith(state).where((s) => s == SidecarConnectionState.connected).switchMap((_) {
-      debugPrint('[GrpcConnectionManager] [Health] Starting watchHealth stream');
-      return _apiService.watchHealth().handleError((error) {
-        // Log the error but let it propagate to onError for state management
-        debugPrint('[GrpcConnectionManager] [Health] Stream error: $error');
-        throw error; // Re-throw to trigger onError
-      });
-    }).listen(
+    _stateSubscription = stateStream.startWith(state).where((s) => s == SidecarConnectionState.connected).switchMap((_) => _apiService.watchHealth()).listen(
       (healthCheckResult) {
         if (healthCheckResult.status == ServingStatus.serving) {
           _updateState(SidecarConnectionState.connected);
@@ -126,7 +114,7 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
         }
       },
       onError: (e) {
-        debugPrint('[GrpcConnectionManager] [Health] [FATAL] Health check failed: $e');
+        debugPrint('[GrpcConnectionManager] [Health] [ERROR] Health check failed: $e');
         // Only update state to failed if we're currently connected
         // This prevents rapid state changes during reconnection attempts
         if (_stateSnapshot == SidecarConnectionState.connected) {
@@ -138,30 +126,20 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
 
   Future<void> _startWatchingLogsSubscription() async {
     await _logsSubscription?.cancel();
-
-    debugPrint('[GrpcConnectionManager] [Logs] Starting logs subscription');
     // Use a nested switchMap:
     // Outer: listens to connection state.
     // Inner: listens to log level changes ONLY when connected.
     _logsSubscription = stateStream.startWith(state).distinct().switchMap((s) {
-      debugPrint('[GrpcConnectionManager] [Logs] State changed to: $s');
       if (s != SidecarConnectionState.connected) {
-        debugPrint('[GrpcConnectionManager] [Logs] Not connected, idling stream');
         return const Stream<LogEntry>.empty();
       }
 
-      debugPrint('[GrpcConnectionManager] [Logs] Connected! Starting preference observer');
       return Rx.concat([
         Stream.fromFuture(_sidecarPreferences.logLevel.get()),
         _sidecarPreferences.logLevel.changes(),
       ]).distinct().switchMap((level) {
-        debugPrint('[GrpcConnectionManager] [Logs] [TRIGGER] Calling gRPC watchLogs (Level: $level)');
         return _apiService.watchLogs(minLevel: level.toLogLevel()).handleError((error) {
-          debugPrint('[GrpcConnectionManager] [Logs] [ERROR] gRPC stream error: $error');
-          // If log stream fails, connection is likely dead.
-          // Trigger failure state to update UI immediately
           if (_stateSnapshot == SidecarConnectionState.connected) {
-            debugPrint('[GrpcConnectionManager] [Logs] Connection broken, updating state to failed');
             _updateState(SidecarConnectionState.failed);
           }
           throw error;
@@ -169,18 +147,14 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
       });
     }).listen(
       (logEntry) {
-        // debugPrint('[GrpcConnectionManager] [Logs] Received log: ${logEntry.level.name} - ${logEntry.message}');
         _updateLogEntry(logEntry);
       },
       onError: (error) {
-        debugPrint('[GrpcConnectionManager] [Logs] [FATAL] Subscription error: $error');
-        // REDUNDANT but safe: ensure state is failed
         if (_stateSnapshot == SidecarConnectionState.connected) {
           _updateState(SidecarConnectionState.failed);
         }
       },
     );
-    debugPrint('[GrpcConnectionManager] [Logs] Subscription setup complete');
   }
 
   void _updateState(SidecarConnectionState newState) {

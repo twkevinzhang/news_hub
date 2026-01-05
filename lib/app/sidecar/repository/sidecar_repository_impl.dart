@@ -31,11 +31,7 @@ class SidecarRepositoryImpl implements SidecarRepository {
 
   @override
   Stream<LogEntry> watchLogs({required LogLevel minLevel}) {
-    debugPrint('[SidecarRepositoryImpl] watchLogs called with minLevel: ${minLevel.name}');
-    return _connectionManager.logsStream
-        .doOnListen(() => debugPrint('[SidecarRepositoryImpl] logsStream subscribed'))
-        .doOnData((entry) => debugPrint('[SidecarRepositoryImpl] Forwarding log: ${entry.level.name}'))
-        .where((entry) => entry.level.index >= minLevel.index);
+    return _connectionManager.logsStream.where((entry) => entry.level.index >= minLevel.index);
   }
 
   @override
