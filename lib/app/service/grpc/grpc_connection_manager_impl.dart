@@ -29,10 +29,13 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
   Stream<SidecarConnectionState> get stateStream => _stateController.stream;
 
   StreamSubscription<LogEntry>? _logsSubscription;
-  final _logsController = ReplaySubject<LogEntry>(maxSize: 1000);
+  StreamSubscription<int>? _logLimitSubscription;
+
+  // Wrapper to hold the current ReplaySubject, allowing us to switch it when maxSize changes
+  final _logsSubjectWrapper = BehaviorSubject<ReplaySubject<LogEntry>>();
 
   @override
-  Stream<LogEntry> get logsStream => _logsController.stream;
+  Stream<LogEntry> get logsStream => _logsSubjectWrapper.switchMap((subject) => subject.stream);
 
   String _host = '127.0.0.1';
   int _port = 55001;
@@ -49,12 +52,42 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
     _host = host;
     _port = port;
 
+    // Initialize logs subject with current preference
+    final initialLimit = await _sidecarPreferences.maxLogEntries.get();
+    _logsSubjectWrapper.add(ReplaySubject<LogEntry>(maxSize: initialLimit));
+
+    // Listen for limit changes
+    _logLimitSubscription = _sidecarPreferences.maxLogEntries.changes().listen((newLimit) {
+      debugPrint('[GrpcConnectionManager] [Logs] Max log entries changed to $newLimit');
+      _resizeLogBuffer(newLimit);
+    });
+
     await waitUntilConnected();
     _startHealthCheckSubscription();
     _startWatchingLogsSubscription();
+  }
 
-    // Ensure we start emitting only when we have subscribers or just rely on buffer?
-    // ReplaySubject buffers automatically.
+  void _resizeLogBuffer(int newLimit) {
+    final oldSubject = _logsSubjectWrapper.valueOrNull;
+    if (oldSubject == null) return;
+
+    final newSubject = ReplaySubject<LogEntry>(maxSize: newLimit);
+
+    // Migrate existing logs
+    // We only take the last 'newLimit' logs to respect the new size immediately
+    final existingLogs = oldSubject.values;
+    final logsToKeep = existingLogs.length > newLimit ? existingLogs.sublist(existingLogs.length - newLimit) : existingLogs;
+
+    for (var log in logsToKeep) {
+      newSubject.add(log);
+    }
+
+    _logsSubjectWrapper.add(newSubject);
+    // We don't necessarily need to close the old subject immediately as switchMap handles unsubscription,
+    // but cleaning up is good practice after a small delay to ensure switchMap has switched?
+    // Actually switchMap disposes subscription to inner stream synchronously when switching.
+    // So we can close existing subject.
+    oldSubject.close();
   }
 
   Future<void> _connect() async {
@@ -136,7 +169,7 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
       });
     }).listen(
       (logEntry) {
-        debugPrint('[GrpcConnectionManager] [Logs] Received log: ${logEntry.level.name} - ${logEntry.message}');
+        // debugPrint('[GrpcConnectionManager] [Logs] Received log: ${logEntry.level.name} - ${logEntry.message}');
         _updateLogEntry(logEntry);
       },
       onError: (error) {
@@ -158,7 +191,25 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
   }
 
   void _updateLogEntry(LogEntry logEntry) {
-    _logsController.add(logEntry);
+    // Add to current subject
+    _logsSubjectWrapper.valueOrNull?.add(logEntry);
+  }
+
+  @override
+  Future<void> dispose() async {
+    _reconnectTimer?.cancel();
+    await _logsSubscription?.cancel();
+    await _logLimitSubscription?.cancel();
+    await _stateSubscription?.cancel();
+
+    await _closeChannel();
+
+    _updateState(SidecarConnectionState.closed);
+    await _stateController.close();
+
+    // Close current subject and wrapper
+    await _logsSubjectWrapper.valueOrNull?.close();
+    await _logsSubjectWrapper.close();
   }
 
   @override
@@ -173,19 +224,6 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
     }
     await _channel!.shutdown();
     _channel = null;
-  }
-
-  @override
-  Future<void> dispose() async {
-    _reconnectTimer?.cancel();
-    await _logsSubscription?.cancel();
-    await _stateSubscription?.cancel();
-
-    await _closeChannel();
-
-    _updateState(SidecarConnectionState.closed);
-    await _stateController.close();
-    await _logsController.close();
   }
 
   ClientChannel getChannel() {
