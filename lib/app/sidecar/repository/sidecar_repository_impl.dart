@@ -1,91 +1,69 @@
 import 'dart:async';
+import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/app/service/grpc/grpc_connection_manager.dart';
-import 'package:news_hub/domain/api_service.dart';
+import 'package:news_hub/app/sidecar/preferences/sidecar_preferences.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/sidecar/repository/sidecar_repository.dart';
+import 'package:news_hub/domain/sidecar/service/sidecar_connection_manager.dart';
+import 'package:rxdart/rxdart.dart';
 
 @LazySingleton(as: SidecarRepository)
 class SidecarRepositoryImpl implements SidecarRepository {
-  final ApiService _apiService;
-  final GrpcConnectionManager _connectionManager;
+  final SidecarConnectionManager _connectionManager;
+  final SidecarPreferences _preferences;
 
   SidecarRepositoryImpl(
-    this._apiService,
     this._connectionManager,
+    this._preferences,
   );
 
   @override
-  Stream<HealthCheckResult> watchHealth() async* {
-    await _ensureConnected();
-    yield* _apiService.watchHealth();
+  Stream<SidecarConnectionState> watchHealth() {
+    return _connectionManager.stateStream.startWith(_connectionManager.state).distinct();
   }
 
   @override
-  Future<HealthCheckResult> getHealthStatus() async {
+  Future<SidecarConnectionState> getHealthStatus() async {
     await _ensureConnected();
-    return _apiService.healthCheck();
+    final state = _connectionManager.state;
+    return state;
   }
 
   @override
-  Stream<LogEntry> watchLogs({required LogLevel minLevel}) async* {
-    await _ensureConnected();
-    yield* _apiService.watchLogs(minLevel: minLevel);
+  Stream<LogEntry> watchLogs({required LogLevel minLevel}) {
+    debugPrint('[SidecarRepositoryImpl] watchLogs called with minLevel: ${minLevel.name}');
+    return _connectionManager.logsStream
+        .doOnListen(() => debugPrint('[SidecarRepositoryImpl] logsStream subscribed'))
+        .doOnData((entry) => debugPrint('[SidecarRepositoryImpl] Forwarding log: ${entry.level.name}'))
+        .where((entry) => entry.level.index >= minLevel.index);
+  }
+
+  @override
+  Future<SidecarSettings> getSettings() async {
+    return SidecarSettings(
+      logLevel: (await _preferences.logLevel.get()).toLogLevel(),
+      maxLogEntries: await _preferences.maxLogEntries.get(),
+      autoScroll: await _preferences.autoScroll.get(),
+    );
+  }
+
+  @override
+  Stream<SidecarSettings> watchSettings() {
+    return CombineLatestStream.combine3(
+      _preferences.logLevel.changes(),
+      _preferences.maxLogEntries.changes(),
+      _preferences.autoScroll.changes(),
+      (String logLevel, int maxLogEntries, bool autoScroll) {
+        return SidecarSettings(
+          logLevel: logLevel.toLogLevel(),
+          maxLogEntries: maxLogEntries,
+          autoScroll: autoScroll,
+        );
+      },
+    );
   }
 
   Future<void> _ensureConnected() async {
-    final state = _connectionManager.state;
-
-    if (state == GrpcConnectionState.connected) {
-      return;
-    }
-
-    if (state == GrpcConnectionState.connecting) {
-      await _waitForConnection();
-      return;
-    }
-
-    await _connectionManager.getChannelSafe();
-  }
-
-  Future<void> _waitForConnection() async {
-    final completer = Completer<void>();
-
-    final subscription = _connectionManager.stateStream.listen((state) {
-      if (_shouldCompleteSuccessfully(state)) {
-        _completeIfNeeded(completer);
-      } else if (_shouldCompleteFailed(state)) {
-        _completeErrorIfNeeded(completer, 'gRPC connection failed or closed while waiting');
-      }
-    });
-
-    try {
-      await completer.future.timeout(
-        const Duration(seconds: 10),
-        onTimeout: () => throw TimeoutException('Timeout waiting for gRPC connection'),
-      );
-    } finally {
-      await subscription.cancel();
-    }
-  }
-
-  bool _shouldCompleteSuccessfully(GrpcConnectionState state) {
-    return state == GrpcConnectionState.connected;
-  }
-
-  bool _shouldCompleteFailed(GrpcConnectionState state) {
-    return state == GrpcConnectionState.failed || state == GrpcConnectionState.closed;
-  }
-
-  void _completeIfNeeded(Completer<void> completer) {
-    if (!completer.isCompleted) {
-      completer.complete();
-    }
-  }
-
-  void _completeErrorIfNeeded(Completer<void> completer, String message) {
-    if (!completer.isCompleted) {
-      completer.completeError(StateError(message));
-    }
+    await _connectionManager.waitUntilConnected();
   }
 }

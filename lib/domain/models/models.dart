@@ -29,6 +29,16 @@ enum LogLevel {
   critical,
 }
 
+extension LogLevelEx on String {
+  LogLevel toLogLevel() {
+    try {
+      return LogLevel.values.byName(toLowerCase());
+    } catch (e) {
+      return LogLevel.info;
+    }
+  }
+}
+
 class LogEntry {
   final DateTime timestamp;
   final LogLevel level;
