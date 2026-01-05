@@ -2,6 +2,8 @@
 import logging
 from concurrent import futures
 import grpc
+import threading
+import time
 
 def main():
     """Start the gRPC server"""
@@ -36,6 +38,23 @@ def main():
         server.start()
 
         logger.info(f"gRPC server running on port {Config.GRPC_PORT}...")
+        
+        # ==========
+        # Start test log generator thread
+        def generate_test_logs():
+            """Generate a test log every second for debugging"""
+            counter = 0
+            test_logger = logging.getLogger("sidecar.test")
+            while True:
+                counter += 1
+                test_logger.info(f"Test log message #{counter} - Verifying log streaming pipeline")
+                time.sleep(1)
+        
+        log_thread = threading.Thread(target=generate_test_logs, daemon=True)
+        log_thread.start()
+        logger.info("Test log generator started (1 log/second)")
+        # ==========
+        
         server.wait_for_termination()
 
     except Exception as e:

@@ -280,19 +280,30 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
 
     def WatchHealth(self, request, context):
         """Stream health status changes"""
-        try:
-            # Send initial status
-            yield self.health_check_service.check(request.service)
-            
-            # Keep connection alive and send periodic updates
-            while context.is_active():
-                time.sleep(5)  # Check every 5 seconds
-                yield self.health_check_service.check(request.service)
-        except Exception as e:
-            logger.error(f"WatchHealth error: {e}", exc_info=True)
+        last_status = None
+        while context.is_active():
+            try:
+                status = self.health_check_service.get_status()
+                message = self.health_check_service.get_message()
+                
+                # Correct message type based on proto definition
+                current_result = pb2.HealthCheckRes(
+                    status=status.value,
+                    message=message,
+                    service=request.service
+                )
+
+                if last_status != status:
+                    last_status = status
+                    yield current_result
+                
+                time.sleep(1)
+            except Exception as e:
+                logger.error(f"WatchHealth error: {e}", exc_info=True)
+                break
 
     # Logs Methods
-    def StreamLogs(self, request, context):
+    def WatchLogs(self, request, context):
         """Stream logs in real-time"""
         log_queue = None
         try:
@@ -315,7 +326,7 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
                     # Timeout or queue empty, continue
                     continue
         except Exception as e:
-            logger.error(f"StreamLogs error: {e}", exc_info=True)
+            logger.error(f"WatchLogs error: {e}", exc_info=True)
         finally:
             if log_queue:
                 self.logging_service.unsubscribe_stream(log_queue)
