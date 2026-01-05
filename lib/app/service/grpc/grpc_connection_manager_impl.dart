@@ -122,6 +122,13 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
         debugPrint('[GrpcConnectionManager] [Logs] [TRIGGER] Calling gRPC watchLogs (Level: $level)');
         return _apiService.watchLogs(minLevel: level.toLogLevel()).handleError((error) {
           debugPrint('[GrpcConnectionManager] [Logs] [ERROR] gRPC stream error: $error');
+          // If log stream fails, connection is likely dead.
+          // Trigger failure state to update UI immediately
+          if (_stateSnapshot == SidecarConnectionState.connected) {
+            debugPrint('[GrpcConnectionManager] [Logs] Connection broken, updating state to failed');
+            _updateState(SidecarConnectionState.failed);
+          }
+          throw error;
         });
       });
     }).listen(
@@ -129,7 +136,13 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
         debugPrint('[GrpcConnectionManager] [Logs] Received log: ${logEntry.level.name} - ${logEntry.message}');
         _updateLogEntry(logEntry);
       },
-      onError: (error) => debugPrint('[GrpcConnectionManager] [Logs] [FATAL] Subscription error: $error'),
+      onError: (error) {
+        debugPrint('[GrpcConnectionManager] [Logs] [FATAL] Subscription error: $error');
+        // REDUNDANT but safe: ensure state is failed
+        if (_stateSnapshot == SidecarConnectionState.connected) {
+          _updateState(SidecarConnectionState.failed);
+        }
+      },
     );
     debugPrint('[GrpcConnectionManager] [Logs] Subscription setup complete');
   }
