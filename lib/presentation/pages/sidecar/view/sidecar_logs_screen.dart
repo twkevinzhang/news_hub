@@ -1,5 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/domain/models/models.dart';
@@ -69,18 +70,6 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
               ),
             );
           }
-
-          if (state.autoScroll && _scrollController.hasClients && state.logs.isNotEmpty) {
-            WidgetsBinding.instance.addPostFrameCallback((_) {
-              if (_scrollController.hasClients) {
-                _scrollController.animateTo(
-                  _scrollController.position.maxScrollExtent,
-                  duration: const Duration(milliseconds: 200),
-                  curve: Curves.easeOut,
-                );
-              }
-            });
-          }
         },
         child: BlocBuilder<SidecarLogsCubit, SidecarLogsState>(
           builder: (context, state) {
@@ -144,13 +133,12 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
                               ],
                             ),
                           )
-                        : ListView.separated(
+                        : AutoScrollListView<LogEntry>(
                             controller: _scrollController,
-                            padding: const EdgeInsets.all(8),
-                            itemCount: state.filteredLogs.length,
-                            separatorBuilder: (context, index) => const Divider(height: 1),
-                            itemBuilder: (context, index) {
-                              final log = state.filteredLogs[index];
+                            items: state.filteredLogs,
+                            autoScroll: state.autoScroll,
+                            onAutoScrollChanged: (enabled) => _cubit.toggleAutoScroll(enabled),
+                            itemBuilder: (context, log) {
                               final time = log.timestamp;
                               final timeStr =
                                   '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}:${time.second.toString().padLeft(2, '0')}';
@@ -416,6 +404,119 @@ class _StatusBar extends StatelessWidget {
             onChanged: onAutoScrollChanged,
           ),
         ],
+      ),
+    );
+  }
+}
+
+class AutoScrollListView<T> extends StatefulWidget {
+  final List<T> items;
+  final Widget Function(BuildContext, T) itemBuilder;
+  final ScrollController controller;
+  final bool autoScroll;
+  final ValueChanged<bool> onAutoScrollChanged;
+
+  const AutoScrollListView({
+    super.key,
+    required this.items,
+    required this.itemBuilder,
+    required this.controller,
+    required this.autoScroll,
+    required this.onAutoScrollChanged,
+  });
+
+  @override
+  State<AutoScrollListView<T>> createState() => _AutoScrollListViewState<T>();
+}
+
+class _AutoScrollListViewState<T> extends State<AutoScrollListView<T>> {
+  bool _isUserInteracting = false;
+  static const double _bottomThreshold = 50.0;
+
+  // Track previous item count to detect additions
+  late int _previousItemCount;
+
+  @override
+  void initState() {
+    super.initState();
+    _previousItemCount = widget.items.length;
+  }
+
+  @override
+  void didUpdateWidget(AutoScrollListView<T> oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    // Check if new items were added
+    if (widget.items.length > _previousItemCount) {
+      // Trigger scroll if autoScroll is enabled AND user is NOT interacting
+      if (widget.autoScroll && !_isUserInteracting) {
+        _scrollToBottom();
+      }
+    }
+    _previousItemCount = widget.items.length;
+
+    // Also handle case where autoScroll was just enabled manually
+    if (widget.autoScroll && !oldWidget.autoScroll && !_isUserInteracting) {
+      _scrollToBottom();
+    }
+  }
+
+  void _scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.controller.hasClients) {
+        widget.controller.animateTo(
+          widget.controller.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeOut,
+        );
+      }
+    });
+  }
+
+  bool _isNearBottom(ScrollMetrics metrics) {
+    // Check if we are close to the bottom
+    return metrics.extentAfter < _bottomThreshold;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Listener(
+      onPointerDown: (_) => _isUserInteracting = true,
+      onPointerUp: (_) {
+        _isUserInteracting = false;
+        // If user let go and we are at the bottom, re-enable auto scroll
+        // BUT ONLY if we are truly at/near the bottom.
+        if (widget.controller.hasClients && !widget.autoScroll && _isNearBottom(widget.controller.position)) {
+          widget.onAutoScrollChanged(true);
+        }
+      },
+      onPointerCancel: (_) => _isUserInteracting = false,
+      child: NotificationListener<ScrollNotification>(
+        onNotification: (notification) {
+          if (notification is ScrollUpdateNotification) {
+            // User dragging content down (finger moves down, content moves down to show top) -> Offset decreases -> Delta < 0
+            if (_isUserInteracting && notification.scrollDelta != null && notification.scrollDelta! < 0 && !_isNearBottom(notification.metrics)) {
+              if (widget.autoScroll) {
+                widget.onAutoScrollChanged(false);
+              }
+            }
+          }
+
+          // Double check on end of scroll
+          if (notification is ScrollEndNotification) {
+            if (_isNearBottom(notification.metrics)) {
+              if (!widget.autoScroll) widget.onAutoScrollChanged(true);
+            }
+          }
+          return false;
+        },
+        child: ListView.separated(
+          controller: widget.controller,
+          padding: const EdgeInsets.all(8),
+          itemCount: widget.items.length,
+          separatorBuilder: (context, index) => const Divider(height: 1),
+          itemBuilder: (context, index) => widget.itemBuilder(context, widget.items[index]),
+        ),
       ),
     );
   }
