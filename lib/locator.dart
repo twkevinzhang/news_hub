@@ -13,7 +13,8 @@ import 'package:news_hub/domain/api_service.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/sidecar/repository/sidecar_repository.dart';
 import 'package:news_hub/app/service/api/sidecar_api_impl.dart';
-import 'package:news_hub/app/service/grpc/grpc_connection_manager.dart';
+import 'package:news_hub/app/service/grpc/grpc_connection_manager_impl.dart';
+import 'package:news_hub/domain/sidecar/service/sidecar_connection_manager.dart';
 import 'package:news_hub/app/service/preferences/store.dart';
 import 'package:news_hub/app/sidecar/preferences/sidecar_preferences.dart';
 import 'locator.config.dart';
@@ -40,17 +41,13 @@ abstract class AppProvider {
   @singleton
   Dio get dio => Dio();
 
-  @lazySingleton
-  ClientChannel clientChannel(GrpcConnectionManager manager) {
-    return manager.channel ??
-      ClientChannel('127.0.0.1', port: 55001,
-        options: const ChannelOptions(credentials: ChannelCredentials.insecure()));
-  }
-
   @singleton
   SidecarPreferences sidecarPreferences(PreferenceStore store) {
     return SidecarPreferences(store);
   }
+
+  @singleton
+  SidecarConnectionManager sidecarConnectionManager(GrpcConnectionManagerImpl manager) => manager;
 }
 
 abstract class Launcher {
@@ -59,14 +56,10 @@ abstract class Launcher {
 
 @Injectable(as: Launcher)
 class AppLauncher implements Launcher {
-  final GrpcConnectionManager _connectionManager;
-  final SidecarRepository _sidecarRepository;
-  final SidecarPreferences _sidecarPreferences;
+  final SidecarConnectionManager _connectionManager;
 
   AppLauncher(
     this._connectionManager,
-    this._sidecarRepository,
-    this._sidecarPreferences,
   );
 
   @override
@@ -75,28 +68,12 @@ class AppLauncher implements Launcher {
 
     const envHost = String.fromEnvironment('SIDECAR_HOST', defaultValue: '127.0.0.1');
     const envPort = int.fromEnvironment('SIDECAR_PORT', defaultValue: 55001);
-
-    final logLevelStr = await _sidecarPreferences.logLevel.get();
-    final initialLogLevel = _parseLogLevel(logLevelStr);
-
-    debugPrint('Initializing gRPC connection to: $envHost:$envPort with log level: $initialLogLevel');
     _connectionManager.initialize(
       host: envHost,
       port: envPort,
-      autoReconnect: true,
-      sidecarRepository: _sidecarRepository,
-      initialLogLevel: initialLogLevel,
     );
 
     SeriousPython.run(sidecarAsset);
     runApp(App());
-  }
-
-  LogLevel _parseLogLevel(String levelStr) {
-    try {
-      return LogLevel.values.byName(levelStr.toLowerCase());
-    } catch (e) {
-      return LogLevel.info;
-    }
   }
 }

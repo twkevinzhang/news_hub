@@ -1,14 +1,14 @@
 import 'dart:async';
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/app/service/grpc/grpc_connection_manager.dart';
 import 'package:news_hub/domain/api_service.dart';
 import 'package:news_hub/domain/extension/repository/extension_repo_repository.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
+import 'package:news_hub/domain/sidecar/service/sidecar_connection_manager.dart';
 
 @LazySingleton(as: ExtensionRepoRepository)
 class ExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
   final ApiService _apiService;
-  final GrpcConnectionManager _connectionManager;
+  final SidecarConnectionManager _connectionManager;
 
   ExtensionRepoRepositoryImpl(
     this._apiService,
@@ -34,58 +34,6 @@ class ExtensionRepoRepositoryImpl implements ExtensionRepoRepository {
   }
 
   Future<void> _ensureConnected() async {
-    final state = _connectionManager.state;
-
-    if (state == GrpcConnectionState.connected) {
-      return;
-    }
-
-    if (state == GrpcConnectionState.connecting) {
-      await _waitForConnection();
-      return;
-    }
-
-    await _connectionManager.getChannelSafe();
-  }
-
-  Future<void> _waitForConnection() async {
-    final completer = Completer<void>();
-
-    final subscription = _connectionManager.stateStream.listen((state) {
-      if (_shouldCompleteSuccessfully(state)) {
-        _completeIfNeeded(completer);
-      } else if (_shouldCompleteFailed(state)) {
-        _completeErrorIfNeeded(completer, 'gRPC connection failed or closed while waiting');
-      }
-    });
-
-    try {
-      await completer.future.timeout(
-        const Duration(seconds: 10),
-        onTimeout: () => throw TimeoutException('Timeout waiting for gRPC connection'),
-      );
-    } finally {
-      await subscription.cancel();
-    }
-  }
-
-  bool _shouldCompleteSuccessfully(GrpcConnectionState state) {
-    return state == GrpcConnectionState.connected;
-  }
-
-  bool _shouldCompleteFailed(GrpcConnectionState state) {
-    return state == GrpcConnectionState.failed || state == GrpcConnectionState.closed;
-  }
-
-  void _completeIfNeeded(Completer<void> completer) {
-    if (!completer.isCompleted) {
-      completer.complete();
-    }
-  }
-
-  void _completeErrorIfNeeded(Completer<void> completer, String message) {
-    if (!completer.isCompleted) {
-      completer.completeError(StateError(message));
-    }
+    await _connectionManager.waitUntilConnected();
   }
 }

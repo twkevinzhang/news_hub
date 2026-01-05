@@ -1,9 +1,11 @@
 import 'dart:async';
 import 'package:grpc/grpc.dart';
 import 'package:news_hub/app/service/api/models/transform.dart';
+import 'package:news_hub/app/service/grpc/grpc_connection_manager_impl.dart';
 import 'package:news_hub/domain/api_service.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 import 'package:injectable/injectable.dart';
+import 'package:news_hub/locator.dart';
 import 'package:news_hub/shared/models.dart';
 
 import 'models/sidecar_api.pbgrpc.dart';
@@ -11,11 +13,9 @@ import 'models/sidecar_api.pb.dart' as pb;
 
 @LazySingleton(as: ApiService)
 class SidecarApiImpl implements ApiService {
-  late final SidecarApiClient _client;
+  SidecarApiClient get _client => SidecarApiClient(sl<GrpcConnectionManagerImpl>().getChannel());
 
-  SidecarApiImpl({
-    required ClientChannel clientChannel,
-  }) : _client = SidecarApiClient(clientChannel);
+  SidecarApiImpl();
 
   @override
   Future<domain.Site> getSite({
