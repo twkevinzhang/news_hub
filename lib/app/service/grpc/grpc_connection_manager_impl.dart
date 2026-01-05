@@ -29,7 +29,7 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
   Stream<SidecarConnectionState> get stateStream => _stateController.stream;
 
   StreamSubscription<LogEntry>? _logsSubscription;
-  final _logsController = StreamController<LogEntry>.broadcast();
+  final _logsController = ReplaySubject<LogEntry>(maxSize: 1000);
 
   @override
   Stream<LogEntry> get logsStream => _logsController.stream;
@@ -52,6 +52,9 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
     await waitUntilConnected();
     _startHealthCheckSubscription();
     _startWatchingLogsSubscription();
+
+    // Ensure we start emitting only when we have subscribers or just rely on buffer?
+    // ReplaySubject buffers automatically.
   }
 
   Future<void> _connect() async {
