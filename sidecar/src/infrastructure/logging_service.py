@@ -2,13 +2,16 @@
 import logging
 import logging.handlers
 from pathlib import Path
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Optional, List
 import threading
 import sys
 import queue
 from dataclasses import dataclass
 import sidecar_api_pb2 as pb2
+
+# UTC+8 timezone
+UTC_PLUS_8 = timezone(timedelta(hours=8))
 
 
 @dataclass
@@ -68,6 +71,57 @@ class LogStreamHandler(logging.Handler):
             self.handleError(record)
 
 
+class ReopeningFileHandler(logging.Handler):
+    """File handler with daily rotation (UTC+8) and auto-reopening on deletion"""
+
+    def __init__(self, log_dir: Path, retention_days: int = 7):
+        super().__init__()
+        self.log_dir = log_dir
+        self.retention_days = retention_days
+        self.current_file = None
+        self.stream = None
+        self._lock = threading.Lock()
+
+    def _get_log_file_path(self) -> Path:
+        """Get the current log file path based on date (UTC+8)"""
+        now_utc8 = datetime.now(UTC_PLUS_8)
+        return self.log_dir / f"sidecar_{now_utc8.strftime('%Y%m%d')}.log"
+
+    def _open_file(self):
+        """Open or reopen the log file"""
+        log_file = self._get_log_file_path()
+
+        # Close existing stream if file path changed (daily rotation) or file was deleted
+        if self.stream:
+            if self.current_file != log_file or not self.current_file.exists():
+                self.stream.close()
+                self.stream = None
+
+        # Open new stream if needed
+        if not self.stream:
+            self.current_file = log_file
+            self.stream = open(log_file, 'a', encoding='utf-8')
+
+    def emit(self, record: logging.LogRecord):
+        """Emit a log record, reopening file if necessary"""
+        try:
+            with self._lock:
+                self._open_file()
+                msg = self.format(record)
+                self.stream.write(msg + '\n')
+                self.stream.flush()
+        except Exception:
+            self.handleError(record)
+
+    def close(self):
+        """Close the handler"""
+        with self._lock:
+            if self.stream:
+                self.stream.close()
+                self.stream = None
+        super().close()
+
+
 class LoggingService:
     """Centralized logging service"""
     
@@ -76,6 +130,7 @@ class LoggingService:
         self.retention_days = retention_days
         self.stream_handler = LogStreamHandler()
         self._current_level = logging.INFO
+        self.file_handler = None
         
         # Try to create log directory, but don't crash if it fails
         try:
@@ -106,21 +161,13 @@ class LoggingService:
         # Set root logger level to DEBUG
         root_logger.setLevel(logging.DEBUG)
         
-        # File handler with daily rotation (UTC+8)
+        # File handler with auto-reopening on deletion
         if self.file_logging_available:
             try:
-                log_file = self.log_dir / f"sidecar_{datetime.now().strftime('%Y%m%d')}.log"
-                file_handler = logging.handlers.TimedRotatingFileHandler(
-                    filename=log_file,
-                    when='midnight',
-                    interval=1,
-                    backupCount=self.retention_days,
-                    encoding='utf-8',
-                    utc=False  # Use local time (UTC+8)
-                )
-                file_handler.setLevel(logging.DEBUG)
-                file_handler.setFormatter(formatter)
-                root_logger.addHandler(file_handler)
+                self.file_handler = ReopeningFileHandler(self.log_dir, self.retention_days)
+                self.file_handler.setLevel(logging.DEBUG)
+                self.file_handler.setFormatter(formatter)
+                root_logger.addHandler(self.file_handler)
             except Exception as e:
                 print(f"Warning: Could not setup file logging: {e}")
                 self.file_logging_available = False
@@ -159,25 +206,25 @@ class LoggingService:
     ) -> List[LogEntry]:
         """Get historical logs from files"""
         entries = []
-        
-        # Determine which log files to read
-        start_dt = datetime.fromtimestamp(start_time / 1000)
-        end_dt = datetime.fromtimestamp(end_time / 1000)
-        
+
+        # Determine which log files to read (using UTC+8)
+        start_dt = datetime.fromtimestamp(start_time / 1000, tz=UTC_PLUS_8)
+        end_dt = datetime.fromtimestamp(end_time / 1000, tz=UTC_PLUS_8)
+
         current_dt = start_dt
         while current_dt <= end_dt:
             log_file = self.log_dir / f"sidecar_{current_dt.strftime('%Y%m%d')}.log"
             if log_file.exists():
                 entries.extend(self._parse_log_file(log_file, start_time, end_time, min_level))
             current_dt += timedelta(days=1)
-        
+
         # Sort by timestamp
         entries.sort(key=lambda x: x.timestamp)
-        
+
         # Apply limit
         if limit and len(entries) > limit:
             entries = entries[-limit:]
-        
+
         return entries
     
     def _parse_log_file(
@@ -238,18 +285,19 @@ class LoggingService:
             return None
     
     def cleanup_old_logs(self):
-        """Clean up logs older than retention period"""
+        """Clean up logs older than retention period (UTC+8)"""
         if self.retention_days <= 0:
             return  # Never delete if retention is 0
-        
-        cutoff_date = datetime.now() - timedelta(days=self.retention_days)
-        
+
+        now_utc8 = datetime.now(UTC_PLUS_8)
+        cutoff_date = now_utc8 - timedelta(days=self.retention_days)
+
         for log_file in self.log_dir.glob("sidecar_*.log"):
             try:
                 # Extract date from filename
                 date_str = log_file.stem.split('_')[1]
-                file_date = datetime.strptime(date_str, '%Y%m%d')
-                
+                file_date = datetime.strptime(date_str, '%Y%m%d').replace(tzinfo=UTC_PLUS_8)
+
                 if file_date < cutoff_date:
                     log_file.unlink()
                     logging.info(f"Deleted old log file: {log_file}")
