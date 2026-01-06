@@ -46,7 +46,7 @@ class HttpDownloader:
             async with aiohttp.ClientSession(timeout=self.timeout) as session:
                 async with session.get(url) as response:
                     response.raise_for_status()
-                    return await response.json()
+                    return await response.json(content_type=None)
         except Exception as e:
             logger.error(f"Failed to fetch JSON from {url}: {e}")
             return None
