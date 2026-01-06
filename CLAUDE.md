@@ -190,8 +190,11 @@ make run SIDECAR_HOST=my-server.local  # 連接到主機名/mDNS
    - 功能開發任務：
 
      - 每完成一個獨立功能或重大修改後，必須執行 git commit。
-     - Commit 時使用指定作者: `git commit --author="Gemini 3 Flash <noreply@google.com>" -m "commit message"`
-     - Commit message 應清楚描述變更內容
+     - Commit 時使用指定作者
+       - 如果指定 twkevinzhang, 則使用 `git commit --author="twkevinzhang <twkevinzhang@gmail.com>" -m "commit message"`
+       - 如果指定 Gemini 3 Flash, 則使用 `git commit --author="Gemini 3 Flash <google-bot@users.noreply.github.com>" -m "commit message"`
+       - 如果指定 Sonnet 4.5, 則使用 `git commit --author="Sonnet 4.5 <noreply@anthropic.com>" -m "commit message"`
+     - Commit message 應使用英文清楚描述變更內容
      - Commit message 格式應該遵循 Conventional Commits: https://www.conventionalcommits.org/en/v1.0.0-beta.4/
 
    - Bug 修復任務 (豁免條款)：
