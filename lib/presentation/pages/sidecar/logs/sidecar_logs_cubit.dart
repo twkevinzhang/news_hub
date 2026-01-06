@@ -64,19 +64,15 @@ class SidecarLogsCubit extends Cubit<SidecarLogsState> {
     await _logsSubscription?.cancel();
     await _healthSubscription?.cancel();
 
-    print('[SidecarLogsCubit] Subscribing to watchLogs with minLevel: ${settings.logLevel.name}');
     _logsSubscription = _repository.watchLogs(minLevel: settings.logLevel).listen(
       (logEntry) {
-        print('[SidecarLogsCubit] Received log: ${logEntry.level.name} - ${logEntry.message}');
         final updatedLogs = _addLogWithLimit(logEntry);
         emit(state.copyWith(logs: updatedLogs));
       },
       onError: (error) {
-        print('[SidecarLogsCubit] Error: $error');
         emit(state.copyWith(error: 'Failed to fetch logs: $error'));
       },
     );
-    print('[SidecarLogsCubit] Subscription created, current logs count: ${state.logs.length}');
 
     _healthSubscription = _repository.watchHealth().listen(
       (status) {

@@ -1,4 +1,5 @@
 import 'package:injectable/injectable.dart';
+import 'package:flutter/widgets.dart';
 import 'package:news_hub/domain/repo/repository.dart';
 
 @lazySingleton

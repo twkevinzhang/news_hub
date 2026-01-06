@@ -121,7 +121,6 @@ class ThreadListCubit extends Cubit<ThreadListState> {
   }
 
   void _loadThreadList(int pageKey) async {
-    print("_loadThreadList $pageKey");
     try {
       final queryState = await threadListQuery.getNextPage();
       if (queryState?.error != null) {
