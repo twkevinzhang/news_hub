@@ -31,12 +31,10 @@ class InstallExtensionUseCase:
             if existing:
                 return existing
 
-        # Download extension
-        url = f"{metadata.repo_base_url}/{metadata.zip_name}"
-        self.installer.download(url, metadata.pkg_name)
+        # Download extension directory from GitHub repo
+        self.installer.download_directory(metadata.repo_url, metadata.pkg_name)
 
-        # Extract
-        self.installer.extract(metadata.pkg_name)
+        # Install requirements
 
         # Install requirements
         self.installer.install_requirements(metadata.pkg_name)

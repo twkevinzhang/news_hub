@@ -23,6 +23,31 @@ class ExtensionInstaller:
         destination = self.file_manager.get_download_path(pkg_name)
         self.downloader.download_file_sync(url, destination)
 
+    def download_directory(self, repo_url: str, pkg_name: str) -> None:
+        """Download a directory from GitHub repository"""
+        # 1. Download full repo zip (trying main/master)
+        zip_path = None
+        for branch in ["main", "master"]:
+            try:
+                zip_url = f"{repo_url.rstrip('/')}/archive/refs/heads/{branch}.zip"
+                destination = self.file_manager.download_github_zip(repo_url, branch)
+                self.downloader.download_file_sync(zip_url, destination)
+                zip_path = destination
+                break
+            except Exception as e:
+                logger.debug(f"Failed to download zip from {branch}: {e}")
+                continue
+        
+        if not zip_path:
+            raise ValueError(f"Failed to download repository zip for {repo_url}")
+
+        # 2. Extract specific directory
+        self.file_manager.extract_directory_from_zip(zip_path, pkg_name, pkg_name)
+        
+        # 3. Cleanup zip
+        if zip_path.exists():
+            zip_path.unlink()
+
     def extract(self, pkg_name: str) -> None:
         """Extract extension zip file"""
         self.file_manager.extract_zip(pkg_name)

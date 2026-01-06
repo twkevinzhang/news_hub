@@ -31,12 +31,16 @@ class ExtensionRepositoryImpl(ExtensionRepository):
         )
 
     def find_all(self) -> List[Extension]:
-        """Find all installed extensions"""
+        """Find all installed extensions from centralized JSON"""
+        metadatas = self.file_manager.load_installed_extensions()
         extensions = []
-        for pkg_name in self.file_manager.list_extension_dirs():
-            extension = self.find_by_pkg_name(pkg_name)
-            if extension:
-                extensions.append(extension)
+        for metadata in metadatas:
+            installation_path = self.file_manager.get_extension_path(metadata.pkg_name)
+            extensions.append(Extension(
+                metadata=metadata,
+                installation_path=installation_path,
+                is_installed=True
+            ))
         return extensions
 
     def save(self, extension: Extension) -> None:
