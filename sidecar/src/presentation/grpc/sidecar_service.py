@@ -283,13 +283,12 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
         last_status = None
         while context.is_active():
             try:
-                status = self.health_check_service.get_status()
-                message = self.health_check_service.get_message()
+                status, message = self.health_check_service.get_status()
                 
                 # Correct message type based on proto definition
                 current_result = pb2.HealthCheckRes(
                     status=status.value,
-                    message=message,
+                    message=message or "",
                     service=request.service
                 )
 
