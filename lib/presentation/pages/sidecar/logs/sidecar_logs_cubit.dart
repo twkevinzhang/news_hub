@@ -7,7 +7,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/sidecar/repository.dart';
-import 'package:news_hub/domain/sidecar/service/sidecar_connection_manager.dart';
+import 'package:news_hub/app/service/connection/interface.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/router/router.dart';
 import 'package:path_provider/path_provider.dart';

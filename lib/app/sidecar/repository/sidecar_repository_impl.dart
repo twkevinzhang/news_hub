@@ -1,10 +1,10 @@
 import 'dart:async';
 import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
+import 'package:news_hub/app/service/connection/interface.dart';
 import 'package:news_hub/app/sidecar/preferences/sidecar_preferences.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/sidecar/repository.dart';
-import 'package:news_hub/domain/sidecar/service/sidecar_connection_manager.dart';
 import 'package:rxdart/rxdart.dart';
 
 @LazySingleton(as: SidecarRepository)

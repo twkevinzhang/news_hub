@@ -23,9 +23,10 @@ import 'package:news_hub/app/extension/repository/installed_extension_repository
     as _i753;
 import 'package:news_hub/app/service/api/sidecar_api_impl.dart' as _i75;
 import 'package:news_hub/app/service/cache/cache.dart' as _i158;
+import 'package:news_hub/app/service/connection/grpc_connection_manager_impl.dart'
+    as _i908;
+import 'package:news_hub/app/service/connection/interface.dart' as _i976;
 import 'package:news_hub/app/service/database/database.dart' as _i539;
-import 'package:news_hub/app/service/grpc/grpc_connection_manager_impl.dart'
-    as _i492;
 import 'package:news_hub/app/service/preferences/store.dart' as _i365;
 import 'package:news_hub/app/service/preferences/store_impl.dart' as _i842;
 import 'package:news_hub/app/sidecar/preferences/sidecar_preferences.dart'
@@ -69,8 +70,6 @@ import 'package:news_hub/domain/repo/interactor/list_repos.dart' as _i608;
 import 'package:news_hub/domain/repo/interactor/remove_repo.dart' as _i154;
 import 'package:news_hub/domain/repo/repository.dart' as _i989;
 import 'package:news_hub/domain/sidecar/repository.dart' as _i611;
-import 'package:news_hub/domain/sidecar/service/sidecar_connection_manager.dart'
-    as _i133;
 import 'package:news_hub/domain/suggestion/interactor/insert_suggestion.dart'
     as _i446;
 import 'package:news_hub/domain/suggestion/interactor/list_suggestions.dart'
@@ -163,34 +162,50 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i191.ExtensionPreferencesService>(() =>
         _i29.ExtensionPreferencesServiceImpl(
             store: gh<_i365.PreferenceStore>()));
-    gh.singleton<_i492.GrpcConnectionManagerImpl>(
-        () => _i492.GrpcConnectionManagerImpl(
+    gh.singleton<_i908.GrpcConnectionManagerImpl>(
+        () => _i908.GrpcConnectionManagerImpl(
               gh<_i280.SidecarPreferences>(),
               gh<_i113.ApiService>(),
             ));
-    gh.singleton<_i133.SidecarConnectionManager>(() => appProvider
-        .sidecarConnectionManager(gh<_i492.GrpcConnectionManagerImpl>()));
+    gh.singleton<_i976.SidecarConnectionManager>(() => appProvider
+        .sidecarConnectionManager(gh<_i908.GrpcConnectionManagerImpl>()));
+    gh.lazySingleton<_i611.SidecarRepository>(() => _i757.SidecarRepositoryImpl(
+          gh<_i976.SidecarConnectionManager>(),
+          gh<_i280.SidecarPreferences>(),
+        ));
     gh.lazySingleton<_i989.RepoRepository>(() => _i795.RepoRepositoryImpl(
           gh<_i113.ApiService>(),
-          gh<_i133.SidecarConnectionManager>(),
+          gh<_i976.SidecarConnectionManager>(),
         ));
-    gh.lazySingleton<_i198.ExtensionRepository>(
-        () => _i753.InstalledRepositoryImpl(
-              gh<_i113.ApiService>(),
-              gh<_i133.SidecarConnectionManager>(),
-              gh<_i989.RepoRepository>(),
-            ));
     gh.lazySingleton<_i608.ListRepos>(
         () => _i608.ListRepos(gh<_i989.RepoRepository>()));
     gh.lazySingleton<_i154.RemoveRepo>(
         () => _i154.RemoveRepo(gh<_i989.RepoRepository>()));
     gh.lazySingleton<_i1048.AddRepo>(
         () => _i1048.AddRepo(gh<_i989.RepoRepository>()));
+    gh.factory<_i852.SidecarCubit>(
+        () => _i852.SidecarCubit(gh<_i611.SidecarRepository>()));
     gh.factory<_i56.Launcher>(
-        () => _i56.AppLauncher(gh<_i133.SidecarConnectionManager>()));
-    gh.lazySingleton<_i611.SidecarRepository>(() => _i757.SidecarRepositoryImpl(
-          gh<_i133.SidecarConnectionManager>(),
-          gh<_i280.SidecarPreferences>(),
+        () => _i56.AppLauncher(gh<_i976.SidecarConnectionManager>()));
+    gh.factory<_i515.SidecarLogsCubit>(() => _i515.SidecarLogsCubit(
+          gh<_i611.SidecarRepository>(),
+          gh<_i976.SidecarConnectionManager>(),
+        ));
+    gh.lazySingleton<_i198.ExtensionRepository>(
+        () => _i753.InstalledRepositoryImpl(
+              gh<_i113.ApiService>(),
+              gh<_i976.SidecarConnectionManager>(),
+              gh<_i989.RepoRepository>(),
+            ));
+    gh.lazySingleton<_i351.ListInstalledExtensions>(
+        () => _i351.ListInstalledExtensions(
+              repository: gh<_i198.ExtensionRepository>(),
+              apiService: gh<_i113.ApiService>(),
+            ));
+    gh.factory<_i91.RepoCubit>(() => _i91.RepoCubit(
+          listRepos: gh<_i608.ListRepos>(),
+          addRepo: gh<_i1048.AddRepo>(),
+          removeRepo: gh<_i154.RemoveRepo>(),
         ));
     gh.lazySingleton<_i783.InstallExtension>(() =>
         _i783.InstallExtension(repository: gh<_i198.ExtensionRepository>()));
@@ -202,8 +217,10 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i915.ListRemoteExtensions>(() =>
         _i915.ListRemoteExtensions(
             repository: gh<_i198.ExtensionRepository>()));
-    gh.factory<_i852.SidecarCubit>(
-        () => _i852.SidecarCubit(gh<_i611.SidecarRepository>()));
+    gh.lazySingleton<_i757.ListThreads>(() => _i757.ListThreads(
+          apiService: gh<_i113.ApiService>(),
+          listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
+        ));
     gh.lazySingleton<_i616.GetThread>(() => _i616.GetThread(
           apiService: gh<_i113.ApiService>(),
           installedRepository: gh<_i266.GetInstalledExtension>(),
@@ -212,39 +229,16 @@ extension GetItInjectableX on _i174.GetIt {
           apiService: gh<_i113.ApiService>(),
           installedRepository: gh<_i266.GetInstalledExtension>(),
         ));
+    gh.factory<_i274.BoardsPickerCubit>(
+        () => _i274.BoardsPickerCubit(gh<_i351.ListInstalledExtensions>()));
     gh.factory<_i10.ThreadDetailCubit>(() => _i10.ThreadDetailCubit(
           getThread: gh<_i616.GetThread>(),
           listRegardingPosts: gh<_i492.ListRegardingPosts>(),
         ));
-    gh.factory<_i515.SidecarLogsCubit>(() => _i515.SidecarLogsCubit(
-          gh<_i611.SidecarRepository>(),
-          gh<_i133.SidecarConnectionManager>(),
-        ));
-    gh.lazySingleton<_i351.ListInstalledExtensions>(
-        () => _i351.ListInstalledExtensions(
-              repository: gh<_i198.ExtensionRepository>(),
-              apiService: gh<_i113.ApiService>(),
-            ));
     gh.lazySingleton<_i214.ListExtensions>(() => _i214.ListExtensions(
           prefService: gh<_i191.ExtensionPreferencesService>(),
           listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
           listRemoteExtensions: gh<_i915.ListRemoteExtensions>(),
-        ));
-    gh.factory<_i91.RepoCubit>(() => _i91.RepoCubit(
-          listRepos: gh<_i608.ListRepos>(),
-          addRepo: gh<_i1048.AddRepo>(),
-          removeRepo: gh<_i154.RemoveRepo>(),
-        ));
-    gh.lazySingleton<_i757.ListThreads>(() => _i757.ListThreads(
-          apiService: gh<_i113.ApiService>(),
-          listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
-        ));
-    gh.factory<_i274.BoardsPickerCubit>(
-        () => _i274.BoardsPickerCubit(gh<_i351.ListInstalledExtensions>()));
-    gh.factory<_i34.ExtensionCubit>(() => _i34.ExtensionCubit(
-          listExtensions: gh<_i214.ListExtensions>(),
-          installExtension: gh<_i783.InstallExtension>(),
-          uninstallExtension: gh<_i517.UninstallExtension>(),
         ));
     gh.factory<_i769.SearchCubit>(() => _i769.SearchCubit(
           listSuggestions: gh<_i643.ListSuggestions>(),
@@ -256,6 +250,11 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i887.ThreadListCubit>(() => _i887.ThreadListCubit(
           listThreadList: gh<_i757.ListThreads>(),
           listExtensions: gh<_i351.ListInstalledExtensions>(),
+        ));
+    gh.factory<_i34.ExtensionCubit>(() => _i34.ExtensionCubit(
+          listExtensions: gh<_i214.ListExtensions>(),
+          installExtension: gh<_i783.InstallExtension>(),
+          uninstallExtension: gh<_i517.UninstallExtension>(),
         ));
     return this;
   }

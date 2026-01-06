@@ -1,5 +1,13 @@
 import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/domain/sidecar/service/sidecar_connection_manager.dart';
+
+enum SidecarConnectionState {
+  uninitialized,
+  connecting,
+  retrying,
+  connected,
+  failed,
+  closed,
+}
 
 abstract class SidecarRepository {
   Stream<SidecarConnectionState> watchHealth();

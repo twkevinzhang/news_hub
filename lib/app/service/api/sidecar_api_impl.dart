@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:news_hub/app/service/api/models/transform.dart';
-import 'package:news_hub/app/service/grpc/grpc_connection_manager_impl.dart';
+import 'package:news_hub/app/service/connection/grpc_connection_manager_impl.dart';
 import 'package:news_hub/domain/api_service.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 import 'package:injectable/injectable.dart';

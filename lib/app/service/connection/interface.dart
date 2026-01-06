@@ -1,13 +1,5 @@
 import 'package:news_hub/domain/models/models.dart';
-
-enum SidecarConnectionState {
-  uninitialized,
-  connecting,
-  retrying,
-  connected,
-  failed,
-  closed,
-}
+import 'package:news_hub/domain/sidecar/repository.dart';
 
 abstract class SidecarConnectionManager {
   Future<void> initialize({

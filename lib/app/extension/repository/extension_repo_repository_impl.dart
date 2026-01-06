@@ -3,7 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/api_service.dart';
 import 'package:news_hub/domain/repo/repository.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
-import 'package:news_hub/domain/sidecar/service/sidecar_connection_manager.dart';
+import 'package:news_hub/app/service/connection/interface.dart';
 
 @LazySingleton(as: RepoRepository)
 class RepoRepositoryImpl implements RepoRepository {
