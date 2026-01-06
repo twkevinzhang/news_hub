@@ -40,7 +40,8 @@ class DependencyContainer:
         self.http_downloader = HttpDownloader(timeout=Config.DOWNLOAD_TIMEOUT)
         self.file_manager = ExtensionFileManager(
             extensions_dir=Config.EXTENSIONS_DIR,
-            download_dir=Config.DOWNLOAD_DIR
+            download_dir=Config.DOWNLOAD_DIR,
+            persistent_dir=Config.PERSISTENT_DIR
         )
 
         # Repositories
