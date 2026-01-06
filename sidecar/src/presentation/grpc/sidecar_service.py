@@ -288,8 +288,7 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
                 # Correct message type based on proto definition
                 current_result = pb2.HealthCheckRes(
                     status=status.value,
-                    message=message or "",
-                    service=request.service
+                    message=message or ""
                 )
 
                 if last_status != status:
