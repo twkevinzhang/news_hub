@@ -103,8 +103,8 @@ class LoggingService:
         console_handler.setFormatter(formatter)
         root_logger.addHandler(console_handler)
         
-        # Set root logger level
-        root_logger.setLevel(logging.INFO)
+        # Set root logger level to DEBUG
+        root_logger.setLevel(logging.DEBUG)
         
         # File handler with daily rotation (UTC+8)
         if self.file_logging_available:

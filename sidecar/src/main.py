@@ -5,9 +5,16 @@ import grpc
 import threading
 import time
 
+class LoggingInterceptor(grpc.ServerInterceptor):
+    """Interceptor to log all gRPC requests"""
+    def intercept_service(self, continuation, handler_call_details):
+        logger = logging.getLogger(__name__)
+        logger.debug(f"gRPC call received: {handler_call_details.method}")
+        handler = continuation(handler_call_details)
+        return handler
+
 def main():
     """Start the gRPC server"""
-    print("Sidecar starting...", flush=True)
     from shared.config import Config
     from shared.dependency_container import DependencyContainer
     import sidecar_api_pb2_grpc as pb2_grpc
@@ -19,9 +26,10 @@ def main():
         # Initialize dependencies
         container = DependencyContainer()
 
-        # Create gRPC server
+        # Create gRPC server with logging interceptor
         server = grpc.server(
             futures.ThreadPoolExecutor(max_workers=Config.MAX_WORKERS),
+            interceptors=[LoggingInterceptor()],
             options=[
                 ('grpc.logging_verbosity', 'DEBUG'),
             ]
