@@ -17,7 +17,6 @@ class Config:
 
     # Server
     GRPC_PORT = 55001
-    MAX_WORKERS = 5
 
     # Download
     DOWNLOAD_TIMEOUT = 30  # seconds

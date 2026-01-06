@@ -6,6 +6,7 @@ from datetime import datetime, timedelta, timezone
 from typing import Optional, List
 import threading
 import sys
+import asyncio
 import queue
 from dataclasses import dataclass
 import sidecar_api_pb2 as pb2
@@ -25,28 +26,40 @@ class LogEntry:
 
 
 class LogStreamHandler(logging.Handler):
-    """Custom handler that streams logs to subscribers"""
+    """Custom handler that streams logs to subscribers via asyncio.Queue"""
     
     def __init__(self):
         super().__init__()
-        self._subscribers: List[queue.Queue] = []
+        self._subscribers: List[asyncio.Queue] = []
         self._lock = threading.Lock()
+        self._loop: Optional[asyncio.AbstractEventLoop] = None
     
-    def subscribe(self, min_level: int = logging.DEBUG) -> queue.Queue:
-        """Subscribe to log stream"""
-        log_queue = queue.Queue(maxsize=1000)
+    def set_loop(self, loop: asyncio.AbstractEventLoop):
+        """Set the event loop to use for thread-safe queue operations"""
+        with self._lock:
+            self._loop = loop
+
+    def subscribe(self, min_level: int = logging.DEBUG) -> asyncio.Queue:
+        """Subscribe to log stream (returns an asyncio.Queue)"""
+        log_queue = asyncio.Queue(maxsize=1000)
         with self._lock:
             self._subscribers.append(log_queue)
+            # Try to auto-capture loop if not set
+            if not self._loop:
+                try:
+                    self._loop = asyncio.get_event_loop()
+                except RuntimeError:
+                    pass
         return log_queue
     
-    def unsubscribe(self, log_queue: queue.Queue):
+    def unsubscribe(self, log_queue: asyncio.Queue):
         """Unsubscribe from log stream"""
         with self._lock:
             if log_queue in self._subscribers:
                 self._subscribers.remove(log_queue)
     
     def emit(self, record: logging.LogRecord):
-        """Emit log record to all subscribers"""
+        """Emit log record to all subscribers thread-safely"""
         try:
             entry = LogEntry(
                 timestamp=int(record.created * 1000),
@@ -57,18 +70,25 @@ class LogStreamHandler(logging.Handler):
             )
             
             with self._lock:
-                for subscriber_queue in self._subscribers[:]:
-                    try:
-                        subscriber_queue.put_nowait(entry)
-                    except queue.Full:
-                        # Drop old logs if queue is full
-                        try:
-                            subscriber_queue.get_nowait()
-                            subscriber_queue.put_nowait(entry)
-                        except:
-                            pass
+                loop = self._loop
+                subscribers = self._subscribers[:]
+            
+            if loop and subscribers:
+                for subscriber_queue in subscribers:
+                    loop.call_soon_threadsafe(self._safe_put, subscriber_queue, entry)
         except Exception:
             self.handleError(record)
+
+    def _safe_put(self, q: asyncio.Queue, entry: LogEntry):
+        """Put entry in asyncio.Queue, dropping old messages if full"""
+        try:
+            q.put_nowait(entry)
+        except asyncio.QueueFull:
+            try:
+                q.get_nowait()
+                q.put_nowait(entry)
+            except:
+                pass
 
 
 class ReopeningFileHandler(logging.Handler):
@@ -189,11 +209,11 @@ class LoggingService:
         """Get current log level"""
         return self._current_level
     
-    def subscribe_stream(self, min_level: int = logging.DEBUG) -> queue.Queue:
+    def subscribe_stream(self, min_level: int = logging.DEBUG) -> asyncio.Queue:
         """Subscribe to log stream"""
         return self.stream_handler.subscribe(min_level)
     
-    def unsubscribe_stream(self, log_queue: queue.Queue):
+    def unsubscribe_stream(self, log_queue: asyncio.Queue):
         """Unsubscribe from log stream"""
         self.stream_handler.unsubscribe(log_queue)
     

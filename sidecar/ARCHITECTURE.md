@@ -5,18 +5,18 @@
 ```
 ┌─────────────────────────────────────────┐
 │        Presentation Layer (gRPC)        │
-│  - SidecarService                       │
+│  - SidecarService (Async gRPC)          │
 └─────────────────────────────────────────┘
                   ↓
 ┌─────────────────────────────────────────┐
 │        Application Layer                │
-│  - Use Cases (Install, Uninstall, etc.) │
+│  - Use Cases (Install, Add Repo, etc.)  │
 │  - Application Services                 │
 └─────────────────────────────────────────┘
                   ↓
 ┌─────────────────────────────────────────┐
 │         Domain Layer                    │
-│  - Entities (Extension)                 │
+│  - Entities (Extension, Repo)           │
 │  - Value Objects (ExtensionMetadata)    │
 │  - Repository Interfaces                │
 └─────────────────────────────────────────┘
@@ -26,6 +26,7 @@
 │  - Repository Implementations           │
 │  - File System Manager                  │
 │  - HTTP Downloader                      │
+│  - Health Check & Logging Services      │
 └─────────────────────────────────────────┘
 ```
 
@@ -35,9 +36,11 @@
 src/
 ├── domain/                      # Core business logic
 │   ├── entities/                # Business entities
-│   │   └── extension.py         # Extension entity
+│   │   ├── extension.py         # Extension entity
+│   │   └── repo.py              # Repository entity
 │   ├── repositories/            # Repository interfaces
-│   │   └── extension_repository.py
+│   │   ├── extension_repository.py
+│   │   └── repo_repository.py   # Repo repository interface
 │   └── value_objects/           # Immutable value objects
 │       └── extension_metadata.py
 │
@@ -47,7 +50,9 @@ src/
 │   │   ├── uninstall_extension.py
 │   │   ├── list_installed_extensions.py
 │   │   ├── list_remote_extensions.py
-│   │   └── get_installed_extension.py
+│   │   ├── get_installed_extension.py
+│   │   ├── add_repo.py          # Add new extension repo
+│   │   └── remove_repo.py       # Remove extension repo
 │   └── services/                # Application services
 │       ├── extension_installer.py
 │       └── extension_loader.py
@@ -55,76 +60,62 @@ src/
 ├── infrastructure/              # External dependencies
 │   ├── repositories/            # Repository implementations
 │   │   ├── extension_repository_impl.py
-│   │   └── remote_extension_repository_impl.py
+│   │   ├── remote_extension_repository_impl.py
+│   │   └── repo_repository_impl.py # Repo repository impl
 │   ├── downloaders/             # Download mechanisms
 │   │   └── http_downloader.py
-│   └── file_system/             # File operations
-│       └── extension_file_manager.py
+│   ├── file_system/             # File operations
+│   │   └── extension_file_manager.py
+│   ├── health_check_service.py  # Health monitoring
+│   └── logging_service.py       # Centralized logging & streaming
 │
 ├── presentation/                # External interfaces
 │   └── grpc/                    # gRPC service
-│       └── sidecar_service.py
+│       └── sidecar_service.py   # Sidecar implementation
 │
 ├── shared/                      # Shared utilities
 │   ├── config.py                # Configuration
-│   ├── dependency_container.py  # DI container
-│   └── logger.py                # Logging setup
+│   └── dependency_container.py  # DI container
 │
 ├── tests/                       # Test suite
 │   ├── unit/                    # Unit tests
 │   └── integration/             # Integration tests
 │
-└── main_new.py                  # Application entry point
+├── download/                    # [Data] Temporary download storage
+├── extensions/                  # [Data] Installed extensions storage
+└── main.py                      # Application entry point (Async)
 ```
 
 ## Design Principles
 
 ### 1. Domain-Driven Design (DDD)
 
-- **Domain Layer**: Contains core business logic, independent of external concerns
-- **Application Layer**: Orchestrates use cases and application flow
-- **Infrastructure Layer**: Implements technical details (database, HTTP, file system)
-- **Presentation Layer**: Handles external communication (gRPC API)
+- **Domain Layer**: Contains core business logic, independent of external concerns.
+- **Application Layer**: Orchestrates use cases and application flow.
+- **Infrastructure Layer**: Implements technical details (Persistence, HTTP, File system, Logging).
+- **Presentation Layer**: Handles external communication (Async gRPC API).
 
 ### 2. Dependency Inversion
 
-- High-level modules don't depend on low-level modules
-- Both depend on abstractions (interfaces)
-- Example: Use cases depend on `ExtensionRepository` interface, not the file-system implementation
+- High-level modules don't depend on low-level modules.
+- Both depend on abstractions (interfaces).
+- Example: Use cases depend on `ExtensionRepository` interface, not the file-system implementation.
 
 ### 3. Single Responsibility
 
-- Each class has one reason to change
-- `ExtensionFileManager`: Only handles file operations
-- `HttpDownloader`: Only handles HTTP downloads
-- Use cases: Each handles one specific business operation
+- Each class has one reason to change.
+- `ExtensionFileManager`: Only handles file operations.
+- `HttpDownloader`: Only handles HTTP downloads.
+- Use cases: Each handles one specific business operation.
 
 ### 4. Testability
 
 All components are designed for easy testing:
 
-- **Domain entities**: Pure Python objects, no external dependencies
-- **Use cases**: Depend on interfaces, easily mocked
-- **Services**: Injectable dependencies
-- **Repositories**: Interface-based, swappable implementations
-
-Example test:
-
-```python
-def test_install_extension():
-    # Mock dependencies
-    repository = Mock()
-    installer = Mock()
-
-    # Create use case with mocks
-    use_case = InstallExtensionUseCase(repository, installer)
-
-    # Test behavior
-    result = use_case.execute(metadata)
-
-    # Verify interactions
-    repository.save.assert_called_once()
-```
+- **Domain entities**: Pure Python objects, no external dependencies.
+- **Use cases**: Depend on interfaces, easily mocked.
+- **Services**: Injectable dependencies.
+- **Repositories**: Interface-based, swappable implementations.
 
 ## Key Components
 
@@ -132,168 +123,100 @@ def test_install_extension():
 
 **Extension (Entity)**
 
-- Represents an installed extension
-- Contains business logic for installation lifecycle
-- Mutable state (installed/uninstalled)
+- Represents an installed extension.
+- Contains business logic for installation lifecycle.
+
+**Repo (Entity)**
+
+- Represents a registered extension repository.
+- Validates repository source (e.g., GitHub).
 
 **ExtensionMetadata (Value Object)**
 
-- Immutable extension information
-- Validates data integrity
-- Contains no behavior, only data
+- Immutable extension information.
+- Validates data integrity.
 
 **Repository Interfaces**
 
-- Define contracts for data access
-- No implementation details
-- Enable dependency inversion
+- Define contracts for data access.
+- Enable dependency inversion.
 
 ### Application Layer
 
 **Use Cases**
 
-- One class per business operation
-- Pure business logic
-- No technical details
+- One class per business operation (e.g., `InstallExtensionUseCase`, `AddRepoUseCase`).
+- Pure business logic orchestrating domain and infrastructure.
 
 **Services**
 
-- Support use cases with technical operations
-- `ExtensionInstaller`: Download and install
-- `ExtensionLoader`: Dynamic module loading
+- `ExtensionInstaller`: Handles the technical process of downloading and extracting.
+- `ExtensionLoader`: Dynamic module loading for extensions.
 
 ### Infrastructure Layer
 
 **Repository Implementations**
 
-- Implement domain repository interfaces
-- Handle technical details (JSON, file I/O)
-- Swappable with other implementations
+- `ExtensionRepositoryImpl`: File-based storage for installed extensions.
+- `RepoRepositoryImpl`: Persistent storage for registered repositories.
 
-**File System Manager**
+**Logging Service**
 
-- Encapsulates all file operations
-- Makes file operations testable
-- Centralized error handling
+- Provides centralized logging.
+- Supports real-time log streaming via gRPC.
 
-**HTTP Downloader**
+**Health Check Service**
 
-- Handles HTTP requests
-- Async/sync support
-- Timeout management
+- Monitors system health.
+- Supports real-status streaming.
 
 ### Presentation Layer
 
-**SidecarService (gRPC)**
+**SidecarService (Async gRPC)**
 
-- Thin adapter layer
-- Delegates to use cases
-- Handles protocol-specific concerns
-- Error translation
+- Implementation of `SidecarApiServicer`.
+- Asynchronous request handling using `grpc.aio`.
+- Delegates all business logic to use cases.
+- Supports streaming for logs and health status.
 
 ## Dependency Injection
 
 Using manual DI with `DependencyContainer`:
 
-```python
-class DependencyContainer:
-    def __init__(self):
-        # Create infrastructure
-        self.http_downloader = HttpDownloader()
-        self.file_manager = ExtensionFileManager(...)
-
-        # Create repositories
-        self.repository = RepositoryImpl(
-            file_manager=self.file_manager
-        )
-
-        # Create use cases
-        self.install_uc = InstallExtensionUseCase(
-            repository=self.repository,
-            installer=self.extension_installer
-        )
-
-        # Create service
-        self.sidecar_service = SidecarService(
-            install_extension_uc=self.install_uc,
-            ...
-        )
-```
-
-Benefits:
-
-- Clear dependency graph
-- Easy to test (swap implementations)
-- No magic, explicit wiring
-- Simple to understand
+- Explicit wiring in `shared/dependency_container.py`.
+- Singleton instances managed by the container.
+- Clean separation of infrastructure and application logic.
 
 ## Testing Strategy
 
 ### Unit Tests
 
-- Test individual components in isolation
-- Mock all dependencies
-- Focus on business logic
-- Fast execution
+- Test individual components in isolation.
+- Mock all dependencies.
+- Focus on business logic.
 
 ### Integration Tests
 
-- Test component interactions
-- May use real file system (in temp directory)
-- Test error scenarios
-- Validate end-to-end flows
+- Test component interactions.
+- Validate end-to-end flows (e.g., install to load).
 
-### Test Coverage Goals
+## Migration Notes
 
-- Domain: 80%+
-- Application: 70%+
-- Infrastructure: 60%+
-- Presentation: 50%+
+- The service has been migrated to an asynchronous architecture using `grpc.aio`.
+- All file operations are encapsulated in `ExtensionFileManager`.
+- Logging is now a first-class service supporting streaming.
 
-## Migration Guide
-
-### Old → New Mapping
-
-| Old                    | New                                                    |
-| ---------------------- | ------------------------------------------------------ |
-| `api_server_impl.py`   | `presentation/grpc/sidecar_service.py`                 |
-| Direct file operations | `infrastructure/file_system/extension_file_manager.py` |
-| HTTP in API server     | `infrastructure/downloaders/http_downloader.py`        |
-| Mixed concerns         | Separated into layers                                  |
-
-### Running the New Service
+## Running the Service
 
 ```bash
-python main_new.py
-```
-
-### Running Tests
-
-```bash
-# Run all tests
-python -m pytest tests/
-
-# Run specific tests
-python -m pytest tests/unit/test_use_cases.py
-
-# With coverage
-python -m pytest --cov=. tests/
+cd sidecar/src
+python main.py
 ```
 
 ## Benefits of This Architecture
 
-1. **Testability**: All components are easily testable with mocks
-2. **Maintainability**: Clear separation of concerns
-3. **Flexibility**: Easy to swap implementations
-4. **Scalability**: Add new features without changing existing code
-5. **Clarity**: Clear dependencies and data flow
-6. **Robustness**: Better error handling and validation
-
-## Future Improvements
-
-- Add caching layer for loaded extensions
-- Implement event-driven architecture for install progress
-- Add database for extension metadata
-- Implement retry logic for downloads
-- Add metrics and monitoring
-- Support for extension updates
+1. **Testability**: Highly decoupled components.
+2. **Maintainability**: Clear architectural boundaries.
+3. **Flexibility**: Simple to swap infrastructure (e.g., from file-based to DB-based storage).
+4. **Resilience**: Centralized logging and health monitoring.
+5. **Performance**: Asynchronous gRPC handling for better throughput.

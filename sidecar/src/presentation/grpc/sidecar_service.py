@@ -1,6 +1,6 @@
 """gRPC Service Implementation"""
 import logging
-import time
+import asyncio
 import sidecar_api_pb2 as pb2
 import sidecar_api_pb2_grpc as pb2_grpc
 import grpc
@@ -54,7 +54,7 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
         self.health_check_service = health_check_service
         self.logging_service = logging_service
 
-    def ListInstalledExtensions(self, request, context):
+    async def ListInstalledExtensions(self, request, context):
         """List all installed extensions"""
         try:
             extensions = self.list_installed_uc.execute()
@@ -68,7 +68,7 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             context.set_details(str(e))
             return pb2.ListInstalledExtensionsRes()
 
-    def GetInstalledExtension(self, request, context):
+    async def GetInstalledExtension(self, request, context):
         """Get a single installed extension"""
         try:
             extension = self.get_installed_uc.execute(request.pkg_name)
@@ -86,7 +86,7 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             context.set_details(str(e))
             return pb2.GetInstalledExtensionRes()
 
-    def InstallExtension(self, request, context):
+    async def InstallExtension(self, request, context):
         """Install an extension"""
         try:
             metadata = ExtensionMetadata(
@@ -97,7 +97,9 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
                 version=1,
                 python_version=3,
             )
-            self.install_extension_uc.execute(metadata)
+            # This involves network/IO, ideally should be async but use_case is sync
+            loop = asyncio.get_event_loop()
+            await loop.run_in_executor(None, self.install_extension_uc.execute, metadata)
             return pb2.Empty()
         except Exception as e:
             logger.error(f"InstallExtension error: {e}", exc_info=True)
@@ -105,7 +107,7 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             context.set_details(str(e))
             return pb2.Empty()
 
-    def UninstallExtension(self, request, context):
+    async def UninstallExtension(self, request, context):
         """Uninstall an extension"""
         try:
             self.uninstall_extension_uc.execute(request.pkg_name)
@@ -116,10 +118,12 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             context.set_details(str(e))
             return pb2.Empty()
 
-    def ListRemoteExtensions(self, request, context):
+    async def ListRemoteExtensions(self, request, context):
         """List available remote extensions"""
         try:
-            extensions = self.list_remote_uc.execute(request.repo_base_url)
+            # UC involves network IO, run in executor
+            loop = asyncio.get_event_loop()
+            extensions = await loop.run_in_executor(None, self.list_remote_uc.execute, request.repo_base_url)
             pb_extensions = [
                 pb2.RemoteExtension(
                     base=pb2.Extension(
@@ -142,14 +146,15 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             logger.error(f"ListRemoteExtensions error: {e}", exc_info=True)
             return pb2.ListRemoteExtensionsRes()
 
-    def GetInstallProgress(self, request, context):
+    async def GetInstallProgress(self, request, context):
         """Get installation progress (placeholder)"""
         return pb2.GetInstallProgressRes(sites=[])
 
-    def AddExtensionRepo(self, request, context):
+    async def AddExtensionRepo(self, request, context):
         """Add a new extension repository"""
         try:
-            repo = self.add_repo_uc.execute(request.url)
+            loop = asyncio.get_event_loop()
+            repo = await loop.run_in_executor(None, self.add_repo_uc.execute, request.url)
             return pb2.AddExtensionRepoRes(
                 url=repo.url,
                 added_at=int(repo.added_at.timestamp() * 1000),
@@ -169,7 +174,7 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             context.set_details(str(e))
             return pb2.AddExtensionRepoRes()
 
-    def RemoveExtensionRepo(self, request, context):
+    async def RemoveExtensionRepo(self, request, context):
         """Remove an extension repository"""
         try:
             self.remove_repo_uc.execute(request.url)
@@ -185,7 +190,7 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             context.set_details(str(e))
             return pb2.Empty()
 
-    def ListExtensionRepos(self, request, context):
+    async def ListExtensionRepos(self, request, context):
         """List all extension repositories"""
         try:
             repos = self.repo_repository.find_all()
@@ -207,31 +212,31 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             context.set_details(str(e))
             return pb2.ListExtensionReposRes()
 
-    def GetSite(self, request, context):
+    async def GetSite(self, request, context):
         """Delegate to extension resolver"""
-        return self._delegate_to_resolver(request.pkg_name, "GetSite", request, context)
+        return await self._delegate_to_resolver(request.pkg_name, "GetSite", request, context)
 
-    def GetBoards(self, request, context):
+    async def GetBoards(self, request, context):
         """Delegate to extension resolver"""
-        return self._delegate_to_resolver(request.pkg_name, "GetBoards", request, context)
+        return await self._delegate_to_resolver(request.pkg_name, "GetBoards", request, context)
 
-    def GetThreadInfos(self, request, context):
+    async def GetThreadInfos(self, request, context):
         """Delegate to extension resolver"""
-        return self._delegate_to_resolver(request.pkg_name, "GetThreadInfos", request, context)
+        return await self._delegate_to_resolver(request.pkg_name, "GetThreadInfos", request, context)
 
-    def GetThreadPost(self, request, context):
+    async def GetThreadPost(self, request, context):
         """Delegate to extension resolver"""
-        return self._delegate_to_resolver(request.pkg_name, "GetThreadPost", request, context)
+        return await self._delegate_to_resolver(request.pkg_name, "GetThreadPost", request, context)
 
-    def GetRegardingPosts(self, request, context):
+    async def GetRegardingPosts(self, request, context):
         """Delegate to extension resolver"""
-        return self._delegate_to_resolver(request.pkg_name, "GetRegardingPosts", request, context)
+        return await self._delegate_to_resolver(request.pkg_name, "GetRegardingPosts", request, context)
 
-    def GetComments(self, request, context):
+    async def GetComments(self, request, context):
         """Delegate to extension resolver"""
-        return self._delegate_to_resolver(request.pkg_name, "GetComments", request, context)
+        return await self._delegate_to_resolver(request.pkg_name, "GetComments", request, context)
 
-    def _delegate_to_resolver(self, pkg_name, method_name, request, context):
+    async def _delegate_to_resolver(self, pkg_name, method_name, request, context):
         """Delegate method call to extension resolver"""
         try:
             extension = self.extension_repository.find_by_pkg_name(pkg_name)
@@ -245,7 +250,10 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
                 extension.installation_path
             )
             method = getattr(resolver, method_name)
-            return method(request, context)
+            
+            # Extensions are likely synchronous, run in executor
+            loop = asyncio.get_event_loop()
+            return await loop.run_in_executor(None, method, request, context)
         except Exception as e:
             logger.error(f"{method_name} error: {e}", exc_info=True)
             context.set_code(grpc.StatusCode.INTERNAL)
@@ -267,7 +275,7 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
         )
 
     # Health Check Methods
-    def HealthCheck(self, request, context):
+    async def HealthCheck(self, request, context):
         """Perform health check"""
         try:
             return self.health_check_service.check(request.service)
@@ -278,10 +286,10 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
                 message=str(e)
             )
 
-    def WatchHealth(self, request, context):
+    async def WatchHealth(self, request, context):
         """Stream health status changes"""
         last_status = None
-        while context.is_active():
+        while True:
             try:
                 status, message = self.health_check_service.get_status()
                 
@@ -295,23 +303,23 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
                     last_status = status
                     yield current_result
                 
-                time.sleep(1)
+                await asyncio.sleep(1)
             except Exception as e:
                 logger.error(f"WatchHealth error: {e}", exc_info=True)
                 break
 
     # Logs Methods
-    def WatchLogs(self, request, context):
+    async def WatchLogs(self, request, context):
         """Stream logs in real-time"""
         log_queue = None
         try:
             min_level = proto_level_to_python(request.min_level)
             log_queue = self.logging_service.subscribe_stream(min_level)
             
-            while context.is_active():
+            while True:
                 try:
-                    # Wait for new log entry (with timeout)
-                    entry = log_queue.get(timeout=1.0)
+                    # Wait for new log entry
+                    entry = await log_queue.get()
                     
                     yield pb2.LogEntry(
                         timestamp=entry.timestamp,
@@ -320,16 +328,18 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
                         message=entry.message,
                         exception=entry.exception or ""
                     )
-                except:
-                    # Timeout or queue empty, continue
-                    continue
+                except asyncio.CancelledError:
+                    break
+                except Exception as e:
+                    logger.error(f"Error in WatchLogs loop: {e}")
+                    break
         except Exception as e:
             logger.error(f"WatchLogs error: {e}", exc_info=True)
         finally:
             if log_queue:
                 self.logging_service.unsubscribe_stream(log_queue)
 
-    def GetLogs(self, request, context):
+    async def GetLogs(self, request, context):
         """Get historical logs"""
         try:
             min_level = proto_level_to_python(request.min_level)
@@ -356,7 +366,7 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             logger.error(f"GetLogs error: {e}", exc_info=True)
             return pb2.GetLogsResponse()
 
-    def SetLogLevel(self, request, context):
+    async def SetLogLevel(self, request, context):
         """Set log level"""
         try:
             level = proto_level_to_python(request.level)

@@ -140,7 +140,7 @@ sidecar/src/
 
 - 擴展管理: ListInstalledExtensions, InstallExtension, UninstallExtension
 - 論壇操作: GetSite, GetBoards, GetThreadInfos, GetThreadPost
-- 所有操作委託給動態加載的擴展
+- 所有操作委託給動態加載的擴展，並在非同步環境下透過執行緒池執行以確保不阻塞。
 
 ### 擴展系統
 
@@ -379,9 +379,9 @@ make run SIDECAR_HOST=my-server.local  # 連接到主機名/mDNS
 
     - 執行緒與併發警示:
 
-      - 由於 Sidecar 包含 WatchHealth 和 WatchLogs 等長連接 Streaming，AI 必須意識到 Python gRPC 預設一個請求佔用一個 Thread。
-      - 當遇到連線超時問題，優先檢查 MAX_WORKERS 設定，本專案建議預設值為 `5`。
-      - 超時定義：本專案 gRPC 請求的超時判定基準為 `10 秒`。若超過此閾值，AI 必須停止重試並轉向架構層面檢查（如 Thread 阻塞）。
+      - Sidecar 使用 `grpc.aio` 非同步伺服器。大部分 Streaming 請求（如 WatchHealth 和 WatchLogs）運行在非同步事件迴圈中。
+      - 對於同步的擴展開發或 IO 操作，應使用 `run_in_executor` 委託給執行緒池。
+      - 超時定義：本專案 gRPC 請求的超時判定基準為 `10 秒`。若超過此閾值，AI 必須停止重試並轉向架構層面檢查。
 
     - 中斷與人工干預 (Interruption Protocol):
 

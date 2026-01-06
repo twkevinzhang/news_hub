@@ -1,22 +1,19 @@
 """Main entry point for Sidecar service"""
 import logging
-from concurrent import futures
+import asyncio
 import grpc
-import threading
-import time
 from shared.config import Config
 from shared.dependency_container import DependencyContainer
 import sidecar_api_pb2_grpc as pb2_grpc
 
-class LoggingInterceptor(grpc.ServerInterceptor):
+class LoggingInterceptor(grpc.aio.ServerInterceptor):
     """Interceptor to log all gRPC requests"""
-    def intercept_service(self, continuation, handler_call_details):
+    async def intercept_service(self, continuation, handler_call_details):
         logger = logging.getLogger(__name__)
         logger.debug(f"gRPC call received: {handler_call_details.method}")
-        handler = continuation(handler_call_details)
-        return handler
+        return await continuation(handler_call_details)
 
-def main():
+async def main():
     """Start the gRPC server"""
     # Note: Logging is initialized inside DependencyContainer via LoggingService
     logger = logging.getLogger(__name__)
@@ -24,10 +21,12 @@ def main():
     try:
         # Initialize dependencies
         container = DependencyContainer()
+        
+        # Set event loop for logging stream handler
+        container.logging_service.stream_handler.set_loop(asyncio.get_running_loop())
 
-        # Create gRPC server with logging interceptor
-        server = grpc.server(
-            futures.ThreadPoolExecutor(max_workers=Config.MAX_WORKERS),
+        # Create gRPC server - aio server doesn't use ThreadPoolExecutor for logic
+        server = grpc.aio.server(
             interceptors=[LoggingInterceptor()],
             options=[
                 ('grpc.logging_verbosity', 'DEBUG'),
@@ -42,27 +41,26 @@ def main():
 
         # Start server
         server.add_insecure_port(f'[::]:{Config.GRPC_PORT}')
-        server.start()
+        await server.start()
 
-        logger.info(f"gRPC server running on port {Config.GRPC_PORT}...")
+        logger.info(f"gRPC aio server running on port {Config.GRPC_PORT}...")
         
         # ==========
-        # Start test log generator thread
-        def generate_test_logs():
+        # Start test log generator
+        async def generate_test_logs():
             """Generate a test log every second for debugging"""
             counter = 0
             test_logger = logging.getLogger("sidecar.test")
             while True:
                 counter += 1
                 test_logger.info(f"Test log message #{counter} - Verifying log streaming pipeline")
-                time.sleep(1)
+                await asyncio.sleep(1)
         
-        log_thread = threading.Thread(target=generate_test_logs, daemon=True)
-        log_thread.start()
+        asyncio.create_task(generate_test_logs())
         logger.info("Test log generator started (1 log/second)")
         # ==========
         
-        server.wait_for_termination()
+        await server.wait_for_termination()
 
     except Exception as e:
         logger.exception(f"Server error: {e}")
@@ -71,7 +69,7 @@ def main():
 
 if __name__ == "__main__" or __name__ == "main":
     try:
-        main()
+        asyncio.run(main())
     except Exception as e:
         # Fallback logging if logger isn't initialized
         print(f"Fatal startup error: {e}")
