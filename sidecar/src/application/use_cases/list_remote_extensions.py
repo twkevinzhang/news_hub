@@ -2,21 +2,45 @@
 import logging
 from typing import List
 from domain.value_objects.extension_metadata import ExtensionMetadata
-from domain.repositories.extension_repository import RemoteExtensionRepository
+from domain.repositories.repo_repository import RepoRepository
 
 
 logger = logging.getLogger(__name__)
 
 
 class ListRemoteExtensionsUseCase:
-    """Use case for listing remote extensions"""
+    """Use case for listing remote extensions from all registered repos"""
 
-    def __init__(self, repository: RemoteExtensionRepository):
-        self.repository = repository
+    def __init__(
+        self,
+        extension_repository: RemoteExtensionRepository,
+        repo_repository: RepoRepository
+    ):
+        self.extension_repository = extension_repository
+        self.repo_repository = repo_repository
 
-    def execute(self, repo_base_url: str) -> List[ExtensionMetadata]:
+    def execute(self, keyword: str = None) -> List[ExtensionMetadata]:
         """Execute the list remote extensions use case"""
-        logger.debug(f"Fetching remote extensions from {repo_base_url}")
-        extensions = self.repository.fetch_all(repo_base_url)
-        logger.debug(f"Found {len(extensions)} remote extensions")
-        return extensions
+        logger.debug("Fetching remote extensions from all registered repositories")
+        
+        all_extensions = []
+        repos = self.repo_repository.find_all()
+        
+        for repo in repos:
+            try:
+                extensions = self.extension_repository.fetch_all(repo.url)
+                all_extensions.extend(extensions)
+            except Exception as e:
+                logger.error(f"Failed to fetch extensions from {repo.url}: {e}")
+                continue
+
+        # Optional: Filter by keyword if provided
+        if keyword:
+            keyword = keyword.lower()
+            all_extensions = [
+                e for e in all_extensions
+                if keyword in e.display_name.lower() or keyword in e.pkg_name.lower()
+            ]
+
+        logger.debug(f"Found total {len(all_extensions)} remote extensions")
+        return all_extensions

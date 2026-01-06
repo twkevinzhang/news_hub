@@ -73,7 +73,8 @@ class DependencyContainer:
             repository=self.extension_repository
         )
         self.list_remote_uc = ListRemoteExtensionsUseCase(
-            repository=self.remote_extension_repository
+            extension_repository=self.remote_extension_repository,
+            repo_repository=self.repo_repository
         )
         self.get_installed_uc = GetInstalledExtensionUseCase(
             repository=self.extension_repository

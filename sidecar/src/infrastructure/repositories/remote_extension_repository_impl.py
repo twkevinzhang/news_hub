@@ -16,29 +16,46 @@ class RemoteExtensionRepositoryImpl(RemoteExtensionRepository):
     def __init__(self, downloader: HttpDownloader):
         self.downloader = downloader
 
-    def fetch_all(self, repo_base_url: str) -> List[ExtensionMetadata]:
-        """Fetch all available extensions from remote repository"""
-        index_url = f"{repo_base_url}/index.json"
-        data = self.downloader.fetch_json_sync(index_url)
+    def fetch_all(self, repo_url: str) -> List[ExtensionMetadata]:
+        """Fetch all available extensions from remote repository root"""
+        base_url = repo_url.rstrip("/")
+        if base_url.endswith(".git"):
+            base_url = base_url[:-4]
+
+        parts = base_url.split("/")
+        if len(parts) < 2:
+            logger.warning(f"Invalid GitHub URL: {repo_url}")
+            return []
+
+        owner = parts[-2]
+        repo_name = parts[-1]
+
+        data = None
+        for branch in ["main", "master"]:
+            raw_url = f"https://raw.githubusercontent.com/{owner}/{repo_name}/{branch}/extensions.json"
+            logger.debug(f"Checking for extensions.json at {raw_url}")
+            data = self.downloader.fetch_json_sync(raw_url)
+            if data:
+                break
 
         if not data or "extensions" not in data:
-            logger.warning(f"No extensions found at {index_url}")
+            logger.warning(f"No extensions found for {repo_url}")
             return []
 
         extensions = []
         for item in data["extensions"]:
             try:
                 metadata = ExtensionMetadata(
-                    repo_base_url=repo_base_url,
+                    repo_base_url=repo_url,  # Keep original repo link
                     pkg_name=item["pkg_name"],
                     display_name=item["display_name"],
-                    zip_name=item["zip_name"],
+                    zip_name=item.get("zip_name", ""), # Now optional
                     version=item["version"],
                     python_version=item.get("python_version", 3),
                     lang=item.get("lang"),
                     is_nsfw=item.get("is_nsfw", False),
                     icon_url=item.get("icon_url"),
-                    repo_url=item.get("repo_url"),
+                    repo_url=item.get("repo_url", repo_url),
                 )
                 extensions.append(metadata)
             except (KeyError, ValueError) as e:
