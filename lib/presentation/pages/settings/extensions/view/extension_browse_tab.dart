@@ -10,27 +10,42 @@ class ExtensionBrowseTab extends StatelessWidget {
   Widget build(BuildContext context) {
     final cubit = context.watch<ExtensionCubit>();
     return cubit.state.extensions.when(
-      completed: (data) => data.notInstalled.isEmpty
-          ? const Center(child: Text('No extensions found'))
-          : ListView(
-              children: [
-                ...data.notInstalled.map((e) {
-                  final installing = cubit.state.installingExtensions[e.pkgName];
-                  return ListTile(
-                    title: Text(e.displayName),
-                    subtitle: installing != null ? LinearProgressIndicator(value: installing.second) : Text(e.pkgName),
-                    trailing: installing != null
-                        ? const SizedBox(width: 24, height: 24, child: CircularProgressIndicator(strokeWidth: 2))
+      completed: (data) {
+        final allExtensions = [...data.installed, ...data.notInstalled];
+        if (allExtensions.isEmpty) {
+          return const Center(child: Text('No extensions found'));
+        }
+        return ListView(
+          children: [
+            ...allExtensions.map((e) {
+              final installing = cubit.state.installingExtensions[e.pkgName];
+              final isInstalled = data.installed.any((i) => i.pkgName == e.pkgName);
+
+              return ListTile(
+                title: Text(e.displayName),
+                subtitle: installing != null ? LinearProgressIndicator(value: installing.second) : Text(e.pkgName),
+                trailing: installing != null
+                    ? const SizedBox(
+                        width: 24,
+                        height: 24,
+                        child: CircularProgressIndicator(strokeWidth: 2),
+                      )
+                    : isInstalled
+                        ? const OutlinedButton(
+                            onPressed: null, // Disabled or click to open?
+                            child: Text('Installed'),
+                          )
                         : ElevatedButton(
                             child: const Text('Install'),
                             onPressed: () {
                               cubit.installExtension(e);
                             },
                           ),
-                  );
-                })
-              ],
-            ),
+              );
+            })
+          ],
+        );
+      },
       error: (e) => Center(child: Text(e.toString())),
       initial: () => const SizedBox(),
       loading: () => const LoadingIndicator(),
