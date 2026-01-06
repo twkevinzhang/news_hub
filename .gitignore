@@ -48,3 +48,4 @@ android/app/.cxx/Debug
 sidecar/venv
 sidecar/dist
 sidecar/build
+sidecar/persistent
