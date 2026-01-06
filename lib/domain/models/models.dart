@@ -55,14 +55,14 @@ class LogEntry {
   });
 }
 
-class ExtensionRepo {
+class Repo {
   final String? icon;
   final String baseUrl;
   final String displayName;
   final String website;
   final String signingKeyFingerprint;
 
-  ExtensionRepo({
+  Repo({
     this.icon,
     required this.baseUrl,
     required this.displayName,

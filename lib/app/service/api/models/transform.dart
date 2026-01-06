@@ -1,4 +1,3 @@
-import 'package:dartx/dartx.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 import 'package:news_hub/shared/extensions.dart';
 import 'sidecar_api.pb.dart' as pb;
@@ -221,9 +220,9 @@ extension RemoteExtensionTransform on pb.RemoteExtension {
   }
 }
 
-extension ExtensionRepoTransform on pb.ExtensionRepo {
-  domain.ExtensionRepo toExtensionRepoDomain() {
-    return domain.ExtensionRepo(
+extension RepoTransform on pb.ExtensionRepo {
+  domain.Repo toRepoDomain() {
+    return domain.Repo(
       baseUrl: url,
       displayName: displayName.isNotEmpty ? displayName : url,
       website: website.isNotEmpty ? website : url,
@@ -269,7 +268,7 @@ extension LogEntryTransform on pb.LogEntry {
 }
 
 extension DomainLogLevelTransform on domain.LogLevel {
-  pb.LogLevel toPbLogLevel(){
+  pb.LogLevel toPbLogLevel() {
     return switch (this) {
       domain.LogLevel.debug => pb.LogLevel.DEBUG,
       domain.LogLevel.info => pb.LogLevel.INFO,

@@ -1,7 +1,7 @@
 import 'package:dartx/dartx.dart';
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/extension/interactor/list_installed_extensions.dart';
-import 'package:news_hub/domain/extension/extension_preferences_service.dart';
+import 'package:news_hub/domain/extension/services/extension_preferences_service.dart';
 import 'package:news_hub/domain/extension/interactor/list_remote_extensions.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:rxdart/rxdart.dart';
@@ -21,26 +21,17 @@ class ListExtensions {
 
   Stream<Extensions> asStream(String? keyword) {
     return CombineLatestStream.combine3(
-        _prefService.enabledLanguages().changes(),
-        _listInstalledExtensions.call().asStream(),
-        _listRemoteExtensions.call().asStream(),
+        _prefService.enabledLanguages().changes(), _listInstalledExtensions.call().asStream(), _listRemoteExtensions.call().asStream(),
         (enabledLanguages, installed, remotes) {
       var filtered = installed.toIterable();
-      var updates = filtered.where((element) => remotes.any(
-          (e) => e.pkgName == element.pkgName && e.version > element.version));
+      var updates = filtered.where((element) => remotes.any((e) => e.pkgName == element.pkgName && e.version > element.version));
       var deprecated = filtered.toSet().difference(remotes.toSet());
-      var notInstalled = remotes.filter(
-          (element) => filtered.none((e) => e.pkgName == element.pkgName));
+      var notInstalled = remotes.filter((element) => filtered.none((e) => e.pkgName == element.pkgName));
       if (keyword != null) {
-        filtered =
-            filtered.filter((element) => element.displayName.contains(keyword));
-        updates =
-            updates.filter((element) => element.displayName.contains(keyword));
-        deprecated = deprecated
-            .filter((element) => element.displayName.contains(keyword))
-            .toSet();
-        notInstalled = notInstalled
-            .filter((element) => element.displayName.contains(keyword));
+        filtered = filtered.filter((element) => element.displayName.contains(keyword));
+        updates = updates.filter((element) => element.displayName.contains(keyword));
+        deprecated = deprecated.filter((element) => element.displayName.contains(keyword)).toSet();
+        notInstalled = notInstalled.filter((element) => element.displayName.contains(keyword));
       }
       return Extensions(
         updates: updates.toSet(),

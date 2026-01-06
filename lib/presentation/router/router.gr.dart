@@ -12,26 +12,25 @@
 import 'package:auto_route/auto_route.dart' as _i12;
 import 'package:flutter/material.dart' as _i13;
 import 'package:news_hub/domain/models/models.dart' as _i14;
-import 'package:news_hub/presentation/pages/app-shell/home/home_screen.dart'
-    as _i4;
-import 'package:news_hub/presentation/pages/app-shell/settings/view/settings_screen.dart'
-    as _i6;
-import 'package:news_hub/presentation/pages/content-discovery/browse-threads/view/thread_list_screen.dart'
-    as _i10;
-import 'package:news_hub/presentation/pages/content-discovery/read-thread/view/thread_detail_screen.dart'
-    as _i9;
-import 'package:news_hub/presentation/pages/content-discovery/search-threads/view/search_screen.dart'
-    as _i5;
-import 'package:news_hub/presentation/pages/content-organization/create-collection/view/create_collection_page.dart'
+import 'package:news_hub/presentation/pages/collections/create/view/create_collection_page.dart'
     as _i2;
-import 'package:news_hub/presentation/pages/content-organization/manage-collections/view/collection_list_screen.dart'
+import 'package:news_hub/presentation/pages/collections/list/view/collection_list_screen.dart'
     as _i1;
-import 'package:news_hub/presentation/pages/extension-marketplace/manage-extensions/view/extension_manage_screen.dart'
+import 'package:news_hub/presentation/pages/settings/extensions/view/extension_manage_screen.dart'
     as _i3;
-import 'package:news_hub/presentation/pages/system-operations/configure-sidecar/sidecar_manage_screen.dart'
+import 'package:news_hub/presentation/pages/settings/settings_screen.dart'
+    as _i6;
+import 'package:news_hub/presentation/pages/settings/sidecar/sidecar_manage_screen.dart'
     as _i8;
-import 'package:news_hub/presentation/pages/system-operations/monitor-sidecar/sidecar_logs_screen.dart'
+import 'package:news_hub/presentation/pages/shell/home_screen.dart' as _i4;
+import 'package:news_hub/presentation/pages/sidecar/logs/sidecar_logs_screen.dart'
     as _i7;
+import 'package:news_hub/presentation/pages/threads/detail/view/thread_detail_screen.dart'
+    as _i9;
+import 'package:news_hub/presentation/pages/threads/list/view/thread_list_screen.dart'
+    as _i10;
+import 'package:news_hub/presentation/pages/threads/search/view/search_screen.dart'
+    as _i5;
 import 'package:news_hub/presentation/router/wrapper_screen.dart' as _i11;
 
 /// generated route for

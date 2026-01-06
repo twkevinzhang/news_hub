@@ -1,7 +1,7 @@
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/app/service/preferences/preference.dart';
 import 'package:news_hub/app/service/preferences/store.dart';
-import 'package:news_hub/domain/extension/extension_preferences_service.dart';
+import 'package:news_hub/domain/extension/services/extension_preferences_service.dart';
 
 @LazySingleton(as: ExtensionPreferencesService)
 class ExtensionPreferencesServiceImpl implements ExtensionPreferencesService {
@@ -13,8 +13,7 @@ class ExtensionPreferencesServiceImpl implements ExtensionPreferencesService {
 
   @override
   Preference<Set<String>> enabledLanguages() {
-    return _store.getStringList('extension_languages',
-        defaultValue: {'en'}); // Replace with actual default languages
+    return _store.getStringList('extension_languages', defaultValue: {'en'}); // Replace with actual default languages
   }
 
   @override

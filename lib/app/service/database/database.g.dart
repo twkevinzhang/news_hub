@@ -3,12 +3,11 @@
 part of 'database.dart';
 
 // ignore_for_file: type=lint
-class $ExtensionReposTable extends ExtensionRepos
-    with TableInfo<$ExtensionReposTable, ExtensionRepo> {
+class $ReposTable extends Repos with TableInfo<$ReposTable, Repo> {
   @override
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
-  $ExtensionReposTable(this.attachedDatabase, [this._alias]);
+  $ReposTable(this.attachedDatabase, [this._alias]);
   static const VerificationMeta _iconMeta = const VerificationMeta('icon');
   @override
   late final GeneratedColumn<String> icon = GeneratedColumn<String>(
@@ -45,9 +44,9 @@ class $ExtensionReposTable extends ExtensionRepos
   String get aliasedName => _alias ?? actualTableName;
   @override
   String get actualTableName => $name;
-  static const String $name = 'extension_repos';
+  static const String $name = 'repos';
   @override
-  VerificationContext validateIntegrity(Insertable<ExtensionRepo> instance,
+  VerificationContext validateIntegrity(Insertable<Repo> instance,
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
@@ -89,9 +88,9 @@ class $ExtensionReposTable extends ExtensionRepos
   @override
   Set<GeneratedColumn> get $primaryKey => {baseUrl};
   @override
-  ExtensionRepo map(Map<String, dynamic> data, {String? tablePrefix}) {
+  Repo map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
-    return ExtensionRepo(
+    return Repo(
       icon: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}icon']),
       baseUrl: attachedDatabase.typeMapping
@@ -107,18 +106,18 @@ class $ExtensionReposTable extends ExtensionRepos
   }
 
   @override
-  $ExtensionReposTable createAlias(String alias) {
-    return $ExtensionReposTable(attachedDatabase, alias);
+  $ReposTable createAlias(String alias) {
+    return $ReposTable(attachedDatabase, alias);
   }
 }
 
-class ExtensionRepo extends DataClass implements Insertable<ExtensionRepo> {
+class Repo extends DataClass implements Insertable<Repo> {
   final String? icon;
   final String baseUrl;
   final String displayName;
   final String website;
   final String signingKeyFingerprint;
-  const ExtensionRepo(
+  const Repo(
       {this.icon,
       required this.baseUrl,
       required this.displayName,
@@ -137,8 +136,8 @@ class ExtensionRepo extends DataClass implements Insertable<ExtensionRepo> {
     return map;
   }
 
-  ExtensionReposCompanion toCompanion(bool nullToAbsent) {
-    return ExtensionReposCompanion(
+  ReposCompanion toCompanion(bool nullToAbsent) {
+    return ReposCompanion(
       icon: icon == null && nullToAbsent ? const Value.absent() : Value(icon),
       baseUrl: Value(baseUrl),
       displayName: Value(displayName),
@@ -147,10 +146,10 @@ class ExtensionRepo extends DataClass implements Insertable<ExtensionRepo> {
     );
   }
 
-  factory ExtensionRepo.fromJson(Map<String, dynamic> json,
+  factory Repo.fromJson(Map<String, dynamic> json,
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
-    return ExtensionRepo(
+    return Repo(
       icon: serializer.fromJson<String?>(json['icon']),
       baseUrl: serializer.fromJson<String>(json['baseUrl']),
       displayName: serializer.fromJson<String>(json['displayName']),
@@ -171,13 +170,13 @@ class ExtensionRepo extends DataClass implements Insertable<ExtensionRepo> {
     };
   }
 
-  ExtensionRepo copyWith(
+  Repo copyWith(
           {Value<String?> icon = const Value.absent(),
           String? baseUrl,
           String? displayName,
           String? website,
           String? signingKeyFingerprint}) =>
-      ExtensionRepo(
+      Repo(
         icon: icon.present ? icon.value : this.icon,
         baseUrl: baseUrl ?? this.baseUrl,
         displayName: displayName ?? this.displayName,
@@ -185,8 +184,8 @@ class ExtensionRepo extends DataClass implements Insertable<ExtensionRepo> {
         signingKeyFingerprint:
             signingKeyFingerprint ?? this.signingKeyFingerprint,
       );
-  ExtensionRepo copyWithCompanion(ExtensionReposCompanion data) {
-    return ExtensionRepo(
+  Repo copyWithCompanion(ReposCompanion data) {
+    return Repo(
       icon: data.icon.present ? data.icon.value : this.icon,
       baseUrl: data.baseUrl.present ? data.baseUrl.value : this.baseUrl,
       displayName:
@@ -200,7 +199,7 @@ class ExtensionRepo extends DataClass implements Insertable<ExtensionRepo> {
 
   @override
   String toString() {
-    return (StringBuffer('ExtensionRepo(')
+    return (StringBuffer('Repo(')
           ..write('icon: $icon, ')
           ..write('baseUrl: $baseUrl, ')
           ..write('displayName: $displayName, ')
@@ -216,7 +215,7 @@ class ExtensionRepo extends DataClass implements Insertable<ExtensionRepo> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is ExtensionRepo &&
+      (other is Repo &&
           other.icon == this.icon &&
           other.baseUrl == this.baseUrl &&
           other.displayName == this.displayName &&
@@ -224,14 +223,14 @@ class ExtensionRepo extends DataClass implements Insertable<ExtensionRepo> {
           other.signingKeyFingerprint == this.signingKeyFingerprint);
 }
 
-class ExtensionReposCompanion extends UpdateCompanion<ExtensionRepo> {
+class ReposCompanion extends UpdateCompanion<Repo> {
   final Value<String?> icon;
   final Value<String> baseUrl;
   final Value<String> displayName;
   final Value<String> website;
   final Value<String> signingKeyFingerprint;
   final Value<int> rowid;
-  const ExtensionReposCompanion({
+  const ReposCompanion({
     this.icon = const Value.absent(),
     this.baseUrl = const Value.absent(),
     this.displayName = const Value.absent(),
@@ -239,7 +238,7 @@ class ExtensionReposCompanion extends UpdateCompanion<ExtensionRepo> {
     this.signingKeyFingerprint = const Value.absent(),
     this.rowid = const Value.absent(),
   });
-  ExtensionReposCompanion.insert({
+  ReposCompanion.insert({
     this.icon = const Value.absent(),
     required String baseUrl,
     required String displayName,
@@ -250,7 +249,7 @@ class ExtensionReposCompanion extends UpdateCompanion<ExtensionRepo> {
         displayName = Value(displayName),
         website = Value(website),
         signingKeyFingerprint = Value(signingKeyFingerprint);
-  static Insertable<ExtensionRepo> custom({
+  static Insertable<Repo> custom({
     Expression<String>? icon,
     Expression<String>? baseUrl,
     Expression<String>? displayName,
@@ -269,14 +268,14 @@ class ExtensionReposCompanion extends UpdateCompanion<ExtensionRepo> {
     });
   }
 
-  ExtensionReposCompanion copyWith(
+  ReposCompanion copyWith(
       {Value<String?>? icon,
       Value<String>? baseUrl,
       Value<String>? displayName,
       Value<String>? website,
       Value<String>? signingKeyFingerprint,
       Value<int>? rowid}) {
-    return ExtensionReposCompanion(
+    return ReposCompanion(
       icon: icon ?? this.icon,
       baseUrl: baseUrl ?? this.baseUrl,
       displayName: displayName ?? this.displayName,
@@ -314,7 +313,7 @@ class ExtensionReposCompanion extends UpdateCompanion<ExtensionRepo> {
 
   @override
   String toString() {
-    return (StringBuffer('ExtensionReposCompanion(')
+    return (StringBuffer('ReposCompanion(')
           ..write('icon: $icon, ')
           ..write('baseUrl: $baseUrl, ')
           ..write('displayName: $displayName, ')
@@ -1514,7 +1513,7 @@ class CollectionBoardRefsCompanion extends UpdateCompanion<CollectionBoardRef> {
 abstract class _$AppDatabase extends GeneratedDatabase {
   _$AppDatabase(QueryExecutor e) : super(e);
   $AppDatabaseManager get managers => $AppDatabaseManager(this);
-  late final $ExtensionReposTable extensionRepos = $ExtensionReposTable(this);
+  late final $ReposTable repos = $ReposTable(this);
   late final $InstalledExtensionsTable installedExtensions =
       $InstalledExtensionsTable(this);
   late final $SuggestionsTable suggestions = $SuggestionsTable(this);
@@ -1526,7 +1525,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       allSchemaEntities.whereType<TableInfo<Table, Object?>>();
   @override
   List<DatabaseSchemaEntity> get allSchemaEntities => [
-        extensionRepos,
+        repos,
         installedExtensions,
         suggestions,
         collections,
@@ -1534,8 +1533,7 @@ abstract class _$AppDatabase extends GeneratedDatabase {
       ];
 }
 
-typedef $$ExtensionReposTableCreateCompanionBuilder = ExtensionReposCompanion
-    Function({
+typedef $$ReposTableCreateCompanionBuilder = ReposCompanion Function({
   Value<String?> icon,
   required String baseUrl,
   required String displayName,
@@ -1543,8 +1541,7 @@ typedef $$ExtensionReposTableCreateCompanionBuilder = ExtensionReposCompanion
   required String signingKeyFingerprint,
   Value<int> rowid,
 });
-typedef $$ExtensionReposTableUpdateCompanionBuilder = ExtensionReposCompanion
-    Function({
+typedef $$ReposTableUpdateCompanionBuilder = ReposCompanion Function({
   Value<String?> icon,
   Value<String> baseUrl,
   Value<String> displayName,
@@ -1553,9 +1550,8 @@ typedef $$ExtensionReposTableUpdateCompanionBuilder = ExtensionReposCompanion
   Value<int> rowid,
 });
 
-class $$ExtensionReposTableFilterComposer
-    extends Composer<_$AppDatabase, $ExtensionReposTable> {
-  $$ExtensionReposTableFilterComposer({
+class $$ReposTableFilterComposer extends Composer<_$AppDatabase, $ReposTable> {
+  $$ReposTableFilterComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1579,9 +1575,9 @@ class $$ExtensionReposTableFilterComposer
       builder: (column) => ColumnFilters(column));
 }
 
-class $$ExtensionReposTableOrderingComposer
-    extends Composer<_$AppDatabase, $ExtensionReposTable> {
-  $$ExtensionReposTableOrderingComposer({
+class $$ReposTableOrderingComposer
+    extends Composer<_$AppDatabase, $ReposTable> {
+  $$ReposTableOrderingComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1605,9 +1601,9 @@ class $$ExtensionReposTableOrderingComposer
       builder: (column) => ColumnOrderings(column));
 }
 
-class $$ExtensionReposTableAnnotationComposer
-    extends Composer<_$AppDatabase, $ExtensionReposTable> {
-  $$ExtensionReposTableAnnotationComposer({
+class $$ReposTableAnnotationComposer
+    extends Composer<_$AppDatabase, $ReposTable> {
+  $$ReposTableAnnotationComposer({
     required super.$db,
     required super.$table,
     super.joinBuilder,
@@ -1630,32 +1626,28 @@ class $$ExtensionReposTableAnnotationComposer
       column: $table.signingKeyFingerprint, builder: (column) => column);
 }
 
-class $$ExtensionReposTableTableManager extends RootTableManager<
+class $$ReposTableTableManager extends RootTableManager<
     _$AppDatabase,
-    $ExtensionReposTable,
-    ExtensionRepo,
-    $$ExtensionReposTableFilterComposer,
-    $$ExtensionReposTableOrderingComposer,
-    $$ExtensionReposTableAnnotationComposer,
-    $$ExtensionReposTableCreateCompanionBuilder,
-    $$ExtensionReposTableUpdateCompanionBuilder,
-    (
-      ExtensionRepo,
-      BaseReferences<_$AppDatabase, $ExtensionReposTable, ExtensionRepo>
-    ),
-    ExtensionRepo,
+    $ReposTable,
+    Repo,
+    $$ReposTableFilterComposer,
+    $$ReposTableOrderingComposer,
+    $$ReposTableAnnotationComposer,
+    $$ReposTableCreateCompanionBuilder,
+    $$ReposTableUpdateCompanionBuilder,
+    (Repo, BaseReferences<_$AppDatabase, $ReposTable, Repo>),
+    Repo,
     PrefetchHooks Function()> {
-  $$ExtensionReposTableTableManager(
-      _$AppDatabase db, $ExtensionReposTable table)
+  $$ReposTableTableManager(_$AppDatabase db, $ReposTable table)
       : super(TableManagerState(
           db: db,
           table: table,
           createFilteringComposer: () =>
-              $$ExtensionReposTableFilterComposer($db: db, $table: table),
+              $$ReposTableFilterComposer($db: db, $table: table),
           createOrderingComposer: () =>
-              $$ExtensionReposTableOrderingComposer($db: db, $table: table),
+              $$ReposTableOrderingComposer($db: db, $table: table),
           createComputedFieldComposer: () =>
-              $$ExtensionReposTableAnnotationComposer($db: db, $table: table),
+              $$ReposTableAnnotationComposer($db: db, $table: table),
           updateCompanionCallback: ({
             Value<String?> icon = const Value.absent(),
             Value<String> baseUrl = const Value.absent(),
@@ -1664,7 +1656,7 @@ class $$ExtensionReposTableTableManager extends RootTableManager<
             Value<String> signingKeyFingerprint = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
-              ExtensionReposCompanion(
+              ReposCompanion(
             icon: icon,
             baseUrl: baseUrl,
             displayName: displayName,
@@ -1680,7 +1672,7 @@ class $$ExtensionReposTableTableManager extends RootTableManager<
             required String signingKeyFingerprint,
             Value<int> rowid = const Value.absent(),
           }) =>
-              ExtensionReposCompanion.insert(
+              ReposCompanion.insert(
             icon: icon,
             baseUrl: baseUrl,
             displayName: displayName,
@@ -1695,20 +1687,17 @@ class $$ExtensionReposTableTableManager extends RootTableManager<
         ));
 }
 
-typedef $$ExtensionReposTableProcessedTableManager = ProcessedTableManager<
+typedef $$ReposTableProcessedTableManager = ProcessedTableManager<
     _$AppDatabase,
-    $ExtensionReposTable,
-    ExtensionRepo,
-    $$ExtensionReposTableFilterComposer,
-    $$ExtensionReposTableOrderingComposer,
-    $$ExtensionReposTableAnnotationComposer,
-    $$ExtensionReposTableCreateCompanionBuilder,
-    $$ExtensionReposTableUpdateCompanionBuilder,
-    (
-      ExtensionRepo,
-      BaseReferences<_$AppDatabase, $ExtensionReposTable, ExtensionRepo>
-    ),
-    ExtensionRepo,
+    $ReposTable,
+    Repo,
+    $$ReposTableFilterComposer,
+    $$ReposTableOrderingComposer,
+    $$ReposTableAnnotationComposer,
+    $$ReposTableCreateCompanionBuilder,
+    $$ReposTableUpdateCompanionBuilder,
+    (Repo, BaseReferences<_$AppDatabase, $ReposTable, Repo>),
+    Repo,
     PrefetchHooks Function()>;
 typedef $$InstalledExtensionsTableCreateCompanionBuilder
     = InstalledExtensionsCompanion Function({
@@ -2575,8 +2564,8 @@ typedef $$CollectionBoardRefsTableProcessedTableManager = ProcessedTableManager<
 class $AppDatabaseManager {
   final _$AppDatabase _db;
   $AppDatabaseManager(this._db);
-  $$ExtensionReposTableTableManager get extensionRepos =>
-      $$ExtensionReposTableTableManager(_db, _db.extensionRepos);
+  $$ReposTableTableManager get repos =>
+      $$ReposTableTableManager(_db, _db.repos);
   $$InstalledExtensionsTableTableManager get installedExtensions =>
       $$InstalledExtensionsTableTableManager(_db, _db.installedExtensions);
   $$SuggestionsTableTableManager get suggestions =>

@@ -109,6 +109,7 @@ All components are designed for easy testing:
 - **Repositories**: Interface-based, swappable implementations
 
 Example test:
+
 ```python
 def test_install_extension():
     # Mock dependencies
@@ -130,16 +131,19 @@ def test_install_extension():
 ### Domain Layer
 
 **Extension (Entity)**
+
 - Represents an installed extension
 - Contains business logic for installation lifecycle
 - Mutable state (installed/uninstalled)
 
 **ExtensionMetadata (Value Object)**
+
 - Immutable extension information
 - Validates data integrity
 - Contains no behavior, only data
 
 **Repository Interfaces**
+
 - Define contracts for data access
 - No implementation details
 - Enable dependency inversion
@@ -147,11 +151,13 @@ def test_install_extension():
 ### Application Layer
 
 **Use Cases**
+
 - One class per business operation
 - Pure business logic
 - No technical details
 
 **Services**
+
 - Support use cases with technical operations
 - `ExtensionInstaller`: Download and install
 - `ExtensionLoader`: Dynamic module loading
@@ -159,16 +165,19 @@ def test_install_extension():
 ### Infrastructure Layer
 
 **Repository Implementations**
+
 - Implement domain repository interfaces
 - Handle technical details (JSON, file I/O)
 - Swappable with other implementations
 
 **File System Manager**
+
 - Encapsulates all file operations
 - Makes file operations testable
 - Centralized error handling
 
 **HTTP Downloader**
+
 - Handles HTTP requests
 - Async/sync support
 - Timeout management
@@ -176,6 +185,7 @@ def test_install_extension():
 ### Presentation Layer
 
 **SidecarService (gRPC)**
+
 - Thin adapter layer
 - Delegates to use cases
 - Handles protocol-specific concerns
@@ -193,13 +203,13 @@ class DependencyContainer:
         self.file_manager = ExtensionFileManager(...)
 
         # Create repositories
-        self.extension_repository = ExtensionRepositoryImpl(
+        self.repository = RepositoryImpl(
             file_manager=self.file_manager
         )
 
         # Create use cases
         self.install_uc = InstallExtensionUseCase(
-            repository=self.extension_repository,
+            repository=self.repository,
             installer=self.extension_installer
         )
 
@@ -211,6 +221,7 @@ class DependencyContainer:
 ```
 
 Benefits:
+
 - Clear dependency graph
 - Easy to test (swap implementations)
 - No magic, explicit wiring
@@ -219,18 +230,21 @@ Benefits:
 ## Testing Strategy
 
 ### Unit Tests
+
 - Test individual components in isolation
 - Mock all dependencies
 - Focus on business logic
 - Fast execution
 
 ### Integration Tests
+
 - Test component interactions
 - May use real file system (in temp directory)
 - Test error scenarios
 - Validate end-to-end flows
 
 ### Test Coverage Goals
+
 - Domain: 80%+
 - Application: 70%+
 - Infrastructure: 60%+
@@ -241,7 +255,7 @@ Benefits:
 ### Old → New Mapping
 
 | Old                    | New                                                    |
-|------------------------|--------------------------------------------------------|
+| ---------------------- | ------------------------------------------------------ |
 | `api_server_impl.py`   | `presentation/grpc/sidecar_service.py`                 |
 | Direct file operations | `infrastructure/file_system/extension_file_manager.py` |
 | HTTP in API server     | `infrastructure/downloaders/http_downloader.py`        |

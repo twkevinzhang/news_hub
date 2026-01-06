@@ -11,7 +11,7 @@ import 'package:serious_python/serious_python.dart';
 import 'package:news_hub/shared/constants.dart';
 import 'package:news_hub/domain/api_service.dart';
 import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/domain/sidecar/repository/sidecar_repository.dart';
+import 'package:news_hub/domain/sidecar/repository.dart';
 import 'package:news_hub/app/service/api/sidecar_api_impl.dart';
 import 'package:news_hub/app/service/grpc/grpc_connection_manager_impl.dart';
 import 'package:news_hub/domain/sidecar/service/sidecar_connection_manager.dart';

@@ -1,14 +1,14 @@
 import 'package:dartx/dartx.dart';
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/domain/extension/repository/installed_extension_repository.dart';
+import 'package:news_hub/domain/extension/repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 
 @lazySingleton
 class InstallExtension {
-  final InstalledExtensionRepository _repository;
+  final ExtensionRepository _repository;
 
   InstallExtension({
-    required InstalledExtensionRepository repository,
+    required ExtensionRepository repository,
   }) : _repository = repository;
 
   Stream<Pair<InstallStatus, double>> call(Extension extension) {

@@ -1,5 +1,5 @@
 import 'package:dartx/src/map.dart';
-import 'package:news_hub/domain/bookmark/bookmark_repository.dart';
+import 'package:news_hub/domain/bookmark/repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:injectable/injectable.dart';
 
@@ -27,11 +27,7 @@ class BookmarkRepositoryImpl implements BookmarkRepository {
   }
 
   @override
-  Future<void> insertRepo(
-      {required String id,
-      required Set<Board> enabledBoards,
-      required Set<Pair<Board, String>> threadsSorting,
-      required String keywords}) {
+  Future<void> insertRepo({required String id, required Set<Board> enabledBoards, required Set<Pair<Board, String>> threadsSorting, required String keywords}) {
     throw UnimplementedError();
   }
 
@@ -41,11 +37,7 @@ class BookmarkRepositoryImpl implements BookmarkRepository {
   }
 
   @override
-  Future<void> upsertRepo(
-      {required String id,
-      required Set<Board> enabledBoards,
-      required Set<Pair<Board, String>> threadsSorting,
-      required String keywords}) {
+  Future<void> upsertRepo({required String id, required Set<Board> enabledBoards, required Set<Pair<Board, String>> threadsSorting, required String keywords}) {
     throw UnimplementedError();
   }
 }

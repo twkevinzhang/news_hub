@@ -1,13 +1,13 @@
-import 'package:news_hub/domain/extension/repository/installed_extension_repository.dart';
+import 'package:news_hub/domain/extension/repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:injectable/injectable.dart';
 
 @lazySingleton
 class UninstallExtension {
-  final InstalledExtensionRepository _repository;
+  final ExtensionRepository _repository;
 
   UninstallExtension({
-    required InstalledExtensionRepository repository,
+    required ExtensionRepository repository,
   }) : _repository = repository;
 
   Future<void> call(Extension extension) {

@@ -1,15 +1,15 @@
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/api_service.dart';
-import 'package:news_hub/domain/extension/repository/installed_extension_repository.dart';
+import 'package:news_hub/domain/extension/repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 
 @lazySingleton
 class ListInstalledExtensions {
-  final InstalledExtensionRepository _repository;
+  final ExtensionRepository _repository;
   final ApiService _apiService;
 
   ListInstalledExtensions({
-    required InstalledExtensionRepository repository,
+    required ExtensionRepository repository,
     required ApiService apiService,
   })  : _repository = repository,
         _apiService = apiService;

@@ -1,5 +1,5 @@
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/domain/bookmark/bookmark_repository.dart';
+import 'package:news_hub/domain/bookmark/repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 
 @lazySingleton

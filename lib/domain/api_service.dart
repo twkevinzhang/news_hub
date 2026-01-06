@@ -77,13 +77,13 @@ abstract class ApiService {
   });
 
   // Extension Repository operations
-  Future<List<ExtensionRepo>> listExtensionRepos();
+  Future<List<Repo>> listRepos();
 
-  Future<void> addExtensionRepo({
+  Future<void> addRepo({
     required String url,
   });
 
-  Future<void> removeExtensionRepo({
+  Future<void> removeRepo({
     required String url,
   });
 }

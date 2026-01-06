@@ -1,6 +1,5 @@
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/domain/suggestion/suggestion_repository.dart';
+import 'package:news_hub/domain/suggestion/repository.dart';
 
 @lazySingleton
 class InsertSuggestion {

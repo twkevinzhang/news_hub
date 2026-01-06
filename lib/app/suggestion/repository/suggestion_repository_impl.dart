@@ -3,7 +3,7 @@ import 'package:news_hub/app/service/database/database.dart';
 import 'package:news_hub/app/suggestion/repository/models/transform.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/domain/suggestion/suggestion_repository.dart';
+import 'package:news_hub/domain/suggestion/repository.dart';
 import 'package:news_hub/shared/exceptions.dart';
 import 'package:uuid/uuid.dart';
 
@@ -42,7 +42,7 @@ class SuggestionRepositoryImpl implements SuggestionRepository {
   }
 
   @override
-  Stream<List<domain.Suggestion>> subscribeList() {
+  Stream<List<domain.Suggestion>> watchList() {
     return _db.select(_db.suggestions).watch().map((l) => l.map((s) => s.toDomain()).toList());
   }
 

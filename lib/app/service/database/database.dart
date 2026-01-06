@@ -9,7 +9,7 @@ import 'package:path/path.dart' as p;
 
 part 'database.g.dart';
 
-class ExtensionRepos extends Table {
+class Repos extends Table {
   TextColumn get icon => text().nullable()();
   TextColumn get baseUrl => text()();
   TextColumn get displayName => text()();
@@ -64,7 +64,7 @@ class CollectionBoardRefs extends Table {
 
 @singleton
 @DriftDatabase(tables: [
-  ExtensionRepos,
+  Repos,
   InstalledExtensions,
   Suggestions,
   Collections,

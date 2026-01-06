@@ -1,9 +1,8 @@
 import 'package:drift/drift.dart';
 import 'package:news_hub/app/service/database/database.dart';
-import 'package:news_hub/domain/collection/collection_repository.dart';
+import 'package:news_hub/domain/collection/repository.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/shared/constants.dart';
 import 'package:uuid/uuid.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -16,7 +15,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
   }) : _db = db;
 
   @override
-  Stream<List<domain.Collection>> watchCollections() {
+  Stream<List<domain.Collection>> watchList() {
     return _db.select(_db.collections).watch().switchMap((collections) {
       if (collections.isEmpty) return Stream.value([]);
 
@@ -46,7 +45,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
   }
 
   @override
-  Future<List<domain.Collection>> getCollections() async {
+  Future<List<domain.Collection>> list() async {
     final collections = await _db.select(_db.collections).get();
     if (collections.isEmpty) return [];
 
@@ -75,7 +74,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
   }
 
   @override
-  Future<void> createCollection(String name, List<domain.Board> boards) async {
+  Future<void> create(String name, List<domain.Board> boards) async {
     final id = const Uuid().v4();
     await _db.transaction(() async {
       await _db.into(_db.collections).insert(CollectionsCompanion.insert(
@@ -96,7 +95,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
   }
 
   @override
-  Future<void> deleteCollection(String id) async {
+  Future<void> delete(String id) async {
     await _db.transaction(() async {
       await (_db.delete(_db.collectionBoardRefs)..where((tbl) => tbl.collectionId.equals(id))).go();
       await (_db.delete(_db.collections)..where((tbl) => tbl.id.equals(id))).go();
@@ -104,7 +103,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
   }
 
   @override
-  Future<void> updateCollection(domain.Collection collection) async {
+  Future<void> update(domain.Collection collection) async {
     await _db.transaction(() async {
       await (_db.update(_db.collections)..where((tbl) => tbl.id.equals(collection.id))).write(CollectionsCompanion(
         name: Value(collection.name),

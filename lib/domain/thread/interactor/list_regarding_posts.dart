@@ -12,9 +12,9 @@ class ListRegardingPosts {
 
   ListRegardingPosts({
     required ApiService apiService,
-    required GetInstalledExtension installedExtensionRepository,
+    required GetInstalledExtension installedRepository,
   })  : _service = apiService,
-        _getInstalledExtension = installedExtensionRepository;
+        _getInstalledExtension = installedRepository;
 
   Future<List<ArticlePostWithExtension>> call({
     required String extensionPkgName,

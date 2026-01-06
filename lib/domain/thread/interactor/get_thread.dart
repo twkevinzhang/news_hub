@@ -10,9 +10,9 @@ class GetThread {
 
   GetThread({
     required ApiService apiService,
-    required GetInstalledExtension installedExtensionRepository,
+    required GetInstalledExtension installedRepository,
   })  : _service = apiService,
-        _getInstalledExtension = installedExtensionRepository;
+        _getInstalledExtension = installedRepository;
 
   Future<ArticlePostWithExtension> call({
     required String extensionPkgName,

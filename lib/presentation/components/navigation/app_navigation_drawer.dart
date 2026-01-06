@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/presentation/pages/content-organization/manage-collections/bloc/collection_list_bloc.dart';
-import 'package:news_hub/presentation/pages/system-operations/sidecar_cubit.dart';
+import 'package:news_hub/presentation/pages/collections/list/bloc/collection_list_bloc.dart';
+import 'package:news_hub/presentation/pages/sidecar/sidecar_cubit.dart';
 
 class AppNavigationDrawer extends StatefulWidget {
   final Function(Collection) onCollectionSelected;

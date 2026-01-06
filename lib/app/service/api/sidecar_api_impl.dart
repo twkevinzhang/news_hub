@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:grpc/grpc.dart';
+
 import 'package:news_hub/app/service/api/models/transform.dart';
 import 'package:news_hub/app/service/grpc/grpc_connection_manager_impl.dart';
 import 'package:news_hub/domain/api_service.dart';
@@ -187,18 +187,18 @@ class SidecarApiImpl implements ApiService {
 
   // Extension Repository operations
   @override
-  Future<List<domain.ExtensionRepo>> listExtensionRepos() async {
+  Future<List<domain.Repo>> listRepos() async {
     final res = await _client.listExtensionRepos(pb.Empty());
-    return res.repos.map((r) => r.toExtensionRepoDomain()).toList();
+    return res.repos.map((r) => r.toRepoDomain()).toList();
   }
 
   @override
-  Future<void> addExtensionRepo({required String url}) async {
+  Future<void> addRepo({required String url}) async {
     await _client.addExtensionRepo(pb.AddExtensionRepoReq(url: url));
   }
 
   @override
-  Future<void> removeExtensionRepo({required String url}) async {
+  Future<void> removeRepo({required String url}) async {
     await _client.removeExtensionRepo(pb.RemoveExtensionRepoReq(url: url));
   }
 }
