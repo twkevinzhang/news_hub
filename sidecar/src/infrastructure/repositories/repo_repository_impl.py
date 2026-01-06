@@ -15,11 +15,11 @@ logger = logging.getLogger(__name__)
 class RepoRepositoryImpl(RepoRepository):
     """File-based implementation of Repo Repository"""
 
-    REPO_FILE = "repo.json"
+    REPOS_FILE = "repos.json"
 
     def __init__(self, persistent_dir: Path):
         self.persistent_dir = persistent_dir
-        self.repo_file = persistent_dir / self.REPO_FILE
+        self.repos_file = persistent_dir / self.REPOS_FILE
 
     def add(self, repo: Repo) -> None:
         """Add a new repository"""
@@ -76,25 +76,25 @@ class RepoRepositoryImpl(RepoRepository):
 
     def _load_repos(self) -> List[dict]:
         """Load repositories from file"""
-        if not self.repo_file.exists():
+        if not self.repos_file.exists():
             return []
 
         try:
-            with open(self.repo_file, "r", encoding="utf-8") as f:
+            with open(self.repos_file, "r", encoding="utf-8") as f:
                 data = json.load(f)
                 return data if isinstance(data, list) else []
         except (json.JSONDecodeError, IOError) as e:
-            logger.error(f"Error loading repos from {self.repo_file}: {e}")
+            logger.error(f"Error loading repos from {self.repos_file}: {e}")
             return []
 
     def _save_repos(self, repos: List[dict]) -> None:
         """Save repositories to file"""
         try:
             self.persistent_dir.mkdir(parents=True, exist_ok=True)
-            with open(self.repo_file, "w", encoding="utf-8") as f:
+            with open(self.repos_file, "w", encoding="utf-8") as f:
                 json.dump(repos, f, indent=2, ensure_ascii=False)
         except IOError as e:
-            logger.error(f"Error saving repos to {self.repo_file}: {e}")
+            logger.error(f"Error saving repos to {self.repos_file}: {e}")
             raise
 
     def _dict_to_repo(self, repo_dict: dict) -> Repo:

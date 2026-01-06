@@ -1,4 +1,5 @@
 """Configuration for the sidecar service"""
+import sys
 from pathlib import Path
 
 
@@ -6,7 +7,9 @@ class Config:
     """Configuration class"""
 
     # Directories
-    BASE_DIR = Path(__file__).parent.parent
+    # Use sys.executable to get the directory where the exe/binary is located
+    # This works for both development (python script) and production (packaged exe)
+    BASE_DIR = Path(sys.executable).parent if getattr(sys, 'frozen', False) else Path(__file__).parent.parent.parent
     EXTENSIONS_DIR = BASE_DIR / "extensions"
     DOWNLOAD_DIR = BASE_DIR / "download"
     LOG_DIR = BASE_DIR / "logs"
