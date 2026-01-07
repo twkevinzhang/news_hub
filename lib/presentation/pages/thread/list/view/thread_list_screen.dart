@@ -4,8 +4,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/thread/interactor/list_threads.dart';
 import 'package:news_hub/locator.dart';
-import 'package:news_hub/presentation/pages/threads/detail/layouts/single_image_post_layout.dart';
-import 'package:news_hub/presentation/pages/threads/list/bloc/thread_list_cubit.dart';
+import 'package:news_hub/presentation/pages/thread/detail/layouts/single_image_post_layout.dart';
+import 'package:news_hub/presentation/pages/thread/list/bloc/thread_list_cubit.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:news_hub/presentation/components/rendering/loading_indicator.dart';
 

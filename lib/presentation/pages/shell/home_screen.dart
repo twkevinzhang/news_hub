@@ -3,7 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/locator.dart';
-import 'package:news_hub/presentation/pages/collections/list/bloc/collection_list_cubit.dart';
+import 'package:news_hub/presentation/pages/settings/collections/bloc/collection_cubit.dart';
 import 'package:news_hub/presentation/components/navigation/app_navigation_drawer.dart';
 import 'package:news_hub/presentation/components/navigation/app_top_bar.dart';
 import 'package:news_hub/presentation/pages/sidecar/sidecar_cubit.dart';
@@ -19,14 +19,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  late final CollectionListCubit _collectionListCubit;
+  late final CollectionCubit _collectionListCubit;
   late final SidecarCubit _sidecarCubit;
 
   @override
   void initState() {
     super.initState();
     _sidecarCubit = sl<SidecarCubit>()..startHealthWatch();
-    _collectionListCubit = sl<CollectionListCubit>()..load();
+    _collectionListCubit = sl<CollectionCubit>()..load();
   }
 
   Future<void> _safeNavigate(VoidCallback navigate) async {

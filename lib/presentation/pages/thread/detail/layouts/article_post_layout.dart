@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:news_hub/presentation/pages/threads/detail/widgets/post_paragraph.dart';
+import 'package:news_hub/presentation/pages/thread/detail/widgets/post_paragraph.dart';
 import 'package:news_hub/shared/extensions.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:news_hub/domain/models/models.dart' as domain;

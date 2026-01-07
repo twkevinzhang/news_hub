@@ -86,8 +86,8 @@ import 'package:news_hub/presentation/components/forms/collection/bloc/collectio
     as _i545;
 import 'package:news_hub/presentation/components/rendering/boards-picker/bloc/boards_picker_cubit.dart'
     as _i274;
-import 'package:news_hub/presentation/pages/collections/list/bloc/collection_list_cubit.dart'
-    as _i603;
+import 'package:news_hub/presentation/pages/settings/collections/bloc/collection_cubit.dart'
+    as _i31;
 import 'package:news_hub/presentation/pages/settings/extensions/bloc/extension_cubit.dart'
     as _i34;
 import 'package:news_hub/presentation/pages/settings/extensions/bloc/repo_cubit.dart'
@@ -96,12 +96,12 @@ import 'package:news_hub/presentation/pages/sidecar/logs/sidecar_logs_cubit.dart
     as _i515;
 import 'package:news_hub/presentation/pages/sidecar/sidecar_cubit.dart'
     as _i852;
-import 'package:news_hub/presentation/pages/threads/detail/bloc/thread_detail_cubit.dart'
-    as _i10;
-import 'package:news_hub/presentation/pages/threads/list/bloc/thread_list_cubit.dart'
-    as _i887;
-import 'package:news_hub/presentation/pages/threads/search/bloc/search_cubit.dart'
-    as _i769;
+import 'package:news_hub/presentation/pages/thread/detail/bloc/thread_detail_cubit.dart'
+    as _i994;
+import 'package:news_hub/presentation/pages/thread/list/bloc/thread_list_cubit.dart'
+    as _i660;
+import 'package:news_hub/presentation/pages/thread/search/bloc/search_cubit.dart'
+    as _i948;
 import 'package:news_hub/presentation/router/router.dart' as _i762;
 import 'package:rx_shared_preferences/rx_shared_preferences.dart' as _i579;
 
@@ -158,8 +158,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i606.DeleteCollection(gh<_i914.CollectionRepository>()));
     gh.factory<_i913.UpdateCollection>(
         () => _i913.UpdateCollection(gh<_i914.CollectionRepository>()));
-    gh.factory<_i603.CollectionListCubit>(
-        () => _i603.CollectionListCubit(gh<_i914.CollectionRepository>()));
+    gh.factory<_i31.CollectionCubit>(
+        () => _i31.CollectionCubit(gh<_i914.CollectionRepository>()));
     gh.singleton<_i280.SidecarPreferences>(
         () => appProvider.sidecarPreferences(gh<_i365.PreferenceStore>()));
     gh.lazySingleton<_i191.ExtensionPreferencesService>(() =>
@@ -234,7 +234,7 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i274.BoardsPickerCubit>(
         () => _i274.BoardsPickerCubit(gh<_i351.ListInstalledExtensions>()));
-    gh.factory<_i10.ThreadDetailCubit>(() => _i10.ThreadDetailCubit(
+    gh.factory<_i994.ThreadDetailCubit>(() => _i994.ThreadDetailCubit(
           getThread: gh<_i616.GetThread>(),
           listRegardingPosts: gh<_i492.ListRegardingPosts>(),
         ));
@@ -248,14 +248,14 @@ extension GetItInjectableX on _i174.GetIt {
           addRepo: gh<_i1048.AddRepo>(),
           removeRepo: gh<_i154.RemoveRepo>(),
         ));
-    gh.factory<_i769.SearchCubit>(() => _i769.SearchCubit(
+    gh.factory<_i948.SearchCubit>(() => _i948.SearchCubit(
           listSuggestions: gh<_i643.ListSuggestions>(),
           updateSuggestionLatestUsedAt:
               gh<_i650.UpdateSuggestionLatestUsedAt>(),
           insertSuggestion: gh<_i446.InsertSuggestion>(),
           listThreadList: gh<_i757.ListThreads>(),
         ));
-    gh.factory<_i887.ThreadListCubit>(() => _i887.ThreadListCubit(
+    gh.factory<_i660.ThreadListCubit>(() => _i660.ThreadListCubit(
           listThreadList: gh<_i757.ListThreads>(),
           listExtensions: gh<_i351.ListInstalledExtensions>(),
         ));

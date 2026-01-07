@@ -12,11 +12,11 @@
 import 'package:auto_route/auto_route.dart' as _i13;
 import 'package:flutter/material.dart' as _i14;
 import 'package:news_hub/domain/models/models.dart' as _i15;
-import 'package:news_hub/presentation/pages/collections/create/view/collection_create_screen.dart'
+import 'package:news_hub/presentation/pages/collection/create/view/collection_create_screen.dart'
     as _i1;
-import 'package:news_hub/presentation/pages/collections/edit/view/collection_create_screen.dart'
+import 'package:news_hub/presentation/pages/collection/edit/view/collection_create_screen.dart'
     as _i2;
-import 'package:news_hub/presentation/pages/collections/list/view/collection_list_screen.dart'
+import 'package:news_hub/presentation/pages/settings/collections/view/collection_manage_screen.dart'
     as _i3;
 import 'package:news_hub/presentation/pages/settings/extensions/view/extension_manage_screen.dart'
     as _i4;
@@ -27,11 +27,11 @@ import 'package:news_hub/presentation/pages/settings/sidecar/sidecar_manage_scre
 import 'package:news_hub/presentation/pages/shell/home_screen.dart' as _i5;
 import 'package:news_hub/presentation/pages/sidecar/logs/sidecar_logs_screen.dart'
     as _i8;
-import 'package:news_hub/presentation/pages/threads/detail/view/thread_detail_screen.dart'
+import 'package:news_hub/presentation/pages/thread/detail/view/thread_detail_screen.dart'
     as _i10;
-import 'package:news_hub/presentation/pages/threads/list/view/thread_list_screen.dart'
+import 'package:news_hub/presentation/pages/thread/list/view/thread_list_screen.dart'
     as _i11;
-import 'package:news_hub/presentation/pages/threads/search/view/search_screen.dart'
+import 'package:news_hub/presentation/pages/thread/search/view/search_screen.dart'
     as _i6;
 import 'package:news_hub/presentation/router/wrapper_screen.dart' as _i12;
 
@@ -97,17 +97,17 @@ class CollectionEditRouteArgs {
 }
 
 /// generated route for
-/// [_i3.CollectionListScreen]
-class CollectionListRoute extends _i13.PageRouteInfo<void> {
-  const CollectionListRoute({List<_i13.PageRouteInfo>? children})
-    : super(CollectionListRoute.name, initialChildren: children);
+/// [_i3.CollectionManageScreen]
+class CollectionManageRoute extends _i13.PageRouteInfo<void> {
+  const CollectionManageRoute({List<_i13.PageRouteInfo>? children})
+    : super(CollectionManageRoute.name, initialChildren: children);
 
-  static const String name = 'CollectionListRoute';
+  static const String name = 'CollectionManageRoute';
 
   static _i13.PageInfo page = _i13.PageInfo(
     name,
     builder: (data) {
-      return _i13.WrappedRoute(child: const _i3.CollectionListScreen());
+      return _i13.WrappedRoute(child: const _i3.CollectionManageScreen());
     },
   );
 }

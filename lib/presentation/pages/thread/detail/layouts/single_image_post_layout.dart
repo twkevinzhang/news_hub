@@ -3,7 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:news_hub/domain/thread/interactor/list_threads.dart';
-import 'package:news_hub/presentation/pages/threads/detail/widgets/post_paragraph.dart';
+import 'package:news_hub/presentation/pages/thread/detail/widgets/post_paragraph.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 import 'package:news_hub/presentation/components/rendering/loading_indicator.dart';

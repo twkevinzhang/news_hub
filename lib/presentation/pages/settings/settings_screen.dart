@@ -19,7 +19,7 @@ class SettingsScreen extends StatelessWidget {
             title: const Text('Collections'),
             subtitle: const Text('Manage your board collections'),
             trailing: const Icon(Icons.chevron_right),
-            onTap: () => context.router.push(const CollectionListRoute()),
+            onTap: () => context.router.push(const CollectionManageRoute()),
           ),
           ListTile(
             leading: const Icon(Icons.extension),

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'collection_list_cubit.dart';
+part of 'collection_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,39 +15,39 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$CollectionListState {
+mixin _$CollectionState {
   List<Collection> get collections => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
-  /// Create a copy of CollectionListState
+  /// Create a copy of CollectionState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $CollectionListStateCopyWith<CollectionListState> get copyWith =>
+  $CollectionStateCopyWith<CollectionState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $CollectionListStateCopyWith<$Res> {
-  factory $CollectionListStateCopyWith(
-          CollectionListState value, $Res Function(CollectionListState) then) =
-      _$CollectionListStateCopyWithImpl<$Res, CollectionListState>;
+abstract class $CollectionStateCopyWith<$Res> {
+  factory $CollectionStateCopyWith(
+          CollectionState value, $Res Function(CollectionState) then) =
+      _$CollectionStateCopyWithImpl<$Res, CollectionState>;
   @useResult
   $Res call(
       {List<Collection> collections, bool isLoading, String? errorMessage});
 }
 
 /// @nodoc
-class _$CollectionListStateCopyWithImpl<$Res, $Val extends CollectionListState>
-    implements $CollectionListStateCopyWith<$Res> {
-  _$CollectionListStateCopyWithImpl(this._value, this._then);
+class _$CollectionStateCopyWithImpl<$Res, $Val extends CollectionState>
+    implements $CollectionStateCopyWith<$Res> {
+  _$CollectionStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of CollectionListState
+  /// Create a copy of CollectionState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -74,11 +74,11 @@ class _$CollectionListStateCopyWithImpl<$Res, $Val extends CollectionListState>
 }
 
 /// @nodoc
-abstract class _$$CollectionListStateImplCopyWith<$Res>
-    implements $CollectionListStateCopyWith<$Res> {
-  factory _$$CollectionListStateImplCopyWith(_$CollectionListStateImpl value,
-          $Res Function(_$CollectionListStateImpl) then) =
-      __$$CollectionListStateImplCopyWithImpl<$Res>;
+abstract class _$$CollectionStateImplCopyWith<$Res>
+    implements $CollectionStateCopyWith<$Res> {
+  factory _$$CollectionStateImplCopyWith(_$CollectionStateImpl value,
+          $Res Function(_$CollectionStateImpl) then) =
+      __$$CollectionStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -86,14 +86,14 @@ abstract class _$$CollectionListStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$CollectionListStateImplCopyWithImpl<$Res>
-    extends _$CollectionListStateCopyWithImpl<$Res, _$CollectionListStateImpl>
-    implements _$$CollectionListStateImplCopyWith<$Res> {
-  __$$CollectionListStateImplCopyWithImpl(_$CollectionListStateImpl _value,
-      $Res Function(_$CollectionListStateImpl) _then)
+class __$$CollectionStateImplCopyWithImpl<$Res>
+    extends _$CollectionStateCopyWithImpl<$Res, _$CollectionStateImpl>
+    implements _$$CollectionStateImplCopyWith<$Res> {
+  __$$CollectionStateImplCopyWithImpl(
+      _$CollectionStateImpl _value, $Res Function(_$CollectionStateImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of CollectionListState
+  /// Create a copy of CollectionState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -102,7 +102,7 @@ class __$$CollectionListStateImplCopyWithImpl<$Res>
     Object? isLoading = null,
     Object? errorMessage = freezed,
   }) {
-    return _then(_$CollectionListStateImpl(
+    return _then(_$CollectionStateImpl(
       collections: null == collections
           ? _value._collections
           : collections // ignore: cast_nullable_to_non_nullable
@@ -121,8 +121,8 @@ class __$$CollectionListStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$CollectionListStateImpl implements _CollectionListState {
-  const _$CollectionListStateImpl(
+class _$CollectionStateImpl implements _CollectionState {
+  const _$CollectionStateImpl(
       {final List<Collection> collections = const [],
       this.isLoading = false,
       this.errorMessage})
@@ -145,14 +145,14 @@ class _$CollectionListStateImpl implements _CollectionListState {
 
   @override
   String toString() {
-    return 'CollectionListState(collections: $collections, isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'CollectionState(collections: $collections, isLoading: $isLoading, errorMessage: $errorMessage)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$CollectionListStateImpl &&
+            other is _$CollectionStateImpl &&
             const DeepCollectionEquality()
                 .equals(other._collections, _collections) &&
             (identical(other.isLoading, isLoading) ||
@@ -168,21 +168,21 @@ class _$CollectionListStateImpl implements _CollectionListState {
       isLoading,
       errorMessage);
 
-  /// Create a copy of CollectionListState
+  /// Create a copy of CollectionState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$CollectionListStateImplCopyWith<_$CollectionListStateImpl> get copyWith =>
-      __$$CollectionListStateImplCopyWithImpl<_$CollectionListStateImpl>(
+  _$$CollectionStateImplCopyWith<_$CollectionStateImpl> get copyWith =>
+      __$$CollectionStateImplCopyWithImpl<_$CollectionStateImpl>(
           this, _$identity);
 }
 
-abstract class _CollectionListState implements CollectionListState {
-  const factory _CollectionListState(
+abstract class _CollectionState implements CollectionState {
+  const factory _CollectionState(
       {final List<Collection> collections,
       final bool isLoading,
-      final String? errorMessage}) = _$CollectionListStateImpl;
+      final String? errorMessage}) = _$CollectionStateImpl;
 
   @override
   List<Collection> get collections;
@@ -191,10 +191,10 @@ abstract class _CollectionListState implements CollectionListState {
   @override
   String? get errorMessage;
 
-  /// Create a copy of CollectionListState
+  /// Create a copy of CollectionState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$CollectionListStateImplCopyWith<_$CollectionListStateImpl> get copyWith =>
+  _$$CollectionStateImplCopyWith<_$CollectionStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

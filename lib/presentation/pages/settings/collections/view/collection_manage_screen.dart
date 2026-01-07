@@ -1,19 +1,19 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_hub/presentation/pages/collections/list/bloc/collection_list_cubit.dart';
+import 'package:news_hub/presentation/pages/settings/collections/bloc/collection_cubit.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
 
 import 'package:news_hub/locator.dart';
 
 @RoutePage()
-class CollectionListScreen extends StatelessWidget implements AutoRouteWrapper {
-  const CollectionListScreen({super.key});
+class CollectionManageScreen extends StatelessWidget implements AutoRouteWrapper {
+  const CollectionManageScreen({super.key});
 
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<CollectionListCubit>()..load(),
+      create: (context) => sl<CollectionCubit>()..load(),
       child: this,
     );
   }
@@ -22,7 +22,7 @@ class CollectionListScreen extends StatelessWidget implements AutoRouteWrapper {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Collections')),
-      body: BlocBuilder<CollectionListCubit, CollectionListState>(
+      body: BlocBuilder<CollectionCubit, CollectionState>(
         builder: (context, state) {
           if (state.isLoading && state.collections.isEmpty) {
             return const Center(child: CircularProgressIndicator());
@@ -32,7 +32,7 @@ class CollectionListScreen extends StatelessWidget implements AutoRouteWrapper {
           }
           return ReorderableListView(
             onReorder: (oldIndex, newIndex) {
-              context.read<CollectionListCubit>().reorderCollections(oldIndex, newIndex);
+              context.read<CollectionCubit>().reorderCollections(oldIndex, newIndex);
             },
             children: state.collections.map((collection) {
               return ListTile(
@@ -64,7 +64,7 @@ class CollectionListScreen extends StatelessWidget implements AutoRouteWrapper {
                       );
                       if (confirm == true) {
                         if (context.mounted) {
-                          context.read<CollectionListCubit>().deleteCollection(collection.id);
+                          context.read<CollectionCubit>().deleteCollection(collection.id);
                         }
                       }
                     }

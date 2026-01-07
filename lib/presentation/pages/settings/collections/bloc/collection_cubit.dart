@@ -5,22 +5,22 @@ import 'package:news_hub/domain/collection/repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:injectable/injectable.dart';
 
-part 'collection_list_cubit.freezed.dart';
+part 'collection_cubit.freezed.dart';
 
 @freezed
-class CollectionListState with _$CollectionListState {
-  const factory CollectionListState({
+class CollectionState with _$CollectionState {
+  const factory CollectionState({
     @Default([]) List<Collection> collections,
     @Default(false) bool isLoading,
     String? errorMessage,
-  }) = _CollectionListState;
+  }) = _CollectionState;
 }
 
 @injectable
-class CollectionListCubit extends Cubit<CollectionListState> {
+class CollectionCubit extends Cubit<CollectionState> {
   final CollectionRepository _repository;
 
-  CollectionListCubit(this._repository) : super(const CollectionListState());
+  CollectionCubit(this._repository) : super(const CollectionState());
 
   StreamSubscription? _subscription;
 

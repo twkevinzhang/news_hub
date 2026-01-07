@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/presentation/pages/collections/list/bloc/collection_list_cubit.dart';
+import 'package:news_hub/presentation/pages/settings/collections/bloc/collection_cubit.dart';
 import 'package:news_hub/presentation/pages/sidecar/sidecar_cubit.dart';
 
 class AppNavigationDrawer extends StatefulWidget {
@@ -46,7 +46,7 @@ class _AppNavigationDrawerState extends State<AppNavigationDrawer> {
                   ),
                 ),
                 // Collection List
-                BlocBuilder<CollectionListCubit, CollectionListState>(
+                BlocBuilder<CollectionCubit, CollectionState>(
                   builder: (context, state) {
                     if (state.isLoading && state.collections.isEmpty) {
                       return const Center(

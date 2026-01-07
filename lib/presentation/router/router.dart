@@ -11,31 +11,22 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => [
-        // ============================================
-        // 📁 Content Organization - 內容整理
-        // ============================================
-        AutoRoute(path: '/collection/list', page: CollectionListRoute.page),
-        AutoRoute(path: '/collection/create', page: CollectionCreateRoute.page),
-
         AutoRoute(path: '/', page: HomeRoute.page),
+        AutoRoute(path: '/collection/create', page: CollectionCreateRoute.page),
+        AutoRoute(path: '/collection/edit', page: CollectionEditRoute.page),
+        AutoRoute(path: '/collection/:collectionId/threads/list', page: ThreadListRoute.page),
+        AutoRoute(path: '/collection/:collectionId/boards/:boardId/threads/list', page: ThreadListRoute.page),
+        // AutoRoute(path: '/collection/:collectionId/threads/search', page: ThreadListRoute.page),
+
+        // AutoRoute(path: '/threads/list', page: ThreadListRoute.page),
+        // AutoRoute(path: '/threads/:threadId', page: ThreadDetailRoute.page),
+
         AutoRoute(path: '/settings', page: SettingsRoute.page),
-
-        // ============================================
-        // 📰 Content Discovery - 內容探索
-        // ============================================
-        AutoRoute(path: '/thread/list', page: ThreadListRoute.page),
-        AutoRoute(path: '/search', page: SearchRoute.page),
-
-        // ============================================
-        // 🧩 Extension Marketplace - 擴充市集
-        // ============================================
+        AutoRoute(path: '/settings/collections', page: CollectionManageRoute.page),
         AutoRoute(path: '/settings/extensions', page: ExtensionManageRoute.page),
-
-        // ============================================
-        // ⚙️ System Operations - 系統維運
-        // ============================================
-        AutoRoute(path: '/sidecar/logs', page: SidecarLogsRoute.page),
         AutoRoute(path: '/settings/sidecar', page: SidecarManageRoute.page),
+
+        AutoRoute(path: '/sidecar/logs', page: SidecarLogsRoute.page),
       ];
 
   @override
