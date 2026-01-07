@@ -26,11 +26,13 @@ cd sidecar && pip install -r requirements.txt  # 安裝 Python 依賴
 ### 構建與運行
 
 ```bash
-make run              # 使用本地 sidecar 運行應用 (127.0.0.1:55001)
-make run SIDECAR_HOST=192.168.1.100  # 使用遠程 sidecar 運行
+make run-sidecar      # 使用本地 sidecar 運行應用 (127.0.0.1:55001) [預設]
+make run-remote SIDECAR_HOST=10.69.71.136  # 使用遠程 sidecar 運行 (不打包 Python，速度快)
 make build            # 運行 dart build_runner
+make build-sidecar    # 構建含 Sidecar 的 APK
+make build-remote     # 構建純遠程連接的 APK
 make proto            # 為 Dart 和 Python 生成 protobuf 文件
-make sidecar          # 構建 sidecar 發布包
+make sidecar          # 構建 sidecar 發布包 (由 build-sidecar 自動調用)
 ```
 
 ### Sidecar 開發
@@ -166,9 +168,9 @@ sidecar/src/
 
 ```bash
 make sidecar-info  # 顯示網絡信息
-make run           # 使用默認本地服務器
-make run SIDECAR_HOST=192.168.1.100  # 連接到遠程 IP
-make run SIDECAR_HOST=my-server.local  # 連接到主機名/mDNS
+make run-sidecar   # 使用默認本地服務器
+make run-remote SIDECAR_HOST=10.69.71.136  # 連接到遠程 IP
+make run-remote SIDECAR_HOST=my-server.local  # 連接到主機名/mDNS
 ```
 
 **安全性:** 永遠不要將實際遠程 IP 地址提交到 git。使用 `--dart-define` 進行本地開發或在應用內實現設置 UI。

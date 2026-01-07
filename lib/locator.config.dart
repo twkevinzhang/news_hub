@@ -105,6 +105,9 @@ import 'package:news_hub/presentation/pages/threads/search/bloc/search_cubit.dar
 import 'package:news_hub/presentation/router/router.dart' as _i762;
 import 'package:rx_shared_preferences/rx_shared_preferences.dart' as _i579;
 
+const String _sidecar = 'sidecar';
+const String _remote = 'remote';
+
 extension GetItInjectableX on _i174.GetIt {
 // initializes the registration of main-scope dependencies inside of GetIt
   Future<_i174.GetIt> init({
@@ -177,6 +180,14 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i113.ApiService>(),
           gh<_i976.SidecarConnectionManager>(),
         ));
+    gh.factory<_i56.Launcher>(
+      () => _i56.SidecarAppLauncher(gh<_i976.SidecarConnectionManager>()),
+      registerFor: {_sidecar},
+    );
+    gh.factory<_i56.Launcher>(
+      () => _i56.RemoteAppLauncher(gh<_i976.SidecarConnectionManager>()),
+      registerFor: {_remote},
+    );
     gh.lazySingleton<_i198.ExtensionRepository>(
         () => _i753.InstalledRepositoryImpl(
               gh<_i113.ApiService>(),
@@ -209,8 +220,6 @@ extension GetItInjectableX on _i174.GetIt {
           apiService: gh<_i113.ApiService>(),
           listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
         ));
-    gh.factory<_i56.Launcher>(
-        () => _i56.AppLauncher(gh<_i976.SidecarConnectionManager>()));
     gh.lazySingleton<_i616.GetThread>(() => _i616.GetThread(
           apiService: gh<_i113.ApiService>(),
           installedRepository: gh<_i266.GetInstalledExtension>(),

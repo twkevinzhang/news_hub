@@ -36,20 +36,38 @@ sidecar-info:
 	@echo "=========================================="
 
 .PHONY: run
-run:
+run: run-sidecar
+
+.PHONY: run-sidecar
+run-sidecar:
+	@echo "🚀 Starting Flutter with Sidecar flavor"
+	flutter run --flavor sidecar -t lib/main_sidecar.dart
+
+.PHONY: run-remote
+run-remote:
 ifdef SIDECAR_HOST
-	@echo "🚀 Starting Flutter with Sidecar: $(SIDECAR_HOST):$(SIDECAR_PORT)"
-	flutter run \
+	@echo "🚀 Starting Flutter with Remote flavor: $(SIDECAR_HOST):$(SIDECAR_PORT)"
+	flutter run --flavor remote -t lib/main_remote.dart \
 		--dart-define=SIDECAR_HOST=$(SIDECAR_HOST) \
 		--dart-define=SIDECAR_PORT=$(SIDECAR_PORT)
 else
-	@echo "🚀 Starting Flutter (使用預設 127.0.0.1:55001)"
-	flutter run
+	@echo "🚀 Starting Flutter with Remote flavor (使用預設 127.0.0.1:55001)"
+	flutter run --flavor remote -t lib/main_remote.dart
 endif
 
 .PHONY: build
 build:
 	dart run build_runner build --delete-conflicting-outputs
+
+.PHONY: build-sidecar
+build-sidecar: sidecar
+	@echo "📦 Building APK for Sidecar flavor"
+	flutter build apk --flavor sidecar -t lib/main_sidecar.dart
+
+.PHONY: build-remote
+build-remote:
+	@echo "📦 Building APK for Remote flavor"
+	flutter build apk --flavor remote -t lib/main_remote.dart
 
 .PHONY: clean
 clean:
