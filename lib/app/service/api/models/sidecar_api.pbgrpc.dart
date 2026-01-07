@@ -15,92 +15,93 @@ import 'dart:core' as $core;
 import 'package:grpc/service_api.dart' as $grpc;
 import 'package:protobuf/protobuf.dart' as $pb;
 
+import 'domain_models.pb.dart' as $1;
 import 'sidecar_api.pb.dart' as $0;
 
 export 'sidecar_api.pb.dart';
 
-@$pb.GrpcServiceName('pb.SidecarApi')
+@$pb.GrpcServiceName('news_hub.sidecar.SidecarApi')
 class SidecarApiClient extends $grpc.Client {
   static final _$getSite = $grpc.ClientMethod<$0.GetSiteReq, $0.GetSiteRes>(
-      '/pb.SidecarApi/GetSite',
+      '/news_hub.sidecar.SidecarApi/GetSite',
       ($0.GetSiteReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.GetSiteRes.fromBuffer(value));
   static final _$getBoards = $grpc.ClientMethod<$0.GetBoardsReq, $0.GetBoardsRes>(
-      '/pb.SidecarApi/GetBoards',
+      '/news_hub.sidecar.SidecarApi/GetBoards',
       ($0.GetBoardsReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.GetBoardsRes.fromBuffer(value));
   static final _$getThreadInfos = $grpc.ClientMethod<$0.GetThreadInfosReq, $0.GetThreadInfosRes>(
-      '/pb.SidecarApi/GetThreadInfos',
+      '/news_hub.sidecar.SidecarApi/GetThreadInfos',
       ($0.GetThreadInfosReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.GetThreadInfosRes.fromBuffer(value));
   static final _$getThreadPost = $grpc.ClientMethod<$0.GetThreadPostReq, $0.GetThreadPostRes>(
-      '/pb.SidecarApi/GetThreadPost',
+      '/news_hub.sidecar.SidecarApi/GetThreadPost',
       ($0.GetThreadPostReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.GetThreadPostRes.fromBuffer(value));
   static final _$getRegardingPosts = $grpc.ClientMethod<$0.GetRegardingPostsReq, $0.GetRegardingPostsRes>(
-      '/pb.SidecarApi/GetRegardingPosts',
+      '/news_hub.sidecar.SidecarApi/GetRegardingPosts',
       ($0.GetRegardingPostsReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.GetRegardingPostsRes.fromBuffer(value));
   static final _$getComments = $grpc.ClientMethod<$0.GetCommentsReq, $0.GetCommentsRes>(
-      '/pb.SidecarApi/GetComments',
+      '/news_hub.sidecar.SidecarApi/GetComments',
       ($0.GetCommentsReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.GetCommentsRes.fromBuffer(value));
-  static final _$listInstalledExtensions = $grpc.ClientMethod<$0.Empty, $0.ListInstalledExtensionsRes>(
-      '/pb.SidecarApi/ListInstalledExtensions',
-      ($0.Empty value) => value.writeToBuffer(),
+  static final _$listInstalledExtensions = $grpc.ClientMethod<$1.Empty, $0.ListInstalledExtensionsRes>(
+      '/news_hub.sidecar.SidecarApi/ListInstalledExtensions',
+      ($1.Empty value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.ListInstalledExtensionsRes.fromBuffer(value));
   static final _$getInstalledExtension = $grpc.ClientMethod<$0.GetInstalledExtensionReq, $0.GetInstalledExtensionRes>(
-      '/pb.SidecarApi/GetInstalledExtension',
+      '/news_hub.sidecar.SidecarApi/GetInstalledExtension',
       ($0.GetInstalledExtensionReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.GetInstalledExtensionRes.fromBuffer(value));
-  static final _$installExtension = $grpc.ClientMethod<$0.InstallExtensionReq, $0.Empty>(
-      '/pb.SidecarApi/InstallExtension',
+  static final _$installExtension = $grpc.ClientMethod<$0.InstallExtensionReq, $1.Empty>(
+      '/news_hub.sidecar.SidecarApi/InstallExtension',
       ($0.InstallExtensionReq value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
-  static final _$uninstallExtension = $grpc.ClientMethod<$0.UninstallExtensionReq, $0.Empty>(
-      '/pb.SidecarApi/UninstallExtension',
+      ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
+  static final _$uninstallExtension = $grpc.ClientMethod<$0.UninstallExtensionReq, $1.Empty>(
+      '/news_hub.sidecar.SidecarApi/UninstallExtension',
       ($0.UninstallExtensionReq value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
+      ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
   static final _$getInstallProgress = $grpc.ClientMethod<$0.GetInstallProgressReq, $0.GetInstallProgressRes>(
-      '/pb.SidecarApi/GetInstallProgress',
+      '/news_hub.sidecar.SidecarApi/GetInstallProgress',
       ($0.GetInstallProgressReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.GetInstallProgressRes.fromBuffer(value));
   static final _$listRemoteExtensions = $grpc.ClientMethod<$0.ListRemoteExtensionsReq, $0.ListRemoteExtensionsRes>(
-      '/pb.SidecarApi/ListRemoteExtensions',
+      '/news_hub.sidecar.SidecarApi/ListRemoteExtensions',
       ($0.ListRemoteExtensionsReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.ListRemoteExtensionsRes.fromBuffer(value));
-  static final _$listExtensionRepos = $grpc.ClientMethod<$0.Empty, $0.ListExtensionReposRes>(
-      '/pb.SidecarApi/ListExtensionRepos',
-      ($0.Empty value) => value.writeToBuffer(),
+  static final _$listExtensionRepos = $grpc.ClientMethod<$1.Empty, $0.ListExtensionReposRes>(
+      '/news_hub.sidecar.SidecarApi/ListExtensionRepos',
+      ($1.Empty value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.ListExtensionReposRes.fromBuffer(value));
   static final _$addExtensionRepo = $grpc.ClientMethod<$0.AddExtensionRepoReq, $0.AddExtensionRepoRes>(
-      '/pb.SidecarApi/AddExtensionRepo',
+      '/news_hub.sidecar.SidecarApi/AddExtensionRepo',
       ($0.AddExtensionRepoReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.AddExtensionRepoRes.fromBuffer(value));
-  static final _$removeExtensionRepo = $grpc.ClientMethod<$0.RemoveExtensionRepoReq, $0.Empty>(
-      '/pb.SidecarApi/RemoveExtensionRepo',
+  static final _$removeExtensionRepo = $grpc.ClientMethod<$0.RemoveExtensionRepoReq, $1.Empty>(
+      '/news_hub.sidecar.SidecarApi/RemoveExtensionRepo',
       ($0.RemoveExtensionRepoReq value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
+      ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
   static final _$healthCheck = $grpc.ClientMethod<$0.HealthCheckReq, $0.HealthCheckRes>(
-      '/pb.SidecarApi/HealthCheck',
+      '/news_hub.sidecar.SidecarApi/HealthCheck',
       ($0.HealthCheckReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.HealthCheckRes.fromBuffer(value));
   static final _$watchHealth = $grpc.ClientMethod<$0.HealthCheckReq, $0.HealthCheckRes>(
-      '/pb.SidecarApi/WatchHealth',
+      '/news_hub.sidecar.SidecarApi/WatchHealth',
       ($0.HealthCheckReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.HealthCheckRes.fromBuffer(value));
-  static final _$watchLogs = $grpc.ClientMethod<$0.WatchLogsReq, $0.LogEntry>(
-      '/pb.SidecarApi/WatchLogs',
+  static final _$watchLogs = $grpc.ClientMethod<$0.WatchLogsReq, $1.LogEntry>(
+      '/news_hub.sidecar.SidecarApi/WatchLogs',
       ($0.WatchLogsReq value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.LogEntry.fromBuffer(value));
+      ($core.List<$core.int> value) => $1.LogEntry.fromBuffer(value));
   static final _$getLogs = $grpc.ClientMethod<$0.GetLogsReq, $0.GetLogsRes>(
-      '/pb.SidecarApi/GetLogs',
+      '/news_hub.sidecar.SidecarApi/GetLogs',
       ($0.GetLogsReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.GetLogsRes.fromBuffer(value));
-  static final _$setLogLevel = $grpc.ClientMethod<$0.SetLogLevelReq, $0.Empty>(
-      '/pb.SidecarApi/SetLogLevel',
+  static final _$setLogLevel = $grpc.ClientMethod<$0.SetLogLevelReq, $1.Empty>(
+      '/news_hub.sidecar.SidecarApi/SetLogLevel',
       ($0.SetLogLevelReq value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.Empty.fromBuffer(value));
+      ($core.List<$core.int> value) => $1.Empty.fromBuffer(value));
 
   SidecarApiClient($grpc.ClientChannel channel,
       {$grpc.CallOptions? options,
@@ -132,7 +133,7 @@ class SidecarApiClient extends $grpc.Client {
     return $createUnaryCall(_$getComments, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.ListInstalledExtensionsRes> listInstalledExtensions($0.Empty request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.ListInstalledExtensionsRes> listInstalledExtensions($1.Empty request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$listInstalledExtensions, request, options: options);
   }
 
@@ -140,11 +141,11 @@ class SidecarApiClient extends $grpc.Client {
     return $createUnaryCall(_$getInstalledExtension, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Empty> installExtension($0.InstallExtensionReq request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$1.Empty> installExtension($0.InstallExtensionReq request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$installExtension, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Empty> uninstallExtension($0.UninstallExtensionReq request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$1.Empty> uninstallExtension($0.UninstallExtensionReq request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$uninstallExtension, request, options: options);
   }
 
@@ -156,7 +157,7 @@ class SidecarApiClient extends $grpc.Client {
     return $createUnaryCall(_$listRemoteExtensions, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.ListExtensionReposRes> listExtensionRepos($0.Empty request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$0.ListExtensionReposRes> listExtensionRepos($1.Empty request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$listExtensionRepos, request, options: options);
   }
 
@@ -164,7 +165,7 @@ class SidecarApiClient extends $grpc.Client {
     return $createUnaryCall(_$addExtensionRepo, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Empty> removeExtensionRepo($0.RemoveExtensionRepoReq request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$1.Empty> removeExtensionRepo($0.RemoveExtensionRepoReq request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$removeExtensionRepo, request, options: options);
   }
 
@@ -176,7 +177,7 @@ class SidecarApiClient extends $grpc.Client {
     return $createStreamingCall(_$watchHealth, $async.Stream.fromIterable([request]), options: options);
   }
 
-  $grpc.ResponseStream<$0.LogEntry> watchLogs($0.WatchLogsReq request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseStream<$1.LogEntry> watchLogs($0.WatchLogsReq request, {$grpc.CallOptions? options}) {
     return $createStreamingCall(_$watchLogs, $async.Stream.fromIterable([request]), options: options);
   }
 
@@ -184,14 +185,14 @@ class SidecarApiClient extends $grpc.Client {
     return $createUnaryCall(_$getLogs, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.Empty> setLogLevel($0.SetLogLevelReq request, {$grpc.CallOptions? options}) {
+  $grpc.ResponseFuture<$1.Empty> setLogLevel($0.SetLogLevelReq request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$setLogLevel, request, options: options);
   }
 }
 
-@$pb.GrpcServiceName('pb.SidecarApi')
+@$pb.GrpcServiceName('news_hub.sidecar.SidecarApi')
 abstract class SidecarApiServiceBase extends $grpc.Service {
-  $core.String get $name => 'pb.SidecarApi';
+  $core.String get $name => 'news_hub.sidecar.SidecarApi';
 
   SidecarApiServiceBase() {
     $addMethod($grpc.ServiceMethod<$0.GetSiteReq, $0.GetSiteRes>(
@@ -236,12 +237,12 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.GetCommentsReq.fromBuffer(value),
         ($0.GetCommentsRes value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.Empty, $0.ListInstalledExtensionsRes>(
+    $addMethod($grpc.ServiceMethod<$1.Empty, $0.ListInstalledExtensionsRes>(
         'ListInstalledExtensions',
         listInstalledExtensions_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
+        ($core.List<$core.int> value) => $1.Empty.fromBuffer(value),
         ($0.ListInstalledExtensionsRes value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.GetInstalledExtensionReq, $0.GetInstalledExtensionRes>(
         'GetInstalledExtension',
@@ -250,20 +251,20 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.GetInstalledExtensionReq.fromBuffer(value),
         ($0.GetInstalledExtensionRes value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.InstallExtensionReq, $0.Empty>(
+    $addMethod($grpc.ServiceMethod<$0.InstallExtensionReq, $1.Empty>(
         'InstallExtension',
         installExtension_Pre,
         false,
         false,
         ($core.List<$core.int> value) => $0.InstallExtensionReq.fromBuffer(value),
-        ($0.Empty value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.UninstallExtensionReq, $0.Empty>(
+        ($1.Empty value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.UninstallExtensionReq, $1.Empty>(
         'UninstallExtension',
         uninstallExtension_Pre,
         false,
         false,
         ($core.List<$core.int> value) => $0.UninstallExtensionReq.fromBuffer(value),
-        ($0.Empty value) => value.writeToBuffer()));
+        ($1.Empty value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.GetInstallProgressReq, $0.GetInstallProgressRes>(
         'GetInstallProgress',
         getInstallProgress_Pre,
@@ -278,12 +279,12 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.ListRemoteExtensionsReq.fromBuffer(value),
         ($0.ListRemoteExtensionsRes value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.Empty, $0.ListExtensionReposRes>(
+    $addMethod($grpc.ServiceMethod<$1.Empty, $0.ListExtensionReposRes>(
         'ListExtensionRepos',
         listExtensionRepos_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.Empty.fromBuffer(value),
+        ($core.List<$core.int> value) => $1.Empty.fromBuffer(value),
         ($0.ListExtensionReposRes value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.AddExtensionRepoReq, $0.AddExtensionRepoRes>(
         'AddExtensionRepo',
@@ -292,13 +293,13 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.AddExtensionRepoReq.fromBuffer(value),
         ($0.AddExtensionRepoRes value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.RemoveExtensionRepoReq, $0.Empty>(
+    $addMethod($grpc.ServiceMethod<$0.RemoveExtensionRepoReq, $1.Empty>(
         'RemoveExtensionRepo',
         removeExtensionRepo_Pre,
         false,
         false,
         ($core.List<$core.int> value) => $0.RemoveExtensionRepoReq.fromBuffer(value),
-        ($0.Empty value) => value.writeToBuffer()));
+        ($1.Empty value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.HealthCheckReq, $0.HealthCheckRes>(
         'HealthCheck',
         healthCheck_Pre,
@@ -313,13 +314,13 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
         true,
         ($core.List<$core.int> value) => $0.HealthCheckReq.fromBuffer(value),
         ($0.HealthCheckRes value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.WatchLogsReq, $0.LogEntry>(
+    $addMethod($grpc.ServiceMethod<$0.WatchLogsReq, $1.LogEntry>(
         'WatchLogs',
         watchLogs_Pre,
         false,
         true,
         ($core.List<$core.int> value) => $0.WatchLogsReq.fromBuffer(value),
-        ($0.LogEntry value) => value.writeToBuffer()));
+        ($1.LogEntry value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.GetLogsReq, $0.GetLogsRes>(
         'GetLogs',
         getLogs_Pre,
@@ -327,13 +328,13 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.GetLogsReq.fromBuffer(value),
         ($0.GetLogsRes value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.SetLogLevelReq, $0.Empty>(
+    $addMethod($grpc.ServiceMethod<$0.SetLogLevelReq, $1.Empty>(
         'SetLogLevel',
         setLogLevel_Pre,
         false,
         false,
         ($core.List<$core.int> value) => $0.SetLogLevelReq.fromBuffer(value),
-        ($0.Empty value) => value.writeToBuffer()));
+        ($1.Empty value) => value.writeToBuffer()));
   }
 
   $async.Future<$0.GetSiteRes> getSite_Pre($grpc.ServiceCall call, $async.Future<$0.GetSiteReq> request) async {
@@ -360,7 +361,7 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
     return getComments(call, await request);
   }
 
-  $async.Future<$0.ListInstalledExtensionsRes> listInstalledExtensions_Pre($grpc.ServiceCall call, $async.Future<$0.Empty> request) async {
+  $async.Future<$0.ListInstalledExtensionsRes> listInstalledExtensions_Pre($grpc.ServiceCall call, $async.Future<$1.Empty> request) async {
     return listInstalledExtensions(call, await request);
   }
 
@@ -368,11 +369,11 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
     return getInstalledExtension(call, await request);
   }
 
-  $async.Future<$0.Empty> installExtension_Pre($grpc.ServiceCall call, $async.Future<$0.InstallExtensionReq> request) async {
+  $async.Future<$1.Empty> installExtension_Pre($grpc.ServiceCall call, $async.Future<$0.InstallExtensionReq> request) async {
     return installExtension(call, await request);
   }
 
-  $async.Future<$0.Empty> uninstallExtension_Pre($grpc.ServiceCall call, $async.Future<$0.UninstallExtensionReq> request) async {
+  $async.Future<$1.Empty> uninstallExtension_Pre($grpc.ServiceCall call, $async.Future<$0.UninstallExtensionReq> request) async {
     return uninstallExtension(call, await request);
   }
 
@@ -384,7 +385,7 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
     return listRemoteExtensions(call, await request);
   }
 
-  $async.Future<$0.ListExtensionReposRes> listExtensionRepos_Pre($grpc.ServiceCall call, $async.Future<$0.Empty> request) async {
+  $async.Future<$0.ListExtensionReposRes> listExtensionRepos_Pre($grpc.ServiceCall call, $async.Future<$1.Empty> request) async {
     return listExtensionRepos(call, await request);
   }
 
@@ -392,7 +393,7 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
     return addExtensionRepo(call, await request);
   }
 
-  $async.Future<$0.Empty> removeExtensionRepo_Pre($grpc.ServiceCall call, $async.Future<$0.RemoveExtensionRepoReq> request) async {
+  $async.Future<$1.Empty> removeExtensionRepo_Pre($grpc.ServiceCall call, $async.Future<$0.RemoveExtensionRepoReq> request) async {
     return removeExtensionRepo(call, await request);
   }
 
@@ -404,7 +405,7 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
     yield* watchHealth(call, await request);
   }
 
-  $async.Stream<$0.LogEntry> watchLogs_Pre($grpc.ServiceCall call, $async.Future<$0.WatchLogsReq> request) async* {
+  $async.Stream<$1.LogEntry> watchLogs_Pre($grpc.ServiceCall call, $async.Future<$0.WatchLogsReq> request) async* {
     yield* watchLogs(call, await request);
   }
 
@@ -412,7 +413,7 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
     return getLogs(call, await request);
   }
 
-  $async.Future<$0.Empty> setLogLevel_Pre($grpc.ServiceCall call, $async.Future<$0.SetLogLevelReq> request) async {
+  $async.Future<$1.Empty> setLogLevel_Pre($grpc.ServiceCall call, $async.Future<$0.SetLogLevelReq> request) async {
     return setLogLevel(call, await request);
   }
 
@@ -422,18 +423,18 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
   $async.Future<$0.GetThreadPostRes> getThreadPost($grpc.ServiceCall call, $0.GetThreadPostReq request);
   $async.Future<$0.GetRegardingPostsRes> getRegardingPosts($grpc.ServiceCall call, $0.GetRegardingPostsReq request);
   $async.Future<$0.GetCommentsRes> getComments($grpc.ServiceCall call, $0.GetCommentsReq request);
-  $async.Future<$0.ListInstalledExtensionsRes> listInstalledExtensions($grpc.ServiceCall call, $0.Empty request);
+  $async.Future<$0.ListInstalledExtensionsRes> listInstalledExtensions($grpc.ServiceCall call, $1.Empty request);
   $async.Future<$0.GetInstalledExtensionRes> getInstalledExtension($grpc.ServiceCall call, $0.GetInstalledExtensionReq request);
-  $async.Future<$0.Empty> installExtension($grpc.ServiceCall call, $0.InstallExtensionReq request);
-  $async.Future<$0.Empty> uninstallExtension($grpc.ServiceCall call, $0.UninstallExtensionReq request);
+  $async.Future<$1.Empty> installExtension($grpc.ServiceCall call, $0.InstallExtensionReq request);
+  $async.Future<$1.Empty> uninstallExtension($grpc.ServiceCall call, $0.UninstallExtensionReq request);
   $async.Future<$0.GetInstallProgressRes> getInstallProgress($grpc.ServiceCall call, $0.GetInstallProgressReq request);
   $async.Future<$0.ListRemoteExtensionsRes> listRemoteExtensions($grpc.ServiceCall call, $0.ListRemoteExtensionsReq request);
-  $async.Future<$0.ListExtensionReposRes> listExtensionRepos($grpc.ServiceCall call, $0.Empty request);
+  $async.Future<$0.ListExtensionReposRes> listExtensionRepos($grpc.ServiceCall call, $1.Empty request);
   $async.Future<$0.AddExtensionRepoRes> addExtensionRepo($grpc.ServiceCall call, $0.AddExtensionRepoReq request);
-  $async.Future<$0.Empty> removeExtensionRepo($grpc.ServiceCall call, $0.RemoveExtensionRepoReq request);
+  $async.Future<$1.Empty> removeExtensionRepo($grpc.ServiceCall call, $0.RemoveExtensionRepoReq request);
   $async.Future<$0.HealthCheckRes> healthCheck($grpc.ServiceCall call, $0.HealthCheckReq request);
   $async.Stream<$0.HealthCheckRes> watchHealth($grpc.ServiceCall call, $0.HealthCheckReq request);
-  $async.Stream<$0.LogEntry> watchLogs($grpc.ServiceCall call, $0.WatchLogsReq request);
+  $async.Stream<$1.LogEntry> watchLogs($grpc.ServiceCall call, $0.WatchLogsReq request);
   $async.Future<$0.GetLogsRes> getLogs($grpc.ServiceCall call, $0.GetLogsReq request);
-  $async.Future<$0.Empty> setLogLevel($grpc.ServiceCall call, $0.SetLogLevelReq request);
+  $async.Future<$1.Empty> setLogLevel($grpc.ServiceCall call, $0.SetLogLevelReq request);
 }

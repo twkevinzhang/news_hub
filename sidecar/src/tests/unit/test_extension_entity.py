@@ -13,12 +13,11 @@ class TestExtensionEntity(unittest.TestCase):
         self.metadata = ExtensionMetadata(
             pkg_name="test_extension",
             display_name="Test Extension",
-            zip_name="test.zip",
             version=1,
             python_version=3,
             lang="en",
             is_nsfw=False,
-            repo_url="https://example.com"
+            icon_url=None
         )
         self.installation_path = Path("/tmp/extensions/test_extension")
 
@@ -77,10 +76,8 @@ class TestExtensionMetadata(unittest.TestCase):
         metadata = ExtensionMetadata(
             pkg_name="test_extension",
             display_name="Test Extension",
-            zip_name="test.zip",
             version=1,
             python_version=3,
-            repo_url="https://example.com"
         )
 
         self.assertEqual(metadata.pkg_name, "test_extension")
@@ -92,10 +89,8 @@ class TestExtensionMetadata(unittest.TestCase):
             ExtensionMetadata(
                 pkg_name="",
                 display_name="Test",
-                zip_name="test.zip",
                 version=1,
                 python_version=3,
-                repo_url="https://example.com"
             )
 
     def test_negative_version_raises_error(self):
@@ -104,10 +99,8 @@ class TestExtensionMetadata(unittest.TestCase):
             ExtensionMetadata(
                 pkg_name="test",
                 display_name="Test",
-                zip_name="test.zip",
                 version=-1,
                 python_version=3,
-                repo_url="https://example.com"
             )
 
     def test_metadata_is_immutable(self):
@@ -115,10 +108,8 @@ class TestExtensionMetadata(unittest.TestCase):
         metadata = ExtensionMetadata(
             pkg_name="test",
             display_name="Test",
-            zip_name="test.zip",
             version=1,
             python_version=3,
-            repo_url="https://example.com"
         )
 
         with self.assertRaises(AttributeError):

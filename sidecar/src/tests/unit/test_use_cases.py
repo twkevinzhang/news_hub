@@ -27,10 +27,8 @@ class TestInstallExtensionUseCase(unittest.TestCase):
         self.metadata = ExtensionMetadata(
             pkg_name="test_ext",
             display_name="Test Extension",
-            zip_name="test.zip",
             version=1,
             python_version=3,
-            repo_url="https://example.com"
         )
 
     def test_install_new_extension(self):
@@ -44,8 +42,7 @@ class TestInstallExtensionUseCase(unittest.TestCase):
 
         # Verify
         self.repository.exists.assert_called_once_with("test_ext")
-        self.installer.download.assert_called_once()
-        self.installer.extract.assert_called_once_with("test_ext")
+        self.installer.download_directory.assert_called_once()
         self.installer.install_requirements.assert_called_once_with("test_ext")
         self.repository.save.assert_called_once()
 

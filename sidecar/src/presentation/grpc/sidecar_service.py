@@ -3,6 +3,7 @@ import logging
 import asyncio
 import sidecar_api_pb2 as pb2
 import sidecar_api_pb2_grpc as pb2_grpc
+import domain_models_pb2 as domain_pb2
 import grpc
 
 from domain.value_objects.extension_metadata import ExtensionMetadata
@@ -128,8 +129,8 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             loop = asyncio.get_event_loop()
             extensions_with_urls = await loop.run_in_executor(None, self.list_remote_uc.execute, request.keyword)
             pb_extensions = [
-                pb2.RemoteExtension(
-                    base=pb2.Extension(
+                domain_pb2.RemoteExtension(
+                    base=domain_pb2.Extension(
                         pkg_name=ext.pkg_name,
                         display_name=ext.display_name,
                         version=ext.version,
@@ -196,7 +197,7 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
         try:
             repos = self.repo_repository.find_all()
             pb_repos = [
-                pb2.ExtensionRepo(
+                domain_pb2.ExtensionRepo(
                     url=repo.url,
                     added_at=int(repo.added_at.timestamp() * 1000),
                     display_name=repo.display_name,
@@ -254,7 +255,23 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             
             # Extensions are likely synchronous, run in executor
             loop = asyncio.get_event_loop()
-            return await loop.run_in_executor(None, method, request, context)
+            ext_response = await loop.run_in_executor(None, method, request, context)
+
+            if ext_response is None:
+                return None
+
+            # Adapter Pattern: Convert extension's message to sidecar's expected message
+            # This handles different namespaces (packages) if the schema matches.
+            res_class_name = ext_response.__class__.__name__
+            sidecar_res_class = getattr(pb2, res_class_name, None)
+            if not sidecar_res_class:
+                # Some residents might be in domain_pb2 (like Empty)
+                sidecar_res_class = getattr(domain_pb2, res_class_name, None)
+            
+            if not sidecar_res_class or ext_response.__class__ == sidecar_res_class:
+                return ext_response
+
+            return self._convert_msg(ext_response, sidecar_res_class)
         except Exception as e:
             logger.error(f"{method_name} error: {e}", exc_info=True)
             context.set_code(grpc.StatusCode.INTERNAL)
@@ -262,9 +279,17 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             return None
 
     @staticmethod
+    def _convert_msg(source_msg, target_class):
+        """Convert message between identical schemas in different packages using serialization"""
+        serialized = source_msg.SerializeToString()
+        target_msg = target_class()
+        target_msg.ParseFromString(serialized)
+        return target_msg
+
+    @staticmethod
     def _extension_to_pb(extension):
         """Convert Extension entity to protobuf"""
-        return pb2.Extension(
+        return domain_pb2.Extension(
             pkg_name=extension.metadata.pkg_name,
             display_name=extension.metadata.display_name,
             version=extension.metadata.version,
@@ -280,8 +305,8 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             return self.health_check_service.check(request.service)
         except Exception as e:
             logger.error(f"HealthCheck error: {e}", exc_info=True)
-            return pb2.HealthCheckResponse(
-                status=pb2.HealthCheckResponse.UNKNOWN,
+            return pb2.HealthCheckRes(
+                status=pb2.HealthCheckRes.UNKNOWN,
                 message=str(e)
             )
 
@@ -320,7 +345,7 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
                     # Wait for new log entry
                     entry = await log_queue.get()
                     
-                    yield pb2.LogEntry(
+                    yield domain_pb2.LogEntry(
                         timestamp=entry.timestamp,
                         level=python_level_to_proto(entry.level),
                         logger_name=entry.logger_name,
@@ -350,7 +375,7 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             )
             
             pb_entries = [
-                pb2.LogEntry(
+                domain_pb2.LogEntry(
                     timestamp=entry.timestamp,
                     level=python_level_to_proto(entry.level),
                     logger_name=entry.logger_name,
@@ -360,10 +385,10 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
                 for entry in entries
             ]
             
-            return pb2.GetLogsResponse(entries=pb_entries)
+            return pb2.GetLogsRes(entries=pb_entries)
         except Exception as e:
             logger.error(f"GetLogs error: {e}", exc_info=True)
-            return pb2.GetLogsResponse()
+            return pb2.GetLogsRes()
 
     async def SetLogLevel(self, request, context):
         """Set log level"""

@@ -10,6 +10,7 @@ import 'package:news_hub/shared/models.dart';
 
 import 'models/sidecar_api.pbgrpc.dart';
 import 'models/sidecar_api.pb.dart' as pb;
+import 'models/domain_models.pb.dart' as domain_pb;
 
 @LazySingleton(as: ApiService)
 class SidecarApiImpl implements ApiService {
@@ -34,7 +35,7 @@ class SidecarApiImpl implements ApiService {
     final res = await _client.getBoards(pb.GetBoardsReq(
       pkgName: extensionPkgName,
       siteId: siteId,
-      page: pb.PaginationReq(
+      page: domain_pb.PaginationReq(
         page: pagination?.page,
         pageSize: pagination?.pageSize,
       ),
@@ -55,7 +56,7 @@ class SidecarApiImpl implements ApiService {
       pkgName: extensionPkgName,
       siteId: siteId,
       boardsSorting: boardsSorting,
-      page: pb.PaginationReq(
+      page: domain_pb.PaginationReq(
         page: pagination?.page,
         pageSize: pagination?.pageSize,
       ),
@@ -97,7 +98,7 @@ class SidecarApiImpl implements ApiService {
       boardId: boardId,
       threadId: threadId,
       replyToId: replyToId,
-      page: pb.PaginationReq(
+      page: domain_pb.PaginationReq(
         page: pagination?.page,
         pageSize: pagination?.pageSize,
       ),
@@ -120,7 +121,7 @@ class SidecarApiImpl implements ApiService {
       boardId: boardId,
       threadId: threadId,
       postId: postId,
-      page: pb.PaginationReq(
+      page: domain_pb.PaginationReq(
         page: pagination?.page,
         pageSize: pagination?.pageSize,
       ),
@@ -150,7 +151,7 @@ class SidecarApiImpl implements ApiService {
 
   @override
   Future<List<domain.Extension>> listInstalledExtensions() async {
-    final res = await _client.listInstalledExtensions(pb.Empty());
+    final res = await _client.listInstalledExtensions(domain_pb.Empty());
     return res.extensions.map((e) => e.toExtensionDomain()).toList();
   }
 
@@ -187,7 +188,7 @@ class SidecarApiImpl implements ApiService {
   // Extension Repository operations
   @override
   Future<List<domain.Repo>> listRepos() async {
-    final res = await _client.listExtensionRepos(pb.Empty());
+    final res = await _client.listExtensionRepos(domain_pb.Empty());
     return res.repos.map((r) => r.toRepoDomain()).toList();
   }
 

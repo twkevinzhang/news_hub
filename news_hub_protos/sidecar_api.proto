@@ -1,5 +1,7 @@
 syntax = "proto3";
-package pb;
+package news_hub.sidecar;
+
+import "domain_models.proto";
 
 service SidecarApi {
   rpc GetSite (GetSiteReq) returns (GetSiteRes) {}
@@ -10,49 +12,26 @@ service SidecarApi {
   rpc GetComments (GetCommentsReq) returns (GetCommentsRes) {}
 
    // Extension operations
-  rpc ListInstalledExtensions (Empty) returns (ListInstalledExtensionsRes);
+  rpc ListInstalledExtensions (news_hub.domain.Empty) returns (ListInstalledExtensionsRes);
   rpc GetInstalledExtension (GetInstalledExtensionReq) returns (GetInstalledExtensionRes);
-  rpc InstallExtension (InstallExtensionReq) returns (Empty);
-  rpc UninstallExtension (UninstallExtensionReq) returns (Empty);
+  rpc InstallExtension (InstallExtensionReq) returns (news_hub.domain.Empty);
+  rpc UninstallExtension (UninstallExtensionReq) returns (news_hub.domain.Empty);
   rpc GetInstallProgress (GetInstallProgressReq) returns (GetInstallProgressRes);
   rpc ListRemoteExtensions (ListRemoteExtensionsReq) returns (ListRemoteExtensionsRes);
 
   // Extension Repository operations
-  rpc ListExtensionRepos (Empty) returns (ListExtensionReposRes);
+  rpc ListExtensionRepos (news_hub.domain.Empty) returns (ListExtensionReposRes);
   rpc AddExtensionRepo (AddExtensionRepoReq) returns (AddExtensionRepoRes);
-  rpc RemoveExtensionRepo (RemoveExtensionRepoReq) returns (Empty);
+  rpc RemoveExtensionRepo (RemoveExtensionRepoReq) returns (news_hub.domain.Empty);
 
   // Health check
   rpc HealthCheck (HealthCheckReq) returns (HealthCheckRes);
   rpc WatchHealth (HealthCheckReq) returns (stream HealthCheckRes);
 
   // Logs
-  rpc WatchLogs (WatchLogsReq) returns (stream LogEntry);
+  rpc WatchLogs (WatchLogsReq) returns (stream news_hub.domain.LogEntry);
   rpc GetLogs (GetLogsReq) returns (GetLogsRes);
-  rpc SetLogLevel (SetLogLevelReq) returns (Empty);
-}
-
-message PaginationReq {
-  // for offset-based pagination
-  optional int32 page = 1;
-  optional int32 page_size = 3;
-  // for cursor-based pagination
-  optional int32 limit = 2;
-  optional string prev_cursor = 4;
-  optional string next_cursor = 5;
-}
-
-message PaginationRes {
-  // for offset-based pagination
-  optional int32 total_page = 1;
-  optional int32 current_page = 2;
-  optional int32 page_size = 3;
-  // for cursor-based pagination
-  optional string prev_cursor = 4;
-  optional string next_cursor = 5;
-}
-
-message Empty {
+  rpc SetLogLevel (SetLogLevelReq) returns (news_hub.domain.Empty);
 }
 
 message GetSiteReq {
@@ -60,51 +39,31 @@ message GetSiteReq {
 }
 
 message GetSiteRes {
-  Site site = 1;
-}
-
-message Site {
-  string pkg_name = 6;
-  string id = 4;
-  string icon = 5;
-  string name = 1;
-  string description = 2;
-  string url = 3;
+  news_hub.domain.Site site = 1;
 }
 
 message GetBoardsReq {
   string pkg_name = 3;
   string site_id = 1;
-  optional PaginationReq page = 2;
+  optional news_hub.domain.PaginationReq page = 2;
 }
 
 message GetBoardsRes {
-  repeated Board boards = 1;
-  PaginationRes page = 2;
-}
-
-message Board {
-  string pkg_name = 8;
-  string site_id = 2;
-  string id = 1;
-  string name = 3;
-  string icon = 4;
-  string large_welcome_image = 5;
-  string url = 6;
-  repeated string supported_threads_sorting = 7;
+  repeated news_hub.domain.Board boards = 1;
+  news_hub.domain.PaginationRes page = 2;
 }
 
 message GetThreadInfosReq {
   string pkg_name = 6;
   string site_id = 1;
   map<string, string> boards_sorting = 2;
-  optional PaginationReq page = 3;
+  optional news_hub.domain.PaginationReq page = 3;
   optional string keywords = 5;
 }
 
 message GetThreadInfosRes {
-  repeated Post thread_infos = 1;
-  PaginationRes page = 2;
+  repeated news_hub.domain.Post thread_infos = 1;
+  news_hub.domain.PaginationRes page = 2;
 }
 
 message GetThreadPostReq {
@@ -116,7 +75,7 @@ message GetThreadPostReq {
 }
 
 message GetThreadPostRes {
-  Post thread_post = 1;
+  news_hub.domain.Post thread_post = 1;
 }
 
 message GetRegardingPostsReq {
@@ -125,109 +84,12 @@ message GetRegardingPostsReq {
   string board_id = 2;
   string thread_id = 3;
   optional string reply_to_id = 5;
-  optional PaginationReq page = 4;
+  optional news_hub.domain.PaginationReq page = 4;
 }
 
 message GetRegardingPostsRes {
-  repeated Post regarding_posts = 1;
-  PaginationRes page = 2;
-}
-
-enum ParagraphType {
-  PARAGRAPH_TYPE_UNSPECIFIED = 0;
-  PARAGRAPH_TYPE_QUOTE = 1;
-  PARAGRAPH_TYPE_REPLY_TO = 2;
-  PARAGRAPH_TYPE_TEXT = 3;
-  PARAGRAPH_TYPE_NEW_LINE = 7;
-  PARAGRAPH_TYPE_IMAGE = 4;
-  PARAGRAPH_TYPE_LINK = 5;
-  PARAGRAPH_TYPE_VIDEO = 6;
-}
-
-message Paragraph {
-  ParagraphType type = 1;
-  oneof content {
-    ImageParagraph image = 2;
-    VideoParagraph video = 3;
-    TextParagraph text = 4;
-    NewLineParagraph new_line = 8;
-    QuoteParagraph quote = 5;
-    ReplyToParagraph reply_to = 6;
-    LinkParagraph link = 7;
-  }
-}
-
-message ImageParagraph {
-  optional string thumb = 1;
-  string raw = 2;
-}
-
-message VideoParagraph {
-  optional string thumb = 1;
-  string url = 2;
-}
-
-message TextParagraph {
-  string content = 1;
-}
-
-message NewLineParagraph {
-  string symbol = 1;
-}
-
-message QuoteParagraph {
-  string content = 1;
-}
-
-message ReplyToParagraph {
-  string id = 1;
-  string author_name = 3;
-  string preview = 2;
-}
-
-message LinkParagraph {
-  string content = 1;
-}
-
-message Post {
-  string pkg_name = 6;
-  string site_id = 4;
-  string board_id = 3;
-  string thread_id = 2;
-  string id = 1;
-  oneof content {
-    ArticlePost article_post = 7;
-    SingleImagePost single_image_post = 8;
-  }
-}
-
-message ArticlePost {
-  string author_id = 11;
-  string author_name = 5;
-  int64 created_at = 7;
-  string title = 9;
-  int32 liked = 12;
-  int32 disliked = 13;
-  repeated Paragraph contents = 17;
-  repeated string tags = 18;
-  int64 latest_regarding_post_created_at = 15;
-  int32 regarding_posts_count = 19;
-  string url = 20;
-}
-
-message SingleImagePost {
-  string author_id = 11;
-  string author_name = 5;
-  int64 created_at = 7;
-  string title = 9;
-  int32 liked = 12;
-  int32 disliked = 13;
-  ImageParagraph image = 21;
-  repeated Paragraph contents = 17;
-  repeated string tags = 18;
-  int64 latest_regarding_post_created_at = 15;
-  int32 regarding_posts_count = 19;
-  string url = 20;
+  repeated news_hub.domain.Post regarding_posts = 1;
+  news_hub.domain.PaginationRes page = 2;
 }
 
 message GetCommentsReq {
@@ -236,29 +98,16 @@ message GetCommentsReq {
   string board_id = 2;
   string thread_id = 3;
   string post_id = 4;
-  optional PaginationReq page = 5;
+  optional news_hub.domain.PaginationReq page = 5;
 }
 
 message GetCommentsRes {
-  repeated Comment comments = 1;
-  PaginationRes page = 2;
-}
-
-message Comment {
-  string pkg_name = 12;
-  string site_id = 5;
-  string board_id = 4;
-  string thread_id = 3;
-  string post_id = 2;
-  string id = 1;
-  string author_id = 6;
-  string author_name = 10;
-  repeated Paragraph contents = 11;
-  int64 created_at = 8;
+  repeated news_hub.domain.Comment comments = 1;
+  news_hub.domain.PaginationRes page = 2;
 }
 
 message ListInstalledExtensionsRes {
-  repeated Extension extensions = 1;
+  repeated news_hub.domain.Extension extensions = 1;
 }
 
 message GetInstalledExtensionReq {
@@ -266,7 +115,7 @@ message GetInstalledExtensionReq {
 }
 
 message GetInstalledExtensionRes {
-  Extension extension = 1;
+  news_hub.domain.Extension extension = 1;
 }
 
 message InstallExtensionReq {
@@ -283,7 +132,7 @@ message GetInstallProgressReq {
 }
 
 message GetInstallProgressRes {
-  repeated Site sites = 1;
+  repeated news_hub.domain.Site sites = 1;
 }
 
 message ListRemoteExtensionsReq {
@@ -291,32 +140,11 @@ message ListRemoteExtensionsReq {
 }
 
 message ListRemoteExtensionsRes {
-  repeated RemoteExtension extensions = 1;
+  repeated news_hub.domain.RemoteExtension extensions = 1;
 }
 
-message RemoteExtension {
-  Extension base = 1;
-  string icon_url = 2;
-  string repo_url = 3;
-}
-
-message Extension {
-  string pkg_name = 2;
-  string display_name = 3;
-  int32 version = 5;
-  int32 python_version = 6;
-  optional string lang = 7;
-  bool is_nsfw = 8;
-}
-
-// Extension Repo messages
-message ExtensionRepo {
-  string url = 1;
-  int64 added_at = 2;  // milliseconds since epoch
-  string display_name = 3;
-  string website = 4;
-  string signing_key_fingerprint = 5;
-  optional string icon = 6;
+message ListExtensionReposRes {
+  repeated news_hub.domain.ExtensionRepo repos = 1;
 }
 
 message AddExtensionRepoReq {
@@ -336,11 +164,6 @@ message RemoveExtensionRepoReq {
   string url = 1;
 }
 
-message ListExtensionReposRes {
-  repeated ExtensionRepo repos = 1;
-}
-
-// Health Check messages
 message HealthCheckReq {
   string service = 1;
 }
@@ -356,41 +179,23 @@ message HealthCheckRes {
   optional string message = 2;
 }
 
-// Logs messages
-enum LogLevel {
-  DEBUG = 0;
-  INFO = 1;
-  WARNING = 2;
-  ERROR = 3;
-  CRITICAL = 4;
-}
-
-message LogEntry {
-  int64 timestamp = 1;
-  LogLevel level = 2;
-  string logger_name = 3;
-  string message = 4;
-  optional string exception = 5;
-}
-
 message WatchLogsReq {
-  LogLevel min_level = 1;
+  news_hub.domain.LogLevel min_level = 1;
   optional string logger_filter = 2;
 }
 
 message GetLogsReq {
   int64 start_time = 1;
   int64 end_time = 2;
-  LogLevel min_level = 3;
+  news_hub.domain.LogLevel min_level = 3;
   optional string logger_filter = 4;
   optional int32 limit = 5;
 }
 
 message GetLogsRes {
-  repeated LogEntry entries = 1;
+  repeated news_hub.domain.LogEntry entries = 1;
 }
 
 message SetLogLevelReq {
-  LogLevel level = 1;
+  news_hub.domain.LogLevel level = 1;
 }
-

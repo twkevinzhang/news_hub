@@ -10,6 +10,7 @@ import asyncio
 import queue
 from dataclasses import dataclass
 import sidecar_api_pb2 as pb2
+import domain_models_pb2 as domain_pb2
 
 # UTC+8 timezone
 UTC_PLUS_8 = timezone(timedelta(hours=8))
@@ -325,27 +326,27 @@ class LoggingService:
                 logging.error(f"Error cleaning up log file {log_file}: {e}")
 
 
-def python_level_to_proto(level: int) -> pb2.LogLevel:
+def python_level_to_proto(level: int) -> domain_pb2.LogLevel:
     """Convert Python logging level to proto LogLevel"""
     if level >= logging.CRITICAL:
-        return pb2.CRITICAL
+        return domain_pb2.CRITICAL
     elif level >= logging.ERROR:
-        return pb2.ERROR
+        return domain_pb2.ERROR
     elif level >= logging.WARNING:
-        return pb2.WARNING
+        return domain_pb2.WARNING
     elif level >= logging.INFO:
-        return pb2.INFO
+        return domain_pb2.INFO
     else:
-        return pb2.DEBUG
+        return domain_pb2.DEBUG
 
 
-def proto_level_to_python(level: pb2.LogLevel) -> int:
+def proto_level_to_python(level: domain_pb2.LogLevel) -> int:
     """Convert proto LogLevel to Python logging level"""
     mapping = {
-        pb2.DEBUG: logging.DEBUG,
-        pb2.INFO: logging.INFO,
-        pb2.WARNING: logging.WARNING,
-        pb2.ERROR: logging.ERROR,
-        pb2.CRITICAL: logging.CRITICAL,
+        domain_pb2.DEBUG: logging.DEBUG,
+        domain_pb2.INFO: logging.INFO,
+        domain_pb2.WARNING: logging.WARNING,
+        domain_pb2.ERROR: logging.ERROR,
+        domain_pb2.CRITICAL: logging.CRITICAL,
     }
     return mapping.get(level, logging.INFO)

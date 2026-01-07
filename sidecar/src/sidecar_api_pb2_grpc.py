@@ -3,6 +3,7 @@
 import grpc
 import warnings
 
+import domain_models_pb2 as domain__models__pb2
 import sidecar_api_pb2 as sidecar__api__pb2
 
 GRPC_GENERATED_VERSION = '1.67.1'
@@ -35,104 +36,104 @@ class SidecarApiStub(object):
             channel: A grpc.Channel.
         """
         self.GetSite = channel.unary_unary(
-                '/pb.SidecarApi/GetSite',
+                '/news_hub.sidecar.SidecarApi/GetSite',
                 request_serializer=sidecar__api__pb2.GetSiteReq.SerializeToString,
                 response_deserializer=sidecar__api__pb2.GetSiteRes.FromString,
                 _registered_method=True)
         self.GetBoards = channel.unary_unary(
-                '/pb.SidecarApi/GetBoards',
+                '/news_hub.sidecar.SidecarApi/GetBoards',
                 request_serializer=sidecar__api__pb2.GetBoardsReq.SerializeToString,
                 response_deserializer=sidecar__api__pb2.GetBoardsRes.FromString,
                 _registered_method=True)
         self.GetThreadInfos = channel.unary_unary(
-                '/pb.SidecarApi/GetThreadInfos',
+                '/news_hub.sidecar.SidecarApi/GetThreadInfos',
                 request_serializer=sidecar__api__pb2.GetThreadInfosReq.SerializeToString,
                 response_deserializer=sidecar__api__pb2.GetThreadInfosRes.FromString,
                 _registered_method=True)
         self.GetThreadPost = channel.unary_unary(
-                '/pb.SidecarApi/GetThreadPost',
+                '/news_hub.sidecar.SidecarApi/GetThreadPost',
                 request_serializer=sidecar__api__pb2.GetThreadPostReq.SerializeToString,
                 response_deserializer=sidecar__api__pb2.GetThreadPostRes.FromString,
                 _registered_method=True)
         self.GetRegardingPosts = channel.unary_unary(
-                '/pb.SidecarApi/GetRegardingPosts',
+                '/news_hub.sidecar.SidecarApi/GetRegardingPosts',
                 request_serializer=sidecar__api__pb2.GetRegardingPostsReq.SerializeToString,
                 response_deserializer=sidecar__api__pb2.GetRegardingPostsRes.FromString,
                 _registered_method=True)
         self.GetComments = channel.unary_unary(
-                '/pb.SidecarApi/GetComments',
+                '/news_hub.sidecar.SidecarApi/GetComments',
                 request_serializer=sidecar__api__pb2.GetCommentsReq.SerializeToString,
                 response_deserializer=sidecar__api__pb2.GetCommentsRes.FromString,
                 _registered_method=True)
         self.ListInstalledExtensions = channel.unary_unary(
-                '/pb.SidecarApi/ListInstalledExtensions',
-                request_serializer=sidecar__api__pb2.Empty.SerializeToString,
+                '/news_hub.sidecar.SidecarApi/ListInstalledExtensions',
+                request_serializer=domain__models__pb2.Empty.SerializeToString,
                 response_deserializer=sidecar__api__pb2.ListInstalledExtensionsRes.FromString,
                 _registered_method=True)
         self.GetInstalledExtension = channel.unary_unary(
-                '/pb.SidecarApi/GetInstalledExtension',
+                '/news_hub.sidecar.SidecarApi/GetInstalledExtension',
                 request_serializer=sidecar__api__pb2.GetInstalledExtensionReq.SerializeToString,
                 response_deserializer=sidecar__api__pb2.GetInstalledExtensionRes.FromString,
                 _registered_method=True)
         self.InstallExtension = channel.unary_unary(
-                '/pb.SidecarApi/InstallExtension',
+                '/news_hub.sidecar.SidecarApi/InstallExtension',
                 request_serializer=sidecar__api__pb2.InstallExtensionReq.SerializeToString,
-                response_deserializer=sidecar__api__pb2.Empty.FromString,
+                response_deserializer=domain__models__pb2.Empty.FromString,
                 _registered_method=True)
         self.UninstallExtension = channel.unary_unary(
-                '/pb.SidecarApi/UninstallExtension',
+                '/news_hub.sidecar.SidecarApi/UninstallExtension',
                 request_serializer=sidecar__api__pb2.UninstallExtensionReq.SerializeToString,
-                response_deserializer=sidecar__api__pb2.Empty.FromString,
+                response_deserializer=domain__models__pb2.Empty.FromString,
                 _registered_method=True)
         self.GetInstallProgress = channel.unary_unary(
-                '/pb.SidecarApi/GetInstallProgress',
+                '/news_hub.sidecar.SidecarApi/GetInstallProgress',
                 request_serializer=sidecar__api__pb2.GetInstallProgressReq.SerializeToString,
                 response_deserializer=sidecar__api__pb2.GetInstallProgressRes.FromString,
                 _registered_method=True)
         self.ListRemoteExtensions = channel.unary_unary(
-                '/pb.SidecarApi/ListRemoteExtensions',
+                '/news_hub.sidecar.SidecarApi/ListRemoteExtensions',
                 request_serializer=sidecar__api__pb2.ListRemoteExtensionsReq.SerializeToString,
                 response_deserializer=sidecar__api__pb2.ListRemoteExtensionsRes.FromString,
                 _registered_method=True)
         self.ListExtensionRepos = channel.unary_unary(
-                '/pb.SidecarApi/ListExtensionRepos',
-                request_serializer=sidecar__api__pb2.Empty.SerializeToString,
+                '/news_hub.sidecar.SidecarApi/ListExtensionRepos',
+                request_serializer=domain__models__pb2.Empty.SerializeToString,
                 response_deserializer=sidecar__api__pb2.ListExtensionReposRes.FromString,
                 _registered_method=True)
         self.AddExtensionRepo = channel.unary_unary(
-                '/pb.SidecarApi/AddExtensionRepo',
+                '/news_hub.sidecar.SidecarApi/AddExtensionRepo',
                 request_serializer=sidecar__api__pb2.AddExtensionRepoReq.SerializeToString,
                 response_deserializer=sidecar__api__pb2.AddExtensionRepoRes.FromString,
                 _registered_method=True)
         self.RemoveExtensionRepo = channel.unary_unary(
-                '/pb.SidecarApi/RemoveExtensionRepo',
+                '/news_hub.sidecar.SidecarApi/RemoveExtensionRepo',
                 request_serializer=sidecar__api__pb2.RemoveExtensionRepoReq.SerializeToString,
-                response_deserializer=sidecar__api__pb2.Empty.FromString,
+                response_deserializer=domain__models__pb2.Empty.FromString,
                 _registered_method=True)
         self.HealthCheck = channel.unary_unary(
-                '/pb.SidecarApi/HealthCheck',
+                '/news_hub.sidecar.SidecarApi/HealthCheck',
                 request_serializer=sidecar__api__pb2.HealthCheckReq.SerializeToString,
                 response_deserializer=sidecar__api__pb2.HealthCheckRes.FromString,
                 _registered_method=True)
         self.WatchHealth = channel.unary_stream(
-                '/pb.SidecarApi/WatchHealth',
+                '/news_hub.sidecar.SidecarApi/WatchHealth',
                 request_serializer=sidecar__api__pb2.HealthCheckReq.SerializeToString,
                 response_deserializer=sidecar__api__pb2.HealthCheckRes.FromString,
                 _registered_method=True)
         self.WatchLogs = channel.unary_stream(
-                '/pb.SidecarApi/WatchLogs',
+                '/news_hub.sidecar.SidecarApi/WatchLogs',
                 request_serializer=sidecar__api__pb2.WatchLogsReq.SerializeToString,
-                response_deserializer=sidecar__api__pb2.LogEntry.FromString,
+                response_deserializer=domain__models__pb2.LogEntry.FromString,
                 _registered_method=True)
         self.GetLogs = channel.unary_unary(
-                '/pb.SidecarApi/GetLogs',
+                '/news_hub.sidecar.SidecarApi/GetLogs',
                 request_serializer=sidecar__api__pb2.GetLogsReq.SerializeToString,
                 response_deserializer=sidecar__api__pb2.GetLogsRes.FromString,
                 _registered_method=True)
         self.SetLogLevel = channel.unary_unary(
-                '/pb.SidecarApi/SetLogLevel',
+                '/news_hub.sidecar.SidecarApi/SetLogLevel',
                 request_serializer=sidecar__api__pb2.SetLogLevelReq.SerializeToString,
-                response_deserializer=sidecar__api__pb2.Empty.FromString,
+                response_deserializer=domain__models__pb2.Empty.FromString,
                 _registered_method=True)
 
 
@@ -298,7 +299,7 @@ def add_SidecarApiServicer_to_server(servicer, server):
             ),
             'ListInstalledExtensions': grpc.unary_unary_rpc_method_handler(
                     servicer.ListInstalledExtensions,
-                    request_deserializer=sidecar__api__pb2.Empty.FromString,
+                    request_deserializer=domain__models__pb2.Empty.FromString,
                     response_serializer=sidecar__api__pb2.ListInstalledExtensionsRes.SerializeToString,
             ),
             'GetInstalledExtension': grpc.unary_unary_rpc_method_handler(
@@ -309,12 +310,12 @@ def add_SidecarApiServicer_to_server(servicer, server):
             'InstallExtension': grpc.unary_unary_rpc_method_handler(
                     servicer.InstallExtension,
                     request_deserializer=sidecar__api__pb2.InstallExtensionReq.FromString,
-                    response_serializer=sidecar__api__pb2.Empty.SerializeToString,
+                    response_serializer=domain__models__pb2.Empty.SerializeToString,
             ),
             'UninstallExtension': grpc.unary_unary_rpc_method_handler(
                     servicer.UninstallExtension,
                     request_deserializer=sidecar__api__pb2.UninstallExtensionReq.FromString,
-                    response_serializer=sidecar__api__pb2.Empty.SerializeToString,
+                    response_serializer=domain__models__pb2.Empty.SerializeToString,
             ),
             'GetInstallProgress': grpc.unary_unary_rpc_method_handler(
                     servicer.GetInstallProgress,
@@ -328,7 +329,7 @@ def add_SidecarApiServicer_to_server(servicer, server):
             ),
             'ListExtensionRepos': grpc.unary_unary_rpc_method_handler(
                     servicer.ListExtensionRepos,
-                    request_deserializer=sidecar__api__pb2.Empty.FromString,
+                    request_deserializer=domain__models__pb2.Empty.FromString,
                     response_serializer=sidecar__api__pb2.ListExtensionReposRes.SerializeToString,
             ),
             'AddExtensionRepo': grpc.unary_unary_rpc_method_handler(
@@ -339,7 +340,7 @@ def add_SidecarApiServicer_to_server(servicer, server):
             'RemoveExtensionRepo': grpc.unary_unary_rpc_method_handler(
                     servicer.RemoveExtensionRepo,
                     request_deserializer=sidecar__api__pb2.RemoveExtensionRepoReq.FromString,
-                    response_serializer=sidecar__api__pb2.Empty.SerializeToString,
+                    response_serializer=domain__models__pb2.Empty.SerializeToString,
             ),
             'HealthCheck': grpc.unary_unary_rpc_method_handler(
                     servicer.HealthCheck,
@@ -354,7 +355,7 @@ def add_SidecarApiServicer_to_server(servicer, server):
             'WatchLogs': grpc.unary_stream_rpc_method_handler(
                     servicer.WatchLogs,
                     request_deserializer=sidecar__api__pb2.WatchLogsReq.FromString,
-                    response_serializer=sidecar__api__pb2.LogEntry.SerializeToString,
+                    response_serializer=domain__models__pb2.LogEntry.SerializeToString,
             ),
             'GetLogs': grpc.unary_unary_rpc_method_handler(
                     servicer.GetLogs,
@@ -364,13 +365,13 @@ def add_SidecarApiServicer_to_server(servicer, server):
             'SetLogLevel': grpc.unary_unary_rpc_method_handler(
                     servicer.SetLogLevel,
                     request_deserializer=sidecar__api__pb2.SetLogLevelReq.FromString,
-                    response_serializer=sidecar__api__pb2.Empty.SerializeToString,
+                    response_serializer=domain__models__pb2.Empty.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
-            'pb.SidecarApi', rpc_method_handlers)
+            'news_hub.sidecar.SidecarApi', rpc_method_handlers)
     server.add_generic_rpc_handlers((generic_handler,))
-    server.add_registered_method_handlers('pb.SidecarApi', rpc_method_handlers)
+    server.add_registered_method_handlers('news_hub.sidecar.SidecarApi', rpc_method_handlers)
 
 
  # This class is part of an EXPERIMENTAL API.
@@ -391,7 +392,7 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.SidecarApi/GetSite',
+            '/news_hub.sidecar.SidecarApi/GetSite',
             sidecar__api__pb2.GetSiteReq.SerializeToString,
             sidecar__api__pb2.GetSiteRes.FromString,
             options,
@@ -418,7 +419,7 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.SidecarApi/GetBoards',
+            '/news_hub.sidecar.SidecarApi/GetBoards',
             sidecar__api__pb2.GetBoardsReq.SerializeToString,
             sidecar__api__pb2.GetBoardsRes.FromString,
             options,
@@ -445,7 +446,7 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.SidecarApi/GetThreadInfos',
+            '/news_hub.sidecar.SidecarApi/GetThreadInfos',
             sidecar__api__pb2.GetThreadInfosReq.SerializeToString,
             sidecar__api__pb2.GetThreadInfosRes.FromString,
             options,
@@ -472,7 +473,7 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.SidecarApi/GetThreadPost',
+            '/news_hub.sidecar.SidecarApi/GetThreadPost',
             sidecar__api__pb2.GetThreadPostReq.SerializeToString,
             sidecar__api__pb2.GetThreadPostRes.FromString,
             options,
@@ -499,7 +500,7 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.SidecarApi/GetRegardingPosts',
+            '/news_hub.sidecar.SidecarApi/GetRegardingPosts',
             sidecar__api__pb2.GetRegardingPostsReq.SerializeToString,
             sidecar__api__pb2.GetRegardingPostsRes.FromString,
             options,
@@ -526,7 +527,7 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.SidecarApi/GetComments',
+            '/news_hub.sidecar.SidecarApi/GetComments',
             sidecar__api__pb2.GetCommentsReq.SerializeToString,
             sidecar__api__pb2.GetCommentsRes.FromString,
             options,
@@ -553,8 +554,8 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.SidecarApi/ListInstalledExtensions',
-            sidecar__api__pb2.Empty.SerializeToString,
+            '/news_hub.sidecar.SidecarApi/ListInstalledExtensions',
+            domain__models__pb2.Empty.SerializeToString,
             sidecar__api__pb2.ListInstalledExtensionsRes.FromString,
             options,
             channel_credentials,
@@ -580,7 +581,7 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.SidecarApi/GetInstalledExtension',
+            '/news_hub.sidecar.SidecarApi/GetInstalledExtension',
             sidecar__api__pb2.GetInstalledExtensionReq.SerializeToString,
             sidecar__api__pb2.GetInstalledExtensionRes.FromString,
             options,
@@ -607,9 +608,9 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.SidecarApi/InstallExtension',
+            '/news_hub.sidecar.SidecarApi/InstallExtension',
             sidecar__api__pb2.InstallExtensionReq.SerializeToString,
-            sidecar__api__pb2.Empty.FromString,
+            domain__models__pb2.Empty.FromString,
             options,
             channel_credentials,
             insecure,
@@ -634,9 +635,9 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.SidecarApi/UninstallExtension',
+            '/news_hub.sidecar.SidecarApi/UninstallExtension',
             sidecar__api__pb2.UninstallExtensionReq.SerializeToString,
-            sidecar__api__pb2.Empty.FromString,
+            domain__models__pb2.Empty.FromString,
             options,
             channel_credentials,
             insecure,
@@ -661,7 +662,7 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.SidecarApi/GetInstallProgress',
+            '/news_hub.sidecar.SidecarApi/GetInstallProgress',
             sidecar__api__pb2.GetInstallProgressReq.SerializeToString,
             sidecar__api__pb2.GetInstallProgressRes.FromString,
             options,
@@ -688,7 +689,7 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.SidecarApi/ListRemoteExtensions',
+            '/news_hub.sidecar.SidecarApi/ListRemoteExtensions',
             sidecar__api__pb2.ListRemoteExtensionsReq.SerializeToString,
             sidecar__api__pb2.ListRemoteExtensionsRes.FromString,
             options,
@@ -715,8 +716,8 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.SidecarApi/ListExtensionRepos',
-            sidecar__api__pb2.Empty.SerializeToString,
+            '/news_hub.sidecar.SidecarApi/ListExtensionRepos',
+            domain__models__pb2.Empty.SerializeToString,
             sidecar__api__pb2.ListExtensionReposRes.FromString,
             options,
             channel_credentials,
@@ -742,7 +743,7 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.SidecarApi/AddExtensionRepo',
+            '/news_hub.sidecar.SidecarApi/AddExtensionRepo',
             sidecar__api__pb2.AddExtensionRepoReq.SerializeToString,
             sidecar__api__pb2.AddExtensionRepoRes.FromString,
             options,
@@ -769,9 +770,9 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.SidecarApi/RemoveExtensionRepo',
+            '/news_hub.sidecar.SidecarApi/RemoveExtensionRepo',
             sidecar__api__pb2.RemoveExtensionRepoReq.SerializeToString,
-            sidecar__api__pb2.Empty.FromString,
+            domain__models__pb2.Empty.FromString,
             options,
             channel_credentials,
             insecure,
@@ -796,7 +797,7 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.SidecarApi/HealthCheck',
+            '/news_hub.sidecar.SidecarApi/HealthCheck',
             sidecar__api__pb2.HealthCheckReq.SerializeToString,
             sidecar__api__pb2.HealthCheckRes.FromString,
             options,
@@ -823,7 +824,7 @@ class SidecarApi(object):
         return grpc.experimental.unary_stream(
             request,
             target,
-            '/pb.SidecarApi/WatchHealth',
+            '/news_hub.sidecar.SidecarApi/WatchHealth',
             sidecar__api__pb2.HealthCheckReq.SerializeToString,
             sidecar__api__pb2.HealthCheckRes.FromString,
             options,
@@ -850,9 +851,9 @@ class SidecarApi(object):
         return grpc.experimental.unary_stream(
             request,
             target,
-            '/pb.SidecarApi/WatchLogs',
+            '/news_hub.sidecar.SidecarApi/WatchLogs',
             sidecar__api__pb2.WatchLogsReq.SerializeToString,
-            sidecar__api__pb2.LogEntry.FromString,
+            domain__models__pb2.LogEntry.FromString,
             options,
             channel_credentials,
             insecure,
@@ -877,7 +878,7 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.SidecarApi/GetLogs',
+            '/news_hub.sidecar.SidecarApi/GetLogs',
             sidecar__api__pb2.GetLogsReq.SerializeToString,
             sidecar__api__pb2.GetLogsRes.FromString,
             options,
@@ -904,9 +905,9 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/pb.SidecarApi/SetLogLevel',
+            '/news_hub.sidecar.SidecarApi/SetLogLevel',
             sidecar__api__pb2.SetLogLevelReq.SerializeToString,
-            sidecar__api__pb2.Empty.FromString,
+            domain__models__pb2.Empty.FromString,
             options,
             channel_credentials,
             insecure,

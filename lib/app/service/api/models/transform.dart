@@ -1,8 +1,9 @@
 import 'package:news_hub/domain/models/models.dart' as domain;
 import 'package:news_hub/shared/extensions.dart';
 import 'sidecar_api.pb.dart' as pb;
+import 'domain_models.pb.dart' as domain_pb;
 
-extension SiteTransform on pb.Site {
+extension SiteTransform on domain_pb.Site {
   domain.Site toSiteDomain() {
     return domain.Site(
       extensionPkgName: pkgName,
@@ -14,7 +15,7 @@ extension SiteTransform on pb.Site {
   }
 }
 
-extension BoardTransform on pb.Board {
+extension BoardTransform on domain_pb.Board {
   domain.Board toBoardDomain() {
     return domain.Board(
       extensionPkgName: pkgName,
@@ -29,12 +30,12 @@ extension BoardTransform on pb.Board {
   }
 }
 
-extension PostTransform on pb.Post {
+extension PostTransform on domain_pb.Post {
   domain.Post toPostDomain() {
     switch (whichContent()) {
-      case pb.Post_Content.articlePost:
+      case domain_pb.Post_Content.articlePost:
         return articlePost.toArticlePostDomain(this);
-      case pb.Post_Content.singleImagePost:
+      case domain_pb.Post_Content.singleImagePost:
         return singleImagePost.toSingleImagePostDomain(this);
       default:
         return articlePost.toArticlePostDomain(this);
@@ -42,8 +43,8 @@ extension PostTransform on pb.Post {
   }
 }
 
-extension ArticlePostTransform on pb.ArticlePost {
-  domain.ArticlePost toArticlePostDomain(pb.Post post) {
+extension ArticlePostTransform on domain_pb.ArticlePost {
+  domain.ArticlePost toArticlePostDomain(domain_pb.Post post) {
     return domain.ArticlePost(
       extensionPkgName: post.pkgName,
       siteId: post.siteId,
@@ -65,8 +66,8 @@ extension ArticlePostTransform on pb.ArticlePost {
   }
 }
 
-extension SingleImagePostTransform on pb.SingleImagePost {
-  domain.SingleImagePost toSingleImagePostDomain(pb.Post post) {
+extension SingleImagePostTransform on domain_pb.SingleImagePost {
+  domain.SingleImagePost toSingleImagePostDomain(domain_pb.Post post) {
     return domain.SingleImagePost(
       extensionPkgName: post.pkgName,
       siteId: post.siteId,
@@ -89,7 +90,7 @@ extension SingleImagePostTransform on pb.SingleImagePost {
   }
 }
 
-extension CommentTransform on pb.Comment {
+extension CommentTransform on domain_pb.Comment {
   domain.Comment toCommentDomain() {
     return domain.Comment(
       id: id,
@@ -105,22 +106,22 @@ extension CommentTransform on pb.Comment {
   }
 }
 
-extension ParagraphTransform on pb.Paragraph {
+extension ParagraphTransform on domain_pb.Paragraph {
   domain.Paragraph toParagraphDomain() {
     switch (whichContent()) {
-      case pb.Paragraph_Content.image:
+      case domain_pb.Paragraph_Content.image:
         return image.toImageParagraphDomain();
-      case pb.Paragraph_Content.video:
+      case domain_pb.Paragraph_Content.video:
         return video.toVideoParagraphDomain();
-      case pb.Paragraph_Content.text:
+      case domain_pb.Paragraph_Content.text:
         return text.toTextParagraphDomain();
-      case pb.Paragraph_Content.newLine:
+      case domain_pb.Paragraph_Content.newLine:
         return newLine.toNewLineParagraphDomain();
-      case pb.Paragraph_Content.quote:
+      case domain_pb.Paragraph_Content.quote:
         return quote.toQuoteParagraphDomain();
-      case pb.Paragraph_Content.replyTo:
+      case domain_pb.Paragraph_Content.replyTo:
         return replyTo.toReplyToParagraphDomain();
-      case pb.Paragraph_Content.link:
+      case domain_pb.Paragraph_Content.link:
         return link.toLinkParagraphDomain();
       default:
         return text.toTextParagraphDomain();
@@ -128,7 +129,7 @@ extension ParagraphTransform on pb.Paragraph {
   }
 }
 
-extension ImageParagraphTransform on pb.ImageParagraph {
+extension ImageParagraphTransform on domain_pb.ImageParagraph {
   domain.ImageParagraph toImageParagraphDomain() {
     return domain.ImageParagraph(
       thumb: thumb,
@@ -137,7 +138,7 @@ extension ImageParagraphTransform on pb.ImageParagraph {
   }
 }
 
-extension VideoParagraphTransform on pb.VideoParagraph {
+extension VideoParagraphTransform on domain_pb.VideoParagraph {
   domain.VideoParagraph toVideoParagraphDomain() {
     return domain.VideoParagraph(
       thumb: thumb,
@@ -146,7 +147,7 @@ extension VideoParagraphTransform on pb.VideoParagraph {
   }
 }
 
-extension TextParagraphTransform on pb.TextParagraph {
+extension TextParagraphTransform on domain_pb.TextParagraph {
   domain.TextParagraph toTextParagraphDomain() {
     return domain.TextParagraph(
       content: content,
@@ -154,7 +155,7 @@ extension TextParagraphTransform on pb.TextParagraph {
   }
 }
 
-extension NewLineParagraphTransform on pb.NewLineParagraph {
+extension NewLineParagraphTransform on domain_pb.NewLineParagraph {
   domain.NewLineParagraph toNewLineParagraphDomain() {
     return domain.NewLineParagraph(
       symbol: symbol,
@@ -162,7 +163,7 @@ extension NewLineParagraphTransform on pb.NewLineParagraph {
   }
 }
 
-extension QuoteParagraphTransform on pb.QuoteParagraph {
+extension QuoteParagraphTransform on domain_pb.QuoteParagraph {
   domain.QuoteParagraph toQuoteParagraphDomain() {
     return domain.QuoteParagraph(
       content: content,
@@ -170,7 +171,7 @@ extension QuoteParagraphTransform on pb.QuoteParagraph {
   }
 }
 
-extension ReplyToParagraphTransform on pb.ReplyToParagraph {
+extension ReplyToParagraphTransform on domain_pb.ReplyToParagraph {
   domain.ReplyToParagraph toReplyToParagraphDomain() {
     return domain.ReplyToParagraph(
       id: id,
@@ -180,7 +181,7 @@ extension ReplyToParagraphTransform on pb.ReplyToParagraph {
   }
 }
 
-extension LinkParagraphTransform on pb.LinkParagraph {
+extension LinkParagraphTransform on domain_pb.LinkParagraph {
   domain.LinkParagraph toLinkParagraphDomain() {
     return domain.LinkParagraph(
       content: content,
@@ -188,7 +189,7 @@ extension LinkParagraphTransform on pb.LinkParagraph {
   }
 }
 
-extension ExtensionTransform on pb.Extension {
+extension ExtensionTransform on domain_pb.Extension {
   domain.Extension toExtensionDomain() {
     return domain.Extension(
       pkgName: pkgName,
@@ -201,7 +202,7 @@ extension ExtensionTransform on pb.Extension {
   }
 }
 
-extension RemoteExtensionTransform on pb.RemoteExtension {
+extension RemoteExtensionTransform on domain_pb.RemoteExtension {
   domain.RemoteExtension toRemoteExtensionDomain() {
     return domain.RemoteExtension(
       pkgName: base.pkgName,
@@ -216,7 +217,7 @@ extension RemoteExtensionTransform on pb.RemoteExtension {
   }
 }
 
-extension RepoTransform on pb.ExtensionRepo {
+extension RepoTransform on domain_pb.ExtensionRepo {
   domain.Repo toRepoDomain() {
     return domain.Repo(
       baseUrl: url,
@@ -244,7 +245,7 @@ extension HealthCheckResTransform on pb.HealthCheckRes {
   }
 }
 
-extension LogEntryTransform on pb.LogEntry {
+extension LogEntryTransform on domain_pb.LogEntry {
   domain.LogEntry toLogEntryDomain() {
     return domain.LogEntry(
       timestamp: timestamp.toDateTime(),
@@ -264,13 +265,13 @@ extension LogEntryTransform on pb.LogEntry {
 }
 
 extension DomainLogLevelTransform on domain.LogLevel {
-  pb.LogLevel toPbLogLevel() {
+  domain_pb.LogLevel toPbLogLevel() {
     return switch (this) {
-      domain.LogLevel.debug => pb.LogLevel.DEBUG,
-      domain.LogLevel.info => pb.LogLevel.INFO,
-      domain.LogLevel.warn => pb.LogLevel.WARNING,
-      domain.LogLevel.error => pb.LogLevel.ERROR,
-      domain.LogLevel.critical => pb.LogLevel.CRITICAL,
+      domain.LogLevel.debug => domain_pb.LogLevel.DEBUG,
+      domain.LogLevel.info => domain_pb.LogLevel.INFO,
+      domain.LogLevel.warn => domain_pb.LogLevel.WARNING,
+      domain.LogLevel.error => domain_pb.LogLevel.ERROR,
+      domain.LogLevel.critical => domain_pb.LogLevel.CRITICAL,
     };
   }
 }
