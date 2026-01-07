@@ -22,13 +22,37 @@ class ListThreads {
     ThreadsSorting? sorting,
   }) async {
     final extensions = await _listInstalledExtensions.withBoards();
-    final threads = (await Future.wait(extensions.map((e) => _service.listThreads(
-              extensionPkgName: e.pkgName,
-              boardSorts: filter?.boardSorts,
-              pagination: pagination,
-              keywords: filter?.keywords,
-            ))))
-        .flatten();
+    final boardSorts = filter?.boardSorts ?? {};
+    final List<Future<List<Post>>> tasks = [];
+
+    for (final e in extensions) {
+      final extensionBoardIds = e.boards.map((b) => b.id).toSet();
+      final targetBoardSorts = boardSorts.entries.where((entry) => extensionBoardIds.contains(entry.key));
+
+      if (targetBoardSorts.isEmpty) {
+        // If no specific boards for this extension, but we have keywords, do a general search
+        if (filter?.keywords != null && filter!.keywords.isNotEmpty) {
+          tasks.add(_service.listThreads(
+            extensionPkgName: e.pkgName,
+            boardId: null,
+            pagination: pagination,
+            keywords: filter.keywords,
+          ));
+        }
+      } else {
+        for (final entry in targetBoardSorts) {
+          tasks.add(_service.listThreads(
+            extensionPkgName: e.pkgName,
+            boardId: entry.key,
+            sort: entry.value,
+            pagination: pagination,
+            keywords: filter?.keywords,
+          ));
+        }
+      }
+    }
+
+    final threads = (await Future.wait(tasks)).flatten();
 
     return threads.map((t) {
       final e = extensions.firstWhere((e) => e.pkgName == t.extensionPkgName);

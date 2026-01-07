@@ -45,7 +45,8 @@ message GetBoardsRes {
 
 message GetThreadsReq {
   string pkg_name = 6;
-  map<string, string> board_sorts = 2;
+  string board_id = 8;
+  optional string sort = 7;
   optional news_hub.domain.PaginationReq page = 3;
   optional string keywords = 5;
 }

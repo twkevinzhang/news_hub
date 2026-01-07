@@ -24,23 +24,18 @@ class GetBoardsRes(_message.Message):
     def __init__(self, boards: _Optional[_Iterable[_Union[_domain_models_pb2.Board, _Mapping]]] = ..., page: _Optional[_Union[_domain_models_pb2.PaginationRes, _Mapping]] = ...) -> None: ...
 
 class GetThreadsReq(_message.Message):
-    __slots__ = ("pkg_name", "board_sorts", "page", "keywords")
-    class BoardSortsEntry(_message.Message):
-        __slots__ = ("key", "value")
-        KEY_FIELD_NUMBER: _ClassVar[int]
-        VALUE_FIELD_NUMBER: _ClassVar[int]
-        key: str
-        value: str
-        def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
+    __slots__ = ("pkg_name", "board_id", "sort", "page", "keywords")
     PKG_NAME_FIELD_NUMBER: _ClassVar[int]
-    BOARD_SORTS_FIELD_NUMBER: _ClassVar[int]
+    BOARD_ID_FIELD_NUMBER: _ClassVar[int]
+    SORT_FIELD_NUMBER: _ClassVar[int]
     PAGE_FIELD_NUMBER: _ClassVar[int]
     KEYWORDS_FIELD_NUMBER: _ClassVar[int]
     pkg_name: str
-    board_sorts: _containers.ScalarMap[str, str]
+    board_id: str
+    sort: str
     page: _domain_models_pb2.PaginationReq
     keywords: str
-    def __init__(self, pkg_name: _Optional[str] = ..., board_sorts: _Optional[_Mapping[str, str]] = ..., page: _Optional[_Union[_domain_models_pb2.PaginationReq, _Mapping]] = ..., keywords: _Optional[str] = ...) -> None: ...
+    def __init__(self, pkg_name: _Optional[str] = ..., board_id: _Optional[str] = ..., sort: _Optional[str] = ..., page: _Optional[_Union[_domain_models_pb2.PaginationReq, _Mapping]] = ..., keywords: _Optional[str] = ...) -> None: ...
 
 class GetThreadsRes(_message.Message):
     __slots__ = ("threads", "page")

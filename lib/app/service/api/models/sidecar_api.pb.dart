@@ -148,15 +148,13 @@ class GetBoardsRes extends $pb.GeneratedMessage {
 
 class GetThreadsReq extends $pb.GeneratedMessage {
   factory GetThreadsReq({
-    $core.Map<$core.String, $core.String>? boardSorts,
     $1.PaginationReq? page,
     $core.String? keywords,
     $core.String? pkgName,
+    $core.String? sort,
+    $core.String? boardId,
   }) {
     final result = create();
-    if (boardSorts != null) {
-      result.boardSorts.addAll(boardSorts);
-    }
     if (page != null) {
       result.page = page;
     }
@@ -166,6 +164,12 @@ class GetThreadsReq extends $pb.GeneratedMessage {
     if (pkgName != null) {
       result.pkgName = pkgName;
     }
+    if (sort != null) {
+      result.sort = sort;
+    }
+    if (boardId != null) {
+      result.boardId = boardId;
+    }
     return result;
   }
   GetThreadsReq._() : super();
@@ -173,10 +177,11 @@ class GetThreadsReq extends $pb.GeneratedMessage {
   factory GetThreadsReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetThreadsReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'news_hub.sidecar'), createEmptyInstance: create)
-    ..m<$core.String, $core.String>(2, _omitFieldNames ? '' : 'boardSorts', entryClassName: 'GetThreadsReq.BoardSortsEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('news_hub.sidecar'))
     ..aOM<$1.PaginationReq>(3, _omitFieldNames ? '' : 'page', subBuilder: $1.PaginationReq.create)
     ..aOS(5, _omitFieldNames ? '' : 'keywords')
     ..aOS(6, _omitFieldNames ? '' : 'pkgName')
+    ..aOS(7, _omitFieldNames ? '' : 'sort')
+    ..aOS(8, _omitFieldNames ? '' : 'boardId')
     ..hasRequiredFields = false
   ;
 
@@ -201,37 +206,52 @@ class GetThreadsReq extends $pb.GeneratedMessage {
   static GetThreadsReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetThreadsReq>(create);
   static GetThreadsReq? _defaultInstance;
 
-  @$pb.TagNumber(2)
-  $core.Map<$core.String, $core.String> get boardSorts => $_getMap(0);
-
   @$pb.TagNumber(3)
-  $1.PaginationReq get page => $_getN(1);
+  $1.PaginationReq get page => $_getN(0);
   @$pb.TagNumber(3)
   set page($1.PaginationReq v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasPage() => $_has(1);
+  $core.bool hasPage() => $_has(0);
   @$pb.TagNumber(3)
   void clearPage() => clearField(3);
   @$pb.TagNumber(3)
-  $1.PaginationReq ensurePage() => $_ensure(1);
+  $1.PaginationReq ensurePage() => $_ensure(0);
 
   @$pb.TagNumber(5)
-  $core.String get keywords => $_getSZ(2);
+  $core.String get keywords => $_getSZ(1);
   @$pb.TagNumber(5)
-  set keywords($core.String v) { $_setString(2, v); }
+  set keywords($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(5)
-  $core.bool hasKeywords() => $_has(2);
+  $core.bool hasKeywords() => $_has(1);
   @$pb.TagNumber(5)
   void clearKeywords() => clearField(5);
 
   @$pb.TagNumber(6)
-  $core.String get pkgName => $_getSZ(3);
+  $core.String get pkgName => $_getSZ(2);
   @$pb.TagNumber(6)
-  set pkgName($core.String v) { $_setString(3, v); }
+  set pkgName($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(6)
-  $core.bool hasPkgName() => $_has(3);
+  $core.bool hasPkgName() => $_has(2);
   @$pb.TagNumber(6)
   void clearPkgName() => clearField(6);
+
+  @$pb.TagNumber(7)
+  $core.String get sort => $_getSZ(3);
+  @$pb.TagNumber(7)
+  set sort($core.String v) { $_setString(3, v); }
+  @$pb.TagNumber(7)
+  $core.bool hasSort() => $_has(3);
+  @$pb.TagNumber(7)
+  void clearSort() => clearField(7);
+
+  @$pb.TagNumber(8)
+  $core.String get boardId => $_getSZ(4);
+  @$pb.TagNumber(8)
+  set boardId($core.String v) { $_setString(4, v); }
+  @$pb.TagNumber(8)
+  $core.bool hasBoardId() => $_has(4);
+  @$pb.TagNumber(8)
+  void clearBoardId() => clearField(8);
 }
 
 class GetThreadsRes extends $pb.GeneratedMessage {

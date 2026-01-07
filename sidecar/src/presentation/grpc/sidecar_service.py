@@ -1,6 +1,7 @@
 """gRPC Service Implementation"""
 import logging
 import asyncio
+import sys
 import sidecar_api_pb2 as pb2
 import sidecar_api_pb2_grpc as pb2_grpc
 import domain_models_pb2 as domain_pb2
@@ -253,19 +254,30 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             )
             method = getattr(resolver, method_name)
             
+            # Find extension's own message classes (Adapter Pattern)
+            # Extensions follow the convention of importing their local pb2 as 'pb2'
+            resolver_module = sys.modules[resolver.__module__]
+            ext_pb2 = getattr(resolver_module, 'pb2', None)
+            
+            ext_request = request
+            if ext_pb2:
+                req_class_name = request.__class__.__name__
+                ext_req_class = getattr(ext_pb2, req_class_name, None)
+                if ext_req_class and ext_req_class != request.__class__:
+                    ext_request = ext_req_class()
+                    ext_request.ParseFromString(request.SerializeToString())
+
             # Extensions are likely synchronous, run in executor
             loop = asyncio.get_event_loop()
-            ext_response = await loop.run_in_executor(None, method, request, context)
+            ext_response = await loop.run_in_executor(None, method, ext_request, context)
 
             if ext_response is None:
                 return None
 
-            # Adapter Pattern: Convert extension's message to sidecar's expected message
-            # This handles different namespaces (packages) if the schema matches.
+            # Adapter Pattern: Convert extension's response to sidecar's expected response
             res_class_name = ext_response.__class__.__name__
             sidecar_res_class = getattr(pb2, res_class_name, None)
             if not sidecar_res_class:
-                # Some residents might be in domain_pb2 (like Empty)
                 sidecar_res_class = getattr(domain_pb2, res_class_name, None)
             
             if not sidecar_res_class or ext_response.__class__ == sidecar_res_class:

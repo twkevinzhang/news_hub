@@ -36,14 +36,15 @@ class SidecarApiImpl implements ApiService {
   @override
   Future<List<domain.Post>> listThreads({
     required String extensionPkgName,
-    required Map<String, String>? boardSorts,
+    required String? boardId,
+    String? sort,
     Pagination? pagination,
-    String? sortBy,
     String? keywords,
   }) async {
     final res = await _client.getThreads(pb.GetThreadsReq(
       pkgName: extensionPkgName,
-      boardSorts: boardSorts,
+      boardId: boardId ?? '',
+      sort: sort,
       page: domain_pb.PaginationReq(
         page: pagination?.page,
         pageSize: pagination?.pageSize,

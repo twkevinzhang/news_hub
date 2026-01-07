@@ -1,4 +1,4 @@
-"""Test namespace isolation and adapter pattern"""
+"""Test namespace isolation and double adaptation pattern"""
 import unittest
 import sys
 import os
@@ -14,65 +14,50 @@ import domain_models_pb2 as domain_pb2
 import sidecar_api_pb2 as pb2
 
 class TestNamespaceIsolation(unittest.TestCase):
-    """Verify that multiple namespaces can coexist and be converted"""
+    """Verify that multiple namespaces and filenames can coexist and be converted"""
 
-    def test_sidecar_and_extension_coexistence(self):
+    def test_multiple_extensions_coexistence(self):
         """
-        Verify that loading an extension with 'package pb' 
-        doesn't conflict with sidecar's new namespaced protos.
+        Verify that loading multiple extensions with unique filenames
+        doesn't conflict and adaptive pattern works for both.
         """
-        # 1. Sidecar protos are already loaded (imported above)
-        self.assertEqual(domain_pb2.DESCRIPTOR.package, "news_hub.domain")
-        
-        # 2. Simulate loading an extension that uses 'package pb'
-        # We'll use twkevinzhang_komica from the other workspace
         extensions_root = Path("/Users/zhangzhenlong/Projects/news_hub_extensions")
-        ext_pkg_path = extensions_root / "twkevinzhang_komica"
         
-        if not ext_pkg_path.exists():
-            self.skipTest(f"Extension path not found: {ext_pkg_path}")
-            
-        sys.path.insert(0, str(ext_pkg_path))
+        # 1. Load Komica
+        komica_path = extensions_root / "twkevinzhang_komica"
+        sys.path.insert(0, str(komica_path))
+        komica_resolver = importlib.import_module("twkevinzhang_komica.resolver_impl")
+        
+        # 2. Load Mock
+        mock_path = extensions_root / "twkevinzhang_mock"
+        sys.path.insert(0, str(mock_path))
+        mock_resolver = importlib.import_module("twkevinzhang_mock.resolver_impl")
         
         try:
-            # This is the moment of truth: will it throw Duplicate Symbol error?
-            komica_module = importlib.import_module("twkevinzhang_komica.resolver_impl")
-            importlib.reload(komica_module) # Ensure it reloads in this process
+            # Verify descriptors are independent
+            self.assertIn("komica_api.proto", komica_resolver.pb2.DESCRIPTOR.name)
+            self.assertIn("mock_api.proto", mock_resolver.pb2.DESCRIPTOR.name)
             
-            # If we reach here, isolation worked!
-            self.assertTrue(True, "Successfully loaded extension without symbol collision")
+            self.assertNotEqual(komica_resolver.pb2.DESCRIPTOR, mock_resolver.pb2.DESCRIPTOR)
             
-            # 3. Test Adapter Logic (Manual Simulation)
-            # Create a response using extension's 'pb' namespace
-            ext_pb2 = komica_module.pb2
-            ext_res = ext_pb2.GetBoardsRes(
-                boards=[
-                    ext_pb2.Board(
-                        id="test_board",
-                        name="Test Board",
-                        url="https://test.com/board"
-                    )
-                ]
-            )
+            # Test adaptation for both
+            sidecar_req = pb2.GetBoardsReq(pkg_name="any")
             
-            # Convert to sidecar's namespace using serialization
-            serialized = ext_res.SerializeToString()
-            sidecar_res = pb2.GetBoardsRes()
-            sidecar_res.ParseFromString(serialized)
+            # Komica adaptation
+            ext_req_k = komica_resolver.pb2.GetBoardsReq()
+            ext_req_k.ParseFromString(sidecar_req.SerializeToString())
+            self.assertEqual(ext_req_k.pkg_name, "any")
             
-            self.assertEqual(sidecar_res.boards[0].name, "Test Board")
-            self.assertEqual(sidecar_res.boards[0].id, "test_board")
-            self.assertNotEqual(ext_res.__class__, sidecar_res.__class__)
+            # Mock adaptation
+            ext_req_m = mock_resolver.pb2.GetBoardsReq()
+            ext_req_m.ParseFromString(sidecar_req.SerializeToString())
+            self.assertEqual(ext_req_m.pkg_name, "any")
             
-            print("\n[SUCCESS] Namespace isolation verified!")
-            print(f"Extension Class: {ext_res.__class__}")
-            print(f"Sidecar Class:   {sidecar_res.__class__}")
+            print("\n[SUCCESS] Multiple extensions coexistence verified!")
             
-        except Exception as e:
-            self.fail(f"Failed during isolation test: {e}")
         finally:
-            if str(ext_pkg_path) in sys.path:
-                sys.path.remove(str(ext_pkg_path))
+            if str(komica_path) in sys.path: sys.path.remove(str(komica_path))
+            if str(mock_path) in sys.path: sys.path.remove(str(mock_path))
 
 if __name__ == "__main__":
     unittest.main()

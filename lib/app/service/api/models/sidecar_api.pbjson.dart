@@ -50,35 +50,24 @@ const GetThreadsReq$json = {
   '1': 'GetThreadsReq',
   '2': [
     {'1': 'pkg_name', '3': 6, '4': 1, '5': 9, '10': 'pkgName'},
-    {'1': 'board_sorts', '3': 2, '4': 3, '5': 11, '6': '.news_hub.sidecar.GetThreadsReq.BoardSortsEntry', '10': 'boardSorts'},
-    {'1': 'page', '3': 3, '4': 1, '5': 11, '6': '.news_hub.domain.PaginationReq', '9': 0, '10': 'page', '17': true},
-    {'1': 'keywords', '3': 5, '4': 1, '5': 9, '9': 1, '10': 'keywords', '17': true},
+    {'1': 'board_id', '3': 8, '4': 1, '5': 9, '10': 'boardId'},
+    {'1': 'sort', '3': 7, '4': 1, '5': 9, '9': 0, '10': 'sort', '17': true},
+    {'1': 'page', '3': 3, '4': 1, '5': 11, '6': '.news_hub.domain.PaginationReq', '9': 1, '10': 'page', '17': true},
+    {'1': 'keywords', '3': 5, '4': 1, '5': 9, '9': 2, '10': 'keywords', '17': true},
   ],
-  '3': [GetThreadsReq_BoardSortsEntry$json],
   '8': [
+    {'1': '_sort'},
     {'1': '_page'},
     {'1': '_keywords'},
   ],
 };
 
-@$core.Deprecated('Use getThreadsReqDescriptor instead')
-const GetThreadsReq_BoardSortsEntry$json = {
-  '1': 'BoardSortsEntry',
-  '2': [
-    {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
-    {'1': 'value', '3': 2, '4': 1, '5': 9, '10': 'value'},
-  ],
-  '7': {'7': true},
-};
-
 /// Descriptor for `GetThreadsReq`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List getThreadsReqDescriptor = $convert.base64Decode(
-    'Cg1HZXRUaHJlYWRzUmVxEhkKCHBrZ19uYW1lGAYgASgJUgdwa2dOYW1lElAKC2JvYXJkX3Nvcn'
-    'RzGAIgAygLMi8ubmV3c19odWIuc2lkZWNhci5HZXRUaHJlYWRzUmVxLkJvYXJkU29ydHNFbnRy'
-    'eVIKYm9hcmRTb3J0cxI3CgRwYWdlGAMgASgLMh4ubmV3c19odWIuZG9tYWluLlBhZ2luYXRpb2'
-    '5SZXFIAFIEcGFnZYgBARIfCghrZXl3b3JkcxgFIAEoCUgBUghrZXl3b3Jkc4gBARo9Cg9Cb2Fy'
-    'ZFNvcnRzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4AU'
-    'IHCgVfcGFnZUILCglfa2V5d29yZHM=');
+    'Cg1HZXRUaHJlYWRzUmVxEhkKCHBrZ19uYW1lGAYgASgJUgdwa2dOYW1lEhkKCGJvYXJkX2lkGA'
+    'ggASgJUgdib2FyZElkEhcKBHNvcnQYByABKAlIAFIEc29ydIgBARI3CgRwYWdlGAMgASgLMh4u'
+    'bmV3c19odWIuZG9tYWluLlBhZ2luYXRpb25SZXFIAVIEcGFnZYgBARIfCghrZXl3b3JkcxgFIA'
+    'EoCUgCUghrZXl3b3Jkc4gBAUIHCgVfc29ydEIHCgVfcGFnZUILCglfa2V5d29yZHM=');
 
 @$core.Deprecated('Use getThreadsResDescriptor instead')
 const GetThreadsRes$json = {
