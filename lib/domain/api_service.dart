@@ -73,7 +73,7 @@ abstract class ApiService {
   });
 
   Future<List<RemoteExtension>> listRemoteExtensions({
-    required String repoBaseUrl,
+    String? keyword,
   });
 
   // Extension Repository operations

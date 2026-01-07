@@ -161,8 +161,8 @@ class SidecarApiImpl implements ApiService {
   }
 
   @override
-  Future<List<domain.RemoteExtension>> listRemoteExtensions({required String repoBaseUrl}) async {
-    final res = await _client.listRemoteExtensions(pb.ListRemoteExtensionsReq(repoBaseUrl: repoBaseUrl));
+  Future<List<domain.RemoteExtension>> listRemoteExtensions({String? keyword}) async {
+    final res = await _client.listRemoteExtensions(pb.ListRemoteExtensionsReq(keyword: keyword));
     return res.extensions.map((e) => e.toRemoteExtensionDomain()).toList();
   }
 

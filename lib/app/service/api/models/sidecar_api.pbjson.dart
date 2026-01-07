@@ -702,14 +702,17 @@ final $typed_data.Uint8List getInstallProgressResDescriptor = $convert.base64Dec
 const ListRemoteExtensionsReq$json = {
   '1': 'ListRemoteExtensionsReq',
   '2': [
-    {'1': 'repo_base_url', '3': 1, '4': 1, '5': 9, '10': 'repoBaseUrl'},
+    {'1': 'keyword', '3': 1, '4': 1, '5': 9, '9': 0, '10': 'keyword', '17': true},
+  ],
+  '8': [
+    {'1': '_keyword'},
   ],
 };
 
 /// Descriptor for `ListRemoteExtensionsReq`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List listRemoteExtensionsReqDescriptor = $convert.base64Decode(
-    'ChdMaXN0UmVtb3RlRXh0ZW5zaW9uc1JlcRIiCg1yZXBvX2Jhc2VfdXJsGAEgASgJUgtyZXBvQm'
-    'FzZVVybA==');
+    'ChdMaXN0UmVtb3RlRXh0ZW5zaW9uc1JlcRIdCgdrZXl3b3JkGAEgASgJSABSB2tleXdvcmSIAQ'
+    'FCCgoIX2tleXdvcmQ=');
 
 @$core.Deprecated('Use listRemoteExtensionsResDescriptor instead')
 const ListRemoteExtensionsRes$json = {

@@ -123,7 +123,7 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
         try:
             # UC involves network IO, run in executor
             loop = asyncio.get_event_loop()
-            extensions = await loop.run_in_executor(None, self.list_remote_uc.execute, request.repo_base_url)
+            extensions = await loop.run_in_executor(None, self.list_remote_uc.execute, request.keyword)
             pb_extensions = [
                 pb2.RemoteExtension(
                     base=pb2.Extension(

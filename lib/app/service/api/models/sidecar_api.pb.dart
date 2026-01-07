@@ -3112,11 +3112,11 @@ class GetInstallProgressRes extends $pb.GeneratedMessage {
 
 class ListRemoteExtensionsReq extends $pb.GeneratedMessage {
   factory ListRemoteExtensionsReq({
-    $core.String? repoBaseUrl,
+    $core.String? keyword,
   }) {
     final result = create();
-    if (repoBaseUrl != null) {
-      result.repoBaseUrl = repoBaseUrl;
+    if (keyword != null) {
+      result.keyword = keyword;
     }
     return result;
   }
@@ -3125,7 +3125,7 @@ class ListRemoteExtensionsReq extends $pb.GeneratedMessage {
   factory ListRemoteExtensionsReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'ListRemoteExtensionsReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'repoBaseUrl')
+    ..aOS(1, _omitFieldNames ? '' : 'keyword')
     ..hasRequiredFields = false
   ;
 
@@ -3151,13 +3151,13 @@ class ListRemoteExtensionsReq extends $pb.GeneratedMessage {
   static ListRemoteExtensionsReq? _defaultInstance;
 
   @$pb.TagNumber(1)
-  $core.String get repoBaseUrl => $_getSZ(0);
+  $core.String get keyword => $_getSZ(0);
   @$pb.TagNumber(1)
-  set repoBaseUrl($core.String v) { $_setString(0, v); }
+  set keyword($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(1)
-  $core.bool hasRepoBaseUrl() => $_has(0);
+  $core.bool hasKeyword() => $_has(0);
   @$pb.TagNumber(1)
-  void clearRepoBaseUrl() => clearField(1);
+  void clearKeyword() => clearField(1);
 }
 
 class ListRemoteExtensionsRes extends $pb.GeneratedMessage {

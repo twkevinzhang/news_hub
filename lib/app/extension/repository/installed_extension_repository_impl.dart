@@ -3,7 +3,6 @@ import 'package:dartx/dartx.dart';
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/api_service.dart';
 import 'package:news_hub/domain/extension/repository.dart';
-import 'package:news_hub/domain/repo/repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/app/service/connection/interface.dart';
 
@@ -11,12 +10,10 @@ import 'package:news_hub/app/service/connection/interface.dart';
 class InstalledRepositoryImpl implements ExtensionRepository {
   final ApiService _apiService;
   final SidecarConnectionManager _connectionManager;
-  final RepoRepository _repoRepository;
 
   InstalledRepositoryImpl(
     this._apiService,
     this._connectionManager,
-    this._repoRepository,
   );
 
   @override
@@ -53,20 +50,7 @@ class InstalledRepositoryImpl implements ExtensionRepository {
   @override
   Future<List<RemoteExtension>> listRemote() async {
     await _ensureConnected();
-
-    final repos = await _repoRepository.list();
-    final List<RemoteExtension> results = [];
-
-    for (final repo in repos) {
-      try {
-        final remotes = await _apiService.listRemoteExtensions(repoBaseUrl: repo.baseUrl);
-        results.addAll(remotes);
-      } catch (e) {
-        // Skip failed repos
-      }
-    }
-
-    return results;
+    return _apiService.listRemoteExtensions();
   }
 
   Future<void> _ensureConnected() async {

@@ -446,10 +446,10 @@ class GetInstallProgressRes(_message.Message):
     def __init__(self, sites: _Optional[_Iterable[_Union[Site, _Mapping]]] = ...) -> None: ...
 
 class ListRemoteExtensionsReq(_message.Message):
-    __slots__ = ("repo_base_url",)
-    REPO_BASE_URL_FIELD_NUMBER: _ClassVar[int]
-    repo_base_url: str
-    def __init__(self, repo_base_url: _Optional[str] = ...) -> None: ...
+    __slots__ = ("keyword",)
+    KEYWORD_FIELD_NUMBER: _ClassVar[int]
+    keyword: str
+    def __init__(self, keyword: _Optional[str] = ...) -> None: ...
 
 class ListRemoteExtensionsRes(_message.Message):
     __slots__ = ("extensions",)

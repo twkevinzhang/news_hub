@@ -288,7 +288,7 @@ message GetInstallProgressRes {
 }
 
 message ListRemoteExtensionsReq {
-  string repo_base_url = 1;
+  optional string keyword = 1;
 }
 
 message ListRemoteExtensionsRes {

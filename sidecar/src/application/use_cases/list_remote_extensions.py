@@ -3,6 +3,7 @@ import logging
 from typing import List
 from domain.value_objects.extension_metadata import ExtensionMetadata
 from domain.repositories.repo_repository import RepoRepository
+from domain.repositories.extension_repository import RemoteExtensionRepository
 
 
 logger = logging.getLogger(__name__)
