@@ -9,13 +9,11 @@ class ExtensionMetadata:
 
     pkg_name: str
     display_name: str
-    zip_name: str
     version: int
     python_version: int
     lang: Optional[str] = None
     is_nsfw: bool = False
     icon_url: Optional[str] = None
-    repo_url: Optional[str] = None
 
     def __post_init__(self):
         """Validate metadata"""

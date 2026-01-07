@@ -193,12 +193,10 @@ extension ExtensionTransform on pb.Extension {
     return domain.Extension(
       pkgName: pkgName,
       displayName: displayName,
-      zipName: zipName,
       version: version,
       pythonVersion: pythonVersion,
       lang: hasLang() ? lang : null,
       isNsfw: isNsfw,
-      repoUrl: repoUrl,
     );
   }
 }
@@ -208,7 +206,6 @@ extension RemoteExtensionTransform on pb.RemoteExtension {
     return domain.RemoteExtension(
       pkgName: base.pkgName,
       displayName: base.displayName,
-      zipName: base.zipName,
       version: base.version,
       pythonVersion: base.pythonVersion,
       lang: base.hasLang() ? base.lang : null,

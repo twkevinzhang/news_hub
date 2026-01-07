@@ -21,7 +21,7 @@ class AddRepoUseCase:
         self.repository = repository
         self.downloader = downloader
 
-    def execute(self, url: str, display_name: str = None) -> Repo:
+    def execute(self, url: str) -> Repo:
         """
         Execute the add repo use case
 
@@ -67,9 +67,9 @@ class AddRepoUseCase:
         repo = Repo(
             url=url,
             added_at=datetime.now(),
-            display_name=display_name or metadata.get("displayName", url),
+            display_name=metadata.get("display_name", url),
             website=metadata.get("website", url),
-            signing_key_fingerprint=metadata.get("signingKeyFingerprint", ""),
+            signing_key_fingerprint=metadata.get("signing_key_fingerprint", ""),
             icon=metadata.get("icon")
         )
 

@@ -144,8 +144,7 @@ class SidecarApiImpl implements ApiService {
   Future<void> installExtension({required domain.Extension extension}) async {
     await _client.installExtension(pb.InstallExtensionReq(
       pkgName: extension.pkgName,
-      zipName: extension.zipName,
-      repoUrl: extension.repoUrl,
+      repoUrl: (extension is domain.RemoteExtension) ? extension.repoUrl : null,
     ));
   }
 
@@ -193,8 +192,8 @@ class SidecarApiImpl implements ApiService {
   }
 
   @override
-  Future<void> addRepo({required String url, String? displayName}) async {
-    await _client.addExtensionRepo(pb.AddExtensionRepoReq(url: url, displayName: displayName));
+  Future<void> addRepo({required String url}) async {
+    await _client.addExtensionRepo(pb.AddExtensionRepoReq(url: url));
   }
 
   @override

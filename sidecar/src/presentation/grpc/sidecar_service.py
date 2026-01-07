@@ -92,14 +92,17 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             metadata = ExtensionMetadata(
                 pkg_name=request.pkg_name,
                 display_name=request.pkg_name,  # Will be updated from extension
-                zip_name=request.zip_name,
                 version=1,
                 python_version=3,
-                repo_url=request.repo_url if request.HasField('repo_url') else ""
             )
             # This involves network/IO, ideally should be async but use_case is sync
             loop = asyncio.get_event_loop()
-            await loop.run_in_executor(None, self.install_extension_uc.execute, metadata)
+            await loop.run_in_executor(
+                None, 
+                self.install_extension_uc.execute, 
+                metadata, 
+                request.repo_url if request.HasField('repo_url') else ""
+            )
             return pb2.Empty()
         except Exception as e:
             logger.error(f"InstallExtension error: {e}", exc_info=True)
@@ -123,23 +126,21 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
         try:
             # UC involves network IO, run in executor
             loop = asyncio.get_event_loop()
-            extensions = await loop.run_in_executor(None, self.list_remote_uc.execute, request.keyword)
+            extensions_with_urls = await loop.run_in_executor(None, self.list_remote_uc.execute, request.keyword)
             pb_extensions = [
                 pb2.RemoteExtension(
                     base=pb2.Extension(
                         pkg_name=ext.pkg_name,
                         display_name=ext.display_name,
-                        zip_name=ext.zip_name,
                         version=ext.version,
                         python_version=ext.python_version,
                         lang=ext.lang,
                         is_nsfw=ext.is_nsfw,
-                        repo_url=ext.repo_url
                     ),
                     icon_url=ext.icon_url or "",
-                    repo_url=ext.repo_url or ""
+                    repo_url=url
                 )
-                for ext in extensions
+                for ext, url in extensions_with_urls
             ]
             return pb2.ListRemoteExtensionsRes(extensions=pb_extensions)
         except Exception as e:
@@ -154,7 +155,7 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
         """Add a new extension repository"""
         try:
             loop = asyncio.get_event_loop()
-            repo = await loop.run_in_executor(None, self.add_repo_uc.execute, request.url, request.display_name)
+            repo = await loop.run_in_executor(None, self.add_repo_uc.execute, request.url)
             return pb2.AddExtensionRepoRes(
                 url=repo.url,
                 added_at=int(repo.added_at.timestamp() * 1000),
@@ -266,12 +267,10 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
         return pb2.Extension(
             pkg_name=extension.metadata.pkg_name,
             display_name=extension.metadata.display_name,
-            zip_name=extension.metadata.zip_name,
             version=extension.metadata.version,
             python_version=extension.metadata.python_version,
             lang=extension.metadata.lang,
             is_nsfw=extension.metadata.is_nsfw,
-            repo_url=extension.metadata.repo_url
         )
 
     # Health Check Methods

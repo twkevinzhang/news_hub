@@ -41,13 +41,11 @@ class ExtensionFileManager:
                     ExtensionMetadata(
                         pkg_name=item["pkg_name"],
                         display_name=item.get("display_name", item["pkg_name"]),
-                        zip_name=item.get("zip_name", ""),
                         version=item.get("version", 0),
                         python_version=item.get("python_version", 3),
                         lang=item.get("lang"),
                         is_nsfw=item.get("is_nsfw", False),
                         icon_url=item.get("icon_url"),
-                        repo_url=item.get("repo_url"),
                     )
                     for item in data
                 ]
@@ -61,13 +59,11 @@ class ExtensionFileManager:
             {
                 "pkg_name": m.pkg_name,
                 "display_name": m.display_name,
-                "zip_name": m.zip_name,
                 "version": m.version,
                 "python_version": m.python_version,
                 "lang": m.lang,
                 "is_nsfw": m.is_nsfw,
                 "icon_url": m.icon_url,
-                "repo_url": m.repo_url,
             }
             for m in extensions
         ]
@@ -141,13 +137,11 @@ class ExtensionFileManager:
                 return ExtensionMetadata(
                     pkg_name=pkg_name,
                     display_name=data.get("display_name", pkg_name),
-                    zip_name=data.get("zip_name", ""),
                     version=data.get("version", 0),
                     python_version=data.get("python_version", 3),
                     lang=data.get("lang"),
                     is_nsfw=data.get("is_nsfw", False),
                     icon_url=data.get("icon_url"),
-                    repo_url=data.get("repo_url"),
                 )
         except (json.JSONDecodeError, KeyError) as e:
             logger.error(f"Failed to load metadata for {pkg_name}: {e}")
@@ -159,13 +153,11 @@ class ExtensionFileManager:
         data = {
             "pkg_name": metadata.pkg_name,
             "display_name": metadata.display_name,
-            "zip_name": metadata.zip_name,
             "version": metadata.version,
             "python_version": metadata.python_version,
             "lang": metadata.lang,
             "is_nsfw": metadata.is_nsfw,
             "icon_url": metadata.icon_url,
-            "repo_url": metadata.repo_url,
         }
 
         meta_path.parent.mkdir(parents=True, exist_ok=True)

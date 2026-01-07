@@ -81,7 +81,6 @@ abstract class ApiService {
 
   Future<void> addRepo({
     required String url,
-    String? displayName,
   });
 
   Future<void> removeRepo({

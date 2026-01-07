@@ -61,7 +61,6 @@ class ReposTab extends StatelessWidget {
 
   void _showAddRepoDialog(BuildContext context, RepoCubit cubit) {
     final urlController = TextEditingController();
-    final nameController = TextEditingController();
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -69,8 +68,7 @@ class ReposTab extends StatelessWidget {
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            TextField(controller: nameController, decoration: const InputDecoration(labelText: 'Name')),
-            TextField(controller: urlController, decoration: const InputDecoration(labelText: 'Base URL')),
+            TextField(controller: urlController, decoration: const InputDecoration(labelText: 'GitHub Repository URL')),
           ],
         ),
         actions: [
@@ -79,7 +77,6 @@ class ReposTab extends StatelessWidget {
             onPressed: () {
               cubit.addRepo(
                 url: urlController.text,
-                displayName: nameController.text.isNotEmpty ? nameController.text : null,
               );
               Navigator.pop(context);
             },

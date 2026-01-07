@@ -20,7 +20,7 @@ class ListRemoteExtensionsUseCase:
         self.extension_repository = extension_repository
         self.repo_repository = repo_repository
 
-    def execute(self, keyword: str = None) -> List[ExtensionMetadata]:
+    def execute(self, keyword: str = None) -> List[tuple[ExtensionMetadata, str]]:
         """Execute the list remote extensions use case"""
         logger.debug("Fetching remote extensions from all registered repositories")
         
@@ -30,7 +30,7 @@ class ListRemoteExtensionsUseCase:
         for repo in repos:
             try:
                 extensions = self.extension_repository.fetch_all(repo.url)
-                all_extensions.extend(extensions)
+                all_extensions.extend([(e, repo.url) for e in extensions])
             except Exception as e:
                 logger.error(f"Failed to fetch extensions from {repo.url}: {e}")
                 continue
@@ -39,7 +39,7 @@ class ListRemoteExtensionsUseCase:
         if keyword:
             keyword = keyword.lower()
             all_extensions = [
-                e for e in all_extensions
+                (e, url) for e, url in all_extensions
                 if keyword in e.display_name.lower() or keyword in e.pkg_name.lower()
             ]
 

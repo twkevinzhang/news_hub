@@ -44,10 +44,9 @@ class RepoCubit extends Cubit<RepoState> {
 
   Future<void> addRepo({
     required String url,
-    String? displayName,
   }) async {
     try {
-      await _addRepo(url: url, displayName: displayName);
+      await _addRepo(url: url);
       // Refresh repos list after adding
       await init();
     } catch (e) {

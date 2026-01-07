@@ -331,12 +331,6 @@ class $InstalledExtensionsTable extends InstalledExtensions
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $InstalledExtensionsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _repoUrlMeta =
-      const VerificationMeta('repoUrl');
-  @override
-  late final GeneratedColumn<String> repoUrl = GeneratedColumn<String>(
-      'repo_url', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _pkgNameMeta =
       const VerificationMeta('pkgName');
   @override
@@ -348,12 +342,6 @@ class $InstalledExtensionsTable extends InstalledExtensions
   @override
   late final GeneratedColumn<String> displayName = GeneratedColumn<String>(
       'display_name', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _zipNameMeta =
-      const VerificationMeta('zipName');
-  @override
-  late final GeneratedColumn<String> zipName = GeneratedColumn<String>(
-      'zip_name', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _versionMeta =
       const VerificationMeta('version');
@@ -381,16 +369,8 @@ class $InstalledExtensionsTable extends InstalledExtensions
       defaultConstraints:
           GeneratedColumn.constraintIsAlways('CHECK ("is_nsfw" IN (0, 1))'));
   @override
-  List<GeneratedColumn> get $columns => [
-        repoUrl,
-        pkgName,
-        displayName,
-        zipName,
-        version,
-        pythonVersion,
-        lang,
-        isNsfw
-      ];
+  List<GeneratedColumn> get $columns =>
+      [pkgName, displayName, version, pythonVersion, lang, isNsfw];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -401,12 +381,6 @@ class $InstalledExtensionsTable extends InstalledExtensions
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('repo_url')) {
-      context.handle(_repoUrlMeta,
-          repoUrl.isAcceptableOrUnknown(data['repo_url']!, _repoUrlMeta));
-    } else if (isInserting) {
-      context.missing(_repoUrlMeta);
-    }
     if (data.containsKey('pkg_name')) {
       context.handle(_pkgNameMeta,
           pkgName.isAcceptableOrUnknown(data['pkg_name']!, _pkgNameMeta));
@@ -420,12 +394,6 @@ class $InstalledExtensionsTable extends InstalledExtensions
               data['display_name']!, _displayNameMeta));
     } else if (isInserting) {
       context.missing(_displayNameMeta);
-    }
-    if (data.containsKey('zip_name')) {
-      context.handle(_zipNameMeta,
-          zipName.isAcceptableOrUnknown(data['zip_name']!, _zipNameMeta));
-    } else if (isInserting) {
-      context.missing(_zipNameMeta);
     }
     if (data.containsKey('version')) {
       context.handle(_versionMeta,
@@ -460,14 +428,10 @@ class $InstalledExtensionsTable extends InstalledExtensions
   InstalledExtension map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return InstalledExtension(
-      repoUrl: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}repo_url'])!,
       pkgName: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}pkg_name'])!,
       displayName: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}display_name'])!,
-      zipName: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}zip_name'])!,
       version: attachedDatabase.typeMapping
           .read(DriftSqlType.int, data['${effectivePrefix}version'])!,
       pythonVersion: attachedDatabase.typeMapping
@@ -487,19 +451,15 @@ class $InstalledExtensionsTable extends InstalledExtensions
 
 class InstalledExtension extends DataClass
     implements Insertable<InstalledExtension> {
-  final String repoUrl;
   final String pkgName;
   final String displayName;
-  final String zipName;
   final int version;
   final int pythonVersion;
   final String? lang;
   final bool isNsfw;
   const InstalledExtension(
-      {required this.repoUrl,
-      required this.pkgName,
+      {required this.pkgName,
       required this.displayName,
-      required this.zipName,
       required this.version,
       required this.pythonVersion,
       this.lang,
@@ -507,10 +467,8 @@ class InstalledExtension extends DataClass
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['repo_url'] = Variable<String>(repoUrl);
     map['pkg_name'] = Variable<String>(pkgName);
     map['display_name'] = Variable<String>(displayName);
-    map['zip_name'] = Variable<String>(zipName);
     map['version'] = Variable<int>(version);
     map['python_version'] = Variable<int>(pythonVersion);
     if (!nullToAbsent || lang != null) {
@@ -522,10 +480,8 @@ class InstalledExtension extends DataClass
 
   InstalledExtensionsCompanion toCompanion(bool nullToAbsent) {
     return InstalledExtensionsCompanion(
-      repoUrl: Value(repoUrl),
       pkgName: Value(pkgName),
       displayName: Value(displayName),
-      zipName: Value(zipName),
       version: Value(version),
       pythonVersion: Value(pythonVersion),
       lang: lang == null && nullToAbsent ? const Value.absent() : Value(lang),
@@ -537,10 +493,8 @@ class InstalledExtension extends DataClass
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return InstalledExtension(
-      repoUrl: serializer.fromJson<String>(json['repoUrl']),
       pkgName: serializer.fromJson<String>(json['pkgName']),
       displayName: serializer.fromJson<String>(json['displayName']),
-      zipName: serializer.fromJson<String>(json['zipName']),
       version: serializer.fromJson<int>(json['version']),
       pythonVersion: serializer.fromJson<int>(json['pythonVersion']),
       lang: serializer.fromJson<String?>(json['lang']),
@@ -551,10 +505,8 @@ class InstalledExtension extends DataClass
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'repoUrl': serializer.toJson<String>(repoUrl),
       'pkgName': serializer.toJson<String>(pkgName),
       'displayName': serializer.toJson<String>(displayName),
-      'zipName': serializer.toJson<String>(zipName),
       'version': serializer.toJson<int>(version),
       'pythonVersion': serializer.toJson<int>(pythonVersion),
       'lang': serializer.toJson<String?>(lang),
@@ -563,19 +515,15 @@ class InstalledExtension extends DataClass
   }
 
   InstalledExtension copyWith(
-          {String? repoUrl,
-          String? pkgName,
+          {String? pkgName,
           String? displayName,
-          String? zipName,
           int? version,
           int? pythonVersion,
           Value<String?> lang = const Value.absent(),
           bool? isNsfw}) =>
       InstalledExtension(
-        repoUrl: repoUrl ?? this.repoUrl,
         pkgName: pkgName ?? this.pkgName,
         displayName: displayName ?? this.displayName,
-        zipName: zipName ?? this.zipName,
         version: version ?? this.version,
         pythonVersion: pythonVersion ?? this.pythonVersion,
         lang: lang.present ? lang.value : this.lang,
@@ -583,11 +531,9 @@ class InstalledExtension extends DataClass
       );
   InstalledExtension copyWithCompanion(InstalledExtensionsCompanion data) {
     return InstalledExtension(
-      repoUrl: data.repoUrl.present ? data.repoUrl.value : this.repoUrl,
       pkgName: data.pkgName.present ? data.pkgName.value : this.pkgName,
       displayName:
           data.displayName.present ? data.displayName.value : this.displayName,
-      zipName: data.zipName.present ? data.zipName.value : this.zipName,
       version: data.version.present ? data.version.value : this.version,
       pythonVersion: data.pythonVersion.present
           ? data.pythonVersion.value
@@ -600,10 +546,8 @@ class InstalledExtension extends DataClass
   @override
   String toString() {
     return (StringBuffer('InstalledExtension(')
-          ..write('repoUrl: $repoUrl, ')
           ..write('pkgName: $pkgName, ')
           ..write('displayName: $displayName, ')
-          ..write('zipName: $zipName, ')
           ..write('version: $version, ')
           ..write('pythonVersion: $pythonVersion, ')
           ..write('lang: $lang, ')
@@ -613,16 +557,14 @@ class InstalledExtension extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(repoUrl, pkgName, displayName, zipName,
-      version, pythonVersion, lang, isNsfw);
+  int get hashCode =>
+      Object.hash(pkgName, displayName, version, pythonVersion, lang, isNsfw);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is InstalledExtension &&
-          other.repoUrl == this.repoUrl &&
           other.pkgName == this.pkgName &&
           other.displayName == this.displayName &&
-          other.zipName == this.zipName &&
           other.version == this.version &&
           other.pythonVersion == this.pythonVersion &&
           other.lang == this.lang &&
@@ -630,20 +572,16 @@ class InstalledExtension extends DataClass
 }
 
 class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
-  final Value<String> repoUrl;
   final Value<String> pkgName;
   final Value<String> displayName;
-  final Value<String> zipName;
   final Value<int> version;
   final Value<int> pythonVersion;
   final Value<String?> lang;
   final Value<bool> isNsfw;
   final Value<int> rowid;
   const InstalledExtensionsCompanion({
-    this.repoUrl = const Value.absent(),
     this.pkgName = const Value.absent(),
     this.displayName = const Value.absent(),
-    this.zipName = const Value.absent(),
     this.version = const Value.absent(),
     this.pythonVersion = const Value.absent(),
     this.lang = const Value.absent(),
@@ -651,27 +589,21 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
     this.rowid = const Value.absent(),
   });
   InstalledExtensionsCompanion.insert({
-    required String repoUrl,
     required String pkgName,
     required String displayName,
-    required String zipName,
     required int version,
     required int pythonVersion,
     this.lang = const Value.absent(),
     required bool isNsfw,
     this.rowid = const Value.absent(),
-  })  : repoUrl = Value(repoUrl),
-        pkgName = Value(pkgName),
+  })  : pkgName = Value(pkgName),
         displayName = Value(displayName),
-        zipName = Value(zipName),
         version = Value(version),
         pythonVersion = Value(pythonVersion),
         isNsfw = Value(isNsfw);
   static Insertable<InstalledExtension> custom({
-    Expression<String>? repoUrl,
     Expression<String>? pkgName,
     Expression<String>? displayName,
-    Expression<String>? zipName,
     Expression<int>? version,
     Expression<int>? pythonVersion,
     Expression<String>? lang,
@@ -679,10 +611,8 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (repoUrl != null) 'repo_url': repoUrl,
       if (pkgName != null) 'pkg_name': pkgName,
       if (displayName != null) 'display_name': displayName,
-      if (zipName != null) 'zip_name': zipName,
       if (version != null) 'version': version,
       if (pythonVersion != null) 'python_version': pythonVersion,
       if (lang != null) 'lang': lang,
@@ -692,20 +622,16 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
   }
 
   InstalledExtensionsCompanion copyWith(
-      {Value<String>? repoUrl,
-      Value<String>? pkgName,
+      {Value<String>? pkgName,
       Value<String>? displayName,
-      Value<String>? zipName,
       Value<int>? version,
       Value<int>? pythonVersion,
       Value<String?>? lang,
       Value<bool>? isNsfw,
       Value<int>? rowid}) {
     return InstalledExtensionsCompanion(
-      repoUrl: repoUrl ?? this.repoUrl,
       pkgName: pkgName ?? this.pkgName,
       displayName: displayName ?? this.displayName,
-      zipName: zipName ?? this.zipName,
       version: version ?? this.version,
       pythonVersion: pythonVersion ?? this.pythonVersion,
       lang: lang ?? this.lang,
@@ -717,17 +643,11 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (repoUrl.present) {
-      map['repo_url'] = Variable<String>(repoUrl.value);
-    }
     if (pkgName.present) {
       map['pkg_name'] = Variable<String>(pkgName.value);
     }
     if (displayName.present) {
       map['display_name'] = Variable<String>(displayName.value);
-    }
-    if (zipName.present) {
-      map['zip_name'] = Variable<String>(zipName.value);
     }
     if (version.present) {
       map['version'] = Variable<int>(version.value);
@@ -750,10 +670,8 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
   @override
   String toString() {
     return (StringBuffer('InstalledExtensionsCompanion(')
-          ..write('repoUrl: $repoUrl, ')
           ..write('pkgName: $pkgName, ')
           ..write('displayName: $displayName, ')
-          ..write('zipName: $zipName, ')
           ..write('version: $version, ')
           ..write('pythonVersion: $pythonVersion, ')
           ..write('lang: $lang, ')
@@ -1698,10 +1616,8 @@ typedef $$ReposTableProcessedTableManager = ProcessedTableManager<
     PrefetchHooks Function()>;
 typedef $$InstalledExtensionsTableCreateCompanionBuilder
     = InstalledExtensionsCompanion Function({
-  required String repoUrl,
   required String pkgName,
   required String displayName,
-  required String zipName,
   required int version,
   required int pythonVersion,
   Value<String?> lang,
@@ -1710,10 +1626,8 @@ typedef $$InstalledExtensionsTableCreateCompanionBuilder
 });
 typedef $$InstalledExtensionsTableUpdateCompanionBuilder
     = InstalledExtensionsCompanion Function({
-  Value<String> repoUrl,
   Value<String> pkgName,
   Value<String> displayName,
-  Value<String> zipName,
   Value<int> version,
   Value<int> pythonVersion,
   Value<String?> lang,
@@ -1730,17 +1644,11 @@ class $$InstalledExtensionsTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<String> get repoUrl => $composableBuilder(
-      column: $table.repoUrl, builder: (column) => ColumnFilters(column));
-
   ColumnFilters<String> get pkgName => $composableBuilder(
       column: $table.pkgName, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get displayName => $composableBuilder(
       column: $table.displayName, builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get zipName => $composableBuilder(
-      column: $table.zipName, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<int> get version => $composableBuilder(
       column: $table.version, builder: (column) => ColumnFilters(column));
@@ -1764,17 +1672,11 @@ class $$InstalledExtensionsTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<String> get repoUrl => $composableBuilder(
-      column: $table.repoUrl, builder: (column) => ColumnOrderings(column));
-
   ColumnOrderings<String> get pkgName => $composableBuilder(
       column: $table.pkgName, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<String> get displayName => $composableBuilder(
       column: $table.displayName, builder: (column) => ColumnOrderings(column));
-
-  ColumnOrderings<String> get zipName => $composableBuilder(
-      column: $table.zipName, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<int> get version => $composableBuilder(
       column: $table.version, builder: (column) => ColumnOrderings(column));
@@ -1799,17 +1701,11 @@ class $$InstalledExtensionsTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<String> get repoUrl =>
-      $composableBuilder(column: $table.repoUrl, builder: (column) => column);
-
   GeneratedColumn<String> get pkgName =>
       $composableBuilder(column: $table.pkgName, builder: (column) => column);
 
   GeneratedColumn<String> get displayName => $composableBuilder(
       column: $table.displayName, builder: (column) => column);
-
-  GeneratedColumn<String> get zipName =>
-      $composableBuilder(column: $table.zipName, builder: (column) => column);
 
   GeneratedColumn<int> get version =>
       $composableBuilder(column: $table.version, builder: (column) => column);
@@ -1854,10 +1750,8 @@ class $$InstalledExtensionsTableTableManager extends RootTableManager<
               $$InstalledExtensionsTableAnnotationComposer(
                   $db: db, $table: table),
           updateCompanionCallback: ({
-            Value<String> repoUrl = const Value.absent(),
             Value<String> pkgName = const Value.absent(),
             Value<String> displayName = const Value.absent(),
-            Value<String> zipName = const Value.absent(),
             Value<int> version = const Value.absent(),
             Value<int> pythonVersion = const Value.absent(),
             Value<String?> lang = const Value.absent(),
@@ -1865,10 +1759,8 @@ class $$InstalledExtensionsTableTableManager extends RootTableManager<
             Value<int> rowid = const Value.absent(),
           }) =>
               InstalledExtensionsCompanion(
-            repoUrl: repoUrl,
             pkgName: pkgName,
             displayName: displayName,
-            zipName: zipName,
             version: version,
             pythonVersion: pythonVersion,
             lang: lang,
@@ -1876,10 +1768,8 @@ class $$InstalledExtensionsTableTableManager extends RootTableManager<
             rowid: rowid,
           ),
           createCompanionCallback: ({
-            required String repoUrl,
             required String pkgName,
             required String displayName,
-            required String zipName,
             required int version,
             required int pythonVersion,
             Value<String?> lang = const Value.absent(),
@@ -1887,10 +1777,8 @@ class $$InstalledExtensionsTableTableManager extends RootTableManager<
             Value<int> rowid = const Value.absent(),
           }) =>
               InstalledExtensionsCompanion.insert(
-            repoUrl: repoUrl,
             pkgName: pkgName,
             displayName: displayName,
-            zipName: zipName,
             version: version,
             pythonVersion: pythonVersion,
             lang: lang,

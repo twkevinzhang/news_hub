@@ -26,12 +26,10 @@ class ListInstalledExtensions {
       return ExtensionWithBoards(
         pkgName: e.pkgName,
         displayName: e.displayName,
-        zipName: e.zipName,
         version: e.version,
         pythonVersion: e.pythonVersion,
         lang: e.lang,
         isNsfw: e.isNsfw,
-        repoUrl: e.repoUrl,
         site: site,
         boards: boards.toSet(),
       );
@@ -46,12 +44,10 @@ class ExtensionWithBoards extends Extension {
   ExtensionWithBoards({
     required super.pkgName,
     required super.displayName,
-    required super.zipName,
     required super.version,
     required super.pythonVersion,
     required super.lang,
     required super.isNsfw,
-    required super.repoUrl,
     required this.site,
     required this.boards,
   });

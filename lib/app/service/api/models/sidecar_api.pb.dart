@@ -2891,15 +2891,11 @@ class GetInstalledExtensionRes extends $pb.GeneratedMessage {
 class InstallExtensionReq extends $pb.GeneratedMessage {
   factory InstallExtensionReq({
     $core.String? pkgName,
-    $core.String? zipName,
     $core.String? repoUrl,
   }) {
     final result = create();
     if (pkgName != null) {
       result.pkgName = pkgName;
-    }
-    if (zipName != null) {
-      result.zipName = zipName;
     }
     if (repoUrl != null) {
       result.repoUrl = repoUrl;
@@ -2912,7 +2908,6 @@ class InstallExtensionReq extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'InstallExtensionReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'pkgName')
-    ..aOS(2, _omitFieldNames ? '' : 'zipName')
     ..aOS(4, _omitFieldNames ? '' : 'repoUrl')
     ..hasRequiredFields = false
   ;
@@ -2947,21 +2942,12 @@ class InstallExtensionReq extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearPkgName() => clearField(1);
 
-  @$pb.TagNumber(2)
-  $core.String get zipName => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set zipName($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasZipName() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearZipName() => clearField(2);
-
   @$pb.TagNumber(4)
-  $core.String get repoUrl => $_getSZ(2);
+  $core.String get repoUrl => $_getSZ(1);
   @$pb.TagNumber(4)
-  set repoUrl($core.String v) { $_setString(2, v); }
+  set repoUrl($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(4)
-  $core.bool hasRepoUrl() => $_has(2);
+  $core.bool hasRepoUrl() => $_has(1);
   @$pb.TagNumber(4)
   void clearRepoUrl() => clearField(4);
 }
@@ -3288,12 +3274,10 @@ class Extension extends $pb.GeneratedMessage {
   factory Extension({
     $core.String? pkgName,
     $core.String? displayName,
-    $core.String? zipName,
     $core.int? version,
     $core.int? pythonVersion,
     $core.String? lang,
     $core.bool? isNsfw,
-    $core.String? repoUrl,
   }) {
     final result = create();
     if (pkgName != null) {
@@ -3301,9 +3285,6 @@ class Extension extends $pb.GeneratedMessage {
     }
     if (displayName != null) {
       result.displayName = displayName;
-    }
-    if (zipName != null) {
-      result.zipName = zipName;
     }
     if (version != null) {
       result.version = version;
@@ -3317,9 +3298,6 @@ class Extension extends $pb.GeneratedMessage {
     if (isNsfw != null) {
       result.isNsfw = isNsfw;
     }
-    if (repoUrl != null) {
-      result.repoUrl = repoUrl;
-    }
     return result;
   }
   Extension._() : super();
@@ -3329,12 +3307,10 @@ class Extension extends $pb.GeneratedMessage {
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'Extension', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..aOS(2, _omitFieldNames ? '' : 'pkgName')
     ..aOS(3, _omitFieldNames ? '' : 'displayName')
-    ..aOS(4, _omitFieldNames ? '' : 'zipName')
     ..a<$core.int>(5, _omitFieldNames ? '' : 'version', $pb.PbFieldType.O3)
     ..a<$core.int>(6, _omitFieldNames ? '' : 'pythonVersion', $pb.PbFieldType.O3)
     ..aOS(7, _omitFieldNames ? '' : 'lang')
     ..aOB(8, _omitFieldNames ? '' : 'isNsfw')
-    ..aOS(9, _omitFieldNames ? '' : 'repoUrl')
     ..hasRequiredFields = false
   ;
 
@@ -3377,59 +3353,41 @@ class Extension extends $pb.GeneratedMessage {
   @$pb.TagNumber(3)
   void clearDisplayName() => clearField(3);
 
-  @$pb.TagNumber(4)
-  $core.String get zipName => $_getSZ(2);
-  @$pb.TagNumber(4)
-  set zipName($core.String v) { $_setString(2, v); }
-  @$pb.TagNumber(4)
-  $core.bool hasZipName() => $_has(2);
-  @$pb.TagNumber(4)
-  void clearZipName() => clearField(4);
-
   @$pb.TagNumber(5)
-  $core.int get version => $_getIZ(3);
+  $core.int get version => $_getIZ(2);
   @$pb.TagNumber(5)
-  set version($core.int v) { $_setSignedInt32(3, v); }
+  set version($core.int v) { $_setSignedInt32(2, v); }
   @$pb.TagNumber(5)
-  $core.bool hasVersion() => $_has(3);
+  $core.bool hasVersion() => $_has(2);
   @$pb.TagNumber(5)
   void clearVersion() => clearField(5);
 
   @$pb.TagNumber(6)
-  $core.int get pythonVersion => $_getIZ(4);
+  $core.int get pythonVersion => $_getIZ(3);
   @$pb.TagNumber(6)
-  set pythonVersion($core.int v) { $_setSignedInt32(4, v); }
+  set pythonVersion($core.int v) { $_setSignedInt32(3, v); }
   @$pb.TagNumber(6)
-  $core.bool hasPythonVersion() => $_has(4);
+  $core.bool hasPythonVersion() => $_has(3);
   @$pb.TagNumber(6)
   void clearPythonVersion() => clearField(6);
 
   @$pb.TagNumber(7)
-  $core.String get lang => $_getSZ(5);
+  $core.String get lang => $_getSZ(4);
   @$pb.TagNumber(7)
-  set lang($core.String v) { $_setString(5, v); }
+  set lang($core.String v) { $_setString(4, v); }
   @$pb.TagNumber(7)
-  $core.bool hasLang() => $_has(5);
+  $core.bool hasLang() => $_has(4);
   @$pb.TagNumber(7)
   void clearLang() => clearField(7);
 
   @$pb.TagNumber(8)
-  $core.bool get isNsfw => $_getBF(6);
+  $core.bool get isNsfw => $_getBF(5);
   @$pb.TagNumber(8)
-  set isNsfw($core.bool v) { $_setBool(6, v); }
+  set isNsfw($core.bool v) { $_setBool(5, v); }
   @$pb.TagNumber(8)
-  $core.bool hasIsNsfw() => $_has(6);
+  $core.bool hasIsNsfw() => $_has(5);
   @$pb.TagNumber(8)
   void clearIsNsfw() => clearField(8);
-
-  @$pb.TagNumber(9)
-  $core.String get repoUrl => $_getSZ(7);
-  @$pb.TagNumber(9)
-  set repoUrl($core.String v) { $_setString(7, v); }
-  @$pb.TagNumber(9)
-  $core.bool hasRepoUrl() => $_has(7);
-  @$pb.TagNumber(9)
-  void clearRepoUrl() => clearField(9);
 }
 
 /// Extension Repo messages
@@ -3556,14 +3514,10 @@ class ExtensionRepo extends $pb.GeneratedMessage {
 class AddExtensionRepoReq extends $pb.GeneratedMessage {
   factory AddExtensionRepoReq({
     $core.String? url,
-    $core.String? displayName,
   }) {
     final result = create();
     if (url != null) {
       result.url = url;
-    }
-    if (displayName != null) {
-      result.displayName = displayName;
     }
     return result;
   }
@@ -3573,7 +3527,6 @@ class AddExtensionRepoReq extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddExtensionRepoReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'url')
-    ..aOS(2, _omitFieldNames ? '' : 'displayName')
     ..hasRequiredFields = false
   ;
 
@@ -3606,15 +3559,6 @@ class AddExtensionRepoReq extends $pb.GeneratedMessage {
   $core.bool hasUrl() => $_has(0);
   @$pb.TagNumber(1)
   void clearUrl() => clearField(1);
-
-  @$pb.TagNumber(2)
-  $core.String get displayName => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set displayName($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasDisplayName() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearDisplayName() => clearField(2);
 }
 
 class AddExtensionRepoRes extends $pb.GeneratedMessage {

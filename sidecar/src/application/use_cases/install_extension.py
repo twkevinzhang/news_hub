@@ -20,7 +20,7 @@ class InstallExtensionUseCase:
         self.repository = repository
         self.installer = installer
 
-    def execute(self, metadata: ExtensionMetadata) -> Extension:
+    def execute(self, metadata: ExtensionMetadata, repo_url: str = "") -> Extension:
         """Execute the install extension use case"""
         logger.info(f"Installing extension: {metadata.pkg_name}")
 
@@ -32,7 +32,7 @@ class InstallExtensionUseCase:
                 return existing
 
         # Download extension directory from GitHub repo
-        self.installer.download_directory(metadata.repo_url, metadata.pkg_name)
+        self.installer.download_directory(repo_url, metadata.pkg_name)
 
         # Install requirements
 

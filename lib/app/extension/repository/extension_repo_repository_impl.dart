@@ -22,9 +22,9 @@ class RepoRepositoryImpl implements RepoRepository {
   }
 
   @override
-  Future<void> insert(String url, {String? displayName}) async {
+  Future<void> insert(String url) async {
     await _ensureConnected();
-    await _apiService.addRepo(url: url, displayName: displayName);
+    await _apiService.addRepo(url: url);
   }
 
   @override

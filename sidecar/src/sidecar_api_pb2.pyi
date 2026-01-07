@@ -418,14 +418,12 @@ class GetInstalledExtensionRes(_message.Message):
     def __init__(self, extension: _Optional[_Union[Extension, _Mapping]] = ...) -> None: ...
 
 class InstallExtensionReq(_message.Message):
-    __slots__ = ("pkg_name", "zip_name", "repo_url")
+    __slots__ = ("pkg_name", "repo_url")
     PKG_NAME_FIELD_NUMBER: _ClassVar[int]
-    ZIP_NAME_FIELD_NUMBER: _ClassVar[int]
     REPO_URL_FIELD_NUMBER: _ClassVar[int]
     pkg_name: str
-    zip_name: str
     repo_url: str
-    def __init__(self, pkg_name: _Optional[str] = ..., zip_name: _Optional[str] = ..., repo_url: _Optional[str] = ...) -> None: ...
+    def __init__(self, pkg_name: _Optional[str] = ..., repo_url: _Optional[str] = ...) -> None: ...
 
 class UninstallExtensionReq(_message.Message):
     __slots__ = ("pkg_name",)
@@ -468,24 +466,20 @@ class RemoteExtension(_message.Message):
     def __init__(self, base: _Optional[_Union[Extension, _Mapping]] = ..., icon_url: _Optional[str] = ..., repo_url: _Optional[str] = ...) -> None: ...
 
 class Extension(_message.Message):
-    __slots__ = ("pkg_name", "display_name", "zip_name", "version", "python_version", "lang", "is_nsfw", "repo_url")
+    __slots__ = ("pkg_name", "display_name", "version", "python_version", "lang", "is_nsfw")
     PKG_NAME_FIELD_NUMBER: _ClassVar[int]
     DISPLAY_NAME_FIELD_NUMBER: _ClassVar[int]
-    ZIP_NAME_FIELD_NUMBER: _ClassVar[int]
     VERSION_FIELD_NUMBER: _ClassVar[int]
     PYTHON_VERSION_FIELD_NUMBER: _ClassVar[int]
     LANG_FIELD_NUMBER: _ClassVar[int]
     IS_NSFW_FIELD_NUMBER: _ClassVar[int]
-    REPO_URL_FIELD_NUMBER: _ClassVar[int]
     pkg_name: str
     display_name: str
-    zip_name: str
     version: int
     python_version: int
     lang: str
     is_nsfw: bool
-    repo_url: str
-    def __init__(self, pkg_name: _Optional[str] = ..., display_name: _Optional[str] = ..., zip_name: _Optional[str] = ..., version: _Optional[int] = ..., python_version: _Optional[int] = ..., lang: _Optional[str] = ..., is_nsfw: bool = ..., repo_url: _Optional[str] = ...) -> None: ...
+    def __init__(self, pkg_name: _Optional[str] = ..., display_name: _Optional[str] = ..., version: _Optional[int] = ..., python_version: _Optional[int] = ..., lang: _Optional[str] = ..., is_nsfw: bool = ...) -> None: ...
 
 class ExtensionRepo(_message.Message):
     __slots__ = ("url", "added_at", "display_name", "website", "signing_key_fingerprint", "icon")
@@ -504,12 +498,10 @@ class ExtensionRepo(_message.Message):
     def __init__(self, url: _Optional[str] = ..., added_at: _Optional[int] = ..., display_name: _Optional[str] = ..., website: _Optional[str] = ..., signing_key_fingerprint: _Optional[str] = ..., icon: _Optional[str] = ...) -> None: ...
 
 class AddExtensionRepoReq(_message.Message):
-    __slots__ = ("url", "display_name")
+    __slots__ = ("url",)
     URL_FIELD_NUMBER: _ClassVar[int]
-    DISPLAY_NAME_FIELD_NUMBER: _ClassVar[int]
     url: str
-    display_name: str
-    def __init__(self, url: _Optional[str] = ..., display_name: _Optional[str] = ...) -> None: ...
+    def __init__(self, url: _Optional[str] = ...) -> None: ...
 
 class AddExtensionRepoRes(_message.Message):
     __slots__ = ("url", "added_at", "display_name", "website", "signing_key_fingerprint", "icon")

@@ -74,37 +74,33 @@ class Repo {
 class Extension {
   final String pkgName;
   final String displayName;
-  final String zipName;
   final int version;
   final int pythonVersion;
   final String? lang;
   final bool isNsfw;
-  final String repoUrl;
 
   Extension({
     required this.pkgName,
     required this.displayName,
-    required this.zipName,
     required this.version,
     required this.pythonVersion,
     this.lang,
     required this.isNsfw,
-    required this.repoUrl,
   });
 }
 
 class RemoteExtension extends Extension {
   final String iconUrl;
+  final String repoUrl;
 
   RemoteExtension({
     required super.pkgName,
     required super.displayName,
-    required super.zipName,
     required super.version,
     required super.pythonVersion,
     required super.lang,
     required super.isNsfw,
-    required super.repoUrl,
+    required this.repoUrl,
     required this.iconUrl,
   });
 }
@@ -113,7 +109,6 @@ extension RemoteExtensionEx on RemoteExtension {
   RemoteExtension copyWith({
     String? pkgName,
     String? displayName,
-    String? zipName,
     int? version,
     int? pythonVersion,
     String? lang,
@@ -126,7 +121,6 @@ extension RemoteExtensionEx on RemoteExtension {
     return RemoteExtension(
       pkgName: pkgName ?? this.pkgName,
       displayName: displayName ?? this.displayName,
-      zipName: zipName ?? this.zipName,
       version: version ?? this.version,
       pythonVersion: pythonVersion ?? this.pythonVersion,
       lang: lang ?? this.lang,

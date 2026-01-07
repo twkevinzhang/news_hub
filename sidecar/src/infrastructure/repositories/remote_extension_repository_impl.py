@@ -48,13 +48,11 @@ class RemoteExtensionRepositoryImpl(RemoteExtensionRepository):
                 metadata = ExtensionMetadata(
                     pkg_name=item["pkg_name"],
                     display_name=item["display_name"],
-                    zip_name=item.get("zip_name", ""), # Now optional
                     version=item["version"],
                     python_version=item.get("python_version", 3),
                     lang=item.get("lang"),
                     is_nsfw=item.get("is_nsfw", False),
                     icon_url=item.get("icon_url"),
-                    repo_url=item.get("repo_url", repo_url),
                 )
                 extensions.append(metadata)
             except (KeyError, ValueError) as e:

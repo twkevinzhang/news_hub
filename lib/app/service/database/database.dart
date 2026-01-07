@@ -21,10 +21,8 @@ class Repos extends Table {
 }
 
 class InstalledExtensions extends Table {
-  TextColumn get repoUrl => text()();
   TextColumn get pkgName => text()();
   TextColumn get displayName => text()();
-  TextColumn get zipName => text()();
   IntColumn get version => integer()();
   IntColumn get pythonVersion => integer()();
   TextColumn get lang => text().nullable()();
@@ -87,8 +85,7 @@ class AppDatabase extends _$AppDatabase {
             await m.createTable(collectionBoardRefs);
           }
           if (from < 3) {
-            // Rename repoBaseUrl to repoUrl
-            await m.renameColumn(installedExtensions, 'repo_base_url', installedExtensions.repoUrl);
+            // repo_base_url was renamed but now removed
           }
         },
       );
