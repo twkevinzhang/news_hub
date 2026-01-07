@@ -141,7 +141,7 @@ sidecar/src/
 **主要 gRPC 操作:**
 
 - 擴展管理: ListInstalledExtensions, InstallExtension, UninstallExtension
-- 論壇操作: GetSite, GetBoards, GetThreadInfos, GetThreadPost
+- 論壇操作: GetBoards, GetThreads, GetOriginalPost, GetReplies
 - 所有操作委託給動態加載的擴展，並在非同步環境下透過執行緒池執行以確保不阻塞。
 
 ### 擴展系統

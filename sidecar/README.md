@@ -88,6 +88,7 @@ python -m pytest tests/unit/test_extension_entity.py
 The service exposes the following gRPC methods:
 
 ### Extension Management
+
 - `ListInstalledExtensions`: List all installed extensions
 - `GetInstalledExtension`: Get details of a specific extension
 - `InstallExtension`: Install a new extension
@@ -95,11 +96,11 @@ The service exposes the following gRPC methods:
 - `ListRemoteExtensions`: List available extensions from a repository
 
 ### Extension Operations (Delegated to Extensions)
-- `GetSite`: Get forum site information
+
 - `GetBoards`: Get forum boards
-- `GetThreadInfos`: Get thread list
-- `GetThreadPost`: Get thread details
-- `GetRegardingPosts`: Get post replies
+- `GetThreads`: Get thread list
+- `GetOriginalPost`: Get OP
+- `GetReplies`: Get post replies
 - `GetComments`: Get post comments
 
 ## Configuration
