@@ -60,13 +60,13 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         drawer: AppNavigationDrawer(
           onCollectionSelected: (collection) {
-            _safeNavigate(() => context.router.push(ThreadListRoute()));
+            _safeNavigate(() => context.router.push(CollectionThreadListRoute()));
           },
           onCreateCollectionPressed: () {
             _safeNavigate(() => context.router.push(CollectionCreateRoute()));
           },
           onBoardSelected: (board) {
-            _safeNavigate(() => context.router.push(ThreadListRoute()));
+            _safeNavigate(() => context.router.push(CollectionBoardThreadListRoute()));
           },
           onStatusPressed: () {
             _safeNavigate(() => context.router.push(const SidecarLogsRoute()));

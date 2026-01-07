@@ -12,24 +12,36 @@
 import 'package:auto_route/auto_route.dart' as _i14;
 import 'package:flutter/material.dart' as _i15;
 import 'package:news_hub/domain/models/models.dart' as _i16;
-import 'package:news_hub/presentation/pages/collection/:collectionId/boards/:boardId/threads/list/collection_board_thread_list_screen.dart' as _i1;
-import 'package:news_hub/presentation/pages/collection/:collectionId/threads/list/collection_thread_list_screen.dart' as _i5;
-import 'package:news_hub/presentation/pages/collection/create/view/collection_create_screen.dart' as _i2;
-import 'package:news_hub/presentation/pages/collection/edit/view/collection_create_screen.dart' as _i3;
-import 'package:news_hub/presentation/pages/settings/collections/view/collection_manage_screen.dart' as _i4;
-import 'package:news_hub/presentation/pages/settings/extensions/view/extension_manage_screen.dart' as _i6;
-import 'package:news_hub/presentation/pages/settings/settings_screen.dart' as _i9;
-import 'package:news_hub/presentation/pages/settings/sidecar/sidecar_manage_screen.dart' as _i11;
+import 'package:news_hub/presentation/pages/collection/:collectionId/boards/:boardId/threads/list/collection_board_thread_list_screen.dart'
+    as _i1;
+import 'package:news_hub/presentation/pages/collection/:collectionId/threads/list/collection_thread_list_screen.dart'
+    as _i5;
+import 'package:news_hub/presentation/pages/collection/:collectionId/threads/search/view/search_screen.dart'
+    as _i8;
+import 'package:news_hub/presentation/pages/collection/create/view/collection_create_screen.dart'
+    as _i2;
+import 'package:news_hub/presentation/pages/collection/edit/view/collection_create_screen.dart'
+    as _i3;
+import 'package:news_hub/presentation/pages/settings/collections/view/collection_manage_screen.dart'
+    as _i4;
+import 'package:news_hub/presentation/pages/settings/extensions/view/extension_manage_screen.dart'
+    as _i6;
+import 'package:news_hub/presentation/pages/settings/settings_screen.dart'
+    as _i9;
+import 'package:news_hub/presentation/pages/settings/sidecar/sidecar_manage_screen.dart'
+    as _i11;
 import 'package:news_hub/presentation/pages/shell/home_screen.dart' as _i7;
-import 'package:news_hub/presentation/pages/sidecar/logs/sidecar_logs_screen.dart' as _i10;
-import 'package:news_hub/presentation/pages/thread/detail/view/thread_detail_screen.dart' as _i12;
-import 'package:news_hub/presentation/pages/collection/:collectionId/threads/search/view/search_screen.dart' as _i8;
+import 'package:news_hub/presentation/pages/sidecar/logs/sidecar_logs_screen.dart'
+    as _i10;
+import 'package:news_hub/presentation/pages/thread/detail/view/thread_detail_screen.dart'
+    as _i12;
 import 'package:news_hub/presentation/router/wrapper_screen.dart' as _i13;
 
 /// generated route for
 /// [_i1.CollectionBoardThreadListScreen]
 class CollectionBoardThreadListRoute extends _i14.PageRouteInfo<void> {
-  const CollectionBoardThreadListRoute({List<_i14.PageRouteInfo>? children}) : super(CollectionBoardThreadListRoute.name, initialChildren: children);
+  const CollectionBoardThreadListRoute({List<_i14.PageRouteInfo>? children})
+    : super(CollectionBoardThreadListRoute.name, initialChildren: children);
 
   static const String name = 'CollectionBoardThreadListRoute';
 
@@ -46,7 +58,8 @@ class CollectionBoardThreadListRoute extends _i14.PageRouteInfo<void> {
 /// generated route for
 /// [_i2.CollectionCreateScreen]
 class CollectionCreateRoute extends _i14.PageRouteInfo<void> {
-  const CollectionCreateRoute({List<_i14.PageRouteInfo>? children}) : super(CollectionCreateRoute.name, initialChildren: children);
+  const CollectionCreateRoute({List<_i14.PageRouteInfo>? children})
+    : super(CollectionCreateRoute.name, initialChildren: children);
 
   static const String name = 'CollectionCreateRoute';
 
@@ -66,13 +79,13 @@ class CollectionEditRoute extends _i14.PageRouteInfo<CollectionEditRouteArgs> {
     required _i16.Collection initialCollection,
     List<_i14.PageRouteInfo>? children,
   }) : super(
-          CollectionEditRoute.name,
-          args: CollectionEditRouteArgs(
-            key: key,
-            initialCollection: initialCollection,
-          ),
-          initialChildren: children,
-        );
+         CollectionEditRoute.name,
+         args: CollectionEditRouteArgs(
+           key: key,
+           initialCollection: initialCollection,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'CollectionEditRoute';
 
@@ -106,7 +119,8 @@ class CollectionEditRouteArgs {
 /// generated route for
 /// [_i4.CollectionManageScreen]
 class CollectionManageRoute extends _i14.PageRouteInfo<void> {
-  const CollectionManageRoute({List<_i14.PageRouteInfo>? children}) : super(CollectionManageRoute.name, initialChildren: children);
+  const CollectionManageRoute({List<_i14.PageRouteInfo>? children})
+    : super(CollectionManageRoute.name, initialChildren: children);
 
   static const String name = 'CollectionManageRoute';
 
@@ -121,7 +135,8 @@ class CollectionManageRoute extends _i14.PageRouteInfo<void> {
 /// generated route for
 /// [_i5.CollectionThreadListScreen]
 class CollectionThreadListRoute extends _i14.PageRouteInfo<void> {
-  const CollectionThreadListRoute({List<_i14.PageRouteInfo>? children}) : super(CollectionThreadListRoute.name, initialChildren: children);
+  const CollectionThreadListRoute({List<_i14.PageRouteInfo>? children})
+    : super(CollectionThreadListRoute.name, initialChildren: children);
 
   static const String name = 'CollectionThreadListRoute';
 
@@ -136,7 +151,8 @@ class CollectionThreadListRoute extends _i14.PageRouteInfo<void> {
 /// generated route for
 /// [_i6.ExtensionManageScreen]
 class ExtensionManageRoute extends _i14.PageRouteInfo<void> {
-  const ExtensionManageRoute({List<_i14.PageRouteInfo>? children}) : super(ExtensionManageRoute.name, initialChildren: children);
+  const ExtensionManageRoute({List<_i14.PageRouteInfo>? children})
+    : super(ExtensionManageRoute.name, initialChildren: children);
 
   static const String name = 'ExtensionManageRoute';
 
@@ -151,7 +167,8 @@ class ExtensionManageRoute extends _i14.PageRouteInfo<void> {
 /// generated route for
 /// [_i7.HomeScreen]
 class HomeRoute extends _i14.PageRouteInfo<void> {
-  const HomeRoute({List<_i14.PageRouteInfo>? children}) : super(HomeRoute.name, initialChildren: children);
+  const HomeRoute({List<_i14.PageRouteInfo>? children})
+    : super(HomeRoute.name, initialChildren: children);
 
   static const String name = 'HomeRoute';
 
@@ -167,11 +184,11 @@ class HomeRoute extends _i14.PageRouteInfo<void> {
 /// [_i8.SearchScreen]
 class SearchRoute extends _i14.PageRouteInfo<SearchRouteArgs> {
   SearchRoute({_i15.Key? key, List<_i14.PageRouteInfo>? children})
-      : super(
-          SearchRoute.name,
-          args: SearchRouteArgs(key: key),
-          initialChildren: children,
-        );
+    : super(
+        SearchRoute.name,
+        args: SearchRouteArgs(key: key),
+        initialChildren: children,
+      );
 
   static const String name = 'SearchRoute';
 
@@ -200,7 +217,8 @@ class SearchRouteArgs {
 /// generated route for
 /// [_i9.SettingsScreen]
 class SettingsRoute extends _i14.PageRouteInfo<void> {
-  const SettingsRoute({List<_i14.PageRouteInfo>? children}) : super(SettingsRoute.name, initialChildren: children);
+  const SettingsRoute({List<_i14.PageRouteInfo>? children})
+    : super(SettingsRoute.name, initialChildren: children);
 
   static const String name = 'SettingsRoute';
 
@@ -215,7 +233,8 @@ class SettingsRoute extends _i14.PageRouteInfo<void> {
 /// generated route for
 /// [_i10.SidecarLogsScreen]
 class SidecarLogsRoute extends _i14.PageRouteInfo<void> {
-  const SidecarLogsRoute({List<_i14.PageRouteInfo>? children}) : super(SidecarLogsRoute.name, initialChildren: children);
+  const SidecarLogsRoute({List<_i14.PageRouteInfo>? children})
+    : super(SidecarLogsRoute.name, initialChildren: children);
 
   static const String name = 'SidecarLogsRoute';
 
@@ -230,7 +249,8 @@ class SidecarLogsRoute extends _i14.PageRouteInfo<void> {
 /// generated route for
 /// [_i11.SidecarManageScreen]
 class SidecarManageRoute extends _i14.PageRouteInfo<void> {
-  const SidecarManageRoute({List<_i14.PageRouteInfo>? children}) : super(SidecarManageRoute.name, initialChildren: children);
+  const SidecarManageRoute({List<_i14.PageRouteInfo>? children})
+    : super(SidecarManageRoute.name, initialChildren: children);
 
   static const String name = 'SidecarManageRoute';
 
@@ -249,20 +269,18 @@ class ThreadDetailRoute extends _i14.PageRouteInfo<ThreadDetailRouteArgs> {
     _i15.Key? key,
     required String threadId,
     required String extensionPkgName,
-    required String siteId,
     required String boardId,
     List<_i14.PageRouteInfo>? children,
   }) : super(
-          ThreadDetailRoute.name,
-          args: ThreadDetailRouteArgs(
-            key: key,
-            threadId: threadId,
-            extensionPkgName: extensionPkgName,
-            siteId: siteId,
-            boardId: boardId,
-          ),
-          initialChildren: children,
-        );
+         ThreadDetailRoute.name,
+         args: ThreadDetailRouteArgs(
+           key: key,
+           threadId: threadId,
+           extensionPkgName: extensionPkgName,
+           boardId: boardId,
+         ),
+         initialChildren: children,
+       );
 
   static const String name = 'ThreadDetailRoute';
 
@@ -275,7 +293,6 @@ class ThreadDetailRoute extends _i14.PageRouteInfo<ThreadDetailRouteArgs> {
           key: args.key,
           threadId: args.threadId,
           extensionPkgName: args.extensionPkgName,
-          siteId: args.siteId,
           boardId: args.boardId,
         ),
       );
@@ -288,7 +305,6 @@ class ThreadDetailRouteArgs {
     this.key,
     required this.threadId,
     required this.extensionPkgName,
-    required this.siteId,
     required this.boardId,
   });
 
@@ -298,20 +314,19 @@ class ThreadDetailRouteArgs {
 
   final String extensionPkgName;
 
-  final String siteId;
-
   final String boardId;
 
   @override
   String toString() {
-    return 'ThreadDetailRouteArgs{key: $key, threadId: $threadId, extensionPkgName: $extensionPkgName, siteId: $siteId, boardId: $boardId}';
+    return 'ThreadDetailRouteArgs{key: $key, threadId: $threadId, extensionPkgName: $extensionPkgName, boardId: $boardId}';
   }
 }
 
 /// generated route for
 /// [_i13.WrapperScreen]
 class WrapperRoute extends _i14.PageRouteInfo<void> {
-  const WrapperRoute({List<_i14.PageRouteInfo>? children}) : super(WrapperRoute.name, initialChildren: children);
+  const WrapperRoute({List<_i14.PageRouteInfo>? children})
+    : super(WrapperRoute.name, initialChildren: children);
 
   static const String name = 'WrapperRoute';
 
