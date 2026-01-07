@@ -14,8 +14,8 @@ class AppRouter extends RootStackRouter {
         AutoRoute(path: '/', page: HomeRoute.page),
         AutoRoute(path: '/collection/create', page: CollectionCreateRoute.page),
         AutoRoute(path: '/collection/edit', page: CollectionEditRoute.page),
-        AutoRoute(path: '/collection/:collectionId/threads/list', page: ThreadListRoute.page),
-        AutoRoute(path: '/collection/:collectionId/boards/:boardId/threads/list', page: ThreadListRoute.page),
+        AutoRoute(path: '/collection/:collectionId/threads/list', page: CollectionThreadListRoute.page),
+        AutoRoute(path: '/collection/:collectionId/boards/:boardId/threads/list', page: CollectionBoardThreadListRoute.page),
         // AutoRoute(path: '/collection/:collectionId/threads/search', page: ThreadListRoute.page),
 
         // AutoRoute(path: '/threads/list', page: ThreadListRoute.page),

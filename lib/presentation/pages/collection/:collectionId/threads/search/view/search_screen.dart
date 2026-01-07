@@ -138,7 +138,7 @@ class SearchScreen extends StatelessWidget implements AutoRouteWrapper {
       _formKey.currentState!.save();
       cubit.submit();
       final state = cubit.state;
-      AutoRouter.of(context).push(ThreadListRoute(filter: state.filter, sorting: state.sorting));
+      AutoRouter.of(context).push(CollectionThreadListRoute());
     }
   }
 }
