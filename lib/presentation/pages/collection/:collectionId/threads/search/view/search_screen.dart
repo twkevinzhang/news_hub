@@ -122,14 +122,14 @@ class SearchScreen extends StatelessWidget implements AutoRouteWrapper {
       builder: (context) {
         return Dialog.fullscreen(
           child: BlocProvider<BoardsPickerCubit>(
-            create: (context) => sl<BoardsPickerCubit>()..init(chosenBoards: cubit.state.filter.boardsSorting),
+            create: (context) => sl<BoardsPickerCubit>()..init(chosenBoards: cubit.state.filter.boardSorts),
             child: const BoardsPickerScreen(),
           ),
         );
       },
     );
     if (result != null) {
-      cubit.setBoardsSorting(result.chosenBoards);
+      cubit.setBoardSorts(result.chosenBoards);
     }
   }
 

@@ -33,20 +33,20 @@ abstract class ApiService {
 
   Future<List<Post>> listThreads({
     required String extensionPkgName,
-    required Map<String, String>? boardsSorting,
+    required Map<String, String>? boardSorts,
     Pagination? pagination,
     String? sortBy,
     String? keywords,
   });
 
-  Future<Post> getThread({
+  Future<Post> getOriginalPost({
     required String extensionPkgName,
     required String boardId,
     required String threadId,
     String? postId,
   });
 
-  Future<List<Post>> listRegardingPosts({
+  Future<List<Post>> listReplies({
     required String extensionPkgName,
     required String boardId,
     required String threadId,

@@ -45,24 +45,24 @@ final $typed_data.Uint8List getBoardsResDescriptor = $convert.base64Decode(
     'Zib2FyZHMSMgoEcGFnZRgCIAEoCzIeLm5ld3NfaHViLmRvbWFpbi5QYWdpbmF0aW9uUmVzUgRw'
     'YWdl');
 
-@$core.Deprecated('Use getThreadInfosReqDescriptor instead')
-const GetThreadInfosReq$json = {
-  '1': 'GetThreadInfosReq',
+@$core.Deprecated('Use getThreadsReqDescriptor instead')
+const GetThreadsReq$json = {
+  '1': 'GetThreadsReq',
   '2': [
     {'1': 'pkg_name', '3': 6, '4': 1, '5': 9, '10': 'pkgName'},
-    {'1': 'board_sorts', '3': 2, '4': 3, '5': 11, '6': '.news_hub.sidecar.GetThreadInfosReq.BoardSortsEntry', '10': 'boardSorts'},
+    {'1': 'board_sorts', '3': 2, '4': 3, '5': 11, '6': '.news_hub.sidecar.GetThreadsReq.BoardSortsEntry', '10': 'boardSorts'},
     {'1': 'page', '3': 3, '4': 1, '5': 11, '6': '.news_hub.domain.PaginationReq', '9': 0, '10': 'page', '17': true},
     {'1': 'keywords', '3': 5, '4': 1, '5': 9, '9': 1, '10': 'keywords', '17': true},
   ],
-  '3': [GetThreadInfosReq_BoardSortsEntry$json],
+  '3': [GetThreadsReq_BoardSortsEntry$json],
   '8': [
     {'1': '_page'},
     {'1': '_keywords'},
   ],
 };
 
-@$core.Deprecated('Use getThreadInfosReqDescriptor instead')
-const GetThreadInfosReq_BoardSortsEntry$json = {
+@$core.Deprecated('Use getThreadsReqDescriptor instead')
+const GetThreadsReq_BoardSortsEntry$json = {
   '1': 'BoardSortsEntry',
   '2': [
     {'1': 'key', '3': 1, '4': 1, '5': 9, '10': 'key'},
@@ -71,33 +71,33 @@ const GetThreadInfosReq_BoardSortsEntry$json = {
   '7': {'7': true},
 };
 
-/// Descriptor for `GetThreadInfosReq`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getThreadInfosReqDescriptor = $convert.base64Decode(
-    'ChFHZXRUaHJlYWRJbmZvc1JlcRIZCghwa2dfbmFtZRgGIAEoCVIHcGtnTmFtZRJUCgtib2FyZF'
-    '9zb3J0cxgCIAMoCzIzLm5ld3NfaHViLnNpZGVjYXIuR2V0VGhyZWFkSW5mb3NSZXEuQm9hcmRT'
-    'b3J0c0VudHJ5Ugpib2FyZFNvcnRzEjcKBHBhZ2UYAyABKAsyHi5uZXdzX2h1Yi5kb21haW4uUG'
-    'FnaW5hdGlvblJlcUgAUgRwYWdliAEBEh8KCGtleXdvcmRzGAUgASgJSAFSCGtleXdvcmRziAEB'
-    'Gj0KD0JvYXJkU29ydHNFbnRyeRIQCgNrZXkYASABKAlSA2tleRIUCgV2YWx1ZRgCIAEoCVIFdm'
-    'FsdWU6AjgBQgcKBV9wYWdlQgsKCV9rZXl3b3Jkcw==');
+/// Descriptor for `GetThreadsReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getThreadsReqDescriptor = $convert.base64Decode(
+    'Cg1HZXRUaHJlYWRzUmVxEhkKCHBrZ19uYW1lGAYgASgJUgdwa2dOYW1lElAKC2JvYXJkX3Nvcn'
+    'RzGAIgAygLMi8ubmV3c19odWIuc2lkZWNhci5HZXRUaHJlYWRzUmVxLkJvYXJkU29ydHNFbnRy'
+    'eVIKYm9hcmRTb3J0cxI3CgRwYWdlGAMgASgLMh4ubmV3c19odWIuZG9tYWluLlBhZ2luYXRpb2'
+    '5SZXFIAFIEcGFnZYgBARIfCghrZXl3b3JkcxgFIAEoCUgBUghrZXl3b3Jkc4gBARo9Cg9Cb2Fy'
+    'ZFNvcnRzRW50cnkSEAoDa2V5GAEgASgJUgNrZXkSFAoFdmFsdWUYAiABKAlSBXZhbHVlOgI4AU'
+    'IHCgVfcGFnZUILCglfa2V5d29yZHM=');
 
-@$core.Deprecated('Use getThreadInfosResDescriptor instead')
-const GetThreadInfosRes$json = {
-  '1': 'GetThreadInfosRes',
+@$core.Deprecated('Use getThreadsResDescriptor instead')
+const GetThreadsRes$json = {
+  '1': 'GetThreadsRes',
   '2': [
-    {'1': 'thread_infos', '3': 1, '4': 3, '5': 11, '6': '.news_hub.domain.Post', '10': 'threadInfos'},
+    {'1': 'threads', '3': 1, '4': 3, '5': 11, '6': '.news_hub.domain.Post', '10': 'threads'},
     {'1': 'page', '3': 2, '4': 1, '5': 11, '6': '.news_hub.domain.PaginationRes', '10': 'page'},
   ],
 };
 
-/// Descriptor for `GetThreadInfosRes`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getThreadInfosResDescriptor = $convert.base64Decode(
-    'ChFHZXRUaHJlYWRJbmZvc1JlcxI4Cgx0aHJlYWRfaW5mb3MYASADKAsyFS5uZXdzX2h1Yi5kb2'
-    '1haW4uUG9zdFILdGhyZWFkSW5mb3MSMgoEcGFnZRgCIAEoCzIeLm5ld3NfaHViLmRvbWFpbi5Q'
-    'YWdpbmF0aW9uUmVzUgRwYWdl');
+/// Descriptor for `GetThreadsRes`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getThreadsResDescriptor = $convert.base64Decode(
+    'Cg1HZXRUaHJlYWRzUmVzEi8KB3RocmVhZHMYASADKAsyFS5uZXdzX2h1Yi5kb21haW4uUG9zdF'
+    'IHdGhyZWFkcxIyCgRwYWdlGAIgASgLMh4ubmV3c19odWIuZG9tYWluLlBhZ2luYXRpb25SZXNS'
+    'BHBhZ2U=');
 
-@$core.Deprecated('Use getThreadPostReqDescriptor instead')
-const GetThreadPostReq$json = {
-  '1': 'GetThreadPostReq',
+@$core.Deprecated('Use getOriginalPostReqDescriptor instead')
+const GetOriginalPostReq$json = {
+  '1': 'GetOriginalPostReq',
   '2': [
     {'1': 'pkg_name', '3': 5, '4': 1, '5': 9, '10': 'pkgName'},
     {'1': 'board_id', '3': 3, '4': 1, '5': 9, '10': 'boardId'},
@@ -106,28 +106,28 @@ const GetThreadPostReq$json = {
   ],
 };
 
-/// Descriptor for `GetThreadPostReq`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getThreadPostReqDescriptor = $convert.base64Decode(
-    'ChBHZXRUaHJlYWRQb3N0UmVxEhkKCHBrZ19uYW1lGAUgASgJUgdwa2dOYW1lEhkKCGJvYXJkX2'
-    'lkGAMgASgJUgdib2FyZElkEhsKCXRocmVhZF9pZBgBIAEoCVIIdGhyZWFkSWQSFwoHcG9zdF9p'
-    'ZBgEIAEoCVIGcG9zdElk');
+/// Descriptor for `GetOriginalPostReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getOriginalPostReqDescriptor = $convert.base64Decode(
+    'ChJHZXRPcmlnaW5hbFBvc3RSZXESGQoIcGtnX25hbWUYBSABKAlSB3BrZ05hbWUSGQoIYm9hcm'
+    'RfaWQYAyABKAlSB2JvYXJkSWQSGwoJdGhyZWFkX2lkGAEgASgJUgh0aHJlYWRJZBIXCgdwb3N0'
+    'X2lkGAQgASgJUgZwb3N0SWQ=');
 
-@$core.Deprecated('Use getThreadPostResDescriptor instead')
-const GetThreadPostRes$json = {
-  '1': 'GetThreadPostRes',
+@$core.Deprecated('Use getOriginalPostResDescriptor instead')
+const GetOriginalPostRes$json = {
+  '1': 'GetOriginalPostRes',
   '2': [
-    {'1': 'thread_post', '3': 1, '4': 1, '5': 11, '6': '.news_hub.domain.Post', '10': 'threadPost'},
+    {'1': 'original_post', '3': 1, '4': 1, '5': 11, '6': '.news_hub.domain.Post', '10': 'originalPost'},
   ],
 };
 
-/// Descriptor for `GetThreadPostRes`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getThreadPostResDescriptor = $convert.base64Decode(
-    'ChBHZXRUaHJlYWRQb3N0UmVzEjYKC3RocmVhZF9wb3N0GAEgASgLMhUubmV3c19odWIuZG9tYW'
-    'luLlBvc3RSCnRocmVhZFBvc3Q=');
+/// Descriptor for `GetOriginalPostRes`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getOriginalPostResDescriptor = $convert.base64Decode(
+    'ChJHZXRPcmlnaW5hbFBvc3RSZXMSOgoNb3JpZ2luYWxfcG9zdBgBIAEoCzIVLm5ld3NfaHViLm'
+    'RvbWFpbi5Qb3N0UgxvcmlnaW5hbFBvc3Q=');
 
-@$core.Deprecated('Use getRegardingPostsReqDescriptor instead')
-const GetRegardingPostsReq$json = {
-  '1': 'GetRegardingPostsReq',
+@$core.Deprecated('Use getRepliesReqDescriptor instead')
+const GetRepliesReq$json = {
+  '1': 'GetRepliesReq',
   '2': [
     {'1': 'pkg_name', '3': 6, '4': 1, '5': 9, '10': 'pkgName'},
     {'1': 'board_id', '3': 2, '4': 1, '5': 9, '10': 'boardId'},
@@ -141,28 +141,27 @@ const GetRegardingPostsReq$json = {
   ],
 };
 
-/// Descriptor for `GetRegardingPostsReq`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getRegardingPostsReqDescriptor = $convert.base64Decode(
-    'ChRHZXRSZWdhcmRpbmdQb3N0c1JlcRIZCghwa2dfbmFtZRgGIAEoCVIHcGtnTmFtZRIZCghib2'
-    'FyZF9pZBgCIAEoCVIHYm9hcmRJZBIbCgl0aHJlYWRfaWQYAyABKAlSCHRocmVhZElkEiMKC3Jl'
-    'cGx5X3RvX2lkGAUgASgJSABSCXJlcGx5VG9JZIgBARI3CgRwYWdlGAQgASgLMh4ubmV3c19odW'
-    'IuZG9tYWluLlBhZ2luYXRpb25SZXFIAVIEcGFnZYgBAUIOCgxfcmVwbHlfdG9faWRCBwoFX3Bh'
-    'Z2U=');
+/// Descriptor for `GetRepliesReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getRepliesReqDescriptor = $convert.base64Decode(
+    'Cg1HZXRSZXBsaWVzUmVxEhkKCHBrZ19uYW1lGAYgASgJUgdwa2dOYW1lEhkKCGJvYXJkX2lkGA'
+    'IgASgJUgdib2FyZElkEhsKCXRocmVhZF9pZBgDIAEoCVIIdGhyZWFkSWQSIwoLcmVwbHlfdG9f'
+    'aWQYBSABKAlIAFIJcmVwbHlUb0lkiAEBEjcKBHBhZ2UYBCABKAsyHi5uZXdzX2h1Yi5kb21haW'
+    '4uUGFnaW5hdGlvblJlcUgBUgRwYWdliAEBQg4KDF9yZXBseV90b19pZEIHCgVfcGFnZQ==');
 
-@$core.Deprecated('Use getRegardingPostsResDescriptor instead')
-const GetRegardingPostsRes$json = {
-  '1': 'GetRegardingPostsRes',
+@$core.Deprecated('Use getRepliesResDescriptor instead')
+const GetRepliesRes$json = {
+  '1': 'GetRepliesRes',
   '2': [
-    {'1': 'regarding_posts', '3': 1, '4': 3, '5': 11, '6': '.news_hub.domain.Post', '10': 'regardingPosts'},
+    {'1': 'replies', '3': 1, '4': 3, '5': 11, '6': '.news_hub.domain.Post', '10': 'replies'},
     {'1': 'page', '3': 2, '4': 1, '5': 11, '6': '.news_hub.domain.PaginationRes', '10': 'page'},
   ],
 };
 
-/// Descriptor for `GetRegardingPostsRes`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List getRegardingPostsResDescriptor = $convert.base64Decode(
-    'ChRHZXRSZWdhcmRpbmdQb3N0c1JlcxI+Cg9yZWdhcmRpbmdfcG9zdHMYASADKAsyFS5uZXdzX2'
-    'h1Yi5kb21haW4uUG9zdFIOcmVnYXJkaW5nUG9zdHMSMgoEcGFnZRgCIAEoCzIeLm5ld3NfaHVi'
-    'LmRvbWFpbi5QYWdpbmF0aW9uUmVzUgRwYWdl');
+/// Descriptor for `GetRepliesRes`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getRepliesResDescriptor = $convert.base64Decode(
+    'Cg1HZXRSZXBsaWVzUmVzEi8KB3JlcGxpZXMYASADKAsyFS5uZXdzX2h1Yi5kb21haW4uUG9zdF'
+    'IHcmVwbGllcxIyCgRwYWdlGAIgASgLMh4ubmV3c19odWIuZG9tYWluLlBhZ2luYXRpb25SZXNS'
+    'BHBhZ2U=');
 
 @$core.Deprecated('Use getCommentsReqDescriptor instead')
 const GetCommentsReq$json = {

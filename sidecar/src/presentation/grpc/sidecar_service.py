@@ -107,23 +107,23 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
                 metadata, 
                 request.repo_url if request.HasField('repo_url') else ""
             )
-            return pb2.Empty()
+            return domain_pb2.Empty()
         except Exception as e:
             logger.error(f"InstallExtension error: {e}", exc_info=True)
             context.set_code(grpc.StatusCode.INTERNAL)
             context.set_details(str(e))
-            return pb2.Empty()
+            return domain_pb2.Empty()
 
     async def UninstallExtension(self, request, context):
         """Uninstall an extension"""
         try:
             self.uninstall_extension_uc.execute(request.pkg_name)
-            return pb2.Empty()
+            return domain_pb2.Empty()
         except Exception as e:
             logger.error(f"UninstallExtension error: {e}", exc_info=True)
             context.set_code(grpc.StatusCode.INTERNAL)
             context.set_details(str(e))
-            return pb2.Empty()
+            return domain_pb2.Empty()
 
     async def ListRemoteExtensions(self, request, context):
         """List available remote extensions"""
@@ -184,17 +184,17 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
         """Remove an extension repository"""
         try:
             self.remove_repo_uc.execute(request.url)
-            return pb2.Empty()
+            return domain_pb2.Empty()
         except ValueError as e:
             logger.warning(f"RemoveExtensionRepo validation error: {e}")
             context.set_code(grpc.StatusCode.NOT_FOUND)
             context.set_details(str(e))
-            return pb2.Empty()
+            return domain_pb2.Empty()
         except Exception as e:
             logger.error(f"RemoveExtensionRepo error: {e}", exc_info=True)
             context.set_code(grpc.StatusCode.INTERNAL)
             context.set_details(str(e))
-            return pb2.Empty()
+            return domain_pb2.Empty()
 
     async def ListExtensionRepos(self, request, context):
         """List all extension repositories"""
@@ -222,17 +222,17 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
         """Delegate to extension resolver"""
         return await self._delegate_to_resolver(request.pkg_name, "GetBoards", request, context)
 
-    async def GetThreadInfos(self, request, context):
+    async def GetThreads(self, request, context):
         """Delegate to extension resolver"""
-        return await self._delegate_to_resolver(request.pkg_name, "GetThreadInfos", request, context)
+        return await self._delegate_to_resolver(request.pkg_name, "GetThreads", request, context)
 
-    async def GetThreadPost(self, request, context):
+    async def GetOriginalPost(self, request, context):
         """Delegate to extension resolver"""
-        return await self._delegate_to_resolver(request.pkg_name, "GetThreadPost", request, context)
+        return await self._delegate_to_resolver(request.pkg_name, "GetOriginalPost", request, context)
 
-    async def GetRegardingPosts(self, request, context):
+    async def GetReplies(self, request, context):
         """Delegate to extension resolver"""
-        return await self._delegate_to_resolver(request.pkg_name, "GetRegardingPosts", request, context)
+        return await self._delegate_to_resolver(request.pkg_name, "GetReplies", request, context)
 
     async def GetComments(self, request, context):
         """Delegate to extension resolver"""
@@ -395,9 +395,9 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
         try:
             level = proto_level_to_python(request.level)
             self.logging_service.set_level(level)
-            return pb2.Empty()
+            return domain_pb2.Empty()
         except Exception as e:
             logger.error(f"SetLogLevel error: {e}", exc_info=True)
             context.set_code(grpc.StatusCode.INTERNAL)
             context.set_details(str(e))
-            return pb2.Empty()
+            return domain_pb2.Empty()

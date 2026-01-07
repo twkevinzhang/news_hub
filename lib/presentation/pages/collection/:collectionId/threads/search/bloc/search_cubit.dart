@@ -40,11 +40,11 @@ class SearchCubit extends Cubit<SearchState> {
         super(SearchState(
           suggestions: Result.initial(),
           filter: ThreadsFilter(
-            boardsSorting: {},
+            boardSorts: {},
             keywords: '',
           ),
           submittedFilter: ThreadsFilter(
-            boardsSorting: {},
+            boardSorts: {},
             keywords: '',
           ),
           sorting: ThreadsSorting(
@@ -68,8 +68,8 @@ class SearchCubit extends Cubit<SearchState> {
     }
   }
 
-  void setBoardsSorting(Map<String, String> boardsSorting) {
-    safeEmit(state.copyWith.filter(boardsSorting: boardsSorting));
+  void setBoardSorts(Map<String, String> boardSorts) {
+    safeEmit(state.copyWith.filter(boardSorts: boardSorts));
   }
 
   void setKeywords(String keywords) {

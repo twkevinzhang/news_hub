@@ -175,7 +175,7 @@ class Post(_message.Message):
     def __init__(self, id: _Optional[str] = ..., thread_id: _Optional[str] = ..., board_id: _Optional[str] = ..., pkg_name: _Optional[str] = ..., article_post: _Optional[_Union[ArticlePost, _Mapping]] = ..., single_image_post: _Optional[_Union[SingleImagePost, _Mapping]] = ...) -> None: ...
 
 class ArticlePost(_message.Message):
-    __slots__ = ("author_id", "author_name", "created_at", "title", "liked", "disliked", "contents", "tags", "latest_regarding_post_created_at", "regarding_posts_count", "url")
+    __slots__ = ("author_id", "author_name", "created_at", "title", "liked", "disliked", "contents", "tags", "latest_reply_created_at", "replies_count", "url")
     AUTHOR_ID_FIELD_NUMBER: _ClassVar[int]
     AUTHOR_NAME_FIELD_NUMBER: _ClassVar[int]
     CREATED_AT_FIELD_NUMBER: _ClassVar[int]
@@ -184,8 +184,8 @@ class ArticlePost(_message.Message):
     DISLIKED_FIELD_NUMBER: _ClassVar[int]
     CONTENTS_FIELD_NUMBER: _ClassVar[int]
     TAGS_FIELD_NUMBER: _ClassVar[int]
-    LATEST_REGARDING_POST_CREATED_AT_FIELD_NUMBER: _ClassVar[int]
-    REGARDING_POSTS_COUNT_FIELD_NUMBER: _ClassVar[int]
+    LATEST_REPLY_CREATED_AT_FIELD_NUMBER: _ClassVar[int]
+    REPLIES_COUNT_FIELD_NUMBER: _ClassVar[int]
     URL_FIELD_NUMBER: _ClassVar[int]
     author_id: str
     author_name: str
@@ -195,13 +195,13 @@ class ArticlePost(_message.Message):
     disliked: int
     contents: _containers.RepeatedCompositeFieldContainer[Paragraph]
     tags: _containers.RepeatedScalarFieldContainer[str]
-    latest_regarding_post_created_at: int
-    regarding_posts_count: int
+    latest_reply_created_at: int
+    replies_count: int
     url: str
-    def __init__(self, author_id: _Optional[str] = ..., author_name: _Optional[str] = ..., created_at: _Optional[int] = ..., title: _Optional[str] = ..., liked: _Optional[int] = ..., disliked: _Optional[int] = ..., contents: _Optional[_Iterable[_Union[Paragraph, _Mapping]]] = ..., tags: _Optional[_Iterable[str]] = ..., latest_regarding_post_created_at: _Optional[int] = ..., regarding_posts_count: _Optional[int] = ..., url: _Optional[str] = ...) -> None: ...
+    def __init__(self, author_id: _Optional[str] = ..., author_name: _Optional[str] = ..., created_at: _Optional[int] = ..., title: _Optional[str] = ..., liked: _Optional[int] = ..., disliked: _Optional[int] = ..., contents: _Optional[_Iterable[_Union[Paragraph, _Mapping]]] = ..., tags: _Optional[_Iterable[str]] = ..., latest_reply_created_at: _Optional[int] = ..., replies_count: _Optional[int] = ..., url: _Optional[str] = ...) -> None: ...
 
 class SingleImagePost(_message.Message):
-    __slots__ = ("author_id", "author_name", "created_at", "title", "liked", "disliked", "image", "contents", "tags", "latest_regarding_post_created_at", "regarding_posts_count", "url")
+    __slots__ = ("author_id", "author_name", "created_at", "title", "liked", "disliked", "image", "contents", "tags", "latest_reply_created_at", "replies_count", "url")
     AUTHOR_ID_FIELD_NUMBER: _ClassVar[int]
     AUTHOR_NAME_FIELD_NUMBER: _ClassVar[int]
     CREATED_AT_FIELD_NUMBER: _ClassVar[int]
@@ -211,8 +211,8 @@ class SingleImagePost(_message.Message):
     IMAGE_FIELD_NUMBER: _ClassVar[int]
     CONTENTS_FIELD_NUMBER: _ClassVar[int]
     TAGS_FIELD_NUMBER: _ClassVar[int]
-    LATEST_REGARDING_POST_CREATED_AT_FIELD_NUMBER: _ClassVar[int]
-    REGARDING_POSTS_COUNT_FIELD_NUMBER: _ClassVar[int]
+    LATEST_REPLY_CREATED_AT_FIELD_NUMBER: _ClassVar[int]
+    REPLIES_COUNT_FIELD_NUMBER: _ClassVar[int]
     URL_FIELD_NUMBER: _ClassVar[int]
     author_id: str
     author_name: str
@@ -223,10 +223,10 @@ class SingleImagePost(_message.Message):
     image: ImageParagraph
     contents: _containers.RepeatedCompositeFieldContainer[Paragraph]
     tags: _containers.RepeatedScalarFieldContainer[str]
-    latest_regarding_post_created_at: int
-    regarding_posts_count: int
+    latest_reply_created_at: int
+    replies_count: int
     url: str
-    def __init__(self, author_id: _Optional[str] = ..., author_name: _Optional[str] = ..., created_at: _Optional[int] = ..., title: _Optional[str] = ..., liked: _Optional[int] = ..., disliked: _Optional[int] = ..., image: _Optional[_Union[ImageParagraph, _Mapping]] = ..., contents: _Optional[_Iterable[_Union[Paragraph, _Mapping]]] = ..., tags: _Optional[_Iterable[str]] = ..., latest_regarding_post_created_at: _Optional[int] = ..., regarding_posts_count: _Optional[int] = ..., url: _Optional[str] = ...) -> None: ...
+    def __init__(self, author_id: _Optional[str] = ..., author_name: _Optional[str] = ..., created_at: _Optional[int] = ..., title: _Optional[str] = ..., liked: _Optional[int] = ..., disliked: _Optional[int] = ..., image: _Optional[_Union[ImageParagraph, _Mapping]] = ..., contents: _Optional[_Iterable[_Union[Paragraph, _Mapping]]] = ..., tags: _Optional[_Iterable[str]] = ..., latest_reply_created_at: _Optional[int] = ..., replies_count: _Optional[int] = ..., url: _Optional[str] = ...) -> None: ...
 
 class Comment(_message.Message):
     __slots__ = ("id", "post_id", "thread_id", "board_id", "author_id", "author_name", "contents", "pkg_name", "created_at")

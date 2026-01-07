@@ -43,7 +43,7 @@ class ThreadListCubit extends Cubit<ThreadListState> {
         super(ThreadListState(
           boardsMap: {},
           filter: ThreadsFilter(
-            boardsSorting: {},
+            boardSorts: {},
             keywords: '',
           ),
           sorting: ThreadsSorting(
@@ -55,7 +55,7 @@ class ThreadListCubit extends Cubit<ThreadListState> {
   }
 
   void init(ThreadsFilter? filter, ThreadsSorting? sorting) async {
-    filter ??= ThreadsFilter(boardsSorting: {}, keywords: '');
+    filter ??= ThreadsFilter(boardSorts: {}, keywords: '');
     sorting ??= ThreadsSorting(boardsOrder: []);
     final extensions = await _listExtensions.withBoards();
     Map<String, Board> newBoards = {};
@@ -95,20 +95,20 @@ class ThreadListCubit extends Cubit<ThreadListState> {
   }
 
   String _getFilterDescription() {
-    final boardsSorting = state.filter.boardsSorting;
-    if (boardsSorting.isEmpty) {
+    final boardSorts = state.filter.boardSorts;
+    if (boardSorts.isEmpty) {
       return defaultTitle;
     }
-    final boardNames = boardsSorting.entries.take(2).map((entry) => '${state.boardsMap[entry.key]?.name}').join(',');
-    if (boardsSorting.length <= 2) {
+    final boardNames = boardSorts.entries.take(2).map((entry) => '${state.boardsMap[entry.key]?.name}').join(',');
+    if (boardSorts.length <= 2) {
       return '$boardNames搜尋結果：';
     } else {
-      return '$boardNames等${boardsSorting.length}個搜尋結果';
+      return '$boardNames等${boardSorts.length}個搜尋結果';
     }
   }
 
-  void setBoardsSorting(Map<String, String> boardsSorting) {
-    _updateState(state.copyWith.filter(boardsSorting: boardsSorting));
+  void setBoardSorts(Map<String, String> boardSorts) {
+    _updateState(state.copyWith.filter(boardSorts: boardSorts));
   }
 
   void setKeywords(String keywords) {

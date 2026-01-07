@@ -108,8 +108,8 @@ message ArticlePost {
   int32 disliked = 13;
   repeated Paragraph contents = 17;
   repeated string tags = 18;
-  int64 latest_regarding_post_created_at = 15;
-  int32 regarding_posts_count = 19;
+  int64 latest_reply_created_at = 15;
+  int32 replies_count = 19;
   string url = 20;
 }
 
@@ -123,8 +123,8 @@ message SingleImagePost {
   ImageParagraph image = 21;
   repeated Paragraph contents = 17;
   repeated string tags = 18;
-  int64 latest_regarding_post_created_at = 15;
-  int32 regarding_posts_count = 19;
+  int64 latest_reply_created_at = 15;
+  int32 replies_count = 19;
   string url = 20;
 }
 

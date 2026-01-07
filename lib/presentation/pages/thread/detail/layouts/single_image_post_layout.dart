@@ -46,7 +46,7 @@ class SingleImagePostLayout extends StatelessWidget {
   final bool disablePlay;
   final FutureOr<void> Function(domain.Paragraph paragraph)? onParagraphClick;
   final FutureOr<void> Function()? onLikeClick;
-  final FutureOr<void> Function()? onRegardingPostsClick;
+  final FutureOr<void> Function()? onRepliesClick;
   final FutureOr<void> Function()? onCommentsClick;
   const SingleImagePostLayout({
     super.key,
@@ -54,7 +54,7 @@ class SingleImagePostLayout extends StatelessWidget {
     this.disablePlay = false,
     this.onParagraphClick,
     this.onLikeClick,
-    this.onRegardingPostsClick,
+    this.onRepliesClick,
     this.onCommentsClick,
   });
 
@@ -109,10 +109,10 @@ class SingleImagePostLayout extends StatelessWidget {
         Container(height: 8),
         PostActions(
           liked: post.liked,
-          regardingPosts: post.regardingPostsCount,
+          replies: post.repliesCount,
           comments: null,
           onLikeClick: onLikeClick,
-          onRegardingPostsClick: onRegardingPostsClick,
+          onRepliesClick: onRepliesClick,
           onCommentsClick: onCommentsClick,
         ),
       ],

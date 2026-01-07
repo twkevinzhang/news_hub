@@ -24,7 +24,7 @@ class ListThreads {
     final extensions = await _listInstalledExtensions.withBoards();
     final threads = (await Future.wait(extensions.map((e) => _service.listThreads(
               extensionPkgName: e.pkgName,
-              boardsSorting: filter?.boardsSorting,
+              boardSorts: filter?.boardSorts,
               pagination: pagination,
               keywords: filter?.keywords,
             ))))
@@ -61,7 +61,7 @@ class SingleImagePostWithExtension extends SingleImagePost {
           image: post.image,
           contents: post.contents,
           tags: post.tags,
-          latestRegardingPostCreatedAt: post.latestRegardingPostCreatedAt,
-          regardingPostsCount: post.regardingPostsCount,
+          latestReplyCreatedAt: post.latestReplyCreatedAt,
+          repliesCount: post.repliesCount,
         );
 }

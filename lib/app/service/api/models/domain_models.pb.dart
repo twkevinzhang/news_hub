@@ -1130,10 +1130,10 @@ class ArticlePost extends $pb.GeneratedMessage {
     $core.String? authorId,
     $core.int? liked,
     $core.int? disliked,
-    $fixnum.Int64? latestRegardingPostCreatedAt,
+    $fixnum.Int64? latestReplyCreatedAt,
     $core.Iterable<Paragraph>? contents,
     $core.Iterable<$core.String>? tags,
-    $core.int? regardingPostsCount,
+    $core.int? repliesCount,
     $core.String? url,
   }) {
     final result = create();
@@ -1155,8 +1155,8 @@ class ArticlePost extends $pb.GeneratedMessage {
     if (disliked != null) {
       result.disliked = disliked;
     }
-    if (latestRegardingPostCreatedAt != null) {
-      result.latestRegardingPostCreatedAt = latestRegardingPostCreatedAt;
+    if (latestReplyCreatedAt != null) {
+      result.latestReplyCreatedAt = latestReplyCreatedAt;
     }
     if (contents != null) {
       result.contents.addAll(contents);
@@ -1164,8 +1164,8 @@ class ArticlePost extends $pb.GeneratedMessage {
     if (tags != null) {
       result.tags.addAll(tags);
     }
-    if (regardingPostsCount != null) {
-      result.regardingPostsCount = regardingPostsCount;
+    if (repliesCount != null) {
+      result.repliesCount = repliesCount;
     }
     if (url != null) {
       result.url = url;
@@ -1183,10 +1183,10 @@ class ArticlePost extends $pb.GeneratedMessage {
     ..aOS(11, _omitFieldNames ? '' : 'authorId')
     ..a<$core.int>(12, _omitFieldNames ? '' : 'liked', $pb.PbFieldType.O3)
     ..a<$core.int>(13, _omitFieldNames ? '' : 'disliked', $pb.PbFieldType.O3)
-    ..aInt64(15, _omitFieldNames ? '' : 'latestRegardingPostCreatedAt')
+    ..aInt64(15, _omitFieldNames ? '' : 'latestReplyCreatedAt')
     ..pc<Paragraph>(17, _omitFieldNames ? '' : 'contents', $pb.PbFieldType.PM, subBuilder: Paragraph.create)
     ..pPS(18, _omitFieldNames ? '' : 'tags')
-    ..a<$core.int>(19, _omitFieldNames ? '' : 'regardingPostsCount', $pb.PbFieldType.O3)
+    ..a<$core.int>(19, _omitFieldNames ? '' : 'repliesCount', $pb.PbFieldType.O3)
     ..aOS(20, _omitFieldNames ? '' : 'url')
     ..hasRequiredFields = false
   ;
@@ -1267,13 +1267,13 @@ class ArticlePost extends $pb.GeneratedMessage {
   void clearDisliked() => clearField(13);
 
   @$pb.TagNumber(15)
-  $fixnum.Int64 get latestRegardingPostCreatedAt => $_getI64(6);
+  $fixnum.Int64 get latestReplyCreatedAt => $_getI64(6);
   @$pb.TagNumber(15)
-  set latestRegardingPostCreatedAt($fixnum.Int64 v) { $_setInt64(6, v); }
+  set latestReplyCreatedAt($fixnum.Int64 v) { $_setInt64(6, v); }
   @$pb.TagNumber(15)
-  $core.bool hasLatestRegardingPostCreatedAt() => $_has(6);
+  $core.bool hasLatestReplyCreatedAt() => $_has(6);
   @$pb.TagNumber(15)
-  void clearLatestRegardingPostCreatedAt() => clearField(15);
+  void clearLatestReplyCreatedAt() => clearField(15);
 
   @$pb.TagNumber(17)
   $core.List<Paragraph> get contents => $_getList(7);
@@ -1282,13 +1282,13 @@ class ArticlePost extends $pb.GeneratedMessage {
   $core.List<$core.String> get tags => $_getList(8);
 
   @$pb.TagNumber(19)
-  $core.int get regardingPostsCount => $_getIZ(9);
+  $core.int get repliesCount => $_getIZ(9);
   @$pb.TagNumber(19)
-  set regardingPostsCount($core.int v) { $_setSignedInt32(9, v); }
+  set repliesCount($core.int v) { $_setSignedInt32(9, v); }
   @$pb.TagNumber(19)
-  $core.bool hasRegardingPostsCount() => $_has(9);
+  $core.bool hasRepliesCount() => $_has(9);
   @$pb.TagNumber(19)
-  void clearRegardingPostsCount() => clearField(19);
+  void clearRepliesCount() => clearField(19);
 
   @$pb.TagNumber(20)
   $core.String get url => $_getSZ(10);
@@ -1308,10 +1308,10 @@ class SingleImagePost extends $pb.GeneratedMessage {
     $core.String? authorId,
     $core.int? liked,
     $core.int? disliked,
-    $fixnum.Int64? latestRegardingPostCreatedAt,
+    $fixnum.Int64? latestReplyCreatedAt,
     $core.Iterable<Paragraph>? contents,
     $core.Iterable<$core.String>? tags,
-    $core.int? regardingPostsCount,
+    $core.int? repliesCount,
     $core.String? url,
     ImageParagraph? image,
   }) {
@@ -1334,8 +1334,8 @@ class SingleImagePost extends $pb.GeneratedMessage {
     if (disliked != null) {
       result.disliked = disliked;
     }
-    if (latestRegardingPostCreatedAt != null) {
-      result.latestRegardingPostCreatedAt = latestRegardingPostCreatedAt;
+    if (latestReplyCreatedAt != null) {
+      result.latestReplyCreatedAt = latestReplyCreatedAt;
     }
     if (contents != null) {
       result.contents.addAll(contents);
@@ -1343,8 +1343,8 @@ class SingleImagePost extends $pb.GeneratedMessage {
     if (tags != null) {
       result.tags.addAll(tags);
     }
-    if (regardingPostsCount != null) {
-      result.regardingPostsCount = regardingPostsCount;
+    if (repliesCount != null) {
+      result.repliesCount = repliesCount;
     }
     if (url != null) {
       result.url = url;
@@ -1365,10 +1365,10 @@ class SingleImagePost extends $pb.GeneratedMessage {
     ..aOS(11, _omitFieldNames ? '' : 'authorId')
     ..a<$core.int>(12, _omitFieldNames ? '' : 'liked', $pb.PbFieldType.O3)
     ..a<$core.int>(13, _omitFieldNames ? '' : 'disliked', $pb.PbFieldType.O3)
-    ..aInt64(15, _omitFieldNames ? '' : 'latestRegardingPostCreatedAt')
+    ..aInt64(15, _omitFieldNames ? '' : 'latestReplyCreatedAt')
     ..pc<Paragraph>(17, _omitFieldNames ? '' : 'contents', $pb.PbFieldType.PM, subBuilder: Paragraph.create)
     ..pPS(18, _omitFieldNames ? '' : 'tags')
-    ..a<$core.int>(19, _omitFieldNames ? '' : 'regardingPostsCount', $pb.PbFieldType.O3)
+    ..a<$core.int>(19, _omitFieldNames ? '' : 'repliesCount', $pb.PbFieldType.O3)
     ..aOS(20, _omitFieldNames ? '' : 'url')
     ..aOM<ImageParagraph>(21, _omitFieldNames ? '' : 'image', subBuilder: ImageParagraph.create)
     ..hasRequiredFields = false
@@ -1450,13 +1450,13 @@ class SingleImagePost extends $pb.GeneratedMessage {
   void clearDisliked() => clearField(13);
 
   @$pb.TagNumber(15)
-  $fixnum.Int64 get latestRegardingPostCreatedAt => $_getI64(6);
+  $fixnum.Int64 get latestReplyCreatedAt => $_getI64(6);
   @$pb.TagNumber(15)
-  set latestRegardingPostCreatedAt($fixnum.Int64 v) { $_setInt64(6, v); }
+  set latestReplyCreatedAt($fixnum.Int64 v) { $_setInt64(6, v); }
   @$pb.TagNumber(15)
-  $core.bool hasLatestRegardingPostCreatedAt() => $_has(6);
+  $core.bool hasLatestReplyCreatedAt() => $_has(6);
   @$pb.TagNumber(15)
-  void clearLatestRegardingPostCreatedAt() => clearField(15);
+  void clearLatestReplyCreatedAt() => clearField(15);
 
   @$pb.TagNumber(17)
   $core.List<Paragraph> get contents => $_getList(7);
@@ -1465,13 +1465,13 @@ class SingleImagePost extends $pb.GeneratedMessage {
   $core.List<$core.String> get tags => $_getList(8);
 
   @$pb.TagNumber(19)
-  $core.int get regardingPostsCount => $_getIZ(9);
+  $core.int get repliesCount => $_getIZ(9);
   @$pb.TagNumber(19)
-  set regardingPostsCount($core.int v) { $_setSignedInt32(9, v); }
+  set repliesCount($core.int v) { $_setSignedInt32(9, v); }
   @$pb.TagNumber(19)
-  $core.bool hasRegardingPostsCount() => $_has(9);
+  $core.bool hasRepliesCount() => $_has(9);
   @$pb.TagNumber(19)
-  void clearRegardingPostsCount() => clearField(19);
+  void clearRepliesCount() => clearField(19);
 
   @$pb.TagNumber(20)
   $core.String get url => $_getSZ(10);

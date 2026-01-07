@@ -36,48 +36,48 @@ class SidecarApiImpl implements ApiService {
   @override
   Future<List<domain.Post>> listThreads({
     required String extensionPkgName,
-    required Map<String, String>? boardsSorting,
+    required Map<String, String>? boardSorts,
     Pagination? pagination,
     String? sortBy,
     String? keywords,
   }) async {
-    final res = await _client.getThreadInfos(pb.GetThreadInfosReq(
+    final res = await _client.getThreads(pb.GetThreadsReq(
       pkgName: extensionPkgName,
-      boardSorts: boardsSorting,
+      boardSorts: boardSorts,
       page: domain_pb.PaginationReq(
         page: pagination?.page,
         pageSize: pagination?.pageSize,
       ),
       keywords: keywords,
     ));
-    return res.threadInfos.map((t) => t.toPostDomain()).toList();
+    return res.threads.map((t) => t.toPostDomain()).toList();
   }
 
   @override
-  Future<domain.Post> getThread({
+  Future<domain.Post> getOriginalPost({
     required String extensionPkgName,
     required String boardId,
     required String threadId,
     String? postId,
   }) async {
-    final res = await _client.getThreadPost(pb.GetThreadPostReq(
+    final res = await _client.getOriginalPost(pb.GetOriginalPostReq(
       pkgName: extensionPkgName,
       boardId: boardId,
       threadId: threadId,
       postId: postId,
     ));
-    return res.threadPost.toPostDomain();
+    return res.originalPost.toPostDomain();
   }
 
   @override
-  Future<List<domain.Post>> listRegardingPosts({
+  Future<List<domain.Post>> listReplies({
     required String extensionPkgName,
     required String boardId,
     required String threadId,
     String? replyToId,
     Pagination? pagination,
   }) async {
-    final res = await _client.getRegardingPosts(pb.GetRegardingPostsReq(
+    final res = await _client.getReplies(pb.GetRepliesReq(
       pkgName: extensionPkgName,
       boardId: boardId,
       threadId: threadId,
@@ -87,7 +87,7 @@ class SidecarApiImpl implements ApiService {
         pageSize: pagination?.pageSize,
       ),
     ));
-    return res.regardingPosts.map((p) => p.toPostDomain()).toList();
+    return res.replies.map((p) => p.toPostDomain()).toList();
   }
 
   @override

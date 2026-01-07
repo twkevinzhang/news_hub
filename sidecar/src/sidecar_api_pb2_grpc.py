@@ -40,20 +40,20 @@ class SidecarApiStub(object):
                 request_serializer=sidecar__api__pb2.GetBoardsReq.SerializeToString,
                 response_deserializer=sidecar__api__pb2.GetBoardsRes.FromString,
                 _registered_method=True)
-        self.GetThreadInfos = channel.unary_unary(
-                '/news_hub.sidecar.SidecarApi/GetThreadInfos',
-                request_serializer=sidecar__api__pb2.GetThreadInfosReq.SerializeToString,
-                response_deserializer=sidecar__api__pb2.GetThreadInfosRes.FromString,
+        self.GetThreads = channel.unary_unary(
+                '/news_hub.sidecar.SidecarApi/GetThreads',
+                request_serializer=sidecar__api__pb2.GetThreadsReq.SerializeToString,
+                response_deserializer=sidecar__api__pb2.GetThreadsRes.FromString,
                 _registered_method=True)
-        self.GetThreadPost = channel.unary_unary(
-                '/news_hub.sidecar.SidecarApi/GetThreadPost',
-                request_serializer=sidecar__api__pb2.GetThreadPostReq.SerializeToString,
-                response_deserializer=sidecar__api__pb2.GetThreadPostRes.FromString,
+        self.GetOriginalPost = channel.unary_unary(
+                '/news_hub.sidecar.SidecarApi/GetOriginalPost',
+                request_serializer=sidecar__api__pb2.GetOriginalPostReq.SerializeToString,
+                response_deserializer=sidecar__api__pb2.GetOriginalPostRes.FromString,
                 _registered_method=True)
-        self.GetRegardingPosts = channel.unary_unary(
-                '/news_hub.sidecar.SidecarApi/GetRegardingPosts',
-                request_serializer=sidecar__api__pb2.GetRegardingPostsReq.SerializeToString,
-                response_deserializer=sidecar__api__pb2.GetRegardingPostsRes.FromString,
+        self.GetReplies = channel.unary_unary(
+                '/news_hub.sidecar.SidecarApi/GetReplies',
+                request_serializer=sidecar__api__pb2.GetRepliesReq.SerializeToString,
+                response_deserializer=sidecar__api__pb2.GetRepliesRes.FromString,
                 _registered_method=True)
         self.GetComments = channel.unary_unary(
                 '/news_hub.sidecar.SidecarApi/GetComments',
@@ -141,19 +141,19 @@ class SidecarApiServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetThreadInfos(self, request, context):
+    def GetThreads(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetThreadPost(self, request, context):
+    def GetOriginalPost(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
-    def GetRegardingPosts(self, request, context):
+    def GetReplies(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -261,20 +261,20 @@ def add_SidecarApiServicer_to_server(servicer, server):
                     request_deserializer=sidecar__api__pb2.GetBoardsReq.FromString,
                     response_serializer=sidecar__api__pb2.GetBoardsRes.SerializeToString,
             ),
-            'GetThreadInfos': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetThreadInfos,
-                    request_deserializer=sidecar__api__pb2.GetThreadInfosReq.FromString,
-                    response_serializer=sidecar__api__pb2.GetThreadInfosRes.SerializeToString,
+            'GetThreads': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetThreads,
+                    request_deserializer=sidecar__api__pb2.GetThreadsReq.FromString,
+                    response_serializer=sidecar__api__pb2.GetThreadsRes.SerializeToString,
             ),
-            'GetThreadPost': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetThreadPost,
-                    request_deserializer=sidecar__api__pb2.GetThreadPostReq.FromString,
-                    response_serializer=sidecar__api__pb2.GetThreadPostRes.SerializeToString,
+            'GetOriginalPost': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetOriginalPost,
+                    request_deserializer=sidecar__api__pb2.GetOriginalPostReq.FromString,
+                    response_serializer=sidecar__api__pb2.GetOriginalPostRes.SerializeToString,
             ),
-            'GetRegardingPosts': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetRegardingPosts,
-                    request_deserializer=sidecar__api__pb2.GetRegardingPostsReq.FromString,
-                    response_serializer=sidecar__api__pb2.GetRegardingPostsRes.SerializeToString,
+            'GetReplies': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetReplies,
+                    request_deserializer=sidecar__api__pb2.GetRepliesReq.FromString,
+                    response_serializer=sidecar__api__pb2.GetRepliesRes.SerializeToString,
             ),
             'GetComments': grpc.unary_unary_rpc_method_handler(
                     servicer.GetComments,
@@ -390,7 +390,7 @@ class SidecarApi(object):
             _registered_method=True)
 
     @staticmethod
-    def GetThreadInfos(request,
+    def GetThreads(request,
             target,
             options=(),
             channel_credentials=None,
@@ -403,9 +403,9 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/news_hub.sidecar.SidecarApi/GetThreadInfos',
-            sidecar__api__pb2.GetThreadInfosReq.SerializeToString,
-            sidecar__api__pb2.GetThreadInfosRes.FromString,
+            '/news_hub.sidecar.SidecarApi/GetThreads',
+            sidecar__api__pb2.GetThreadsReq.SerializeToString,
+            sidecar__api__pb2.GetThreadsRes.FromString,
             options,
             channel_credentials,
             insecure,
@@ -417,7 +417,7 @@ class SidecarApi(object):
             _registered_method=True)
 
     @staticmethod
-    def GetThreadPost(request,
+    def GetOriginalPost(request,
             target,
             options=(),
             channel_credentials=None,
@@ -430,9 +430,9 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/news_hub.sidecar.SidecarApi/GetThreadPost',
-            sidecar__api__pb2.GetThreadPostReq.SerializeToString,
-            sidecar__api__pb2.GetThreadPostRes.FromString,
+            '/news_hub.sidecar.SidecarApi/GetOriginalPost',
+            sidecar__api__pb2.GetOriginalPostReq.SerializeToString,
+            sidecar__api__pb2.GetOriginalPostRes.FromString,
             options,
             channel_credentials,
             insecure,
@@ -444,7 +444,7 @@ class SidecarApi(object):
             _registered_method=True)
 
     @staticmethod
-    def GetRegardingPosts(request,
+    def GetReplies(request,
             target,
             options=(),
             channel_credentials=None,
@@ -457,9 +457,9 @@ class SidecarApi(object):
         return grpc.experimental.unary_unary(
             request,
             target,
-            '/news_hub.sidecar.SidecarApi/GetRegardingPosts',
-            sidecar__api__pb2.GetRegardingPostsReq.SerializeToString,
-            sidecar__api__pb2.GetRegardingPostsRes.FromString,
+            '/news_hub.sidecar.SidecarApi/GetReplies',
+            sidecar__api__pb2.GetRepliesReq.SerializeToString,
+            sidecar__api__pb2.GetRepliesRes.FromString,
             options,
             channel_credentials,
             insecure,

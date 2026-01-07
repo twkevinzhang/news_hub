@@ -77,9 +77,9 @@ import 'package:news_hub/domain/suggestion/interactor/list_suggestions.dart'
 import 'package:news_hub/domain/suggestion/interactor/update_suggestion_latest_used_at.dart'
     as _i650;
 import 'package:news_hub/domain/suggestion/repository.dart' as _i678;
-import 'package:news_hub/domain/thread/interactor/get_thread.dart' as _i616;
-import 'package:news_hub/domain/thread/interactor/list_regarding_posts.dart'
-    as _i492;
+import 'package:news_hub/domain/thread/interactor/get_original_post.dart'
+    as _i161;
+import 'package:news_hub/domain/thread/interactor/list_replies.dart' as _i587;
 import 'package:news_hub/domain/thread/interactor/list_threads.dart' as _i757;
 import 'package:news_hub/locator.dart' as _i56;
 import 'package:news_hub/presentation/components/forms/collection/bloc/collection_form_cubit.dart'
@@ -220,11 +220,11 @@ extension GetItInjectableX on _i174.GetIt {
           apiService: gh<_i113.ApiService>(),
           listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
         ));
-    gh.lazySingleton<_i616.GetThread>(() => _i616.GetThread(
+    gh.lazySingleton<_i161.GetOriginalPost>(() => _i161.GetOriginalPost(
           apiService: gh<_i113.ApiService>(),
           installedRepository: gh<_i266.GetInstalledExtension>(),
         ));
-    gh.lazySingleton<_i492.ListRegardingPosts>(() => _i492.ListRegardingPosts(
+    gh.lazySingleton<_i587.ListReplies>(() => _i587.ListReplies(
           apiService: gh<_i113.ApiService>(),
           installedRepository: gh<_i266.GetInstalledExtension>(),
         ));
@@ -232,12 +232,12 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i611.SidecarRepository>(),
           gh<_i976.SidecarConnectionManager>(),
         ));
+    gh.factory<_i994.ThreadDetailCubit>(() => _i994.ThreadDetailCubit(
+          getOriginalPost: gh<_i161.GetOriginalPost>(),
+          listReplies: gh<_i587.ListReplies>(),
+        ));
     gh.factory<_i274.BoardsPickerCubit>(
         () => _i274.BoardsPickerCubit(gh<_i351.ListInstalledExtensions>()));
-    gh.factory<_i994.ThreadDetailCubit>(() => _i994.ThreadDetailCubit(
-          getThread: gh<_i616.GetThread>(),
-          listRegardingPosts: gh<_i492.ListRegardingPosts>(),
-        ));
     gh.lazySingleton<_i214.ListExtensions>(() => _i214.ListExtensions(
           prefService: gh<_i191.ExtensionPreferencesService>(),
           listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),

@@ -308,8 +308,8 @@ const ArticlePost$json = {
     {'1': 'disliked', '3': 13, '4': 1, '5': 5, '10': 'disliked'},
     {'1': 'contents', '3': 17, '4': 3, '5': 11, '6': '.news_hub.domain.Paragraph', '10': 'contents'},
     {'1': 'tags', '3': 18, '4': 3, '5': 9, '10': 'tags'},
-    {'1': 'latest_regarding_post_created_at', '3': 15, '4': 1, '5': 3, '10': 'latestRegardingPostCreatedAt'},
-    {'1': 'regarding_posts_count', '3': 19, '4': 1, '5': 5, '10': 'regardingPostsCount'},
+    {'1': 'latest_reply_created_at', '3': 15, '4': 1, '5': 3, '10': 'latestReplyCreatedAt'},
+    {'1': 'replies_count', '3': 19, '4': 1, '5': 5, '10': 'repliesCount'},
     {'1': 'url', '3': 20, '4': 1, '5': 9, '10': 'url'},
   ],
 };
@@ -320,10 +320,9 @@ final $typed_data.Uint8List articlePostDescriptor = $convert.base64Decode(
     '1lGAUgASgJUgphdXRob3JOYW1lEh0KCmNyZWF0ZWRfYXQYByABKANSCWNyZWF0ZWRBdBIUCgV0'
     'aXRsZRgJIAEoCVIFdGl0bGUSFAoFbGlrZWQYDCABKAVSBWxpa2VkEhoKCGRpc2xpa2VkGA0gAS'
     'gFUghkaXNsaWtlZBI2Cghjb250ZW50cxgRIAMoCzIaLm5ld3NfaHViLmRvbWFpbi5QYXJhZ3Jh'
-    'cGhSCGNvbnRlbnRzEhIKBHRhZ3MYEiADKAlSBHRhZ3MSRgogbGF0ZXN0X3JlZ2FyZGluZ19wb3'
-    'N0X2NyZWF0ZWRfYXQYDyABKANSHGxhdGVzdFJlZ2FyZGluZ1Bvc3RDcmVhdGVkQXQSMgoVcmVn'
-    'YXJkaW5nX3Bvc3RzX2NvdW50GBMgASgFUhNyZWdhcmRpbmdQb3N0c0NvdW50EhAKA3VybBgUIA'
-    'EoCVIDdXJs');
+    'cGhSCGNvbnRlbnRzEhIKBHRhZ3MYEiADKAlSBHRhZ3MSNQoXbGF0ZXN0X3JlcGx5X2NyZWF0ZW'
+    'RfYXQYDyABKANSFGxhdGVzdFJlcGx5Q3JlYXRlZEF0EiMKDXJlcGxpZXNfY291bnQYEyABKAVS'
+    'DHJlcGxpZXNDb3VudBIQCgN1cmwYFCABKAlSA3VybA==');
 
 @$core.Deprecated('Use singleImagePostDescriptor instead')
 const SingleImagePost$json = {
@@ -338,8 +337,8 @@ const SingleImagePost$json = {
     {'1': 'image', '3': 21, '4': 1, '5': 11, '6': '.news_hub.domain.ImageParagraph', '10': 'image'},
     {'1': 'contents', '3': 17, '4': 3, '5': 11, '6': '.news_hub.domain.Paragraph', '10': 'contents'},
     {'1': 'tags', '3': 18, '4': 3, '5': 9, '10': 'tags'},
-    {'1': 'latest_regarding_post_created_at', '3': 15, '4': 1, '5': 3, '10': 'latestRegardingPostCreatedAt'},
-    {'1': 'regarding_posts_count', '3': 19, '4': 1, '5': 5, '10': 'regardingPostsCount'},
+    {'1': 'latest_reply_created_at', '3': 15, '4': 1, '5': 3, '10': 'latestReplyCreatedAt'},
+    {'1': 'replies_count', '3': 19, '4': 1, '5': 5, '10': 'repliesCount'},
     {'1': 'url', '3': 20, '4': 1, '5': 9, '10': 'url'},
   ],
 };
@@ -351,10 +350,9 @@ final $typed_data.Uint8List singleImagePostDescriptor = $convert.base64Decode(
     'FAoFdGl0bGUYCSABKAlSBXRpdGxlEhQKBWxpa2VkGAwgASgFUgVsaWtlZBIaCghkaXNsaWtlZB'
     'gNIAEoBVIIZGlzbGlrZWQSNQoFaW1hZ2UYFSABKAsyHy5uZXdzX2h1Yi5kb21haW4uSW1hZ2VQ'
     'YXJhZ3JhcGhSBWltYWdlEjYKCGNvbnRlbnRzGBEgAygLMhoubmV3c19odWIuZG9tYWluLlBhcm'
-    'FncmFwaFIIY29udGVudHMSEgoEdGFncxgSIAMoCVIEdGFncxJGCiBsYXRlc3RfcmVnYXJkaW5n'
-    'X3Bvc3RfY3JlYXRlZF9hdBgPIAEoA1IcbGF0ZXN0UmVnYXJkaW5nUG9zdENyZWF0ZWRBdBIyCh'
-    'VyZWdhcmRpbmdfcG9zdHNfY291bnQYEyABKAVSE3JlZ2FyZGluZ1Bvc3RzQ291bnQSEAoDdXJs'
-    'GBQgASgJUgN1cmw=');
+    'FncmFwaFIIY29udGVudHMSEgoEdGFncxgSIAMoCVIEdGFncxI1ChdsYXRlc3RfcmVwbHlfY3Jl'
+    'YXRlZF9hdBgPIAEoA1IUbGF0ZXN0UmVwbHlDcmVhdGVkQXQSIwoNcmVwbGllc19jb3VudBgTIA'
+    'EoBVIMcmVwbGllc0NvdW50EhAKA3VybBgUIAEoCVIDdXJs');
 
 @$core.Deprecated('Use commentDescriptor instead')
 const Comment$json = {

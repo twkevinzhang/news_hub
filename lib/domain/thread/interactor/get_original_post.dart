@@ -4,11 +4,11 @@ import 'package:news_hub/domain/extension/interactor/get_installed_extension.dar
 import 'package:news_hub/domain/models/models.dart';
 
 @lazySingleton
-class GetThread {
+class GetOriginalPost {
   final GetInstalledExtension _getInstalledExtension;
   final ApiService _service;
 
-  GetThread({
+  GetOriginalPost({
     required ApiService apiService,
     required GetInstalledExtension installedRepository,
   })  : _service = apiService,
@@ -22,7 +22,7 @@ class GetThread {
   }) async {
     final extensionF = _getInstalledExtension.get(extensionPkgName);
     final boardsF = _service.listBoards(extensionPkgName: extensionPkgName);
-    final threadF = _service.getThread(
+    final threadF = _service.getOriginalPost(
       extensionPkgName: extensionPkgName,
       boardId: boardId,
       threadId: threadId,
@@ -60,7 +60,7 @@ class ArticlePostWithExtension extends ArticlePost {
           disliked: post.disliked,
           contents: post.contents,
           tags: post.tags,
-          latestRegardingPostCreatedAt: post.latestRegardingPostCreatedAt,
-          regardingPostsCount: post.regardingPostsCount,
+          latestReplyCreatedAt: post.latestReplyCreatedAt,
+          repliesCount: post.repliesCount,
         );
 }

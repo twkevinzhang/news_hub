@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ThreadsFilter {
-  Map<String, String> get boardsSorting => throw _privateConstructorUsedError;
+  Map<String, String> get boardSorts => throw _privateConstructorUsedError;
   String get keywords => throw _privateConstructorUsedError;
 
   /// Serializes this ThreadsFilter to a JSON map.
@@ -35,7 +35,7 @@ abstract class $ThreadsFilterCopyWith<$Res> {
           ThreadsFilter value, $Res Function(ThreadsFilter) then) =
       _$ThreadsFilterCopyWithImpl<$Res, ThreadsFilter>;
   @useResult
-  $Res call({Map<String, String> boardsSorting, String keywords});
+  $Res call({Map<String, String> boardSorts, String keywords});
 }
 
 /// @nodoc
@@ -53,13 +53,13 @@ class _$ThreadsFilterCopyWithImpl<$Res, $Val extends ThreadsFilter>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? boardsSorting = null,
+    Object? boardSorts = null,
     Object? keywords = null,
   }) {
     return _then(_value.copyWith(
-      boardsSorting: null == boardsSorting
-          ? _value.boardsSorting
-          : boardsSorting // ignore: cast_nullable_to_non_nullable
+      boardSorts: null == boardSorts
+          ? _value.boardSorts
+          : boardSorts // ignore: cast_nullable_to_non_nullable
               as Map<String, String>,
       keywords: null == keywords
           ? _value.keywords
@@ -77,7 +77,7 @@ abstract class _$$ThreadsFilterImplCopyWith<$Res>
       __$$ThreadsFilterImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Map<String, String> boardsSorting, String keywords});
+  $Res call({Map<String, String> boardSorts, String keywords});
 }
 
 /// @nodoc
@@ -93,13 +93,13 @@ class __$$ThreadsFilterImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? boardsSorting = null,
+    Object? boardSorts = null,
     Object? keywords = null,
   }) {
     return _then(_$ThreadsFilterImpl(
-      boardsSorting: null == boardsSorting
-          ? _value._boardsSorting
-          : boardsSorting // ignore: cast_nullable_to_non_nullable
+      boardSorts: null == boardSorts
+          ? _value._boardSorts
+          : boardSorts // ignore: cast_nullable_to_non_nullable
               as Map<String, String>,
       keywords: null == keywords
           ? _value.keywords
@@ -115,16 +115,15 @@ class _$ThreadsFilterImpl
     with DiagnosticableTreeMixin
     implements _ThreadsFilter {
   const _$ThreadsFilterImpl(
-      {required final Map<String, String> boardsSorting,
-      required this.keywords})
-      : _boardsSorting = boardsSorting;
+      {required final Map<String, String> boardSorts, required this.keywords})
+      : _boardSorts = boardSorts;
 
-  final Map<String, String> _boardsSorting;
+  final Map<String, String> _boardSorts;
   @override
-  Map<String, String> get boardsSorting {
-    if (_boardsSorting is EqualUnmodifiableMapView) return _boardsSorting;
+  Map<String, String> get boardSorts {
+    if (_boardSorts is EqualUnmodifiableMapView) return _boardSorts;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_boardsSorting);
+    return EqualUnmodifiableMapView(_boardSorts);
   }
 
   @override
@@ -132,7 +131,7 @@ class _$ThreadsFilterImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ThreadsFilter(boardsSorting: $boardsSorting, keywords: $keywords)';
+    return 'ThreadsFilter(boardSorts: $boardSorts, keywords: $keywords)';
   }
 
   @override
@@ -140,7 +139,7 @@ class _$ThreadsFilterImpl
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ThreadsFilter'))
-      ..add(DiagnosticsProperty('boardsSorting', boardsSorting))
+      ..add(DiagnosticsProperty('boardSorts', boardSorts))
       ..add(DiagnosticsProperty('keywords', keywords));
   }
 
@@ -150,15 +149,15 @@ class _$ThreadsFilterImpl
         (other.runtimeType == runtimeType &&
             other is _$ThreadsFilterImpl &&
             const DeepCollectionEquality()
-                .equals(other._boardsSorting, _boardsSorting) &&
+                .equals(other._boardSorts, _boardSorts) &&
             (identical(other.keywords, keywords) ||
                 other.keywords == keywords));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_boardsSorting), keywords);
+  int get hashCode => Object.hash(
+      runtimeType, const DeepCollectionEquality().hash(_boardSorts), keywords);
 
   /// Create a copy of ThreadsFilter
   /// with the given fields replaced by the non-null parameter values.
@@ -178,11 +177,11 @@ class _$ThreadsFilterImpl
 
 abstract class _ThreadsFilter implements ThreadsFilter {
   const factory _ThreadsFilter(
-      {required final Map<String, String> boardsSorting,
+      {required final Map<String, String> boardSorts,
       required final String keywords}) = _$ThreadsFilterImpl;
 
   @override
-  Map<String, String> get boardsSorting;
+  Map<String, String> get boardSorts;
   @override
   String get keywords;
 

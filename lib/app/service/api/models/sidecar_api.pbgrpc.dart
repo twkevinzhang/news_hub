@@ -26,18 +26,18 @@ class SidecarApiClient extends $grpc.Client {
       '/news_hub.sidecar.SidecarApi/GetBoards',
       ($0.GetBoardsReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.GetBoardsRes.fromBuffer(value));
-  static final _$getThreadInfos = $grpc.ClientMethod<$0.GetThreadInfosReq, $0.GetThreadInfosRes>(
-      '/news_hub.sidecar.SidecarApi/GetThreadInfos',
-      ($0.GetThreadInfosReq value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.GetThreadInfosRes.fromBuffer(value));
-  static final _$getThreadPost = $grpc.ClientMethod<$0.GetThreadPostReq, $0.GetThreadPostRes>(
-      '/news_hub.sidecar.SidecarApi/GetThreadPost',
-      ($0.GetThreadPostReq value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.GetThreadPostRes.fromBuffer(value));
-  static final _$getRegardingPosts = $grpc.ClientMethod<$0.GetRegardingPostsReq, $0.GetRegardingPostsRes>(
-      '/news_hub.sidecar.SidecarApi/GetRegardingPosts',
-      ($0.GetRegardingPostsReq value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.GetRegardingPostsRes.fromBuffer(value));
+  static final _$getThreads = $grpc.ClientMethod<$0.GetThreadsReq, $0.GetThreadsRes>(
+      '/news_hub.sidecar.SidecarApi/GetThreads',
+      ($0.GetThreadsReq value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.GetThreadsRes.fromBuffer(value));
+  static final _$getOriginalPost = $grpc.ClientMethod<$0.GetOriginalPostReq, $0.GetOriginalPostRes>(
+      '/news_hub.sidecar.SidecarApi/GetOriginalPost',
+      ($0.GetOriginalPostReq value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.GetOriginalPostRes.fromBuffer(value));
+  static final _$getReplies = $grpc.ClientMethod<$0.GetRepliesReq, $0.GetRepliesRes>(
+      '/news_hub.sidecar.SidecarApi/GetReplies',
+      ($0.GetRepliesReq value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.GetRepliesRes.fromBuffer(value));
   static final _$getComments = $grpc.ClientMethod<$0.GetCommentsReq, $0.GetCommentsRes>(
       '/news_hub.sidecar.SidecarApi/GetComments',
       ($0.GetCommentsReq value) => value.writeToBuffer(),
@@ -109,16 +109,16 @@ class SidecarApiClient extends $grpc.Client {
     return $createUnaryCall(_$getBoards, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.GetThreadInfosRes> getThreadInfos($0.GetThreadInfosReq request, {$grpc.CallOptions? options}) {
-    return $createUnaryCall(_$getThreadInfos, request, options: options);
+  $grpc.ResponseFuture<$0.GetThreadsRes> getThreads($0.GetThreadsReq request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getThreads, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.GetThreadPostRes> getThreadPost($0.GetThreadPostReq request, {$grpc.CallOptions? options}) {
-    return $createUnaryCall(_$getThreadPost, request, options: options);
+  $grpc.ResponseFuture<$0.GetOriginalPostRes> getOriginalPost($0.GetOriginalPostReq request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getOriginalPost, request, options: options);
   }
 
-  $grpc.ResponseFuture<$0.GetRegardingPostsRes> getRegardingPosts($0.GetRegardingPostsReq request, {$grpc.CallOptions? options}) {
-    return $createUnaryCall(_$getRegardingPosts, request, options: options);
+  $grpc.ResponseFuture<$0.GetRepliesRes> getReplies($0.GetRepliesReq request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getReplies, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.GetCommentsRes> getComments($0.GetCommentsReq request, {$grpc.CallOptions? options}) {
@@ -194,27 +194,27 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.GetBoardsReq.fromBuffer(value),
         ($0.GetBoardsRes value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.GetThreadInfosReq, $0.GetThreadInfosRes>(
-        'GetThreadInfos',
-        getThreadInfos_Pre,
+    $addMethod($grpc.ServiceMethod<$0.GetThreadsReq, $0.GetThreadsRes>(
+        'GetThreads',
+        getThreads_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.GetThreadInfosReq.fromBuffer(value),
-        ($0.GetThreadInfosRes value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.GetThreadPostReq, $0.GetThreadPostRes>(
-        'GetThreadPost',
-        getThreadPost_Pre,
+        ($core.List<$core.int> value) => $0.GetThreadsReq.fromBuffer(value),
+        ($0.GetThreadsRes value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.GetOriginalPostReq, $0.GetOriginalPostRes>(
+        'GetOriginalPost',
+        getOriginalPost_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.GetThreadPostReq.fromBuffer(value),
-        ($0.GetThreadPostRes value) => value.writeToBuffer()));
-    $addMethod($grpc.ServiceMethod<$0.GetRegardingPostsReq, $0.GetRegardingPostsRes>(
-        'GetRegardingPosts',
-        getRegardingPosts_Pre,
+        ($core.List<$core.int> value) => $0.GetOriginalPostReq.fromBuffer(value),
+        ($0.GetOriginalPostRes value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.GetRepliesReq, $0.GetRepliesRes>(
+        'GetReplies',
+        getReplies_Pre,
         false,
         false,
-        ($core.List<$core.int> value) => $0.GetRegardingPostsReq.fromBuffer(value),
-        ($0.GetRegardingPostsRes value) => value.writeToBuffer()));
+        ($core.List<$core.int> value) => $0.GetRepliesReq.fromBuffer(value),
+        ($0.GetRepliesRes value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.GetCommentsReq, $0.GetCommentsRes>(
         'GetComments',
         getComments_Pre,
@@ -326,16 +326,16 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
     return getBoards(call, await request);
   }
 
-  $async.Future<$0.GetThreadInfosRes> getThreadInfos_Pre($grpc.ServiceCall call, $async.Future<$0.GetThreadInfosReq> request) async {
-    return getThreadInfos(call, await request);
+  $async.Future<$0.GetThreadsRes> getThreads_Pre($grpc.ServiceCall call, $async.Future<$0.GetThreadsReq> request) async {
+    return getThreads(call, await request);
   }
 
-  $async.Future<$0.GetThreadPostRes> getThreadPost_Pre($grpc.ServiceCall call, $async.Future<$0.GetThreadPostReq> request) async {
-    return getThreadPost(call, await request);
+  $async.Future<$0.GetOriginalPostRes> getOriginalPost_Pre($grpc.ServiceCall call, $async.Future<$0.GetOriginalPostReq> request) async {
+    return getOriginalPost(call, await request);
   }
 
-  $async.Future<$0.GetRegardingPostsRes> getRegardingPosts_Pre($grpc.ServiceCall call, $async.Future<$0.GetRegardingPostsReq> request) async {
-    return getRegardingPosts(call, await request);
+  $async.Future<$0.GetRepliesRes> getReplies_Pre($grpc.ServiceCall call, $async.Future<$0.GetRepliesReq> request) async {
+    return getReplies(call, await request);
   }
 
   $async.Future<$0.GetCommentsRes> getComments_Pre($grpc.ServiceCall call, $async.Future<$0.GetCommentsReq> request) async {
@@ -399,9 +399,9 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
   }
 
   $async.Future<$0.GetBoardsRes> getBoards($grpc.ServiceCall call, $0.GetBoardsReq request);
-  $async.Future<$0.GetThreadInfosRes> getThreadInfos($grpc.ServiceCall call, $0.GetThreadInfosReq request);
-  $async.Future<$0.GetThreadPostRes> getThreadPost($grpc.ServiceCall call, $0.GetThreadPostReq request);
-  $async.Future<$0.GetRegardingPostsRes> getRegardingPosts($grpc.ServiceCall call, $0.GetRegardingPostsReq request);
+  $async.Future<$0.GetThreadsRes> getThreads($grpc.ServiceCall call, $0.GetThreadsReq request);
+  $async.Future<$0.GetOriginalPostRes> getOriginalPost($grpc.ServiceCall call, $0.GetOriginalPostReq request);
+  $async.Future<$0.GetRepliesRes> getReplies($grpc.ServiceCall call, $0.GetRepliesReq request);
   $async.Future<$0.GetCommentsRes> getComments($grpc.ServiceCall call, $0.GetCommentsReq request);
   $async.Future<$0.ListInstalledExtensionsRes> listInstalledExtensions($grpc.ServiceCall call, $1.Empty request);
   $async.Future<$0.GetInstalledExtensionRes> getInstalledExtension($grpc.ServiceCall call, $0.GetInstalledExtensionReq request);

@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_hub/domain/thread/interactor/get_thread.dart';
+import 'package:news_hub/domain/thread/interactor/get_original_post.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/thread/detail/bloc/thread_detail_cubit.dart';
 import 'package:news_hub/presentation/pages/thread/detail/layouts/article_post_layout.dart';
@@ -84,7 +84,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
             child: Card(
                 child: Padding(
               padding: const EdgeInsets.all(8),
-              child: _buildPostLayout(context, cubit, post, disableRegardingPostsClick: index == 0),
+              child: _buildPostLayout(context, cubit, post, disableRepliesClick: index == 0),
             )),
           ),
           noItemsFoundIndicatorBuilder: (context) => Center(
@@ -100,7 +100,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
     );
   }
 
-  Widget _buildPostLayout(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post, {bool disableRegardingPostsClick = false}) {
+  Widget _buildPostLayout(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post, {bool disableRepliesClick = false}) {
     return ArticlePostLayout(
       post: post,
       onParagraphClick: (paragraph) async {
@@ -116,7 +116,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
           // TODO
         }
       },
-      onRegardingPostsClick: !disableRegardingPostsClick ? () => _onRegardingPostsClick(context, cubit, post) : null,
+      onRepliesClick: !disableRepliesClick ? () => _onRepliesClick(context, cubit, post) : null,
     );
   }
 
@@ -146,19 +146,17 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
     _buildPostGallery(context, cubit, post, index).show();
   }
 
-  void _onRegardingPostsClick(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post) {
+  void _onRepliesClick(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post) {
     showDialog(
       context: context,
       builder: (context) => _buildDialog(
         cubit: cubit,
-        builder: (context, state) => state.regardingPostsMap[post.id]!.maybeWhen(
+        builder: (context, state) => state.repliesMap[post.id]!.maybeWhen(
           orElse: () => const LoadingIndicator(),
-          completed: (regardingPosts) => SingleChildScrollView(
+          completed: (replies) => SingleChildScrollView(
             child: Padding(
               padding: EdgeInsets.symmetric(vertical: 16),
-              child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: regardingPosts.map((regardingPost) => _buildPostLayout(context, cubit, regardingPost)).toList()),
+              child: Column(mainAxisAlignment: MainAxisAlignment.start, children: replies.map((reply) => _buildPostLayout(context, cubit, reply)).toList()),
             ),
           ),
         ),

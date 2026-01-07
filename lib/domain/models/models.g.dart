@@ -8,7 +8,7 @@ part of 'models.dart';
 
 Map<String, dynamic> _$$ThreadsFilterImplToJson(_$ThreadsFilterImpl instance) =>
     <String, dynamic>{
-      'boardsSorting': instance.boardsSorting,
+      'boardSorts': instance.boardSorts,
       'keywords': instance.keywords,
     };
 

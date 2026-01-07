@@ -46,8 +46,8 @@ extension ArticlePostTransform on domain_pb.ArticlePost {
       tags: tags,
       url: url,
       title: title,
-      latestRegardingPostCreatedAt: latestRegardingPostCreatedAt.toDateTime(),
-      regardingPostsCount: regardingPostsCount,
+      latestReplyCreatedAt: latestReplyCreatedAt.toDateTime(),
+      repliesCount: repliesCount,
     );
   }
 }
@@ -69,8 +69,8 @@ extension SingleImagePostTransform on domain_pb.SingleImagePost {
       tags: tags,
       url: url,
       title: title,
-      latestRegardingPostCreatedAt: latestRegardingPostCreatedAt.toDateTime(),
-      regardingPostsCount: regardingPostsCount,
+      latestReplyCreatedAt: latestReplyCreatedAt.toDateTime(),
+      repliesCount: repliesCount,
     );
   }
 }

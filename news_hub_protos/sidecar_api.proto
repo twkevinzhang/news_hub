@@ -5,9 +5,9 @@ import "domain_models.proto";
 
 service SidecarApi {
   rpc GetBoards (GetBoardsReq) returns (GetBoardsRes) {}
-  rpc GetThreadInfos (GetThreadInfosReq) returns (GetThreadInfosRes) {}
-  rpc GetThreadPost (GetThreadPostReq) returns (GetThreadPostRes) {}
-  rpc GetRegardingPosts (GetRegardingPostsReq) returns (GetRegardingPostsRes) {}
+  rpc GetThreads (GetThreadsReq) returns (GetThreadsRes) {}
+  rpc GetOriginalPost (GetOriginalPostReq) returns (GetOriginalPostRes) {}
+  rpc GetReplies (GetRepliesReq) returns (GetRepliesRes) {}
   rpc GetComments (GetCommentsReq) returns (GetCommentsRes) {}
 
    // Extension operations
@@ -43,30 +43,30 @@ message GetBoardsRes {
   news_hub.domain.PaginationRes page = 2;
 }
 
-message GetThreadInfosReq {
+message GetThreadsReq {
   string pkg_name = 6;
   map<string, string> board_sorts = 2;
   optional news_hub.domain.PaginationReq page = 3;
   optional string keywords = 5;
 }
 
-message GetThreadInfosRes {
-  repeated news_hub.domain.Post thread_infos = 1;
+message GetThreadsRes {
+  repeated news_hub.domain.Post threads = 1;
   news_hub.domain.PaginationRes page = 2;
 }
 
-message GetThreadPostReq {
+message GetOriginalPostReq {
   string pkg_name = 5;
   string board_id = 3;
   string thread_id = 1;
   string post_id = 4;
 }
 
-message GetThreadPostRes {
-  news_hub.domain.Post thread_post = 1;
+message GetOriginalPostRes {
+  news_hub.domain.Post original_post = 1;
 }
 
-message GetRegardingPostsReq {
+message GetRepliesReq {
   string pkg_name = 6;
   string board_id = 2;
   string thread_id = 3;
@@ -74,8 +74,8 @@ message GetRegardingPostsReq {
   optional news_hub.domain.PaginationReq page = 4;
 }
 
-message GetRegardingPostsRes {
-  repeated news_hub.domain.Post regarding_posts = 1;
+message GetRepliesRes {
+  repeated news_hub.domain.Post replies = 1;
   news_hub.domain.PaginationRes page = 2;
 }
 

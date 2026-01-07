@@ -11,7 +11,7 @@ class ArticlePostLayout extends StatelessWidget {
   final bool disablePlay;
   final FutureOr<void> Function(domain.Paragraph paragraph)? onParagraphClick;
   final FutureOr<void> Function()? onLikeClick;
-  final FutureOr<void> Function()? onRegardingPostsClick;
+  final FutureOr<void> Function()? onRepliesClick;
   final FutureOr<void> Function()? onCommentsClick;
   const ArticlePostLayout({
     super.key,
@@ -19,7 +19,7 @@ class ArticlePostLayout extends StatelessWidget {
     this.disablePlay = false,
     this.onParagraphClick,
     this.onLikeClick,
-    this.onRegardingPostsClick,
+    this.onRepliesClick,
     this.onCommentsClick,
   });
 
@@ -41,10 +41,10 @@ class ArticlePostLayout extends StatelessWidget {
         Container(height: 8),
         PostActions(
           liked: post.liked,
-          regardingPosts: post.regardingPostsCount,
+          replies: post.repliesCount,
           comments: null,
           onLikeClick: onLikeClick,
-          onRegardingPostsClick: onRegardingPostsClick,
+          onRepliesClick: onRepliesClick,
           onCommentsClick: onCommentsClick,
         ),
       ],
@@ -104,18 +104,18 @@ class PostHeader extends StatelessWidget {
 
 class PostActions extends StatelessWidget {
   final int? liked;
-  final int? regardingPosts;
+  final int? replies;
   final int? comments;
   final FutureOr<void> Function()? onLikeClick;
-  final FutureOr<void> Function()? onRegardingPostsClick;
+  final FutureOr<void> Function()? onRepliesClick;
   final FutureOr<void> Function()? onCommentsClick;
   const PostActions({
     super.key,
     this.liked,
-    this.regardingPosts,
+    this.replies,
     this.comments,
     this.onLikeClick,
-    this.onRegardingPostsClick,
+    this.onRepliesClick,
     this.onCommentsClick,
   });
 
@@ -125,7 +125,7 @@ class PostActions extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         if (liked.isPositive) ..._getAction(context, Icons.thumb_up_alt_outlined, onLikeClick, liked.toString()),
-        if (regardingPosts.isPositive) ..._getAction(context, Icons.comment_outlined, onRegardingPostsClick, regardingPosts.toString()),
+        if (replies.isPositive) ..._getAction(context, Icons.comment_outlined, onRepliesClick, replies.toString()),
         if (comments.isPositive) ..._getAction(context, Icons.bubble_chart_outlined, onCommentsClick, comments.toString()),
       ],
     );

@@ -187,8 +187,8 @@ class SingleImagePost extends Post {
   final List<String>? tags;
   final ImageParagraph? image;
   final List<Paragraph> contents;
-  final DateTime? latestRegardingPostCreatedAt;
-  final int? regardingPostsCount;
+  final DateTime? latestReplyCreatedAt;
+  final int? repliesCount;
 
   SingleImagePost({
     required super.extensionPkgName,
@@ -204,8 +204,8 @@ class SingleImagePost extends Post {
     required this.disliked,
     required this.image,
     required this.contents,
-    this.latestRegardingPostCreatedAt,
-    this.regardingPostsCount,
+    this.latestReplyCreatedAt,
+    this.repliesCount,
     required this.tags,
   });
 }
@@ -231,8 +231,8 @@ class ArticlePost extends Post {
   final int? disliked;
   final List<String>? tags;
   final List<Paragraph> contents;
-  final DateTime? latestRegardingPostCreatedAt;
-  final int? regardingPostsCount;
+  final DateTime? latestReplyCreatedAt;
+  final int? repliesCount;
 
   ArticlePost({
     required super.extensionPkgName,
@@ -247,8 +247,8 @@ class ArticlePost extends Post {
     required this.liked,
     required this.disliked,
     required this.contents,
-    this.latestRegardingPostCreatedAt,
-    this.regardingPostsCount,
+    this.latestReplyCreatedAt,
+    this.repliesCount,
     required this.tags,
   });
 }
@@ -386,19 +386,19 @@ class Bookmark {
 @Freezed(toJson: true)
 class ThreadsFilter with _$ThreadsFilter {
   const factory ThreadsFilter({
-    required Map<String, String> boardsSorting,
+    required Map<String, String> boardSorts,
     required String keywords,
   }) = _ThreadsFilter;
 }
 
 extension ThreadsFilterEx on ThreadsFilter {
   int boardsTotal() {
-    final boardIds = boardsSorting.keys.toSet();
+    final boardIds = boardSorts.keys.toSet();
     return boardIds.length;
   }
 
   bool get isEmpty {
-    return boardsSorting.isEmpty && keywords.isEmpty;
+    return boardSorts.isEmpty && keywords.isEmpty;
   }
 }
 
