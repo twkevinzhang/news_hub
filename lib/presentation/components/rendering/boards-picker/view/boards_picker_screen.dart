@@ -39,6 +39,7 @@ class BoardsPickerScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   final ext = data[index];
                   return _CategorySection(
+                    extensionPkgName: ext.pkgName,
                     site: ext.site,
                     boards: ext.boards.toList(),
                   );
@@ -53,10 +54,12 @@ class BoardsPickerScreen extends StatelessWidget {
 }
 
 class _CategorySection extends StatelessWidget {
+  final String extensionPkgName;
   final Site site;
   final List<Board> boards;
 
   const _CategorySection({
+    required this.extensionPkgName,
     required this.site,
     required this.boards,
   });
@@ -71,11 +74,26 @@ class _CategorySection extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text(
-                site.name,
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
+              Row(
+                children: [
+                  BlocBuilder<BoardsPickerCubit, BoardsPickerState>(
+                    builder: (context, state) {
+                      final cubit = context.read<BoardsPickerCubit>();
+                      final value = cubit.getExtensionCheckboxValue(extensionPkgName);
+                      return Checkbox(
+                        value: value,
+                        tristate: true,
+                        onChanged: (v) => cubit.toggleExtension(extensionPkgName, v),
+                      );
+                    },
+                  ),
+                  Text(
+                    site.name,
+                    style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                          fontWeight: FontWeight.bold,
+                        ),
+                  ),
+                ],
               ),
               TextButton(
                 onPressed: () {
@@ -148,13 +166,25 @@ class _BoardCard extends StatelessWidget {
                     ),
                   ),
                   const Spacer(),
-                  Text(
-                    board.name,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                          fontWeight: FontWeight.bold,
+                  Row(
+                    children: [
+                      Checkbox(
+                        value: isSelected,
+                        onChanged: (v) => cubit.toggleBoard(board.id, v),
+                        visualDensity: VisualDensity.compact,
+                        materialTapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                      ),
+                      Expanded(
+                        child: Text(
+                          board.name,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
                         ),
+                      ),
+                    ],
                   ),
                   Text(
                     board.id,
@@ -167,20 +197,6 @@ class _BoardCard extends StatelessWidget {
                 ],
               ),
             ),
-            if (isSelected)
-              Positioned(
-                top: 8,
-                right: 8,
-                child: CircleAvatar(
-                  radius: 12,
-                  backgroundColor: Theme.of(context).colorScheme.primary,
-                  child: const Icon(
-                    Icons.check,
-                    size: 16,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
           ],
         ),
       ),

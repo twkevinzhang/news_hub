@@ -17,6 +17,18 @@ class CreateCollectionState with _$CreateCollectionState {
   }) = _CreateCollectionState;
 }
 
+extension CreateCollectionStateEx on CreateCollectionState {
+  String get defaultName {
+    if (selectedBoards.isEmpty) return '';
+    final firstBoardName = selectedBoards.first.name;
+    if (selectedBoards.length > 1) {
+      return '$firstBoardName...等${selectedBoards.length}個';
+    } else {
+      return firstBoardName;
+    }
+  }
+}
+
 @injectable
 class CreateCollectionCubit extends Cubit<CreateCollectionState> {
   final CollectionRepository _collectionRepository;
@@ -42,12 +54,7 @@ class CreateCollectionCubit extends Cubit<CreateCollectionState> {
     try {
       String finalName = state.name.trim();
       if (finalName.isEmpty) {
-        final firstBoardName = state.selectedBoards.first.name;
-        if (state.selectedBoards.length > 1) {
-          finalName = '$firstBoardName...等 (${state.selectedBoards.length})';
-        } else {
-          finalName = firstBoardName;
-        }
+        finalName = state.defaultName;
       }
 
       await _collectionRepository.create(finalName, state.selectedBoards);

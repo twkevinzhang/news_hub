@@ -44,10 +44,10 @@ class CreateCollectionPage extends StatelessWidget implements AutoRouteWrapper {
             padding: const EdgeInsets.all(16),
             children: [
               TextField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: '集合名稱 (選填)',
-                  hintText: '預設：第一個版塊名稱...等',
-                  border: OutlineInputBorder(),
+                  hintText: state.defaultName.isEmpty ? '某版塊...等' : state.defaultName,
+                  border: const OutlineInputBorder(),
                 ),
                 onChanged: cubit.updateName,
               ),
@@ -118,7 +118,7 @@ class CreateCollectionPage extends StatelessWidget implements AutoRouteWrapper {
       context: context,
       builder: (context) {
         final initialChosenBoards = Map.fromEntries(
-          cubit.state.selectedBoards.map((b) => MapEntry(b.id, b.supportedThreadsSorting.first)),
+          cubit.state.selectedBoards.map((b) => MapEntry(b.id, b.supportedThreadsSorting.firstOrNull ?? '')),
         );
         return Dialog.fullscreen(
           child: BlocProvider<BoardsPickerCubit>(

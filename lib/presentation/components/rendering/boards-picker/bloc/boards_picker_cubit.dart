@@ -103,7 +103,7 @@ class BoardsPickerCubit extends Cubit<BoardsPickerState> {
       throw Exception("state.extensionBoards not loaded");
     }
     if (value) {
-      final newBoardSorting = extension.boards.map((e) => MapEntry(e.id, e.supportedThreadsSorting.first));
+      final newBoardSorting = extension.boards.map((e) => MapEntry(e.id, e.supportedThreadsSorting.firstOrNull ?? ''));
       safeEmit(state.copyWith(
         chosenBoards: {...state.chosenBoards}..addEntries(newBoardSorting),
       ));
@@ -123,7 +123,7 @@ class BoardsPickerCubit extends Cubit<BoardsPickerState> {
         throw Exception("state.extensionBoards not loaded");
       }
       safeEmit(state.copyWith(
-        chosenBoards: {...state.chosenBoards}..addAll({boardId: board.supportedThreadsSorting.first}),
+        chosenBoards: {...state.chosenBoards}..addAll({boardId: board.supportedThreadsSorting.firstOrNull ?? ''}),
       ));
     } else {
       safeEmit(state.copyWith(
