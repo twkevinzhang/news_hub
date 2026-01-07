@@ -3,23 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/locator.dart';
-// ignore: unused_import
-import 'package:news_hub/presentation/pages/collections/form/bloc/collection_form_cubit.dart';
+import 'package:news_hub/presentation/components/forms/collection/bloc/collection_form_cubit.dart';
 import 'package:news_hub/presentation/components/rendering/boards-picker/boards_picker.dart';
 
-@RoutePage()
-class CollectionFormScreen extends StatelessWidget implements AutoRouteWrapper {
+class CollectionForm extends StatelessWidget {
   final Collection? initialCollection;
 
-  const CollectionFormScreen({super.key, this.initialCollection});
-
-  @override
-  Widget wrappedRoute(BuildContext context) {
-    return BlocProvider(
-      create: (context) => sl<CollectionFormCubit>()..init(initialCollection),
-      child: this,
-    );
-  }
+  const CollectionForm({super.key, this.initialCollection});
 
   @override
   Widget build(BuildContext context) {

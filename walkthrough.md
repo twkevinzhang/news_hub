@@ -27,10 +27,12 @@ Implemented comprehensive features for the Collection List, including creating, 
   - Added Floating Action Button (FAB) for creating collections.
   - Added Context Menu (Edit/Delete) for each list item.
   - Added Delete Confirmation Dialog.
-- **CollectionFormScreen**:
-  - Renamed from `CreateCollectionPage`.
-  - Updated title and button text based on mode (Create vs Edit).
-  - Pre-fills data when editing.
+- **CollectionCreateScreen**:
+  - Replaces `CollectionFormScreen`.
+  - Wraps the reusable `CollectionForm` component.
+  - Provides `CollectionFormCubit` via `BlocProvider`.
+- **CollectionForm (Component)**:
+  - Extracted as a reusable form component in `lib/presentation/components/forms/collection`.
 
 ### 4. Integration
 

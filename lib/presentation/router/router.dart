@@ -12,8 +12,11 @@ class AppRouter extends RootStackRouter {
   @override
   List<AutoRoute> get routes => [
         // ============================================
-        // 🏠 App Shell - 應用框架
+        // 📁 Content Organization - 內容整理
         // ============================================
+        AutoRoute(path: '/collection/list', page: CollectionListRoute.page),
+        AutoRoute(path: '/collection/create', page: CollectionCreateRoute.page),
+
         AutoRoute(path: '/', page: HomeRoute.page),
         AutoRoute(path: '/settings', page: SettingsRoute.page),
 
@@ -22,12 +25,6 @@ class AppRouter extends RootStackRouter {
         // ============================================
         AutoRoute(path: '/thread/list', page: ThreadListRoute.page),
         AutoRoute(path: '/search', page: SearchRoute.page),
-
-        // ============================================
-        // 📁 Content Organization - 內容整理
-        // ============================================
-        AutoRoute(path: '/collection/list', page: CollectionListRoute.page),
-        AutoRoute(path: '/collection/create', page: CollectionFormRoute.page),
 
         // ============================================
         // 🧩 Extension Marketplace - 擴充市集

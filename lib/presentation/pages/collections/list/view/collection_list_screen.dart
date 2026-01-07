@@ -43,7 +43,7 @@ class CollectionListScreen extends StatelessWidget implements AutoRouteWrapper {
                 trailing: PopupMenuButton<String>(
                   onSelected: (value) async {
                     if (value == 'edit') {
-                      context.router.push(CollectionFormRoute(initialCollection: collection));
+                      context.router.push(CollectionEditRoute(initialCollection: collection));
                     } else if (value == 'delete') {
                       final confirm = await showDialog<bool>(
                         context: context,
@@ -89,7 +89,7 @@ class CollectionListScreen extends StatelessWidget implements AutoRouteWrapper {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          context.router.push(CollectionFormRoute());
+          context.router.push(CollectionCreateRoute());
         },
         child: const Icon(Icons.add),
       ),

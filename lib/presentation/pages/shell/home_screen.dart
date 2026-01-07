@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
             _safeNavigate(() => context.router.push(ThreadListRoute()));
           },
           onCreateCollectionPressed: () {
-            _safeNavigate(() => context.router.push(CollectionFormRoute()));
+            _safeNavigate(() => context.router.push(CollectionCreateRoute()));
           },
           onBoardSelected: (board) {
             _safeNavigate(() => context.router.push(ThreadListRoute()));
