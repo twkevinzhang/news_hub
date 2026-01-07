@@ -7,11 +7,11 @@ import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/app/service/connection/interface.dart';
 
 @LazySingleton(as: ExtensionRepository)
-class InstalledRepositoryImpl implements ExtensionRepository {
+class ExtensionRepositoryImpl implements ExtensionRepository {
   final ApiService _apiService;
   final SidecarConnectionManager _connectionManager;
 
-  InstalledRepositoryImpl(
+  ExtensionRepositoryImpl(
     this._apiService,
     this._connectionManager,
   );
