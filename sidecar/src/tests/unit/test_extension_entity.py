@@ -11,14 +11,14 @@ class TestExtensionEntity(unittest.TestCase):
     def setUp(self):
         """Set up test fixtures"""
         self.metadata = ExtensionMetadata(
-            repo_base_url="https://example.com",
             pkg_name="test_extension",
             display_name="Test Extension",
             zip_name="test.zip",
             version=1,
             python_version=3,
             lang="en",
-            is_nsfw=False
+            is_nsfw=False,
+            repo_url="https://example.com"
         )
         self.installation_path = Path("/tmp/extensions/test_extension")
 
@@ -75,12 +75,12 @@ class TestExtensionMetadata(unittest.TestCase):
     def test_create_valid_metadata(self):
         """Test creating valid metadata"""
         metadata = ExtensionMetadata(
-            repo_base_url="https://example.com",
             pkg_name="test_extension",
             display_name="Test Extension",
             zip_name="test.zip",
             version=1,
-            python_version=3
+            python_version=3,
+            repo_url="https://example.com"
         )
 
         self.assertEqual(metadata.pkg_name, "test_extension")
@@ -90,35 +90,35 @@ class TestExtensionMetadata(unittest.TestCase):
         """Test that empty pkg_name raises ValueError"""
         with self.assertRaises(ValueError):
             ExtensionMetadata(
-                repo_base_url="https://example.com",
                 pkg_name="",
                 display_name="Test",
                 zip_name="test.zip",
                 version=1,
-                python_version=3
+                python_version=3,
+                repo_url="https://example.com"
             )
 
     def test_negative_version_raises_error(self):
         """Test that negative version raises ValueError"""
         with self.assertRaises(ValueError):
             ExtensionMetadata(
-                repo_base_url="https://example.com",
                 pkg_name="test",
                 display_name="Test",
                 zip_name="test.zip",
                 version=-1,
-                python_version=3
+                python_version=3,
+                repo_url="https://example.com"
             )
 
     def test_metadata_is_immutable(self):
         """Test that metadata is immutable"""
         metadata = ExtensionMetadata(
-            repo_base_url="https://example.com",
             pkg_name="test",
             display_name="Test",
             zip_name="test.zip",
             version=1,
-            python_version=3
+            python_version=3,
+            repo_url="https://example.com"
         )
 
         with self.assertRaises(AttributeError):

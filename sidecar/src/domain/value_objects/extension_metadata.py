@@ -7,7 +7,6 @@ from typing import Optional
 class ExtensionMetadata:
     """Immutable value object representing extension metadata"""
 
-    repo_base_url: str
     pkg_name: str
     display_name: str
     zip_name: str

@@ -79,11 +79,15 @@ class ExtensionCubit extends Cubit<ExtensionState> {
       final newInstallingExtensions = Map<String, Pair<InstallStatus, double>>.from(state.installingExtensions)..addAll({extension.pkgName: pair});
       safeEmit(state.copyWith(installingExtensions: newInstallingExtensions));
       if (pair.first == InstallStatus.completed || pair.first == InstallStatus.failed) {
+        final newInstallingExtensions = Map<String, Pair<InstallStatus, double>>.from(state.installingExtensions)..remove(extension.pkgName);
+        safeEmit(state.copyWith(installingExtensions: newInstallingExtensions));
         _installingStream[extension.pkgName]?.cancel();
         _installingStream.remove(extension.pkgName);
         loadExtensions();
       }
     }, onError: (error) {
+      final newInstallingExtensions = Map<String, Pair<InstallStatus, double>>.from(state.installingExtensions)..remove(extension.pkgName);
+      safeEmit(state.copyWith(installingExtensions: newInstallingExtensions));
       debugPrint(error.toString());
     });
     _installingStream[extension.pkgName] = sub;

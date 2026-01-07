@@ -46,7 +46,6 @@ class RemoteExtensionRepositoryImpl(RemoteExtensionRepository):
         for item in data["extensions"]:
             try:
                 metadata = ExtensionMetadata(
-                    repo_base_url=repo_url,  # Keep original repo link
                     pkg_name=item["pkg_name"],
                     display_name=item["display_name"],
                     zip_name=item.get("zip_name", ""), # Now optional

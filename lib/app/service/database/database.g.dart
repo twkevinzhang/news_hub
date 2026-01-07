@@ -331,11 +331,11 @@ class $InstalledExtensionsTable extends InstalledExtensions
   final GeneratedDatabase attachedDatabase;
   final String? _alias;
   $InstalledExtensionsTable(this.attachedDatabase, [this._alias]);
-  static const VerificationMeta _repoBaseUrlMeta =
-      const VerificationMeta('repoBaseUrl');
+  static const VerificationMeta _repoUrlMeta =
+      const VerificationMeta('repoUrl');
   @override
-  late final GeneratedColumn<String> repoBaseUrl = GeneratedColumn<String>(
-      'repo_base_url', aliasedName, false,
+  late final GeneratedColumn<String> repoUrl = GeneratedColumn<String>(
+      'repo_url', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _pkgNameMeta =
       const VerificationMeta('pkgName');
@@ -382,7 +382,7 @@ class $InstalledExtensionsTable extends InstalledExtensions
           GeneratedColumn.constraintIsAlways('CHECK ("is_nsfw" IN (0, 1))'));
   @override
   List<GeneratedColumn> get $columns => [
-        repoBaseUrl,
+        repoUrl,
         pkgName,
         displayName,
         zipName,
@@ -401,13 +401,11 @@ class $InstalledExtensionsTable extends InstalledExtensions
       {bool isInserting = false}) {
     final context = VerificationContext();
     final data = instance.toColumns(true);
-    if (data.containsKey('repo_base_url')) {
-      context.handle(
-          _repoBaseUrlMeta,
-          repoBaseUrl.isAcceptableOrUnknown(
-              data['repo_base_url']!, _repoBaseUrlMeta));
+    if (data.containsKey('repo_url')) {
+      context.handle(_repoUrlMeta,
+          repoUrl.isAcceptableOrUnknown(data['repo_url']!, _repoUrlMeta));
     } else if (isInserting) {
-      context.missing(_repoBaseUrlMeta);
+      context.missing(_repoUrlMeta);
     }
     if (data.containsKey('pkg_name')) {
       context.handle(_pkgNameMeta,
@@ -462,8 +460,8 @@ class $InstalledExtensionsTable extends InstalledExtensions
   InstalledExtension map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
     return InstalledExtension(
-      repoBaseUrl: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}repo_base_url'])!,
+      repoUrl: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}repo_url'])!,
       pkgName: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}pkg_name'])!,
       displayName: attachedDatabase.typeMapping
@@ -489,7 +487,7 @@ class $InstalledExtensionsTable extends InstalledExtensions
 
 class InstalledExtension extends DataClass
     implements Insertable<InstalledExtension> {
-  final String repoBaseUrl;
+  final String repoUrl;
   final String pkgName;
   final String displayName;
   final String zipName;
@@ -498,7 +496,7 @@ class InstalledExtension extends DataClass
   final String? lang;
   final bool isNsfw;
   const InstalledExtension(
-      {required this.repoBaseUrl,
+      {required this.repoUrl,
       required this.pkgName,
       required this.displayName,
       required this.zipName,
@@ -509,7 +507,7 @@ class InstalledExtension extends DataClass
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    map['repo_base_url'] = Variable<String>(repoBaseUrl);
+    map['repo_url'] = Variable<String>(repoUrl);
     map['pkg_name'] = Variable<String>(pkgName);
     map['display_name'] = Variable<String>(displayName);
     map['zip_name'] = Variable<String>(zipName);
@@ -524,7 +522,7 @@ class InstalledExtension extends DataClass
 
   InstalledExtensionsCompanion toCompanion(bool nullToAbsent) {
     return InstalledExtensionsCompanion(
-      repoBaseUrl: Value(repoBaseUrl),
+      repoUrl: Value(repoUrl),
       pkgName: Value(pkgName),
       displayName: Value(displayName),
       zipName: Value(zipName),
@@ -539,7 +537,7 @@ class InstalledExtension extends DataClass
       {ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return InstalledExtension(
-      repoBaseUrl: serializer.fromJson<String>(json['repoBaseUrl']),
+      repoUrl: serializer.fromJson<String>(json['repoUrl']),
       pkgName: serializer.fromJson<String>(json['pkgName']),
       displayName: serializer.fromJson<String>(json['displayName']),
       zipName: serializer.fromJson<String>(json['zipName']),
@@ -553,7 +551,7 @@ class InstalledExtension extends DataClass
   Map<String, dynamic> toJson({ValueSerializer? serializer}) {
     serializer ??= driftRuntimeOptions.defaultSerializer;
     return <String, dynamic>{
-      'repoBaseUrl': serializer.toJson<String>(repoBaseUrl),
+      'repoUrl': serializer.toJson<String>(repoUrl),
       'pkgName': serializer.toJson<String>(pkgName),
       'displayName': serializer.toJson<String>(displayName),
       'zipName': serializer.toJson<String>(zipName),
@@ -565,7 +563,7 @@ class InstalledExtension extends DataClass
   }
 
   InstalledExtension copyWith(
-          {String? repoBaseUrl,
+          {String? repoUrl,
           String? pkgName,
           String? displayName,
           String? zipName,
@@ -574,7 +572,7 @@ class InstalledExtension extends DataClass
           Value<String?> lang = const Value.absent(),
           bool? isNsfw}) =>
       InstalledExtension(
-        repoBaseUrl: repoBaseUrl ?? this.repoBaseUrl,
+        repoUrl: repoUrl ?? this.repoUrl,
         pkgName: pkgName ?? this.pkgName,
         displayName: displayName ?? this.displayName,
         zipName: zipName ?? this.zipName,
@@ -585,8 +583,7 @@ class InstalledExtension extends DataClass
       );
   InstalledExtension copyWithCompanion(InstalledExtensionsCompanion data) {
     return InstalledExtension(
-      repoBaseUrl:
-          data.repoBaseUrl.present ? data.repoBaseUrl.value : this.repoBaseUrl,
+      repoUrl: data.repoUrl.present ? data.repoUrl.value : this.repoUrl,
       pkgName: data.pkgName.present ? data.pkgName.value : this.pkgName,
       displayName:
           data.displayName.present ? data.displayName.value : this.displayName,
@@ -603,7 +600,7 @@ class InstalledExtension extends DataClass
   @override
   String toString() {
     return (StringBuffer('InstalledExtension(')
-          ..write('repoBaseUrl: $repoBaseUrl, ')
+          ..write('repoUrl: $repoUrl, ')
           ..write('pkgName: $pkgName, ')
           ..write('displayName: $displayName, ')
           ..write('zipName: $zipName, ')
@@ -616,13 +613,13 @@ class InstalledExtension extends DataClass
   }
 
   @override
-  int get hashCode => Object.hash(repoBaseUrl, pkgName, displayName, zipName,
+  int get hashCode => Object.hash(repoUrl, pkgName, displayName, zipName,
       version, pythonVersion, lang, isNsfw);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is InstalledExtension &&
-          other.repoBaseUrl == this.repoBaseUrl &&
+          other.repoUrl == this.repoUrl &&
           other.pkgName == this.pkgName &&
           other.displayName == this.displayName &&
           other.zipName == this.zipName &&
@@ -633,7 +630,7 @@ class InstalledExtension extends DataClass
 }
 
 class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
-  final Value<String> repoBaseUrl;
+  final Value<String> repoUrl;
   final Value<String> pkgName;
   final Value<String> displayName;
   final Value<String> zipName;
@@ -643,7 +640,7 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
   final Value<bool> isNsfw;
   final Value<int> rowid;
   const InstalledExtensionsCompanion({
-    this.repoBaseUrl = const Value.absent(),
+    this.repoUrl = const Value.absent(),
     this.pkgName = const Value.absent(),
     this.displayName = const Value.absent(),
     this.zipName = const Value.absent(),
@@ -654,7 +651,7 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
     this.rowid = const Value.absent(),
   });
   InstalledExtensionsCompanion.insert({
-    required String repoBaseUrl,
+    required String repoUrl,
     required String pkgName,
     required String displayName,
     required String zipName,
@@ -663,7 +660,7 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
     this.lang = const Value.absent(),
     required bool isNsfw,
     this.rowid = const Value.absent(),
-  })  : repoBaseUrl = Value(repoBaseUrl),
+  })  : repoUrl = Value(repoUrl),
         pkgName = Value(pkgName),
         displayName = Value(displayName),
         zipName = Value(zipName),
@@ -671,7 +668,7 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
         pythonVersion = Value(pythonVersion),
         isNsfw = Value(isNsfw);
   static Insertable<InstalledExtension> custom({
-    Expression<String>? repoBaseUrl,
+    Expression<String>? repoUrl,
     Expression<String>? pkgName,
     Expression<String>? displayName,
     Expression<String>? zipName,
@@ -682,7 +679,7 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
-      if (repoBaseUrl != null) 'repo_base_url': repoBaseUrl,
+      if (repoUrl != null) 'repo_url': repoUrl,
       if (pkgName != null) 'pkg_name': pkgName,
       if (displayName != null) 'display_name': displayName,
       if (zipName != null) 'zip_name': zipName,
@@ -695,7 +692,7 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
   }
 
   InstalledExtensionsCompanion copyWith(
-      {Value<String>? repoBaseUrl,
+      {Value<String>? repoUrl,
       Value<String>? pkgName,
       Value<String>? displayName,
       Value<String>? zipName,
@@ -705,7 +702,7 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
       Value<bool>? isNsfw,
       Value<int>? rowid}) {
     return InstalledExtensionsCompanion(
-      repoBaseUrl: repoBaseUrl ?? this.repoBaseUrl,
+      repoUrl: repoUrl ?? this.repoUrl,
       pkgName: pkgName ?? this.pkgName,
       displayName: displayName ?? this.displayName,
       zipName: zipName ?? this.zipName,
@@ -720,8 +717,8 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
-    if (repoBaseUrl.present) {
-      map['repo_base_url'] = Variable<String>(repoBaseUrl.value);
+    if (repoUrl.present) {
+      map['repo_url'] = Variable<String>(repoUrl.value);
     }
     if (pkgName.present) {
       map['pkg_name'] = Variable<String>(pkgName.value);
@@ -753,7 +750,7 @@ class InstalledExtensionsCompanion extends UpdateCompanion<InstalledExtension> {
   @override
   String toString() {
     return (StringBuffer('InstalledExtensionsCompanion(')
-          ..write('repoBaseUrl: $repoBaseUrl, ')
+          ..write('repoUrl: $repoUrl, ')
           ..write('pkgName: $pkgName, ')
           ..write('displayName: $displayName, ')
           ..write('zipName: $zipName, ')
@@ -1701,7 +1698,7 @@ typedef $$ReposTableProcessedTableManager = ProcessedTableManager<
     PrefetchHooks Function()>;
 typedef $$InstalledExtensionsTableCreateCompanionBuilder
     = InstalledExtensionsCompanion Function({
-  required String repoBaseUrl,
+  required String repoUrl,
   required String pkgName,
   required String displayName,
   required String zipName,
@@ -1713,7 +1710,7 @@ typedef $$InstalledExtensionsTableCreateCompanionBuilder
 });
 typedef $$InstalledExtensionsTableUpdateCompanionBuilder
     = InstalledExtensionsCompanion Function({
-  Value<String> repoBaseUrl,
+  Value<String> repoUrl,
   Value<String> pkgName,
   Value<String> displayName,
   Value<String> zipName,
@@ -1733,8 +1730,8 @@ class $$InstalledExtensionsTableFilterComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnFilters<String> get repoBaseUrl => $composableBuilder(
-      column: $table.repoBaseUrl, builder: (column) => ColumnFilters(column));
+  ColumnFilters<String> get repoUrl => $composableBuilder(
+      column: $table.repoUrl, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get pkgName => $composableBuilder(
       column: $table.pkgName, builder: (column) => ColumnFilters(column));
@@ -1767,8 +1764,8 @@ class $$InstalledExtensionsTableOrderingComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  ColumnOrderings<String> get repoBaseUrl => $composableBuilder(
-      column: $table.repoBaseUrl, builder: (column) => ColumnOrderings(column));
+  ColumnOrderings<String> get repoUrl => $composableBuilder(
+      column: $table.repoUrl, builder: (column) => ColumnOrderings(column));
 
   ColumnOrderings<String> get pkgName => $composableBuilder(
       column: $table.pkgName, builder: (column) => ColumnOrderings(column));
@@ -1802,8 +1799,8 @@ class $$InstalledExtensionsTableAnnotationComposer
     super.$addJoinBuilderToRootComposer,
     super.$removeJoinBuilderFromRootComposer,
   });
-  GeneratedColumn<String> get repoBaseUrl => $composableBuilder(
-      column: $table.repoBaseUrl, builder: (column) => column);
+  GeneratedColumn<String> get repoUrl =>
+      $composableBuilder(column: $table.repoUrl, builder: (column) => column);
 
   GeneratedColumn<String> get pkgName =>
       $composableBuilder(column: $table.pkgName, builder: (column) => column);
@@ -1857,7 +1854,7 @@ class $$InstalledExtensionsTableTableManager extends RootTableManager<
               $$InstalledExtensionsTableAnnotationComposer(
                   $db: db, $table: table),
           updateCompanionCallback: ({
-            Value<String> repoBaseUrl = const Value.absent(),
+            Value<String> repoUrl = const Value.absent(),
             Value<String> pkgName = const Value.absent(),
             Value<String> displayName = const Value.absent(),
             Value<String> zipName = const Value.absent(),
@@ -1868,7 +1865,7 @@ class $$InstalledExtensionsTableTableManager extends RootTableManager<
             Value<int> rowid = const Value.absent(),
           }) =>
               InstalledExtensionsCompanion(
-            repoBaseUrl: repoBaseUrl,
+            repoUrl: repoUrl,
             pkgName: pkgName,
             displayName: displayName,
             zipName: zipName,
@@ -1879,7 +1876,7 @@ class $$InstalledExtensionsTableTableManager extends RootTableManager<
             rowid: rowid,
           ),
           createCompanionCallback: ({
-            required String repoBaseUrl,
+            required String repoUrl,
             required String pkgName,
             required String displayName,
             required String zipName,
@@ -1890,7 +1887,7 @@ class $$InstalledExtensionsTableTableManager extends RootTableManager<
             Value<int> rowid = const Value.absent(),
           }) =>
               InstalledExtensionsCompanion.insert(
-            repoBaseUrl: repoBaseUrl,
+            repoUrl: repoUrl,
             pkgName: pkgName,
             displayName: displayName,
             zipName: zipName,

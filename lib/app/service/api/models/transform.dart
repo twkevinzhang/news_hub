@@ -191,7 +191,6 @@ extension LinkParagraphTransform on pb.LinkParagraph {
 extension ExtensionTransform on pb.Extension {
   domain.Extension toExtensionDomain() {
     return domain.Extension(
-      repoBaseUrl: repoBaseUrl,
       pkgName: pkgName,
       displayName: displayName,
       zipName: zipName,
@@ -199,6 +198,7 @@ extension ExtensionTransform on pb.Extension {
       pythonVersion: pythonVersion,
       lang: hasLang() ? lang : null,
       isNsfw: isNsfw,
+      repoUrl: repoUrl,
     );
   }
 }
@@ -206,7 +206,6 @@ extension ExtensionTransform on pb.Extension {
 extension RemoteExtensionTransform on pb.RemoteExtension {
   domain.RemoteExtension toRemoteExtensionDomain() {
     return domain.RemoteExtension(
-      repoBaseUrl: base.repoBaseUrl,
       pkgName: base.pkgName,
       displayName: base.displayName,
       zipName: base.zipName,

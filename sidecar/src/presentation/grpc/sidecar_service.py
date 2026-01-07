@@ -90,12 +90,12 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
         """Install an extension"""
         try:
             metadata = ExtensionMetadata(
-                repo_base_url=request.repo_base_url,
                 pkg_name=request.pkg_name,
                 display_name=request.pkg_name,  # Will be updated from extension
                 zip_name=request.zip_name,
                 version=1,
                 python_version=3,
+                repo_url=request.repo_url if request.HasField('repo_url') else ""
             )
             # This involves network/IO, ideally should be async but use_case is sync
             loop = asyncio.get_event_loop()
@@ -127,14 +127,14 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             pb_extensions = [
                 pb2.RemoteExtension(
                     base=pb2.Extension(
-                        repo_base_url=ext.repo_base_url,
                         pkg_name=ext.pkg_name,
                         display_name=ext.display_name,
                         zip_name=ext.zip_name,
                         version=ext.version,
                         python_version=ext.python_version,
                         lang=ext.lang,
-                        is_nsfw=ext.is_nsfw
+                        is_nsfw=ext.is_nsfw,
+                        repo_url=ext.repo_url
                     ),
                     icon_url=ext.icon_url or "",
                     repo_url=ext.repo_url or ""
@@ -264,14 +264,14 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
     def _extension_to_pb(extension):
         """Convert Extension entity to protobuf"""
         return pb2.Extension(
-            repo_base_url=extension.metadata.repo_base_url,
             pkg_name=extension.metadata.pkg_name,
             display_name=extension.metadata.display_name,
             zip_name=extension.metadata.zip_name,
             version=extension.metadata.version,
             python_version=extension.metadata.python_version,
             lang=extension.metadata.lang,
-            is_nsfw=extension.metadata.is_nsfw
+            is_nsfw=extension.metadata.is_nsfw,
+            repo_url=extension.metadata.repo_url
         )
 
     # Health Check Methods

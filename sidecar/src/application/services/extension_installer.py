@@ -25,6 +25,9 @@ class ExtensionInstaller:
 
     def download_directory(self, repo_url: str, pkg_name: str) -> None:
         """Download a directory from GitHub repository"""
+        if not repo_url:
+            raise ValueError(f"Repository URL cannot be None for extension {pkg_name}")
+            
         # 1. Download full repo zip (trying main/master)
         zip_path = None
         for branch in ["main", "master"]:

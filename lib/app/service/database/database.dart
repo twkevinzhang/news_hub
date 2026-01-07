@@ -21,7 +21,7 @@ class Repos extends Table {
 }
 
 class InstalledExtensions extends Table {
-  TextColumn get repoBaseUrl => text()();
+  TextColumn get repoUrl => text()();
   TextColumn get pkgName => text()();
   TextColumn get displayName => text()();
   TextColumn get zipName => text()();
@@ -74,7 +74,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 2;
+  int get schemaVersion => 3;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -85,6 +85,10 @@ class AppDatabase extends _$AppDatabase {
           if (from < 2) {
             await m.createTable(collections);
             await m.createTable(collectionBoardRefs);
+          }
+          if (from < 3) {
+            // Rename repoBaseUrl to repoUrl
+            await m.renameColumn(installedExtensions, 'repo_base_url', installedExtensions.repoUrl);
           }
         },
       );

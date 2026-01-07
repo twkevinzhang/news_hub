@@ -39,7 +39,6 @@ class ExtensionFileManager:
                 data = json.load(f)
                 return [
                     ExtensionMetadata(
-                        repo_base_url=item.get("repo_base_url", ""),
                         pkg_name=item["pkg_name"],
                         display_name=item.get("display_name", item["pkg_name"]),
                         zip_name=item.get("zip_name", ""),
@@ -60,7 +59,6 @@ class ExtensionFileManager:
         """Save all installed extensions metadata to centralized JSON"""
         data = [
             {
-                "repo_base_url": m.repo_base_url,
                 "pkg_name": m.pkg_name,
                 "display_name": m.display_name,
                 "zip_name": m.zip_name,
@@ -141,7 +139,6 @@ class ExtensionFileManager:
             with open(meta_path, "r", encoding="utf-8") as f:
                 data = json.load(f)
                 return ExtensionMetadata(
-                    repo_base_url=data.get("repo_base_url", ""),
                     pkg_name=pkg_name,
                     display_name=data.get("display_name", pkg_name),
                     zip_name=data.get("zip_name", ""),
@@ -160,7 +157,6 @@ class ExtensionFileManager:
         # Save to both individual metadata.json and centralized list
         meta_path = self.get_extension_path(metadata.pkg_name) / "metadata.json"
         data = {
-            "repo_base_url": metadata.repo_base_url,
             "pkg_name": metadata.pkg_name,
             "display_name": metadata.display_name,
             "zip_name": metadata.zip_name,

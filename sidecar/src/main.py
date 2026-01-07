@@ -45,20 +45,20 @@ async def main():
 
         logger.info(f"gRPC aio server running on port {Config.GRPC_PORT}...")
         
-        # ==========
-        # Start test log generator
-        async def generate_test_logs():
-            """Generate a test log every second for debugging"""
-            counter = 0
-            test_logger = logging.getLogger("sidecar.test")
-            while True:
-                counter += 1
-                test_logger.info(f"Test log message #{counter} - Verifying log streaming pipeline")
-                await asyncio.sleep(1)
+        # # ==========
+        # # Start test log generator
+        # async def generate_test_logs():
+        #     """Generate a test log every second for debugging"""
+        #     counter = 0
+        #     test_logger = logging.getLogger("sidecar.test")
+        #     while True:
+        #         counter += 1
+        #         test_logger.info(f"Test log message #{counter} - Verifying log streaming pipeline")
+        #         await asyncio.sleep(1)
         
-        asyncio.create_task(generate_test_logs())
-        logger.info("Test log generator started (1 log/second)")
-        # ==========
+        # asyncio.create_task(generate_test_logs())
+        # logger.info("Test log generator started (1 log/second)")
+        # # ==========
         
         await server.wait_for_termination()
 

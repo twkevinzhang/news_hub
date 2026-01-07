@@ -72,7 +72,6 @@ class Repo {
 }
 
 class Extension {
-  final String repoBaseUrl;
   final String pkgName;
   final String displayName;
   final String zipName;
@@ -80,9 +79,9 @@ class Extension {
   final int pythonVersion;
   final String? lang;
   final bool isNsfw;
+  final String repoUrl;
 
   Extension({
-    required this.repoBaseUrl,
     required this.pkgName,
     required this.displayName,
     required this.zipName,
@@ -90,15 +89,14 @@ class Extension {
     required this.pythonVersion,
     this.lang,
     required this.isNsfw,
+    required this.repoUrl,
   });
 }
 
 class RemoteExtension extends Extension {
   final String iconUrl;
-  final String repoUrl;
 
   RemoteExtension({
-    required super.repoBaseUrl,
     required super.pkgName,
     required super.displayName,
     required super.zipName,
@@ -106,14 +104,13 @@ class RemoteExtension extends Extension {
     required super.pythonVersion,
     required super.lang,
     required super.isNsfw,
+    required super.repoUrl,
     required this.iconUrl,
-    required this.repoUrl,
   });
 }
 
 extension RemoteExtensionEx on RemoteExtension {
   RemoteExtension copyWith({
-    String? repoBaseUrl,
     String? pkgName,
     String? displayName,
     String? zipName,
@@ -127,7 +124,6 @@ extension RemoteExtensionEx on RemoteExtension {
     Set<Board> boards = const {},
   }) {
     return RemoteExtension(
-      repoBaseUrl: repoBaseUrl ?? this.repoBaseUrl,
       pkgName: pkgName ?? this.pkgName,
       displayName: displayName ?? this.displayName,
       zipName: zipName ?? this.zipName,

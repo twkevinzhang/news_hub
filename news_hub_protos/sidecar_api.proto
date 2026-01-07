@@ -272,7 +272,7 @@ message GetInstalledExtensionRes {
 message InstallExtensionReq {
   string pkg_name = 1;
   string zip_name = 2;
-  string repo_base_url = 3;
+  optional string repo_url = 4;
 }
 
 message UninstallExtensionReq {
@@ -302,7 +302,6 @@ message RemoteExtension {
 }
 
 message Extension {
-  string repo_base_url = 1;
   string pkg_name = 2;
   string display_name = 3;
   string zip_name = 4;
@@ -310,6 +309,7 @@ message Extension {
   int32 python_version = 6;
   optional string lang = 7;
   bool is_nsfw = 8;
+  optional string repo_url = 9;
 }
 
 // Extension Repo messages

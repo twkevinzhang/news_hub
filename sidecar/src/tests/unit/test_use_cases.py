@@ -25,12 +25,12 @@ class TestInstallExtensionUseCase(unittest.TestCase):
         )
 
         self.metadata = ExtensionMetadata(
-            repo_base_url="https://example.com",
             pkg_name="test_ext",
             display_name="Test Extension",
             zip_name="test.zip",
             version=1,
-            python_version=3
+            python_version=3,
+            repo_url="https://example.com"
         )
 
     def test_install_new_extension(self):

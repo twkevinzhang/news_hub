@@ -24,7 +24,6 @@ class ListInstalledExtensions {
       final site = await _apiService.getSite(extensionPkgName: e.pkgName);
       final boards = await _apiService.listBoards(extensionPkgName: e.pkgName, siteId: site.id);
       return ExtensionWithBoards(
-        repoBaseUrl: e.repoBaseUrl,
         pkgName: e.pkgName,
         displayName: e.displayName,
         zipName: e.zipName,
@@ -32,6 +31,7 @@ class ListInstalledExtensions {
         pythonVersion: e.pythonVersion,
         lang: e.lang,
         isNsfw: e.isNsfw,
+        repoUrl: e.repoUrl,
         site: site,
         boards: boards.toSet(),
       );
@@ -44,7 +44,6 @@ class ExtensionWithBoards extends Extension {
   final Site site;
   final Set<Board> boards;
   ExtensionWithBoards({
-    required super.repoBaseUrl,
     required super.pkgName,
     required super.displayName,
     required super.zipName,
@@ -52,6 +51,7 @@ class ExtensionWithBoards extends Extension {
     required super.pythonVersion,
     required super.lang,
     required super.isNsfw,
+    required super.repoUrl,
     required this.site,
     required this.boards,
   });

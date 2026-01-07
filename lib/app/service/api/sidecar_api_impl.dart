@@ -145,7 +145,7 @@ class SidecarApiImpl implements ApiService {
     await _client.installExtension(pb.InstallExtensionReq(
       pkgName: extension.pkgName,
       zipName: extension.zipName,
-      repoBaseUrl: extension.repoBaseUrl,
+      repoUrl: extension.repoUrl,
     ));
   }
 

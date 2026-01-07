@@ -38,6 +38,6 @@ class RemoteExtensionRepository(ABC):
     """Repository interface for remote extensions"""
 
     @abstractmethod
-    def fetch_all(self, repo_base_url: str) -> List[ExtensionMetadata]:
+    def fetch_all(self, repo_url: str) -> List[ExtensionMetadata]:
         """Fetch all available extensions from remote repository"""
         pass
