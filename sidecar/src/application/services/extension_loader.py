@@ -19,25 +19,32 @@ class ExtensionLoader:
         if pkg_name in self._loaded_resolvers:
             return self._loaded_resolvers[pkg_name]
 
-        resolver_path = extension_path / "resolver_impl.py"
-        if not resolver_path.exists():
-            raise FileNotFoundError(f"Resolver not found: {resolver_path}")
+        # Standard Package Structure:
+        # extension_path/
+        #   {pkg_name}/
+        #     __init__.py
+        #     resolver_impl.py
 
         # Add extension directory to sys.path
         ext_dir_str = str(extension_path)
         if ext_dir_str not in sys.path:
             sys.path.insert(0, ext_dir_str)
 
-        # Load module
-        module_name = f"{pkg_name}_resolver"
-        spec = importlib.util.spec_from_file_location(module_name, resolver_path)
-
-        if not spec or not spec.loader:
-            raise ImportError(f"Cannot load module from {resolver_path}")
-
-        module = importlib.util.module_from_spec(spec)
-        sys.modules[module_name] = module
-        spec.loader.exec_module(module)
+        module_name = f"{pkg_name}.resolver_impl"
+        try:
+            # Use standard import mechanism
+            # This allows relative imports inside the extension package to work correctly
+            if module_name in sys.modules:
+                # Reload if already loaded (useful for development/updates)
+                module = importlib.reload(sys.modules[module_name])
+            else:
+                module = importlib.import_module(module_name)
+        except ImportError as e:
+            logger.error(f"Failed to import module {module_name}: {e}")
+            raise ImportError(f"Cannot load module {module_name} from {extension_path}: {e}")
+        except Exception as e:
+            logger.error(f"Unexpected error loading module {module_name}: {e}")
+            raise e
 
         # Get ResolverImpl class
         if not hasattr(module, "ResolverImpl"):
