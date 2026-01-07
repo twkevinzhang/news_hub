@@ -27,12 +27,18 @@ class CollectionListBloc extends Bloc<CollectionListEvent, CollectionListState> 
   CollectionListBloc(this._repository) : super(const CollectionListState()) {
     on<LoadCollectionList>((event, emit) async {
       emit(state.copyWith(isLoading: true));
-      try {
-        final collections = await _repository.list();
-        emit(state.copyWith(collections: collections, isLoading: false));
-      } catch (e) {
-        emit(state.copyWith(isLoading: false, errorMessage: e.toString()));
-      }
+      await emit.forEach<List<Collection>>(
+        _repository.watchList(),
+        onData: (collections) => state.copyWith(
+          collections: collections,
+          isLoading: false,
+          errorMessage: null,
+        ),
+        onError: (error, stackTrace) => state.copyWith(
+          isLoading: false,
+          errorMessage: error.toString(),
+        ),
+      );
     });
   }
 }
