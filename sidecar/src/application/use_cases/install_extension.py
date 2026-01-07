@@ -46,6 +46,7 @@ class InstallExtensionUseCase:
             is_installed=True
         )
         self.repository.save(extension)
+        self.installer.progress_tracker.set_progress(metadata.pkg_name, 100)
 
         logger.info(f"Successfully installed extension: {metadata.pkg_name}")
         return extension

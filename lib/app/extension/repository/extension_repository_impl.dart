@@ -34,8 +34,39 @@ class ExtensionRepositoryImpl implements ExtensionRepository {
 
     yield Pair(InstallStatus.installing, 0.0);
     try {
-      await _apiService.installExtension(extension: extension);
-      yield Pair(InstallStatus.completed, 1.0);
+      bool finished = false;
+      String? error;
+
+      // Start installation in parallel
+      final installFuture = _apiService.installExtension(extension: extension).then((_) {
+        finished = true;
+      }).catchError((e) {
+        finished = true;
+        error = e.toString();
+      });
+
+      // Poll progress
+      while (!finished) {
+        await Future.delayed(500.milliseconds);
+        if (finished) break;
+
+        try {
+          final progress = await _apiService.getInstallProgress(
+            extensionPkgName: extension.pkgName,
+          );
+          yield Pair(InstallStatus.installing, progress / 100.0);
+        } catch (e) {
+          // Ignore polling errors if we are still installing
+        }
+      }
+
+      await installFuture;
+
+      if (error != null) {
+        yield Pair(InstallStatus.failed, 0.0);
+      } else {
+        yield Pair(InstallStatus.completed, 1.0);
+      }
     } catch (e) {
       yield Pair(InstallStatus.failed, 0.0);
     }

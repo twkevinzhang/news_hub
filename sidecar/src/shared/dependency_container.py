@@ -6,6 +6,7 @@ from infrastructure.repositories.extension_repository_impl import ExtensionRepos
 from infrastructure.repositories.remote_extension_repository_impl import RemoteExtensionRepositoryImpl
 from infrastructure.health_check_service import HealthCheckService, HealthStatus
 from infrastructure.logging_service import LoggingService
+from infrastructure.progress_tracker import ProgressTracker
 from application.services.extension_installer import ExtensionInstaller
 from application.services.extension_loader import ExtensionLoader
 from application.use_cases.install_extension import InstallExtensionUseCase
@@ -43,6 +44,7 @@ class DependencyContainer:
             download_dir=Config.DOWNLOAD_DIR,
             persistent_dir=Config.PERSISTENT_DIR
         )
+        self.progress_tracker = ProgressTracker()
 
         # Repositories
         self.extension_repository = ExtensionRepositoryImpl(self.file_manager)
@@ -56,7 +58,8 @@ class DependencyContainer:
         # Application Services
         self.extension_installer = ExtensionInstaller(
             downloader=self.http_downloader,
-            file_manager=self.file_manager
+            file_manager=self.file_manager,
+            progress_tracker=self.progress_tracker
         )
         self.extension_loader = ExtensionLoader()
 
@@ -100,7 +103,8 @@ class DependencyContainer:
             extension_repository=self.extension_repository,
             repo_repository=self.repo_repository,
             health_check_service=self.health_check_service,
-            logging_service=self.logging_service
+            logging_service=self.logging_service,
+            progress_tracker=self.progress_tracker
         )
 
         # Mark as fully initialized

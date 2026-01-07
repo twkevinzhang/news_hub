@@ -23,7 +23,7 @@ abstract class ApiService {
     required Extension extension,
   });
 
-  Future<List<Site>> getInstallProgress({
+  Future<int> getInstallProgress({
     required String extensionPkgName,
   });
   Future<List<Board>> listBoards({

@@ -112,9 +112,9 @@ class SidecarApiImpl implements ApiService {
   }
 
   @override
-  Future<List<domain.Site>> getInstallProgress({required String extensionPkgName}) async {
+  Future<int> getInstallProgress({required String extensionPkgName}) async {
     final res = await _client.getInstallProgress(pb.GetInstallProgressReq(pkgName: extensionPkgName));
-    return res.sites.map((s) => s.toSiteDomain()).toList();
+    return res.progress.toInt();
   }
 
   @override

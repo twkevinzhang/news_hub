@@ -8,15 +8,19 @@ from infrastructure.downloaders.http_downloader import HttpDownloader
 from infrastructure.file_system.extension_file_manager import ExtensionFileManager
 
 
+from infrastructure.progress_tracker import ProgressTracker
+
+
 logger = logging.getLogger(__name__)
 
 
 class ExtensionInstaller:
     """Handles extension installation process"""
 
-    def __init__(self, downloader: HttpDownloader, file_manager: ExtensionFileManager):
+    def __init__(self, downloader: HttpDownloader, file_manager: ExtensionFileManager, progress_tracker: ProgressTracker):
         self.downloader = downloader
         self.file_manager = file_manager
+        self.progress_tracker = progress_tracker
 
     def download(self, url: str, pkg_name: str) -> None:
         """Download extension zip file"""
@@ -29,6 +33,7 @@ class ExtensionInstaller:
             raise ValueError(f"Repository URL cannot be None for extension {pkg_name}")
             
         # 1. Download full repo zip (trying main/master)
+        self.progress_tracker.set_progress(pkg_name, 10)
         zip_path = None
         for branch in ["main", "master"]:
             try:
@@ -45,11 +50,13 @@ class ExtensionInstaller:
             raise ValueError(f"Failed to download repository zip for {repo_url}")
 
         # 2. Extract specific directory
+        self.progress_tracker.set_progress(pkg_name, 40)
         self.file_manager.extract_directory_from_zip(zip_path, pkg_name, pkg_name)
         
         # 3. Cleanup zip
         if zip_path.exists():
             zip_path.unlink()
+        self.progress_tracker.set_progress(pkg_name, 60)
 
     def extract(self, pkg_name: str) -> None:
         """Extract extension zip file"""
@@ -64,6 +71,7 @@ class ExtensionInstaller:
             return
 
         logger.info(f"Installing requirements for {pkg_name}")
+        self.progress_tracker.set_progress(pkg_name, 70)
         try:
             subprocess.check_call(
                 [sys.executable, '-m', 'pip', 'install', '-r', str(req_path)],
@@ -71,6 +79,7 @@ class ExtensionInstaller:
                 stderr=subprocess.PIPE
             )
             logger.info(f"Requirements installed for {pkg_name}")
+            self.progress_tracker.set_progress(pkg_name, 90)
         except subprocess.CalledProcessError as e:
             logger.error(f"Failed to install requirements for {pkg_name}: {e}")
             raise

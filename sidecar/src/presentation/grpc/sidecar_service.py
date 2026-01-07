@@ -19,6 +19,7 @@ from domain.repositories.extension_repository import ExtensionRepository
 from domain.repositories.repo_repository import RepoRepository
 from infrastructure.health_check_service import HealthCheckService
 from infrastructure.logging_service import LoggingService, python_level_to_proto, proto_level_to_python
+from infrastructure.progress_tracker import ProgressTracker
 
 
 logger = logging.getLogger(__name__)
@@ -40,7 +41,8 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
         extension_repository: ExtensionRepository,
         repo_repository: RepoRepository,
         health_check_service: HealthCheckService,
-        logging_service: LoggingService
+        logging_service: LoggingService,
+        progress_tracker: ProgressTracker
     ):
         self.install_extension_uc = install_extension_uc
         self.uninstall_extension_uc = uninstall_extension_uc
@@ -54,6 +56,7 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
         self.repo_repository = repo_repository
         self.health_check_service = health_check_service
         self.logging_service = logging_service
+        self.progress_tracker = progress_tracker
 
     async def ListInstalledExtensions(self, request, context):
         """List all installed extensions"""
@@ -149,8 +152,9 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             return pb2.ListRemoteExtensionsRes()
 
     async def GetInstallProgress(self, request, context):
-        """Get installation progress (placeholder)"""
-        return pb2.GetInstallProgressRes()
+        """Get installation progress"""
+        progress = self.progress_tracker.get_progress(request.pkg_name)
+        return pb2.GetInstallProgressRes(progress=progress)
 
     async def AddExtensionRepo(self, request, context):
         """Add a new extension repository"""

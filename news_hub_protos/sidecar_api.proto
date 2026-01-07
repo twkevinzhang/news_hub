@@ -45,7 +45,7 @@ message GetBoardsRes {
 
 message GetThreadInfosReq {
   string pkg_name = 6;
-  map<string, string> boards_sorting = 2;
+  map<string, string> board_sorts = 2;
   optional news_hub.domain.PaginationReq page = 3;
   optional string keywords = 5;
 }
@@ -118,7 +118,7 @@ message GetInstallProgressReq {
 }
 
 message GetInstallProgressRes {
-  repeated news_hub.domain.Site sites = 1;
+  int64 progress = 2;
 }
 
 message ListRemoteExtensionsReq {
