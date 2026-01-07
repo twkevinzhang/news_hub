@@ -9,7 +9,8 @@ class AddRepo {
 
   Future<void> call({
     required String url,
+    String? displayName,
   }) {
-    return _repo.insert(url);
+    return _repo.insert(url, displayName: displayName);
   }
 }

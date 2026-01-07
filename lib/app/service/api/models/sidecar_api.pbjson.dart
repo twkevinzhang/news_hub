@@ -796,12 +796,17 @@ const AddExtensionRepoReq$json = {
   '1': 'AddExtensionRepoReq',
   '2': [
     {'1': 'url', '3': 1, '4': 1, '5': 9, '10': 'url'},
+    {'1': 'display_name', '3': 2, '4': 1, '5': 9, '9': 0, '10': 'displayName', '17': true},
+  ],
+  '8': [
+    {'1': '_display_name'},
   ],
 };
 
 /// Descriptor for `AddExtensionRepoReq`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List addExtensionRepoReqDescriptor = $convert.base64Decode(
-    'ChNBZGRFeHRlbnNpb25SZXBvUmVxEhAKA3VybBgBIAEoCVIDdXJs');
+    'ChNBZGRFeHRlbnNpb25SZXBvUmVxEhAKA3VybBgBIAEoCVIDdXJsEiYKDGRpc3BsYXlfbmFtZR'
+    'gCIAEoCUgAUgtkaXNwbGF5TmFtZYgBAUIPCg1fZGlzcGxheV9uYW1l');
 
 @$core.Deprecated('Use addExtensionRepoResDescriptor instead')
 const AddExtensionRepoRes$json = {

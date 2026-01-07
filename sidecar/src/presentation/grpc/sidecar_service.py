@@ -154,7 +154,7 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
         """Add a new extension repository"""
         try:
             loop = asyncio.get_event_loop()
-            repo = await loop.run_in_executor(None, self.add_repo_uc.execute, request.url)
+            repo = await loop.run_in_executor(None, self.add_repo_uc.execute, request.url, request.display_name)
             return pb2.AddExtensionRepoRes(
                 url=repo.url,
                 added_at=int(repo.added_at.timestamp() * 1000),

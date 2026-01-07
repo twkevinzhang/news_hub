@@ -193,8 +193,8 @@ class SidecarApiImpl implements ApiService {
   }
 
   @override
-  Future<void> addRepo({required String url}) async {
-    await _client.addExtensionRepo(pb.AddExtensionRepoReq(url: url));
+  Future<void> addRepo({required String url, String? displayName}) async {
+    await _client.addExtensionRepo(pb.AddExtensionRepoReq(url: url, displayName: displayName));
   }
 
   @override

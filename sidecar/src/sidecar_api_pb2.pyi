@@ -504,10 +504,12 @@ class ExtensionRepo(_message.Message):
     def __init__(self, url: _Optional[str] = ..., added_at: _Optional[int] = ..., display_name: _Optional[str] = ..., website: _Optional[str] = ..., signing_key_fingerprint: _Optional[str] = ..., icon: _Optional[str] = ...) -> None: ...
 
 class AddExtensionRepoReq(_message.Message):
-    __slots__ = ("url",)
+    __slots__ = ("url", "display_name")
     URL_FIELD_NUMBER: _ClassVar[int]
+    DISPLAY_NAME_FIELD_NUMBER: _ClassVar[int]
     url: str
-    def __init__(self, url: _Optional[str] = ...) -> None: ...
+    display_name: str
+    def __init__(self, url: _Optional[str] = ..., display_name: _Optional[str] = ...) -> None: ...
 
 class AddExtensionRepoRes(_message.Message):
     __slots__ = ("url", "added_at", "display_name", "website", "signing_key_fingerprint", "icon")

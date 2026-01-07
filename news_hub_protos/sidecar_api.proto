@@ -324,6 +324,7 @@ message ExtensionRepo {
 
 message AddExtensionRepoReq {
   string url = 1;
+  optional string display_name = 2;
 }
 
 message AddExtensionRepoRes {

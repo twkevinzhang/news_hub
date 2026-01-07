@@ -3556,10 +3556,14 @@ class ExtensionRepo extends $pb.GeneratedMessage {
 class AddExtensionRepoReq extends $pb.GeneratedMessage {
   factory AddExtensionRepoReq({
     $core.String? url,
+    $core.String? displayName,
   }) {
     final result = create();
     if (url != null) {
       result.url = url;
+    }
+    if (displayName != null) {
+      result.displayName = displayName;
     }
     return result;
   }
@@ -3569,6 +3573,7 @@ class AddExtensionRepoReq extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'AddExtensionRepoReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'pb'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'url')
+    ..aOS(2, _omitFieldNames ? '' : 'displayName')
     ..hasRequiredFields = false
   ;
 
@@ -3601,6 +3606,15 @@ class AddExtensionRepoReq extends $pb.GeneratedMessage {
   $core.bool hasUrl() => $_has(0);
   @$pb.TagNumber(1)
   void clearUrl() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.String get displayName => $_getSZ(1);
+  @$pb.TagNumber(2)
+  set displayName($core.String v) { $_setString(1, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasDisplayName() => $_has(1);
+  @$pb.TagNumber(2)
+  void clearDisplayName() => clearField(2);
 }
 
 class AddExtensionRepoRes extends $pb.GeneratedMessage {

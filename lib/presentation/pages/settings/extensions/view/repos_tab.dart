@@ -79,6 +79,7 @@ class ReposTab extends StatelessWidget {
             onPressed: () {
               cubit.addRepo(
                 url: urlController.text,
+                displayName: nameController.text.isNotEmpty ? nameController.text : null,
               );
               Navigator.pop(context);
             },
