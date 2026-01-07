@@ -24,7 +24,6 @@ class ListThreads {
     final extensions = await _listInstalledExtensions.withBoards();
     final threads = (await Future.wait(extensions.map((e) => _service.listThreads(
               extensionPkgName: e.pkgName,
-              siteId: e.site.id,
               boardsSorting: filter?.boardsSorting,
               pagination: pagination,
               keywords: filter?.keywords,
@@ -34,24 +33,21 @@ class ListThreads {
     return threads.map((t) {
       final e = extensions.firstWhere((e) => e.pkgName == t.extensionPkgName);
       final b = e.boards.firstWhere((b) => b.id == t.boardId);
-      return SingleImagePostWithExtension(post: t as SingleImagePost, board: b, extension: e, site: e.site);
+      return SingleImagePostWithExtension(post: t as SingleImagePost, board: b, extension: e);
     }).toList();
   }
 }
 
 class SingleImagePostWithExtension extends SingleImagePost {
   final Extension extension;
-  final Site site;
   final Board board;
 
   SingleImagePostWithExtension({
     required SingleImagePost post,
-    required this.site,
     required this.extension,
     required this.board,
   }) : super(
           extensionPkgName: post.extensionPkgName,
-          siteId: post.siteId,
           boardId: post.boardId,
           threadId: post.threadId,
           id: post.id,

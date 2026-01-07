@@ -15,14 +15,12 @@ import 'package:news_hub/domain/models/models.dart' as domain;
 @RoutePage()
 class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
   final String extensionPkgName;
-  final String siteId;
   final String boardId;
   final String threadId;
   const ThreadDetailScreen({
     super.key,
     required this.threadId,
     required this.extensionPkgName,
-    required this.siteId,
     required this.boardId,
   });
 
@@ -33,7 +31,6 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
         ..init(
           threadId: threadId,
           extensionPkgName: extensionPkgName,
-          siteId: siteId,
           boardId: boardId,
         ),
       child: this,

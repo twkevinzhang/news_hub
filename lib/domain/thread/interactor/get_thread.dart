@@ -16,27 +16,23 @@ class GetThread {
 
   Future<ArticlePostWithExtension> call({
     required String extensionPkgName,
-    required String siteId,
     required String boardId,
     required String threadId,
     String? postId,
   }) async {
     final extensionF = _getInstalledExtension.get(extensionPkgName);
-    final siteF = _service.getSite(extensionPkgName: extensionPkgName);
-    final boardsF = _service.listBoards(extensionPkgName: extensionPkgName, siteId: siteId);
+    final boardsF = _service.listBoards(extensionPkgName: extensionPkgName);
     final threadF = _service.getThread(
       extensionPkgName: extensionPkgName,
-      siteId: siteId,
       boardId: boardId,
       threadId: threadId,
       postId: postId,
     );
-    final (extension, site, boards, thread) = await (extensionF, siteF, boardsF, threadF).wait;
+    final (extension, boards, thread) = await (extensionF, boardsF, threadF).wait;
     final board = boards.firstWhere((b) => b.id == boardId);
     return ArticlePostWithExtension(
       post: thread as ArticlePost,
       board: board,
-      site: site,
       extension: extension,
     );
   }
@@ -44,17 +40,14 @@ class GetThread {
 
 class ArticlePostWithExtension extends ArticlePost {
   final Extension extension;
-  final Site site;
   final Board board;
 
   ArticlePostWithExtension({
     required ArticlePost post,
-    required this.site,
     required this.extension,
     required this.board,
   }) : super(
           extensionPkgName: post.extensionPkgName,
-          siteId: post.siteId,
           boardId: post.boardId,
           threadId: post.threadId,
           id: post.id,

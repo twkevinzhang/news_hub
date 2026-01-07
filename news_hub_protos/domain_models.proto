@@ -19,24 +19,15 @@ message PaginationRes {
 
 message Empty {}
 
-message Site {
-  string pkg_name = 6;
-  string id = 4;
-  string icon = 5;
-  string name = 1;
-  string description = 2;
-  string url = 3;
-}
-
 message Board {
-  string pkg_name = 8;
-  string site_id = 2;
   string id = 1;
+  reserved 2; // site_id was 2
   string name = 3;
   string icon = 4;
   string large_welcome_image = 5;
   string url = 6;
   repeated string supported_threads_sorting = 7;
+  string pkg_name = 8;
 }
 
 enum ParagraphType {
@@ -96,11 +87,12 @@ message LinkParagraph {
 }
 
 message Post {
-  string pkg_name = 6;
-  string site_id = 4;
-  string board_id = 3;
-  string thread_id = 2;
   string id = 1;
+  string thread_id = 2;
+  string board_id = 3;
+  reserved 4; // site_id was 4
+  reserved 5;
+  string pkg_name = 6;
   oneof content {
     ArticlePost article_post = 7;
     SingleImagePost single_image_post = 8;
@@ -137,16 +129,16 @@ message SingleImagePost {
 }
 
 message Comment {
-  string pkg_name = 12;
-  string site_id = 5;
-  string board_id = 4;
-  string thread_id = 3;
-  string post_id = 2;
   string id = 1;
+  string post_id = 2;
+  string thread_id = 3;
+  string board_id = 4;
   string author_id = 6;
   string author_name = 10;
   repeated Paragraph contents = 11;
+  string pkg_name = 12;
   int64 created_at = 8;
+  reserved 5, 7, 9; // site_id was 5
 }
 
 message Extension {

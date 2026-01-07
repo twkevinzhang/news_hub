@@ -18,31 +18,27 @@ class ListRegardingPosts {
 
   Future<List<ArticlePostWithExtension>> call({
     required String extensionPkgName,
-    required String siteId,
     required String boardId,
     required String threadId,
     String? replyToId,
     Pagination? pagination,
   }) async {
     final extensionF = _getInstalledExtension.get(extensionPkgName);
-    final siteF = _service.getSite(extensionPkgName: extensionPkgName);
-    final boardsF = _service.listBoards(extensionPkgName: extensionPkgName, siteId: siteId);
+    final boardsF = _service.listBoards(extensionPkgName: extensionPkgName);
     final regardingPostsF = _service.listRegardingPosts(
       extensionPkgName: extensionPkgName,
-      siteId: siteId,
       boardId: boardId,
       threadId: threadId,
       replyToId: replyToId,
       pagination: pagination,
     );
-    final (extension, site, boards, regardingPosts) = await (extensionF, siteF, boardsF, regardingPostsF).wait;
+    final (extension, boards, regardingPosts) = await (extensionF, boardsF, regardingPostsF).wait;
     final board = boards.firstWhere((b) => b.id == boardId);
 
     return regardingPosts
         .map((p) => ArticlePostWithExtension(
               post: p as ArticlePost,
               board: board,
-              site: site,
               extension: extension,
             ))
         .toList();

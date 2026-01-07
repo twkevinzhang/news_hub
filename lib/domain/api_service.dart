@@ -26,20 +26,13 @@ abstract class ApiService {
   Future<List<Site>> getInstallProgress({
     required String extensionPkgName,
   });
-
-  Future<Site> getSite({
-    required String extensionPkgName,
-  });
-
   Future<List<Board>> listBoards({
     required String extensionPkgName,
-    required String siteId,
     Pagination? pagination,
   });
 
   Future<List<Post>> listThreads({
     required String extensionPkgName,
-    required String siteId,
     required Map<String, String>? boardsSorting,
     Pagination? pagination,
     String? sortBy,
@@ -48,7 +41,6 @@ abstract class ApiService {
 
   Future<Post> getThread({
     required String extensionPkgName,
-    required String siteId,
     required String boardId,
     required String threadId,
     String? postId,
@@ -56,7 +48,6 @@ abstract class ApiService {
 
   Future<List<Post>> listRegardingPosts({
     required String extensionPkgName,
-    required String siteId,
     required String boardId,
     required String threadId,
     String? replyToId,
@@ -65,7 +56,6 @@ abstract class ApiService {
 
   Future<List<Comment>> listComments({
     required String extensionPkgName,
-    required String siteId,
     required String boardId,
     required String threadId,
     required String postId,

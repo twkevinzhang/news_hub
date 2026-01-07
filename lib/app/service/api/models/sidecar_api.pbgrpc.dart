@@ -22,10 +22,6 @@ export 'sidecar_api.pb.dart';
 
 @$pb.GrpcServiceName('news_hub.sidecar.SidecarApi')
 class SidecarApiClient extends $grpc.Client {
-  static final _$getSite = $grpc.ClientMethod<$0.GetSiteReq, $0.GetSiteRes>(
-      '/news_hub.sidecar.SidecarApi/GetSite',
-      ($0.GetSiteReq value) => value.writeToBuffer(),
-      ($core.List<$core.int> value) => $0.GetSiteRes.fromBuffer(value));
   static final _$getBoards = $grpc.ClientMethod<$0.GetBoardsReq, $0.GetBoardsRes>(
       '/news_hub.sidecar.SidecarApi/GetBoards',
       ($0.GetBoardsReq value) => value.writeToBuffer(),
@@ -109,10 +105,6 @@ class SidecarApiClient extends $grpc.Client {
       : super(channel, options: options,
         interceptors: interceptors);
 
-  $grpc.ResponseFuture<$0.GetSiteRes> getSite($0.GetSiteReq request, {$grpc.CallOptions? options}) {
-    return $createUnaryCall(_$getSite, request, options: options);
-  }
-
   $grpc.ResponseFuture<$0.GetBoardsRes> getBoards($0.GetBoardsReq request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getBoards, request, options: options);
   }
@@ -195,13 +187,6 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
   $core.String get $name => 'news_hub.sidecar.SidecarApi';
 
   SidecarApiServiceBase() {
-    $addMethod($grpc.ServiceMethod<$0.GetSiteReq, $0.GetSiteRes>(
-        'GetSite',
-        getSite_Pre,
-        false,
-        false,
-        ($core.List<$core.int> value) => $0.GetSiteReq.fromBuffer(value),
-        ($0.GetSiteRes value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$0.GetBoardsReq, $0.GetBoardsRes>(
         'GetBoards',
         getBoards_Pre,
@@ -337,10 +322,6 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
         ($1.Empty value) => value.writeToBuffer()));
   }
 
-  $async.Future<$0.GetSiteRes> getSite_Pre($grpc.ServiceCall call, $async.Future<$0.GetSiteReq> request) async {
-    return getSite(call, await request);
-  }
-
   $async.Future<$0.GetBoardsRes> getBoards_Pre($grpc.ServiceCall call, $async.Future<$0.GetBoardsReq> request) async {
     return getBoards(call, await request);
   }
@@ -417,7 +398,6 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
     return setLogLevel(call, await request);
   }
 
-  $async.Future<$0.GetSiteRes> getSite($grpc.ServiceCall call, $0.GetSiteReq request);
   $async.Future<$0.GetBoardsRes> getBoards($grpc.ServiceCall call, $0.GetBoardsReq request);
   $async.Future<$0.GetThreadInfosRes> getThreadInfos($grpc.ServiceCall call, $0.GetThreadInfosReq request);
   $async.Future<$0.GetThreadPostRes> getThreadPost($grpc.ServiceCall call, $0.GetThreadPostReq request);

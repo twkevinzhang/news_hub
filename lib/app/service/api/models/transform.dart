@@ -3,25 +3,12 @@ import 'package:news_hub/shared/extensions.dart';
 import 'sidecar_api.pb.dart' as pb;
 import 'domain_models.pb.dart' as domain_pb;
 
-extension SiteTransform on domain_pb.Site {
-  domain.Site toSiteDomain() {
-    return domain.Site(
-      extensionPkgName: pkgName,
-      id: id,
-      icon: icon,
-      name: name,
-      url: url,
-    );
-  }
-}
-
 extension BoardTransform on domain_pb.Board {
   domain.Board toBoardDomain() {
     return domain.Board(
       extensionPkgName: pkgName,
       id: id,
       name: name,
-      siteId: siteId,
       icon: icon,
       largeWelcomeImage: largeWelcomeImage,
       url: url,
@@ -47,7 +34,6 @@ extension ArticlePostTransform on domain_pb.ArticlePost {
   domain.ArticlePost toArticlePostDomain(domain_pb.Post post) {
     return domain.ArticlePost(
       extensionPkgName: post.pkgName,
-      siteId: post.siteId,
       boardId: post.boardId,
       threadId: post.threadId,
       id: post.id,
@@ -70,7 +56,6 @@ extension SingleImagePostTransform on domain_pb.SingleImagePost {
   domain.SingleImagePost toSingleImagePostDomain(domain_pb.Post post) {
     return domain.SingleImagePost(
       extensionPkgName: post.pkgName,
-      siteId: post.siteId,
       boardId: post.boardId,
       threadId: post.threadId,
       id: post.id,
@@ -97,7 +82,6 @@ extension CommentTransform on domain_pb.Comment {
       postId: postId,
       threadId: threadId,
       boardId: boardId,
-      siteId: siteId,
       extensionPkgName: pkgName,
       contents: contents.map((e) => e.toParagraphDomain()).toList(),
       authorId: authorId,

@@ -7,27 +7,13 @@ from typing import ClassVar as _ClassVar, Iterable as _Iterable, Mapping as _Map
 
 DESCRIPTOR: _descriptor.FileDescriptor
 
-class GetSiteReq(_message.Message):
-    __slots__ = ("pkg_name",)
-    PKG_NAME_FIELD_NUMBER: _ClassVar[int]
-    pkg_name: str
-    def __init__(self, pkg_name: _Optional[str] = ...) -> None: ...
-
-class GetSiteRes(_message.Message):
-    __slots__ = ("site",)
-    SITE_FIELD_NUMBER: _ClassVar[int]
-    site: _domain_models_pb2.Site
-    def __init__(self, site: _Optional[_Union[_domain_models_pb2.Site, _Mapping]] = ...) -> None: ...
-
 class GetBoardsReq(_message.Message):
-    __slots__ = ("pkg_name", "site_id", "page")
+    __slots__ = ("pkg_name", "page")
     PKG_NAME_FIELD_NUMBER: _ClassVar[int]
-    SITE_ID_FIELD_NUMBER: _ClassVar[int]
     PAGE_FIELD_NUMBER: _ClassVar[int]
     pkg_name: str
-    site_id: str
     page: _domain_models_pb2.PaginationReq
-    def __init__(self, pkg_name: _Optional[str] = ..., site_id: _Optional[str] = ..., page: _Optional[_Union[_domain_models_pb2.PaginationReq, _Mapping]] = ...) -> None: ...
+    def __init__(self, pkg_name: _Optional[str] = ..., page: _Optional[_Union[_domain_models_pb2.PaginationReq, _Mapping]] = ...) -> None: ...
 
 class GetBoardsRes(_message.Message):
     __slots__ = ("boards", "page")
@@ -38,8 +24,8 @@ class GetBoardsRes(_message.Message):
     def __init__(self, boards: _Optional[_Iterable[_Union[_domain_models_pb2.Board, _Mapping]]] = ..., page: _Optional[_Union[_domain_models_pb2.PaginationRes, _Mapping]] = ...) -> None: ...
 
 class GetThreadInfosReq(_message.Message):
-    __slots__ = ("pkg_name", "site_id", "boards_sorting", "page", "keywords")
-    class BoardsSortingEntry(_message.Message):
+    __slots__ = ("pkg_name", "board_sorts", "page", "keywords")
+    class BoardSortsEntry(_message.Message):
         __slots__ = ("key", "value")
         KEY_FIELD_NUMBER: _ClassVar[int]
         VALUE_FIELD_NUMBER: _ClassVar[int]
@@ -47,16 +33,14 @@ class GetThreadInfosReq(_message.Message):
         value: str
         def __init__(self, key: _Optional[str] = ..., value: _Optional[str] = ...) -> None: ...
     PKG_NAME_FIELD_NUMBER: _ClassVar[int]
-    SITE_ID_FIELD_NUMBER: _ClassVar[int]
-    BOARDS_SORTING_FIELD_NUMBER: _ClassVar[int]
+    BOARD_SORTS_FIELD_NUMBER: _ClassVar[int]
     PAGE_FIELD_NUMBER: _ClassVar[int]
     KEYWORDS_FIELD_NUMBER: _ClassVar[int]
     pkg_name: str
-    site_id: str
-    boards_sorting: _containers.ScalarMap[str, str]
+    board_sorts: _containers.ScalarMap[str, str]
     page: _domain_models_pb2.PaginationReq
     keywords: str
-    def __init__(self, pkg_name: _Optional[str] = ..., site_id: _Optional[str] = ..., boards_sorting: _Optional[_Mapping[str, str]] = ..., page: _Optional[_Union[_domain_models_pb2.PaginationReq, _Mapping]] = ..., keywords: _Optional[str] = ...) -> None: ...
+    def __init__(self, pkg_name: _Optional[str] = ..., board_sorts: _Optional[_Mapping[str, str]] = ..., page: _Optional[_Union[_domain_models_pb2.PaginationReq, _Mapping]] = ..., keywords: _Optional[str] = ...) -> None: ...
 
 class GetThreadInfosRes(_message.Message):
     __slots__ = ("thread_infos", "page")
@@ -67,18 +51,16 @@ class GetThreadInfosRes(_message.Message):
     def __init__(self, thread_infos: _Optional[_Iterable[_Union[_domain_models_pb2.Post, _Mapping]]] = ..., page: _Optional[_Union[_domain_models_pb2.PaginationRes, _Mapping]] = ...) -> None: ...
 
 class GetThreadPostReq(_message.Message):
-    __slots__ = ("pkg_name", "site_id", "board_id", "thread_id", "post_id")
+    __slots__ = ("pkg_name", "board_id", "thread_id", "post_id")
     PKG_NAME_FIELD_NUMBER: _ClassVar[int]
-    SITE_ID_FIELD_NUMBER: _ClassVar[int]
     BOARD_ID_FIELD_NUMBER: _ClassVar[int]
     THREAD_ID_FIELD_NUMBER: _ClassVar[int]
     POST_ID_FIELD_NUMBER: _ClassVar[int]
     pkg_name: str
-    site_id: str
     board_id: str
     thread_id: str
     post_id: str
-    def __init__(self, pkg_name: _Optional[str] = ..., site_id: _Optional[str] = ..., board_id: _Optional[str] = ..., thread_id: _Optional[str] = ..., post_id: _Optional[str] = ...) -> None: ...
+    def __init__(self, pkg_name: _Optional[str] = ..., board_id: _Optional[str] = ..., thread_id: _Optional[str] = ..., post_id: _Optional[str] = ...) -> None: ...
 
 class GetThreadPostRes(_message.Message):
     __slots__ = ("thread_post",)
@@ -87,20 +69,18 @@ class GetThreadPostRes(_message.Message):
     def __init__(self, thread_post: _Optional[_Union[_domain_models_pb2.Post, _Mapping]] = ...) -> None: ...
 
 class GetRegardingPostsReq(_message.Message):
-    __slots__ = ("pkg_name", "site_id", "board_id", "thread_id", "reply_to_id", "page")
+    __slots__ = ("pkg_name", "board_id", "thread_id", "reply_to_id", "page")
     PKG_NAME_FIELD_NUMBER: _ClassVar[int]
-    SITE_ID_FIELD_NUMBER: _ClassVar[int]
     BOARD_ID_FIELD_NUMBER: _ClassVar[int]
     THREAD_ID_FIELD_NUMBER: _ClassVar[int]
     REPLY_TO_ID_FIELD_NUMBER: _ClassVar[int]
     PAGE_FIELD_NUMBER: _ClassVar[int]
     pkg_name: str
-    site_id: str
     board_id: str
     thread_id: str
     reply_to_id: str
     page: _domain_models_pb2.PaginationReq
-    def __init__(self, pkg_name: _Optional[str] = ..., site_id: _Optional[str] = ..., board_id: _Optional[str] = ..., thread_id: _Optional[str] = ..., reply_to_id: _Optional[str] = ..., page: _Optional[_Union[_domain_models_pb2.PaginationReq, _Mapping]] = ...) -> None: ...
+    def __init__(self, pkg_name: _Optional[str] = ..., board_id: _Optional[str] = ..., thread_id: _Optional[str] = ..., reply_to_id: _Optional[str] = ..., page: _Optional[_Union[_domain_models_pb2.PaginationReq, _Mapping]] = ...) -> None: ...
 
 class GetRegardingPostsRes(_message.Message):
     __slots__ = ("regarding_posts", "page")
@@ -111,20 +91,18 @@ class GetRegardingPostsRes(_message.Message):
     def __init__(self, regarding_posts: _Optional[_Iterable[_Union[_domain_models_pb2.Post, _Mapping]]] = ..., page: _Optional[_Union[_domain_models_pb2.PaginationRes, _Mapping]] = ...) -> None: ...
 
 class GetCommentsReq(_message.Message):
-    __slots__ = ("pkg_name", "site_id", "board_id", "thread_id", "post_id", "page")
+    __slots__ = ("pkg_name", "board_id", "thread_id", "post_id", "page")
     PKG_NAME_FIELD_NUMBER: _ClassVar[int]
-    SITE_ID_FIELD_NUMBER: _ClassVar[int]
     BOARD_ID_FIELD_NUMBER: _ClassVar[int]
     THREAD_ID_FIELD_NUMBER: _ClassVar[int]
     POST_ID_FIELD_NUMBER: _ClassVar[int]
     PAGE_FIELD_NUMBER: _ClassVar[int]
     pkg_name: str
-    site_id: str
     board_id: str
     thread_id: str
     post_id: str
     page: _domain_models_pb2.PaginationReq
-    def __init__(self, pkg_name: _Optional[str] = ..., site_id: _Optional[str] = ..., board_id: _Optional[str] = ..., thread_id: _Optional[str] = ..., post_id: _Optional[str] = ..., page: _Optional[_Union[_domain_models_pb2.PaginationReq, _Mapping]] = ...) -> None: ...
+    def __init__(self, pkg_name: _Optional[str] = ..., board_id: _Optional[str] = ..., thread_id: _Optional[str] = ..., post_id: _Optional[str] = ..., page: _Optional[_Union[_domain_models_pb2.PaginationReq, _Mapping]] = ...) -> None: ...
 
 class GetCommentsRes(_message.Message):
     __slots__ = ("comments", "page")
@@ -173,10 +151,10 @@ class GetInstallProgressReq(_message.Message):
     def __init__(self, pkg_name: _Optional[str] = ...) -> None: ...
 
 class GetInstallProgressRes(_message.Message):
-    __slots__ = ("sites",)
-    SITES_FIELD_NUMBER: _ClassVar[int]
-    sites: _containers.RepeatedCompositeFieldContainer[_domain_models_pb2.Site]
-    def __init__(self, sites: _Optional[_Iterable[_Union[_domain_models_pb2.Site, _Mapping]]] = ...) -> None: ...
+    __slots__ = ("progress",)
+    PROGRESS_FIELD_NUMBER: _ClassVar[int]
+    progress: int
+    def __init__(self, progress: _Optional[int] = ...) -> None: ...
 
 class ListRemoteExtensionsReq(_message.Message):
     __slots__ = ("keyword",)

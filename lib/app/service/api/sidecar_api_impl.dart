@@ -19,22 +19,12 @@ class SidecarApiImpl implements ApiService {
   SidecarApiImpl();
 
   @override
-  Future<domain.Site> getSite({
-    required String extensionPkgName,
-  }) async {
-    final res = await _client.getSite(pb.GetSiteReq(pkgName: extensionPkgName));
-    return res.site.toSiteDomain();
-  }
-
-  @override
   Future<List<domain.Board>> listBoards({
     required String extensionPkgName,
-    required String siteId,
     Pagination? pagination,
   }) async {
     final res = await _client.getBoards(pb.GetBoardsReq(
       pkgName: extensionPkgName,
-      siteId: siteId,
       page: domain_pb.PaginationReq(
         page: pagination?.page,
         pageSize: pagination?.pageSize,
@@ -46,7 +36,6 @@ class SidecarApiImpl implements ApiService {
   @override
   Future<List<domain.Post>> listThreads({
     required String extensionPkgName,
-    required String siteId,
     required Map<String, String>? boardsSorting,
     Pagination? pagination,
     String? sortBy,
@@ -54,8 +43,7 @@ class SidecarApiImpl implements ApiService {
   }) async {
     final res = await _client.getThreadInfos(pb.GetThreadInfosReq(
       pkgName: extensionPkgName,
-      siteId: siteId,
-      boardsSorting: boardsSorting,
+      boardSorts: boardsSorting,
       page: domain_pb.PaginationReq(
         page: pagination?.page,
         pageSize: pagination?.pageSize,
@@ -68,14 +56,12 @@ class SidecarApiImpl implements ApiService {
   @override
   Future<domain.Post> getThread({
     required String extensionPkgName,
-    required String siteId,
     required String boardId,
     required String threadId,
     String? postId,
   }) async {
     final res = await _client.getThreadPost(pb.GetThreadPostReq(
       pkgName: extensionPkgName,
-      siteId: siteId,
       boardId: boardId,
       threadId: threadId,
       postId: postId,
@@ -86,7 +72,6 @@ class SidecarApiImpl implements ApiService {
   @override
   Future<List<domain.Post>> listRegardingPosts({
     required String extensionPkgName,
-    required String siteId,
     required String boardId,
     required String threadId,
     String? replyToId,
@@ -94,7 +79,6 @@ class SidecarApiImpl implements ApiService {
   }) async {
     final res = await _client.getRegardingPosts(pb.GetRegardingPostsReq(
       pkgName: extensionPkgName,
-      siteId: siteId,
       boardId: boardId,
       threadId: threadId,
       replyToId: replyToId,
@@ -109,7 +93,6 @@ class SidecarApiImpl implements ApiService {
   @override
   Future<List<domain.Comment>> listComments({
     required String extensionPkgName,
-    required String siteId,
     required String boardId,
     required String threadId,
     required String postId,
@@ -117,7 +100,6 @@ class SidecarApiImpl implements ApiService {
   }) async {
     final res = await _client.getComments(pb.GetCommentsReq(
       pkgName: extensionPkgName,
-      siteId: siteId,
       boardId: boardId,
       threadId: threadId,
       postId: postId,

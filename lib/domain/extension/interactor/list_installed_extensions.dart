@@ -21,8 +21,7 @@ class ListInstalledExtensions {
   Future<List<ExtensionWithBoards>> withBoards() async {
     final extensions = await call();
     final promises = extensions.map((e) async {
-      final site = await _apiService.getSite(extensionPkgName: e.pkgName);
-      final boards = await _apiService.listBoards(extensionPkgName: e.pkgName, siteId: site.id);
+      final boards = await _apiService.listBoards(extensionPkgName: e.pkgName);
       return ExtensionWithBoards(
         pkgName: e.pkgName,
         displayName: e.displayName,
@@ -30,7 +29,6 @@ class ListInstalledExtensions {
         pythonVersion: e.pythonVersion,
         lang: e.lang,
         isNsfw: e.isNsfw,
-        site: site,
         boards: boards.toSet(),
       );
     });
@@ -39,7 +37,6 @@ class ListInstalledExtensions {
 }
 
 class ExtensionWithBoards extends Extension {
-  final Site site;
   final Set<Board> boards;
   ExtensionWithBoards({
     required super.pkgName,
@@ -48,7 +45,6 @@ class ExtensionWithBoards extends Extension {
     required super.pythonVersion,
     required super.lang,
     required super.isNsfw,
-    required this.site,
     required this.boards,
   });
 }

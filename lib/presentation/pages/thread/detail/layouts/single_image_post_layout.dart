@@ -34,7 +34,6 @@ class SingleImagePostCard extends StatelessWidget {
   void _toDetail(BuildContext context) {
     AutoRouter.of(context).push(ThreadDetailRoute(
       extensionPkgName: thread.extensionPkgName,
-      siteId: thread.siteId,
       boardId: thread.boardId,
       threadId: thread.id,
     ));

@@ -117,47 +117,29 @@ const Empty$json = {
 final $typed_data.Uint8List emptyDescriptor = $convert.base64Decode(
     'CgVFbXB0eQ==');
 
-@$core.Deprecated('Use siteDescriptor instead')
-const Site$json = {
-  '1': 'Site',
-  '2': [
-    {'1': 'pkg_name', '3': 6, '4': 1, '5': 9, '10': 'pkgName'},
-    {'1': 'id', '3': 4, '4': 1, '5': 9, '10': 'id'},
-    {'1': 'icon', '3': 5, '4': 1, '5': 9, '10': 'icon'},
-    {'1': 'name', '3': 1, '4': 1, '5': 9, '10': 'name'},
-    {'1': 'description', '3': 2, '4': 1, '5': 9, '10': 'description'},
-    {'1': 'url', '3': 3, '4': 1, '5': 9, '10': 'url'},
-  ],
-};
-
-/// Descriptor for `Site`. Decode as a `google.protobuf.DescriptorProto`.
-final $typed_data.Uint8List siteDescriptor = $convert.base64Decode(
-    'CgRTaXRlEhkKCHBrZ19uYW1lGAYgASgJUgdwa2dOYW1lEg4KAmlkGAQgASgJUgJpZBISCgRpY2'
-    '9uGAUgASgJUgRpY29uEhIKBG5hbWUYASABKAlSBG5hbWUSIAoLZGVzY3JpcHRpb24YAiABKAlS'
-    'C2Rlc2NyaXB0aW9uEhAKA3VybBgDIAEoCVIDdXJs');
-
 @$core.Deprecated('Use boardDescriptor instead')
 const Board$json = {
   '1': 'Board',
   '2': [
-    {'1': 'pkg_name', '3': 8, '4': 1, '5': 9, '10': 'pkgName'},
-    {'1': 'site_id', '3': 2, '4': 1, '5': 9, '10': 'siteId'},
     {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
     {'1': 'name', '3': 3, '4': 1, '5': 9, '10': 'name'},
     {'1': 'icon', '3': 4, '4': 1, '5': 9, '10': 'icon'},
     {'1': 'large_welcome_image', '3': 5, '4': 1, '5': 9, '10': 'largeWelcomeImage'},
     {'1': 'url', '3': 6, '4': 1, '5': 9, '10': 'url'},
     {'1': 'supported_threads_sorting', '3': 7, '4': 3, '5': 9, '10': 'supportedThreadsSorting'},
+    {'1': 'pkg_name', '3': 8, '4': 1, '5': 9, '10': 'pkgName'},
+  ],
+  '9': [
+    {'1': 2, '2': 3},
   ],
 };
 
 /// Descriptor for `Board`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List boardDescriptor = $convert.base64Decode(
-    'CgVCb2FyZBIZCghwa2dfbmFtZRgIIAEoCVIHcGtnTmFtZRIXCgdzaXRlX2lkGAIgASgJUgZzaX'
-    'RlSWQSDgoCaWQYASABKAlSAmlkEhIKBG5hbWUYAyABKAlSBG5hbWUSEgoEaWNvbhgEIAEoCVIE'
-    'aWNvbhIuChNsYXJnZV93ZWxjb21lX2ltYWdlGAUgASgJUhFsYXJnZVdlbGNvbWVJbWFnZRIQCg'
-    'N1cmwYBiABKAlSA3VybBI6ChlzdXBwb3J0ZWRfdGhyZWFkc19zb3J0aW5nGAcgAygJUhdzdXBw'
-    'b3J0ZWRUaHJlYWRzU29ydGluZw==');
+    'CgVCb2FyZBIOCgJpZBgBIAEoCVICaWQSEgoEbmFtZRgDIAEoCVIEbmFtZRISCgRpY29uGAQgAS'
+    'gJUgRpY29uEi4KE2xhcmdlX3dlbGNvbWVfaW1hZ2UYBSABKAlSEWxhcmdlV2VsY29tZUltYWdl'
+    'EhAKA3VybBgGIAEoCVIDdXJsEjoKGXN1cHBvcnRlZF90aHJlYWRzX3NvcnRpbmcYByADKAlSF3'
+    'N1cHBvcnRlZFRocmVhZHNTb3J0aW5nEhkKCHBrZ19uYW1lGAggASgJUgdwa2dOYW1lSgQIAhAD');
 
 @$core.Deprecated('Use paragraphDescriptor instead')
 const Paragraph$json = {
@@ -290,27 +272,29 @@ final $typed_data.Uint8List linkParagraphDescriptor = $convert.base64Decode(
 const Post$json = {
   '1': 'Post',
   '2': [
-    {'1': 'pkg_name', '3': 6, '4': 1, '5': 9, '10': 'pkgName'},
-    {'1': 'site_id', '3': 4, '4': 1, '5': 9, '10': 'siteId'},
-    {'1': 'board_id', '3': 3, '4': 1, '5': 9, '10': 'boardId'},
-    {'1': 'thread_id', '3': 2, '4': 1, '5': 9, '10': 'threadId'},
     {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {'1': 'thread_id', '3': 2, '4': 1, '5': 9, '10': 'threadId'},
+    {'1': 'board_id', '3': 3, '4': 1, '5': 9, '10': 'boardId'},
+    {'1': 'pkg_name', '3': 6, '4': 1, '5': 9, '10': 'pkgName'},
     {'1': 'article_post', '3': 7, '4': 1, '5': 11, '6': '.news_hub.domain.ArticlePost', '9': 0, '10': 'articlePost'},
     {'1': 'single_image_post', '3': 8, '4': 1, '5': 11, '6': '.news_hub.domain.SingleImagePost', '9': 0, '10': 'singleImagePost'},
   ],
   '8': [
     {'1': 'content'},
   ],
+  '9': [
+    {'1': 4, '2': 5},
+    {'1': 5, '2': 6},
+  ],
 };
 
 /// Descriptor for `Post`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List postDescriptor = $convert.base64Decode(
-    'CgRQb3N0EhkKCHBrZ19uYW1lGAYgASgJUgdwa2dOYW1lEhcKB3NpdGVfaWQYBCABKAlSBnNpdG'
-    'VJZBIZCghib2FyZF9pZBgDIAEoCVIHYm9hcmRJZBIbCgl0aHJlYWRfaWQYAiABKAlSCHRocmVh'
-    'ZElkEg4KAmlkGAEgASgJUgJpZBJBCgxhcnRpY2xlX3Bvc3QYByABKAsyHC5uZXdzX2h1Yi5kb2'
-    '1haW4uQXJ0aWNsZVBvc3RIAFILYXJ0aWNsZVBvc3QSTgoRc2luZ2xlX2ltYWdlX3Bvc3QYCCAB'
-    'KAsyIC5uZXdzX2h1Yi5kb21haW4uU2luZ2xlSW1hZ2VQb3N0SABSD3NpbmdsZUltYWdlUG9zdE'
-    'IJCgdjb250ZW50');
+    'CgRQb3N0Eg4KAmlkGAEgASgJUgJpZBIbCgl0aHJlYWRfaWQYAiABKAlSCHRocmVhZElkEhkKCG'
+    'JvYXJkX2lkGAMgASgJUgdib2FyZElkEhkKCHBrZ19uYW1lGAYgASgJUgdwa2dOYW1lEkEKDGFy'
+    'dGljbGVfcG9zdBgHIAEoCzIcLm5ld3NfaHViLmRvbWFpbi5BcnRpY2xlUG9zdEgAUgthcnRpY2'
+    'xlUG9zdBJOChFzaW5nbGVfaW1hZ2VfcG9zdBgIIAEoCzIgLm5ld3NfaHViLmRvbWFpbi5TaW5n'
+    'bGVJbWFnZVBvc3RIAFIPc2luZ2xlSW1hZ2VQb3N0QgkKB2NvbnRlbnRKBAgEEAVKBAgFEAY=');
 
 @$core.Deprecated('Use articlePostDescriptor instead')
 const ArticlePost$json = {
@@ -376,27 +360,31 @@ final $typed_data.Uint8List singleImagePostDescriptor = $convert.base64Decode(
 const Comment$json = {
   '1': 'Comment',
   '2': [
-    {'1': 'pkg_name', '3': 12, '4': 1, '5': 9, '10': 'pkgName'},
-    {'1': 'site_id', '3': 5, '4': 1, '5': 9, '10': 'siteId'},
-    {'1': 'board_id', '3': 4, '4': 1, '5': 9, '10': 'boardId'},
-    {'1': 'thread_id', '3': 3, '4': 1, '5': 9, '10': 'threadId'},
-    {'1': 'post_id', '3': 2, '4': 1, '5': 9, '10': 'postId'},
     {'1': 'id', '3': 1, '4': 1, '5': 9, '10': 'id'},
+    {'1': 'post_id', '3': 2, '4': 1, '5': 9, '10': 'postId'},
+    {'1': 'thread_id', '3': 3, '4': 1, '5': 9, '10': 'threadId'},
+    {'1': 'board_id', '3': 4, '4': 1, '5': 9, '10': 'boardId'},
     {'1': 'author_id', '3': 6, '4': 1, '5': 9, '10': 'authorId'},
     {'1': 'author_name', '3': 10, '4': 1, '5': 9, '10': 'authorName'},
     {'1': 'contents', '3': 11, '4': 3, '5': 11, '6': '.news_hub.domain.Paragraph', '10': 'contents'},
+    {'1': 'pkg_name', '3': 12, '4': 1, '5': 9, '10': 'pkgName'},
     {'1': 'created_at', '3': 8, '4': 1, '5': 3, '10': 'createdAt'},
+  ],
+  '9': [
+    {'1': 5, '2': 6},
+    {'1': 7, '2': 8},
+    {'1': 9, '2': 10},
   ],
 };
 
 /// Descriptor for `Comment`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List commentDescriptor = $convert.base64Decode(
-    'CgdDb21tZW50EhkKCHBrZ19uYW1lGAwgASgJUgdwa2dOYW1lEhcKB3NpdGVfaWQYBSABKAlSBn'
-    'NpdGVJZBIZCghib2FyZF9pZBgEIAEoCVIHYm9hcmRJZBIbCgl0aHJlYWRfaWQYAyABKAlSCHRo'
-    'cmVhZElkEhcKB3Bvc3RfaWQYAiABKAlSBnBvc3RJZBIOCgJpZBgBIAEoCVICaWQSGwoJYXV0aG'
-    '9yX2lkGAYgASgJUghhdXRob3JJZBIfCgthdXRob3JfbmFtZRgKIAEoCVIKYXV0aG9yTmFtZRI2'
-    'Cghjb250ZW50cxgLIAMoCzIaLm5ld3NfaHViLmRvbWFpbi5QYXJhZ3JhcGhSCGNvbnRlbnRzEh'
-    '0KCmNyZWF0ZWRfYXQYCCABKANSCWNyZWF0ZWRBdA==');
+    'CgdDb21tZW50Eg4KAmlkGAEgASgJUgJpZBIXCgdwb3N0X2lkGAIgASgJUgZwb3N0SWQSGwoJdG'
+    'hyZWFkX2lkGAMgASgJUgh0aHJlYWRJZBIZCghib2FyZF9pZBgEIAEoCVIHYm9hcmRJZBIbCglh'
+    'dXRob3JfaWQYBiABKAlSCGF1dGhvcklkEh8KC2F1dGhvcl9uYW1lGAogASgJUgphdXRob3JOYW'
+    '1lEjYKCGNvbnRlbnRzGAsgAygLMhoubmV3c19odWIuZG9tYWluLlBhcmFncmFwaFIIY29udGVu'
+    'dHMSGQoIcGtnX25hbWUYDCABKAlSB3BrZ05hbWUSHQoKY3JlYXRlZF9hdBgIIAEoA1IJY3JlYX'
+    'RlZEF0SgQIBRAGSgQIBxAISgQICRAK');
 
 @$core.Deprecated('Use extensionDescriptor instead')
 const Extension$json = {

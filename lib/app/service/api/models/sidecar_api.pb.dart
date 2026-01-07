@@ -20,118 +20,12 @@ import 'sidecar_api.pbenum.dart';
 
 export 'sidecar_api.pbenum.dart';
 
-class GetSiteReq extends $pb.GeneratedMessage {
-  factory GetSiteReq({
-    $core.String? pkgName,
-  }) {
-    final result = create();
-    if (pkgName != null) {
-      result.pkgName = pkgName;
-    }
-    return result;
-  }
-  GetSiteReq._() : super();
-  factory GetSiteReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GetSiteReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetSiteReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'news_hub.sidecar'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'pkgName')
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  GetSiteReq clone() => GetSiteReq()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  GetSiteReq copyWith(void Function(GetSiteReq) updates) => super.copyWith((message) => updates(message as GetSiteReq)) as GetSiteReq;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static GetSiteReq create() => GetSiteReq._();
-  GetSiteReq createEmptyInstance() => create();
-  static $pb.PbList<GetSiteReq> createRepeated() => $pb.PbList<GetSiteReq>();
-  @$core.pragma('dart2js:noInline')
-  static GetSiteReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetSiteReq>(create);
-  static GetSiteReq? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $core.String get pkgName => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set pkgName($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasPkgName() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearPkgName() => clearField(1);
-}
-
-class GetSiteRes extends $pb.GeneratedMessage {
-  factory GetSiteRes({
-    $1.Site? site,
-  }) {
-    final result = create();
-    if (site != null) {
-      result.site = site;
-    }
-    return result;
-  }
-  GetSiteRes._() : super();
-  factory GetSiteRes.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
-  factory GetSiteRes.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
-
-  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetSiteRes', package: const $pb.PackageName(_omitMessageNames ? '' : 'news_hub.sidecar'), createEmptyInstance: create)
-    ..aOM<$1.Site>(1, _omitFieldNames ? '' : 'site', subBuilder: $1.Site.create)
-    ..hasRequiredFields = false
-  ;
-
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
-  'Will be removed in next major version')
-  GetSiteRes clone() => GetSiteRes()..mergeFromMessage(this);
-  @$core.Deprecated(
-  'Using this can add significant overhead to your binary. '
-  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
-  'Will be removed in next major version')
-  GetSiteRes copyWith(void Function(GetSiteRes) updates) => super.copyWith((message) => updates(message as GetSiteRes)) as GetSiteRes;
-
-  $pb.BuilderInfo get info_ => _i;
-
-  @$core.pragma('dart2js:noInline')
-  static GetSiteRes create() => GetSiteRes._();
-  GetSiteRes createEmptyInstance() => create();
-  static $pb.PbList<GetSiteRes> createRepeated() => $pb.PbList<GetSiteRes>();
-  @$core.pragma('dart2js:noInline')
-  static GetSiteRes getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetSiteRes>(create);
-  static GetSiteRes? _defaultInstance;
-
-  @$pb.TagNumber(1)
-  $1.Site get site => $_getN(0);
-  @$pb.TagNumber(1)
-  set site($1.Site v) { setField(1, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasSite() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearSite() => clearField(1);
-  @$pb.TagNumber(1)
-  $1.Site ensureSite() => $_ensure(0);
-}
-
 class GetBoardsReq extends $pb.GeneratedMessage {
   factory GetBoardsReq({
-    $core.String? siteId,
     $1.PaginationReq? page,
     $core.String? pkgName,
   }) {
     final result = create();
-    if (siteId != null) {
-      result.siteId = siteId;
-    }
     if (page != null) {
       result.page = page;
     }
@@ -145,7 +39,6 @@ class GetBoardsReq extends $pb.GeneratedMessage {
   factory GetBoardsReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetBoardsReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'news_hub.sidecar'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'siteId')
     ..aOM<$1.PaginationReq>(2, _omitFieldNames ? '' : 'page', subBuilder: $1.PaginationReq.create)
     ..aOS(3, _omitFieldNames ? '' : 'pkgName')
     ..hasRequiredFields = false
@@ -172,32 +65,23 @@ class GetBoardsReq extends $pb.GeneratedMessage {
   static GetBoardsReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetBoardsReq>(create);
   static GetBoardsReq? _defaultInstance;
 
-  @$pb.TagNumber(1)
-  $core.String get siteId => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set siteId($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasSiteId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearSiteId() => clearField(1);
-
   @$pb.TagNumber(2)
-  $1.PaginationReq get page => $_getN(1);
+  $1.PaginationReq get page => $_getN(0);
   @$pb.TagNumber(2)
   set page($1.PaginationReq v) { setField(2, v); }
   @$pb.TagNumber(2)
-  $core.bool hasPage() => $_has(1);
+  $core.bool hasPage() => $_has(0);
   @$pb.TagNumber(2)
   void clearPage() => clearField(2);
   @$pb.TagNumber(2)
-  $1.PaginationReq ensurePage() => $_ensure(1);
+  $1.PaginationReq ensurePage() => $_ensure(0);
 
   @$pb.TagNumber(3)
-  $core.String get pkgName => $_getSZ(2);
+  $core.String get pkgName => $_getSZ(1);
   @$pb.TagNumber(3)
-  set pkgName($core.String v) { $_setString(2, v); }
+  set pkgName($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(3)
-  $core.bool hasPkgName() => $_has(2);
+  $core.bool hasPkgName() => $_has(1);
   @$pb.TagNumber(3)
   void clearPkgName() => clearField(3);
 }
@@ -264,18 +148,14 @@ class GetBoardsRes extends $pb.GeneratedMessage {
 
 class GetThreadInfosReq extends $pb.GeneratedMessage {
   factory GetThreadInfosReq({
-    $core.String? siteId,
-    $core.Map<$core.String, $core.String>? boardsSorting,
+    $core.Map<$core.String, $core.String>? boardSorts,
     $1.PaginationReq? page,
     $core.String? keywords,
     $core.String? pkgName,
   }) {
     final result = create();
-    if (siteId != null) {
-      result.siteId = siteId;
-    }
-    if (boardsSorting != null) {
-      result.boardsSorting.addAll(boardsSorting);
+    if (boardSorts != null) {
+      result.boardSorts.addAll(boardSorts);
     }
     if (page != null) {
       result.page = page;
@@ -293,8 +173,7 @@ class GetThreadInfosReq extends $pb.GeneratedMessage {
   factory GetThreadInfosReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetThreadInfosReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'news_hub.sidecar'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'siteId')
-    ..m<$core.String, $core.String>(2, _omitFieldNames ? '' : 'boardsSorting', entryClassName: 'GetThreadInfosReq.BoardsSortingEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('news_hub.sidecar'))
+    ..m<$core.String, $core.String>(2, _omitFieldNames ? '' : 'boardSorts', entryClassName: 'GetThreadInfosReq.BoardSortsEntry', keyFieldType: $pb.PbFieldType.OS, valueFieldType: $pb.PbFieldType.OS, packageName: const $pb.PackageName('news_hub.sidecar'))
     ..aOM<$1.PaginationReq>(3, _omitFieldNames ? '' : 'page', subBuilder: $1.PaginationReq.create)
     ..aOS(5, _omitFieldNames ? '' : 'keywords')
     ..aOS(6, _omitFieldNames ? '' : 'pkgName')
@@ -322,44 +201,35 @@ class GetThreadInfosReq extends $pb.GeneratedMessage {
   static GetThreadInfosReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetThreadInfosReq>(create);
   static GetThreadInfosReq? _defaultInstance;
 
-  @$pb.TagNumber(1)
-  $core.String get siteId => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set siteId($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasSiteId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearSiteId() => clearField(1);
-
   @$pb.TagNumber(2)
-  $core.Map<$core.String, $core.String> get boardsSorting => $_getMap(1);
+  $core.Map<$core.String, $core.String> get boardSorts => $_getMap(0);
 
   @$pb.TagNumber(3)
-  $1.PaginationReq get page => $_getN(2);
+  $1.PaginationReq get page => $_getN(1);
   @$pb.TagNumber(3)
   set page($1.PaginationReq v) { setField(3, v); }
   @$pb.TagNumber(3)
-  $core.bool hasPage() => $_has(2);
+  $core.bool hasPage() => $_has(1);
   @$pb.TagNumber(3)
   void clearPage() => clearField(3);
   @$pb.TagNumber(3)
-  $1.PaginationReq ensurePage() => $_ensure(2);
+  $1.PaginationReq ensurePage() => $_ensure(1);
 
   @$pb.TagNumber(5)
-  $core.String get keywords => $_getSZ(3);
+  $core.String get keywords => $_getSZ(2);
   @$pb.TagNumber(5)
-  set keywords($core.String v) { $_setString(3, v); }
+  set keywords($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(5)
-  $core.bool hasKeywords() => $_has(3);
+  $core.bool hasKeywords() => $_has(2);
   @$pb.TagNumber(5)
   void clearKeywords() => clearField(5);
 
   @$pb.TagNumber(6)
-  $core.String get pkgName => $_getSZ(4);
+  $core.String get pkgName => $_getSZ(3);
   @$pb.TagNumber(6)
-  set pkgName($core.String v) { $_setString(4, v); }
+  set pkgName($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(6)
-  $core.bool hasPkgName() => $_has(4);
+  $core.bool hasPkgName() => $_has(3);
   @$pb.TagNumber(6)
   void clearPkgName() => clearField(6);
 }
@@ -427,7 +297,6 @@ class GetThreadInfosRes extends $pb.GeneratedMessage {
 class GetThreadPostReq extends $pb.GeneratedMessage {
   factory GetThreadPostReq({
     $core.String? threadId,
-    $core.String? siteId,
     $core.String? boardId,
     $core.String? postId,
     $core.String? pkgName,
@@ -435,9 +304,6 @@ class GetThreadPostReq extends $pb.GeneratedMessage {
     final result = create();
     if (threadId != null) {
       result.threadId = threadId;
-    }
-    if (siteId != null) {
-      result.siteId = siteId;
     }
     if (boardId != null) {
       result.boardId = boardId;
@@ -456,7 +322,6 @@ class GetThreadPostReq extends $pb.GeneratedMessage {
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetThreadPostReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'news_hub.sidecar'), createEmptyInstance: create)
     ..aOS(1, _omitFieldNames ? '' : 'threadId')
-    ..aOS(2, _omitFieldNames ? '' : 'siteId')
     ..aOS(3, _omitFieldNames ? '' : 'boardId')
     ..aOS(4, _omitFieldNames ? '' : 'postId')
     ..aOS(5, _omitFieldNames ? '' : 'pkgName')
@@ -493,39 +358,30 @@ class GetThreadPostReq extends $pb.GeneratedMessage {
   @$pb.TagNumber(1)
   void clearThreadId() => clearField(1);
 
-  @$pb.TagNumber(2)
-  $core.String get siteId => $_getSZ(1);
-  @$pb.TagNumber(2)
-  set siteId($core.String v) { $_setString(1, v); }
-  @$pb.TagNumber(2)
-  $core.bool hasSiteId() => $_has(1);
-  @$pb.TagNumber(2)
-  void clearSiteId() => clearField(2);
-
   @$pb.TagNumber(3)
-  $core.String get boardId => $_getSZ(2);
+  $core.String get boardId => $_getSZ(1);
   @$pb.TagNumber(3)
-  set boardId($core.String v) { $_setString(2, v); }
+  set boardId($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(3)
-  $core.bool hasBoardId() => $_has(2);
+  $core.bool hasBoardId() => $_has(1);
   @$pb.TagNumber(3)
   void clearBoardId() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.String get postId => $_getSZ(3);
+  $core.String get postId => $_getSZ(2);
   @$pb.TagNumber(4)
-  set postId($core.String v) { $_setString(3, v); }
+  set postId($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(4)
-  $core.bool hasPostId() => $_has(3);
+  $core.bool hasPostId() => $_has(2);
   @$pb.TagNumber(4)
   void clearPostId() => clearField(4);
 
   @$pb.TagNumber(5)
-  $core.String get pkgName => $_getSZ(4);
+  $core.String get pkgName => $_getSZ(3);
   @$pb.TagNumber(5)
-  set pkgName($core.String v) { $_setString(4, v); }
+  set pkgName($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(5)
-  $core.bool hasPkgName() => $_has(4);
+  $core.bool hasPkgName() => $_has(3);
   @$pb.TagNumber(5)
   void clearPkgName() => clearField(5);
 }
@@ -584,7 +440,6 @@ class GetThreadPostRes extends $pb.GeneratedMessage {
 
 class GetRegardingPostsReq extends $pb.GeneratedMessage {
   factory GetRegardingPostsReq({
-    $core.String? siteId,
     $core.String? boardId,
     $core.String? threadId,
     $1.PaginationReq? page,
@@ -592,9 +447,6 @@ class GetRegardingPostsReq extends $pb.GeneratedMessage {
     $core.String? pkgName,
   }) {
     final result = create();
-    if (siteId != null) {
-      result.siteId = siteId;
-    }
     if (boardId != null) {
       result.boardId = boardId;
     }
@@ -617,7 +469,6 @@ class GetRegardingPostsReq extends $pb.GeneratedMessage {
   factory GetRegardingPostsReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetRegardingPostsReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'news_hub.sidecar'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'siteId')
     ..aOS(2, _omitFieldNames ? '' : 'boardId')
     ..aOS(3, _omitFieldNames ? '' : 'threadId')
     ..aOM<$1.PaginationReq>(4, _omitFieldNames ? '' : 'page', subBuilder: $1.PaginationReq.create)
@@ -647,59 +498,50 @@ class GetRegardingPostsReq extends $pb.GeneratedMessage {
   static GetRegardingPostsReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetRegardingPostsReq>(create);
   static GetRegardingPostsReq? _defaultInstance;
 
-  @$pb.TagNumber(1)
-  $core.String get siteId => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set siteId($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasSiteId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearSiteId() => clearField(1);
-
   @$pb.TagNumber(2)
-  $core.String get boardId => $_getSZ(1);
+  $core.String get boardId => $_getSZ(0);
   @$pb.TagNumber(2)
-  set boardId($core.String v) { $_setString(1, v); }
+  set boardId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(2)
-  $core.bool hasBoardId() => $_has(1);
+  $core.bool hasBoardId() => $_has(0);
   @$pb.TagNumber(2)
   void clearBoardId() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.String get threadId => $_getSZ(2);
+  $core.String get threadId => $_getSZ(1);
   @$pb.TagNumber(3)
-  set threadId($core.String v) { $_setString(2, v); }
+  set threadId($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(3)
-  $core.bool hasThreadId() => $_has(2);
+  $core.bool hasThreadId() => $_has(1);
   @$pb.TagNumber(3)
   void clearThreadId() => clearField(3);
 
   @$pb.TagNumber(4)
-  $1.PaginationReq get page => $_getN(3);
+  $1.PaginationReq get page => $_getN(2);
   @$pb.TagNumber(4)
   set page($1.PaginationReq v) { setField(4, v); }
   @$pb.TagNumber(4)
-  $core.bool hasPage() => $_has(3);
+  $core.bool hasPage() => $_has(2);
   @$pb.TagNumber(4)
   void clearPage() => clearField(4);
   @$pb.TagNumber(4)
-  $1.PaginationReq ensurePage() => $_ensure(3);
+  $1.PaginationReq ensurePage() => $_ensure(2);
 
   @$pb.TagNumber(5)
-  $core.String get replyToId => $_getSZ(4);
+  $core.String get replyToId => $_getSZ(3);
   @$pb.TagNumber(5)
-  set replyToId($core.String v) { $_setString(4, v); }
+  set replyToId($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(5)
-  $core.bool hasReplyToId() => $_has(4);
+  $core.bool hasReplyToId() => $_has(3);
   @$pb.TagNumber(5)
   void clearReplyToId() => clearField(5);
 
   @$pb.TagNumber(6)
-  $core.String get pkgName => $_getSZ(5);
+  $core.String get pkgName => $_getSZ(4);
   @$pb.TagNumber(6)
-  set pkgName($core.String v) { $_setString(5, v); }
+  set pkgName($core.String v) { $_setString(4, v); }
   @$pb.TagNumber(6)
-  $core.bool hasPkgName() => $_has(5);
+  $core.bool hasPkgName() => $_has(4);
   @$pb.TagNumber(6)
   void clearPkgName() => clearField(6);
 }
@@ -766,7 +608,6 @@ class GetRegardingPostsRes extends $pb.GeneratedMessage {
 
 class GetCommentsReq extends $pb.GeneratedMessage {
   factory GetCommentsReq({
-    $core.String? siteId,
     $core.String? boardId,
     $core.String? threadId,
     $core.String? postId,
@@ -774,9 +615,6 @@ class GetCommentsReq extends $pb.GeneratedMessage {
     $core.String? pkgName,
   }) {
     final result = create();
-    if (siteId != null) {
-      result.siteId = siteId;
-    }
     if (boardId != null) {
       result.boardId = boardId;
     }
@@ -799,7 +637,6 @@ class GetCommentsReq extends $pb.GeneratedMessage {
   factory GetCommentsReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetCommentsReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'news_hub.sidecar'), createEmptyInstance: create)
-    ..aOS(1, _omitFieldNames ? '' : 'siteId')
     ..aOS(2, _omitFieldNames ? '' : 'boardId')
     ..aOS(3, _omitFieldNames ? '' : 'threadId')
     ..aOS(4, _omitFieldNames ? '' : 'postId')
@@ -829,59 +666,50 @@ class GetCommentsReq extends $pb.GeneratedMessage {
   static GetCommentsReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetCommentsReq>(create);
   static GetCommentsReq? _defaultInstance;
 
-  @$pb.TagNumber(1)
-  $core.String get siteId => $_getSZ(0);
-  @$pb.TagNumber(1)
-  set siteId($core.String v) { $_setString(0, v); }
-  @$pb.TagNumber(1)
-  $core.bool hasSiteId() => $_has(0);
-  @$pb.TagNumber(1)
-  void clearSiteId() => clearField(1);
-
   @$pb.TagNumber(2)
-  $core.String get boardId => $_getSZ(1);
+  $core.String get boardId => $_getSZ(0);
   @$pb.TagNumber(2)
-  set boardId($core.String v) { $_setString(1, v); }
+  set boardId($core.String v) { $_setString(0, v); }
   @$pb.TagNumber(2)
-  $core.bool hasBoardId() => $_has(1);
+  $core.bool hasBoardId() => $_has(0);
   @$pb.TagNumber(2)
   void clearBoardId() => clearField(2);
 
   @$pb.TagNumber(3)
-  $core.String get threadId => $_getSZ(2);
+  $core.String get threadId => $_getSZ(1);
   @$pb.TagNumber(3)
-  set threadId($core.String v) { $_setString(2, v); }
+  set threadId($core.String v) { $_setString(1, v); }
   @$pb.TagNumber(3)
-  $core.bool hasThreadId() => $_has(2);
+  $core.bool hasThreadId() => $_has(1);
   @$pb.TagNumber(3)
   void clearThreadId() => clearField(3);
 
   @$pb.TagNumber(4)
-  $core.String get postId => $_getSZ(3);
+  $core.String get postId => $_getSZ(2);
   @$pb.TagNumber(4)
-  set postId($core.String v) { $_setString(3, v); }
+  set postId($core.String v) { $_setString(2, v); }
   @$pb.TagNumber(4)
-  $core.bool hasPostId() => $_has(3);
+  $core.bool hasPostId() => $_has(2);
   @$pb.TagNumber(4)
   void clearPostId() => clearField(4);
 
   @$pb.TagNumber(5)
-  $1.PaginationReq get page => $_getN(4);
+  $1.PaginationReq get page => $_getN(3);
   @$pb.TagNumber(5)
   set page($1.PaginationReq v) { setField(5, v); }
   @$pb.TagNumber(5)
-  $core.bool hasPage() => $_has(4);
+  $core.bool hasPage() => $_has(3);
   @$pb.TagNumber(5)
   void clearPage() => clearField(5);
   @$pb.TagNumber(5)
-  $1.PaginationReq ensurePage() => $_ensure(4);
+  $1.PaginationReq ensurePage() => $_ensure(3);
 
   @$pb.TagNumber(6)
-  $core.String get pkgName => $_getSZ(5);
+  $core.String get pkgName => $_getSZ(4);
   @$pb.TagNumber(6)
-  set pkgName($core.String v) { $_setString(5, v); }
+  set pkgName($core.String v) { $_setString(4, v); }
   @$pb.TagNumber(6)
-  $core.bool hasPkgName() => $_has(5);
+  $core.bool hasPkgName() => $_has(4);
   @$pb.TagNumber(6)
   void clearPkgName() => clearField(6);
 }
@@ -1258,11 +1086,11 @@ class GetInstallProgressReq extends $pb.GeneratedMessage {
 
 class GetInstallProgressRes extends $pb.GeneratedMessage {
   factory GetInstallProgressRes({
-    $core.Iterable<$1.Site>? sites,
+    $fixnum.Int64? progress,
   }) {
     final result = create();
-    if (sites != null) {
-      result.sites.addAll(sites);
+    if (progress != null) {
+      result.progress = progress;
     }
     return result;
   }
@@ -1271,7 +1099,7 @@ class GetInstallProgressRes extends $pb.GeneratedMessage {
   factory GetInstallProgressRes.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
 
   static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetInstallProgressRes', package: const $pb.PackageName(_omitMessageNames ? '' : 'news_hub.sidecar'), createEmptyInstance: create)
-    ..pc<$1.Site>(1, _omitFieldNames ? '' : 'sites', $pb.PbFieldType.PM, subBuilder: $1.Site.create)
+    ..aInt64(2, _omitFieldNames ? '' : 'progress')
     ..hasRequiredFields = false
   ;
 
@@ -1296,8 +1124,14 @@ class GetInstallProgressRes extends $pb.GeneratedMessage {
   static GetInstallProgressRes getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetInstallProgressRes>(create);
   static GetInstallProgressRes? _defaultInstance;
 
-  @$pb.TagNumber(1)
-  $core.List<$1.Site> get sites => $_getList(0);
+  @$pb.TagNumber(2)
+  $fixnum.Int64 get progress => $_getI64(0);
+  @$pb.TagNumber(2)
+  set progress($fixnum.Int64 v) { $_setInt64(0, v); }
+  @$pb.TagNumber(2)
+  $core.bool hasProgress() => $_has(0);
+  @$pb.TagNumber(2)
+  void clearProgress() => clearField(2);
 }
 
 class ListRemoteExtensionsReq extends $pb.GeneratedMessage {

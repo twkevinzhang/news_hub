@@ -35,11 +35,6 @@ class SidecarApiStub(object):
         Args:
             channel: A grpc.Channel.
         """
-        self.GetSite = channel.unary_unary(
-                '/news_hub.sidecar.SidecarApi/GetSite',
-                request_serializer=sidecar__api__pb2.GetSiteReq.SerializeToString,
-                response_deserializer=sidecar__api__pb2.GetSiteRes.FromString,
-                _registered_method=True)
         self.GetBoards = channel.unary_unary(
                 '/news_hub.sidecar.SidecarApi/GetBoards',
                 request_serializer=sidecar__api__pb2.GetBoardsReq.SerializeToString,
@@ -139,12 +134,6 @@ class SidecarApiStub(object):
 
 class SidecarApiServicer(object):
     """Missing associated documentation comment in .proto file."""
-
-    def GetSite(self, request, context):
-        """Missing associated documentation comment in .proto file."""
-        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
-        context.set_details('Method not implemented!')
-        raise NotImplementedError('Method not implemented!')
 
     def GetBoards(self, request, context):
         """Missing associated documentation comment in .proto file."""
@@ -267,11 +256,6 @@ class SidecarApiServicer(object):
 
 def add_SidecarApiServicer_to_server(servicer, server):
     rpc_method_handlers = {
-            'GetSite': grpc.unary_unary_rpc_method_handler(
-                    servicer.GetSite,
-                    request_deserializer=sidecar__api__pb2.GetSiteReq.FromString,
-                    response_serializer=sidecar__api__pb2.GetSiteRes.SerializeToString,
-            ),
             'GetBoards': grpc.unary_unary_rpc_method_handler(
                     servicer.GetBoards,
                     request_deserializer=sidecar__api__pb2.GetBoardsReq.FromString,
@@ -377,33 +361,6 @@ def add_SidecarApiServicer_to_server(servicer, server):
  # This class is part of an EXPERIMENTAL API.
 class SidecarApi(object):
     """Missing associated documentation comment in .proto file."""
-
-    @staticmethod
-    def GetSite(request,
-            target,
-            options=(),
-            channel_credentials=None,
-            call_credentials=None,
-            insecure=False,
-            compression=None,
-            wait_for_ready=None,
-            timeout=None,
-            metadata=None):
-        return grpc.experimental.unary_unary(
-            request,
-            target,
-            '/news_hub.sidecar.SidecarApi/GetSite',
-            sidecar__api__pb2.GetSiteReq.SerializeToString,
-            sidecar__api__pb2.GetSiteRes.FromString,
-            options,
-            channel_credentials,
-            insecure,
-            call_credentials,
-            compression,
-            wait_for_ready,
-            timeout,
-            metadata,
-            _registered_method=True)
 
     @staticmethod
     def GetBoards(request,

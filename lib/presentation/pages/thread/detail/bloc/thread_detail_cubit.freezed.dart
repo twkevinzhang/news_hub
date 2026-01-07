@@ -17,7 +17,6 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ThreadDetailState {
   String get extensionPkgName => throw _privateConstructorUsedError;
-  String get siteId => throw _privateConstructorUsedError;
   String get boardId => throw _privateConstructorUsedError;
   String get threadId => throw _privateConstructorUsedError;
   Map<String, Result<ArticlePost>> get threadMap =>
@@ -40,7 +39,6 @@ abstract class $ThreadDetailStateCopyWith<$Res> {
   @useResult
   $Res call(
       {String extensionPkgName,
-      String siteId,
       String boardId,
       String threadId,
       Map<String, Result<ArticlePost>> threadMap,
@@ -63,7 +61,6 @@ class _$ThreadDetailStateCopyWithImpl<$Res, $Val extends ThreadDetailState>
   @override
   $Res call({
     Object? extensionPkgName = null,
-    Object? siteId = null,
     Object? boardId = null,
     Object? threadId = null,
     Object? threadMap = null,
@@ -73,10 +70,6 @@ class _$ThreadDetailStateCopyWithImpl<$Res, $Val extends ThreadDetailState>
       extensionPkgName: null == extensionPkgName
           ? _value.extensionPkgName
           : extensionPkgName // ignore: cast_nullable_to_non_nullable
-              as String,
-      siteId: null == siteId
-          ? _value.siteId
-          : siteId // ignore: cast_nullable_to_non_nullable
               as String,
       boardId: null == boardId
           ? _value.boardId
@@ -108,7 +101,6 @@ abstract class _$$ThreadDetailStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {String extensionPkgName,
-      String siteId,
       String boardId,
       String threadId,
       Map<String, Result<ArticlePost>> threadMap,
@@ -129,7 +121,6 @@ class __$$ThreadDetailStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? extensionPkgName = null,
-    Object? siteId = null,
     Object? boardId = null,
     Object? threadId = null,
     Object? threadMap = null,
@@ -139,10 +130,6 @@ class __$$ThreadDetailStateImplCopyWithImpl<$Res>
       extensionPkgName: null == extensionPkgName
           ? _value.extensionPkgName
           : extensionPkgName // ignore: cast_nullable_to_non_nullable
-              as String,
-      siteId: null == siteId
-          ? _value.siteId
-          : siteId // ignore: cast_nullable_to_non_nullable
               as String,
       boardId: null == boardId
           ? _value.boardId
@@ -171,7 +158,6 @@ class _$ThreadDetailStateImpl
     implements _ThreadDetailState {
   const _$ThreadDetailStateImpl(
       {required this.extensionPkgName,
-      required this.siteId,
       required this.boardId,
       required this.threadId,
       required final Map<String, Result<ArticlePost>> threadMap,
@@ -181,8 +167,6 @@ class _$ThreadDetailStateImpl
 
   @override
   final String extensionPkgName;
-  @override
-  final String siteId;
   @override
   final String boardId;
   @override
@@ -206,7 +190,7 @@ class _$ThreadDetailStateImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ThreadDetailState(extensionPkgName: $extensionPkgName, siteId: $siteId, boardId: $boardId, threadId: $threadId, threadMap: $threadMap, regardingPostsMap: $regardingPostsMap)';
+    return 'ThreadDetailState(extensionPkgName: $extensionPkgName, boardId: $boardId, threadId: $threadId, threadMap: $threadMap, regardingPostsMap: $regardingPostsMap)';
   }
 
   @override
@@ -215,7 +199,6 @@ class _$ThreadDetailStateImpl
     properties
       ..add(DiagnosticsProperty('type', 'ThreadDetailState'))
       ..add(DiagnosticsProperty('extensionPkgName', extensionPkgName))
-      ..add(DiagnosticsProperty('siteId', siteId))
       ..add(DiagnosticsProperty('boardId', boardId))
       ..add(DiagnosticsProperty('threadId', threadId))
       ..add(DiagnosticsProperty('threadMap', threadMap))
@@ -229,7 +212,6 @@ class _$ThreadDetailStateImpl
             other is _$ThreadDetailStateImpl &&
             (identical(other.extensionPkgName, extensionPkgName) ||
                 other.extensionPkgName == extensionPkgName) &&
-            (identical(other.siteId, siteId) || other.siteId == siteId) &&
             (identical(other.boardId, boardId) || other.boardId == boardId) &&
             (identical(other.threadId, threadId) ||
                 other.threadId == threadId) &&
@@ -243,7 +225,6 @@ class _$ThreadDetailStateImpl
   int get hashCode => Object.hash(
       runtimeType,
       extensionPkgName,
-      siteId,
       boardId,
       threadId,
       const DeepCollectionEquality().hash(_threadMap),
@@ -262,7 +243,6 @@ class _$ThreadDetailStateImpl
 abstract class _ThreadDetailState implements ThreadDetailState {
   const factory _ThreadDetailState(
       {required final String extensionPkgName,
-      required final String siteId,
       required final String boardId,
       required final String threadId,
       required final Map<String, Result<ArticlePost>> threadMap,
@@ -271,8 +251,6 @@ abstract class _ThreadDetailState implements ThreadDetailState {
 
   @override
   String get extensionPkgName;
-  @override
-  String get siteId;
   @override
   String get boardId;
   @override

@@ -1162,11 +1162,6 @@ class $CollectionBoardRefsTable extends CollectionBoardRefs
   late final GeneratedColumn<String> extensionPkgName = GeneratedColumn<String>(
       'extension_pkg_name', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
-  static const VerificationMeta _siteIdMeta = const VerificationMeta('siteId');
-  @override
-  late final GeneratedColumn<String> siteId = GeneratedColumn<String>(
-      'site_id', aliasedName, false,
-      type: DriftSqlType.string, requiredDuringInsert: true);
   static const VerificationMeta _boardIdMeta =
       const VerificationMeta('boardId');
   @override
@@ -1183,7 +1178,7 @@ class $CollectionBoardRefsTable extends CollectionBoardRefs
       defaultValue: const Constant(''));
   @override
   List<GeneratedColumn> get $columns =>
-      [collectionId, extensionPkgName, siteId, boardId, boardName];
+      [collectionId, extensionPkgName, boardId, boardName];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -1210,12 +1205,6 @@ class $CollectionBoardRefsTable extends CollectionBoardRefs
     } else if (isInserting) {
       context.missing(_extensionPkgNameMeta);
     }
-    if (data.containsKey('site_id')) {
-      context.handle(_siteIdMeta,
-          siteId.isAcceptableOrUnknown(data['site_id']!, _siteIdMeta));
-    } else if (isInserting) {
-      context.missing(_siteIdMeta);
-    }
     if (data.containsKey('board_id')) {
       context.handle(_boardIdMeta,
           boardId.isAcceptableOrUnknown(data['board_id']!, _boardIdMeta));
@@ -1231,7 +1220,7 @@ class $CollectionBoardRefsTable extends CollectionBoardRefs
 
   @override
   Set<GeneratedColumn> get $primaryKey =>
-      {collectionId, extensionPkgName, siteId, boardId};
+      {collectionId, extensionPkgName, boardId};
   @override
   CollectionBoardRef map(Map<String, dynamic> data, {String? tablePrefix}) {
     final effectivePrefix = tablePrefix != null ? '$tablePrefix.' : '';
@@ -1240,8 +1229,6 @@ class $CollectionBoardRefsTable extends CollectionBoardRefs
           .read(DriftSqlType.string, data['${effectivePrefix}collection_id'])!,
       extensionPkgName: attachedDatabase.typeMapping.read(
           DriftSqlType.string, data['${effectivePrefix}extension_pkg_name'])!,
-      siteId: attachedDatabase.typeMapping
-          .read(DriftSqlType.string, data['${effectivePrefix}site_id'])!,
       boardId: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}board_id'])!,
       boardName: attachedDatabase.typeMapping
@@ -1259,13 +1246,11 @@ class CollectionBoardRef extends DataClass
     implements Insertable<CollectionBoardRef> {
   final String collectionId;
   final String extensionPkgName;
-  final String siteId;
   final String boardId;
   final String boardName;
   const CollectionBoardRef(
       {required this.collectionId,
       required this.extensionPkgName,
-      required this.siteId,
       required this.boardId,
       required this.boardName});
   @override
@@ -1273,7 +1258,6 @@ class CollectionBoardRef extends DataClass
     final map = <String, Expression>{};
     map['collection_id'] = Variable<String>(collectionId);
     map['extension_pkg_name'] = Variable<String>(extensionPkgName);
-    map['site_id'] = Variable<String>(siteId);
     map['board_id'] = Variable<String>(boardId);
     map['board_name'] = Variable<String>(boardName);
     return map;
@@ -1283,7 +1267,6 @@ class CollectionBoardRef extends DataClass
     return CollectionBoardRefsCompanion(
       collectionId: Value(collectionId),
       extensionPkgName: Value(extensionPkgName),
-      siteId: Value(siteId),
       boardId: Value(boardId),
       boardName: Value(boardName),
     );
@@ -1295,7 +1278,6 @@ class CollectionBoardRef extends DataClass
     return CollectionBoardRef(
       collectionId: serializer.fromJson<String>(json['collectionId']),
       extensionPkgName: serializer.fromJson<String>(json['extensionPkgName']),
-      siteId: serializer.fromJson<String>(json['siteId']),
       boardId: serializer.fromJson<String>(json['boardId']),
       boardName: serializer.fromJson<String>(json['boardName']),
     );
@@ -1306,7 +1288,6 @@ class CollectionBoardRef extends DataClass
     return <String, dynamic>{
       'collectionId': serializer.toJson<String>(collectionId),
       'extensionPkgName': serializer.toJson<String>(extensionPkgName),
-      'siteId': serializer.toJson<String>(siteId),
       'boardId': serializer.toJson<String>(boardId),
       'boardName': serializer.toJson<String>(boardName),
     };
@@ -1315,13 +1296,11 @@ class CollectionBoardRef extends DataClass
   CollectionBoardRef copyWith(
           {String? collectionId,
           String? extensionPkgName,
-          String? siteId,
           String? boardId,
           String? boardName}) =>
       CollectionBoardRef(
         collectionId: collectionId ?? this.collectionId,
         extensionPkgName: extensionPkgName ?? this.extensionPkgName,
-        siteId: siteId ?? this.siteId,
         boardId: boardId ?? this.boardId,
         boardName: boardName ?? this.boardName,
       );
@@ -1333,7 +1312,6 @@ class CollectionBoardRef extends DataClass
       extensionPkgName: data.extensionPkgName.present
           ? data.extensionPkgName.value
           : this.extensionPkgName,
-      siteId: data.siteId.present ? data.siteId.value : this.siteId,
       boardId: data.boardId.present ? data.boardId.value : this.boardId,
       boardName: data.boardName.present ? data.boardName.value : this.boardName,
     );
@@ -1344,7 +1322,6 @@ class CollectionBoardRef extends DataClass
     return (StringBuffer('CollectionBoardRef(')
           ..write('collectionId: $collectionId, ')
           ..write('extensionPkgName: $extensionPkgName, ')
-          ..write('siteId: $siteId, ')
           ..write('boardId: $boardId, ')
           ..write('boardName: $boardName')
           ..write(')'))
@@ -1353,14 +1330,13 @@ class CollectionBoardRef extends DataClass
 
   @override
   int get hashCode =>
-      Object.hash(collectionId, extensionPkgName, siteId, boardId, boardName);
+      Object.hash(collectionId, extensionPkgName, boardId, boardName);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
       (other is CollectionBoardRef &&
           other.collectionId == this.collectionId &&
           other.extensionPkgName == this.extensionPkgName &&
-          other.siteId == this.siteId &&
           other.boardId == this.boardId &&
           other.boardName == this.boardName);
 }
@@ -1368,14 +1344,12 @@ class CollectionBoardRef extends DataClass
 class CollectionBoardRefsCompanion extends UpdateCompanion<CollectionBoardRef> {
   final Value<String> collectionId;
   final Value<String> extensionPkgName;
-  final Value<String> siteId;
   final Value<String> boardId;
   final Value<String> boardName;
   final Value<int> rowid;
   const CollectionBoardRefsCompanion({
     this.collectionId = const Value.absent(),
     this.extensionPkgName = const Value.absent(),
-    this.siteId = const Value.absent(),
     this.boardId = const Value.absent(),
     this.boardName = const Value.absent(),
     this.rowid = const Value.absent(),
@@ -1383,18 +1357,15 @@ class CollectionBoardRefsCompanion extends UpdateCompanion<CollectionBoardRef> {
   CollectionBoardRefsCompanion.insert({
     required String collectionId,
     required String extensionPkgName,
-    required String siteId,
     required String boardId,
     this.boardName = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : collectionId = Value(collectionId),
         extensionPkgName = Value(extensionPkgName),
-        siteId = Value(siteId),
         boardId = Value(boardId);
   static Insertable<CollectionBoardRef> custom({
     Expression<String>? collectionId,
     Expression<String>? extensionPkgName,
-    Expression<String>? siteId,
     Expression<String>? boardId,
     Expression<String>? boardName,
     Expression<int>? rowid,
@@ -1402,7 +1373,6 @@ class CollectionBoardRefsCompanion extends UpdateCompanion<CollectionBoardRef> {
     return RawValuesInsertable({
       if (collectionId != null) 'collection_id': collectionId,
       if (extensionPkgName != null) 'extension_pkg_name': extensionPkgName,
-      if (siteId != null) 'site_id': siteId,
       if (boardId != null) 'board_id': boardId,
       if (boardName != null) 'board_name': boardName,
       if (rowid != null) 'rowid': rowid,
@@ -1412,14 +1382,12 @@ class CollectionBoardRefsCompanion extends UpdateCompanion<CollectionBoardRef> {
   CollectionBoardRefsCompanion copyWith(
       {Value<String>? collectionId,
       Value<String>? extensionPkgName,
-      Value<String>? siteId,
       Value<String>? boardId,
       Value<String>? boardName,
       Value<int>? rowid}) {
     return CollectionBoardRefsCompanion(
       collectionId: collectionId ?? this.collectionId,
       extensionPkgName: extensionPkgName ?? this.extensionPkgName,
-      siteId: siteId ?? this.siteId,
       boardId: boardId ?? this.boardId,
       boardName: boardName ?? this.boardName,
       rowid: rowid ?? this.rowid,
@@ -1434,9 +1402,6 @@ class CollectionBoardRefsCompanion extends UpdateCompanion<CollectionBoardRef> {
     }
     if (extensionPkgName.present) {
       map['extension_pkg_name'] = Variable<String>(extensionPkgName.value);
-    }
-    if (siteId.present) {
-      map['site_id'] = Variable<String>(siteId.value);
     }
     if (boardId.present) {
       map['board_id'] = Variable<String>(boardId.value);
@@ -1455,7 +1420,6 @@ class CollectionBoardRefsCompanion extends UpdateCompanion<CollectionBoardRef> {
     return (StringBuffer('CollectionBoardRefsCompanion(')
           ..write('collectionId: $collectionId, ')
           ..write('extensionPkgName: $extensionPkgName, ')
-          ..write('siteId: $siteId, ')
           ..write('boardId: $boardId, ')
           ..write('boardName: $boardName, ')
           ..write('rowid: $rowid')
@@ -2221,7 +2185,6 @@ typedef $$CollectionBoardRefsTableCreateCompanionBuilder
     = CollectionBoardRefsCompanion Function({
   required String collectionId,
   required String extensionPkgName,
-  required String siteId,
   required String boardId,
   Value<String> boardName,
   Value<int> rowid,
@@ -2230,7 +2193,6 @@ typedef $$CollectionBoardRefsTableUpdateCompanionBuilder
     = CollectionBoardRefsCompanion Function({
   Value<String> collectionId,
   Value<String> extensionPkgName,
-  Value<String> siteId,
   Value<String> boardId,
   Value<String> boardName,
   Value<int> rowid,
@@ -2269,9 +2231,6 @@ class $$CollectionBoardRefsTableFilterComposer
   ColumnFilters<String> get extensionPkgName => $composableBuilder(
       column: $table.extensionPkgName,
       builder: (column) => ColumnFilters(column));
-
-  ColumnFilters<String> get siteId => $composableBuilder(
-      column: $table.siteId, builder: (column) => ColumnFilters(column));
 
   ColumnFilters<String> get boardId => $composableBuilder(
       column: $table.boardId, builder: (column) => ColumnFilters(column));
@@ -2313,9 +2272,6 @@ class $$CollectionBoardRefsTableOrderingComposer
       column: $table.extensionPkgName,
       builder: (column) => ColumnOrderings(column));
 
-  ColumnOrderings<String> get siteId => $composableBuilder(
-      column: $table.siteId, builder: (column) => ColumnOrderings(column));
-
   ColumnOrderings<String> get boardId => $composableBuilder(
       column: $table.boardId, builder: (column) => ColumnOrderings(column));
 
@@ -2354,9 +2310,6 @@ class $$CollectionBoardRefsTableAnnotationComposer
   });
   GeneratedColumn<String> get extensionPkgName => $composableBuilder(
       column: $table.extensionPkgName, builder: (column) => column);
-
-  GeneratedColumn<String> get siteId =>
-      $composableBuilder(column: $table.siteId, builder: (column) => column);
 
   GeneratedColumn<String> get boardId =>
       $composableBuilder(column: $table.boardId, builder: (column) => column);
@@ -2413,7 +2366,6 @@ class $$CollectionBoardRefsTableTableManager extends RootTableManager<
           updateCompanionCallback: ({
             Value<String> collectionId = const Value.absent(),
             Value<String> extensionPkgName = const Value.absent(),
-            Value<String> siteId = const Value.absent(),
             Value<String> boardId = const Value.absent(),
             Value<String> boardName = const Value.absent(),
             Value<int> rowid = const Value.absent(),
@@ -2421,7 +2373,6 @@ class $$CollectionBoardRefsTableTableManager extends RootTableManager<
               CollectionBoardRefsCompanion(
             collectionId: collectionId,
             extensionPkgName: extensionPkgName,
-            siteId: siteId,
             boardId: boardId,
             boardName: boardName,
             rowid: rowid,
@@ -2429,7 +2380,6 @@ class $$CollectionBoardRefsTableTableManager extends RootTableManager<
           createCompanionCallback: ({
             required String collectionId,
             required String extensionPkgName,
-            required String siteId,
             required String boardId,
             Value<String> boardName = const Value.absent(),
             Value<int> rowid = const Value.absent(),
@@ -2437,7 +2387,6 @@ class $$CollectionBoardRefsTableTableManager extends RootTableManager<
               CollectionBoardRefsCompanion.insert(
             collectionId: collectionId,
             extensionPkgName: extensionPkgName,
-            siteId: siteId,
             boardId: boardId,
             boardName: boardName,
             rowid: rowid,

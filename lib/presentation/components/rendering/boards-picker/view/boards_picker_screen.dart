@@ -40,7 +40,7 @@ class BoardsPickerScreen extends StatelessWidget {
                   final ext = data[index];
                   return _CategorySection(
                     extensionPkgName: ext.pkgName,
-                    site: ext.site,
+                    displayName: ext.displayName,
                     boards: ext.boards.toList(),
                   );
                 },
@@ -55,12 +55,12 @@ class BoardsPickerScreen extends StatelessWidget {
 
 class _CategorySection extends StatelessWidget {
   final String extensionPkgName;
-  final Site site;
+  final String displayName;
   final List<Board> boards;
 
   const _CategorySection({
     required this.extensionPkgName,
-    required this.site,
+    required this.displayName,
     required this.boards,
   });
 
@@ -88,7 +88,7 @@ class _CategorySection extends StatelessWidget {
                     },
                   ),
                   Text(
-                    site.name,
+                    displayName,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
                           fontWeight: FontWeight.bold,
                         ),

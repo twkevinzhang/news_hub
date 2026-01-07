@@ -53,12 +53,11 @@ class Collections extends Table {
 class CollectionBoardRefs extends Table {
   TextColumn get collectionId => text().references(Collections, #id)();
   TextColumn get extensionPkgName => text()();
-  TextColumn get siteId => text()();
   TextColumn get boardId => text()();
   TextColumn get boardName => text().withDefault(const Constant(''))();
 
   @override
-  Set<Column> get primaryKey => {collectionId, extensionPkgName, siteId, boardId};
+  Set<Column> get primaryKey => {collectionId, extensionPkgName, boardId};
 }
 
 @singleton

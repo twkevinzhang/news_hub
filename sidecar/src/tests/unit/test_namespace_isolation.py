@@ -45,20 +45,23 @@ class TestNamespaceIsolation(unittest.TestCase):
             # 3. Test Adapter Logic (Manual Simulation)
             # Create a response using extension's 'pb' namespace
             ext_pb2 = komica_module.pb2
-            ext_res = ext_pb2.GetSiteRes(
-                site=ext_pb2.Site(
-                    name="Test Site",
-                    url="https://test.com"
-                )
+            ext_res = ext_pb2.GetBoardsRes(
+                boards=[
+                    ext_pb2.Board(
+                        id="test_board",
+                        name="Test Board",
+                        url="https://test.com/board"
+                    )
+                ]
             )
             
             # Convert to sidecar's namespace using serialization
             serialized = ext_res.SerializeToString()
-            sidecar_res = pb2.GetSiteRes()
+            sidecar_res = pb2.GetBoardsRes()
             sidecar_res.ParseFromString(serialized)
             
-            self.assertEqual(sidecar_res.site.name, "Test Site")
-            self.assertEqual(sidecar_res.site.url, "https://test.com")
+            self.assertEqual(sidecar_res.boards[0].name, "Test Board")
+            self.assertEqual(sidecar_res.boards[0].id, "test_board")
             self.assertNotEqual(ext_res.__class__, sidecar_res.__class__)
             
             print("\n[SUCCESS] Namespace isolation verified!")

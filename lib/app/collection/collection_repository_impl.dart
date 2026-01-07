@@ -29,7 +29,6 @@ class CollectionRepositoryImpl implements CollectionRepository {
             boards: boardRefs
                 .map((r) => domain.Board(
                       extensionPkgName: r.extensionPkgName,
-                      siteId: r.siteId,
                       id: r.boardId,
                       name: r.boardName,
                       icon: '',
@@ -60,7 +59,6 @@ class CollectionRepositoryImpl implements CollectionRepository {
         boards: boardRefs
             .map((r) => domain.Board(
                   extensionPkgName: r.extensionPkgName,
-                  siteId: r.siteId,
                   id: r.boardId,
                   name: r.boardName,
                   icon: '',
@@ -93,7 +91,6 @@ class CollectionRepositoryImpl implements CollectionRepository {
         await _db.into(_db.collectionBoardRefs).insert(CollectionBoardRefsCompanion.insert(
               collectionId: id,
               extensionPkgName: board.extensionPkgName,
-              siteId: board.siteId,
               boardId: board.id,
               boardName: Value(board.name),
             ));
@@ -122,7 +119,6 @@ class CollectionRepositoryImpl implements CollectionRepository {
         await _db.into(_db.collectionBoardRefs).insert(CollectionBoardRefsCompanion.insert(
               collectionId: collection.id,
               extensionPkgName: board.extensionPkgName,
-              siteId: board.siteId,
               boardId: board.id,
               boardName: Value(board.name),
             ));

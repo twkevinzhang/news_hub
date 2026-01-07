@@ -150,7 +150,7 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
 
     async def GetInstallProgress(self, request, context):
         """Get installation progress (placeholder)"""
-        return pb2.GetInstallProgressRes(sites=[])
+        return pb2.GetInstallProgressRes()
 
     async def AddExtensionRepo(self, request, context):
         """Add a new extension repository"""
@@ -213,10 +213,6 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
             context.set_code(grpc.StatusCode.INTERNAL)
             context.set_details(str(e))
             return pb2.ListExtensionReposRes()
-
-    async def GetSite(self, request, context):
-        """Delegate to extension resolver"""
-        return await self._delegate_to_resolver(request.pkg_name, "GetSite", request, context)
 
     async def GetBoards(self, request, context):
         """Delegate to extension resolver"""

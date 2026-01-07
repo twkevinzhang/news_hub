@@ -115,7 +115,6 @@ extension RemoteExtensionEx on RemoteExtension {
     bool? isNsfw,
     String? iconUrl,
     String? repoUrl,
-    Site? site,
     Set<Board> boards = const {},
   }) {
     return RemoteExtension(
@@ -129,22 +128,6 @@ extension RemoteExtensionEx on RemoteExtension {
       repoUrl: repoUrl ?? this.repoUrl,
     );
   }
-}
-
-class Site {
-  final String extensionPkgName;
-  final String id;
-  final String name;
-  final String icon;
-  final String url;
-
-  Site({
-    required this.extensionPkgName,
-    required this.id,
-    required this.name,
-    required this.icon,
-    required this.url,
-  });
 }
 
 class Collection {
@@ -161,7 +144,6 @@ class Collection {
 
 class Board {
   final String extensionPkgName;
-  final String siteId;
   final String id;
   final String name;
   final String icon;
@@ -171,7 +153,6 @@ class Board {
 
   Board({
     required this.extensionPkgName,
-    required this.siteId,
     required this.id,
     required this.name,
     required this.icon,
@@ -183,14 +164,12 @@ class Board {
 
 class Post {
   final String extensionPkgName;
-  final String siteId;
   final String boardId;
   final String threadId;
   final String id;
 
   Post({
     required this.extensionPkgName,
-    required this.siteId,
     required this.boardId,
     required this.threadId,
     required this.id,
@@ -213,7 +192,6 @@ class SingleImagePost extends Post {
 
   SingleImagePost({
     required super.extensionPkgName,
-    required super.siteId,
     required super.boardId,
     required super.threadId,
     required super.id,
@@ -258,7 +236,6 @@ class ArticlePost extends Post {
 
   ArticlePost({
     required super.extensionPkgName,
-    required super.siteId,
     required super.boardId,
     required super.threadId,
     required super.id,
@@ -374,7 +351,6 @@ extension ParagraphListEx on List<Paragraph> {
 
 class Comment {
   final String extensionPkgName;
-  final String siteId;
   final String boardId;
   final String threadId;
   final String postId;
@@ -385,7 +361,6 @@ class Comment {
 
   Comment({
     required this.extensionPkgName,
-    required this.siteId,
     required this.boardId,
     required this.threadId,
     required this.postId,

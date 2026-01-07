@@ -18,7 +18,6 @@ part 'thread_detail_cubit.freezed.dart';
 class ThreadDetailState with _$ThreadDetailState {
   const factory ThreadDetailState({
     required String extensionPkgName,
-    required String siteId,
     required String boardId,
     required String threadId,
     required Map<String, Result<ArticlePost>> threadMap,
@@ -44,7 +43,6 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
         overlayController = StreamController<Widget>.broadcast(),
         super(ThreadDetailState(
           extensionPkgName: '',
-          siteId: '',
           boardId: '',
           threadId: '',
           threadMap: {},
@@ -56,13 +54,11 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
   void _loadPosts(int pageKey) async {
     final threadF = _getThread.call(
       extensionPkgName: state.extensionPkgName,
-      siteId: state.siteId,
       boardId: state.boardId,
       threadId: state.threadId,
     );
     final regardingPostsF = _listRegardingPosts.call(
       extensionPkgName: state.extensionPkgName,
-      siteId: state.siteId,
       boardId: state.boardId,
       threadId: state.threadId,
       pagination: Pagination(
@@ -75,13 +71,12 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
       List<ArticlePostWithExtension> newPosts;
       bool isLastPage = false;
       if (pageKey == 1) {
-        final (thread, regardingPosts) = await(threadF, regardingPostsF).wait;
+        final (thread, regardingPosts) = await (threadF, regardingPostsF).wait;
         newPosts = [thread, ...regardingPosts];
         isLastPage = regardingPosts.length < _pageSize;
       } else {
         newPosts = await _listRegardingPosts.call(
           extensionPkgName: state.extensionPkgName,
-          siteId: state.siteId,
           boardId: state.boardId,
           threadId: state.threadId,
           pagination: Pagination(
@@ -116,13 +111,11 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
 
   void init({
     required String extensionPkgName,
-    required String siteId,
     required String boardId,
     required String threadId,
   }) {
     safeEmit(ThreadDetailState(
       extensionPkgName: extensionPkgName,
-      siteId: siteId,
       boardId: boardId,
       threadId: threadId,
       threadMap: {},
