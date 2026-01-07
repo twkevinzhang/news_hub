@@ -18,9 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$BoardsPickerState {
   Result<List<ExtensionWithBoards>> get extensionBoards =>
       throw _privateConstructorUsedError;
-  Map<String, String> get chosenBoardsSorting =>
-      throw _privateConstructorUsedError;
-  Map<String, String> get submittedChosenBoardsSorting =>
+  Map<String, String> get chosenBoards => throw _privateConstructorUsedError;
+  Map<String, String> get submittedChosenBoards =>
       throw _privateConstructorUsedError;
 
   /// Create a copy of BoardsPickerState
@@ -38,8 +37,8 @@ abstract class $BoardsPickerStateCopyWith<$Res> {
   @useResult
   $Res call(
       {Result<List<ExtensionWithBoards>> extensionBoards,
-      Map<String, String> chosenBoardsSorting,
-      Map<String, String> submittedChosenBoardsSorting});
+      Map<String, String> chosenBoards,
+      Map<String, String> submittedChosenBoards});
 
   $ResultCopyWith<List<ExtensionWithBoards>, $Res> get extensionBoards;
 }
@@ -60,21 +59,21 @@ class _$BoardsPickerStateCopyWithImpl<$Res, $Val extends BoardsPickerState>
   @override
   $Res call({
     Object? extensionBoards = null,
-    Object? chosenBoardsSorting = null,
-    Object? submittedChosenBoardsSorting = null,
+    Object? chosenBoards = null,
+    Object? submittedChosenBoards = null,
   }) {
     return _then(_value.copyWith(
       extensionBoards: null == extensionBoards
           ? _value.extensionBoards
           : extensionBoards // ignore: cast_nullable_to_non_nullable
               as Result<List<ExtensionWithBoards>>,
-      chosenBoardsSorting: null == chosenBoardsSorting
-          ? _value.chosenBoardsSorting
-          : chosenBoardsSorting // ignore: cast_nullable_to_non_nullable
+      chosenBoards: null == chosenBoards
+          ? _value.chosenBoards
+          : chosenBoards // ignore: cast_nullable_to_non_nullable
               as Map<String, String>,
-      submittedChosenBoardsSorting: null == submittedChosenBoardsSorting
-          ? _value.submittedChosenBoardsSorting
-          : submittedChosenBoardsSorting // ignore: cast_nullable_to_non_nullable
+      submittedChosenBoards: null == submittedChosenBoards
+          ? _value.submittedChosenBoards
+          : submittedChosenBoards // ignore: cast_nullable_to_non_nullable
               as Map<String, String>,
     ) as $Val);
   }
@@ -101,8 +100,8 @@ abstract class _$$BoardsPickerStateImplCopyWith<$Res>
   @useResult
   $Res call(
       {Result<List<ExtensionWithBoards>> extensionBoards,
-      Map<String, String> chosenBoardsSorting,
-      Map<String, String> submittedChosenBoardsSorting});
+      Map<String, String> chosenBoards,
+      Map<String, String> submittedChosenBoards});
 
   @override
   $ResultCopyWith<List<ExtensionWithBoards>, $Res> get extensionBoards;
@@ -122,21 +121,21 @@ class __$$BoardsPickerStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? extensionBoards = null,
-    Object? chosenBoardsSorting = null,
-    Object? submittedChosenBoardsSorting = null,
+    Object? chosenBoards = null,
+    Object? submittedChosenBoards = null,
   }) {
     return _then(_$BoardsPickerStateImpl(
       extensionBoards: null == extensionBoards
           ? _value.extensionBoards
           : extensionBoards // ignore: cast_nullable_to_non_nullable
               as Result<List<ExtensionWithBoards>>,
-      chosenBoardsSorting: null == chosenBoardsSorting
-          ? _value._chosenBoardsSorting
-          : chosenBoardsSorting // ignore: cast_nullable_to_non_nullable
+      chosenBoards: null == chosenBoards
+          ? _value._chosenBoards
+          : chosenBoards // ignore: cast_nullable_to_non_nullable
               as Map<String, String>,
-      submittedChosenBoardsSorting: null == submittedChosenBoardsSorting
-          ? _value._submittedChosenBoardsSorting
-          : submittedChosenBoardsSorting // ignore: cast_nullable_to_non_nullable
+      submittedChosenBoards: null == submittedChosenBoards
+          ? _value._submittedChosenBoards
+          : submittedChosenBoards // ignore: cast_nullable_to_non_nullable
               as Map<String, String>,
     ));
   }
@@ -147,34 +146,33 @@ class __$$BoardsPickerStateImplCopyWithImpl<$Res>
 class _$BoardsPickerStateImpl implements _BoardsPickerState {
   const _$BoardsPickerStateImpl(
       {required this.extensionBoards,
-      required final Map<String, String> chosenBoardsSorting,
-      required final Map<String, String> submittedChosenBoardsSorting})
-      : _chosenBoardsSorting = chosenBoardsSorting,
-        _submittedChosenBoardsSorting = submittedChosenBoardsSorting;
+      required final Map<String, String> chosenBoards,
+      required final Map<String, String> submittedChosenBoards})
+      : _chosenBoards = chosenBoards,
+        _submittedChosenBoards = submittedChosenBoards;
 
   @override
   final Result<List<ExtensionWithBoards>> extensionBoards;
-  final Map<String, String> _chosenBoardsSorting;
+  final Map<String, String> _chosenBoards;
   @override
-  Map<String, String> get chosenBoardsSorting {
-    if (_chosenBoardsSorting is EqualUnmodifiableMapView)
-      return _chosenBoardsSorting;
+  Map<String, String> get chosenBoards {
+    if (_chosenBoards is EqualUnmodifiableMapView) return _chosenBoards;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_chosenBoardsSorting);
+    return EqualUnmodifiableMapView(_chosenBoards);
   }
 
-  final Map<String, String> _submittedChosenBoardsSorting;
+  final Map<String, String> _submittedChosenBoards;
   @override
-  Map<String, String> get submittedChosenBoardsSorting {
-    if (_submittedChosenBoardsSorting is EqualUnmodifiableMapView)
-      return _submittedChosenBoardsSorting;
+  Map<String, String> get submittedChosenBoards {
+    if (_submittedChosenBoards is EqualUnmodifiableMapView)
+      return _submittedChosenBoards;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_submittedChosenBoardsSorting);
+    return EqualUnmodifiableMapView(_submittedChosenBoards);
   }
 
   @override
   String toString() {
-    return 'BoardsPickerState(extensionBoards: $extensionBoards, chosenBoardsSorting: $chosenBoardsSorting, submittedChosenBoardsSorting: $submittedChosenBoardsSorting)';
+    return 'BoardsPickerState(extensionBoards: $extensionBoards, chosenBoards: $chosenBoards, submittedChosenBoards: $submittedChosenBoards)';
   }
 
   @override
@@ -185,18 +183,17 @@ class _$BoardsPickerStateImpl implements _BoardsPickerState {
             (identical(other.extensionBoards, extensionBoards) ||
                 other.extensionBoards == extensionBoards) &&
             const DeepCollectionEquality()
-                .equals(other._chosenBoardsSorting, _chosenBoardsSorting) &&
-            const DeepCollectionEquality().equals(
-                other._submittedChosenBoardsSorting,
-                _submittedChosenBoardsSorting));
+                .equals(other._chosenBoards, _chosenBoards) &&
+            const DeepCollectionEquality()
+                .equals(other._submittedChosenBoards, _submittedChosenBoards));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       extensionBoards,
-      const DeepCollectionEquality().hash(_chosenBoardsSorting),
-      const DeepCollectionEquality().hash(_submittedChosenBoardsSorting));
+      const DeepCollectionEquality().hash(_chosenBoards),
+      const DeepCollectionEquality().hash(_submittedChosenBoards));
 
   /// Create a copy of BoardsPickerState
   /// with the given fields replaced by the non-null parameter values.
@@ -211,16 +208,16 @@ class _$BoardsPickerStateImpl implements _BoardsPickerState {
 abstract class _BoardsPickerState implements BoardsPickerState {
   const factory _BoardsPickerState(
           {required final Result<List<ExtensionWithBoards>> extensionBoards,
-          required final Map<String, String> chosenBoardsSorting,
-          required final Map<String, String> submittedChosenBoardsSorting}) =
+          required final Map<String, String> chosenBoards,
+          required final Map<String, String> submittedChosenBoards}) =
       _$BoardsPickerStateImpl;
 
   @override
   Result<List<ExtensionWithBoards>> get extensionBoards;
   @override
-  Map<String, String> get chosenBoardsSorting;
+  Map<String, String> get chosenBoards;
   @override
-  Map<String, String> get submittedChosenBoardsSorting;
+  Map<String, String> get submittedChosenBoards;
 
   /// Create a copy of BoardsPickerState
   /// with the given fields replaced by the non-null parameter values.

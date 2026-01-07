@@ -117,19 +117,19 @@ class SearchScreen extends StatelessWidget implements AutoRouteWrapper {
   }
 
   void _showBoardsPicker(BuildContext context, SearchCubit cubit) async {
-    final chosenBoardsSorting = await showDialog<Map<String, String>>(
+    final result = await showDialog<BoardsPickerResult>(
       context: context,
       builder: (context) {
         return Dialog.fullscreen(
           child: BlocProvider<BoardsPickerCubit>(
-            create: (context) => sl<BoardsPickerCubit>()..init(initialChosenBoardsSorting: cubit.state.filter.boardsSorting),
-            child: BoardsPickerScreen(),
+            create: (context) => sl<BoardsPickerCubit>()..init(chosenBoards: cubit.state.filter.boardsSorting),
+            child: const BoardsPickerScreen(),
           ),
         );
       },
     );
-    if (chosenBoardsSorting != null) {
-      cubit.setBoardsSorting(chosenBoardsSorting);
+    if (result != null) {
+      cubit.setBoardsSorting(result.chosenBoards);
     }
   }
 

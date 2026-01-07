@@ -6,19 +6,36 @@ import 'package:news_hub/domain/extension/interactor/list_installed_extensions.d
 import 'package:news_hub/shared/extensions.dart';
 import 'package:news_hub/shared/models.dart';
 
+import 'package:news_hub/domain/models/models.dart';
+
 part 'boards_picker_cubit.freezed.dart';
 
 @freezed
 abstract class BoardsPickerState with _$BoardsPickerState {
   const factory BoardsPickerState({
     required Result<List<ExtensionWithBoards>> extensionBoards,
-    required Map<String, String> chosenBoardsSorting,
-    required Map<String, String> submittedChosenBoardsSorting,
+    required Map<String, String> chosenBoards,
+    required Map<String, String> submittedChosenBoards,
   }) = _BoardsPickerState;
 }
 
+class BoardsPickerResult {
+  final Map<String, String> chosenBoards;
+  final List<Board> boards;
+
+  BoardsPickerResult({
+    required this.chosenBoards,
+    required this.boards,
+  });
+}
+
 extension BoardsPickerStateEx on BoardsPickerState {
-  get chosenBoardIds => chosenBoardsSorting.keys.toSet();
+  Set<String> get chosenBoardIds => chosenBoards.keys.toSet();
+
+  List<Board> get chosenBoardsList => extensionBoards.maybeWhen(
+        completed: (extensions) => extensions.expand((e) => e.boards).where((b) => chosenBoardIds.contains(b.id)).toList(),
+        orElse: () => [],
+      );
 }
 
 @injectable
@@ -30,13 +47,13 @@ class BoardsPickerCubit extends Cubit<BoardsPickerState> {
         super(
           BoardsPickerState(
             extensionBoards: Result.initial(),
-            chosenBoardsSorting: {},
-            submittedChosenBoardsSorting: {},
+            chosenBoards: {},
+            submittedChosenBoards: {},
           ),
         );
 
   Future<void> init({
-    Map<String, String>? initialChosenBoardsSorting,
+    Map<String, String>? chosenBoards,
   }) async {
     safeEmit(state.copyWith(
       extensionBoards: Result.loading(),
@@ -52,20 +69,17 @@ class BoardsPickerCubit extends Cubit<BoardsPickerState> {
       ));
     }
 
-    if (initialChosenBoardsSorting != null) {
+    if (chosenBoards != null) {
       safeEmit(state.copyWith(
-        chosenBoardsSorting: initialChosenBoardsSorting,
-        submittedChosenBoardsSorting: initialChosenBoardsSorting,
+        chosenBoards: chosenBoards,
+        submittedChosenBoards: chosenBoards,
       ));
     }
   }
 
   bool? getExtensionCheckboxValue(String extensionPkgName) {
-    final boardIds = state.extensionBoards.maybeWhen(completed: (data) => data
-        .firstOrNullWhere((e) => e.pkgName == extensionPkgName)
-        ?.boards
-        .map((e) => e.id)
-        .toSet(), orElse: () => null);
+    final boardIds = state.extensionBoards
+        .maybeWhen(completed: (data) => data.firstOrNullWhere((e) => e.pkgName == extensionPkgName)?.boards.map((e) => e.id).toSet(), orElse: () => null);
     if (boardIds == null) {
       throw Exception("Extension not found");
     }
@@ -84,20 +98,18 @@ class BoardsPickerCubit extends Cubit<BoardsPickerState> {
 
   void toggleExtension(String extensionPkgName, bool? value) {
     value ??= false;
-    final extension = state.extensionBoards.maybeWhen(completed: (data) => data
-        .firstWhere((e) => e.pkgName == extensionPkgName), orElse: () => null);
+    final extension = state.extensionBoards.maybeWhen(completed: (data) => data.firstWhere((e) => e.pkgName == extensionPkgName), orElse: () => null);
     if (extension == null) {
       throw Exception("state.extensionBoards not loaded");
     }
     if (value) {
-      final newBoardSorting = extension.boards
-          .map((e) => MapEntry(e.id, e.supportedThreadsSorting.first));
+      final newBoardSorting = extension.boards.map((e) => MapEntry(e.id, e.supportedThreadsSorting.first));
       safeEmit(state.copyWith(
-        chosenBoardsSorting: { ...state.chosenBoardsSorting }..addEntries(newBoardSorting),
+        chosenBoards: {...state.chosenBoards}..addEntries(newBoardSorting),
       ));
     } else {
       safeEmit(state.copyWith(
-        chosenBoardsSorting: { ...state.chosenBoardsSorting }..removeWhere((key, value) => extension.boards.any((e) => e.id == key)),
+        chosenBoards: {...state.chosenBoards}..removeWhere((key, value) => extension.boards.any((e) => e.id == key)),
       ));
     }
   }
@@ -105,19 +117,17 @@ class BoardsPickerCubit extends Cubit<BoardsPickerState> {
   void toggleBoard(String boardId, bool? value) {
     if (value == null) return;
     if (value) {
-      final board = state.extensionBoards.maybeWhen(completed: (data) => data
-          .firstWhere((e) => e.boards.any((b) => b.id == boardId))
-          .boards
-          .firstWhere((e) => e.id == boardId), orElse: () => null);
+      final board = state.extensionBoards.maybeWhen(
+          completed: (data) => data.firstWhere((e) => e.boards.any((b) => b.id == boardId)).boards.firstWhere((e) => e.id == boardId), orElse: () => null);
       if (board == null) {
         throw Exception("state.extensionBoards not loaded");
       }
       safeEmit(state.copyWith(
-        chosenBoardsSorting: { ...state.chosenBoardsSorting }..addAll({boardId: board.supportedThreadsSorting.first}),
+        chosenBoards: {...state.chosenBoards}..addAll({boardId: board.supportedThreadsSorting.first}),
       ));
     } else {
       safeEmit(state.copyWith(
-        chosenBoardsSorting: { ...state.chosenBoardsSorting }..remove(boardId),
+        chosenBoards: {...state.chosenBoards}..remove(boardId),
       ));
     }
   }
@@ -125,23 +135,23 @@ class BoardsPickerCubit extends Cubit<BoardsPickerState> {
   void setBoardSorting(String boardId, String? sorting) {
     if (sorting == null) return;
     safeEmit(state.copyWith(
-      chosenBoardsSorting: { ...state.chosenBoardsSorting }..addAll({boardId: sorting}),
+      chosenBoards: {...state.chosenBoards}..addAll({boardId: sorting}),
     ));
   }
 
   void reset() {
     safeEmit(state.copyWith(
-      chosenBoardsSorting: state.submittedChosenBoardsSorting,
+      chosenBoards: state.submittedChosenBoards,
     ));
   }
 
   void submit() {
     safeEmit(state.copyWith(
-      submittedChosenBoardsSorting: state.chosenBoardsSorting,
+      submittedChosenBoards: state.chosenBoards,
     ));
   }
 
   bool isSubmitted() {
-    return state.chosenBoardsSorting == state.submittedChosenBoardsSorting;
+    return state.chosenBoards == state.submittedChosenBoards;
   }
 }

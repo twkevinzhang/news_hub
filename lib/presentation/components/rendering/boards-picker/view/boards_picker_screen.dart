@@ -17,13 +17,10 @@ class BoardsPickerScreen extends StatelessWidget {
             actions: [
               TextButton(
                 onPressed: () {
-                  final selectedIds = state.chosenBoardsSorting.keys.toSet();
-                  final allBoards = state.extensionBoards.maybeWhen(
-                    completed: (data) => data.expand((e) => e.boards).toList(),
-                    orElse: () => <Board>[],
-                  );
-                  final selectedBoards = allBoards.where((b) => selectedIds.contains(b.id)).toList();
-                  Navigator.of(context).pop(selectedBoards);
+                  Navigator.of(context).pop(BoardsPickerResult(
+                    chosenBoards: state.chosenBoards,
+                    boards: state.chosenBoardsList,
+                  ));
                 },
                 child: const Text('完成'),
               ),

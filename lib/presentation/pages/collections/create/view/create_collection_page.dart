@@ -1,7 +1,6 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/collections/create/bloc/create_collection_cubit.dart';
 import 'package:news_hub/presentation/components/rendering/boards-picker/boards_picker.dart';
@@ -115,20 +114,23 @@ class CreateCollectionPage extends StatelessWidget implements AutoRouteWrapper {
   }
 
   Future<void> _showBoardsPicker(BuildContext context, CreateCollectionCubit cubit) async {
-    final List<Board>? selectedBoards = await showDialog<List<Board>>(
+    final result = await showDialog<BoardsPickerResult>(
       context: context,
       builder: (context) {
+        final initialChosenBoards = Map.fromEntries(
+          cubit.state.selectedBoards.map((b) => MapEntry(b.id, b.supportedThreadsSorting.first)),
+        );
         return Dialog.fullscreen(
           child: BlocProvider<BoardsPickerCubit>(
-            create: (context) => sl<BoardsPickerCubit>()..init(),
+            create: (context) => sl<BoardsPickerCubit>()..init(chosenBoards: initialChosenBoards),
             child: const BoardsPickerScreen(),
           ),
         );
       },
     );
 
-    if (selectedBoards != null) {
-      cubit.updateSelectedBoards(selectedBoards);
+    if (result != null) {
+      cubit.updateSelectedBoards(result.boards);
     }
   }
 }
