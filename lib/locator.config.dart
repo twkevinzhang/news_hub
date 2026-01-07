@@ -84,10 +84,10 @@ import 'package:news_hub/domain/thread/interactor/list_threads.dart' as _i757;
 import 'package:news_hub/locator.dart' as _i56;
 import 'package:news_hub/presentation/components/rendering/boards-picker/bloc/boards_picker_cubit.dart'
     as _i274;
-import 'package:news_hub/presentation/pages/collections/create/bloc/create_collection_cubit.dart'
-    as _i70;
-import 'package:news_hub/presentation/pages/collections/list/bloc/collection_list_bloc.dart'
-    as _i682;
+import 'package:news_hub/presentation/pages/collections/form/bloc/collection_form_cubit.dart'
+    as _i112;
+import 'package:news_hub/presentation/pages/collections/list/bloc/collection_list_cubit.dart'
+    as _i603;
 import 'package:news_hub/presentation/pages/settings/extensions/bloc/extension_cubit.dart'
     as _i34;
 import 'package:news_hub/presentation/pages/settings/extensions/bloc/repo_cubit.dart'
@@ -137,8 +137,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i530.SuggestionRepositoryImpl(db: gh<_i539.AppDatabase>()));
     gh.lazySingleton<_i914.CollectionRepository>(
         () => _i815.CollectionRepositoryImpl(db: gh<_i539.AppDatabase>()));
-    gh.factory<_i70.CreateCollectionCubit>(
-        () => _i70.CreateCollectionCubit(gh<_i914.CollectionRepository>()));
+    gh.factory<_i112.CollectionFormCubit>(
+        () => _i112.CollectionFormCubit(gh<_i914.CollectionRepository>()));
     gh.lazySingleton<_i365.PreferenceStore>(
         () => _i842.PreferenceStoreImpl(prefs: gh<_i579.SharedPreferences>()));
     gh.lazySingleton<_i643.ListSuggestions>(() => _i643.ListSuggestions(
@@ -158,8 +158,8 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i606.DeleteCollection(gh<_i914.CollectionRepository>()));
     gh.factory<_i913.UpdateCollection>(
         () => _i913.UpdateCollection(gh<_i914.CollectionRepository>()));
-    gh.factory<_i682.CollectionListBloc>(
-        () => _i682.CollectionListBloc(gh<_i914.CollectionRepository>()));
+    gh.factory<_i603.CollectionListCubit>(
+        () => _i603.CollectionListCubit(gh<_i914.CollectionRepository>()));
     gh.singleton<_i280.SidecarPreferences>(
         () => appProvider.sidecarPreferences(gh<_i365.PreferenceStore>()));
     gh.lazySingleton<_i191.ExtensionPreferencesService>(() =>

@@ -27,7 +27,7 @@ class AppRouter extends RootStackRouter {
         // 📁 Content Organization - 內容整理
         // ============================================
         AutoRoute(path: '/collection/list', page: CollectionListRoute.page),
-        AutoRoute(path: '/collection/create', page: CreateCollectionRoute.page),
+        AutoRoute(path: '/collection/create', page: CollectionFormRoute.page),
 
         // ============================================
         // 🧩 Extension Marketplace - 擴充市集

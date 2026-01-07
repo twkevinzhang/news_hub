@@ -931,8 +931,16 @@ class $CollectionsTable extends Collections
   late final GeneratedColumn<String> name = GeneratedColumn<String>(
       'name', aliasedName, false,
       type: DriftSqlType.string, requiredDuringInsert: true);
+  static const VerificationMeta _sortOrderMeta =
+      const VerificationMeta('sortOrder');
   @override
-  List<GeneratedColumn> get $columns => [id, name];
+  late final GeneratedColumn<int> sortOrder = GeneratedColumn<int>(
+      'sort_order', aliasedName, false,
+      type: DriftSqlType.int,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(0));
+  @override
+  List<GeneratedColumn> get $columns => [id, name, sortOrder];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -954,6 +962,10 @@ class $CollectionsTable extends Collections
     } else if (isInserting) {
       context.missing(_nameMeta);
     }
+    if (data.containsKey('sort_order')) {
+      context.handle(_sortOrderMeta,
+          sortOrder.isAcceptableOrUnknown(data['sort_order']!, _sortOrderMeta));
+    }
     return context;
   }
 
@@ -967,6 +979,8 @@ class $CollectionsTable extends Collections
           .read(DriftSqlType.string, data['${effectivePrefix}id'])!,
       name: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}name'])!,
+      sortOrder: attachedDatabase.typeMapping
+          .read(DriftSqlType.int, data['${effectivePrefix}sort_order'])!,
     );
   }
 
@@ -979,12 +993,15 @@ class $CollectionsTable extends Collections
 class Collection extends DataClass implements Insertable<Collection> {
   final String id;
   final String name;
-  const Collection({required this.id, required this.name});
+  final int sortOrder;
+  const Collection(
+      {required this.id, required this.name, required this.sortOrder});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
     map['id'] = Variable<String>(id);
     map['name'] = Variable<String>(name);
+    map['sort_order'] = Variable<int>(sortOrder);
     return map;
   }
 
@@ -992,6 +1009,7 @@ class Collection extends DataClass implements Insertable<Collection> {
     return CollectionsCompanion(
       id: Value(id),
       name: Value(name),
+      sortOrder: Value(sortOrder),
     );
   }
 
@@ -1001,6 +1019,7 @@ class Collection extends DataClass implements Insertable<Collection> {
     return Collection(
       id: serializer.fromJson<String>(json['id']),
       name: serializer.fromJson<String>(json['name']),
+      sortOrder: serializer.fromJson<int>(json['sortOrder']),
     );
   }
   @override
@@ -1009,17 +1028,20 @@ class Collection extends DataClass implements Insertable<Collection> {
     return <String, dynamic>{
       'id': serializer.toJson<String>(id),
       'name': serializer.toJson<String>(name),
+      'sortOrder': serializer.toJson<int>(sortOrder),
     };
   }
 
-  Collection copyWith({String? id, String? name}) => Collection(
+  Collection copyWith({String? id, String? name, int? sortOrder}) => Collection(
         id: id ?? this.id,
         name: name ?? this.name,
+        sortOrder: sortOrder ?? this.sortOrder,
       );
   Collection copyWithCompanion(CollectionsCompanion data) {
     return Collection(
       id: data.id.present ? data.id.value : this.id,
       name: data.name.present ? data.name.value : this.name,
+      sortOrder: data.sortOrder.present ? data.sortOrder.value : this.sortOrder,
     );
   }
 
@@ -1027,51 +1049,64 @@ class Collection extends DataClass implements Insertable<Collection> {
   String toString() {
     return (StringBuffer('Collection(')
           ..write('id: $id, ')
-          ..write('name: $name')
+          ..write('name: $name, ')
+          ..write('sortOrder: $sortOrder')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode => Object.hash(id, name);
+  int get hashCode => Object.hash(id, name, sortOrder);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      (other is Collection && other.id == this.id && other.name == this.name);
+      (other is Collection &&
+          other.id == this.id &&
+          other.name == this.name &&
+          other.sortOrder == this.sortOrder);
 }
 
 class CollectionsCompanion extends UpdateCompanion<Collection> {
   final Value<String> id;
   final Value<String> name;
+  final Value<int> sortOrder;
   final Value<int> rowid;
   const CollectionsCompanion({
     this.id = const Value.absent(),
     this.name = const Value.absent(),
+    this.sortOrder = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   CollectionsCompanion.insert({
     required String id,
     required String name,
+    this.sortOrder = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : id = Value(id),
         name = Value(name);
   static Insertable<Collection> custom({
     Expression<String>? id,
     Expression<String>? name,
+    Expression<int>? sortOrder,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
       if (id != null) 'id': id,
       if (name != null) 'name': name,
+      if (sortOrder != null) 'sort_order': sortOrder,
       if (rowid != null) 'rowid': rowid,
     });
   }
 
   CollectionsCompanion copyWith(
-      {Value<String>? id, Value<String>? name, Value<int>? rowid}) {
+      {Value<String>? id,
+      Value<String>? name,
+      Value<int>? sortOrder,
+      Value<int>? rowid}) {
     return CollectionsCompanion(
       id: id ?? this.id,
       name: name ?? this.name,
+      sortOrder: sortOrder ?? this.sortOrder,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -1085,6 +1120,9 @@ class CollectionsCompanion extends UpdateCompanion<Collection> {
     if (name.present) {
       map['name'] = Variable<String>(name.value);
     }
+    if (sortOrder.present) {
+      map['sort_order'] = Variable<int>(sortOrder.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -1096,6 +1134,7 @@ class CollectionsCompanion extends UpdateCompanion<Collection> {
     return (StringBuffer('CollectionsCompanion(')
           ..write('id: $id, ')
           ..write('name: $name, ')
+          ..write('sortOrder: $sortOrder, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1950,12 +1989,14 @@ typedef $$CollectionsTableCreateCompanionBuilder = CollectionsCompanion
     Function({
   required String id,
   required String name,
+  Value<int> sortOrder,
   Value<int> rowid,
 });
 typedef $$CollectionsTableUpdateCompanionBuilder = CollectionsCompanion
     Function({
   Value<String> id,
   Value<String> name,
+  Value<int> sortOrder,
   Value<int> rowid,
 });
 
@@ -1998,6 +2039,9 @@ class $$CollectionsTableFilterComposer
   ColumnFilters<String> get name => $composableBuilder(
       column: $table.name, builder: (column) => ColumnFilters(column));
 
+  ColumnFilters<int> get sortOrder => $composableBuilder(
+      column: $table.sortOrder, builder: (column) => ColumnFilters(column));
+
   Expression<bool> collectionBoardRefsRefs(
       Expression<bool> Function($$CollectionBoardRefsTableFilterComposer f) f) {
     final $$CollectionBoardRefsTableFilterComposer composer = $composerBuilder(
@@ -2034,6 +2078,9 @@ class $$CollectionsTableOrderingComposer
 
   ColumnOrderings<String> get name => $composableBuilder(
       column: $table.name, builder: (column) => ColumnOrderings(column));
+
+  ColumnOrderings<int> get sortOrder => $composableBuilder(
+      column: $table.sortOrder, builder: (column) => ColumnOrderings(column));
 }
 
 class $$CollectionsTableAnnotationComposer
@@ -2050,6 +2097,9 @@ class $$CollectionsTableAnnotationComposer
 
   GeneratedColumn<String> get name =>
       $composableBuilder(column: $table.name, builder: (column) => column);
+
+  GeneratedColumn<int> get sortOrder =>
+      $composableBuilder(column: $table.sortOrder, builder: (column) => column);
 
   Expression<T> collectionBoardRefsRefs<T extends Object>(
       Expression<T> Function($$CollectionBoardRefsTableAnnotationComposer a)
@@ -2100,21 +2150,25 @@ class $$CollectionsTableTableManager extends RootTableManager<
           updateCompanionCallback: ({
             Value<String> id = const Value.absent(),
             Value<String> name = const Value.absent(),
+            Value<int> sortOrder = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               CollectionsCompanion(
             id: id,
             name: name,
+            sortOrder: sortOrder,
             rowid: rowid,
           ),
           createCompanionCallback: ({
             required String id,
             required String name,
+            Value<int> sortOrder = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               CollectionsCompanion.insert(
             id: id,
             name: name,
+            sortOrder: sortOrder,
             rowid: rowid,
           ),
           withReferenceMapper: (p0) => p0

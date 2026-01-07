@@ -3,7 +3,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/locator.dart';
-import 'package:news_hub/presentation/pages/collections/list/bloc/collection_list_bloc.dart';
+import 'package:news_hub/presentation/pages/collections/list/bloc/collection_list_cubit.dart';
 import 'package:news_hub/presentation/components/navigation/app_navigation_drawer.dart';
 import 'package:news_hub/presentation/components/navigation/app_top_bar.dart';
 import 'package:news_hub/presentation/pages/sidecar/sidecar_cubit.dart';
@@ -19,14 +19,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  late final CollectionListBloc _collectionListBloc;
+  late final CollectionListCubit _collectionListCubit;
   late final SidecarCubit _sidecarCubit;
 
   @override
   void initState() {
     super.initState();
     _sidecarCubit = sl<SidecarCubit>()..startHealthWatch();
-    _collectionListBloc = sl<CollectionListBloc>()..add(const CollectionListEvent.load());
+    _collectionListCubit = sl<CollectionListCubit>()..load();
   }
 
   Future<void> _safeNavigate(VoidCallback navigate) async {
@@ -40,7 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   void dispose() {
     _sidecarCubit.close();
-    _collectionListBloc.close();
+    _collectionListCubit.close();
     super.dispose();
   }
 
@@ -49,7 +49,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return MultiBlocProvider(
       providers: [
         BlocProvider.value(value: _sidecarCubit),
-        BlocProvider.value(value: _collectionListBloc),
+        BlocProvider.value(value: _collectionListCubit),
       ],
       child: Scaffold(
         key: _scaffoldKey,
@@ -63,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
             _safeNavigate(() => context.router.push(ThreadListRoute()));
           },
           onCreateCollectionPressed: () {
-            _safeNavigate(() => context.router.push(const CreateCollectionRoute()));
+            _safeNavigate(() => context.router.push(CollectionFormRoute()));
           },
           onBoardSelected: (board) {
             _safeNavigate(() => context.router.push(ThreadListRoute()));

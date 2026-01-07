@@ -6,4 +6,6 @@ abstract class CollectionRepository {
   Future<void> create(String name, List<Board> boards);
   Future<void> delete(String id);
   Future<void> update(Collection collection);
+
+  Future<void> reorder(List<String> ids);
 }

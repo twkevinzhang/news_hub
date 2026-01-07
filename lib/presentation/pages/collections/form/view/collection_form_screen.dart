@@ -1,29 +1,33 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/locator.dart';
-import 'package:news_hub/presentation/pages/collections/create/bloc/create_collection_cubit.dart';
+// ignore: unused_import
+import 'package:news_hub/presentation/pages/collections/form/bloc/collection_form_cubit.dart';
 import 'package:news_hub/presentation/components/rendering/boards-picker/boards_picker.dart';
 
 @RoutePage()
-class CreateCollectionPage extends StatelessWidget implements AutoRouteWrapper {
-  const CreateCollectionPage({super.key});
+class CollectionFormScreen extends StatelessWidget implements AutoRouteWrapper {
+  final Collection? initialCollection;
+
+  const CollectionFormScreen({super.key, this.initialCollection});
 
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<CreateCollectionCubit>(),
+      create: (context) => sl<CollectionFormCubit>()..init(initialCollection),
       child: this,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<CreateCollectionCubit, CreateCollectionState>(
+    return BlocConsumer<CollectionFormCubit, CollectionFormState>(
       listener: (context, state) {
         if (state.isSuccess) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('集合已建立')),
+            SnackBar(content: Text(state.isEditing ? '集合已更新' : '集合已建立')),
           );
           context.maybePop();
         }
@@ -34,16 +38,17 @@ class CreateCollectionPage extends StatelessWidget implements AutoRouteWrapper {
         }
       },
       builder: (context, state) {
-        final cubit = context.read<CreateCollectionCubit>();
+        final cubit = context.read<CollectionFormCubit>();
 
         return Scaffold(
           appBar: AppBar(
-            title: const Text('建立新集合'),
+            title: Text(state.isEditing ? '編輯集合' : '建立新集合'),
           ),
           body: ListView(
             padding: const EdgeInsets.all(16),
             children: [
               TextField(
+                controller: TextEditingController(text: state.name)..selection = TextSelection.fromPosition(TextPosition(offset: state.name.length)),
                 decoration: InputDecoration(
                   labelText: '集合名稱 (選填)',
                   hintText: state.defaultName.isEmpty ? '某版塊...等' : state.defaultName,
@@ -104,7 +109,7 @@ class CreateCollectionPage extends StatelessWidget implements AutoRouteWrapper {
                         width: 20,
                         child: CircularProgressIndicator(strokeWidth: 2, color: Colors.white),
                       )
-                    : const Text('建立集合'),
+                    : Text(state.isEditing ? '更新集合' : '建立集合'),
               ),
             ),
           ),
@@ -113,7 +118,7 @@ class CreateCollectionPage extends StatelessWidget implements AutoRouteWrapper {
     );
   }
 
-  Future<void> _showBoardsPicker(BuildContext context, CreateCollectionCubit cubit) async {
+  Future<void> _showBoardsPicker(BuildContext context, CollectionFormCubit cubit) async {
     final result = await showDialog<BoardsPickerResult>(
       context: context,
       builder: (context) {

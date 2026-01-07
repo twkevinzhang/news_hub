@@ -4,20 +4,22 @@ import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/collection/repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 
-part 'create_collection_cubit.freezed.dart';
+part 'collection_form_cubit.freezed.dart';
 
 @freezed
-class CreateCollectionState with _$CreateCollectionState {
-  const factory CreateCollectionState({
+class CollectionFormState with _$CollectionFormState {
+  const factory CollectionFormState({
     @Default('') String name,
     @Default([]) List<Board> selectedBoards,
     @Default(false) bool isSaving,
     @Default(false) bool isSuccess,
     String? errorMessage,
-  }) = _CreateCollectionState;
+    // Add validation checks or existing ID
+    String? editingCollectionId,
+  }) = _CollectionFormState;
 }
 
-extension CreateCollectionStateEx on CreateCollectionState {
+extension CollectionFormStateEx on CollectionFormState {
   String get defaultName {
     if (selectedBoards.isEmpty) return '';
     final firstBoardName = selectedBoards.first.name;
@@ -27,13 +29,25 @@ extension CreateCollectionStateEx on CreateCollectionState {
       return firstBoardName;
     }
   }
+
+  bool get isEditing => editingCollectionId != null;
 }
 
 @injectable
-class CreateCollectionCubit extends Cubit<CreateCollectionState> {
+class CollectionFormCubit extends Cubit<CollectionFormState> {
   final CollectionRepository _collectionRepository;
 
-  CreateCollectionCubit(this._collectionRepository) : super(const CreateCollectionState());
+  CollectionFormCubit(this._collectionRepository) : super(const CollectionFormState());
+
+  void init(Collection? collection) {
+    if (collection != null) {
+      emit(state.copyWith(
+        name: collection.name,
+        selectedBoards: collection.boards,
+        editingCollectionId: collection.id,
+      ));
+    }
+  }
 
   void updateName(String name) {
     emit(state.copyWith(name: name, errorMessage: null));
@@ -57,7 +71,16 @@ class CreateCollectionCubit extends Cubit<CreateCollectionState> {
         finalName = state.defaultName;
       }
 
-      await _collectionRepository.create(finalName, state.selectedBoards);
+      if (state.isEditing) {
+        await _collectionRepository.update(Collection(
+          id: state.editingCollectionId!,
+          name: finalName,
+          boards: state.selectedBoards,
+        ));
+      } else {
+        await _collectionRepository.create(finalName, state.selectedBoards);
+      }
+
       emit(state.copyWith(isSaving: false, isSuccess: true));
     } catch (e) {
       emit(state.copyWith(isSaving: false, errorMessage: e.toString()));

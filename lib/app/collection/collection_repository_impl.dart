@@ -16,7 +16,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
 
   @override
   Stream<List<domain.Collection>> watchList() {
-    return _db.select(_db.collections).watch().switchMap((collections) {
+    return (_db.select(_db.collections)..orderBy([(t) => OrderingTerm(expression: t.sortOrder)])).watch().switchMap((collections) {
       if (collections.isEmpty) return Stream.value([]);
 
       final collectionIds = collections.map((c) => c.id).toList();
@@ -46,7 +46,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
 
   @override
   Future<List<domain.Collection>> list() async {
-    final collections = await _db.select(_db.collections).get();
+    final collections = await (_db.select(_db.collections)..orderBy([(t) => OrderingTerm(expression: t.sortOrder)])).get();
     if (collections.isEmpty) return [];
 
     final collectionIds = collections.map((c) => c.id).toList();
@@ -77,9 +77,16 @@ class CollectionRepositoryImpl implements CollectionRepository {
   Future<void> create(String name, List<domain.Board> boards) async {
     final id = const Uuid().v4();
     await _db.transaction(() async {
+      // Get max sortOrder to append at the end
+      final maxSortOrderFunc = _db.collections.sortOrder.max();
+      final query = _db.selectOnly(_db.collections)..addColumns([maxSortOrderFunc]);
+      final result = await query.getSingle();
+      final maxSortOrder = result.read(maxSortOrderFunc) ?? 0;
+
       await _db.into(_db.collections).insert(CollectionsCompanion.insert(
             id: id,
             name: name,
+            sortOrder: Value(maxSortOrder + 1),
           ));
 
       for (final board in boards) {
@@ -119,6 +126,17 @@ class CollectionRepositoryImpl implements CollectionRepository {
               boardId: board.id,
               boardName: Value(board.name),
             ));
+      }
+    });
+  }
+
+  @override
+  Future<void> reorder(List<String> ids) async {
+    await _db.transaction(() async {
+      for (int i = 0; i < ids.length; i++) {
+        await (_db.update(_db.collections)..where((tbl) => tbl.id.equals(ids[i]))).write(CollectionsCompanion(
+          sortOrder: Value(i),
+        ));
       }
     });
   }
