@@ -194,8 +194,8 @@ make run SIDECAR_HOST=my-server.local  # 連接到主機名/mDNS
        - 如果指定 twkevinzhang, 則使用 `git commit --author="twkevinzhang <twkevinzhang@gmail.com>" -m "commit message"`
        - 如果指定 Gemini 3 Flash, 則使用 `git commit --author="Gemini 3 Flash <google-bot@users.noreply.github.com>" -m "commit message"`
        - 如果指定 Sonnet 4.5, 則使用 `git commit --author="Sonnet 4.5 <noreply@anthropic.com>" -m "commit message"`
-     - Commit message 應使用英文清楚描述變更內容
-     - Commit message 格式應該遵循 Conventional Commits: https://www.conventionalcommits.org/en/v1.0.0-beta.4/
+     - Commit message 應使用英文清楚描述變更內容，**必須包含標題與詳細的內文說明**（標題與內文間需有空行分隔）。
+     - Commit message 格式應該遵循 Conventional Commits: https://www.conventionalcommits.org/en/v1.0.0-beta.4/，且內容需詳細列出具體改動點。
 
    - Bug 修復任務 (豁免條款)：
 
