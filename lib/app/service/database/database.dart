@@ -9,29 +9,6 @@ import 'package:path/path.dart' as p;
 
 part 'database.g.dart';
 
-class Repos extends Table {
-  TextColumn get icon => text().nullable()();
-  TextColumn get baseUrl => text()();
-  TextColumn get displayName => text()();
-  TextColumn get website => text()();
-  TextColumn get signingKeyFingerprint => text()();
-
-  @override
-  Set<Column> get primaryKey => {baseUrl};
-}
-
-class InstalledExtensions extends Table {
-  TextColumn get pkgName => text()();
-  TextColumn get displayName => text()();
-  IntColumn get version => integer()();
-  IntColumn get pythonVersion => integer()();
-  TextColumn get lang => text().nullable()();
-  BoolColumn get isNsfw => boolean()();
-
-  @override
-  Set<Column> get primaryKey => {pkgName};
-}
-
 class Suggestions extends Table {
   TextColumn get id => text()();
   TextColumn get keywords => text()();
@@ -62,8 +39,6 @@ class CollectionBoardRefs extends Table {
 
 @singleton
 @DriftDatabase(tables: [
-  Repos,
-  InstalledExtensions,
   Suggestions,
   Collections,
   CollectionBoardRefs,
