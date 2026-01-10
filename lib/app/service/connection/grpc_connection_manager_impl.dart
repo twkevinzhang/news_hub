@@ -116,11 +116,7 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
       },
       onError: (e) {
         debugPrint('[GrpcConnectionManager] [Health] [ERROR] Health check failed: $e');
-        // Only update state to failed if we're currently connected
-        // This prevents rapid state changes during reconnection attempts
-        if (_stateSnapshot == SidecarConnectionState.connected) {
-          _updateState(SidecarConnectionState.failed);
-        }
+        _updateState(SidecarConnectionState.failed);
       },
     );
   }
@@ -140,9 +136,7 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
         _sidecarPreferences.logLevel.changes(),
       ]).distinct().switchMap((level) {
         return _apiService.watchLogs(minLevel: level.toLogLevel()).handleError((error) {
-          if (_stateSnapshot == SidecarConnectionState.connected) {
-            _updateState(SidecarConnectionState.failed);
-          }
+          _updateState(SidecarConnectionState.failed);
           throw error;
         });
       });
@@ -151,9 +145,7 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
         _updateLogEntry(logEntry);
       },
       onError: (error) {
-        if (_stateSnapshot == SidecarConnectionState.connected) {
-          _updateState(SidecarConnectionState.failed);
-        }
+        _updateState(SidecarConnectionState.failed);
       },
     );
   }
@@ -190,7 +182,14 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
   @override
   Future<void> reconnect() async {
     _reconnectTimer?.cancel();
-    await _connect();
+    if (![
+      SidecarConnectionState.uninitialized,
+      SidecarConnectionState.connecting,
+      SidecarConnectionState.retrying,
+      SidecarConnectionState.closed,
+    ].contains(state)) {
+      await _connect();
+    }
   }
 
   Future<void> _closeChannel() async {
@@ -202,19 +201,15 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
   }
 
   ClientChannel getChannel() {
-    if (_channelNotReady()) {
+    if (_channel == null || _stateSnapshot != SidecarConnectionState.connected) {
       throw StateError('gRPC connection not available. Current state: $_stateSnapshot. '
           'Please ensure initialize() was called and connection is established.');
     }
     return _channel!;
   }
 
-  bool _channelNotReady() {
-    return _channel == null || _stateSnapshot != SidecarConnectionState.connected;
-  }
-
   Future<ClientChannel> getChannelSafe() async {
-    if (_channelNotReady()) {
+    if (_channel == null || _stateSnapshot != SidecarConnectionState.connected) {
       await _connect();
     }
     return getChannel();
@@ -234,10 +229,14 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
     });
 
     try {
-      if (state == SidecarConnectionState.uninitialized || state == SidecarConnectionState.failed || state == SidecarConnectionState.closed) {
+      if (![
+        SidecarConnectionState.connecting,
+        SidecarConnectionState.retrying,
+        SidecarConnectionState.closed,
+      ].contains(state)) {
         await _connect();
       }
-      await completer.future.timeout(const Duration(seconds: 10));
+      await completer.future.timeout(const Duration(seconds: 5));
     } finally {
       await subscription.cancel();
     }
