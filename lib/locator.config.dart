@@ -38,6 +38,8 @@ import 'package:news_hub/app/sidecar/repository/sidecar_repository_impl.dart'
 import 'package:news_hub/app/suggestion/repository/suggestion_repository_impl.dart'
     as _i530;
 import 'package:news_hub/app/thread/thread_repository_impl.dart' as _i770;
+import 'package:news_hub/domain/board/interactor/get_board_sort_options.dart'
+    as _i744;
 import 'package:news_hub/domain/bookmark/interactor/list_bookmarks.dart'
     as _i1049;
 import 'package:news_hub/domain/bookmark/repository.dart' as _i960;
@@ -145,12 +147,29 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i530.SuggestionRepositoryImpl(db: gh<_i539.AppDatabase>()));
     gh.lazySingleton<_i914.CollectionRepository>(
         () => _i815.CollectionRepositoryImpl(db: gh<_i539.AppDatabase>()));
+    gh.lazySingleton<_i1052.BoardRepository>(() => _i980.BoardRepositoryImpl(
+          gh<_i504.ApiService>(),
+          gh<_i539.AppDatabase>(),
+        ));
+    gh.factory<_i744.GetBoardSortOptions>(
+        () => _i744.GetBoardSortOptions(gh<_i1052.BoardRepository>()));
     gh.lazySingleton<_i1044.ThreadRepository>(
         () => _i770.ThreadRepositoryImpl(gh<_i504.ApiService>()));
     gh.lazySingleton<_i365.PreferenceStore>(
         () => _i842.PreferenceStoreImpl(prefs: gh<_i579.SharedPreferences>()));
-    gh.lazySingleton<_i1052.BoardRepository>(
-        () => _i980.BoardRepositoryImpl(gh<_i504.ApiService>()));
+    gh.factory<_i545.CollectionFormCubit>(() => _i545.CollectionFormCubit(
+          gh<_i914.CollectionRepository>(),
+          gh<_i744.GetBoardSortOptions>(),
+        ));
+    gh.lazySingleton<_i861.ListCollectionThreads>(
+        () => _i861.ListCollectionThreads(
+              repository: gh<_i1044.ThreadRepository>(),
+              collectionRepository: gh<_i914.CollectionRepository>(),
+            ));
+    gh.lazySingleton<_i152.ListBoardThreads>(() => _i152.ListBoardThreads(
+          repository: gh<_i1044.ThreadRepository>(),
+          boardRepository: gh<_i1052.BoardRepository>(),
+        ));
     gh.lazySingleton<_i643.ListSuggestions>(() => _i643.ListSuggestions(
         suggestionRepo: gh<_i678.SuggestionRepository>()));
     gh.lazySingleton<_i650.UpdateSuggestionLatestUsedAt>(() =>
@@ -170,10 +189,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i913.UpdateCollection(gh<_i914.CollectionRepository>()));
     gh.factory<_i31.CollectionCubit>(
         () => _i31.CollectionCubit(gh<_i914.CollectionRepository>()));
-    gh.factory<_i545.CollectionFormCubit>(() => _i545.CollectionFormCubit(
-          gh<_i914.CollectionRepository>(),
-          gh<_i504.ApiService>(),
-        ));
     gh.singleton<_i280.SidecarPreferences>(
         () => appProvider.sidecarPreferences(gh<_i365.PreferenceStore>()));
     gh.singleton<_i908.GrpcConnectionManagerImpl>(
@@ -238,15 +253,6 @@ extension GetItInjectableX on _i174.GetIt {
           repository: gh<_i1044.ThreadRepository>(),
           listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
         ));
-    gh.lazySingleton<_i152.ListBoardThreads>(() => _i152.ListBoardThreads(
-          repository: gh<_i1044.ThreadRepository>(),
-          listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
-        ));
-    gh.lazySingleton<_i861.ListCollectionThreads>(
-        () => _i861.ListCollectionThreads(
-              repository: gh<_i1044.ThreadRepository>(),
-              listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
-            ));
     gh.factory<_i466.ThreadListCubit>(() => _i466.ThreadListCubit(
           listThreadList: gh<_i757.ListThreads>(),
           listExtensions: gh<_i351.ListInstalledExtensions>(),

@@ -1,7 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/app/service/api/api_service.dart';
+import 'package:news_hub/domain/board/interactor/get_board_sort_options.dart';
 import 'package:news_hub/domain/collection/repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 
@@ -38,14 +38,14 @@ extension CollectionFormStateEx on CollectionFormState {
 @injectable
 class CollectionFormCubit extends Cubit<CollectionFormState> {
   final CollectionRepository _collectionRepository;
-  final ApiService _apiService;
+  final GetBoardSortOptions _getBoardSortOptions;
 
-  CollectionFormCubit(this._collectionRepository, this._apiService) : super(const CollectionFormState());
+  CollectionFormCubit(this._collectionRepository, this._getBoardSortOptions) : super(const CollectionFormState());
 
   void init(Collection? collection) async {
     if (collection != null) {
       final boardSorts = Map<String, String>.fromEntries(
-        collection.boards.map((b) => MapEntry(b.id, b.selectedThreadsSorting ?? '')),
+        collection.boards.map((b) => MapEntry(b.id, b.selectedSort ?? '')),
       );
       emit(state.copyWith(
         name: collection.name,
@@ -57,7 +57,7 @@ class CollectionFormCubit extends Cubit<CollectionFormState> {
       // Also fetch options to show in dropdown
       if (collection.boards.isNotEmpty) {
         try {
-          final options = await _apiService.getBoardSortOptions(boards: collection.boards);
+          final options = await _getBoardSortOptions(collection.boards);
           final updatedSorts = _getAutoSelectedSorts(options);
           emit(state.copyWith(
             boardSortOptions: options,
@@ -84,7 +84,7 @@ class CollectionFormCubit extends Cubit<CollectionFormState> {
 
     if (boards.isNotEmpty) {
       try {
-        final options = await _apiService.getBoardSortOptions(boards: boards);
+        final options = await _getBoardSortOptions(boards);
         final updatedSorts = _getAutoSelectedSorts(options);
         emit(state.copyWith(
           boardSortOptions: options,
@@ -138,14 +138,14 @@ class CollectionFormCubit extends Cubit<CollectionFormState> {
           id: state.editingCollectionId!,
           name: finalName,
           boards: state.selectedBoards.map((b) {
-            return b.copyWith(selectedThreadsSorting: state.boardSorts[b.id]);
+            return b.copyWith(selectedSort: state.boardSorts[b.id]);
           }).toList(),
         ));
       } else {
         await _collectionRepository.create(
           finalName,
           state.selectedBoards.map((b) {
-            return b.copyWith(selectedThreadsSorting: state.boardSorts[b.id]);
+            return b.copyWith(selectedSort: state.boardSorts[b.id]);
           }).toList(),
         );
       }

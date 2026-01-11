@@ -22,8 +22,8 @@ mixin _$Board {
   String get icon => throw _privateConstructorUsedError;
   String get largeWelcomeImage => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
-  Set<String> get supportedThreadsSorting => throw _privateConstructorUsedError;
-  String? get selectedThreadsSorting => throw _privateConstructorUsedError;
+  Set<String> get sortOptions => throw _privateConstructorUsedError;
+  String? get selectedSort => throw _privateConstructorUsedError;
 
   /// Create a copy of Board
   /// with the given fields replaced by the non-null parameter values.
@@ -43,8 +43,8 @@ abstract class $BoardCopyWith<$Res> {
       String icon,
       String largeWelcomeImage,
       String url,
-      Set<String> supportedThreadsSorting,
-      String? selectedThreadsSorting});
+      Set<String> sortOptions,
+      String? selectedSort});
 }
 
 /// @nodoc
@@ -68,8 +68,8 @@ class _$BoardCopyWithImpl<$Res, $Val extends Board>
     Object? icon = null,
     Object? largeWelcomeImage = null,
     Object? url = null,
-    Object? supportedThreadsSorting = null,
-    Object? selectedThreadsSorting = freezed,
+    Object? sortOptions = null,
+    Object? selectedSort = freezed,
   }) {
     return _then(_value.copyWith(
       extensionPkgName: null == extensionPkgName
@@ -96,13 +96,13 @@ class _$BoardCopyWithImpl<$Res, $Val extends Board>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      supportedThreadsSorting: null == supportedThreadsSorting
-          ? _value.supportedThreadsSorting
-          : supportedThreadsSorting // ignore: cast_nullable_to_non_nullable
+      sortOptions: null == sortOptions
+          ? _value.sortOptions
+          : sortOptions // ignore: cast_nullable_to_non_nullable
               as Set<String>,
-      selectedThreadsSorting: freezed == selectedThreadsSorting
-          ? _value.selectedThreadsSorting
-          : selectedThreadsSorting // ignore: cast_nullable_to_non_nullable
+      selectedSort: freezed == selectedSort
+          ? _value.selectedSort
+          : selectedSort // ignore: cast_nullable_to_non_nullable
               as String?,
     ) as $Val);
   }
@@ -122,8 +122,8 @@ abstract class _$$BoardImplCopyWith<$Res> implements $BoardCopyWith<$Res> {
       String icon,
       String largeWelcomeImage,
       String url,
-      Set<String> supportedThreadsSorting,
-      String? selectedThreadsSorting});
+      Set<String> sortOptions,
+      String? selectedSort});
 }
 
 /// @nodoc
@@ -145,8 +145,8 @@ class __$$BoardImplCopyWithImpl<$Res>
     Object? icon = null,
     Object? largeWelcomeImage = null,
     Object? url = null,
-    Object? supportedThreadsSorting = null,
-    Object? selectedThreadsSorting = freezed,
+    Object? sortOptions = null,
+    Object? selectedSort = freezed,
   }) {
     return _then(_$BoardImpl(
       extensionPkgName: null == extensionPkgName
@@ -173,13 +173,13 @@ class __$$BoardImplCopyWithImpl<$Res>
           ? _value.url
           : url // ignore: cast_nullable_to_non_nullable
               as String,
-      supportedThreadsSorting: null == supportedThreadsSorting
-          ? _value._supportedThreadsSorting
-          : supportedThreadsSorting // ignore: cast_nullable_to_non_nullable
+      sortOptions: null == sortOptions
+          ? _value._sortOptions
+          : sortOptions // ignore: cast_nullable_to_non_nullable
               as Set<String>,
-      selectedThreadsSorting: freezed == selectedThreadsSorting
-          ? _value.selectedThreadsSorting
-          : selectedThreadsSorting // ignore: cast_nullable_to_non_nullable
+      selectedSort: freezed == selectedSort
+          ? _value.selectedSort
+          : selectedSort // ignore: cast_nullable_to_non_nullable
               as String?,
     ));
   }
@@ -195,9 +195,9 @@ class _$BoardImpl with DiagnosticableTreeMixin implements _Board {
       required this.icon,
       required this.largeWelcomeImage,
       required this.url,
-      required final Set<String> supportedThreadsSorting,
-      this.selectedThreadsSorting})
-      : _supportedThreadsSorting = supportedThreadsSorting;
+      required final Set<String> sortOptions,
+      this.selectedSort})
+      : _sortOptions = sortOptions;
 
   @override
   final String extensionPkgName;
@@ -211,21 +211,20 @@ class _$BoardImpl with DiagnosticableTreeMixin implements _Board {
   final String largeWelcomeImage;
   @override
   final String url;
-  final Set<String> _supportedThreadsSorting;
+  final Set<String> _sortOptions;
   @override
-  Set<String> get supportedThreadsSorting {
-    if (_supportedThreadsSorting is EqualUnmodifiableSetView)
-      return _supportedThreadsSorting;
+  Set<String> get sortOptions {
+    if (_sortOptions is EqualUnmodifiableSetView) return _sortOptions;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableSetView(_supportedThreadsSorting);
+    return EqualUnmodifiableSetView(_sortOptions);
   }
 
   @override
-  final String? selectedThreadsSorting;
+  final String? selectedSort;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Board(extensionPkgName: $extensionPkgName, id: $id, name: $name, icon: $icon, largeWelcomeImage: $largeWelcomeImage, url: $url, supportedThreadsSorting: $supportedThreadsSorting, selectedThreadsSorting: $selectedThreadsSorting)';
+    return 'Board(extensionPkgName: $extensionPkgName, id: $id, name: $name, icon: $icon, largeWelcomeImage: $largeWelcomeImage, url: $url, sortOptions: $sortOptions, selectedSort: $selectedSort)';
   }
 
   @override
@@ -239,10 +238,8 @@ class _$BoardImpl with DiagnosticableTreeMixin implements _Board {
       ..add(DiagnosticsProperty('icon', icon))
       ..add(DiagnosticsProperty('largeWelcomeImage', largeWelcomeImage))
       ..add(DiagnosticsProperty('url', url))
-      ..add(DiagnosticsProperty(
-          'supportedThreadsSorting', supportedThreadsSorting))
-      ..add(DiagnosticsProperty(
-          'selectedThreadsSorting', selectedThreadsSorting));
+      ..add(DiagnosticsProperty('sortOptions', sortOptions))
+      ..add(DiagnosticsProperty('selectedSort', selectedSort));
   }
 
   @override
@@ -258,10 +255,10 @@ class _$BoardImpl with DiagnosticableTreeMixin implements _Board {
             (identical(other.largeWelcomeImage, largeWelcomeImage) ||
                 other.largeWelcomeImage == largeWelcomeImage) &&
             (identical(other.url, url) || other.url == url) &&
-            const DeepCollectionEquality().equals(
-                other._supportedThreadsSorting, _supportedThreadsSorting) &&
-            (identical(other.selectedThreadsSorting, selectedThreadsSorting) ||
-                other.selectedThreadsSorting == selectedThreadsSorting));
+            const DeepCollectionEquality()
+                .equals(other._sortOptions, _sortOptions) &&
+            (identical(other.selectedSort, selectedSort) ||
+                other.selectedSort == selectedSort));
   }
 
   @override
@@ -273,8 +270,8 @@ class _$BoardImpl with DiagnosticableTreeMixin implements _Board {
       icon,
       largeWelcomeImage,
       url,
-      const DeepCollectionEquality().hash(_supportedThreadsSorting),
-      selectedThreadsSorting);
+      const DeepCollectionEquality().hash(_sortOptions),
+      selectedSort);
 
   /// Create a copy of Board
   /// with the given fields replaced by the non-null parameter values.
@@ -293,8 +290,8 @@ abstract class _Board implements Board {
       required final String icon,
       required final String largeWelcomeImage,
       required final String url,
-      required final Set<String> supportedThreadsSorting,
-      final String? selectedThreadsSorting}) = _$BoardImpl;
+      required final Set<String> sortOptions,
+      final String? selectedSort}) = _$BoardImpl;
 
   @override
   String get extensionPkgName;
@@ -309,9 +306,9 @@ abstract class _Board implements Board {
   @override
   String get url;
   @override
-  Set<String> get supportedThreadsSorting;
+  Set<String> get sortOptions;
   @override
-  String? get selectedThreadsSorting;
+  String? get selectedSort;
 
   /// Create a copy of Board
   /// with the given fields replaced by the non-null parameter values.

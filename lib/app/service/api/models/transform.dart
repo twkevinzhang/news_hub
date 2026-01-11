@@ -12,7 +12,7 @@ extension BoardTransform on domain_pb.Board {
       icon: icon,
       largeWelcomeImage: largeWelcomeImage,
       url: url,
-      supportedThreadsSorting: supportedThreadsSorting.toSet(),
+      sortOptions: supportedThreadsSorting.toSet(),
     );
   }
 }

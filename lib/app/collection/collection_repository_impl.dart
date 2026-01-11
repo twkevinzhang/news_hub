@@ -34,8 +34,8 @@ class CollectionRepositoryImpl implements CollectionRepository {
                       icon: '',
                       largeWelcomeImage: '',
                       url: '',
-                      supportedThreadsSorting: {},
-                      selectedThreadsSorting: r.selectedSort,
+                      sortOptions: {},
+                      selectedSort: r.selectedSort,
                     ))
                 .toList(),
           );
@@ -65,8 +65,8 @@ class CollectionRepositoryImpl implements CollectionRepository {
                   icon: '',
                   largeWelcomeImage: '',
                   url: '',
-                  supportedThreadsSorting: {},
-                  selectedThreadsSorting: r.selectedSort,
+                  sortOptions: {},
+                  selectedSort: r.selectedSort,
                 ))
             .toList(),
       );
@@ -95,7 +95,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
               extensionPkgName: board.extensionPkgName,
               boardId: board.id,
               boardName: Value(board.name),
-              selectedSort: Value(board.selectedThreadsSorting ?? ''),
+              selectedSort: Value(board.selectedSort ?? ''),
             ));
       }
     });
@@ -124,7 +124,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
               extensionPkgName: board.extensionPkgName,
               boardId: board.id,
               boardName: Value(board.name),
-              selectedSort: Value(board.selectedThreadsSorting ?? ''),
+              selectedSort: Value(board.selectedSort ?? ''),
             ));
       }
     });

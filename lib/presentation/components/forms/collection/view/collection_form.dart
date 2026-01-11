@@ -144,7 +144,7 @@ class CollectionForm extends StatelessWidget {
       context: context,
       builder: (context) {
         final initialChosenBoards = Map.fromEntries(
-          cubit.state.selectedBoards.map((b) => MapEntry(b.id, b.supportedThreadsSorting.firstOrNull ?? '')),
+          cubit.state.selectedBoards.map((b) => MapEntry(b.id, b.sortOptions.firstOrNull ?? '')),
         );
         return Dialog.fullscreen(
           child: BlocProvider<BoardsPickerCubit>(

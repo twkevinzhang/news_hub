@@ -151,8 +151,8 @@ class Board with _$Board {
     required String icon,
     required String largeWelcomeImage,
     required String url,
-    required Set<String> supportedThreadsSorting,
-    String? selectedThreadsSorting,
+    required Set<String> sortOptions,
+    String? selectedSort,
   }) = _Board;
 }
 
