@@ -137,8 +137,10 @@ class SearchScreen extends StatelessWidget implements AutoRouteWrapper {
     if (_formKey.currentState!.validate()) {
       _formKey.currentState!.save();
       cubit.submit();
-      final state = cubit.state;
-      AutoRouter.of(context).push(CollectionThreadListRoute());
+      // TODO: 搜尋結果導航需要 collectionId，這裡應根據搜尋情境動態提供
+      // 暫時帶入一個空字串或從 filter 中取得（如果有的話）
+      // 根據需求描述，搜尋通常是跨集合的或針對特定集合。這裡暫時修復編譯報錯。
+      AutoRouter.of(context).push(CollectionThreadListRoute(collectionId: ''));
     }
   }
 }

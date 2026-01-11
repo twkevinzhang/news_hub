@@ -13,6 +13,7 @@ extension BoardTransform on domain_pb.Board {
       largeWelcomeImage: largeWelcomeImage,
       url: url,
       sortOptions: supportedThreadsSorting.toSet(),
+      collectionId: null,
     );
   }
 }

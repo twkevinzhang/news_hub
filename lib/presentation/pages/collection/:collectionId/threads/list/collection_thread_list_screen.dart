@@ -1,24 +1,57 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/locator.dart';
-import 'package:news_hub/presentation/components/lists/thread/bloc/thread_list_cubit.dart';
-import 'package:news_hub/presentation/components/lists/thread/view/thread_list.dart';
+import 'package:news_hub/presentation/components/rendering/loading_indicator.dart';
+import 'package:news_hub/presentation/pages/collection/:collectionId/threads/list/bloc/collection_thread_list_cubit.dart';
+import 'package:news_hub/presentation/pages/thread/detail/layouts/single_image_post_layout.dart';
 
 @RoutePage()
 class CollectionThreadListScreen extends StatelessWidget implements AutoRouteWrapper {
-  const CollectionThreadListScreen({super.key});
+  final String collectionId;
+
+  const CollectionThreadListScreen({
+    super.key,
+    @PathParam('collectionId') required this.collectionId,
+  });
 
   @override
   Widget wrappedRoute(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<ThreadListCubit>()..init(null, null),
+      create: (context) => sl<CollectionThreadListCubit>()..init(collectionId),
       child: this,
     );
   }
 
   @override
   Widget build(BuildContext context) {
-    return ThreadList();
+    final cubit = context.watch<CollectionThreadListCubit>();
+    return PagedListView<int, SingleImagePostWithExtension>(
+      pagingController: cubit.pagingController,
+      builderDelegate: PagedChildBuilderDelegate<SingleImagePostWithExtension>(
+        itemBuilder: (context, thread, index) => Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
+          child: SingleImagePostCard(thread: thread),
+        ),
+        noItemsFoundIndicatorBuilder: (context) => Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const Text("Empty"),
+            ElevatedButton(
+              onPressed: () => cubit.refresh(collectionId),
+              child: const Text("Refresh"),
+            ),
+          ],
+        ),
+        firstPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
+        newPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
+        noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
+        transitionDuration: const Duration(milliseconds: 500),
+        animateTransitions: true,
+      ),
+    );
   }
 }

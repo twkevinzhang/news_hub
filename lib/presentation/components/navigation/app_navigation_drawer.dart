@@ -7,7 +7,7 @@ import 'package:news_hub/presentation/pages/sidecar/sidecar_cubit.dart';
 class AppNavigationDrawer extends StatefulWidget {
   final Function(Collection) onCollectionSelected;
   final Function() onCreateCollectionPressed;
-  final Function(Board) onBoardSelected;
+  final Function(CollectionBoard) onBoardSelected;
   final VoidCallback onStatusPressed;
 
   const AppNavigationDrawer({
@@ -87,7 +87,7 @@ class _AppNavigationDrawerState extends State<AppNavigationDrawer> {
                               return ListTile(
                                 contentPadding: const EdgeInsets.only(left: 72),
                                 leading: const Icon(Icons.dashboard_outlined, size: 20),
-                                title: Text(board.id),
+                                title: Text(board.identity.boardId),
                                 onTap: () => widget.onBoardSelected(board),
                               );
                             }),

@@ -133,7 +133,7 @@ extension RemoteExtensionEx on RemoteExtension {
 class Collection {
   final String id;
   final String name;
-  final List<Board> boards;
+  final List<CollectionBoard> boards;
 
   Collection({
     required this.id,
@@ -153,7 +153,70 @@ class Board with _$Board {
     required String url,
     required Set<String> sortOptions,
     String? selectedSort,
+    String? collectionId,
   }) = _Board;
+}
+
+// 新架構：區分 CollectionBoard 與 ExtensionBoard
+
+/// 看板的核心識別資訊
+@freezed
+class BoardIdentity with _$BoardIdentity {
+  const factory BoardIdentity({
+    required String extensionPkgName,
+    required String boardId,
+    required String boardName,
+  }) = _BoardIdentity;
+}
+
+/// 從 Extension API 獲取的完整看板資訊
+@freezed
+class ExtensionBoard with _$ExtensionBoard {
+  const factory ExtensionBoard({
+    required BoardIdentity identity,
+    required String icon,
+    required String largeWelcomeImage,
+    required String url,
+    required Set<String> sortOptions,
+  }) = _ExtensionBoard;
+}
+
+/// Collection 中的看板（必定有 collectionId）
+@freezed
+class CollectionBoard with _$CollectionBoard {
+  const factory CollectionBoard({
+    required BoardIdentity identity,
+    required String collectionId,
+    String? selectedSort,
+  }) = _CollectionBoard;
+}
+
+class SingleImagePostWithExtension extends SingleImagePost {
+  final Extension extension;
+  final Board board;
+
+  SingleImagePostWithExtension({
+    required SingleImagePost post,
+    required this.extension,
+    required this.board,
+  }) : super(
+          extensionPkgName: post.extensionPkgName,
+          boardId: post.boardId,
+          threadId: post.threadId,
+          id: post.id,
+          title: post.title,
+          url: post.url,
+          createdAt: post.createdAt,
+          authorId: post.authorId,
+          authorName: post.authorName,
+          liked: post.liked,
+          disliked: post.disliked,
+          image: post.image,
+          contents: post.contents,
+          tags: post.tags,
+          latestReplyCreatedAt: post.latestReplyCreatedAt,
+          repliesCount: post.repliesCount,
+        );
 }
 
 class Post {

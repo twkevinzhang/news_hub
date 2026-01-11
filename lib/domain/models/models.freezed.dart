@@ -24,6 +24,7 @@ mixin _$Board {
   String get url => throw _privateConstructorUsedError;
   Set<String> get sortOptions => throw _privateConstructorUsedError;
   String? get selectedSort => throw _privateConstructorUsedError;
+  String? get collectionId => throw _privateConstructorUsedError;
 
   /// Create a copy of Board
   /// with the given fields replaced by the non-null parameter values.
@@ -44,7 +45,8 @@ abstract class $BoardCopyWith<$Res> {
       String largeWelcomeImage,
       String url,
       Set<String> sortOptions,
-      String? selectedSort});
+      String? selectedSort,
+      String? collectionId});
 }
 
 /// @nodoc
@@ -70,6 +72,7 @@ class _$BoardCopyWithImpl<$Res, $Val extends Board>
     Object? url = null,
     Object? sortOptions = null,
     Object? selectedSort = freezed,
+    Object? collectionId = freezed,
   }) {
     return _then(_value.copyWith(
       extensionPkgName: null == extensionPkgName
@@ -104,6 +107,10 @@ class _$BoardCopyWithImpl<$Res, $Val extends Board>
           ? _value.selectedSort
           : selectedSort // ignore: cast_nullable_to_non_nullable
               as String?,
+      collectionId: freezed == collectionId
+          ? _value.collectionId
+          : collectionId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -123,7 +130,8 @@ abstract class _$$BoardImplCopyWith<$Res> implements $BoardCopyWith<$Res> {
       String largeWelcomeImage,
       String url,
       Set<String> sortOptions,
-      String? selectedSort});
+      String? selectedSort,
+      String? collectionId});
 }
 
 /// @nodoc
@@ -147,6 +155,7 @@ class __$$BoardImplCopyWithImpl<$Res>
     Object? url = null,
     Object? sortOptions = null,
     Object? selectedSort = freezed,
+    Object? collectionId = freezed,
   }) {
     return _then(_$BoardImpl(
       extensionPkgName: null == extensionPkgName
@@ -181,6 +190,10 @@ class __$$BoardImplCopyWithImpl<$Res>
           ? _value.selectedSort
           : selectedSort // ignore: cast_nullable_to_non_nullable
               as String?,
+      collectionId: freezed == collectionId
+          ? _value.collectionId
+          : collectionId // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -196,7 +209,8 @@ class _$BoardImpl with DiagnosticableTreeMixin implements _Board {
       required this.largeWelcomeImage,
       required this.url,
       required final Set<String> sortOptions,
-      this.selectedSort})
+      this.selectedSort,
+      this.collectionId})
       : _sortOptions = sortOptions;
 
   @override
@@ -221,10 +235,12 @@ class _$BoardImpl with DiagnosticableTreeMixin implements _Board {
 
   @override
   final String? selectedSort;
+  @override
+  final String? collectionId;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Board(extensionPkgName: $extensionPkgName, id: $id, name: $name, icon: $icon, largeWelcomeImage: $largeWelcomeImage, url: $url, sortOptions: $sortOptions, selectedSort: $selectedSort)';
+    return 'Board(extensionPkgName: $extensionPkgName, id: $id, name: $name, icon: $icon, largeWelcomeImage: $largeWelcomeImage, url: $url, sortOptions: $sortOptions, selectedSort: $selectedSort, collectionId: $collectionId)';
   }
 
   @override
@@ -239,7 +255,8 @@ class _$BoardImpl with DiagnosticableTreeMixin implements _Board {
       ..add(DiagnosticsProperty('largeWelcomeImage', largeWelcomeImage))
       ..add(DiagnosticsProperty('url', url))
       ..add(DiagnosticsProperty('sortOptions', sortOptions))
-      ..add(DiagnosticsProperty('selectedSort', selectedSort));
+      ..add(DiagnosticsProperty('selectedSort', selectedSort))
+      ..add(DiagnosticsProperty('collectionId', collectionId));
   }
 
   @override
@@ -258,7 +275,9 @@ class _$BoardImpl with DiagnosticableTreeMixin implements _Board {
             const DeepCollectionEquality()
                 .equals(other._sortOptions, _sortOptions) &&
             (identical(other.selectedSort, selectedSort) ||
-                other.selectedSort == selectedSort));
+                other.selectedSort == selectedSort) &&
+            (identical(other.collectionId, collectionId) ||
+                other.collectionId == collectionId));
   }
 
   @override
@@ -271,7 +290,8 @@ class _$BoardImpl with DiagnosticableTreeMixin implements _Board {
       largeWelcomeImage,
       url,
       const DeepCollectionEquality().hash(_sortOptions),
-      selectedSort);
+      selectedSort,
+      collectionId);
 
   /// Create a copy of Board
   /// with the given fields replaced by the non-null parameter values.
@@ -291,7 +311,8 @@ abstract class _Board implements Board {
       required final String largeWelcomeImage,
       required final String url,
       required final Set<String> sortOptions,
-      final String? selectedSort}) = _$BoardImpl;
+      final String? selectedSort,
+      final String? collectionId}) = _$BoardImpl;
 
   @override
   String get extensionPkgName;
@@ -309,12 +330,650 @@ abstract class _Board implements Board {
   Set<String> get sortOptions;
   @override
   String? get selectedSort;
+  @override
+  String? get collectionId;
 
   /// Create a copy of Board
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$BoardImplCopyWith<_$BoardImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$BoardIdentity {
+  String get extensionPkgName => throw _privateConstructorUsedError;
+  String get boardId => throw _privateConstructorUsedError;
+  String get boardName => throw _privateConstructorUsedError;
+
+  /// Create a copy of BoardIdentity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $BoardIdentityCopyWith<BoardIdentity> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $BoardIdentityCopyWith<$Res> {
+  factory $BoardIdentityCopyWith(
+          BoardIdentity value, $Res Function(BoardIdentity) then) =
+      _$BoardIdentityCopyWithImpl<$Res, BoardIdentity>;
+  @useResult
+  $Res call({String extensionPkgName, String boardId, String boardName});
+}
+
+/// @nodoc
+class _$BoardIdentityCopyWithImpl<$Res, $Val extends BoardIdentity>
+    implements $BoardIdentityCopyWith<$Res> {
+  _$BoardIdentityCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of BoardIdentity
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? extensionPkgName = null,
+    Object? boardId = null,
+    Object? boardName = null,
+  }) {
+    return _then(_value.copyWith(
+      extensionPkgName: null == extensionPkgName
+          ? _value.extensionPkgName
+          : extensionPkgName // ignore: cast_nullable_to_non_nullable
+              as String,
+      boardId: null == boardId
+          ? _value.boardId
+          : boardId // ignore: cast_nullable_to_non_nullable
+              as String,
+      boardName: null == boardName
+          ? _value.boardName
+          : boardName // ignore: cast_nullable_to_non_nullable
+              as String,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$BoardIdentityImplCopyWith<$Res>
+    implements $BoardIdentityCopyWith<$Res> {
+  factory _$$BoardIdentityImplCopyWith(
+          _$BoardIdentityImpl value, $Res Function(_$BoardIdentityImpl) then) =
+      __$$BoardIdentityImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String extensionPkgName, String boardId, String boardName});
+}
+
+/// @nodoc
+class __$$BoardIdentityImplCopyWithImpl<$Res>
+    extends _$BoardIdentityCopyWithImpl<$Res, _$BoardIdentityImpl>
+    implements _$$BoardIdentityImplCopyWith<$Res> {
+  __$$BoardIdentityImplCopyWithImpl(
+      _$BoardIdentityImpl _value, $Res Function(_$BoardIdentityImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of BoardIdentity
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? extensionPkgName = null,
+    Object? boardId = null,
+    Object? boardName = null,
+  }) {
+    return _then(_$BoardIdentityImpl(
+      extensionPkgName: null == extensionPkgName
+          ? _value.extensionPkgName
+          : extensionPkgName // ignore: cast_nullable_to_non_nullable
+              as String,
+      boardId: null == boardId
+          ? _value.boardId
+          : boardId // ignore: cast_nullable_to_non_nullable
+              as String,
+      boardName: null == boardName
+          ? _value.boardName
+          : boardName // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$BoardIdentityImpl
+    with DiagnosticableTreeMixin
+    implements _BoardIdentity {
+  const _$BoardIdentityImpl(
+      {required this.extensionPkgName,
+      required this.boardId,
+      required this.boardName});
+
+  @override
+  final String extensionPkgName;
+  @override
+  final String boardId;
+  @override
+  final String boardName;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'BoardIdentity(extensionPkgName: $extensionPkgName, boardId: $boardId, boardName: $boardName)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'BoardIdentity'))
+      ..add(DiagnosticsProperty('extensionPkgName', extensionPkgName))
+      ..add(DiagnosticsProperty('boardId', boardId))
+      ..add(DiagnosticsProperty('boardName', boardName));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BoardIdentityImpl &&
+            (identical(other.extensionPkgName, extensionPkgName) ||
+                other.extensionPkgName == extensionPkgName) &&
+            (identical(other.boardId, boardId) || other.boardId == boardId) &&
+            (identical(other.boardName, boardName) ||
+                other.boardName == boardName));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, extensionPkgName, boardId, boardName);
+
+  /// Create a copy of BoardIdentity
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BoardIdentityImplCopyWith<_$BoardIdentityImpl> get copyWith =>
+      __$$BoardIdentityImplCopyWithImpl<_$BoardIdentityImpl>(this, _$identity);
+}
+
+abstract class _BoardIdentity implements BoardIdentity {
+  const factory _BoardIdentity(
+      {required final String extensionPkgName,
+      required final String boardId,
+      required final String boardName}) = _$BoardIdentityImpl;
+
+  @override
+  String get extensionPkgName;
+  @override
+  String get boardId;
+  @override
+  String get boardName;
+
+  /// Create a copy of BoardIdentity
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$BoardIdentityImplCopyWith<_$BoardIdentityImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$ExtensionBoard {
+  BoardIdentity get identity => throw _privateConstructorUsedError;
+  String get icon => throw _privateConstructorUsedError;
+  String get largeWelcomeImage => throw _privateConstructorUsedError;
+  String get url => throw _privateConstructorUsedError;
+  Set<String> get sortOptions => throw _privateConstructorUsedError;
+
+  /// Create a copy of ExtensionBoard
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $ExtensionBoardCopyWith<ExtensionBoard> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ExtensionBoardCopyWith<$Res> {
+  factory $ExtensionBoardCopyWith(
+          ExtensionBoard value, $Res Function(ExtensionBoard) then) =
+      _$ExtensionBoardCopyWithImpl<$Res, ExtensionBoard>;
+  @useResult
+  $Res call(
+      {BoardIdentity identity,
+      String icon,
+      String largeWelcomeImage,
+      String url,
+      Set<String> sortOptions});
+
+  $BoardIdentityCopyWith<$Res> get identity;
+}
+
+/// @nodoc
+class _$ExtensionBoardCopyWithImpl<$Res, $Val extends ExtensionBoard>
+    implements $ExtensionBoardCopyWith<$Res> {
+  _$ExtensionBoardCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of ExtensionBoard
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? identity = null,
+    Object? icon = null,
+    Object? largeWelcomeImage = null,
+    Object? url = null,
+    Object? sortOptions = null,
+  }) {
+    return _then(_value.copyWith(
+      identity: null == identity
+          ? _value.identity
+          : identity // ignore: cast_nullable_to_non_nullable
+              as BoardIdentity,
+      icon: null == icon
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
+              as String,
+      largeWelcomeImage: null == largeWelcomeImage
+          ? _value.largeWelcomeImage
+          : largeWelcomeImage // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      sortOptions: null == sortOptions
+          ? _value.sortOptions
+          : sortOptions // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
+    ) as $Val);
+  }
+
+  /// Create a copy of ExtensionBoard
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BoardIdentityCopyWith<$Res> get identity {
+    return $BoardIdentityCopyWith<$Res>(_value.identity, (value) {
+      return _then(_value.copyWith(identity: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$ExtensionBoardImplCopyWith<$Res>
+    implements $ExtensionBoardCopyWith<$Res> {
+  factory _$$ExtensionBoardImplCopyWith(_$ExtensionBoardImpl value,
+          $Res Function(_$ExtensionBoardImpl) then) =
+      __$$ExtensionBoardImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {BoardIdentity identity,
+      String icon,
+      String largeWelcomeImage,
+      String url,
+      Set<String> sortOptions});
+
+  @override
+  $BoardIdentityCopyWith<$Res> get identity;
+}
+
+/// @nodoc
+class __$$ExtensionBoardImplCopyWithImpl<$Res>
+    extends _$ExtensionBoardCopyWithImpl<$Res, _$ExtensionBoardImpl>
+    implements _$$ExtensionBoardImplCopyWith<$Res> {
+  __$$ExtensionBoardImplCopyWithImpl(
+      _$ExtensionBoardImpl _value, $Res Function(_$ExtensionBoardImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ExtensionBoard
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? identity = null,
+    Object? icon = null,
+    Object? largeWelcomeImage = null,
+    Object? url = null,
+    Object? sortOptions = null,
+  }) {
+    return _then(_$ExtensionBoardImpl(
+      identity: null == identity
+          ? _value.identity
+          : identity // ignore: cast_nullable_to_non_nullable
+              as BoardIdentity,
+      icon: null == icon
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
+              as String,
+      largeWelcomeImage: null == largeWelcomeImage
+          ? _value.largeWelcomeImage
+          : largeWelcomeImage // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      sortOptions: null == sortOptions
+          ? _value._sortOptions
+          : sortOptions // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ExtensionBoardImpl
+    with DiagnosticableTreeMixin
+    implements _ExtensionBoard {
+  const _$ExtensionBoardImpl(
+      {required this.identity,
+      required this.icon,
+      required this.largeWelcomeImage,
+      required this.url,
+      required final Set<String> sortOptions})
+      : _sortOptions = sortOptions;
+
+  @override
+  final BoardIdentity identity;
+  @override
+  final String icon;
+  @override
+  final String largeWelcomeImage;
+  @override
+  final String url;
+  final Set<String> _sortOptions;
+  @override
+  Set<String> get sortOptions {
+    if (_sortOptions is EqualUnmodifiableSetView) return _sortOptions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableSetView(_sortOptions);
+  }
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ExtensionBoard(identity: $identity, icon: $icon, largeWelcomeImage: $largeWelcomeImage, url: $url, sortOptions: $sortOptions)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ExtensionBoard'))
+      ..add(DiagnosticsProperty('identity', identity))
+      ..add(DiagnosticsProperty('icon', icon))
+      ..add(DiagnosticsProperty('largeWelcomeImage', largeWelcomeImage))
+      ..add(DiagnosticsProperty('url', url))
+      ..add(DiagnosticsProperty('sortOptions', sortOptions));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ExtensionBoardImpl &&
+            (identical(other.identity, identity) ||
+                other.identity == identity) &&
+            (identical(other.icon, icon) || other.icon == icon) &&
+            (identical(other.largeWelcomeImage, largeWelcomeImage) ||
+                other.largeWelcomeImage == largeWelcomeImage) &&
+            (identical(other.url, url) || other.url == url) &&
+            const DeepCollectionEquality()
+                .equals(other._sortOptions, _sortOptions));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      identity,
+      icon,
+      largeWelcomeImage,
+      url,
+      const DeepCollectionEquality().hash(_sortOptions));
+
+  /// Create a copy of ExtensionBoard
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ExtensionBoardImplCopyWith<_$ExtensionBoardImpl> get copyWith =>
+      __$$ExtensionBoardImplCopyWithImpl<_$ExtensionBoardImpl>(
+          this, _$identity);
+}
+
+abstract class _ExtensionBoard implements ExtensionBoard {
+  const factory _ExtensionBoard(
+      {required final BoardIdentity identity,
+      required final String icon,
+      required final String largeWelcomeImage,
+      required final String url,
+      required final Set<String> sortOptions}) = _$ExtensionBoardImpl;
+
+  @override
+  BoardIdentity get identity;
+  @override
+  String get icon;
+  @override
+  String get largeWelcomeImage;
+  @override
+  String get url;
+  @override
+  Set<String> get sortOptions;
+
+  /// Create a copy of ExtensionBoard
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ExtensionBoardImplCopyWith<_$ExtensionBoardImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$CollectionBoard {
+  BoardIdentity get identity => throw _privateConstructorUsedError;
+  String get collectionId => throw _privateConstructorUsedError;
+  String? get selectedSort => throw _privateConstructorUsedError;
+
+  /// Create a copy of CollectionBoard
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $CollectionBoardCopyWith<CollectionBoard> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $CollectionBoardCopyWith<$Res> {
+  factory $CollectionBoardCopyWith(
+          CollectionBoard value, $Res Function(CollectionBoard) then) =
+      _$CollectionBoardCopyWithImpl<$Res, CollectionBoard>;
+  @useResult
+  $Res call(
+      {BoardIdentity identity, String collectionId, String? selectedSort});
+
+  $BoardIdentityCopyWith<$Res> get identity;
+}
+
+/// @nodoc
+class _$CollectionBoardCopyWithImpl<$Res, $Val extends CollectionBoard>
+    implements $CollectionBoardCopyWith<$Res> {
+  _$CollectionBoardCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of CollectionBoard
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? identity = null,
+    Object? collectionId = null,
+    Object? selectedSort = freezed,
+  }) {
+    return _then(_value.copyWith(
+      identity: null == identity
+          ? _value.identity
+          : identity // ignore: cast_nullable_to_non_nullable
+              as BoardIdentity,
+      collectionId: null == collectionId
+          ? _value.collectionId
+          : collectionId // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectedSort: freezed == selectedSort
+          ? _value.selectedSort
+          : selectedSort // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+
+  /// Create a copy of CollectionBoard
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $BoardIdentityCopyWith<$Res> get identity {
+    return $BoardIdentityCopyWith<$Res>(_value.identity, (value) {
+      return _then(_value.copyWith(identity: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$CollectionBoardImplCopyWith<$Res>
+    implements $CollectionBoardCopyWith<$Res> {
+  factory _$$CollectionBoardImplCopyWith(_$CollectionBoardImpl value,
+          $Res Function(_$CollectionBoardImpl) then) =
+      __$$CollectionBoardImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {BoardIdentity identity, String collectionId, String? selectedSort});
+
+  @override
+  $BoardIdentityCopyWith<$Res> get identity;
+}
+
+/// @nodoc
+class __$$CollectionBoardImplCopyWithImpl<$Res>
+    extends _$CollectionBoardCopyWithImpl<$Res, _$CollectionBoardImpl>
+    implements _$$CollectionBoardImplCopyWith<$Res> {
+  __$$CollectionBoardImplCopyWithImpl(
+      _$CollectionBoardImpl _value, $Res Function(_$CollectionBoardImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of CollectionBoard
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? identity = null,
+    Object? collectionId = null,
+    Object? selectedSort = freezed,
+  }) {
+    return _then(_$CollectionBoardImpl(
+      identity: null == identity
+          ? _value.identity
+          : identity // ignore: cast_nullable_to_non_nullable
+              as BoardIdentity,
+      collectionId: null == collectionId
+          ? _value.collectionId
+          : collectionId // ignore: cast_nullable_to_non_nullable
+              as String,
+      selectedSort: freezed == selectedSort
+          ? _value.selectedSort
+          : selectedSort // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$CollectionBoardImpl
+    with DiagnosticableTreeMixin
+    implements _CollectionBoard {
+  const _$CollectionBoardImpl(
+      {required this.identity, required this.collectionId, this.selectedSort});
+
+  @override
+  final BoardIdentity identity;
+  @override
+  final String collectionId;
+  @override
+  final String? selectedSort;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'CollectionBoard(identity: $identity, collectionId: $collectionId, selectedSort: $selectedSort)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'CollectionBoard'))
+      ..add(DiagnosticsProperty('identity', identity))
+      ..add(DiagnosticsProperty('collectionId', collectionId))
+      ..add(DiagnosticsProperty('selectedSort', selectedSort));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$CollectionBoardImpl &&
+            (identical(other.identity, identity) ||
+                other.identity == identity) &&
+            (identical(other.collectionId, collectionId) ||
+                other.collectionId == collectionId) &&
+            (identical(other.selectedSort, selectedSort) ||
+                other.selectedSort == selectedSort));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, identity, collectionId, selectedSort);
+
+  /// Create a copy of CollectionBoard
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$CollectionBoardImplCopyWith<_$CollectionBoardImpl> get copyWith =>
+      __$$CollectionBoardImplCopyWithImpl<_$CollectionBoardImpl>(
+          this, _$identity);
+}
+
+abstract class _CollectionBoard implements CollectionBoard {
+  const factory _CollectionBoard(
+      {required final BoardIdentity identity,
+      required final String collectionId,
+      final String? selectedSort}) = _$CollectionBoardImpl;
+
+  @override
+  BoardIdentity get identity;
+  @override
+  String get collectionId;
+  @override
+  String? get selectedSort;
+
+  /// Create a copy of CollectionBoard
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$CollectionBoardImplCopyWith<_$CollectionBoardImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

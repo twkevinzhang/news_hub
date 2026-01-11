@@ -19,8 +19,8 @@ class BoardRepositoryImpl implements BoardRepository {
 
   @override
   Future<Board> getBoard({required String boardId, required String collectionId}) async {
-    final ref =
-        await (_db.select(_db.collectionBoardRefs)..where((tbl) => tbl.collectionId.equals(collectionId) & tbl.boardId.equals(boardId))).getSingleOrNull();
+    final query = _db.select(_db.collectionBoardRefs)..where((tbl) => tbl.collectionId.equals(collectionId) & tbl.boardId.equals(boardId));
+    final ref = await query.getSingleOrNull();
 
     if (ref == null) {
       throw Exception('在收藏夾 $collectionId 中找不到看板 $boardId');
@@ -35,6 +35,7 @@ class BoardRepositoryImpl implements BoardRepository {
       url: '',
       sortOptions: {},
       selectedSort: ref.selectedSort,
+      collectionId: collectionId,
     );
   }
 

@@ -44,20 +44,35 @@ class CollectionFormCubit extends Cubit<CollectionFormState> {
 
   void init(Collection? collection) async {
     if (collection != null) {
+      // 將 CollectionBoard 轉換為 Board 用於表單編輯
+      final boards = collection.boards
+          .map((cb) => Board(
+                extensionPkgName: cb.identity.extensionPkgName,
+                id: cb.identity.boardId,
+                name: cb.identity.boardName,
+                icon: '',
+                largeWelcomeImage: '',
+                url: '',
+                sortOptions: {},
+                selectedSort: cb.selectedSort,
+                collectionId: cb.collectionId,
+              ))
+          .toList();
+
       final boardSorts = Map<String, String>.fromEntries(
-        collection.boards.map((b) => MapEntry(b.id, b.selectedSort ?? '')),
+        boards.map((b) => MapEntry(b.id, b.selectedSort ?? '')),
       );
       emit(state.copyWith(
         name: collection.name,
-        selectedBoards: collection.boards,
+        selectedBoards: boards,
         boardSorts: boardSorts,
         editingCollectionId: collection.id,
       ));
 
       // Also fetch options to show in dropdown
-      if (collection.boards.isNotEmpty) {
+      if (boards.isNotEmpty) {
         try {
-          final options = await _getBoardSortOptions(collection.boards);
+          final options = await _getBoardSortOptions(boards);
           final updatedSorts = _getAutoSelectedSorts(options);
           emit(state.copyWith(
             boardSortOptions: options,
@@ -134,19 +149,43 @@ class CollectionFormCubit extends Cubit<CollectionFormState> {
       }
 
       if (state.isEditing) {
+        // 將 Board 轉換為 CollectionBoard
+        final collectionBoards = state.selectedBoards
+            .map((b) => CollectionBoard(
+                  identity: BoardIdentity(
+                    extensionPkgName: b.extensionPkgName,
+                    boardId: b.id,
+                    boardName: b.name,
+                  ),
+                  collectionId: state.editingCollectionId!,
+                  selectedSort: state.boardSorts[b.id],
+                ))
+            .toList();
+
         await _collectionRepository.update(Collection(
           id: state.editingCollectionId!,
           name: finalName,
-          boards: state.selectedBoards.map((b) {
-            return b.copyWith(selectedSort: state.boardSorts[b.id]);
-          }).toList(),
+          boards: collectionBoards,
         ));
       } else {
+        // 創建新 Collection：將 Board 轉換為 CollectionBoard
+        // 注意：這裡 collectionId 會在 repository 中設定
+        final tempCollectionId = 'temp'; // 臨時 ID，實際會被 repository 替換
+        final collectionBoards = state.selectedBoards
+            .map((b) => CollectionBoard(
+                  identity: BoardIdentity(
+                    extensionPkgName: b.extensionPkgName,
+                    boardId: b.id,
+                    boardName: b.name,
+                  ),
+                  collectionId: tempCollectionId,
+                  selectedSort: state.boardSorts[b.id],
+                ))
+            .toList();
+
         await _collectionRepository.create(
           finalName,
-          state.selectedBoards.map((b) {
-            return b.copyWith(selectedSort: state.boardSorts[b.id]);
-          }).toList(),
+          collectionBoards,
         );
       }
 

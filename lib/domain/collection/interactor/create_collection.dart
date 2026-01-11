@@ -8,7 +8,7 @@ class CreateCollection {
 
   CreateCollection(this._repository);
 
-  Future<void> call({required String name, required List<Board> boards}) {
+  Future<void> call({required String name, required List<CollectionBoard> boards}) {
     return _repository.create(name, boards);
   }
 }

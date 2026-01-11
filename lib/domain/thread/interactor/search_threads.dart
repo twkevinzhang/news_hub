@@ -6,11 +6,11 @@ import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/shared/models.dart';
 
 @lazySingleton
-class ListThreads {
+class SearchThreads {
   final ListInstalledExtensions _listInstalledExtensions;
   final ThreadRepository _repository;
 
-  ListThreads({
+  SearchThreads({
     required ThreadRepository repository,
     required ListInstalledExtensions listInstalledExtensions,
   })  : _repository = repository,
@@ -60,32 +60,4 @@ class ListThreads {
       return SingleImagePostWithExtension(post: t as SingleImagePost, board: b, extension: e);
     }).toList();
   }
-}
-
-class SingleImagePostWithExtension extends SingleImagePost {
-  final Extension extension;
-  final Board board;
-
-  SingleImagePostWithExtension({
-    required SingleImagePost post,
-    required this.extension,
-    required this.board,
-  }) : super(
-          extensionPkgName: post.extensionPkgName,
-          boardId: post.boardId,
-          threadId: post.threadId,
-          id: post.id,
-          title: post.title,
-          url: post.url,
-          createdAt: post.createdAt,
-          authorId: post.authorId,
-          authorName: post.authorName,
-          liked: post.liked,
-          disliked: post.disliked,
-          image: post.image,
-          contents: post.contents,
-          tags: post.tags,
-          latestReplyCreatedAt: post.latestReplyCreatedAt,
-          repliesCount: post.repliesCount,
-        );
 }

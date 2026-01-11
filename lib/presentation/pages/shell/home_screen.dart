@@ -1,4 +1,3 @@
-// lib/presentation/pages/home/home_screen.dart
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,13 +59,16 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
         drawer: AppNavigationDrawer(
           onCollectionSelected: (collection) {
-            _safeNavigate(() => context.router.push(CollectionThreadListRoute()));
+            _safeNavigate(() => context.router.push(CollectionThreadListRoute(collectionId: collection.id)));
           },
           onCreateCollectionPressed: () {
             _safeNavigate(() => context.router.push(CollectionCreateRoute()));
           },
           onBoardSelected: (board) {
-            _safeNavigate(() => context.router.push(CollectionBoardThreadListRoute()));
+            _safeNavigate(() => context.router.push(CollectionBoardThreadListRoute(
+                  collectionId: board.collectionId,
+                  boardId: board.identity.boardId,
+                )));
           },
           onStatusPressed: () {
             _safeNavigate(() => context.router.push(const SidecarLogsRoute()));

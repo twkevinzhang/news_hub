@@ -39,20 +39,65 @@ import 'package:news_hub/presentation/router/wrapper_screen.dart' as _i13;
 
 /// generated route for
 /// [_i1.CollectionBoardThreadListScreen]
-class CollectionBoardThreadListRoute extends _i14.PageRouteInfo<void> {
-  const CollectionBoardThreadListRoute({List<_i14.PageRouteInfo>? children})
-    : super(CollectionBoardThreadListRoute.name, initialChildren: children);
+class CollectionBoardThreadListRoute
+    extends _i14.PageRouteInfo<CollectionBoardThreadListRouteArgs> {
+  CollectionBoardThreadListRoute({
+    _i15.Key? key,
+    required String collectionId,
+    required String boardId,
+    List<_i14.PageRouteInfo>? children,
+  }) : super(
+         CollectionBoardThreadListRoute.name,
+         args: CollectionBoardThreadListRouteArgs(
+           key: key,
+           collectionId: collectionId,
+           boardId: boardId,
+         ),
+         rawPathParams: {'collectionId': collectionId, 'boardId': boardId},
+         initialChildren: children,
+       );
 
   static const String name = 'CollectionBoardThreadListRoute';
 
   static _i14.PageInfo page = _i14.PageInfo(
     name,
     builder: (data) {
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<CollectionBoardThreadListRouteArgs>(
+        orElse:
+            () => CollectionBoardThreadListRouteArgs(
+              collectionId: pathParams.getString('collectionId'),
+              boardId: pathParams.getString('boardId'),
+            ),
+      );
       return _i14.WrappedRoute(
-        child: const _i1.CollectionBoardThreadListScreen(),
+        child: _i1.CollectionBoardThreadListScreen(
+          key: args.key,
+          collectionId: args.collectionId,
+          boardId: args.boardId,
+        ),
       );
     },
   );
+}
+
+class CollectionBoardThreadListRouteArgs {
+  const CollectionBoardThreadListRouteArgs({
+    this.key,
+    required this.collectionId,
+    required this.boardId,
+  });
+
+  final _i15.Key? key;
+
+  final String collectionId;
+
+  final String boardId;
+
+  @override
+  String toString() {
+    return 'CollectionBoardThreadListRouteArgs{key: $key, collectionId: $collectionId, boardId: $boardId}';
+  }
 }
 
 /// generated route for
@@ -134,18 +179,55 @@ class CollectionManageRoute extends _i14.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i5.CollectionThreadListScreen]
-class CollectionThreadListRoute extends _i14.PageRouteInfo<void> {
-  const CollectionThreadListRoute({List<_i14.PageRouteInfo>? children})
-    : super(CollectionThreadListRoute.name, initialChildren: children);
+class CollectionThreadListRoute
+    extends _i14.PageRouteInfo<CollectionThreadListRouteArgs> {
+  CollectionThreadListRoute({
+    _i15.Key? key,
+    required String collectionId,
+    List<_i14.PageRouteInfo>? children,
+  }) : super(
+         CollectionThreadListRoute.name,
+         args: CollectionThreadListRouteArgs(
+           key: key,
+           collectionId: collectionId,
+         ),
+         rawPathParams: {'collectionId': collectionId},
+         initialChildren: children,
+       );
 
   static const String name = 'CollectionThreadListRoute';
 
   static _i14.PageInfo page = _i14.PageInfo(
     name,
     builder: (data) {
-      return _i14.WrappedRoute(child: const _i5.CollectionThreadListScreen());
+      final pathParams = data.inheritedPathParams;
+      final args = data.argsAs<CollectionThreadListRouteArgs>(
+        orElse:
+            () => CollectionThreadListRouteArgs(
+              collectionId: pathParams.getString('collectionId'),
+            ),
+      );
+      return _i14.WrappedRoute(
+        child: _i5.CollectionThreadListScreen(
+          key: args.key,
+          collectionId: args.collectionId,
+        ),
+      );
     },
   );
+}
+
+class CollectionThreadListRouteArgs {
+  const CollectionThreadListRouteArgs({this.key, required this.collectionId});
+
+  final _i15.Key? key;
+
+  final String collectionId;
+
+  @override
+  String toString() {
+    return 'CollectionThreadListRouteArgs{key: $key, collectionId: $collectionId}';
+  }
 }
 
 /// generated route for

@@ -116,7 +116,8 @@ extension RouteDataExtensions on RouteData {
     // 備用：從路由名稱映射
     const titleMap = {
       'CreateCollectionRoute': '建立收藏',
-      'ThreadListRoute': 'NewsHub',
+      'CollectionThreadListRoute': 'NewsHub',
+      'CollectionBoardThreadListRoute': 'NewsHub',
       'SidecarLogsRoute': 'Sidecar Logs',
       'SettingsRoute': '設定',
       'SearchRoute': '搜尋',

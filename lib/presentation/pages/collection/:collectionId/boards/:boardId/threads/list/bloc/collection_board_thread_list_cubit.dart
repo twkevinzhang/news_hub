@@ -1,0 +1,68 @@
+import 'dart:async';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
+import 'package:injectable/injectable.dart';
+import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/domain/thread/interactor/list_board_threads.dart';
+
+part 'collection_board_thread_list_cubit.freezed.dart';
+
+@freezed
+class CollectionBoardThreadListState with _$CollectionBoardThreadListState {
+  const factory CollectionBoardThreadListState({
+    @Default([]) List<SingleImagePostWithExtension> threads,
+    @Default(false) bool isLoading,
+    String? error,
+  }) = _CollectionBoardThreadListState;
+}
+
+@injectable
+class CollectionBoardThreadListCubit extends Cubit<CollectionBoardThreadListState> {
+  final ListBoardThreads _listBoardThreads;
+  final PagingController<int, SingleImagePostWithExtension> pagingController = PagingController(firstPageKey: 0);
+
+  CollectionBoardThreadListCubit(this._listBoardThreads) : super(const CollectionBoardThreadListState());
+
+  Future<void> init({
+    required String collectionId,
+    required String boardId,
+    ThreadsFilter? filter,
+  }) async {
+    pagingController.value = const PagingState(
+      nextPageKey: null,
+      itemList: [],
+    );
+    emit(state.copyWith(isLoading: true, error: null));
+
+    try {
+      final threads = await _listBoardThreads(
+        collectionId: collectionId,
+        boardId: boardId,
+        filter: filter,
+      );
+      pagingController.value = PagingState(
+        nextPageKey: null,
+        itemList: threads,
+      );
+      emit(state.copyWith(threads: threads, isLoading: false));
+    } catch (e) {
+      emit(state.copyWith(isLoading: false, error: e.toString()));
+      pagingController.error = e;
+    }
+  }
+
+  void refresh({
+    required String collectionId,
+    required String boardId,
+    ThreadsFilter? filter,
+  }) {
+    init(collectionId: collectionId, boardId: boardId, filter: filter);
+  }
+
+  @override
+  Future<void> close() {
+    pagingController.dispose();
+    return super.close();
+  }
+}
