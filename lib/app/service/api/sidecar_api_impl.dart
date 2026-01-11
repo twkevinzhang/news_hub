@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:news_hub/app/service/api/models/transform.dart';
 import 'package:news_hub/app/service/connection/grpc_connection_manager_impl.dart';
-import 'package:news_hub/domain/api_service.dart';
+import 'package:news_hub/app/service/api/api_service.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/locator.dart';
@@ -36,14 +36,14 @@ class SidecarApiImpl implements ApiService {
   @override
   Future<List<domain.Post>> listThreads({
     required String extensionPkgName,
-    required String? boardId,
+    required String boardId,
     String? sort,
     Pagination? pagination,
     String? keywords,
   }) async {
     final res = await _client.getThreads(pb.GetThreadsReq(
       pkgName: extensionPkgName,
-      boardId: boardId ?? '',
+      boardId: boardId,
       sort: sort,
       page: domain_pb.PaginationReq(
         page: pagination?.page,

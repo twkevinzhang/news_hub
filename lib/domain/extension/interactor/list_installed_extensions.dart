@@ -1,18 +1,18 @@
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/domain/api_service.dart';
+import 'package:news_hub/domain/collection/board_repository.dart';
 import 'package:news_hub/domain/extension/repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 
 @lazySingleton
 class ListInstalledExtensions {
   final ExtensionRepository _repository;
-  final ApiService _apiService;
+  final BoardRepository _boardRepository;
 
   ListInstalledExtensions({
     required ExtensionRepository repository,
-    required ApiService apiService,
+    required BoardRepository boardRepository,
   })  : _repository = repository,
-        _apiService = apiService;
+        _boardRepository = boardRepository;
 
   Future<List<Extension>> call() {
     return _repository.listInstalled();
@@ -21,7 +21,7 @@ class ListInstalledExtensions {
   Future<List<ExtensionWithBoards>> withBoards() async {
     final extensions = await call();
     final promises = extensions.map((e) async {
-      final boards = await _apiService.listBoards(extensionPkgName: e.pkgName);
+      final boards = await _boardRepository.list(e.pkgName);
       return ExtensionWithBoards(
         pkgName: e.pkgName,
         displayName: e.displayName,

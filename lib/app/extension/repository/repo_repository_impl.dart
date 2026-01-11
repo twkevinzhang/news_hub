@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/domain/api_service.dart';
+import 'package:news_hub/app/service/api/api_service.dart';
 import 'package:news_hub/domain/repo/repository.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
 import 'package:news_hub/app/service/connection/interface.dart';

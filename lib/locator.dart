@@ -9,7 +9,7 @@ import 'package:news_hub/presentation/app.dart';
 import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 import 'package:serious_python/serious_python.dart';
 import 'package:news_hub/shared/constants.dart';
-import 'package:news_hub/domain/api_service.dart';
+import 'package:news_hub/app/service/api/api_service.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/sidecar/repository.dart';
 import 'package:news_hub/app/service/api/sidecar_api_impl.dart';

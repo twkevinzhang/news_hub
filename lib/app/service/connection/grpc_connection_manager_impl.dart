@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:grpc/grpc.dart';
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/app/sidecar/preferences/sidecar_preferences.dart';
-import 'package:news_hub/domain/api_service.dart';
+import 'package:news_hub/app/service/api/api_service.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/app/service/connection/interface.dart';
 import 'package:news_hub/domain/sidecar/repository.dart';

@@ -1,5 +1,6 @@
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/domain/api_service.dart';
+import 'package:news_hub/domain/collection/board_repository.dart';
+import 'package:news_hub/domain/thread/repository.dart';
 import 'package:news_hub/domain/extension/interactor/get_installed_extension.dart';
 import 'package:news_hub/domain/thread/interactor/get_original_post.dart';
 import 'package:news_hub/shared/models.dart';
@@ -8,12 +9,15 @@ import 'package:news_hub/domain/models/models.dart';
 @lazySingleton
 class ListReplies {
   final GetInstalledExtension _getInstalledExtension;
-  final ApiService _service;
+  final ThreadRepository _threadRepository;
+  final BoardRepository _boardRepository;
 
   ListReplies({
-    required ApiService apiService,
+    required ThreadRepository threadRepository,
+    required BoardRepository boardRepository,
     required GetInstalledExtension installedRepository,
-  })  : _service = apiService,
+  })  : _threadRepository = threadRepository,
+        _boardRepository = boardRepository,
         _getInstalledExtension = installedRepository;
 
   Future<List<ArticlePostWithExtension>> call({
@@ -24,8 +28,8 @@ class ListReplies {
     Pagination? pagination,
   }) async {
     final extensionF = _getInstalledExtension.get(extensionPkgName);
-    final boardsF = _service.listBoards(extensionPkgName: extensionPkgName);
-    final repliesF = _service.listReplies(
+    final boardsF = _boardRepository.list(extensionPkgName);
+    final repliesF = _threadRepository.listReplies(
       extensionPkgName: extensionPkgName,
       boardId: boardId,
       threadId: threadId,

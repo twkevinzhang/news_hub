@@ -1,6 +1,5 @@
+import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/shared/models.dart';
-
-import 'models/models.dart';
 
 abstract class ApiService {
   Stream<HealthCheckResult> watchHealth();
@@ -33,7 +32,7 @@ abstract class ApiService {
 
   Future<List<Post>> listThreads({
     required String extensionPkgName,
-    required String? boardId,
+    required String boardId,
     String? sort,
     Pagination? pagination,
     String? keywords,

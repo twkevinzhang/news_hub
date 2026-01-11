@@ -1,17 +1,21 @@
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/domain/api_service.dart';
+import 'package:news_hub/domain/collection/board_repository.dart';
+import 'package:news_hub/domain/thread/repository.dart';
 import 'package:news_hub/domain/extension/interactor/get_installed_extension.dart';
 import 'package:news_hub/domain/models/models.dart';
 
 @lazySingleton
 class GetOriginalPost {
   final GetInstalledExtension _getInstalledExtension;
-  final ApiService _service;
+  final ThreadRepository _threadRepository;
+  final BoardRepository _boardRepository;
 
   GetOriginalPost({
-    required ApiService apiService,
+    required ThreadRepository threadRepository,
+    required BoardRepository boardRepository,
     required GetInstalledExtension installedRepository,
-  })  : _service = apiService,
+  })  : _threadRepository = threadRepository,
+        _boardRepository = boardRepository,
         _getInstalledExtension = installedRepository;
 
   Future<ArticlePostWithExtension> call({
@@ -21,8 +25,8 @@ class GetOriginalPost {
     String? postId,
   }) async {
     final extensionF = _getInstalledExtension.get(extensionPkgName);
-    final boardsF = _service.listBoards(extensionPkgName: extensionPkgName);
-    final threadF = _service.getOriginalPost(
+    final boardsF = _boardRepository.list(extensionPkgName);
+    final threadF = _threadRepository.getOriginalPost(
       extensionPkgName: extensionPkgName,
       boardId: boardId,
       threadId: threadId,

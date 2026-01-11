@@ -17,6 +17,7 @@ class ListThreads {
         _listInstalledExtensions = listInstalledExtensions;
 
   Future<List<SingleImagePostWithExtension>> call({
+    required String collectionId,
     Pagination? pagination,
     ThreadsFilter? filter,
     ThreadsSorting? sorting,
