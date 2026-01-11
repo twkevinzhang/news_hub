@@ -12,6 +12,7 @@ class CollectionState with _$CollectionState {
   const factory CollectionState({
     @Default([]) List<Collection> collections,
     @Default(false) bool isLoading,
+    @Default(false) bool isSortingMode,
     String? errorMessage,
   }) = _CollectionState;
 }
@@ -75,5 +76,9 @@ class CollectionCubit extends Cubit<CollectionState> {
       // Revert is handled by watchList stream update usually, but we could handle error explicitly
       emit(state.copyWith(errorMessage: e.toString()));
     }
+  }
+
+  void toggleSortingMode() {
+    emit(state.copyWith(isSortingMode: !state.isSortingMode));
   }
 }

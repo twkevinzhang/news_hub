@@ -20,79 +20,127 @@ class CollectionManageScreen extends StatelessWidget implements AutoRouteWrapper
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Collections')),
-      body: BlocBuilder<CollectionCubit, CollectionState>(
-        builder: (context, state) {
-          if (state.isLoading && state.collections.isEmpty) {
-            return const Center(child: CircularProgressIndicator());
-          }
-          if (state.collections.isEmpty) {
-            return const Center(child: Text('No collections'));
-          }
-          return ReorderableListView(
-            onReorder: (oldIndex, newIndex) {
-              context.read<CollectionCubit>().reorderCollections(oldIndex, newIndex);
-            },
-            children: state.collections.map((collection) {
-              return ListTile(
-                key: Key(collection.id),
-                leading: const Icon(Icons.drag_handle),
-                title: Text(collection.name),
-                subtitle: Text('${collection.boards.length} boards'),
-                trailing: PopupMenuButton<String>(
-                  onSelected: (value) async {
-                    if (value == 'edit') {
-                      context.router.push(CollectionEditRoute(initialCollection: collection));
-                    } else if (value == 'delete') {
-                      final confirm = await showDialog<bool>(
-                        context: context,
-                        builder: (context) => AlertDialog(
-                          title: const Text('Delete Collection'),
-                          content: Text('Are you sure you want to delete "${collection.name}"?'),
-                          actions: [
-                            TextButton(
-                              onPressed: () => Navigator.of(context).pop(false),
-                              child: const Text('Cancel'),
-                            ),
-                            TextButton(
-                              onPressed: () => Navigator.of(context).pop(true),
-                              child: const Text('Delete'),
-                            ),
-                          ],
-                        ),
-                      );
-                      if (confirm == true) {
-                        if (context.mounted) {
-                          context.read<CollectionCubit>().deleteCollection(collection.id);
-                        }
-                      }
-                    }
-                  },
-                  itemBuilder: (BuildContext context) {
-                    return [
-                      const PopupMenuItem(
-                        value: 'edit',
-                        child: Text('Edit'),
-                      ),
-                      const PopupMenuItem(
-                        value: 'delete',
-                        child: Text('Delete'),
-                      ),
-                    ];
-                  },
-                ),
+    return BlocBuilder<CollectionCubit, CollectionState>(
+      builder: (context, state) {
+        return PopScope(
+          canPop: !state.isSortingMode,
+          onPopInvokedWithResult: (didPop, result) async {
+            if (didPop) return;
+            final confirm = await showDialog<bool>(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('放棄排序？'),
+                content: const Text('確定要結束排序模式嗎？'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(false),
+                    child: const Text('取消'),
+                  ),
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(true),
+                    child: const Text('確定'),
+                  ),
+                ],
+              ),
+            );
+            if (confirm == true && context.mounted) {
+              context.read<CollectionCubit>().toggleSortingMode();
+            }
+          },
+          child: Scaffold(
+            appBar: AppBar(
+              title: Text(state.isSortingMode ? '排序集合' : '集合管理'),
+              backgroundColor: state.isSortingMode ? Theme.of(context).colorScheme.primaryContainer : null,
+              leading: state.isSortingMode
+                  ? IconButton(
+                      icon: const Icon(Icons.close),
+                      onPressed: () => Navigator.of(context).maybePop(),
+                    )
+                  : null,
+              actions: [
+                if (state.isSortingMode)
+                  TextButton(
+                    onPressed: () => context.read<CollectionCubit>().toggleSortingMode(),
+                    child: Text('完成', style: TextStyle(color: Theme.of(context).colorScheme.onPrimaryContainer)),
+                  )
+                else
+                  IconButton(
+                    icon: const Icon(Icons.sort),
+                    onPressed: () => context.read<CollectionCubit>().toggleSortingMode(),
+                  ),
+              ],
+            ),
+            body: Builder(builder: (context) {
+              if (state.isLoading && state.collections.isEmpty) {
+                return const Center(child: CircularProgressIndicator());
+              }
+              if (state.collections.isEmpty) {
+                return const Center(child: Text('No collections'));
+              }
+              return ReorderableListView(
+                onReorder: (oldIndex, newIndex) {
+                  context.read<CollectionCubit>().reorderCollections(oldIndex, newIndex);
+                },
+                buildDefaultDragHandles: state.isSortingMode,
+                children: state.collections.map((collection) {
+                  return ListTile(
+                    key: Key(collection.id),
+                    onTap: state.isSortingMode ? null : () => context.router.push(CollectionEditRoute(initialCollection: collection)),
+                    leading: state.isSortingMode ? null : const Icon(Icons.collections),
+                    title: Text(collection.name),
+                    subtitle: Text('${collection.boards.length} boards'),
+                    trailing: state.isSortingMode
+                        ? const ReorderableDragStartListener(
+                            index: 0, // Not used but required if we use custom handles, but buildDefaultDragHandles is true
+                            child: Icon(Icons.drag_handle),
+                          )
+                        : PopupMenuButton<String>(
+                            onSelected: (value) async {
+                              if (value == 'edit') {
+                                context.router.push(CollectionEditRoute(initialCollection: collection));
+                              } else if (value == 'delete') {
+                                final confirm = await showDialog<bool>(
+                                  context: context,
+                                  builder: (context) => AlertDialog(
+                                    title: const Text('Delete Collection'),
+                                    content: Text('Are you sure you want to delete "${collection.name}"?'),
+                                    actions: [
+                                      TextButton(
+                                        onPressed: () => Navigator.of(context).pop(false),
+                                        child: const Text('Cancel'),
+                                      ),
+                                      TextButton(
+                                        onPressed: () => Navigator.of(context).pop(true),
+                                        child: const Text('Delete'),
+                                      ),
+                                    ],
+                                  ),
+                                );
+                                if (confirm == true) {
+                                  if (context.mounted) {
+                                    context.read<CollectionCubit>().deleteCollection(collection.id);
+                                  }
+                                }
+                              }
+                            },
+                            itemBuilder: (BuildContext context) => [
+                              const PopupMenuItem(value: 'edit', child: Text('Edit')),
+                              const PopupMenuItem(value: 'delete', child: Text('Delete')),
+                            ],
+                          ),
+                  );
+                }).toList(),
               );
-            }).toList(),
-          );
-        },
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          context.router.push(CollectionCreateRoute());
-        },
-        child: const Icon(Icons.add),
-      ),
+            }),
+            floatingActionButton: state.isSortingMode
+                ? null
+                : FloatingActionButton(
+                    onPressed: () => context.router.push(CollectionCreateRoute()),
+                    child: const Icon(Icons.add),
+                  ),
+          ),
+        );
+      },
     );
   }
 }

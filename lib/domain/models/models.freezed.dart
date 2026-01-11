@@ -15,6 +15,313 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
+mixin _$Board {
+  String get extensionPkgName => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get icon => throw _privateConstructorUsedError;
+  String get largeWelcomeImage => throw _privateConstructorUsedError;
+  String get url => throw _privateConstructorUsedError;
+  Set<String> get supportedThreadsSorting => throw _privateConstructorUsedError;
+  String? get selectedThreadsSorting => throw _privateConstructorUsedError;
+
+  /// Create a copy of Board
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $BoardCopyWith<Board> get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $BoardCopyWith<$Res> {
+  factory $BoardCopyWith(Board value, $Res Function(Board) then) =
+      _$BoardCopyWithImpl<$Res, Board>;
+  @useResult
+  $Res call(
+      {String extensionPkgName,
+      String id,
+      String name,
+      String icon,
+      String largeWelcomeImage,
+      String url,
+      Set<String> supportedThreadsSorting,
+      String? selectedThreadsSorting});
+}
+
+/// @nodoc
+class _$BoardCopyWithImpl<$Res, $Val extends Board>
+    implements $BoardCopyWith<$Res> {
+  _$BoardCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Board
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? extensionPkgName = null,
+    Object? id = null,
+    Object? name = null,
+    Object? icon = null,
+    Object? largeWelcomeImage = null,
+    Object? url = null,
+    Object? supportedThreadsSorting = null,
+    Object? selectedThreadsSorting = freezed,
+  }) {
+    return _then(_value.copyWith(
+      extensionPkgName: null == extensionPkgName
+          ? _value.extensionPkgName
+          : extensionPkgName // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      icon: null == icon
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
+              as String,
+      largeWelcomeImage: null == largeWelcomeImage
+          ? _value.largeWelcomeImage
+          : largeWelcomeImage // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      supportedThreadsSorting: null == supportedThreadsSorting
+          ? _value.supportedThreadsSorting
+          : supportedThreadsSorting // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
+      selectedThreadsSorting: freezed == selectedThreadsSorting
+          ? _value.selectedThreadsSorting
+          : selectedThreadsSorting // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$BoardImplCopyWith<$Res> implements $BoardCopyWith<$Res> {
+  factory _$$BoardImplCopyWith(
+          _$BoardImpl value, $Res Function(_$BoardImpl) then) =
+      __$$BoardImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {String extensionPkgName,
+      String id,
+      String name,
+      String icon,
+      String largeWelcomeImage,
+      String url,
+      Set<String> supportedThreadsSorting,
+      String? selectedThreadsSorting});
+}
+
+/// @nodoc
+class __$$BoardImplCopyWithImpl<$Res>
+    extends _$BoardCopyWithImpl<$Res, _$BoardImpl>
+    implements _$$BoardImplCopyWith<$Res> {
+  __$$BoardImplCopyWithImpl(
+      _$BoardImpl _value, $Res Function(_$BoardImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of Board
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? extensionPkgName = null,
+    Object? id = null,
+    Object? name = null,
+    Object? icon = null,
+    Object? largeWelcomeImage = null,
+    Object? url = null,
+    Object? supportedThreadsSorting = null,
+    Object? selectedThreadsSorting = freezed,
+  }) {
+    return _then(_$BoardImpl(
+      extensionPkgName: null == extensionPkgName
+          ? _value.extensionPkgName
+          : extensionPkgName // ignore: cast_nullable_to_non_nullable
+              as String,
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: null == name
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      icon: null == icon
+          ? _value.icon
+          : icon // ignore: cast_nullable_to_non_nullable
+              as String,
+      largeWelcomeImage: null == largeWelcomeImage
+          ? _value.largeWelcomeImage
+          : largeWelcomeImage // ignore: cast_nullable_to_non_nullable
+              as String,
+      url: null == url
+          ? _value.url
+          : url // ignore: cast_nullable_to_non_nullable
+              as String,
+      supportedThreadsSorting: null == supportedThreadsSorting
+          ? _value._supportedThreadsSorting
+          : supportedThreadsSorting // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
+      selectedThreadsSorting: freezed == selectedThreadsSorting
+          ? _value.selectedThreadsSorting
+          : selectedThreadsSorting // ignore: cast_nullable_to_non_nullable
+              as String?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$BoardImpl with DiagnosticableTreeMixin implements _Board {
+  const _$BoardImpl(
+      {required this.extensionPkgName,
+      required this.id,
+      required this.name,
+      required this.icon,
+      required this.largeWelcomeImage,
+      required this.url,
+      required final Set<String> supportedThreadsSorting,
+      this.selectedThreadsSorting})
+      : _supportedThreadsSorting = supportedThreadsSorting;
+
+  @override
+  final String extensionPkgName;
+  @override
+  final String id;
+  @override
+  final String name;
+  @override
+  final String icon;
+  @override
+  final String largeWelcomeImage;
+  @override
+  final String url;
+  final Set<String> _supportedThreadsSorting;
+  @override
+  Set<String> get supportedThreadsSorting {
+    if (_supportedThreadsSorting is EqualUnmodifiableSetView)
+      return _supportedThreadsSorting;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableSetView(_supportedThreadsSorting);
+  }
+
+  @override
+  final String? selectedThreadsSorting;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Board(extensionPkgName: $extensionPkgName, id: $id, name: $name, icon: $icon, largeWelcomeImage: $largeWelcomeImage, url: $url, supportedThreadsSorting: $supportedThreadsSorting, selectedThreadsSorting: $selectedThreadsSorting)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Board'))
+      ..add(DiagnosticsProperty('extensionPkgName', extensionPkgName))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('name', name))
+      ..add(DiagnosticsProperty('icon', icon))
+      ..add(DiagnosticsProperty('largeWelcomeImage', largeWelcomeImage))
+      ..add(DiagnosticsProperty('url', url))
+      ..add(DiagnosticsProperty(
+          'supportedThreadsSorting', supportedThreadsSorting))
+      ..add(DiagnosticsProperty(
+          'selectedThreadsSorting', selectedThreadsSorting));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BoardImpl &&
+            (identical(other.extensionPkgName, extensionPkgName) ||
+                other.extensionPkgName == extensionPkgName) &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.icon, icon) || other.icon == icon) &&
+            (identical(other.largeWelcomeImage, largeWelcomeImage) ||
+                other.largeWelcomeImage == largeWelcomeImage) &&
+            (identical(other.url, url) || other.url == url) &&
+            const DeepCollectionEquality().equals(
+                other._supportedThreadsSorting, _supportedThreadsSorting) &&
+            (identical(other.selectedThreadsSorting, selectedThreadsSorting) ||
+                other.selectedThreadsSorting == selectedThreadsSorting));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      extensionPkgName,
+      id,
+      name,
+      icon,
+      largeWelcomeImage,
+      url,
+      const DeepCollectionEquality().hash(_supportedThreadsSorting),
+      selectedThreadsSorting);
+
+  /// Create a copy of Board
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BoardImplCopyWith<_$BoardImpl> get copyWith =>
+      __$$BoardImplCopyWithImpl<_$BoardImpl>(this, _$identity);
+}
+
+abstract class _Board implements Board {
+  const factory _Board(
+      {required final String extensionPkgName,
+      required final String id,
+      required final String name,
+      required final String icon,
+      required final String largeWelcomeImage,
+      required final String url,
+      required final Set<String> supportedThreadsSorting,
+      final String? selectedThreadsSorting}) = _$BoardImpl;
+
+  @override
+  String get extensionPkgName;
+  @override
+  String get id;
+  @override
+  String get name;
+  @override
+  String get icon;
+  @override
+  String get largeWelcomeImage;
+  @override
+  String get url;
+  @override
+  Set<String> get supportedThreadsSorting;
+  @override
+  String? get selectedThreadsSorting;
+
+  /// Create a copy of Board
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$BoardImplCopyWith<_$BoardImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$ThreadsFilter {
   Map<String, String> get boardSorts => throw _privateConstructorUsedError;
   String get keywords => throw _privateConstructorUsedError;

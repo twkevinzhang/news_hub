@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$CollectionState {
   List<Collection> get collections => throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
+  bool get isSortingMode => throw _privateConstructorUsedError;
   String? get errorMessage => throw _privateConstructorUsedError;
 
   /// Create a copy of CollectionState
@@ -34,7 +35,10 @@ abstract class $CollectionStateCopyWith<$Res> {
       _$CollectionStateCopyWithImpl<$Res, CollectionState>;
   @useResult
   $Res call(
-      {List<Collection> collections, bool isLoading, String? errorMessage});
+      {List<Collection> collections,
+      bool isLoading,
+      bool isSortingMode,
+      String? errorMessage});
 }
 
 /// @nodoc
@@ -54,6 +58,7 @@ class _$CollectionStateCopyWithImpl<$Res, $Val extends CollectionState>
   $Res call({
     Object? collections = null,
     Object? isLoading = null,
+    Object? isSortingMode = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_value.copyWith(
@@ -64,6 +69,10 @@ class _$CollectionStateCopyWithImpl<$Res, $Val extends CollectionState>
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSortingMode: null == isSortingMode
+          ? _value.isSortingMode
+          : isSortingMode // ignore: cast_nullable_to_non_nullable
               as bool,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
@@ -82,7 +91,10 @@ abstract class _$$CollectionStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<Collection> collections, bool isLoading, String? errorMessage});
+      {List<Collection> collections,
+      bool isLoading,
+      bool isSortingMode,
+      String? errorMessage});
 }
 
 /// @nodoc
@@ -100,6 +112,7 @@ class __$$CollectionStateImplCopyWithImpl<$Res>
   $Res call({
     Object? collections = null,
     Object? isLoading = null,
+    Object? isSortingMode = null,
     Object? errorMessage = freezed,
   }) {
     return _then(_$CollectionStateImpl(
@@ -110,6 +123,10 @@ class __$$CollectionStateImplCopyWithImpl<$Res>
       isLoading: null == isLoading
           ? _value.isLoading
           : isLoading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isSortingMode: null == isSortingMode
+          ? _value.isSortingMode
+          : isSortingMode // ignore: cast_nullable_to_non_nullable
               as bool,
       errorMessage: freezed == errorMessage
           ? _value.errorMessage
@@ -125,6 +142,7 @@ class _$CollectionStateImpl implements _CollectionState {
   const _$CollectionStateImpl(
       {final List<Collection> collections = const [],
       this.isLoading = false,
+      this.isSortingMode = false,
       this.errorMessage})
       : _collections = collections;
 
@@ -141,11 +159,14 @@ class _$CollectionStateImpl implements _CollectionState {
   @JsonKey()
   final bool isLoading;
   @override
+  @JsonKey()
+  final bool isSortingMode;
+  @override
   final String? errorMessage;
 
   @override
   String toString() {
-    return 'CollectionState(collections: $collections, isLoading: $isLoading, errorMessage: $errorMessage)';
+    return 'CollectionState(collections: $collections, isLoading: $isLoading, isSortingMode: $isSortingMode, errorMessage: $errorMessage)';
   }
 
   @override
@@ -157,6 +178,8 @@ class _$CollectionStateImpl implements _CollectionState {
                 .equals(other._collections, _collections) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
+            (identical(other.isSortingMode, isSortingMode) ||
+                other.isSortingMode == isSortingMode) &&
             (identical(other.errorMessage, errorMessage) ||
                 other.errorMessage == errorMessage));
   }
@@ -166,6 +189,7 @@ class _$CollectionStateImpl implements _CollectionState {
       runtimeType,
       const DeepCollectionEquality().hash(_collections),
       isLoading,
+      isSortingMode,
       errorMessage);
 
   /// Create a copy of CollectionState
@@ -182,12 +206,15 @@ abstract class _CollectionState implements CollectionState {
   const factory _CollectionState(
       {final List<Collection> collections,
       final bool isLoading,
+      final bool isSortingMode,
       final String? errorMessage}) = _$CollectionStateImpl;
 
   @override
   List<Collection> get collections;
   @override
   bool get isLoading;
+  @override
+  bool get isSortingMode;
   @override
   String? get errorMessage;
 

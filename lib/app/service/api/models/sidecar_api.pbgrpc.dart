@@ -42,6 +42,10 @@ class SidecarApiClient extends $grpc.Client {
       '/news_hub.sidecar.SidecarApi/GetComments',
       ($0.GetCommentsReq value) => value.writeToBuffer(),
       ($core.List<$core.int> value) => $0.GetCommentsRes.fromBuffer(value));
+  static final _$getBoardSortOptions = $grpc.ClientMethod<$0.GetBoardSortOptionsReq, $0.GetBoardSortOptionsRes>(
+      '/news_hub.sidecar.SidecarApi/GetBoardSortOptions',
+      ($0.GetBoardSortOptionsReq value) => value.writeToBuffer(),
+      ($core.List<$core.int> value) => $0.GetBoardSortOptionsRes.fromBuffer(value));
   static final _$listInstalledExtensions = $grpc.ClientMethod<$1.Empty, $0.ListInstalledExtensionsRes>(
       '/news_hub.sidecar.SidecarApi/ListInstalledExtensions',
       ($1.Empty value) => value.writeToBuffer(),
@@ -123,6 +127,10 @@ class SidecarApiClient extends $grpc.Client {
 
   $grpc.ResponseFuture<$0.GetCommentsRes> getComments($0.GetCommentsReq request, {$grpc.CallOptions? options}) {
     return $createUnaryCall(_$getComments, request, options: options);
+  }
+
+  $grpc.ResponseFuture<$0.GetBoardSortOptionsRes> getBoardSortOptions($0.GetBoardSortOptionsReq request, {$grpc.CallOptions? options}) {
+    return $createUnaryCall(_$getBoardSortOptions, request, options: options);
   }
 
   $grpc.ResponseFuture<$0.ListInstalledExtensionsRes> listInstalledExtensions($1.Empty request, {$grpc.CallOptions? options}) {
@@ -222,6 +230,13 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
         false,
         ($core.List<$core.int> value) => $0.GetCommentsReq.fromBuffer(value),
         ($0.GetCommentsRes value) => value.writeToBuffer()));
+    $addMethod($grpc.ServiceMethod<$0.GetBoardSortOptionsReq, $0.GetBoardSortOptionsRes>(
+        'GetBoardSortOptions',
+        getBoardSortOptions_Pre,
+        false,
+        false,
+        ($core.List<$core.int> value) => $0.GetBoardSortOptionsReq.fromBuffer(value),
+        ($0.GetBoardSortOptionsRes value) => value.writeToBuffer()));
     $addMethod($grpc.ServiceMethod<$1.Empty, $0.ListInstalledExtensionsRes>(
         'ListInstalledExtensions',
         listInstalledExtensions_Pre,
@@ -342,6 +357,10 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
     return getComments(call, await request);
   }
 
+  $async.Future<$0.GetBoardSortOptionsRes> getBoardSortOptions_Pre($grpc.ServiceCall call, $async.Future<$0.GetBoardSortOptionsReq> request) async {
+    return getBoardSortOptions(call, await request);
+  }
+
   $async.Future<$0.ListInstalledExtensionsRes> listInstalledExtensions_Pre($grpc.ServiceCall call, $async.Future<$1.Empty> request) async {
     return listInstalledExtensions(call, await request);
   }
@@ -403,6 +422,7 @@ abstract class SidecarApiServiceBase extends $grpc.Service {
   $async.Future<$0.GetOriginalPostRes> getOriginalPost($grpc.ServiceCall call, $0.GetOriginalPostReq request);
   $async.Future<$0.GetRepliesRes> getReplies($grpc.ServiceCall call, $0.GetRepliesReq request);
   $async.Future<$0.GetCommentsRes> getComments($grpc.ServiceCall call, $0.GetCommentsReq request);
+  $async.Future<$0.GetBoardSortOptionsRes> getBoardSortOptions($grpc.ServiceCall call, $0.GetBoardSortOptionsReq request);
   $async.Future<$0.ListInstalledExtensionsRes> listInstalledExtensions($grpc.ServiceCall call, $1.Empty request);
   $async.Future<$0.GetInstalledExtensionRes> getInstalledExtension($grpc.ServiceCall call, $0.GetInstalledExtensionReq request);
   $async.Future<$1.Empty> installExtension($grpc.ServiceCall call, $0.InstallExtensionReq request);

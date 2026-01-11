@@ -61,6 +61,10 @@ abstract class ApiService {
     Pagination? pagination,
   });
 
+  Future<Map<String, List<String>>> getBoardSortOptions({
+    required List<Board> boards,
+  });
+
   Future<List<RemoteExtension>> listRemoteExtensions({
     String? keyword,
   });

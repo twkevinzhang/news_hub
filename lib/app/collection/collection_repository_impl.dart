@@ -35,6 +35,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
                       largeWelcomeImage: '',
                       url: '',
                       supportedThreadsSorting: {},
+                      selectedThreadsSorting: r.selectedSort,
                     ))
                 .toList(),
           );
@@ -65,6 +66,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
                   largeWelcomeImage: '',
                   url: '',
                   supportedThreadsSorting: {},
+                  selectedThreadsSorting: r.selectedSort,
                 ))
             .toList(),
       );
@@ -93,6 +95,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
               extensionPkgName: board.extensionPkgName,
               boardId: board.id,
               boardName: Value(board.name),
+              selectedSort: Value(board.selectedThreadsSorting ?? ''),
             ));
       }
     });
@@ -121,6 +124,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
               extensionPkgName: board.extensionPkgName,
               boardId: board.id,
               boardName: Value(board.name),
+              selectedSort: Value(board.selectedThreadsSorting ?? ''),
             ));
       }
     });

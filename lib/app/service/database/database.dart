@@ -32,6 +32,7 @@ class CollectionBoardRefs extends Table {
   TextColumn get extensionPkgName => text()();
   TextColumn get boardId => text()();
   TextColumn get boardName => text().withDefault(const Constant(''))();
+  TextColumn get selectedSort => text().withDefault(const Constant(''))();
 
   @override
   Set<Column> get primaryKey => {collectionId, extensionPkgName, boardId};
@@ -47,7 +48,7 @@ class AppDatabase extends _$AppDatabase {
   AppDatabase() : super(_openConnection());
 
   @override
-  int get schemaVersion => 4;
+  int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
@@ -64,6 +65,9 @@ class AppDatabase extends _$AppDatabase {
           }
           if (from < 4) {
             await m.addColumn(collections, collections.sortOrder);
+          }
+          if (from < 5) {
+            await m.addColumn(collectionBoardRefs, collectionBoardRefs.selectedSort);
           }
         },
       );

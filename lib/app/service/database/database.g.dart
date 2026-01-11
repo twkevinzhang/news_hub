@@ -497,9 +497,17 @@ class $CollectionBoardRefsTable extends CollectionBoardRefs
       type: DriftSqlType.string,
       requiredDuringInsert: false,
       defaultValue: const Constant(''));
+  static const VerificationMeta _selectedSortMeta =
+      const VerificationMeta('selectedSort');
+  @override
+  late final GeneratedColumn<String> selectedSort = GeneratedColumn<String>(
+      'selected_sort', aliasedName, false,
+      type: DriftSqlType.string,
+      requiredDuringInsert: false,
+      defaultValue: const Constant(''));
   @override
   List<GeneratedColumn> get $columns =>
-      [collectionId, extensionPkgName, boardId, boardName];
+      [collectionId, extensionPkgName, boardId, boardName, selectedSort];
   @override
   String get aliasedName => _alias ?? actualTableName;
   @override
@@ -536,6 +544,12 @@ class $CollectionBoardRefsTable extends CollectionBoardRefs
       context.handle(_boardNameMeta,
           boardName.isAcceptableOrUnknown(data['board_name']!, _boardNameMeta));
     }
+    if (data.containsKey('selected_sort')) {
+      context.handle(
+          _selectedSortMeta,
+          selectedSort.isAcceptableOrUnknown(
+              data['selected_sort']!, _selectedSortMeta));
+    }
     return context;
   }
 
@@ -554,6 +568,8 @@ class $CollectionBoardRefsTable extends CollectionBoardRefs
           .read(DriftSqlType.string, data['${effectivePrefix}board_id'])!,
       boardName: attachedDatabase.typeMapping
           .read(DriftSqlType.string, data['${effectivePrefix}board_name'])!,
+      selectedSort: attachedDatabase.typeMapping
+          .read(DriftSqlType.string, data['${effectivePrefix}selected_sort'])!,
     );
   }
 
@@ -569,11 +585,13 @@ class CollectionBoardRef extends DataClass
   final String extensionPkgName;
   final String boardId;
   final String boardName;
+  final String selectedSort;
   const CollectionBoardRef(
       {required this.collectionId,
       required this.extensionPkgName,
       required this.boardId,
-      required this.boardName});
+      required this.boardName,
+      required this.selectedSort});
   @override
   Map<String, Expression> toColumns(bool nullToAbsent) {
     final map = <String, Expression>{};
@@ -581,6 +599,7 @@ class CollectionBoardRef extends DataClass
     map['extension_pkg_name'] = Variable<String>(extensionPkgName);
     map['board_id'] = Variable<String>(boardId);
     map['board_name'] = Variable<String>(boardName);
+    map['selected_sort'] = Variable<String>(selectedSort);
     return map;
   }
 
@@ -590,6 +609,7 @@ class CollectionBoardRef extends DataClass
       extensionPkgName: Value(extensionPkgName),
       boardId: Value(boardId),
       boardName: Value(boardName),
+      selectedSort: Value(selectedSort),
     );
   }
 
@@ -601,6 +621,7 @@ class CollectionBoardRef extends DataClass
       extensionPkgName: serializer.fromJson<String>(json['extensionPkgName']),
       boardId: serializer.fromJson<String>(json['boardId']),
       boardName: serializer.fromJson<String>(json['boardName']),
+      selectedSort: serializer.fromJson<String>(json['selectedSort']),
     );
   }
   @override
@@ -611,6 +632,7 @@ class CollectionBoardRef extends DataClass
       'extensionPkgName': serializer.toJson<String>(extensionPkgName),
       'boardId': serializer.toJson<String>(boardId),
       'boardName': serializer.toJson<String>(boardName),
+      'selectedSort': serializer.toJson<String>(selectedSort),
     };
   }
 
@@ -618,12 +640,14 @@ class CollectionBoardRef extends DataClass
           {String? collectionId,
           String? extensionPkgName,
           String? boardId,
-          String? boardName}) =>
+          String? boardName,
+          String? selectedSort}) =>
       CollectionBoardRef(
         collectionId: collectionId ?? this.collectionId,
         extensionPkgName: extensionPkgName ?? this.extensionPkgName,
         boardId: boardId ?? this.boardId,
         boardName: boardName ?? this.boardName,
+        selectedSort: selectedSort ?? this.selectedSort,
       );
   CollectionBoardRef copyWithCompanion(CollectionBoardRefsCompanion data) {
     return CollectionBoardRef(
@@ -635,6 +659,9 @@ class CollectionBoardRef extends DataClass
           : this.extensionPkgName,
       boardId: data.boardId.present ? data.boardId.value : this.boardId,
       boardName: data.boardName.present ? data.boardName.value : this.boardName,
+      selectedSort: data.selectedSort.present
+          ? data.selectedSort.value
+          : this.selectedSort,
     );
   }
 
@@ -644,14 +671,15 @@ class CollectionBoardRef extends DataClass
           ..write('collectionId: $collectionId, ')
           ..write('extensionPkgName: $extensionPkgName, ')
           ..write('boardId: $boardId, ')
-          ..write('boardName: $boardName')
+          ..write('boardName: $boardName, ')
+          ..write('selectedSort: $selectedSort')
           ..write(')'))
         .toString();
   }
 
   @override
-  int get hashCode =>
-      Object.hash(collectionId, extensionPkgName, boardId, boardName);
+  int get hashCode => Object.hash(
+      collectionId, extensionPkgName, boardId, boardName, selectedSort);
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
@@ -659,7 +687,8 @@ class CollectionBoardRef extends DataClass
           other.collectionId == this.collectionId &&
           other.extensionPkgName == this.extensionPkgName &&
           other.boardId == this.boardId &&
-          other.boardName == this.boardName);
+          other.boardName == this.boardName &&
+          other.selectedSort == this.selectedSort);
 }
 
 class CollectionBoardRefsCompanion extends UpdateCompanion<CollectionBoardRef> {
@@ -667,12 +696,14 @@ class CollectionBoardRefsCompanion extends UpdateCompanion<CollectionBoardRef> {
   final Value<String> extensionPkgName;
   final Value<String> boardId;
   final Value<String> boardName;
+  final Value<String> selectedSort;
   final Value<int> rowid;
   const CollectionBoardRefsCompanion({
     this.collectionId = const Value.absent(),
     this.extensionPkgName = const Value.absent(),
     this.boardId = const Value.absent(),
     this.boardName = const Value.absent(),
+    this.selectedSort = const Value.absent(),
     this.rowid = const Value.absent(),
   });
   CollectionBoardRefsCompanion.insert({
@@ -680,6 +711,7 @@ class CollectionBoardRefsCompanion extends UpdateCompanion<CollectionBoardRef> {
     required String extensionPkgName,
     required String boardId,
     this.boardName = const Value.absent(),
+    this.selectedSort = const Value.absent(),
     this.rowid = const Value.absent(),
   })  : collectionId = Value(collectionId),
         extensionPkgName = Value(extensionPkgName),
@@ -689,6 +721,7 @@ class CollectionBoardRefsCompanion extends UpdateCompanion<CollectionBoardRef> {
     Expression<String>? extensionPkgName,
     Expression<String>? boardId,
     Expression<String>? boardName,
+    Expression<String>? selectedSort,
     Expression<int>? rowid,
   }) {
     return RawValuesInsertable({
@@ -696,6 +729,7 @@ class CollectionBoardRefsCompanion extends UpdateCompanion<CollectionBoardRef> {
       if (extensionPkgName != null) 'extension_pkg_name': extensionPkgName,
       if (boardId != null) 'board_id': boardId,
       if (boardName != null) 'board_name': boardName,
+      if (selectedSort != null) 'selected_sort': selectedSort,
       if (rowid != null) 'rowid': rowid,
     });
   }
@@ -705,12 +739,14 @@ class CollectionBoardRefsCompanion extends UpdateCompanion<CollectionBoardRef> {
       Value<String>? extensionPkgName,
       Value<String>? boardId,
       Value<String>? boardName,
+      Value<String>? selectedSort,
       Value<int>? rowid}) {
     return CollectionBoardRefsCompanion(
       collectionId: collectionId ?? this.collectionId,
       extensionPkgName: extensionPkgName ?? this.extensionPkgName,
       boardId: boardId ?? this.boardId,
       boardName: boardName ?? this.boardName,
+      selectedSort: selectedSort ?? this.selectedSort,
       rowid: rowid ?? this.rowid,
     );
   }
@@ -730,6 +766,9 @@ class CollectionBoardRefsCompanion extends UpdateCompanion<CollectionBoardRef> {
     if (boardName.present) {
       map['board_name'] = Variable<String>(boardName.value);
     }
+    if (selectedSort.present) {
+      map['selected_sort'] = Variable<String>(selectedSort.value);
+    }
     if (rowid.present) {
       map['rowid'] = Variable<int>(rowid.value);
     }
@@ -743,6 +782,7 @@ class CollectionBoardRefsCompanion extends UpdateCompanion<CollectionBoardRef> {
           ..write('extensionPkgName: $extensionPkgName, ')
           ..write('boardId: $boardId, ')
           ..write('boardName: $boardName, ')
+          ..write('selectedSort: $selectedSort, ')
           ..write('rowid: $rowid')
           ..write(')'))
         .toString();
@@ -1140,6 +1180,7 @@ typedef $$CollectionBoardRefsTableCreateCompanionBuilder
   required String extensionPkgName,
   required String boardId,
   Value<String> boardName,
+  Value<String> selectedSort,
   Value<int> rowid,
 });
 typedef $$CollectionBoardRefsTableUpdateCompanionBuilder
@@ -1148,6 +1189,7 @@ typedef $$CollectionBoardRefsTableUpdateCompanionBuilder
   Value<String> extensionPkgName,
   Value<String> boardId,
   Value<String> boardName,
+  Value<String> selectedSort,
   Value<int> rowid,
 });
 
@@ -1191,6 +1233,9 @@ class $$CollectionBoardRefsTableFilterComposer
   ColumnFilters<String> get boardName => $composableBuilder(
       column: $table.boardName, builder: (column) => ColumnFilters(column));
 
+  ColumnFilters<String> get selectedSort => $composableBuilder(
+      column: $table.selectedSort, builder: (column) => ColumnFilters(column));
+
   $$CollectionsTableFilterComposer get collectionId {
     final $$CollectionsTableFilterComposer composer = $composerBuilder(
         composer: this,
@@ -1231,6 +1276,10 @@ class $$CollectionBoardRefsTableOrderingComposer
   ColumnOrderings<String> get boardName => $composableBuilder(
       column: $table.boardName, builder: (column) => ColumnOrderings(column));
 
+  ColumnOrderings<String> get selectedSort => $composableBuilder(
+      column: $table.selectedSort,
+      builder: (column) => ColumnOrderings(column));
+
   $$CollectionsTableOrderingComposer get collectionId {
     final $$CollectionsTableOrderingComposer composer = $composerBuilder(
         composer: this,
@@ -1269,6 +1318,9 @@ class $$CollectionBoardRefsTableAnnotationComposer
 
   GeneratedColumn<String> get boardName =>
       $composableBuilder(column: $table.boardName, builder: (column) => column);
+
+  GeneratedColumn<String> get selectedSort => $composableBuilder(
+      column: $table.selectedSort, builder: (column) => column);
 
   $$CollectionsTableAnnotationComposer get collectionId {
     final $$CollectionsTableAnnotationComposer composer = $composerBuilder(
@@ -1321,6 +1373,7 @@ class $$CollectionBoardRefsTableTableManager extends RootTableManager<
             Value<String> extensionPkgName = const Value.absent(),
             Value<String> boardId = const Value.absent(),
             Value<String> boardName = const Value.absent(),
+            Value<String> selectedSort = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               CollectionBoardRefsCompanion(
@@ -1328,6 +1381,7 @@ class $$CollectionBoardRefsTableTableManager extends RootTableManager<
             extensionPkgName: extensionPkgName,
             boardId: boardId,
             boardName: boardName,
+            selectedSort: selectedSort,
             rowid: rowid,
           ),
           createCompanionCallback: ({
@@ -1335,6 +1389,7 @@ class $$CollectionBoardRefsTableTableManager extends RootTableManager<
             required String extensionPkgName,
             required String boardId,
             Value<String> boardName = const Value.absent(),
+            Value<String> selectedSort = const Value.absent(),
             Value<int> rowid = const Value.absent(),
           }) =>
               CollectionBoardRefsCompanion.insert(
@@ -1342,6 +1397,7 @@ class $$CollectionBoardRefsTableTableManager extends RootTableManager<
             extensionPkgName: extensionPkgName,
             boardId: boardId,
             boardName: boardName,
+            selectedSort: selectedSort,
             rowid: rowid,
           ),
           withReferenceMapper: (p0) => p0

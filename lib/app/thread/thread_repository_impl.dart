@@ -13,14 +13,14 @@ class ThreadRepositoryImpl implements ThreadRepository {
   @override
   Future<List<Post>> listThreads({
     required String extensionPkgName,
-    String? boardId,
+    required String boardId,
     String? sort,
     Pagination? pagination,
     String? keywords,
   }) {
     return _apiService.listThreads(
       extensionPkgName: extensionPkgName,
-      boardId: boardId ?? '', // ApiService expects String, handle nullability
+      boardId: boardId,
       sort: sort,
       pagination: pagination,
       keywords: keywords,

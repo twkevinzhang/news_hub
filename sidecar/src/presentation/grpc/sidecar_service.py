@@ -7,6 +7,7 @@ import sidecar_api_pb2_grpc as pb2_grpc
 import domain_models_pb2 as domain_pb2
 import grpc
 
+
 from domain.value_objects.extension_metadata import ExtensionMetadata
 from application.use_cases.install_extension import InstallExtensionUseCase
 from application.use_cases.uninstall_extension import UninstallExtensionUseCase
@@ -238,6 +239,10 @@ class SidecarService(pb2_grpc.SidecarApiServicer):
     async def GetComments(self, request, context):
         """Delegate to extension resolver"""
         return await self._delegate_to_resolver(request.pkg_name, "GetComments", request, context)
+
+    async def GetBoardSortOptions(self, request, context):
+        """Get supported sorting options for multiple boards by delegating to specific extension"""
+        return await self._delegate_to_resolver(request.pkg_name, "GetBoardSortOptions", request, context)
 
     async def _delegate_to_resolver(self, pkg_name, method_name, request, context):
         """Delegate method call to extension resolver"""

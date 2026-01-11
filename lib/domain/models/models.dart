@@ -142,24 +142,18 @@ class Collection {
   });
 }
 
-class Board {
-  final String extensionPkgName;
-  final String id;
-  final String name;
-  final String icon;
-  final String largeWelcomeImage;
-  final String url;
-  final Set<String> supportedThreadsSorting;
-
-  Board({
-    required this.extensionPkgName,
-    required this.id,
-    required this.name,
-    required this.icon,
-    required this.largeWelcomeImage,
-    required this.url,
-    required this.supportedThreadsSorting,
-  });
+@freezed
+class Board with _$Board {
+  const factory Board({
+    required String extensionPkgName,
+    required String id,
+    required String name,
+    required String icon,
+    required String largeWelcomeImage,
+    required String url,
+    required Set<String> supportedThreadsSorting,
+    String? selectedThreadsSorting,
+  }) = _Board;
 }
 
 class Post {

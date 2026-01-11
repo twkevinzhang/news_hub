@@ -113,6 +113,40 @@ class SidecarApiImpl implements ApiService {
   }
 
   @override
+  Future<Map<String, List<String>>> getBoardSortOptions({
+    required List<domain.Board> boards,
+  }) async {
+    if (boards.isEmpty) return {};
+
+    // Group boards by extension to send parallel requests
+    final groupedBoards = <String, List<domain.Board>>{};
+    for (final board in boards) {
+      groupedBoards.putIfAbsent(board.extensionPkgName, () => []).add(board);
+    }
+
+    // Parallel calls for each extension
+    final futures = groupedBoards.entries.map((entry) async {
+      final res = await _client.getBoardSortOptions(pb.GetBoardSortOptionsReq(
+        pkgName: entry.key,
+        boardIds: entry.value.map((b) => b.id).toList(),
+      ));
+      return res.options;
+    });
+
+    final results = await Future.wait(futures);
+
+    // Flatten and merge results
+    final finalOptions = <String, List<String>>{};
+    for (final options in results) {
+      for (final option in options) {
+        finalOptions[option.boardId] = option.options;
+      }
+    }
+
+    return finalOptions;
+  }
+
+  @override
   Future<int> getInstallProgress({required String extensionPkgName}) async {
     final res = await _client.getInstallProgress(pb.GetInstallProgressReq(pkgName: extensionPkgName));
     return res.progress.toInt();

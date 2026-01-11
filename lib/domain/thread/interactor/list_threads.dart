@@ -34,7 +34,7 @@ class ListThreads {
         if (filter?.keywords != null && filter!.keywords.isNotEmpty) {
           tasks.add(_repository.listThreads(
             extensionPkgName: e.pkgName,
-            boardId: null,
+            boardId: '',
             pagination: pagination,
             keywords: filter.keywords,
           ));

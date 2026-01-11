@@ -18,10 +18,13 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$CollectionFormState {
   String get name => throw _privateConstructorUsedError;
   List<Board> get selectedBoards => throw _privateConstructorUsedError;
+  Map<String, String> get boardSorts =>
+      throw _privateConstructorUsedError; // boardId -> selectedSort
+  Map<String, List<String>> get boardSortOptions =>
+      throw _privateConstructorUsedError; // boardId -> options
   bool get isSaving => throw _privateConstructorUsedError;
   bool get isSuccess => throw _privateConstructorUsedError;
-  String? get errorMessage =>
-      throw _privateConstructorUsedError; // Add validation checks or existing ID
+  String? get errorMessage => throw _privateConstructorUsedError;
   String? get editingCollectionId => throw _privateConstructorUsedError;
 
   /// Create a copy of CollectionFormState
@@ -40,6 +43,8 @@ abstract class $CollectionFormStateCopyWith<$Res> {
   $Res call(
       {String name,
       List<Board> selectedBoards,
+      Map<String, String> boardSorts,
+      Map<String, List<String>> boardSortOptions,
       bool isSaving,
       bool isSuccess,
       String? errorMessage,
@@ -63,6 +68,8 @@ class _$CollectionFormStateCopyWithImpl<$Res, $Val extends CollectionFormState>
   $Res call({
     Object? name = null,
     Object? selectedBoards = null,
+    Object? boardSorts = null,
+    Object? boardSortOptions = null,
     Object? isSaving = null,
     Object? isSuccess = null,
     Object? errorMessage = freezed,
@@ -77,6 +84,14 @@ class _$CollectionFormStateCopyWithImpl<$Res, $Val extends CollectionFormState>
           ? _value.selectedBoards
           : selectedBoards // ignore: cast_nullable_to_non_nullable
               as List<Board>,
+      boardSorts: null == boardSorts
+          ? _value.boardSorts
+          : boardSorts // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>,
+      boardSortOptions: null == boardSortOptions
+          ? _value.boardSortOptions
+          : boardSortOptions // ignore: cast_nullable_to_non_nullable
+              as Map<String, List<String>>,
       isSaving: null == isSaving
           ? _value.isSaving
           : isSaving // ignore: cast_nullable_to_non_nullable
@@ -108,6 +123,8 @@ abstract class _$$CollectionFormStateImplCopyWith<$Res>
   $Res call(
       {String name,
       List<Board> selectedBoards,
+      Map<String, String> boardSorts,
+      Map<String, List<String>> boardSortOptions,
       bool isSaving,
       bool isSuccess,
       String? errorMessage,
@@ -129,6 +146,8 @@ class __$$CollectionFormStateImplCopyWithImpl<$Res>
   $Res call({
     Object? name = null,
     Object? selectedBoards = null,
+    Object? boardSorts = null,
+    Object? boardSortOptions = null,
     Object? isSaving = null,
     Object? isSuccess = null,
     Object? errorMessage = freezed,
@@ -143,6 +162,14 @@ class __$$CollectionFormStateImplCopyWithImpl<$Res>
           ? _value._selectedBoards
           : selectedBoards // ignore: cast_nullable_to_non_nullable
               as List<Board>,
+      boardSorts: null == boardSorts
+          ? _value._boardSorts
+          : boardSorts // ignore: cast_nullable_to_non_nullable
+              as Map<String, String>,
+      boardSortOptions: null == boardSortOptions
+          ? _value._boardSortOptions
+          : boardSortOptions // ignore: cast_nullable_to_non_nullable
+              as Map<String, List<String>>,
       isSaving: null == isSaving
           ? _value.isSaving
           : isSaving // ignore: cast_nullable_to_non_nullable
@@ -169,11 +196,15 @@ class _$CollectionFormStateImpl implements _CollectionFormState {
   const _$CollectionFormStateImpl(
       {this.name = '',
       final List<Board> selectedBoards = const [],
+      final Map<String, String> boardSorts = const {},
+      final Map<String, List<String>> boardSortOptions = const {},
       this.isSaving = false,
       this.isSuccess = false,
       this.errorMessage,
       this.editingCollectionId})
-      : _selectedBoards = selectedBoards;
+      : _selectedBoards = selectedBoards,
+        _boardSorts = boardSorts,
+        _boardSortOptions = boardSortOptions;
 
   @override
   @JsonKey()
@@ -187,6 +218,27 @@ class _$CollectionFormStateImpl implements _CollectionFormState {
     return EqualUnmodifiableListView(_selectedBoards);
   }
 
+  final Map<String, String> _boardSorts;
+  @override
+  @JsonKey()
+  Map<String, String> get boardSorts {
+    if (_boardSorts is EqualUnmodifiableMapView) return _boardSorts;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_boardSorts);
+  }
+
+// boardId -> selectedSort
+  final Map<String, List<String>> _boardSortOptions;
+// boardId -> selectedSort
+  @override
+  @JsonKey()
+  Map<String, List<String>> get boardSortOptions {
+    if (_boardSortOptions is EqualUnmodifiableMapView) return _boardSortOptions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_boardSortOptions);
+  }
+
+// boardId -> options
   @override
   @JsonKey()
   final bool isSaving;
@@ -195,13 +247,12 @@ class _$CollectionFormStateImpl implements _CollectionFormState {
   final bool isSuccess;
   @override
   final String? errorMessage;
-// Add validation checks or existing ID
   @override
   final String? editingCollectionId;
 
   @override
   String toString() {
-    return 'CollectionFormState(name: $name, selectedBoards: $selectedBoards, isSaving: $isSaving, isSuccess: $isSuccess, errorMessage: $errorMessage, editingCollectionId: $editingCollectionId)';
+    return 'CollectionFormState(name: $name, selectedBoards: $selectedBoards, boardSorts: $boardSorts, boardSortOptions: $boardSortOptions, isSaving: $isSaving, isSuccess: $isSuccess, errorMessage: $errorMessage, editingCollectionId: $editingCollectionId)';
   }
 
   @override
@@ -212,6 +263,10 @@ class _$CollectionFormStateImpl implements _CollectionFormState {
             (identical(other.name, name) || other.name == name) &&
             const DeepCollectionEquality()
                 .equals(other._selectedBoards, _selectedBoards) &&
+            const DeepCollectionEquality()
+                .equals(other._boardSorts, _boardSorts) &&
+            const DeepCollectionEquality()
+                .equals(other._boardSortOptions, _boardSortOptions) &&
             (identical(other.isSaving, isSaving) ||
                 other.isSaving == isSaving) &&
             (identical(other.isSuccess, isSuccess) ||
@@ -227,6 +282,8 @@ class _$CollectionFormStateImpl implements _CollectionFormState {
       runtimeType,
       name,
       const DeepCollectionEquality().hash(_selectedBoards),
+      const DeepCollectionEquality().hash(_boardSorts),
+      const DeepCollectionEquality().hash(_boardSortOptions),
       isSaving,
       isSuccess,
       errorMessage,
@@ -246,6 +303,8 @@ abstract class _CollectionFormState implements CollectionFormState {
   const factory _CollectionFormState(
       {final String name,
       final List<Board> selectedBoards,
+      final Map<String, String> boardSorts,
+      final Map<String, List<String>> boardSortOptions,
       final bool isSaving,
       final bool isSuccess,
       final String? errorMessage,
@@ -256,11 +315,15 @@ abstract class _CollectionFormState implements CollectionFormState {
   @override
   List<Board> get selectedBoards;
   @override
+  Map<String, String> get boardSorts; // boardId -> selectedSort
+  @override
+  Map<String, List<String>> get boardSortOptions; // boardId -> options
+  @override
   bool get isSaving;
   @override
   bool get isSuccess;
   @override
-  String? get errorMessage; // Add validation checks or existing ID
+  String? get errorMessage;
   @override
   String? get editingCollectionId;
 

@@ -6,11 +6,11 @@ import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/shared/models.dart';
 
 @lazySingleton
-class ListThreads {
+class ListBoardThreads {
   final ListInstalledExtensions _listInstalledExtensions;
   final ThreadRepository _repository;
 
-  ListThreads({
+  ListBoardThreads({
     required ThreadRepository repository,
     required ListInstalledExtensions listInstalledExtensions,
   })  : _repository = repository,
@@ -19,7 +19,8 @@ class ListThreads {
   Future<List<SingleImagePostWithExtension>> call({
     Pagination? pagination,
     ThreadsFilter? filter,
-    ThreadsSorting? sorting,
+    required String extensionPkgName,
+    required String boardId,
   }) async {
     final extensions = await _listInstalledExtensions.withBoards();
     final boardSorts = filter?.boardSorts ?? {};
@@ -34,7 +35,7 @@ class ListThreads {
         if (filter?.keywords != null && filter!.keywords.isNotEmpty) {
           tasks.add(_repository.listThreads(
             extensionPkgName: e.pkgName,
-            boardId: null,
+            boardId: '',
             pagination: pagination,
             keywords: filter.keywords,
           ));

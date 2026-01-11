@@ -72,20 +72,51 @@ class CollectionForm extends StatelessWidget {
                   ),
                 )
               else
-                ...state.selectedBoards.map((board) => ListTile(
-                      leading: board.icon.isNotEmpty
-                          ? Image.network(board.icon, width: 24, height: 24, errorBuilder: (_, __, ___) => const Icon(Icons.dashboard))
-                          : const Icon(Icons.dashboard),
-                      title: Text(board.name),
-                      subtitle: Text(board.id),
-                      trailing: IconButton(
-                        icon: const Icon(Icons.remove_circle_outline),
-                        onPressed: () {
-                          final newSelected = state.selectedBoards.where((b) => b != board).toList();
-                          cubit.updateSelectedBoards(newSelected);
-                        },
+                ...state.selectedBoards.map((board) {
+                  final options = state.boardSortOptions[board.id] ?? [];
+                  final currentSort = state.boardSorts[board.id];
+
+                  return Column(
+                    children: [
+                      ListTile(
+                        leading: board.icon.isNotEmpty
+                            ? Image.network(board.icon, width: 24, height: 24, errorBuilder: (_, __, ___) => const Icon(Icons.dashboard))
+                            : const Icon(Icons.dashboard),
+                        title: Text(board.name),
+                        subtitle: Text(board.id),
+                        trailing: IconButton(
+                          icon: const Icon(Icons.remove_circle_outline),
+                          onPressed: () {
+                            final newSelected = state.selectedBoards.where((b) => b != board).toList();
+                            cubit.updateSelectedBoards(newSelected);
+                          },
+                        ),
                       ),
-                    )),
+                      if (options.isNotEmpty)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                          child: DropdownButtonFormField<String>(
+                            value: currentSort,
+                            decoration: const InputDecoration(
+                              labelText: '預設排序方式',
+                              border: OutlineInputBorder(),
+                              isDense: true,
+                            ),
+                            items: options
+                                .map((opt) => DropdownMenuItem(
+                                      value: opt,
+                                      child: Text(opt),
+                                    ))
+                                .toList(),
+                            onChanged: (val) {
+                              if (val != null) cubit.updateBoardSort(board.id, val);
+                            },
+                          ),
+                        ),
+                      const Divider(),
+                    ],
+                  );
+                }),
             ],
           ),
           bottomNavigationBar: SafeArea(

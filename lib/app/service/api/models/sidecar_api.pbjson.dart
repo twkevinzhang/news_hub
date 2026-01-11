@@ -480,3 +480,44 @@ final $typed_data.Uint8List setLogLevelReqDescriptor = $convert.base64Decode(
     'Cg5TZXRMb2dMZXZlbFJlcRIvCgVsZXZlbBgBIAEoDjIZLm5ld3NfaHViLmRvbWFpbi5Mb2dMZX'
     'ZlbFIFbGV2ZWw=');
 
+@$core.Deprecated('Use boardSortOptionDescriptor instead')
+const BoardSortOption$json = {
+  '1': 'BoardSortOption',
+  '2': [
+    {'1': 'board_id', '3': 1, '4': 1, '5': 9, '10': 'boardId'},
+    {'1': 'options', '3': 2, '4': 3, '5': 9, '10': 'options'},
+  ],
+};
+
+/// Descriptor for `BoardSortOption`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List boardSortOptionDescriptor = $convert.base64Decode(
+    'Cg9Cb2FyZFNvcnRPcHRpb24SGQoIYm9hcmRfaWQYASABKAlSB2JvYXJkSWQSGAoHb3B0aW9ucx'
+    'gCIAMoCVIHb3B0aW9ucw==');
+
+@$core.Deprecated('Use getBoardSortOptionsReqDescriptor instead')
+const GetBoardSortOptionsReq$json = {
+  '1': 'GetBoardSortOptionsReq',
+  '2': [
+    {'1': 'pkg_name', '3': 1, '4': 1, '5': 9, '10': 'pkgName'},
+    {'1': 'board_ids', '3': 2, '4': 3, '5': 9, '10': 'boardIds'},
+  ],
+};
+
+/// Descriptor for `GetBoardSortOptionsReq`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getBoardSortOptionsReqDescriptor = $convert.base64Decode(
+    'ChZHZXRCb2FyZFNvcnRPcHRpb25zUmVxEhkKCHBrZ19uYW1lGAEgASgJUgdwa2dOYW1lEhsKCW'
+    'JvYXJkX2lkcxgCIAMoCVIIYm9hcmRJZHM=');
+
+@$core.Deprecated('Use getBoardSortOptionsResDescriptor instead')
+const GetBoardSortOptionsRes$json = {
+  '1': 'GetBoardSortOptionsRes',
+  '2': [
+    {'1': 'options', '3': 1, '4': 3, '5': 11, '6': '.news_hub.sidecar.BoardSortOption', '10': 'options'},
+  ],
+};
+
+/// Descriptor for `GetBoardSortOptionsRes`. Decode as a `google.protobuf.DescriptorProto`.
+final $typed_data.Uint8List getBoardSortOptionsResDescriptor = $convert.base64Decode(
+    'ChZHZXRCb2FyZFNvcnRPcHRpb25zUmVzEjsKB29wdGlvbnMYASADKAsyIS5uZXdzX2h1Yi5zaW'
+    'RlY2FyLkJvYXJkU29ydE9wdGlvblIHb3B0aW9ucw==');
+

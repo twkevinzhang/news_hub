@@ -60,6 +60,11 @@ class SidecarApiStub(object):
                 request_serializer=sidecar__api__pb2.GetCommentsReq.SerializeToString,
                 response_deserializer=sidecar__api__pb2.GetCommentsRes.FromString,
                 _registered_method=True)
+        self.GetBoardSortOptions = channel.unary_unary(
+                '/news_hub.sidecar.SidecarApi/GetBoardSortOptions',
+                request_serializer=sidecar__api__pb2.GetBoardSortOptionsReq.SerializeToString,
+                response_deserializer=sidecar__api__pb2.GetBoardSortOptionsRes.FromString,
+                _registered_method=True)
         self.ListInstalledExtensions = channel.unary_unary(
                 '/news_hub.sidecar.SidecarApi/ListInstalledExtensions',
                 request_serializer=domain__models__pb2.Empty.SerializeToString,
@@ -160,6 +165,12 @@ class SidecarApiServicer(object):
         raise NotImplementedError('Method not implemented!')
 
     def GetComments(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def GetBoardSortOptions(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -280,6 +291,11 @@ def add_SidecarApiServicer_to_server(servicer, server):
                     servicer.GetComments,
                     request_deserializer=sidecar__api__pb2.GetCommentsReq.FromString,
                     response_serializer=sidecar__api__pb2.GetCommentsRes.SerializeToString,
+            ),
+            'GetBoardSortOptions': grpc.unary_unary_rpc_method_handler(
+                    servicer.GetBoardSortOptions,
+                    request_deserializer=sidecar__api__pb2.GetBoardSortOptionsReq.FromString,
+                    response_serializer=sidecar__api__pb2.GetBoardSortOptionsRes.SerializeToString,
             ),
             'ListInstalledExtensions': grpc.unary_unary_rpc_method_handler(
                     servicer.ListInstalledExtensions,
@@ -487,6 +503,33 @@ class SidecarApi(object):
             '/news_hub.sidecar.SidecarApi/GetComments',
             sidecar__api__pb2.GetCommentsReq.SerializeToString,
             sidecar__api__pb2.GetCommentsRes.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def GetBoardSortOptions(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/news_hub.sidecar.SidecarApi/GetBoardSortOptions',
+            sidecar__api__pb2.GetBoardSortOptionsReq.SerializeToString,
+            sidecar__api__pb2.GetBoardSortOptionsRes.FromString,
             options,
             channel_credentials,
             insecure,

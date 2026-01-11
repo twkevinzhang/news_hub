@@ -1890,6 +1890,166 @@ class SetLogLevelReq extends $pb.GeneratedMessage {
   void clearLevel() => clearField(1);
 }
 
+class BoardSortOption extends $pb.GeneratedMessage {
+  factory BoardSortOption({
+    $core.String? boardId,
+    $core.Iterable<$core.String>? options,
+  }) {
+    final result = create();
+    if (boardId != null) {
+      result.boardId = boardId;
+    }
+    if (options != null) {
+      result.options.addAll(options);
+    }
+    return result;
+  }
+  BoardSortOption._() : super();
+  factory BoardSortOption.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory BoardSortOption.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'BoardSortOption', package: const $pb.PackageName(_omitMessageNames ? '' : 'news_hub.sidecar'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'boardId')
+    ..pPS(2, _omitFieldNames ? '' : 'options')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  BoardSortOption clone() => BoardSortOption()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  BoardSortOption copyWith(void Function(BoardSortOption) updates) => super.copyWith((message) => updates(message as BoardSortOption)) as BoardSortOption;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static BoardSortOption create() => BoardSortOption._();
+  BoardSortOption createEmptyInstance() => create();
+  static $pb.PbList<BoardSortOption> createRepeated() => $pb.PbList<BoardSortOption>();
+  @$core.pragma('dart2js:noInline')
+  static BoardSortOption getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<BoardSortOption>(create);
+  static BoardSortOption? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get boardId => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set boardId($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasBoardId() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearBoardId() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$core.String> get options => $_getList(1);
+}
+
+class GetBoardSortOptionsReq extends $pb.GeneratedMessage {
+  factory GetBoardSortOptionsReq({
+    $core.String? pkgName,
+    $core.Iterable<$core.String>? boardIds,
+  }) {
+    final result = create();
+    if (pkgName != null) {
+      result.pkgName = pkgName;
+    }
+    if (boardIds != null) {
+      result.boardIds.addAll(boardIds);
+    }
+    return result;
+  }
+  GetBoardSortOptionsReq._() : super();
+  factory GetBoardSortOptionsReq.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetBoardSortOptionsReq.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetBoardSortOptionsReq', package: const $pb.PackageName(_omitMessageNames ? '' : 'news_hub.sidecar'), createEmptyInstance: create)
+    ..aOS(1, _omitFieldNames ? '' : 'pkgName')
+    ..pPS(2, _omitFieldNames ? '' : 'boardIds')
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetBoardSortOptionsReq clone() => GetBoardSortOptionsReq()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetBoardSortOptionsReq copyWith(void Function(GetBoardSortOptionsReq) updates) => super.copyWith((message) => updates(message as GetBoardSortOptionsReq)) as GetBoardSortOptionsReq;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetBoardSortOptionsReq create() => GetBoardSortOptionsReq._();
+  GetBoardSortOptionsReq createEmptyInstance() => create();
+  static $pb.PbList<GetBoardSortOptionsReq> createRepeated() => $pb.PbList<GetBoardSortOptionsReq>();
+  @$core.pragma('dart2js:noInline')
+  static GetBoardSortOptionsReq getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetBoardSortOptionsReq>(create);
+  static GetBoardSortOptionsReq? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.String get pkgName => $_getSZ(0);
+  @$pb.TagNumber(1)
+  set pkgName($core.String v) { $_setString(0, v); }
+  @$pb.TagNumber(1)
+  $core.bool hasPkgName() => $_has(0);
+  @$pb.TagNumber(1)
+  void clearPkgName() => clearField(1);
+
+  @$pb.TagNumber(2)
+  $core.List<$core.String> get boardIds => $_getList(1);
+}
+
+class GetBoardSortOptionsRes extends $pb.GeneratedMessage {
+  factory GetBoardSortOptionsRes({
+    $core.Iterable<BoardSortOption>? options,
+  }) {
+    final result = create();
+    if (options != null) {
+      result.options.addAll(options);
+    }
+    return result;
+  }
+  GetBoardSortOptionsRes._() : super();
+  factory GetBoardSortOptionsRes.fromBuffer($core.List<$core.int> i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromBuffer(i, r);
+  factory GetBoardSortOptionsRes.fromJson($core.String i, [$pb.ExtensionRegistry r = $pb.ExtensionRegistry.EMPTY]) => create()..mergeFromJson(i, r);
+
+  static final $pb.BuilderInfo _i = $pb.BuilderInfo(_omitMessageNames ? '' : 'GetBoardSortOptionsRes', package: const $pb.PackageName(_omitMessageNames ? '' : 'news_hub.sidecar'), createEmptyInstance: create)
+    ..pc<BoardSortOption>(1, _omitFieldNames ? '' : 'options', $pb.PbFieldType.PM, subBuilder: BoardSortOption.create)
+    ..hasRequiredFields = false
+  ;
+
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.deepCopy] instead. '
+  'Will be removed in next major version')
+  GetBoardSortOptionsRes clone() => GetBoardSortOptionsRes()..mergeFromMessage(this);
+  @$core.Deprecated(
+  'Using this can add significant overhead to your binary. '
+  'Use [GeneratedMessageGenericExtensions.rebuild] instead. '
+  'Will be removed in next major version')
+  GetBoardSortOptionsRes copyWith(void Function(GetBoardSortOptionsRes) updates) => super.copyWith((message) => updates(message as GetBoardSortOptionsRes)) as GetBoardSortOptionsRes;
+
+  $pb.BuilderInfo get info_ => _i;
+
+  @$core.pragma('dart2js:noInline')
+  static GetBoardSortOptionsRes create() => GetBoardSortOptionsRes._();
+  GetBoardSortOptionsRes createEmptyInstance() => create();
+  static $pb.PbList<GetBoardSortOptionsRes> createRepeated() => $pb.PbList<GetBoardSortOptionsRes>();
+  @$core.pragma('dart2js:noInline')
+  static GetBoardSortOptionsRes getDefault() => _defaultInstance ??= $pb.GeneratedMessage.$_defaultFor<GetBoardSortOptionsRes>(create);
+  static GetBoardSortOptionsRes? _defaultInstance;
+
+  @$pb.TagNumber(1)
+  $core.List<BoardSortOption> get options => $_getList(0);
+}
+
 
 const _omitFieldNames = $core.bool.fromEnvironment('protobuf.omit_field_names');
 const _omitMessageNames = $core.bool.fromEnvironment('protobuf.omit_message_names');

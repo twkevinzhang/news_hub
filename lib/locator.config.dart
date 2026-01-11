@@ -145,8 +145,6 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i530.SuggestionRepositoryImpl(db: gh<_i539.AppDatabase>()));
     gh.lazySingleton<_i914.CollectionRepository>(
         () => _i815.CollectionRepositoryImpl(db: gh<_i539.AppDatabase>()));
-    gh.factory<_i545.CollectionFormCubit>(
-        () => _i545.CollectionFormCubit(gh<_i914.CollectionRepository>()));
     gh.lazySingleton<_i1044.ThreadRepository>(
         () => _i770.ThreadRepositoryImpl(gh<_i504.ApiService>()));
     gh.lazySingleton<_i365.PreferenceStore>(
@@ -172,6 +170,10 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i913.UpdateCollection(gh<_i914.CollectionRepository>()));
     gh.factory<_i31.CollectionCubit>(
         () => _i31.CollectionCubit(gh<_i914.CollectionRepository>()));
+    gh.factory<_i545.CollectionFormCubit>(() => _i545.CollectionFormCubit(
+          gh<_i914.CollectionRepository>(),
+          gh<_i504.ApiService>(),
+        ));
     gh.singleton<_i280.SidecarPreferences>(
         () => appProvider.sidecarPreferences(gh<_i365.PreferenceStore>()));
     gh.singleton<_i908.GrpcConnectionManagerImpl>(
@@ -236,14 +238,15 @@ extension GetItInjectableX on _i174.GetIt {
           repository: gh<_i1044.ThreadRepository>(),
           listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
         ));
-    gh.lazySingleton<_i152.ListThreads>(() => _i152.ListThreads(
+    gh.lazySingleton<_i152.ListBoardThreads>(() => _i152.ListBoardThreads(
           repository: gh<_i1044.ThreadRepository>(),
           listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
         ));
-    gh.lazySingleton<_i861.ListThreads>(() => _i861.ListThreads(
-          repository: gh<_i1044.ThreadRepository>(),
-          listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
-        ));
+    gh.lazySingleton<_i861.ListCollectionThreads>(
+        () => _i861.ListCollectionThreads(
+              repository: gh<_i1044.ThreadRepository>(),
+              listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
+            ));
     gh.factory<_i466.ThreadListCubit>(() => _i466.ThreadListCubit(
           listThreadList: gh<_i757.ListThreads>(),
           listExtensions: gh<_i351.ListInstalledExtensions>(),

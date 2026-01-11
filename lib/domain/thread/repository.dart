@@ -4,7 +4,7 @@ import 'package:news_hub/shared/models.dart';
 abstract class ThreadRepository {
   Future<List<Post>> listThreads({
     required String extensionPkgName,
-    String? boardId,
+    required String boardId,
     String? sort,
     Pagination? pagination,
     String? keywords,
