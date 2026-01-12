@@ -23,7 +23,7 @@ class BoardRepositoryImpl implements BoardRepository {
     final ref = await query.getSingleOrNull();
 
     if (ref == null) {
-      throw Exception('在收藏夾 $collectionId 中找不到看板 $boardId');
+      throw Exception('Board $boardId not found in collection $collectionId');
     }
 
     return Board(
@@ -34,6 +34,22 @@ class BoardRepositoryImpl implements BoardRepository {
       largeWelcomeImage: '',
       url: '',
       sortOptions: {},
+      selectedSort: ref.selectedSort,
+      collectionId: collectionId,
+    );
+  }
+
+  @override
+  Future<CollectionBoard> getCollectionBoard({required String boardId, required String collectionId}) async {
+    final query = _db.select(_db.collectionBoardRefs)..where((tbl) => tbl.collectionId.equals(collectionId) & tbl.boardId.equals(boardId));
+    final ref = await query.getSingleOrNull();
+
+    if (ref == null) {
+      throw Exception('Board $boardId not found in collection $collectionId');
+    }
+
+    return CollectionBoard(
+      identity: BoardIdentity(extensionPkgName: ref.extensionPkgName, boardId: ref.boardId, boardName: ref.boardName),
       selectedSort: ref.selectedSort,
       collectionId: collectionId,
     );

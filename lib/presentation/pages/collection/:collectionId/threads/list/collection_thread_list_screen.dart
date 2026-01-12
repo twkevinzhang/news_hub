@@ -50,17 +50,7 @@ class CollectionThreadListScreen extends StatelessWidget implements AutoRouteWra
             }
             return const SizedBox.shrink();
           },
-          noItemsFoundIndicatorBuilder: (context) => Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const Text("Empty"),
-              ElevatedButton(
-                onPressed: () => cubit.refresh(collectionId),
-                child: const Text("Refresh"),
-              ),
-            ],
-          ),
+          noItemsFoundIndicatorBuilder: (context) => const SizedBox(),
           firstPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
           newPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
           noMoreItemsIndicatorBuilder: (context) => const SizedBox(),

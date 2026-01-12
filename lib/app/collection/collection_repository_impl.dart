@@ -76,6 +76,30 @@ class CollectionRepositoryImpl implements CollectionRepository {
   }
 
   @override
+  Future<domain.Collection> get(String id) async {
+    final collection = await (_db.select(_db.collections)..where((tbl) => tbl.id.equals(id))).getSingle();
+    final boardRefs = await (_db.select(_db.collectionBoardRefs)..where((tbl) => tbl.collectionId.equals(id))).get();
+
+    final boardsWithCollectionId = boardRefs
+        .map((r) => domain.CollectionBoard(
+              identity: domain.BoardIdentity(
+                extensionPkgName: r.extensionPkgName,
+                boardId: r.boardId,
+                boardName: r.boardName,
+              ),
+              collectionId: id,
+              selectedSort: r.selectedSort,
+            ))
+        .toList();
+
+    return domain.Collection(
+      id: collection.id,
+      name: collection.name,
+      boards: boardsWithCollectionId,
+    );
+  }
+
+  @override
   Future<void> create(String name, List<domain.CollectionBoard> boards) async {
     final id = const Uuid().v4();
     await _db.transaction(() async {

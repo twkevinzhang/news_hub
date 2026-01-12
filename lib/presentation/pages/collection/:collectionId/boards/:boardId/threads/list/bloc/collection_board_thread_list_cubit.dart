@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:injectable/injectable.dart';
+import 'package:news_hub/domain/collection/interactor/get_collection_board.dart';
+import 'package:news_hub/domain/collection/interactor/get_collection.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/thread/interactor/list_board_threads.dart';
 
@@ -11,6 +13,8 @@ part 'collection_board_thread_list_cubit.freezed.dart';
 @freezed
 class CollectionBoardThreadListState with _$CollectionBoardThreadListState {
   const factory CollectionBoardThreadListState({
+    @Default(null) Collection? collection,
+    @Default(null) CollectionBoard? board,
     @Default([]) List<SingleImagePostWithExtension> threads,
     @Default(false) bool isLoading,
     String? error,
@@ -19,10 +23,16 @@ class CollectionBoardThreadListState with _$CollectionBoardThreadListState {
 
 @injectable
 class CollectionBoardThreadListCubit extends Cubit<CollectionBoardThreadListState> {
+  final GetCollection _getCollection;
+  final GetCollectionBoard _getCollectionBoard;
   final ListBoardThreads _listBoardThreads;
   final PagingController<int, SingleImagePostWithExtension> pagingController = PagingController(firstPageKey: 0);
 
-  CollectionBoardThreadListCubit(this._listBoardThreads) : super(const CollectionBoardThreadListState());
+  CollectionBoardThreadListCubit(
+    this._getCollection,
+    this._getCollectionBoard,
+    this._listBoardThreads,
+  ) : super(const CollectionBoardThreadListState());
 
   Future<void> init({
     required String collectionId,
@@ -36,6 +46,8 @@ class CollectionBoardThreadListCubit extends Cubit<CollectionBoardThreadListStat
     emit(state.copyWith(isLoading: true, error: null));
 
     try {
+      final collection = await _getCollection(collectionId);
+      final board = await _getCollectionBoard(collectionId: collectionId, boardId: boardId);
       final threads = await _listBoardThreads(
         collectionId: collectionId,
         boardId: boardId,
@@ -45,7 +57,7 @@ class CollectionBoardThreadListCubit extends Cubit<CollectionBoardThreadListStat
         nextPageKey: null,
         itemList: threads,
       );
-      emit(state.copyWith(threads: threads, isLoading: false));
+      emit(state.copyWith(collection: collection, board: board, threads: threads, isLoading: false));
     } catch (e) {
       emit(state.copyWith(isLoading: false, error: e.toString()));
       pagingController.error = e;

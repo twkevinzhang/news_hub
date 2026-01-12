@@ -48,6 +48,10 @@ import 'package:news_hub/domain/collection/interactor/create_collection.dart'
     as _i803;
 import 'package:news_hub/domain/collection/interactor/delete_collection.dart'
     as _i606;
+import 'package:news_hub/domain/collection/interactor/get_collection.dart'
+    as _i585;
+import 'package:news_hub/domain/collection/interactor/get_collection_board.dart'
+    as _i996;
 import 'package:news_hub/domain/collection/interactor/get_collections.dart'
     as _i74;
 import 'package:news_hub/domain/collection/interactor/update_collection.dart'
@@ -156,6 +160,8 @@ extension GetItInjectableX on _i174.GetIt {
         ));
     gh.factory<_i744.GetBoardSortOptions>(
         () => _i744.GetBoardSortOptions(gh<_i1052.BoardRepository>()));
+    gh.factory<_i996.GetCollectionBoard>(
+        () => _i996.GetCollectionBoard(gh<_i1052.BoardRepository>()));
     gh.lazySingleton<_i1044.ThreadRepository>(
         () => _i770.ThreadRepositoryImpl(gh<_i504.ApiService>()));
     gh.lazySingleton<_i365.PreferenceStore>(
@@ -192,8 +198,14 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i913.UpdateCollection(gh<_i914.CollectionRepository>()));
     gh.factory<_i31.CollectionCubit>(
         () => _i31.CollectionCubit(gh<_i914.CollectionRepository>()));
-    gh.factory<_i525.CollectionThreadListCubit>(() =>
-        _i525.CollectionThreadListCubit(gh<_i861.ListCollectionThreads>()));
+    gh.factory<_i585.GetCollection>(
+        () => _i585.GetCollection(gh<_i914.CollectionRepository>()));
+    gh.factory<_i492.CollectionBoardThreadListCubit>(
+        () => _i492.CollectionBoardThreadListCubit(
+              gh<_i585.GetCollection>(),
+              gh<_i996.GetCollectionBoard>(),
+              gh<_i152.ListBoardThreads>(),
+            ));
     gh.singleton<_i280.SidecarPreferences>(
         () => appProvider.sidecarPreferences(gh<_i365.PreferenceStore>()));
     gh.singleton<_i908.GrpcConnectionManagerImpl>(
@@ -218,8 +230,11 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i56.RemoteAppLauncher(gh<_i976.SidecarConnectionManager>()),
       registerFor: {_remote},
     );
-    gh.factory<_i492.CollectionBoardThreadListCubit>(() =>
-        _i492.CollectionBoardThreadListCubit(gh<_i152.ListBoardThreads>()));
+    gh.factory<_i525.CollectionThreadListCubit>(
+        () => _i525.CollectionThreadListCubit(
+              gh<_i585.GetCollection>(),
+              gh<_i861.ListCollectionThreads>(),
+            ));
     gh.lazySingleton<_i198.ExtensionRepository>(
         () => _i657.ExtensionRepositoryImpl(
               gh<_i504.ApiService>(),

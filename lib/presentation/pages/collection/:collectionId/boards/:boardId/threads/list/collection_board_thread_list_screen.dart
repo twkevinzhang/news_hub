@@ -34,47 +34,39 @@ class CollectionBoardThreadListScreen extends StatelessWidget implements AutoRou
   @override
   Widget build(BuildContext context) {
     final cubit = context.watch<CollectionBoardThreadListCubit>();
-    return PagedListView<int, SingleImagePostWithExtension>(
-      pagingController: cubit.pagingController,
-      builderDelegate: PagedChildBuilderDelegate<SingleImagePostWithExtension>(
-        itemBuilder: (context, thread, index) => Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
-          child: SingleImagePostCard(thread: thread),
-        ),
-        firstPageErrorIndicatorBuilder: (context) => Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text("Error: ${cubit.state.error ?? 'Unknown error'}"),
-              ElevatedButton(
-                onPressed: () => cubit.refresh(
-                  collectionId: collectionId,
-                  boardId: boardId,
-                ),
-                child: const Text("Retry"),
-              ),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(cubit.state.board?.identity.boardName ?? "Untitled"),
+      ),
+      body: PagedListView<int, SingleImagePostWithExtension>(
+        pagingController: cubit.pagingController,
+        builderDelegate: PagedChildBuilderDelegate<SingleImagePostWithExtension>(
+          itemBuilder: (context, thread, index) => Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
+            child: SingleImagePostCard(thread: thread),
           ),
-        ),
-        noItemsFoundIndicatorBuilder: (context) => Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text("Empty"),
-            ElevatedButton(
-              onPressed: () => cubit.refresh(
-                collectionId: collectionId,
-                boardId: boardId,
-              ),
-              child: const Text("Refresh"),
+          firstPageErrorIndicatorBuilder: (context) => Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text("Error: ${cubit.state.error ?? 'Unknown error'}"),
+                ElevatedButton(
+                  onPressed: () => cubit.refresh(
+                    collectionId: collectionId,
+                    boardId: boardId,
+                  ),
+                  child: const Text("Retry"),
+                ),
+              ],
             ),
-          ],
+          ),
+          noItemsFoundIndicatorBuilder: (context) => const SizedBox(),
+          firstPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
+          newPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
+          noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
+          transitionDuration: const Duration(milliseconds: 500),
+          animateTransitions: true,
         ),
-        firstPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
-        newPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
-        noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
-        transitionDuration: const Duration(milliseconds: 500),
-        animateTransitions: true,
       ),
     );
   }

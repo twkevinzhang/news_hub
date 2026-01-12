@@ -16,9 +16,10 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CollectionThreadListState {
-  List<SingleImagePostWithExtension> get threads =>
+  Collection? get collection => throw _privateConstructorUsedError;
+  Map<String, List<SingleImagePostWithExtension>> get boardData =>
       throw _privateConstructorUsedError;
-  bool get isLoading => throw _privateConstructorUsedError;
+  Set<String> get loadingBoardIds => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
 
   /// Create a copy of CollectionThreadListState
@@ -35,8 +36,9 @@ abstract class $CollectionThreadListStateCopyWith<$Res> {
       _$CollectionThreadListStateCopyWithImpl<$Res, CollectionThreadListState>;
   @useResult
   $Res call(
-      {List<SingleImagePostWithExtension> threads,
-      bool isLoading,
+      {Collection? collection,
+      Map<String, List<SingleImagePostWithExtension>> boardData,
+      Set<String> loadingBoardIds,
       String? error});
 }
 
@@ -56,19 +58,24 @@ class _$CollectionThreadListStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? threads = null,
-    Object? isLoading = null,
+    Object? collection = freezed,
+    Object? boardData = null,
+    Object? loadingBoardIds = null,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
-      threads: null == threads
-          ? _value.threads
-          : threads // ignore: cast_nullable_to_non_nullable
-              as List<SingleImagePostWithExtension>,
-      isLoading: null == isLoading
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
+      collection: freezed == collection
+          ? _value.collection
+          : collection // ignore: cast_nullable_to_non_nullable
+              as Collection?,
+      boardData: null == boardData
+          ? _value.boardData
+          : boardData // ignore: cast_nullable_to_non_nullable
+              as Map<String, List<SingleImagePostWithExtension>>,
+      loadingBoardIds: null == loadingBoardIds
+          ? _value.loadingBoardIds
+          : loadingBoardIds // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -87,8 +94,9 @@ abstract class _$$CollectionThreadListStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<SingleImagePostWithExtension> threads,
-      bool isLoading,
+      {Collection? collection,
+      Map<String, List<SingleImagePostWithExtension>> boardData,
+      Set<String> loadingBoardIds,
       String? error});
 }
 
@@ -107,19 +115,24 @@ class __$$CollectionThreadListStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? threads = null,
-    Object? isLoading = null,
+    Object? collection = freezed,
+    Object? boardData = null,
+    Object? loadingBoardIds = null,
     Object? error = freezed,
   }) {
     return _then(_$CollectionThreadListStateImpl(
-      threads: null == threads
-          ? _value._threads
-          : threads // ignore: cast_nullable_to_non_nullable
-              as List<SingleImagePostWithExtension>,
-      isLoading: null == isLoading
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
+      collection: freezed == collection
+          ? _value.collection
+          : collection // ignore: cast_nullable_to_non_nullable
+              as Collection?,
+      boardData: null == boardData
+          ? _value._boardData
+          : boardData // ignore: cast_nullable_to_non_nullable
+              as Map<String, List<SingleImagePostWithExtension>>,
+      loadingBoardIds: null == loadingBoardIds
+          ? _value._loadingBoardIds
+          : loadingBoardIds // ignore: cast_nullable_to_non_nullable
+              as Set<String>,
       error: freezed == error
           ? _value.error
           : error // ignore: cast_nullable_to_non_nullable
@@ -132,29 +145,41 @@ class __$$CollectionThreadListStateImplCopyWithImpl<$Res>
 
 class _$CollectionThreadListStateImpl implements _CollectionThreadListState {
   const _$CollectionThreadListStateImpl(
-      {final List<SingleImagePostWithExtension> threads = const [],
-      this.isLoading = false,
+      {this.collection = null,
+      final Map<String, List<SingleImagePostWithExtension>> boardData =
+          const {},
+      final Set<String> loadingBoardIds = const {},
       this.error})
-      : _threads = threads;
+      : _boardData = boardData,
+        _loadingBoardIds = loadingBoardIds;
 
-  final List<SingleImagePostWithExtension> _threads;
   @override
   @JsonKey()
-  List<SingleImagePostWithExtension> get threads {
-    if (_threads is EqualUnmodifiableListView) return _threads;
+  final Collection? collection;
+  final Map<String, List<SingleImagePostWithExtension>> _boardData;
+  @override
+  @JsonKey()
+  Map<String, List<SingleImagePostWithExtension>> get boardData {
+    if (_boardData is EqualUnmodifiableMapView) return _boardData;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_threads);
+    return EqualUnmodifiableMapView(_boardData);
   }
 
+  final Set<String> _loadingBoardIds;
   @override
   @JsonKey()
-  final bool isLoading;
+  Set<String> get loadingBoardIds {
+    if (_loadingBoardIds is EqualUnmodifiableSetView) return _loadingBoardIds;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableSetView(_loadingBoardIds);
+  }
+
   @override
   final String? error;
 
   @override
   String toString() {
-    return 'CollectionThreadListState(threads: $threads, isLoading: $isLoading, error: $error)';
+    return 'CollectionThreadListState(collection: $collection, boardData: $boardData, loadingBoardIds: $loadingBoardIds, error: $error)';
   }
 
   @override
@@ -162,15 +187,22 @@ class _$CollectionThreadListStateImpl implements _CollectionThreadListState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CollectionThreadListStateImpl &&
-            const DeepCollectionEquality().equals(other._threads, _threads) &&
-            (identical(other.isLoading, isLoading) ||
-                other.isLoading == isLoading) &&
+            (identical(other.collection, collection) ||
+                other.collection == collection) &&
+            const DeepCollectionEquality()
+                .equals(other._boardData, _boardData) &&
+            const DeepCollectionEquality()
+                .equals(other._loadingBoardIds, _loadingBoardIds) &&
             (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
-      const DeepCollectionEquality().hash(_threads), isLoading, error);
+  int get hashCode => Object.hash(
+      runtimeType,
+      collection,
+      const DeepCollectionEquality().hash(_boardData),
+      const DeepCollectionEquality().hash(_loadingBoardIds),
+      error);
 
   /// Create a copy of CollectionThreadListState
   /// with the given fields replaced by the non-null parameter values.
@@ -184,14 +216,17 @@ class _$CollectionThreadListStateImpl implements _CollectionThreadListState {
 
 abstract class _CollectionThreadListState implements CollectionThreadListState {
   const factory _CollectionThreadListState(
-      {final List<SingleImagePostWithExtension> threads,
-      final bool isLoading,
+      {final Collection? collection,
+      final Map<String, List<SingleImagePostWithExtension>> boardData,
+      final Set<String> loadingBoardIds,
       final String? error}) = _$CollectionThreadListStateImpl;
 
   @override
-  List<SingleImagePostWithExtension> get threads;
+  Collection? get collection;
   @override
-  bool get isLoading;
+  Map<String, List<SingleImagePostWithExtension>> get boardData;
+  @override
+  Set<String> get loadingBoardIds;
   @override
   String? get error;
 

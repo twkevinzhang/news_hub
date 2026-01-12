@@ -16,6 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$CollectionBoardThreadListState {
+  Collection? get collection => throw _privateConstructorUsedError;
+  CollectionBoard? get board => throw _privateConstructorUsedError;
   List<SingleImagePostWithExtension> get threads =>
       throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
@@ -37,9 +39,13 @@ abstract class $CollectionBoardThreadListStateCopyWith<$Res> {
           CollectionBoardThreadListState>;
   @useResult
   $Res call(
-      {List<SingleImagePostWithExtension> threads,
+      {Collection? collection,
+      CollectionBoard? board,
+      List<SingleImagePostWithExtension> threads,
       bool isLoading,
       String? error});
+
+  $CollectionBoardCopyWith<$Res>? get board;
 }
 
 /// @nodoc
@@ -58,11 +64,21 @@ class _$CollectionBoardThreadListStateCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? collection = freezed,
+    Object? board = freezed,
     Object? threads = null,
     Object? isLoading = null,
     Object? error = freezed,
   }) {
     return _then(_value.copyWith(
+      collection: freezed == collection
+          ? _value.collection
+          : collection // ignore: cast_nullable_to_non_nullable
+              as Collection?,
+      board: freezed == board
+          ? _value.board
+          : board // ignore: cast_nullable_to_non_nullable
+              as CollectionBoard?,
       threads: null == threads
           ? _value.threads
           : threads // ignore: cast_nullable_to_non_nullable
@@ -77,6 +93,20 @@ class _$CollectionBoardThreadListStateCopyWithImpl<$Res,
               as String?,
     ) as $Val);
   }
+
+  /// Create a copy of CollectionBoardThreadListState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $CollectionBoardCopyWith<$Res>? get board {
+    if (_value.board == null) {
+      return null;
+    }
+
+    return $CollectionBoardCopyWith<$Res>(_value.board!, (value) {
+      return _then(_value.copyWith(board: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -89,9 +119,14 @@ abstract class _$$CollectionBoardThreadListStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {List<SingleImagePostWithExtension> threads,
+      {Collection? collection,
+      CollectionBoard? board,
+      List<SingleImagePostWithExtension> threads,
       bool isLoading,
       String? error});
+
+  @override
+  $CollectionBoardCopyWith<$Res>? get board;
 }
 
 /// @nodoc
@@ -109,11 +144,21 @@ class __$$CollectionBoardThreadListStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? collection = freezed,
+    Object? board = freezed,
     Object? threads = null,
     Object? isLoading = null,
     Object? error = freezed,
   }) {
     return _then(_$CollectionBoardThreadListStateImpl(
+      collection: freezed == collection
+          ? _value.collection
+          : collection // ignore: cast_nullable_to_non_nullable
+              as Collection?,
+      board: freezed == board
+          ? _value.board
+          : board // ignore: cast_nullable_to_non_nullable
+              as CollectionBoard?,
       threads: null == threads
           ? _value._threads
           : threads // ignore: cast_nullable_to_non_nullable
@@ -135,11 +180,19 @@ class __$$CollectionBoardThreadListStateImplCopyWithImpl<$Res>
 class _$CollectionBoardThreadListStateImpl
     implements _CollectionBoardThreadListState {
   const _$CollectionBoardThreadListStateImpl(
-      {final List<SingleImagePostWithExtension> threads = const [],
+      {this.collection = null,
+      this.board = null,
+      final List<SingleImagePostWithExtension> threads = const [],
       this.isLoading = false,
       this.error})
       : _threads = threads;
 
+  @override
+  @JsonKey()
+  final Collection? collection;
+  @override
+  @JsonKey()
+  final CollectionBoard? board;
   final List<SingleImagePostWithExtension> _threads;
   @override
   @JsonKey()
@@ -157,7 +210,7 @@ class _$CollectionBoardThreadListStateImpl
 
   @override
   String toString() {
-    return 'CollectionBoardThreadListState(threads: $threads, isLoading: $isLoading, error: $error)';
+    return 'CollectionBoardThreadListState(collection: $collection, board: $board, threads: $threads, isLoading: $isLoading, error: $error)';
   }
 
   @override
@@ -165,6 +218,9 @@ class _$CollectionBoardThreadListStateImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CollectionBoardThreadListStateImpl &&
+            (identical(other.collection, collection) ||
+                other.collection == collection) &&
+            (identical(other.board, board) || other.board == board) &&
             const DeepCollectionEquality().equals(other._threads, _threads) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
@@ -172,7 +228,7 @@ class _$CollectionBoardThreadListStateImpl
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
+  int get hashCode => Object.hash(runtimeType, collection, board,
       const DeepCollectionEquality().hash(_threads), isLoading, error);
 
   /// Create a copy of CollectionBoardThreadListState
@@ -189,10 +245,16 @@ class _$CollectionBoardThreadListStateImpl
 abstract class _CollectionBoardThreadListState
     implements CollectionBoardThreadListState {
   const factory _CollectionBoardThreadListState(
-      {final List<SingleImagePostWithExtension> threads,
+      {final Collection? collection,
+      final CollectionBoard? board,
+      final List<SingleImagePostWithExtension> threads,
       final bool isLoading,
       final String? error}) = _$CollectionBoardThreadListStateImpl;
 
+  @override
+  Collection? get collection;
+  @override
+  CollectionBoard? get board;
   @override
   List<SingleImagePostWithExtension> get threads;
   @override
