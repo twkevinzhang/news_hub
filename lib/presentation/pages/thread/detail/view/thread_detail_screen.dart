@@ -83,15 +83,12 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
       body: PagedListView<int, ArticlePostWithExtension>(
         pagingController: cubit.pagingController,
         builderDelegate: PagedChildBuilderDelegate<ArticlePostWithExtension>(
-          itemBuilder: (context, post, index) => Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: _buildPostLayout(
-              context,
-              cubit,
-              post,
-              disableRepliesClick: index == 0,
-              index: index,
-            ),
+          itemBuilder: (context, post, index) => ThreadPostItem(
+            post: post,
+            index: index,
+            onRepliesClick: index == 0 ? null : () => _onRepliesClick(context, cubit, post),
+            onRepliesTreeClick: () => _onRepliesTreeClick(context, cubit, post),
+            onParagraphClick: (paragraph) => _handleParagraphClick(context, cubit, post, paragraph),
           ),
           noItemsFoundIndicatorBuilder: (context) => const Center(
             child: Text("Empty"),
@@ -106,40 +103,23 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
     );
   }
 
-  Widget _buildPostLayout(
+  void _handleParagraphClick(
     BuildContext context,
     ThreadDetailCubit cubit,
-    domain.ArticlePost post, {
-    bool disableRepliesClick = false,
-    int index = 0,
-  }) {
-    final commentsResult = context.select((ThreadDetailCubit c) => c.state.commentsMap[post.id]);
-
-    return ArticlePostLayout(
-      post: post,
-      floor: index == 0 ? '樓主' : '${index + 1} 樓',
-      isCommentsLoading: commentsResult?.maybeWhen(
-            loading: () => true,
-            orElse: () => false,
-          ) ??
-          false,
-      onParagraphClick: (paragraph) async {
-        if (paragraph is domain.LinkParagraph) {
-          _onLinkParagraphClick(paragraph);
-        } else if (paragraph is domain.ReplyToParagraph) {
-          _onReplyToParagraphClick(context, cubit, paragraph);
-        } else if (paragraph is domain.VideoParagraph) {
-          // TODO
-        } else if (paragraph is domain.ImageParagraph) {
-          _onImageParagraphClick(context, cubit, post, paragraph);
-        } else if (paragraph is domain.QuoteParagraph) {
-          // TODO
-        }
-      },
-      onRepliesClick: !disableRepliesClick ? () => _onRepliesClick(context, cubit, post) : null,
-      onRepliesTreeClick: () => _onRepliesTreeClick(context, cubit, post),
-      onViewMoreComments: () => cubit.loadComments(post.id),
-    );
+    domain.ArticlePost post,
+    domain.Paragraph paragraph,
+  ) {
+    if (paragraph is domain.LinkParagraph) {
+      _onLinkParagraphClick(paragraph);
+    } else if (paragraph is domain.ReplyToParagraph) {
+      _onReplyToParagraphClick(context, cubit, paragraph);
+    } else if (paragraph is domain.VideoParagraph) {
+      // TODO
+    } else if (paragraph is domain.ImageParagraph) {
+      _onImageParagraphClick(context, cubit, post, paragraph);
+    } else if (paragraph is domain.QuoteParagraph) {
+      // TODO
+    }
   }
 
   void _onLinkParagraphClick(domain.LinkParagraph paragraph) async {
@@ -156,7 +136,13 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
         cubit: cubit,
         builder: (context, state) => state.threadMap[paragraph.id]!.maybeWhen(
           orElse: () => const LoadingIndicator(),
-          completed: (thread) => SingleChildScrollView(child: _buildPostLayout(context, cubit, thread)),
+          completed: (thread) => SingleChildScrollView(
+            child: ThreadPostItem(
+              post: thread,
+              index: -1,
+              onParagraphClick: (p) => _handleParagraphClick(context, cubit, thread, p),
+            ),
+          ),
         ),
       ),
     );
@@ -222,7 +208,12 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
                               if (index == 0) {
                                 return Column(
                                   children: [
-                                    _buildPostLayout(context, cubit, post, disableRepliesClick: true, index: -1),
+                                    ThreadPostItem(
+                                      post: post,
+                                      index: -1,
+                                      onParagraphClick: (paragraph) => _handleParagraphClick(context, cubit, post, paragraph),
+                                      onRepliesTreeClick: () => _onRepliesTreeClick(context, cubit, post),
+                                    ),
                                     const Padding(
                                       padding: EdgeInsets.symmetric(vertical: 8.0),
                                       child: Divider(),
@@ -230,7 +221,14 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
                                   ],
                                 );
                               }
-                              return _buildPostLayout(context, cubit, replies[index - 1], index: index);
+                              final replyPost = replies[index - 1];
+                              return ThreadPostItem(
+                                post: replyPost,
+                                index: index,
+                                onParagraphClick: (paragraph) => _handleParagraphClick(context, cubit, replyPost, paragraph),
+                                onRepliesClick: () => _onRepliesClick(context, cubit, replyPost),
+                                onRepliesTreeClick: () => _onRepliesTreeClick(context, cubit, replyPost),
+                              );
                             },
                           ),
                           orElse: () => const Center(child: LoadingIndicator()),
@@ -279,6 +277,46 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
       initialOverlay: PostGalleryOverlay(
         title: '${initialIndex + 1}/${medias.length}',
         post: post,
+      ),
+    );
+  }
+}
+
+class ThreadPostItem extends StatelessWidget {
+  final domain.ArticlePost post;
+  final int index;
+  final VoidCallback? onRepliesClick;
+  final VoidCallback? onRepliesTreeClick;
+  final Function(domain.Paragraph) onParagraphClick;
+
+  const ThreadPostItem({
+    super.key,
+    required this.post,
+    required this.index,
+    this.onRepliesClick,
+    this.onRepliesTreeClick,
+    required this.onParagraphClick,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final commentsResult = context.select((ThreadDetailCubit c) => c.state.commentsMap[post.id]);
+    final cubit = context.read<ThreadDetailCubit>();
+
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      child: ArticlePostLayout(
+        post: post,
+        floor: index == -1 ? '樓主' : (index == 0 ? '樓主' : '${index + 1} 樓'),
+        isCommentsLoading: commentsResult?.maybeWhen(
+              loading: () => true,
+              orElse: () => false,
+            ) ??
+            false,
+        onParagraphClick: onParagraphClick,
+        onRepliesClick: onRepliesClick,
+        onRepliesTreeClick: onRepliesTreeClick,
+        onViewMoreComments: () => cubit.loadComments(post.id),
       ),
     );
   }

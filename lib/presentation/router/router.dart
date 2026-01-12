@@ -16,10 +16,10 @@ class AppRouter extends RootStackRouter {
         AutoRoute(path: '/collection/edit', page: CollectionEditRoute.page),
         AutoRoute(path: '/collection/:collectionId/threads/list', page: CollectionThreadListRoute.page),
         AutoRoute(path: '/collection/:collectionId/boards/:boardId/threads/list', page: CollectionBoardThreadListRoute.page),
-        // AutoRoute(path: '/collection/:collectionId/threads/search', page: ThreadListRoute.page),
+        AutoRoute(path: '/collection/:collectionId/threads/search', page: SearchRoute.page),
 
         // AutoRoute(path: '/threads/list', page: ThreadListRoute.page),
-        // AutoRoute(path: '/threads/:threadId', page: ThreadDetailRoute.page),
+        AutoRoute(path: '/threads/:threadId', page: ThreadDetailRoute.page),
 
         AutoRoute(path: '/settings', page: SettingsRoute.page),
         AutoRoute(path: '/settings/collections', page: CollectionManageRoute.page),

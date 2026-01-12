@@ -133,10 +133,11 @@ class PostHeader extends StatelessWidget {
                   ],
                 ],
               ),
-              Row(
+              Wrap(
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 8,
                 children: [
                   Text(timeago.format(createdAt), style: outlineStyle),
-                  const SizedBox(width: 8),
                   Text('ID: $postId', style: outlineStyle),
                 ],
               ),
