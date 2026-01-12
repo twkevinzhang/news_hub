@@ -155,6 +155,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
   }
 
   void _onRepliesClick(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post) {
+    cubit.loadReplies(post.id);
     // 傳統回覆對話框 (可選，目前保留)
     showModalBottomSheet(
       context: context,
@@ -165,6 +166,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
   }
 
   void _onRepliesTreeClick(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post) {
+    cubit.loadReplies(post.id);
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
@@ -303,11 +305,19 @@ class ThreadPostItem extends StatelessWidget {
     final commentsResult = context.select((ThreadDetailCubit c) => c.state.commentsMap[post.id]);
     final cubit = context.read<ThreadDetailCubit>();
 
+    // 從 commentsResult 提取留言資料，如果沒有則使用 post.top5Comments
+    final comments = commentsResult?.maybeWhen(
+          completed: (data) => data,
+          orElse: () => post.top5Comments,
+        ) ??
+        post.top5Comments;
+
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: ArticlePostLayout(
         post: post,
         floor: index == -1 ? '樓主' : (index == 0 ? '樓主' : '${index + 1} 樓'),
+        comments: comments,
         isCommentsLoading: commentsResult?.maybeWhen(
               loading: () => true,
               orElse: () => false,
