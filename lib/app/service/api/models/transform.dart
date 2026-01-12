@@ -49,6 +49,7 @@ extension ArticlePostTransform on domain_pb.ArticlePost {
       title: title,
       latestReplyCreatedAt: latestReplyCreatedAt.toDateTime(),
       repliesCount: repliesCount,
+      top5Comments: top5Comments.map((e) => e.toCommentDomain()).toList(),
     );
   }
 }
@@ -72,6 +73,7 @@ extension SingleImagePostTransform on domain_pb.SingleImagePost {
       title: title,
       latestReplyCreatedAt: latestReplyCreatedAt.toDateTime(),
       repliesCount: repliesCount,
+      top5Comments: top5Comments.map((e) => e.toCommentDomain()).toList(),
     );
   }
 }
@@ -87,6 +89,7 @@ extension CommentTransform on domain_pb.Comment {
       contents: contents.map((e) => e.toParagraphDomain()).toList(),
       authorId: authorId,
       authorName: authorName,
+      createdAt: createdAt.toDateTime(),
     );
   }
 }

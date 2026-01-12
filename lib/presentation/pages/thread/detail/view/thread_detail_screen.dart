@@ -40,69 +40,89 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
   @override
   Widget build(BuildContext context) {
     final cubit = context.watch<ThreadDetailCubit>();
-    final thread = cubit.state.threadMap[cubit.state.threadId];
+    final threadResult = cubit.state.threadMap[cubit.state.threadId];
     return Scaffold(
       appBar: AppBar(
-        title: thread?.maybeWhen(orElse: () => Text(cubit.state.threadId), completed: (thread) => Text(thread.title ?? thread.id)),
-        actions: thread?.maybeWhen(
-            orElse: () => null,
-            completed: (thread) {
-              return [
-                IconButton(
-                  icon: const Icon(Icons.refresh_outlined),
-                  onPressed: () => cubit.refresh(),
-                ),
-                PopupMenuButton(
-                  itemBuilder: (context) {
-                    return [
-                      PopupMenuItem(
-                        value: 0,
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [const Icon(Icons.open_in_new_outlined), const SizedBox(width: 12), Text('在瀏覽器中打開')],
-                        ),
+        title: threadResult?.maybeWhen(
+          orElse: () => Text(cubit.state.threadId),
+          completed: (thread) => Text(thread.title ?? thread.id),
+        ),
+        actions: threadResult?.maybeWhen(
+          orElse: () => null,
+          completed: (thread) {
+            return [
+              IconButton(
+                icon: const Icon(Icons.refresh_outlined),
+                onPressed: () => cubit.refresh(),
+              ),
+              PopupMenuButton(
+                itemBuilder: (context) {
+                  return [
+                    const PopupMenuItem(
+                      value: 0,
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [Icon(Icons.open_in_new_outlined), SizedBox(width: 12), Text('在瀏覽器中打開')],
                       ),
-                    ];
-                  },
-                  onSelected: (value) async {
-                    if (value == 0) {
-                      final url = thread.url;
-                      if (!await launchUrl(Uri.parse(thread.url!))) {
-                        debugPrint('Could not launch $url');
-                      }
+                    ),
+                  ];
+                },
+                onSelected: (value) async {
+                  if (value == 0) {
+                    final url = thread.url;
+                    if (url != null && !await launchUrl(Uri.parse(url))) {
+                      debugPrint('Could not launch $url');
                     }
-                  },
-                ),
-              ];
-            }),
+                  }
+                },
+              ),
+            ];
+          },
+        ),
       ),
       body: PagedListView<int, ArticlePostWithExtension>(
         pagingController: cubit.pagingController,
         builderDelegate: PagedChildBuilderDelegate<ArticlePostWithExtension>(
           itemBuilder: (context, post, index) => Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
-            child: Card(
-                child: Padding(
-              padding: const EdgeInsets.all(8),
-              child: _buildPostLayout(context, cubit, post, disableRepliesClick: index == 0),
-            )),
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: _buildPostLayout(
+              context,
+              cubit,
+              post,
+              disableRepliesClick: index == 0,
+              index: index,
+            ),
           ),
-          noItemsFoundIndicatorBuilder: (context) => Center(
+          noItemsFoundIndicatorBuilder: (context) => const Center(
             child: Text("Empty"),
           ),
           firstPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
           newPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
           noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
-          transitionDuration: const Duration(seconds: 1),
+          transitionDuration: const Duration(milliseconds: 500),
           animateTransitions: true,
         ),
       ),
     );
   }
 
-  Widget _buildPostLayout(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post, {bool disableRepliesClick = false}) {
+  Widget _buildPostLayout(
+    BuildContext context,
+    ThreadDetailCubit cubit,
+    domain.ArticlePost post, {
+    bool disableRepliesClick = false,
+    int index = 0,
+  }) {
+    final commentsResult = context.select((ThreadDetailCubit c) => c.state.commentsMap[post.id]);
+
     return ArticlePostLayout(
       post: post,
+      floor: index == 0 ? '樓主' : '${index + 1} 樓',
+      isCommentsLoading: commentsResult?.maybeWhen(
+            loading: () => true,
+            orElse: () => false,
+          ) ??
+          false,
       onParagraphClick: (paragraph) async {
         if (paragraph is domain.LinkParagraph) {
           _onLinkParagraphClick(paragraph);
@@ -117,6 +137,8 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
         }
       },
       onRepliesClick: !disableRepliesClick ? () => _onRepliesClick(context, cubit, post) : null,
+      onRepliesTreeClick: () => _onRepliesTreeClick(context, cubit, post),
+      onViewMoreComments: () => cubit.loadComments(post.id),
     );
   }
 
@@ -147,20 +169,80 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
   }
 
   void _onRepliesClick(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post) {
-    showDialog(
+    // 傳統回覆對話框 (可選，目前保留)
+    showModalBottomSheet(
       context: context,
-      builder: (context) => _buildDialog(
-        cubit: cubit,
-        builder: (context, state) => state.repliesMap[post.id]!.maybeWhen(
-          orElse: () => const LoadingIndicator(),
-          completed: (replies) => SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(vertical: 16),
-              child: Column(mainAxisAlignment: MainAxisAlignment.start, children: replies.map((reply) => _buildPostLayout(context, cubit, reply)).toList()),
-            ),
+      isScrollControlled: true,
+      useSafeArea: true,
+      builder: (context) => _buildRepliesBottomSheet(context, cubit, post),
+    );
+  }
+
+  void _onRepliesTreeClick(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      useSafeArea: true,
+      backgroundColor: Theme.of(context).colorScheme.surface,
+      builder: (context) => _buildRepliesBottomSheet(context, cubit, post),
+    );
+  }
+
+  Widget _buildRepliesBottomSheet(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post) {
+    // 實作巴哈風格的回覆樹 Bottom Sheet (使用 DraggableScrollableSheet)
+    return DraggableScrollableSheet(
+      initialChildSize: 0.9,
+      minChildSize: 0.5,
+      maxChildSize: 0.95,
+      expand: false,
+      builder: (context, scrollController) {
+        return BlocProvider.value(
+          value: cubit,
+          child: Column(
+            children: [
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                width: 40,
+                height: 4,
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.onSurfaceVariant.withOpacity(0.4),
+                  borderRadius: BorderRadius.circular(2),
+                ),
+              ),
+              Expanded(
+                child: BlocBuilder<ThreadDetailCubit, ThreadDetailState>(
+                  builder: (context, state) {
+                    final repliesResult = state.repliesMap[post.id];
+                    return repliesResult?.maybeWhen(
+                          completed: (replies) => ListView.builder(
+                            controller: scrollController,
+                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                            itemCount: replies.length + 1,
+                            itemBuilder: (context, index) {
+                              if (index == 0) {
+                                return Column(
+                                  children: [
+                                    _buildPostLayout(context, cubit, post, disableRepliesClick: true, index: -1),
+                                    const Padding(
+                                      padding: EdgeInsets.symmetric(vertical: 8.0),
+                                      child: Divider(),
+                                    ),
+                                  ],
+                                );
+                              }
+                              return _buildPostLayout(context, cubit, replies[index - 1], index: index);
+                            },
+                          ),
+                          orElse: () => const Center(child: LoadingIndicator()),
+                        ) ??
+                        const Center(child: LoadingIndicator());
+                  },
+                ),
+              ),
+            ],
           ),
-        ),
-      ),
+        );
+      },
     );
   }
 
@@ -172,7 +254,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
       value: cubit,
       child: Dialog(
           child: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
+        padding: const EdgeInsets.symmetric(horizontal: 16),
         child: BlocBuilder<ThreadDetailCubit, ThreadDetailState>(
           builder: builder,
         ),

@@ -1,52 +1,71 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:news_hub/presentation/components/avatar/initials_avatar.dart';
+import 'package:news_hub/presentation/components/cards/post/widgets/comment_list.dart';
 import 'package:news_hub/presentation/pages/thread/detail/widgets/post_paragraph.dart';
-import 'package:news_hub/shared/extensions.dart';
 import 'package:timeago/timeago.dart' as timeago;
 import 'package:news_hub/domain/models/models.dart' as domain;
 
-/// 模仿 Android app Omnichan
 class ArticlePostLayout extends StatelessWidget {
   final domain.ArticlePost post;
   final bool disablePlay;
+  final String? floor;
   final FutureOr<void> Function(domain.Paragraph paragraph)? onParagraphClick;
   final FutureOr<void> Function()? onLikeClick;
   final FutureOr<void> Function()? onRepliesClick;
+  final FutureOr<void> Function()? onRepliesTreeClick;
   final FutureOr<void> Function()? onCommentsClick;
+  final FutureOr<void> Function()? onViewMoreComments;
+  final bool isCommentsLoading;
+
   const ArticlePostLayout({
     super.key,
     required this.post,
     this.disablePlay = false,
+    this.floor,
     this.onParagraphClick,
     this.onLikeClick,
     this.onRepliesClick,
+    this.onRepliesTreeClick,
     this.onCommentsClick,
+    this.onViewMoreComments,
+    this.isCommentsLoading = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    return Wrap(
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         PostHeader(
           postId: post.id,
           author: post.authorName,
           createdAt: post.createdAt,
-          category: null,
+          floor: floor,
         ),
+        const SizedBox(height: 8),
         RichContent(
           contents: post.contents,
           disablePlay: disablePlay,
           onParagraphClick: onParagraphClick,
         ),
-        Container(height: 8),
+        const SizedBox(height: 8),
         PostActions(
           liked: post.liked,
           replies: post.repliesCount,
-          comments: null,
           onLikeClick: onLikeClick,
           onRepliesClick: onRepliesClick,
+          onRepliesTreeClick: onRepliesTreeClick,
           onCommentsClick: onCommentsClick,
         ),
+        CommentList(
+          comments: post.top5Comments ?? [],
+          totalCount: post.repliesCount ?? 0,
+          isLoading: isCommentsLoading,
+          showViewMoreButton: (post.repliesCount ?? 0) > 0,
+          onViewMorePressed: onViewMoreComments,
+        ),
+        const Divider(height: 32, thickness: 0.5),
       ],
     );
   }
@@ -56,72 +75,78 @@ class PostHeader extends StatelessWidget {
   final String postId;
   final String author;
   final DateTime createdAt;
-  final String? category;
+  final String? floor;
+
   const PostHeader({
     super.key,
     required this.postId,
     required this.author,
     required this.createdAt,
-    required this.category,
+    this.floor,
   });
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final primaryStyle = theme.textTheme.bodySmall!.copyWith(
+    final authorStyle = theme.textTheme.titleSmall?.copyWith(
+      fontWeight: FontWeight.bold,
       color: theme.colorScheme.primary,
     );
-    final outlineStyle = theme.textTheme.bodySmall!.copyWith(
+    final outlineStyle = theme.textTheme.labelSmall?.copyWith(
       color: theme.colorScheme.outline,
     );
+
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      crossAxisAlignment: CrossAxisAlignment.center,
       children: [
+        InitialsAvatar(name: author, size: 40),
+        const SizedBox(width: 12),
         Expanded(
-          child: Row(
-            mainAxisSize: MainAxisSize.min,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Flexible(
-                child: Text(
-                  author,
-                  style: primaryStyle,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 1,
-                ),
-              ),
-              const SizedBox(width: 8),
-              Text(timeago.format(createdAt), style: outlineStyle),
-              const SizedBox(width: 8),
-              if (category != null) ...[
-                Text('in', style: outlineStyle),
-                const SizedBox(width: 4),
-                Flexible(
-                  child: Text(
-                    category!,
-                    style: outlineStyle,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
+              Row(
+                children: [
+                  Flexible(
+                    child: Text(
+                      author,
+                      style: authorStyle,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
-                ),
-              ],
+                  if (floor != null) ...[
+                    const SizedBox(width: 8),
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+                      decoration: BoxDecoration(
+                        color: theme.colorScheme.primaryContainer,
+                        borderRadius: BorderRadius.circular(4),
+                      ),
+                      child: Text(
+                        floor!,
+                        style: theme.textTheme.labelSmall?.copyWith(
+                          color: theme.colorScheme.onPrimaryContainer,
+                          fontSize: 10,
+                        ),
+                      ),
+                    ),
+                  ],
+                ],
+              ),
+              Row(
+                children: [
+                  Text(timeago.format(createdAt), style: outlineStyle),
+                  const SizedBox(width: 8),
+                  Text('ID: $postId', style: outlineStyle),
+                ],
+              ),
             ],
           ),
         ),
-        const SizedBox(width: 8),
-        Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Flexible(
-              child: Text(
-                postId,
-                style: outlineStyle,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 1,
-              ),
-            ),
-            const SizedBox(width: 8),
-            const Icon(Icons.more_horiz_outlined),
-          ],
+        IconButton(
+          onPressed: () {}, // 更多功能
+          icon: const Icon(Icons.more_horiz),
+          visualDensity: VisualDensity.compact,
         ),
       ],
     );
@@ -131,60 +156,90 @@ class PostHeader extends StatelessWidget {
 class PostActions extends StatelessWidget {
   final int? liked;
   final int? replies;
-  final int? comments;
   final FutureOr<void> Function()? onLikeClick;
   final FutureOr<void> Function()? onRepliesClick;
+  final FutureOr<void> Function()? onRepliesTreeClick;
   final FutureOr<void> Function()? onCommentsClick;
+
   const PostActions({
     super.key,
     this.liked,
     this.replies,
-    this.comments,
     this.onLikeClick,
     this.onRepliesClick,
+    this.onRepliesTreeClick,
     this.onCommentsClick,
   });
 
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        if (liked.isPositive) ..._getAction(context, Icons.thumb_up_alt_outlined, onLikeClick, liked.toString()),
-        if (replies.isPositive) ..._getAction(context, Icons.comment_outlined, onRepliesClick, replies.toString()),
-        if (comments.isPositive) ..._getAction(context, Icons.bubble_chart_outlined, onCommentsClick, comments.toString()),
+        Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            _ActionButton(
+              icon: Icons.thumb_up_alt_outlined,
+              label: liked?.toString() ?? '讚',
+              onTap: onLikeClick,
+            ),
+            _ActionButton(
+              icon: Icons.chat_bubble_outline,
+              label: '回覆',
+              onTap: onRepliesClick,
+            ),
+            if (replies != null && replies! > 0)
+              _ActionButton(
+                icon: Icons.account_tree_outlined,
+                label: '回覆樹',
+                onTap: onRepliesTreeClick,
+              ),
+          ],
+        ),
+        IconButton(
+          icon: const Icon(Icons.share_outlined, size: 20),
+          onPressed: () {},
+          visualDensity: VisualDensity.compact,
+        ),
       ],
     );
   }
+}
 
-  List<Widget> _getAction(
-    BuildContext context,
-    IconData icon,
-    void Function()? onTap,
-    String text,
-  ) {
+class _ActionButton extends StatelessWidget {
+  final IconData icon;
+  final String label;
+  final VoidCallback? onTap;
+
+  const _ActionButton({
+    required this.icon,
+    required this.label,
+    this.onTap,
+  });
+
+  @override
+  Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final outlineColor = theme.colorScheme.outline;
-    final outlineStyle = theme.textTheme.bodySmall!.copyWith(
-      color: outlineColor,
-    );
-    final row = [
-      Icon(icon, color: outlineColor),
-      SizedBox(width: 4),
-      Text(text, style: outlineStyle),
-      SizedBox(width: 8),
-    ];
-    if (onTap != null) {
-      return [
-        InkWell(
-          onTap: onTap,
-          child: Row(
-            children: row,
-          ),
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(4),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+        child: Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(icon, size: 18, color: theme.colorScheme.outline),
+            const SizedBox(width: 4),
+            Text(
+              label,
+              style: theme.textTheme.labelMedium?.copyWith(
+                color: theme.colorScheme.outline,
+              ),
+            ),
+          ],
         ),
-      ];
-    } else {
-      return row;
-    }
+      ),
+    );
   }
 }

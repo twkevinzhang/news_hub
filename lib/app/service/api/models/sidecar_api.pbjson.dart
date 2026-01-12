@@ -121,11 +121,11 @@ const GetRepliesReq$json = {
     {'1': 'pkg_name', '3': 6, '4': 1, '5': 9, '10': 'pkgName'},
     {'1': 'board_id', '3': 2, '4': 1, '5': 9, '10': 'boardId'},
     {'1': 'thread_id', '3': 3, '4': 1, '5': 9, '10': 'threadId'},
-    {'1': 'reply_to_id', '3': 5, '4': 1, '5': 9, '9': 0, '10': 'replyToId', '17': true},
+    {'1': 'parent_id', '3': 5, '4': 1, '5': 9, '9': 0, '10': 'parentId', '17': true},
     {'1': 'page', '3': 4, '4': 1, '5': 11, '6': '.news_hub.domain.PaginationReq', '9': 1, '10': 'page', '17': true},
   ],
   '8': [
-    {'1': '_reply_to_id'},
+    {'1': '_parent_id'},
     {'1': '_page'},
   ],
 };
@@ -133,9 +133,9 @@ const GetRepliesReq$json = {
 /// Descriptor for `GetRepliesReq`. Decode as a `google.protobuf.DescriptorProto`.
 final $typed_data.Uint8List getRepliesReqDescriptor = $convert.base64Decode(
     'Cg1HZXRSZXBsaWVzUmVxEhkKCHBrZ19uYW1lGAYgASgJUgdwa2dOYW1lEhkKCGJvYXJkX2lkGA'
-    'IgASgJUgdib2FyZElkEhsKCXRocmVhZF9pZBgDIAEoCVIIdGhyZWFkSWQSIwoLcmVwbHlfdG9f'
-    'aWQYBSABKAlIAFIJcmVwbHlUb0lkiAEBEjcKBHBhZ2UYBCABKAsyHi5uZXdzX2h1Yi5kb21haW'
-    '4uUGFnaW5hdGlvblJlcUgBUgRwYWdliAEBQg4KDF9yZXBseV90b19pZEIHCgVfcGFnZQ==');
+    'IgASgJUgdib2FyZElkEhsKCXRocmVhZF9pZBgDIAEoCVIIdGhyZWFkSWQSIAoJcGFyZW50X2lk'
+    'GAUgASgJSABSCHBhcmVudElkiAEBEjcKBHBhZ2UYBCABKAsyHi5uZXdzX2h1Yi5kb21haW4uUG'
+    'FnaW5hdGlvblJlcUgBUgRwYWdliAEBQgwKCl9wYXJlbnRfaWRCBwoFX3BhZ2U=');
 
 @$core.Deprecated('Use getRepliesResDescriptor instead')
 const GetRepliesRes$json = {

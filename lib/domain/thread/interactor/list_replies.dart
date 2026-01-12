@@ -24,7 +24,7 @@ class ListReplies {
     required String extensionPkgName,
     required String boardId,
     required String threadId,
-    String? replyToId,
+    String? parentId,
     Pagination? pagination,
   }) async {
     final extensionF = _getInstalledExtension.get(extensionPkgName);
@@ -33,7 +33,7 @@ class ListReplies {
       extensionPkgName: extensionPkgName,
       boardId: boardId,
       threadId: threadId,
-      replyToId: replyToId,
+      parentId: parentId,
       pagination: pagination,
     );
     final (extension, boards, replies) = await (extensionF, boardsF, repliesF).wait;

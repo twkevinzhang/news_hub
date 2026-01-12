@@ -311,6 +311,7 @@ const ArticlePost$json = {
     {'1': 'latest_reply_created_at', '3': 15, '4': 1, '5': 3, '10': 'latestReplyCreatedAt'},
     {'1': 'replies_count', '3': 19, '4': 1, '5': 5, '10': 'repliesCount'},
     {'1': 'url', '3': 20, '4': 1, '5': 9, '10': 'url'},
+    {'1': 'top_5_comments', '3': 21, '4': 3, '5': 11, '6': '.news_hub.domain.Comment', '10': 'top5Comments'},
   ],
 };
 
@@ -322,7 +323,8 @@ final $typed_data.Uint8List articlePostDescriptor = $convert.base64Decode(
     'gFUghkaXNsaWtlZBI2Cghjb250ZW50cxgRIAMoCzIaLm5ld3NfaHViLmRvbWFpbi5QYXJhZ3Jh'
     'cGhSCGNvbnRlbnRzEhIKBHRhZ3MYEiADKAlSBHRhZ3MSNQoXbGF0ZXN0X3JlcGx5X2NyZWF0ZW'
     'RfYXQYDyABKANSFGxhdGVzdFJlcGx5Q3JlYXRlZEF0EiMKDXJlcGxpZXNfY291bnQYEyABKAVS'
-    'DHJlcGxpZXNDb3VudBIQCgN1cmwYFCABKAlSA3VybA==');
+    'DHJlcGxpZXNDb3VudBIQCgN1cmwYFCABKAlSA3VybBI+Cg50b3BfNV9jb21tZW50cxgVIAMoCz'
+    'IYLm5ld3NfaHViLmRvbWFpbi5Db21tZW50Ugx0b3A1Q29tbWVudHM=');
 
 @$core.Deprecated('Use singleImagePostDescriptor instead')
 const SingleImagePost$json = {
@@ -340,6 +342,7 @@ const SingleImagePost$json = {
     {'1': 'latest_reply_created_at', '3': 15, '4': 1, '5': 3, '10': 'latestReplyCreatedAt'},
     {'1': 'replies_count', '3': 19, '4': 1, '5': 5, '10': 'repliesCount'},
     {'1': 'url', '3': 20, '4': 1, '5': 9, '10': 'url'},
+    {'1': 'top_5_comments', '3': 22, '4': 3, '5': 11, '6': '.news_hub.domain.Comment', '10': 'top5Comments'},
   ],
 };
 
@@ -352,7 +355,8 @@ final $typed_data.Uint8List singleImagePostDescriptor = $convert.base64Decode(
     'YXJhZ3JhcGhSBWltYWdlEjYKCGNvbnRlbnRzGBEgAygLMhoubmV3c19odWIuZG9tYWluLlBhcm'
     'FncmFwaFIIY29udGVudHMSEgoEdGFncxgSIAMoCVIEdGFncxI1ChdsYXRlc3RfcmVwbHlfY3Jl'
     'YXRlZF9hdBgPIAEoA1IUbGF0ZXN0UmVwbHlDcmVhdGVkQXQSIwoNcmVwbGllc19jb3VudBgTIA'
-    'EoBVIMcmVwbGllc0NvdW50EhAKA3VybBgUIAEoCVIDdXJs');
+    'EoBVIMcmVwbGllc0NvdW50EhAKA3VybBgUIAEoCVIDdXJsEj4KDnRvcF81X2NvbW1lbnRzGBYg'
+    'AygLMhgubmV3c19odWIuZG9tYWluLkNvbW1lbnRSDHRvcDVDb21tZW50cw==');
 
 @$core.Deprecated('Use commentDescriptor instead')
 const Comment$json = {

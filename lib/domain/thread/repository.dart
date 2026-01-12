@@ -21,7 +21,15 @@ abstract class ThreadRepository {
     required String extensionPkgName,
     required String boardId,
     required String threadId,
-    String? replyToId,
+    String? parentId,
+    Pagination? pagination,
+  });
+
+  Future<List<Comment>> listComments({
+    required String extensionPkgName,
+    required String boardId,
+    required String threadId,
+    required String postId,
     Pagination? pagination,
   });
 }

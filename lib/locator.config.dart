@@ -92,6 +92,7 @@ import 'package:news_hub/domain/thread/interactor/list_board_threads.dart'
     as _i152;
 import 'package:news_hub/domain/thread/interactor/list_collection_threads.dart'
     as _i861;
+import 'package:news_hub/domain/thread/interactor/list_comments.dart' as _i414;
 import 'package:news_hub/domain/thread/interactor/list_replies.dart' as _i587;
 import 'package:news_hub/domain/thread/interactor/search_threads.dart'
     as _i1012;
@@ -208,6 +209,8 @@ extension GetItInjectableX on _i174.GetIt {
             ));
     gh.singleton<_i280.SidecarPreferences>(
         () => appProvider.sidecarPreferences(gh<_i365.PreferenceStore>()));
+    gh.lazySingleton<_i414.ListComments>(() =>
+        _i414.ListComments(threadRepository: gh<_i1044.ThreadRepository>()));
     gh.singleton<_i908.GrpcConnectionManagerImpl>(
         () => _i908.GrpcConnectionManagerImpl(
               gh<_i280.SidecarPreferences>(),
@@ -287,6 +290,11 @@ extension GetItInjectableX on _i174.GetIt {
           boardRepository: gh<_i1052.BoardRepository>(),
           installedRepository: gh<_i266.GetInstalledExtension>(),
         ));
+    gh.factory<_i994.ThreadDetailCubit>(() => _i994.ThreadDetailCubit(
+          getOriginalPost: gh<_i161.GetOriginalPost>(),
+          listReplies: gh<_i587.ListReplies>(),
+          listComments: gh<_i414.ListComments>(),
+        ));
     gh.lazySingleton<_i214.ListExtensions>(() => _i214.ListExtensions(
           prefService: gh<_i191.ExtensionPreferencesService>(),
           listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
@@ -303,10 +311,6 @@ extension GetItInjectableX on _i174.GetIt {
               gh<_i650.UpdateSuggestionLatestUsedAt>(),
           insertSuggestion: gh<_i446.InsertSuggestion>(),
           listThreadList: gh<_i1012.SearchThreads>(),
-        ));
-    gh.factory<_i994.ThreadDetailCubit>(() => _i994.ThreadDetailCubit(
-          getOriginalPost: gh<_i161.GetOriginalPost>(),
-          listReplies: gh<_i587.ListReplies>(),
         ));
     gh.factory<_i34.ExtensionCubit>(() => _i34.ExtensionCubit(
           listExtensions: gh<_i214.ListExtensions>(),

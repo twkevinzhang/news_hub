@@ -66,7 +66,7 @@ class SingleImagePostLayout extends StatelessWidget {
           postId: post.id,
           author: post.authorName,
           createdAt: post.createdAt,
-          category: null,
+          // category: null, // Removed in Bahamut style
         ),
         post.image != null
             ? Row(
@@ -110,7 +110,7 @@ class SingleImagePostLayout extends StatelessWidget {
         PostActions(
           liked: post.liked,
           replies: post.repliesCount,
-          comments: null,
+          // comments: null, // Removed in Bahamut style
           onLikeClick: onLikeClick,
           onRepliesClick: onRepliesClick,
           onCommentsClick: onCommentsClick,

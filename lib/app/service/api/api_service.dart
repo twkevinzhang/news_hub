@@ -49,7 +49,7 @@ abstract class ApiService {
     required String extensionPkgName,
     required String boardId,
     required String threadId,
-    String? replyToId,
+    String? parentId,
     Pagination? pagination,
   });
 

@@ -78,7 +78,7 @@ clean:
 .PHONY: proto
 proto:
 	protoc --dart_out=grpc:lib/app/service/api/models -Inews_hub_protos news_hub_protos/*.proto
-	source sidecar/venv/bin/activate && \
+	source sidecar/.venv/bin/activate && \
 	pip install grpcio-tools===1.67.1 && \
 	python -m grpc_tools.protoc -Inews_hub_protos --python_out=sidecar/src --pyi_out=sidecar/src --grpc_python_out=sidecar/src news_hub_protos/*.proto
 

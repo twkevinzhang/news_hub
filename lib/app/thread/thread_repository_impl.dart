@@ -47,14 +47,31 @@ class ThreadRepositoryImpl implements ThreadRepository {
     required String extensionPkgName,
     required String boardId,
     required String threadId,
-    String? replyToId,
+    String? parentId,
     Pagination? pagination,
   }) {
     return _apiService.listReplies(
       extensionPkgName: extensionPkgName,
       boardId: boardId,
       threadId: threadId,
-      replyToId: replyToId,
+      parentId: parentId,
+      pagination: pagination,
+    );
+  }
+
+  @override
+  Future<List<Comment>> listComments({
+    required String extensionPkgName,
+    required String boardId,
+    required String threadId,
+    required String postId,
+    Pagination? pagination,
+  }) {
+    return _apiService.listComments(
+      extensionPkgName: extensionPkgName,
+      boardId: boardId,
+      threadId: threadId,
+      postId: postId,
       pagination: pagination,
     );
   }

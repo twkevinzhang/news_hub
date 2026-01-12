@@ -463,7 +463,7 @@ class GetRepliesReq extends $pb.GeneratedMessage {
     $core.String? boardId,
     $core.String? threadId,
     $1.PaginationReq? page,
-    $core.String? replyToId,
+    $core.String? parentId,
     $core.String? pkgName,
   }) {
     final result = create();
@@ -476,8 +476,8 @@ class GetRepliesReq extends $pb.GeneratedMessage {
     if (page != null) {
       result.page = page;
     }
-    if (replyToId != null) {
-      result.replyToId = replyToId;
+    if (parentId != null) {
+      result.parentId = parentId;
     }
     if (pkgName != null) {
       result.pkgName = pkgName;
@@ -492,7 +492,7 @@ class GetRepliesReq extends $pb.GeneratedMessage {
     ..aOS(2, _omitFieldNames ? '' : 'boardId')
     ..aOS(3, _omitFieldNames ? '' : 'threadId')
     ..aOM<$1.PaginationReq>(4, _omitFieldNames ? '' : 'page', subBuilder: $1.PaginationReq.create)
-    ..aOS(5, _omitFieldNames ? '' : 'replyToId')
+    ..aOS(5, _omitFieldNames ? '' : 'parentId')
     ..aOS(6, _omitFieldNames ? '' : 'pkgName')
     ..hasRequiredFields = false
   ;
@@ -548,13 +548,13 @@ class GetRepliesReq extends $pb.GeneratedMessage {
   $1.PaginationReq ensurePage() => $_ensure(2);
 
   @$pb.TagNumber(5)
-  $core.String get replyToId => $_getSZ(3);
+  $core.String get parentId => $_getSZ(3);
   @$pb.TagNumber(5)
-  set replyToId($core.String v) { $_setString(3, v); }
+  set parentId($core.String v) { $_setString(3, v); }
   @$pb.TagNumber(5)
-  $core.bool hasReplyToId() => $_has(3);
+  $core.bool hasParentId() => $_has(3);
   @$pb.TagNumber(5)
-  void clearReplyToId() => clearField(5);
+  void clearParentId() => clearField(5);
 
   @$pb.TagNumber(6)
   $core.String get pkgName => $_getSZ(4);

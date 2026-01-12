@@ -75,14 +75,14 @@ class SidecarApiImpl implements ApiService {
     required String extensionPkgName,
     required String boardId,
     required String threadId,
-    String? replyToId,
+    String? parentId,
     Pagination? pagination,
   }) async {
     final res = await _client.getReplies(pb.GetRepliesReq(
       pkgName: extensionPkgName,
       boardId: boardId,
       threadId: threadId,
-      replyToId: replyToId,
+      parentId: parentId,
       page: domain_pb.PaginationReq(
         page: pagination?.page,
         pageSize: pagination?.pageSize,

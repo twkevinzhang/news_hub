@@ -1135,6 +1135,7 @@ class ArticlePost extends $pb.GeneratedMessage {
     $core.Iterable<$core.String>? tags,
     $core.int? repliesCount,
     $core.String? url,
+    $core.Iterable<Comment>? top5Comments,
   }) {
     final result = create();
     if (authorName != null) {
@@ -1170,6 +1171,9 @@ class ArticlePost extends $pb.GeneratedMessage {
     if (url != null) {
       result.url = url;
     }
+    if (top5Comments != null) {
+      result.top5Comments.addAll(top5Comments);
+    }
     return result;
   }
   ArticlePost._() : super();
@@ -1188,6 +1192,7 @@ class ArticlePost extends $pb.GeneratedMessage {
     ..pPS(18, _omitFieldNames ? '' : 'tags')
     ..a<$core.int>(19, _omitFieldNames ? '' : 'repliesCount', $pb.PbFieldType.O3)
     ..aOS(20, _omitFieldNames ? '' : 'url')
+    ..pc<Comment>(21, _omitFieldNames ? '' : 'top5Comments', $pb.PbFieldType.PM, protoName: 'top_5_comments', subBuilder: Comment.create)
     ..hasRequiredFields = false
   ;
 
@@ -1298,6 +1303,9 @@ class ArticlePost extends $pb.GeneratedMessage {
   $core.bool hasUrl() => $_has(10);
   @$pb.TagNumber(20)
   void clearUrl() => clearField(20);
+
+  @$pb.TagNumber(21)
+  $core.List<Comment> get top5Comments => $_getList(11);
 }
 
 class SingleImagePost extends $pb.GeneratedMessage {
@@ -1314,6 +1322,7 @@ class SingleImagePost extends $pb.GeneratedMessage {
     $core.int? repliesCount,
     $core.String? url,
     ImageParagraph? image,
+    $core.Iterable<Comment>? top5Comments,
   }) {
     final result = create();
     if (authorName != null) {
@@ -1352,6 +1361,9 @@ class SingleImagePost extends $pb.GeneratedMessage {
     if (image != null) {
       result.image = image;
     }
+    if (top5Comments != null) {
+      result.top5Comments.addAll(top5Comments);
+    }
     return result;
   }
   SingleImagePost._() : super();
@@ -1371,6 +1383,7 @@ class SingleImagePost extends $pb.GeneratedMessage {
     ..a<$core.int>(19, _omitFieldNames ? '' : 'repliesCount', $pb.PbFieldType.O3)
     ..aOS(20, _omitFieldNames ? '' : 'url')
     ..aOM<ImageParagraph>(21, _omitFieldNames ? '' : 'image', subBuilder: ImageParagraph.create)
+    ..pc<Comment>(22, _omitFieldNames ? '' : 'top5Comments', $pb.PbFieldType.PM, protoName: 'top_5_comments', subBuilder: Comment.create)
     ..hasRequiredFields = false
   ;
 
@@ -1492,6 +1505,9 @@ class SingleImagePost extends $pb.GeneratedMessage {
   void clearImage() => clearField(21);
   @$pb.TagNumber(21)
   ImageParagraph ensureImage() => $_ensure(11);
+
+  @$pb.TagNumber(22)
+  $core.List<Comment> get top5Comments => $_getList(12);
 }
 
 class Comment extends $pb.GeneratedMessage {

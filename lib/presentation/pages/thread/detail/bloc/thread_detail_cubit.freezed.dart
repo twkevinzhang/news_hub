@@ -23,6 +23,8 @@ mixin _$ThreadDetailState {
       throw _privateConstructorUsedError;
   Map<String, Result<List<ArticlePost>>> get repliesMap =>
       throw _privateConstructorUsedError;
+  Map<String, Result<List<Comment>>> get commentsMap =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of ThreadDetailState
   /// with the given fields replaced by the non-null parameter values.
@@ -42,7 +44,8 @@ abstract class $ThreadDetailStateCopyWith<$Res> {
       String boardId,
       String threadId,
       Map<String, Result<ArticlePost>> threadMap,
-      Map<String, Result<List<ArticlePost>>> repliesMap});
+      Map<String, Result<List<ArticlePost>>> repliesMap,
+      Map<String, Result<List<Comment>>> commentsMap});
 }
 
 /// @nodoc
@@ -65,6 +68,7 @@ class _$ThreadDetailStateCopyWithImpl<$Res, $Val extends ThreadDetailState>
     Object? threadId = null,
     Object? threadMap = null,
     Object? repliesMap = null,
+    Object? commentsMap = null,
   }) {
     return _then(_value.copyWith(
       extensionPkgName: null == extensionPkgName
@@ -87,6 +91,10 @@ class _$ThreadDetailStateCopyWithImpl<$Res, $Val extends ThreadDetailState>
           ? _value.repliesMap
           : repliesMap // ignore: cast_nullable_to_non_nullable
               as Map<String, Result<List<ArticlePost>>>,
+      commentsMap: null == commentsMap
+          ? _value.commentsMap
+          : commentsMap // ignore: cast_nullable_to_non_nullable
+              as Map<String, Result<List<Comment>>>,
     ) as $Val);
   }
 }
@@ -104,7 +112,8 @@ abstract class _$$ThreadDetailStateImplCopyWith<$Res>
       String boardId,
       String threadId,
       Map<String, Result<ArticlePost>> threadMap,
-      Map<String, Result<List<ArticlePost>>> repliesMap});
+      Map<String, Result<List<ArticlePost>>> repliesMap,
+      Map<String, Result<List<Comment>>> commentsMap});
 }
 
 /// @nodoc
@@ -125,6 +134,7 @@ class __$$ThreadDetailStateImplCopyWithImpl<$Res>
     Object? threadId = null,
     Object? threadMap = null,
     Object? repliesMap = null,
+    Object? commentsMap = null,
   }) {
     return _then(_$ThreadDetailStateImpl(
       extensionPkgName: null == extensionPkgName
@@ -147,6 +157,10 @@ class __$$ThreadDetailStateImplCopyWithImpl<$Res>
           ? _value._repliesMap
           : repliesMap // ignore: cast_nullable_to_non_nullable
               as Map<String, Result<List<ArticlePost>>>,
+      commentsMap: null == commentsMap
+          ? _value._commentsMap
+          : commentsMap // ignore: cast_nullable_to_non_nullable
+              as Map<String, Result<List<Comment>>>,
     ));
   }
 }
@@ -161,9 +175,11 @@ class _$ThreadDetailStateImpl
       required this.boardId,
       required this.threadId,
       required final Map<String, Result<ArticlePost>> threadMap,
-      required final Map<String, Result<List<ArticlePost>>> repliesMap})
+      required final Map<String, Result<List<ArticlePost>>> repliesMap,
+      final Map<String, Result<List<Comment>>> commentsMap = const {}})
       : _threadMap = threadMap,
-        _repliesMap = repliesMap;
+        _repliesMap = repliesMap,
+        _commentsMap = commentsMap;
 
   @override
   final String extensionPkgName;
@@ -187,9 +203,18 @@ class _$ThreadDetailStateImpl
     return EqualUnmodifiableMapView(_repliesMap);
   }
 
+  final Map<String, Result<List<Comment>>> _commentsMap;
+  @override
+  @JsonKey()
+  Map<String, Result<List<Comment>>> get commentsMap {
+    if (_commentsMap is EqualUnmodifiableMapView) return _commentsMap;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_commentsMap);
+  }
+
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ThreadDetailState(extensionPkgName: $extensionPkgName, boardId: $boardId, threadId: $threadId, threadMap: $threadMap, repliesMap: $repliesMap)';
+    return 'ThreadDetailState(extensionPkgName: $extensionPkgName, boardId: $boardId, threadId: $threadId, threadMap: $threadMap, repliesMap: $repliesMap, commentsMap: $commentsMap)';
   }
 
   @override
@@ -201,7 +226,8 @@ class _$ThreadDetailStateImpl
       ..add(DiagnosticsProperty('boardId', boardId))
       ..add(DiagnosticsProperty('threadId', threadId))
       ..add(DiagnosticsProperty('threadMap', threadMap))
-      ..add(DiagnosticsProperty('repliesMap', repliesMap));
+      ..add(DiagnosticsProperty('repliesMap', repliesMap))
+      ..add(DiagnosticsProperty('commentsMap', commentsMap));
   }
 
   @override
@@ -217,7 +243,9 @@ class _$ThreadDetailStateImpl
             const DeepCollectionEquality()
                 .equals(other._threadMap, _threadMap) &&
             const DeepCollectionEquality()
-                .equals(other._repliesMap, _repliesMap));
+                .equals(other._repliesMap, _repliesMap) &&
+            const DeepCollectionEquality()
+                .equals(other._commentsMap, _commentsMap));
   }
 
   @override
@@ -227,7 +255,8 @@ class _$ThreadDetailStateImpl
       boardId,
       threadId,
       const DeepCollectionEquality().hash(_threadMap),
-      const DeepCollectionEquality().hash(_repliesMap));
+      const DeepCollectionEquality().hash(_repliesMap),
+      const DeepCollectionEquality().hash(_commentsMap));
 
   /// Create a copy of ThreadDetailState
   /// with the given fields replaced by the non-null parameter values.
@@ -245,7 +274,8 @@ abstract class _ThreadDetailState implements ThreadDetailState {
           required final String boardId,
           required final String threadId,
           required final Map<String, Result<ArticlePost>> threadMap,
-          required final Map<String, Result<List<ArticlePost>>> repliesMap}) =
+          required final Map<String, Result<List<ArticlePost>>> repliesMap,
+          final Map<String, Result<List<Comment>>> commentsMap}) =
       _$ThreadDetailStateImpl;
 
   @override
@@ -258,6 +288,8 @@ abstract class _ThreadDetailState implements ThreadDetailState {
   Map<String, Result<ArticlePost>> get threadMap;
   @override
   Map<String, Result<List<ArticlePost>>> get repliesMap;
+  @override
+  Map<String, Result<List<Comment>>> get commentsMap;
 
   /// Create a copy of ThreadDetailState
   /// with the given fields replaced by the non-null parameter values.
