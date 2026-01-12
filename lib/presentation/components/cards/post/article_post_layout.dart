@@ -17,6 +17,7 @@ class ArticlePostLayout extends StatelessWidget {
   final FutureOr<void> Function()? onCommentsClick;
   final FutureOr<void> Function()? onViewMoreComments;
   final bool isCommentsLoading;
+  final List<domain.Comment>? comments; // 允許外部傳入覆蓋 post.top5Comments
 
   const ArticlePostLayout({
     super.key,
@@ -30,6 +31,7 @@ class ArticlePostLayout extends StatelessWidget {
     this.onCommentsClick,
     this.onViewMoreComments,
     this.isCommentsLoading = false,
+    this.comments, // 新參數
   });
 
   @override
@@ -59,7 +61,7 @@ class ArticlePostLayout extends StatelessWidget {
           onCommentsClick: onCommentsClick,
         ),
         CommentList(
-          comments: post.top5Comments ?? [],
+          comments: comments ?? post.top5Comments ?? [],
           totalCount: post.repliesCount ?? 0,
           isLoading: isCommentsLoading,
           showViewMoreButton: (post.repliesCount ?? 0) > 0,
