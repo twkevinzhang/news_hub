@@ -6,7 +6,7 @@ import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/components/rendering/loading_indicator.dart';
 import 'package:news_hub/presentation/pages/collection/:collectionId/boards/:boardId/threads/list/bloc/collection_board_thread_list_cubit.dart';
-import 'package:news_hub/presentation/pages/thread/detail/layouts/single_image_post_layout.dart';
+import 'package:news_hub/presentation/components/cards/post/single_image_post_layout.dart';
 
 @RoutePage()
 class CollectionBoardThreadListScreen extends StatelessWidget implements AutoRouteWrapper {

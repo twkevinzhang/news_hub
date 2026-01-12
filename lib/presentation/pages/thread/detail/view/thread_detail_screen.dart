@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/domain/thread/interactor/get_original_post.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/thread/detail/bloc/thread_detail_cubit.dart';
-import 'package:news_hub/presentation/pages/thread/detail/layouts/article_post_layout.dart';
+import 'package:news_hub/presentation/components/cards/post/article_post_layout.dart';
 import 'package:news_hub/presentation/components/rendering/loading_indicator.dart';
 import 'package:news_hub/presentation/pages/thread/detail/widgets/post_gallery_overlay.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
