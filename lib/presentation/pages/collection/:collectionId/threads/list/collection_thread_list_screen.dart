@@ -7,6 +7,7 @@ import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/components/rendering/loading_indicator.dart';
 import 'package:news_hub/presentation/pages/collection/:collectionId/threads/list/bloc/collection_thread_list_cubit.dart';
 import 'package:news_hub/presentation/pages/thread/detail/layouts/single_image_post_layout.dart';
+import 'package:news_hub/presentation/pages/thread/detail/layouts/single_image_post_skeleton.dart';
 
 @RoutePage()
 class CollectionThreadListScreen extends StatelessWidget implements AutoRouteWrapper {
@@ -28,29 +29,44 @@ class CollectionThreadListScreen extends StatelessWidget implements AutoRouteWra
   @override
   Widget build(BuildContext context) {
     final cubit = context.watch<CollectionThreadListCubit>();
-    return PagedListView<int, SingleImagePostWithExtension>(
-      pagingController: cubit.pagingController,
-      builderDelegate: PagedChildBuilderDelegate<SingleImagePostWithExtension>(
-        itemBuilder: (context, thread, index) => Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
-          child: SingleImagePostCard(thread: thread),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(cubit.state.collection?.name ?? "Untitled"),
+      ),
+      body: PagedListView<int, dynamic>(
+        pagingController: cubit.pagingController,
+        builderDelegate: PagedChildBuilderDelegate<dynamic>(
+          itemBuilder: (context, item, index) {
+            if (item is SingleImagePostWithExtension) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
+                child: SingleImagePostCard(thread: item),
+              );
+            } else if (item is CollectionBoardSkeleton) {
+              return const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 1),
+                child: SingleImagePostSkeleton(),
+              );
+            }
+            return const SizedBox.shrink();
+          },
+          noItemsFoundIndicatorBuilder: (context) => Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const Text("Empty"),
+              ElevatedButton(
+                onPressed: () => cubit.refresh(collectionId),
+                child: const Text("Refresh"),
+              ),
+            ],
+          ),
+          firstPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
+          newPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
+          noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
+          transitionDuration: const Duration(milliseconds: 500),
+          animateTransitions: true,
         ),
-        noItemsFoundIndicatorBuilder: (context) => Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const Text("Empty"),
-            ElevatedButton(
-              onPressed: () => cubit.refresh(collectionId),
-              child: const Text("Refresh"),
-            ),
-          ],
-        ),
-        firstPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
-        newPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
-        noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
-        transitionDuration: const Duration(milliseconds: 500),
-        animateTransitions: true,
       ),
     );
   }
