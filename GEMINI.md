@@ -1,6 +1,6 @@
-# CLAUDE.md
+# GEMINI.md
 
-本文件為 Claude Code (claude.ai/code) 在本 repository 中工作時的指導文件。
+本文件為 GEMINI 在本 repository 中工作時的指導文件。
 
 ## 專案概覽
 
