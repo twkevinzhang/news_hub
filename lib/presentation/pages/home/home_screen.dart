@@ -18,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late final HomeCubit _homeCubit;
+  bool _hasNavigatedToFirstCollection = false;
 
   @override
   void initState() {
@@ -30,6 +31,19 @@ class _HomeScreenState extends State<HomeScreen> {
         _onRouteChanged(); // update initial title
       }
     });
+  }
+
+  void _navigateToFirstCollectionIfNeeded() {
+    if (_hasNavigatedToFirstCollection) return;
+
+    final currentRoute = context.router.current;
+    final isRootRoute = currentRoute.name == 'HomeRoute';
+    final hasNoChild = context.router.currentChild == null;
+
+    if (isRootRoute && hasNoChild && _homeCubit.state.collections.isNotEmpty) {
+      _hasNavigatedToFirstCollection = true;
+      _homeCubit.navigateToFirstCollection(context.router);
+    }
   }
 
   void _onRouteChanged() {
@@ -64,6 +78,8 @@ class _HomeScreenState extends State<HomeScreen> {
       ],
       child: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
+          _navigateToFirstCollectionIfNeeded();
+
           return Scaffold(
             key: _scaffoldKey,
             appBar: AppTopBar(

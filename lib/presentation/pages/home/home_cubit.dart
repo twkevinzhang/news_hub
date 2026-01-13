@@ -113,6 +113,13 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
+  void navigateToFirstCollection(StackRouter router) {
+    if (state.collections.isNotEmpty) {
+      final firstCollection = state.collections.first;
+      router.replace(CollectionThreadListRoute(collectionId: firstCollection.id));
+    }
+  }
+
   void _updateTitleFromRoute(RouteData route) {
     String title = 'NewsHub';
 
