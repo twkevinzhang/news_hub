@@ -108,6 +108,7 @@ import 'package:news_hub/presentation/pages/collection/:collectionId/threads/lis
     as _i525;
 import 'package:news_hub/presentation/pages/collection/:collectionId/threads/search/bloc/search_cubit.dart'
     as _i470;
+import 'package:news_hub/presentation/pages/home/home_cubit.dart' as _i936;
 import 'package:news_hub/presentation/pages/settings/collections/bloc/collection_cubit.dart'
     as _i31;
 import 'package:news_hub/presentation/pages/settings/extensions/bloc/extension_cubit.dart'
@@ -116,8 +117,6 @@ import 'package:news_hub/presentation/pages/settings/extensions/bloc/repo_cubit.
     as _i91;
 import 'package:news_hub/presentation/pages/sidecar/logs/sidecar_logs_cubit.dart'
     as _i515;
-import 'package:news_hub/presentation/pages/sidecar/sidecar_cubit.dart'
-    as _i852;
 import 'package:news_hub/presentation/pages/thread/detail/bloc/thread_detail_cubit.dart'
     as _i994;
 import 'package:news_hub/presentation/router/router.dart' as _i762;
@@ -159,10 +158,10 @@ extension GetItInjectableX on _i174.GetIt {
           gh<_i504.ApiService>(),
           gh<_i539.AppDatabase>(),
         ));
-    gh.factory<_i744.GetBoardSortOptions>(
-        () => _i744.GetBoardSortOptions(gh<_i1052.BoardRepository>()));
     gh.factory<_i996.GetCollectionBoard>(
         () => _i996.GetCollectionBoard(gh<_i1052.BoardRepository>()));
+    gh.factory<_i744.GetBoardSortOptions>(
+        () => _i744.GetBoardSortOptions(gh<_i1052.BoardRepository>()));
     gh.lazySingleton<_i1044.ThreadRepository>(
         () => _i770.ThreadRepositoryImpl(gh<_i504.ApiService>()));
     gh.lazySingleton<_i365.PreferenceStore>(
@@ -195,12 +194,12 @@ extension GetItInjectableX on _i174.GetIt {
         () => _i803.CreateCollection(gh<_i914.CollectionRepository>()));
     gh.factory<_i606.DeleteCollection>(
         () => _i606.DeleteCollection(gh<_i914.CollectionRepository>()));
+    gh.factory<_i585.GetCollection>(
+        () => _i585.GetCollection(gh<_i914.CollectionRepository>()));
     gh.factory<_i913.UpdateCollection>(
         () => _i913.UpdateCollection(gh<_i914.CollectionRepository>()));
     gh.factory<_i31.CollectionCubit>(
         () => _i31.CollectionCubit(gh<_i914.CollectionRepository>()));
-    gh.factory<_i585.GetCollection>(
-        () => _i585.GetCollection(gh<_i914.CollectionRepository>()));
     gh.factory<_i492.CollectionBoardThreadListCubit>(
         () => _i492.CollectionBoardThreadListCubit(
               gh<_i585.GetCollection>(),
@@ -243,8 +242,10 @@ extension GetItInjectableX on _i174.GetIt {
               gh<_i504.ApiService>(),
               gh<_i976.SidecarConnectionManager>(),
             ));
-    gh.factory<_i852.SidecarCubit>(
-        () => _i852.SidecarCubit(gh<_i611.SidecarRepository>()));
+    gh.lazySingleton<_i936.HomeCubit>(() => _i936.HomeCubit(
+          gh<_i914.CollectionRepository>(),
+          gh<_i611.SidecarRepository>(),
+        ));
     gh.lazySingleton<_i989.RepoRepository>(() => _i128.RepoRepositoryImpl(
           gh<_i504.ApiService>(),
           gh<_i976.SidecarConnectionManager>(),

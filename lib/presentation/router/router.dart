@@ -11,11 +11,16 @@ class AppRouter extends RootStackRouter {
 
   @override
   List<AutoRoute> get routes => [
-        AutoRoute(path: '/', page: HomeRoute.page),
+        AutoRoute(
+          path: '/',
+          page: HomeRoute.page,
+          children: [
+            AutoRoute(path: 'collection/:collectionId/threads/list', page: CollectionThreadListRoute.page),
+            AutoRoute(path: 'collection/:collectionId/boards/:boardId/threads/list', page: CollectionBoardThreadListRoute.page),
+          ],
+        ),
         AutoRoute(path: '/collection/create', page: CollectionCreateRoute.page),
         AutoRoute(path: '/collection/edit', page: CollectionEditRoute.page),
-        AutoRoute(path: '/collection/:collectionId/threads/list', page: CollectionThreadListRoute.page),
-        AutoRoute(path: '/collection/:collectionId/boards/:boardId/threads/list', page: CollectionBoardThreadListRoute.page),
         AutoRoute(path: '/collection/:collectionId/threads/search', page: SearchRoute.page),
 
         // AutoRoute(path: '/threads/list', page: ThreadListRoute.page),

@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/presentation/pages/settings/collections/bloc/collection_cubit.dart';
-import 'package:news_hub/presentation/pages/sidecar/sidecar_cubit.dart';
+import 'package:news_hub/presentation/pages/home/home_cubit.dart';
 
 class AppNavigationDrawer extends StatefulWidget {
   final Function(Collection) onCollectionSelected;
@@ -46,15 +45,15 @@ class _AppNavigationDrawerState extends State<AppNavigationDrawer> {
                   ),
                 ),
                 // Collection List
-                BlocBuilder<CollectionCubit, CollectionState>(
+                BlocBuilder<HomeCubit, HomeState>(
+                  buildWhen: (previous, current) => previous.collections != current.collections,
                   builder: (context, state) {
-                    if (state.isLoading && state.collections.isEmpty) {
-                      return const Center(
-                          child: Padding(
-                        padding: EdgeInsets.all(16.0),
-                        child: CircularProgressIndicator(),
-                      ));
-                    }
+                    // HomeCubit doesn't expose isLoading explicitly for collections,
+                    // but we can assume empty means loading if we want, or just show empty.
+                    // Actually HomeCubit initializes with empty list.
+                    // Ideally check if collections are empty and maybe we are waiting for first emission?
+                    // But for now let's just render.
+
                     return Column(
                       children: state.collections.map((collection) {
                         final controller = _controllers.putIfAbsent(
@@ -87,7 +86,7 @@ class _AppNavigationDrawerState extends State<AppNavigationDrawer> {
                               return ListTile(
                                 contentPadding: const EdgeInsets.only(left: 72),
                                 leading: const Icon(Icons.dashboard_outlined, size: 20),
-                                title: Text(board.identity.boardId),
+                                title: Text(board.identity.boardName),
                                 onTap: () => widget.onBoardSelected(board),
                               );
                             }),
@@ -108,7 +107,8 @@ class _AppNavigationDrawerState extends State<AppNavigationDrawer> {
             ),
           ),
           const Divider(height: 1),
-          BlocBuilder<SidecarCubit, SidecarState>(
+          BlocBuilder<HomeCubit, HomeState>(
+            buildWhen: (previous, current) => previous.sidecarStatus != current.sidecarStatus,
             builder: (context, state) {
               return ListTile(
                 onTap: widget.onStatusPressed,
@@ -117,11 +117,11 @@ class _AppNavigationDrawerState extends State<AppNavigationDrawer> {
                   height: 12,
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: state.statusColor,
+                    color: state.sidecarStatusColor,
                   ),
                 ),
                 title: Text(
-                  state.label,
+                  state.sidecarLabel,
                   style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 trailing: const Icon(Icons.chevron_right, size: 16),

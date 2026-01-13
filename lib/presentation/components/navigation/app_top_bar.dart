@@ -2,12 +2,14 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
 class AppTopBar extends StatefulWidget implements PreferredSizeWidget {
+  final String? title;
   final VoidCallback? onMenuPressed;
   final VoidCallback? onSearchPressed;
   final VoidCallback? onSettingsPressed;
 
   const AppTopBar({
     super.key,
+    this.title,
     this.onMenuPressed,
     this.onSearchPressed,
     this.onSettingsPressed,
@@ -21,53 +23,12 @@ class AppTopBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _AppTopBarState extends State<AppTopBar> {
-  late final ValueNotifier<String> _titleNotifier;
-
-  @override
-  void initState() {
-    super.initState();
-    _titleNotifier = ValueNotifier<String>('NewsHub');
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _setupRouteListener();
-    });
-  }
-
-  void _setupRouteListener() {
-    if (!mounted) return;
-
-    final router = context.router;
-    _updateTitle(router.current);
-    router.addListener(_onRouteChanged);
-  }
-
-  void _onRouteChanged() {
-    if (!mounted) return;
-    _updateTitle(context.router.current);
-  }
-
-  void _updateTitle(RouteData? route) {
-    _titleNotifier.value = route?.displayTitle ?? 'NewsHub';
-  }
-
-  @override
-  void dispose() {
-    context.router.removeListener(_onRouteChanged);
-    _titleNotifier.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
-    return ValueListenableBuilder<String>(
-      valueListenable: _titleNotifier,
-      builder: (context, title, _) {
-        return AppBar(
-          leading: _buildLeading(context),
-          title: Text(title),
-          actions: _buildActions(),
-        );
-      },
+    return AppBar(
+      leading: _buildLeading(context),
+      title: Text(widget.title ?? 'Untitled'),
+      actions: _buildActions(),
     );
   }
 
@@ -104,25 +65,5 @@ class _AppTopBarState extends State<AppTopBar> {
           onPressed: widget.onSettingsPressed,
         ),
     ];
-  }
-}
-
-extension RouteDataExtensions on RouteData {
-  String get displayTitle {
-    // 優先使用 meta 中的 title
-    final metaTitle = meta['title'] as String?;
-    if (metaTitle != null) return metaTitle;
-
-    // 備用：從路由名稱映射
-    const titleMap = {
-      'CreateCollectionRoute': '建立收藏',
-      'CollectionThreadListRoute': 'NewsHub',
-      'CollectionBoardThreadListRoute': 'NewsHub',
-      'SidecarLogsRoute': 'Sidecar Logs',
-      'SettingsRoute': '設定',
-      'SearchRoute': '搜尋',
-    };
-
-    return titleMap[name] ?? 'NewsHub';
   }
 }

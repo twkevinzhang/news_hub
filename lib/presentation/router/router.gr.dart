@@ -22,6 +22,7 @@ import 'package:news_hub/presentation/pages/collection/create/view/collection_cr
     as _i2;
 import 'package:news_hub/presentation/pages/collection/edit/view/collection_create_screen.dart'
     as _i3;
+import 'package:news_hub/presentation/pages/home/home_screen.dart' as _i7;
 import 'package:news_hub/presentation/pages/settings/collections/view/collection_manage_screen.dart'
     as _i4;
 import 'package:news_hub/presentation/pages/settings/extensions/view/extension_manage_screen.dart'
@@ -30,7 +31,6 @@ import 'package:news_hub/presentation/pages/settings/settings_screen.dart'
     as _i9;
 import 'package:news_hub/presentation/pages/settings/sidecar/sidecar_manage_screen.dart'
     as _i11;
-import 'package:news_hub/presentation/pages/shell/home_screen.dart' as _i7;
 import 'package:news_hub/presentation/pages/sidecar/logs/sidecar_logs_screen.dart'
     as _i10;
 import 'package:news_hub/presentation/pages/thread/detail/view/thread_detail_screen.dart'
@@ -64,11 +64,10 @@ class CollectionBoardThreadListRoute
     builder: (data) {
       final pathParams = data.inheritedPathParams;
       final args = data.argsAs<CollectionBoardThreadListRouteArgs>(
-        orElse:
-            () => CollectionBoardThreadListRouteArgs(
-              collectionId: pathParams.getString('collectionId'),
-              boardId: pathParams.getString('boardId'),
-            ),
+        orElse: () => CollectionBoardThreadListRouteArgs(
+          collectionId: pathParams.getString('collectionId'),
+          boardId: pathParams.getString('boardId'),
+        ),
       );
       return _i14.WrappedRoute(
         child: _i1.CollectionBoardThreadListScreen(
@@ -202,10 +201,9 @@ class CollectionThreadListRoute
     builder: (data) {
       final pathParams = data.inheritedPathParams;
       final args = data.argsAs<CollectionThreadListRouteArgs>(
-        orElse:
-            () => CollectionThreadListRouteArgs(
-              collectionId: pathParams.getString('collectionId'),
-            ),
+        orElse: () => CollectionThreadListRouteArgs(
+          collectionId: pathParams.getString('collectionId'),
+        ),
       );
       return _i14.WrappedRoute(
         child: _i5.CollectionThreadListScreen(
