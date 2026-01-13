@@ -12,7 +12,8 @@ part of 'search_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$SearchState {
@@ -32,14 +33,16 @@ mixin _$SearchState {
 /// @nodoc
 abstract class $SearchStateCopyWith<$Res> {
   factory $SearchStateCopyWith(
-          SearchState value, $Res Function(SearchState) then) =
-      _$SearchStateCopyWithImpl<$Res, SearchState>;
+    SearchState value,
+    $Res Function(SearchState) then,
+  ) = _$SearchStateCopyWithImpl<$Res, SearchState>;
   @useResult
-  $Res call(
-      {Result<List<Suggestion>> suggestions,
-      ThreadsFilter filter,
-      ThreadsFilter submittedFilter,
-      ThreadsSorting sorting});
+  $Res call({
+    Result<List<Suggestion>> suggestions,
+    ThreadsFilter filter,
+    ThreadsFilter submittedFilter,
+    ThreadsSorting sorting,
+  });
 
   $ResultCopyWith<List<Suggestion>, $Res> get suggestions;
   $ThreadsFilterCopyWith<$Res> get filter;
@@ -67,24 +70,27 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
     Object? submittedFilter = null,
     Object? sorting = null,
   }) {
-    return _then(_value.copyWith(
-      suggestions: null == suggestions
-          ? _value.suggestions
-          : suggestions // ignore: cast_nullable_to_non_nullable
-              as Result<List<Suggestion>>,
-      filter: null == filter
-          ? _value.filter
-          : filter // ignore: cast_nullable_to_non_nullable
-              as ThreadsFilter,
-      submittedFilter: null == submittedFilter
-          ? _value.submittedFilter
-          : submittedFilter // ignore: cast_nullable_to_non_nullable
-              as ThreadsFilter,
-      sorting: null == sorting
-          ? _value.sorting
-          : sorting // ignore: cast_nullable_to_non_nullable
-              as ThreadsSorting,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            suggestions: null == suggestions
+                ? _value.suggestions
+                : suggestions // ignore: cast_nullable_to_non_nullable
+                      as Result<List<Suggestion>>,
+            filter: null == filter
+                ? _value.filter
+                : filter // ignore: cast_nullable_to_non_nullable
+                      as ThreadsFilter,
+            submittedFilter: null == submittedFilter
+                ? _value.submittedFilter
+                : submittedFilter // ignore: cast_nullable_to_non_nullable
+                      as ThreadsFilter,
+            sorting: null == sorting
+                ? _value.sorting
+                : sorting // ignore: cast_nullable_to_non_nullable
+                      as ThreadsSorting,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of SearchState
@@ -132,15 +138,17 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
 abstract class _$$SearchStateImplCopyWith<$Res>
     implements $SearchStateCopyWith<$Res> {
   factory _$$SearchStateImplCopyWith(
-          _$SearchStateImpl value, $Res Function(_$SearchStateImpl) then) =
-      __$$SearchStateImplCopyWithImpl<$Res>;
+    _$SearchStateImpl value,
+    $Res Function(_$SearchStateImpl) then,
+  ) = __$$SearchStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {Result<List<Suggestion>> suggestions,
-      ThreadsFilter filter,
-      ThreadsFilter submittedFilter,
-      ThreadsSorting sorting});
+  $Res call({
+    Result<List<Suggestion>> suggestions,
+    ThreadsFilter filter,
+    ThreadsFilter submittedFilter,
+    ThreadsSorting sorting,
+  });
 
   @override
   $ResultCopyWith<List<Suggestion>, $Res> get suggestions;
@@ -157,8 +165,9 @@ class __$$SearchStateImplCopyWithImpl<$Res>
     extends _$SearchStateCopyWithImpl<$Res, _$SearchStateImpl>
     implements _$$SearchStateImplCopyWith<$Res> {
   __$$SearchStateImplCopyWithImpl(
-      _$SearchStateImpl _value, $Res Function(_$SearchStateImpl) _then)
-      : super(_value, _then);
+    _$SearchStateImpl _value,
+    $Res Function(_$SearchStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -170,35 +179,38 @@ class __$$SearchStateImplCopyWithImpl<$Res>
     Object? submittedFilter = null,
     Object? sorting = null,
   }) {
-    return _then(_$SearchStateImpl(
-      suggestions: null == suggestions
-          ? _value.suggestions
-          : suggestions // ignore: cast_nullable_to_non_nullable
-              as Result<List<Suggestion>>,
-      filter: null == filter
-          ? _value.filter
-          : filter // ignore: cast_nullable_to_non_nullable
-              as ThreadsFilter,
-      submittedFilter: null == submittedFilter
-          ? _value.submittedFilter
-          : submittedFilter // ignore: cast_nullable_to_non_nullable
-              as ThreadsFilter,
-      sorting: null == sorting
-          ? _value.sorting
-          : sorting // ignore: cast_nullable_to_non_nullable
-              as ThreadsSorting,
-    ));
+    return _then(
+      _$SearchStateImpl(
+        suggestions: null == suggestions
+            ? _value.suggestions
+            : suggestions // ignore: cast_nullable_to_non_nullable
+                  as Result<List<Suggestion>>,
+        filter: null == filter
+            ? _value.filter
+            : filter // ignore: cast_nullable_to_non_nullable
+                  as ThreadsFilter,
+        submittedFilter: null == submittedFilter
+            ? _value.submittedFilter
+            : submittedFilter // ignore: cast_nullable_to_non_nullable
+                  as ThreadsFilter,
+        sorting: null == sorting
+            ? _value.sorting
+            : sorting // ignore: cast_nullable_to_non_nullable
+                  as ThreadsSorting,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$SearchStateImpl with DiagnosticableTreeMixin implements _SearchState {
-  const _$SearchStateImpl(
-      {required this.suggestions,
-      required this.filter,
-      required this.submittedFilter,
-      required this.sorting});
+  const _$SearchStateImpl({
+    required this.suggestions,
+    required this.filter,
+    required this.submittedFilter,
+    required this.sorting,
+  });
 
   @override
   final Result<List<Suggestion>> suggestions;
@@ -252,11 +264,12 @@ class _$SearchStateImpl with DiagnosticableTreeMixin implements _SearchState {
 }
 
 abstract class _SearchState implements SearchState {
-  const factory _SearchState(
-      {required final Result<List<Suggestion>> suggestions,
-      required final ThreadsFilter filter,
-      required final ThreadsFilter submittedFilter,
-      required final ThreadsSorting sorting}) = _$SearchStateImpl;
+  const factory _SearchState({
+    required final Result<List<Suggestion>> suggestions,
+    required final ThreadsFilter filter,
+    required final ThreadsFilter submittedFilter,
+    required final ThreadsSorting sorting,
+  }) = _$SearchStateImpl;
 
   @override
   Result<List<Suggestion>> get suggestions;

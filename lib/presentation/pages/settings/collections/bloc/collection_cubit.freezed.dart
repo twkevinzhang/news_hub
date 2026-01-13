@@ -12,7 +12,8 @@ part of 'collection_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$CollectionState {
@@ -31,14 +32,16 @@ mixin _$CollectionState {
 /// @nodoc
 abstract class $CollectionStateCopyWith<$Res> {
   factory $CollectionStateCopyWith(
-          CollectionState value, $Res Function(CollectionState) then) =
-      _$CollectionStateCopyWithImpl<$Res, CollectionState>;
+    CollectionState value,
+    $Res Function(CollectionState) then,
+  ) = _$CollectionStateCopyWithImpl<$Res, CollectionState>;
   @useResult
-  $Res call(
-      {List<Collection> collections,
-      bool isLoading,
-      bool isSortingMode,
-      String? errorMessage});
+  $Res call({
+    List<Collection> collections,
+    bool isLoading,
+    bool isSortingMode,
+    String? errorMessage,
+  });
 }
 
 /// @nodoc
@@ -61,40 +64,45 @@ class _$CollectionStateCopyWithImpl<$Res, $Val extends CollectionState>
     Object? isSortingMode = null,
     Object? errorMessage = freezed,
   }) {
-    return _then(_value.copyWith(
-      collections: null == collections
-          ? _value.collections
-          : collections // ignore: cast_nullable_to_non_nullable
-              as List<Collection>,
-      isLoading: null == isLoading
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isSortingMode: null == isSortingMode
-          ? _value.isSortingMode
-          : isSortingMode // ignore: cast_nullable_to_non_nullable
-              as bool,
-      errorMessage: freezed == errorMessage
-          ? _value.errorMessage
-          : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            collections: null == collections
+                ? _value.collections
+                : collections // ignore: cast_nullable_to_non_nullable
+                      as List<Collection>,
+            isLoading: null == isLoading
+                ? _value.isLoading
+                : isLoading // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            isSortingMode: null == isSortingMode
+                ? _value.isSortingMode
+                : isSortingMode // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            errorMessage: freezed == errorMessage
+                ? _value.errorMessage
+                : errorMessage // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$CollectionStateImplCopyWith<$Res>
     implements $CollectionStateCopyWith<$Res> {
-  factory _$$CollectionStateImplCopyWith(_$CollectionStateImpl value,
-          $Res Function(_$CollectionStateImpl) then) =
-      __$$CollectionStateImplCopyWithImpl<$Res>;
+  factory _$$CollectionStateImplCopyWith(
+    _$CollectionStateImpl value,
+    $Res Function(_$CollectionStateImpl) then,
+  ) = __$$CollectionStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {List<Collection> collections,
-      bool isLoading,
-      bool isSortingMode,
-      String? errorMessage});
+  $Res call({
+    List<Collection> collections,
+    bool isLoading,
+    bool isSortingMode,
+    String? errorMessage,
+  });
 }
 
 /// @nodoc
@@ -102,8 +110,9 @@ class __$$CollectionStateImplCopyWithImpl<$Res>
     extends _$CollectionStateCopyWithImpl<$Res, _$CollectionStateImpl>
     implements _$$CollectionStateImplCopyWith<$Res> {
   __$$CollectionStateImplCopyWithImpl(
-      _$CollectionStateImpl _value, $Res Function(_$CollectionStateImpl) _then)
-      : super(_value, _then);
+    _$CollectionStateImpl _value,
+    $Res Function(_$CollectionStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CollectionState
   /// with the given fields replaced by the non-null parameter values.
@@ -115,36 +124,38 @@ class __$$CollectionStateImplCopyWithImpl<$Res>
     Object? isSortingMode = null,
     Object? errorMessage = freezed,
   }) {
-    return _then(_$CollectionStateImpl(
-      collections: null == collections
-          ? _value._collections
-          : collections // ignore: cast_nullable_to_non_nullable
-              as List<Collection>,
-      isLoading: null == isLoading
-          ? _value.isLoading
-          : isLoading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isSortingMode: null == isSortingMode
-          ? _value.isSortingMode
-          : isSortingMode // ignore: cast_nullable_to_non_nullable
-              as bool,
-      errorMessage: freezed == errorMessage
-          ? _value.errorMessage
-          : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$CollectionStateImpl(
+        collections: null == collections
+            ? _value._collections
+            : collections // ignore: cast_nullable_to_non_nullable
+                  as List<Collection>,
+        isLoading: null == isLoading
+            ? _value.isLoading
+            : isLoading // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        isSortingMode: null == isSortingMode
+            ? _value.isSortingMode
+            : isSortingMode // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        errorMessage: freezed == errorMessage
+            ? _value.errorMessage
+            : errorMessage // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$CollectionStateImpl implements _CollectionState {
-  const _$CollectionStateImpl(
-      {final List<Collection> collections = const [],
-      this.isLoading = false,
-      this.isSortingMode = false,
-      this.errorMessage})
-      : _collections = collections;
+  const _$CollectionStateImpl({
+    final List<Collection> collections = const [],
+    this.isLoading = false,
+    this.isSortingMode = false,
+    this.errorMessage,
+  }) : _collections = collections;
 
   final List<Collection> _collections;
   @override
@@ -174,8 +185,10 @@ class _$CollectionStateImpl implements _CollectionState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$CollectionStateImpl &&
-            const DeepCollectionEquality()
-                .equals(other._collections, _collections) &&
+            const DeepCollectionEquality().equals(
+              other._collections,
+              _collections,
+            ) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
             (identical(other.isSortingMode, isSortingMode) ||
@@ -186,11 +199,12 @@ class _$CollectionStateImpl implements _CollectionState {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_collections),
-      isLoading,
-      isSortingMode,
-      errorMessage);
+    runtimeType,
+    const DeepCollectionEquality().hash(_collections),
+    isLoading,
+    isSortingMode,
+    errorMessage,
+  );
 
   /// Create a copy of CollectionState
   /// with the given fields replaced by the non-null parameter values.
@@ -199,15 +213,18 @@ class _$CollectionStateImpl implements _CollectionState {
   @pragma('vm:prefer-inline')
   _$$CollectionStateImplCopyWith<_$CollectionStateImpl> get copyWith =>
       __$$CollectionStateImplCopyWithImpl<_$CollectionStateImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _CollectionState implements CollectionState {
-  const factory _CollectionState(
-      {final List<Collection> collections,
-      final bool isLoading,
-      final bool isSortingMode,
-      final String? errorMessage}) = _$CollectionStateImpl;
+  const factory _CollectionState({
+    final List<Collection> collections,
+    final bool isLoading,
+    final bool isSortingMode,
+    final String? errorMessage,
+  }) = _$CollectionStateImpl;
 
   @override
   List<Collection> get collections;

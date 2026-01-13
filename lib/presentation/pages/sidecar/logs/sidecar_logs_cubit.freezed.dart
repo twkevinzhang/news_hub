@@ -12,7 +12,8 @@ part of 'sidecar_logs_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$SidecarLogsState {
@@ -36,18 +37,20 @@ mixin _$SidecarLogsState {
 /// @nodoc
 abstract class $SidecarLogsStateCopyWith<$Res> {
   factory $SidecarLogsStateCopyWith(
-          SidecarLogsState value, $Res Function(SidecarLogsState) then) =
-      _$SidecarLogsStateCopyWithImpl<$Res, SidecarLogsState>;
+    SidecarLogsState value,
+    $Res Function(SidecarLogsState) then,
+  ) = _$SidecarLogsStateCopyWithImpl<$Res, SidecarLogsState>;
   @useResult
-  $Res call(
-      {List<LogEntry> logs,
-      String searchQuery,
-      bool isSearching,
-      bool exportSuccess,
-      SidecarConnectionState connectionStatus,
-      bool autoScroll,
-      String? exportPath,
-      String? error});
+  $Res call({
+    List<LogEntry> logs,
+    String searchQuery,
+    bool isSearching,
+    bool exportSuccess,
+    SidecarConnectionState connectionStatus,
+    bool autoScroll,
+    String? exportPath,
+    String? error,
+  });
 }
 
 /// @nodoc
@@ -74,69 +77,75 @@ class _$SidecarLogsStateCopyWithImpl<$Res, $Val extends SidecarLogsState>
     Object? exportPath = freezed,
     Object? error = freezed,
   }) {
-    return _then(_value.copyWith(
-      logs: null == logs
-          ? _value.logs
-          : logs // ignore: cast_nullable_to_non_nullable
-              as List<LogEntry>,
-      searchQuery: null == searchQuery
-          ? _value.searchQuery
-          : searchQuery // ignore: cast_nullable_to_non_nullable
-              as String,
-      isSearching: null == isSearching
-          ? _value.isSearching
-          : isSearching // ignore: cast_nullable_to_non_nullable
-              as bool,
-      exportSuccess: null == exportSuccess
-          ? _value.exportSuccess
-          : exportSuccess // ignore: cast_nullable_to_non_nullable
-              as bool,
-      connectionStatus: null == connectionStatus
-          ? _value.connectionStatus
-          : connectionStatus // ignore: cast_nullable_to_non_nullable
-              as SidecarConnectionState,
-      autoScroll: null == autoScroll
-          ? _value.autoScroll
-          : autoScroll // ignore: cast_nullable_to_non_nullable
-              as bool,
-      exportPath: freezed == exportPath
-          ? _value.exportPath
-          : exportPath // ignore: cast_nullable_to_non_nullable
-              as String?,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            logs: null == logs
+                ? _value.logs
+                : logs // ignore: cast_nullable_to_non_nullable
+                      as List<LogEntry>,
+            searchQuery: null == searchQuery
+                ? _value.searchQuery
+                : searchQuery // ignore: cast_nullable_to_non_nullable
+                      as String,
+            isSearching: null == isSearching
+                ? _value.isSearching
+                : isSearching // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            exportSuccess: null == exportSuccess
+                ? _value.exportSuccess
+                : exportSuccess // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            connectionStatus: null == connectionStatus
+                ? _value.connectionStatus
+                : connectionStatus // ignore: cast_nullable_to_non_nullable
+                      as SidecarConnectionState,
+            autoScroll: null == autoScroll
+                ? _value.autoScroll
+                : autoScroll // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            exportPath: freezed == exportPath
+                ? _value.exportPath
+                : exportPath // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            error: freezed == error
+                ? _value.error
+                : error // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$SidecarLogsStateImplCopyWith<$Res>
     implements $SidecarLogsStateCopyWith<$Res> {
-  factory _$$SidecarLogsStateImplCopyWith(_$SidecarLogsStateImpl value,
-          $Res Function(_$SidecarLogsStateImpl) then) =
-      __$$SidecarLogsStateImplCopyWithImpl<$Res>;
+  factory _$$SidecarLogsStateImplCopyWith(
+    _$SidecarLogsStateImpl value,
+    $Res Function(_$SidecarLogsStateImpl) then,
+  ) = __$$SidecarLogsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {List<LogEntry> logs,
-      String searchQuery,
-      bool isSearching,
-      bool exportSuccess,
-      SidecarConnectionState connectionStatus,
-      bool autoScroll,
-      String? exportPath,
-      String? error});
+  $Res call({
+    List<LogEntry> logs,
+    String searchQuery,
+    bool isSearching,
+    bool exportSuccess,
+    SidecarConnectionState connectionStatus,
+    bool autoScroll,
+    String? exportPath,
+    String? error,
+  });
 }
 
 /// @nodoc
 class __$$SidecarLogsStateImplCopyWithImpl<$Res>
     extends _$SidecarLogsStateCopyWithImpl<$Res, _$SidecarLogsStateImpl>
     implements _$$SidecarLogsStateImplCopyWith<$Res> {
-  __$$SidecarLogsStateImplCopyWithImpl(_$SidecarLogsStateImpl _value,
-      $Res Function(_$SidecarLogsStateImpl) _then)
-      : super(_value, _then);
+  __$$SidecarLogsStateImplCopyWithImpl(
+    _$SidecarLogsStateImpl _value,
+    $Res Function(_$SidecarLogsStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of SidecarLogsState
   /// with the given fields replaced by the non-null parameter values.
@@ -152,57 +161,59 @@ class __$$SidecarLogsStateImplCopyWithImpl<$Res>
     Object? exportPath = freezed,
     Object? error = freezed,
   }) {
-    return _then(_$SidecarLogsStateImpl(
-      logs: null == logs
-          ? _value._logs
-          : logs // ignore: cast_nullable_to_non_nullable
-              as List<LogEntry>,
-      searchQuery: null == searchQuery
-          ? _value.searchQuery
-          : searchQuery // ignore: cast_nullable_to_non_nullable
-              as String,
-      isSearching: null == isSearching
-          ? _value.isSearching
-          : isSearching // ignore: cast_nullable_to_non_nullable
-              as bool,
-      exportSuccess: null == exportSuccess
-          ? _value.exportSuccess
-          : exportSuccess // ignore: cast_nullable_to_non_nullable
-              as bool,
-      connectionStatus: null == connectionStatus
-          ? _value.connectionStatus
-          : connectionStatus // ignore: cast_nullable_to_non_nullable
-              as SidecarConnectionState,
-      autoScroll: null == autoScroll
-          ? _value.autoScroll
-          : autoScroll // ignore: cast_nullable_to_non_nullable
-              as bool,
-      exportPath: freezed == exportPath
-          ? _value.exportPath
-          : exportPath // ignore: cast_nullable_to_non_nullable
-              as String?,
-      error: freezed == error
-          ? _value.error
-          : error // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$SidecarLogsStateImpl(
+        logs: null == logs
+            ? _value._logs
+            : logs // ignore: cast_nullable_to_non_nullable
+                  as List<LogEntry>,
+        searchQuery: null == searchQuery
+            ? _value.searchQuery
+            : searchQuery // ignore: cast_nullable_to_non_nullable
+                  as String,
+        isSearching: null == isSearching
+            ? _value.isSearching
+            : isSearching // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        exportSuccess: null == exportSuccess
+            ? _value.exportSuccess
+            : exportSuccess // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        connectionStatus: null == connectionStatus
+            ? _value.connectionStatus
+            : connectionStatus // ignore: cast_nullable_to_non_nullable
+                  as SidecarConnectionState,
+        autoScroll: null == autoScroll
+            ? _value.autoScroll
+            : autoScroll // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        exportPath: freezed == exportPath
+            ? _value.exportPath
+            : exportPath // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        error: freezed == error
+            ? _value.error
+            : error // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$SidecarLogsStateImpl extends _SidecarLogsState {
-  const _$SidecarLogsStateImpl(
-      {final List<LogEntry> logs = const [],
-      this.searchQuery = '',
-      this.isSearching = false,
-      this.exportSuccess = false,
-      this.connectionStatus = SidecarConnectionState.uninitialized,
-      this.autoScroll = true,
-      this.exportPath,
-      this.error})
-      : _logs = logs,
-        super._();
+  const _$SidecarLogsStateImpl({
+    final List<LogEntry> logs = const [],
+    this.searchQuery = '',
+    this.isSearching = false,
+    this.exportSuccess = false,
+    this.connectionStatus = SidecarConnectionState.uninitialized,
+    this.autoScroll = true,
+    this.exportPath,
+    this.error,
+  }) : _logs = logs,
+       super._();
 
   final List<LogEntry> _logs;
   @override
@@ -261,15 +272,16 @@ class _$SidecarLogsStateImpl extends _SidecarLogsState {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(_logs),
-      searchQuery,
-      isSearching,
-      exportSuccess,
-      connectionStatus,
-      autoScroll,
-      exportPath,
-      error);
+    runtimeType,
+    const DeepCollectionEquality().hash(_logs),
+    searchQuery,
+    isSearching,
+    exportSuccess,
+    connectionStatus,
+    autoScroll,
+    exportPath,
+    error,
+  );
 
   /// Create a copy of SidecarLogsState
   /// with the given fields replaced by the non-null parameter values.
@@ -278,19 +290,22 @@ class _$SidecarLogsStateImpl extends _SidecarLogsState {
   @pragma('vm:prefer-inline')
   _$$SidecarLogsStateImplCopyWith<_$SidecarLogsStateImpl> get copyWith =>
       __$$SidecarLogsStateImplCopyWithImpl<_$SidecarLogsStateImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _SidecarLogsState extends SidecarLogsState {
-  const factory _SidecarLogsState(
-      {final List<LogEntry> logs,
-      final String searchQuery,
-      final bool isSearching,
-      final bool exportSuccess,
-      final SidecarConnectionState connectionStatus,
-      final bool autoScroll,
-      final String? exportPath,
-      final String? error}) = _$SidecarLogsStateImpl;
+  const factory _SidecarLogsState({
+    final List<LogEntry> logs,
+    final String searchQuery,
+    final bool isSearching,
+    final bool exportSuccess,
+    final SidecarConnectionState connectionStatus,
+    final bool autoScroll,
+    final String? exportPath,
+    final String? error,
+  }) = _$SidecarLogsStateImpl;
   const _SidecarLogsState._() : super._();
 
   @override

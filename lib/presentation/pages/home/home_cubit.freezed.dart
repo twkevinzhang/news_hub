@@ -12,7 +12,8 @@ part of 'home_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$HomeState {
@@ -35,12 +36,13 @@ abstract class $HomeStateCopyWith<$Res> {
   factory $HomeStateCopyWith(HomeState value, $Res Function(HomeState) then) =
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
-  $Res call(
-      {String title,
-      List<Collection> collections,
-      SidecarConnectionState sidecarStatus,
-      String? sidecarMessage,
-      RouteData? pendingRoute});
+  $Res call({
+    String title,
+    List<Collection> collections,
+    SidecarConnectionState sidecarStatus,
+    String? sidecarMessage,
+    RouteData? pendingRoute,
+  });
 }
 
 /// @nodoc
@@ -64,28 +66,31 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
     Object? sidecarMessage = freezed,
     Object? pendingRoute = freezed,
   }) {
-    return _then(_value.copyWith(
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      collections: null == collections
-          ? _value.collections
-          : collections // ignore: cast_nullable_to_non_nullable
-              as List<Collection>,
-      sidecarStatus: null == sidecarStatus
-          ? _value.sidecarStatus
-          : sidecarStatus // ignore: cast_nullable_to_non_nullable
-              as SidecarConnectionState,
-      sidecarMessage: freezed == sidecarMessage
-          ? _value.sidecarMessage
-          : sidecarMessage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      pendingRoute: freezed == pendingRoute
-          ? _value.pendingRoute
-          : pendingRoute // ignore: cast_nullable_to_non_nullable
-              as RouteData?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            title: null == title
+                ? _value.title
+                : title // ignore: cast_nullable_to_non_nullable
+                      as String,
+            collections: null == collections
+                ? _value.collections
+                : collections // ignore: cast_nullable_to_non_nullable
+                      as List<Collection>,
+            sidecarStatus: null == sidecarStatus
+                ? _value.sidecarStatus
+                : sidecarStatus // ignore: cast_nullable_to_non_nullable
+                      as SidecarConnectionState,
+            sidecarMessage: freezed == sidecarMessage
+                ? _value.sidecarMessage
+                : sidecarMessage // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            pendingRoute: freezed == pendingRoute
+                ? _value.pendingRoute
+                : pendingRoute // ignore: cast_nullable_to_non_nullable
+                      as RouteData?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -93,16 +98,18 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
 abstract class _$$HomeStateImplCopyWith<$Res>
     implements $HomeStateCopyWith<$Res> {
   factory _$$HomeStateImplCopyWith(
-          _$HomeStateImpl value, $Res Function(_$HomeStateImpl) then) =
-      __$$HomeStateImplCopyWithImpl<$Res>;
+    _$HomeStateImpl value,
+    $Res Function(_$HomeStateImpl) then,
+  ) = __$$HomeStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String title,
-      List<Collection> collections,
-      SidecarConnectionState sidecarStatus,
-      String? sidecarMessage,
-      RouteData? pendingRoute});
+  $Res call({
+    String title,
+    List<Collection> collections,
+    SidecarConnectionState sidecarStatus,
+    String? sidecarMessage,
+    RouteData? pendingRoute,
+  });
 }
 
 /// @nodoc
@@ -110,8 +117,9 @@ class __$$HomeStateImplCopyWithImpl<$Res>
     extends _$HomeStateCopyWithImpl<$Res, _$HomeStateImpl>
     implements _$$HomeStateImplCopyWith<$Res> {
   __$$HomeStateImplCopyWithImpl(
-      _$HomeStateImpl _value, $Res Function(_$HomeStateImpl) _then)
-      : super(_value, _then);
+    _$HomeStateImpl _value,
+    $Res Function(_$HomeStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -124,42 +132,44 @@ class __$$HomeStateImplCopyWithImpl<$Res>
     Object? sidecarMessage = freezed,
     Object? pendingRoute = freezed,
   }) {
-    return _then(_$HomeStateImpl(
-      title: null == title
-          ? _value.title
-          : title // ignore: cast_nullable_to_non_nullable
-              as String,
-      collections: null == collections
-          ? _value._collections
-          : collections // ignore: cast_nullable_to_non_nullable
-              as List<Collection>,
-      sidecarStatus: null == sidecarStatus
-          ? _value.sidecarStatus
-          : sidecarStatus // ignore: cast_nullable_to_non_nullable
-              as SidecarConnectionState,
-      sidecarMessage: freezed == sidecarMessage
-          ? _value.sidecarMessage
-          : sidecarMessage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      pendingRoute: freezed == pendingRoute
-          ? _value.pendingRoute
-          : pendingRoute // ignore: cast_nullable_to_non_nullable
-              as RouteData?,
-    ));
+    return _then(
+      _$HomeStateImpl(
+        title: null == title
+            ? _value.title
+            : title // ignore: cast_nullable_to_non_nullable
+                  as String,
+        collections: null == collections
+            ? _value._collections
+            : collections // ignore: cast_nullable_to_non_nullable
+                  as List<Collection>,
+        sidecarStatus: null == sidecarStatus
+            ? _value.sidecarStatus
+            : sidecarStatus // ignore: cast_nullable_to_non_nullable
+                  as SidecarConnectionState,
+        sidecarMessage: freezed == sidecarMessage
+            ? _value.sidecarMessage
+            : sidecarMessage // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        pendingRoute: freezed == pendingRoute
+            ? _value.pendingRoute
+            : pendingRoute // ignore: cast_nullable_to_non_nullable
+                  as RouteData?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$HomeStateImpl extends _HomeState {
-  const _$HomeStateImpl(
-      {this.title = 'NewsHub',
-      final List<Collection> collections = const [],
-      this.sidecarStatus = SidecarConnectionState.uninitialized,
-      this.sidecarMessage,
-      this.pendingRoute})
-      : _collections = collections,
-        super._();
+  const _$HomeStateImpl({
+    this.title = 'NewsHub',
+    final List<Collection> collections = const [],
+    this.sidecarStatus = SidecarConnectionState.uninitialized,
+    this.sidecarMessage,
+    this.pendingRoute,
+  }) : _collections = collections,
+       super._();
 
   @override
   @JsonKey()
@@ -192,8 +202,10 @@ class _$HomeStateImpl extends _HomeState {
         (other.runtimeType == runtimeType &&
             other is _$HomeStateImpl &&
             (identical(other.title, title) || other.title == title) &&
-            const DeepCollectionEquality()
-                .equals(other._collections, _collections) &&
+            const DeepCollectionEquality().equals(
+              other._collections,
+              _collections,
+            ) &&
             (identical(other.sidecarStatus, sidecarStatus) ||
                 other.sidecarStatus == sidecarStatus) &&
             (identical(other.sidecarMessage, sidecarMessage) ||
@@ -204,12 +216,13 @@ class _$HomeStateImpl extends _HomeState {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      title,
-      const DeepCollectionEquality().hash(_collections),
-      sidecarStatus,
-      sidecarMessage,
-      pendingRoute);
+    runtimeType,
+    title,
+    const DeepCollectionEquality().hash(_collections),
+    sidecarStatus,
+    sidecarMessage,
+    pendingRoute,
+  );
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -221,12 +234,13 @@ class _$HomeStateImpl extends _HomeState {
 }
 
 abstract class _HomeState extends HomeState {
-  const factory _HomeState(
-      {final String title,
-      final List<Collection> collections,
-      final SidecarConnectionState sidecarStatus,
-      final String? sidecarMessage,
-      final RouteData? pendingRoute}) = _$HomeStateImpl;
+  const factory _HomeState({
+    final String title,
+    final List<Collection> collections,
+    final SidecarConnectionState sidecarStatus,
+    final String? sidecarMessage,
+    final RouteData? pendingRoute,
+  }) = _$HomeStateImpl;
   const _HomeState._() : super._();
 
   @override

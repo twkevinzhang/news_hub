@@ -12,7 +12,8 @@ part of 'models.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$Board {
@@ -37,16 +38,17 @@ abstract class $BoardCopyWith<$Res> {
   factory $BoardCopyWith(Board value, $Res Function(Board) then) =
       _$BoardCopyWithImpl<$Res, Board>;
   @useResult
-  $Res call(
-      {String extensionPkgName,
-      String id,
-      String name,
-      String icon,
-      String largeWelcomeImage,
-      String url,
-      Set<String> sortOptions,
-      String? selectedSort,
-      String? collectionId});
+  $Res call({
+    String extensionPkgName,
+    String id,
+    String name,
+    String icon,
+    String largeWelcomeImage,
+    String url,
+    Set<String> sortOptions,
+    String? selectedSort,
+    String? collectionId,
+  });
 }
 
 /// @nodoc
@@ -74,64 +76,69 @@ class _$BoardCopyWithImpl<$Res, $Val extends Board>
     Object? selectedSort = freezed,
     Object? collectionId = freezed,
   }) {
-    return _then(_value.copyWith(
-      extensionPkgName: null == extensionPkgName
-          ? _value.extensionPkgName
-          : extensionPkgName // ignore: cast_nullable_to_non_nullable
-              as String,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      icon: null == icon
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
-              as String,
-      largeWelcomeImage: null == largeWelcomeImage
-          ? _value.largeWelcomeImage
-          : largeWelcomeImage // ignore: cast_nullable_to_non_nullable
-              as String,
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String,
-      sortOptions: null == sortOptions
-          ? _value.sortOptions
-          : sortOptions // ignore: cast_nullable_to_non_nullable
-              as Set<String>,
-      selectedSort: freezed == selectedSort
-          ? _value.selectedSort
-          : selectedSort // ignore: cast_nullable_to_non_nullable
-              as String?,
-      collectionId: freezed == collectionId
-          ? _value.collectionId
-          : collectionId // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            extensionPkgName: null == extensionPkgName
+                ? _value.extensionPkgName
+                : extensionPkgName // ignore: cast_nullable_to_non_nullable
+                      as String,
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            icon: null == icon
+                ? _value.icon
+                : icon // ignore: cast_nullable_to_non_nullable
+                      as String,
+            largeWelcomeImage: null == largeWelcomeImage
+                ? _value.largeWelcomeImage
+                : largeWelcomeImage // ignore: cast_nullable_to_non_nullable
+                      as String,
+            url: null == url
+                ? _value.url
+                : url // ignore: cast_nullable_to_non_nullable
+                      as String,
+            sortOptions: null == sortOptions
+                ? _value.sortOptions
+                : sortOptions // ignore: cast_nullable_to_non_nullable
+                      as Set<String>,
+            selectedSort: freezed == selectedSort
+                ? _value.selectedSort
+                : selectedSort // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            collectionId: freezed == collectionId
+                ? _value.collectionId
+                : collectionId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$BoardImplCopyWith<$Res> implements $BoardCopyWith<$Res> {
   factory _$$BoardImplCopyWith(
-          _$BoardImpl value, $Res Function(_$BoardImpl) then) =
-      __$$BoardImplCopyWithImpl<$Res>;
+    _$BoardImpl value,
+    $Res Function(_$BoardImpl) then,
+  ) = __$$BoardImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String extensionPkgName,
-      String id,
-      String name,
-      String icon,
-      String largeWelcomeImage,
-      String url,
-      Set<String> sortOptions,
-      String? selectedSort,
-      String? collectionId});
+  $Res call({
+    String extensionPkgName,
+    String id,
+    String name,
+    String icon,
+    String largeWelcomeImage,
+    String url,
+    Set<String> sortOptions,
+    String? selectedSort,
+    String? collectionId,
+  });
 }
 
 /// @nodoc
@@ -139,8 +146,9 @@ class __$$BoardImplCopyWithImpl<$Res>
     extends _$BoardCopyWithImpl<$Res, _$BoardImpl>
     implements _$$BoardImplCopyWith<$Res> {
   __$$BoardImplCopyWithImpl(
-      _$BoardImpl _value, $Res Function(_$BoardImpl) _then)
-      : super(_value, _then);
+    _$BoardImpl _value,
+    $Res Function(_$BoardImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Board
   /// with the given fields replaced by the non-null parameter values.
@@ -157,61 +165,63 @@ class __$$BoardImplCopyWithImpl<$Res>
     Object? selectedSort = freezed,
     Object? collectionId = freezed,
   }) {
-    return _then(_$BoardImpl(
-      extensionPkgName: null == extensionPkgName
-          ? _value.extensionPkgName
-          : extensionPkgName // ignore: cast_nullable_to_non_nullable
-              as String,
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      icon: null == icon
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
-              as String,
-      largeWelcomeImage: null == largeWelcomeImage
-          ? _value.largeWelcomeImage
-          : largeWelcomeImage // ignore: cast_nullable_to_non_nullable
-              as String,
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String,
-      sortOptions: null == sortOptions
-          ? _value._sortOptions
-          : sortOptions // ignore: cast_nullable_to_non_nullable
-              as Set<String>,
-      selectedSort: freezed == selectedSort
-          ? _value.selectedSort
-          : selectedSort // ignore: cast_nullable_to_non_nullable
-              as String?,
-      collectionId: freezed == collectionId
-          ? _value.collectionId
-          : collectionId // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$BoardImpl(
+        extensionPkgName: null == extensionPkgName
+            ? _value.extensionPkgName
+            : extensionPkgName // ignore: cast_nullable_to_non_nullable
+                  as String,
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        icon: null == icon
+            ? _value.icon
+            : icon // ignore: cast_nullable_to_non_nullable
+                  as String,
+        largeWelcomeImage: null == largeWelcomeImage
+            ? _value.largeWelcomeImage
+            : largeWelcomeImage // ignore: cast_nullable_to_non_nullable
+                  as String,
+        url: null == url
+            ? _value.url
+            : url // ignore: cast_nullable_to_non_nullable
+                  as String,
+        sortOptions: null == sortOptions
+            ? _value._sortOptions
+            : sortOptions // ignore: cast_nullable_to_non_nullable
+                  as Set<String>,
+        selectedSort: freezed == selectedSort
+            ? _value.selectedSort
+            : selectedSort // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        collectionId: freezed == collectionId
+            ? _value.collectionId
+            : collectionId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$BoardImpl with DiagnosticableTreeMixin implements _Board {
-  const _$BoardImpl(
-      {required this.extensionPkgName,
-      required this.id,
-      required this.name,
-      required this.icon,
-      required this.largeWelcomeImage,
-      required this.url,
-      required final Set<String> sortOptions,
-      this.selectedSort,
-      this.collectionId})
-      : _sortOptions = sortOptions;
+  const _$BoardImpl({
+    required this.extensionPkgName,
+    required this.id,
+    required this.name,
+    required this.icon,
+    required this.largeWelcomeImage,
+    required this.url,
+    required final Set<String> sortOptions,
+    this.selectedSort,
+    this.collectionId,
+  }) : _sortOptions = sortOptions;
 
   @override
   final String extensionPkgName;
@@ -272,8 +282,10 @@ class _$BoardImpl with DiagnosticableTreeMixin implements _Board {
             (identical(other.largeWelcomeImage, largeWelcomeImage) ||
                 other.largeWelcomeImage == largeWelcomeImage) &&
             (identical(other.url, url) || other.url == url) &&
-            const DeepCollectionEquality()
-                .equals(other._sortOptions, _sortOptions) &&
+            const DeepCollectionEquality().equals(
+              other._sortOptions,
+              _sortOptions,
+            ) &&
             (identical(other.selectedSort, selectedSort) ||
                 other.selectedSort == selectedSort) &&
             (identical(other.collectionId, collectionId) ||
@@ -282,16 +294,17 @@ class _$BoardImpl with DiagnosticableTreeMixin implements _Board {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      extensionPkgName,
-      id,
-      name,
-      icon,
-      largeWelcomeImage,
-      url,
-      const DeepCollectionEquality().hash(_sortOptions),
-      selectedSort,
-      collectionId);
+    runtimeType,
+    extensionPkgName,
+    id,
+    name,
+    icon,
+    largeWelcomeImage,
+    url,
+    const DeepCollectionEquality().hash(_sortOptions),
+    selectedSort,
+    collectionId,
+  );
 
   /// Create a copy of Board
   /// with the given fields replaced by the non-null parameter values.
@@ -303,16 +316,17 @@ class _$BoardImpl with DiagnosticableTreeMixin implements _Board {
 }
 
 abstract class _Board implements Board {
-  const factory _Board(
-      {required final String extensionPkgName,
-      required final String id,
-      required final String name,
-      required final String icon,
-      required final String largeWelcomeImage,
-      required final String url,
-      required final Set<String> sortOptions,
-      final String? selectedSort,
-      final String? collectionId}) = _$BoardImpl;
+  const factory _Board({
+    required final String extensionPkgName,
+    required final String id,
+    required final String name,
+    required final String icon,
+    required final String largeWelcomeImage,
+    required final String url,
+    required final Set<String> sortOptions,
+    final String? selectedSort,
+    final String? collectionId,
+  }) = _$BoardImpl;
 
   @override
   String get extensionPkgName;
@@ -357,8 +371,9 @@ mixin _$BoardIdentity {
 /// @nodoc
 abstract class $BoardIdentityCopyWith<$Res> {
   factory $BoardIdentityCopyWith(
-          BoardIdentity value, $Res Function(BoardIdentity) then) =
-      _$BoardIdentityCopyWithImpl<$Res, BoardIdentity>;
+    BoardIdentity value,
+    $Res Function(BoardIdentity) then,
+  ) = _$BoardIdentityCopyWithImpl<$Res, BoardIdentity>;
   @useResult
   $Res call({String extensionPkgName, String boardId, String boardName});
 }
@@ -382,20 +397,23 @@ class _$BoardIdentityCopyWithImpl<$Res, $Val extends BoardIdentity>
     Object? boardId = null,
     Object? boardName = null,
   }) {
-    return _then(_value.copyWith(
-      extensionPkgName: null == extensionPkgName
-          ? _value.extensionPkgName
-          : extensionPkgName // ignore: cast_nullable_to_non_nullable
-              as String,
-      boardId: null == boardId
-          ? _value.boardId
-          : boardId // ignore: cast_nullable_to_non_nullable
-              as String,
-      boardName: null == boardName
-          ? _value.boardName
-          : boardName // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            extensionPkgName: null == extensionPkgName
+                ? _value.extensionPkgName
+                : extensionPkgName // ignore: cast_nullable_to_non_nullable
+                      as String,
+            boardId: null == boardId
+                ? _value.boardId
+                : boardId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            boardName: null == boardName
+                ? _value.boardName
+                : boardName // ignore: cast_nullable_to_non_nullable
+                      as String,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -403,8 +421,9 @@ class _$BoardIdentityCopyWithImpl<$Res, $Val extends BoardIdentity>
 abstract class _$$BoardIdentityImplCopyWith<$Res>
     implements $BoardIdentityCopyWith<$Res> {
   factory _$$BoardIdentityImplCopyWith(
-          _$BoardIdentityImpl value, $Res Function(_$BoardIdentityImpl) then) =
-      __$$BoardIdentityImplCopyWithImpl<$Res>;
+    _$BoardIdentityImpl value,
+    $Res Function(_$BoardIdentityImpl) then,
+  ) = __$$BoardIdentityImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({String extensionPkgName, String boardId, String boardName});
@@ -415,8 +434,9 @@ class __$$BoardIdentityImplCopyWithImpl<$Res>
     extends _$BoardIdentityCopyWithImpl<$Res, _$BoardIdentityImpl>
     implements _$$BoardIdentityImplCopyWith<$Res> {
   __$$BoardIdentityImplCopyWithImpl(
-      _$BoardIdentityImpl _value, $Res Function(_$BoardIdentityImpl) _then)
-      : super(_value, _then);
+    _$BoardIdentityImpl _value,
+    $Res Function(_$BoardIdentityImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of BoardIdentity
   /// with the given fields replaced by the non-null parameter values.
@@ -427,20 +447,22 @@ class __$$BoardIdentityImplCopyWithImpl<$Res>
     Object? boardId = null,
     Object? boardName = null,
   }) {
-    return _then(_$BoardIdentityImpl(
-      extensionPkgName: null == extensionPkgName
-          ? _value.extensionPkgName
-          : extensionPkgName // ignore: cast_nullable_to_non_nullable
-              as String,
-      boardId: null == boardId
-          ? _value.boardId
-          : boardId // ignore: cast_nullable_to_non_nullable
-              as String,
-      boardName: null == boardName
-          ? _value.boardName
-          : boardName // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+    return _then(
+      _$BoardIdentityImpl(
+        extensionPkgName: null == extensionPkgName
+            ? _value.extensionPkgName
+            : extensionPkgName // ignore: cast_nullable_to_non_nullable
+                  as String,
+        boardId: null == boardId
+            ? _value.boardId
+            : boardId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        boardName: null == boardName
+            ? _value.boardName
+            : boardName // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
   }
 }
 
@@ -449,10 +471,11 @@ class __$$BoardIdentityImplCopyWithImpl<$Res>
 class _$BoardIdentityImpl
     with DiagnosticableTreeMixin
     implements _BoardIdentity {
-  const _$BoardIdentityImpl(
-      {required this.extensionPkgName,
-      required this.boardId,
-      required this.boardName});
+  const _$BoardIdentityImpl({
+    required this.extensionPkgName,
+    required this.boardId,
+    required this.boardName,
+  });
 
   @override
   final String extensionPkgName;
@@ -502,10 +525,11 @@ class _$BoardIdentityImpl
 }
 
 abstract class _BoardIdentity implements BoardIdentity {
-  const factory _BoardIdentity(
-      {required final String extensionPkgName,
-      required final String boardId,
-      required final String boardName}) = _$BoardIdentityImpl;
+  const factory _BoardIdentity({
+    required final String extensionPkgName,
+    required final String boardId,
+    required final String boardName,
+  }) = _$BoardIdentityImpl;
 
   @override
   String get extensionPkgName;
@@ -540,15 +564,17 @@ mixin _$ExtensionBoard {
 /// @nodoc
 abstract class $ExtensionBoardCopyWith<$Res> {
   factory $ExtensionBoardCopyWith(
-          ExtensionBoard value, $Res Function(ExtensionBoard) then) =
-      _$ExtensionBoardCopyWithImpl<$Res, ExtensionBoard>;
+    ExtensionBoard value,
+    $Res Function(ExtensionBoard) then,
+  ) = _$ExtensionBoardCopyWithImpl<$Res, ExtensionBoard>;
   @useResult
-  $Res call(
-      {BoardIdentity identity,
-      String icon,
-      String largeWelcomeImage,
-      String url,
-      Set<String> sortOptions});
+  $Res call({
+    BoardIdentity identity,
+    String icon,
+    String largeWelcomeImage,
+    String url,
+    Set<String> sortOptions,
+  });
 
   $BoardIdentityCopyWith<$Res> get identity;
 }
@@ -574,28 +600,31 @@ class _$ExtensionBoardCopyWithImpl<$Res, $Val extends ExtensionBoard>
     Object? url = null,
     Object? sortOptions = null,
   }) {
-    return _then(_value.copyWith(
-      identity: null == identity
-          ? _value.identity
-          : identity // ignore: cast_nullable_to_non_nullable
-              as BoardIdentity,
-      icon: null == icon
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
-              as String,
-      largeWelcomeImage: null == largeWelcomeImage
-          ? _value.largeWelcomeImage
-          : largeWelcomeImage // ignore: cast_nullable_to_non_nullable
-              as String,
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String,
-      sortOptions: null == sortOptions
-          ? _value.sortOptions
-          : sortOptions // ignore: cast_nullable_to_non_nullable
-              as Set<String>,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            identity: null == identity
+                ? _value.identity
+                : identity // ignore: cast_nullable_to_non_nullable
+                      as BoardIdentity,
+            icon: null == icon
+                ? _value.icon
+                : icon // ignore: cast_nullable_to_non_nullable
+                      as String,
+            largeWelcomeImage: null == largeWelcomeImage
+                ? _value.largeWelcomeImage
+                : largeWelcomeImage // ignore: cast_nullable_to_non_nullable
+                      as String,
+            url: null == url
+                ? _value.url
+                : url // ignore: cast_nullable_to_non_nullable
+                      as String,
+            sortOptions: null == sortOptions
+                ? _value.sortOptions
+                : sortOptions // ignore: cast_nullable_to_non_nullable
+                      as Set<String>,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of ExtensionBoard
@@ -612,17 +641,19 @@ class _$ExtensionBoardCopyWithImpl<$Res, $Val extends ExtensionBoard>
 /// @nodoc
 abstract class _$$ExtensionBoardImplCopyWith<$Res>
     implements $ExtensionBoardCopyWith<$Res> {
-  factory _$$ExtensionBoardImplCopyWith(_$ExtensionBoardImpl value,
-          $Res Function(_$ExtensionBoardImpl) then) =
-      __$$ExtensionBoardImplCopyWithImpl<$Res>;
+  factory _$$ExtensionBoardImplCopyWith(
+    _$ExtensionBoardImpl value,
+    $Res Function(_$ExtensionBoardImpl) then,
+  ) = __$$ExtensionBoardImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {BoardIdentity identity,
-      String icon,
-      String largeWelcomeImage,
-      String url,
-      Set<String> sortOptions});
+  $Res call({
+    BoardIdentity identity,
+    String icon,
+    String largeWelcomeImage,
+    String url,
+    Set<String> sortOptions,
+  });
 
   @override
   $BoardIdentityCopyWith<$Res> get identity;
@@ -633,8 +664,9 @@ class __$$ExtensionBoardImplCopyWithImpl<$Res>
     extends _$ExtensionBoardCopyWithImpl<$Res, _$ExtensionBoardImpl>
     implements _$$ExtensionBoardImplCopyWith<$Res> {
   __$$ExtensionBoardImplCopyWithImpl(
-      _$ExtensionBoardImpl _value, $Res Function(_$ExtensionBoardImpl) _then)
-      : super(_value, _then);
+    _$ExtensionBoardImpl _value,
+    $Res Function(_$ExtensionBoardImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ExtensionBoard
   /// with the given fields replaced by the non-null parameter values.
@@ -647,28 +679,30 @@ class __$$ExtensionBoardImplCopyWithImpl<$Res>
     Object? url = null,
     Object? sortOptions = null,
   }) {
-    return _then(_$ExtensionBoardImpl(
-      identity: null == identity
-          ? _value.identity
-          : identity // ignore: cast_nullable_to_non_nullable
-              as BoardIdentity,
-      icon: null == icon
-          ? _value.icon
-          : icon // ignore: cast_nullable_to_non_nullable
-              as String,
-      largeWelcomeImage: null == largeWelcomeImage
-          ? _value.largeWelcomeImage
-          : largeWelcomeImage // ignore: cast_nullable_to_non_nullable
-              as String,
-      url: null == url
-          ? _value.url
-          : url // ignore: cast_nullable_to_non_nullable
-              as String,
-      sortOptions: null == sortOptions
-          ? _value._sortOptions
-          : sortOptions // ignore: cast_nullable_to_non_nullable
-              as Set<String>,
-    ));
+    return _then(
+      _$ExtensionBoardImpl(
+        identity: null == identity
+            ? _value.identity
+            : identity // ignore: cast_nullable_to_non_nullable
+                  as BoardIdentity,
+        icon: null == icon
+            ? _value.icon
+            : icon // ignore: cast_nullable_to_non_nullable
+                  as String,
+        largeWelcomeImage: null == largeWelcomeImage
+            ? _value.largeWelcomeImage
+            : largeWelcomeImage // ignore: cast_nullable_to_non_nullable
+                  as String,
+        url: null == url
+            ? _value.url
+            : url // ignore: cast_nullable_to_non_nullable
+                  as String,
+        sortOptions: null == sortOptions
+            ? _value._sortOptions
+            : sortOptions // ignore: cast_nullable_to_non_nullable
+                  as Set<String>,
+      ),
+    );
   }
 }
 
@@ -677,13 +711,13 @@ class __$$ExtensionBoardImplCopyWithImpl<$Res>
 class _$ExtensionBoardImpl
     with DiagnosticableTreeMixin
     implements _ExtensionBoard {
-  const _$ExtensionBoardImpl(
-      {required this.identity,
-      required this.icon,
-      required this.largeWelcomeImage,
-      required this.url,
-      required final Set<String> sortOptions})
-      : _sortOptions = sortOptions;
+  const _$ExtensionBoardImpl({
+    required this.identity,
+    required this.icon,
+    required this.largeWelcomeImage,
+    required this.url,
+    required final Set<String> sortOptions,
+  }) : _sortOptions = sortOptions;
 
   @override
   final BoardIdentity identity;
@@ -729,18 +763,21 @@ class _$ExtensionBoardImpl
             (identical(other.largeWelcomeImage, largeWelcomeImage) ||
                 other.largeWelcomeImage == largeWelcomeImage) &&
             (identical(other.url, url) || other.url == url) &&
-            const DeepCollectionEquality()
-                .equals(other._sortOptions, _sortOptions));
+            const DeepCollectionEquality().equals(
+              other._sortOptions,
+              _sortOptions,
+            ));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      identity,
-      icon,
-      largeWelcomeImage,
-      url,
-      const DeepCollectionEquality().hash(_sortOptions));
+    runtimeType,
+    identity,
+    icon,
+    largeWelcomeImage,
+    url,
+    const DeepCollectionEquality().hash(_sortOptions),
+  );
 
   /// Create a copy of ExtensionBoard
   /// with the given fields replaced by the non-null parameter values.
@@ -749,16 +786,19 @@ class _$ExtensionBoardImpl
   @pragma('vm:prefer-inline')
   _$$ExtensionBoardImplCopyWith<_$ExtensionBoardImpl> get copyWith =>
       __$$ExtensionBoardImplCopyWithImpl<_$ExtensionBoardImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _ExtensionBoard implements ExtensionBoard {
-  const factory _ExtensionBoard(
-      {required final BoardIdentity identity,
-      required final String icon,
-      required final String largeWelcomeImage,
-      required final String url,
-      required final Set<String> sortOptions}) = _$ExtensionBoardImpl;
+  const factory _ExtensionBoard({
+    required final BoardIdentity identity,
+    required final String icon,
+    required final String largeWelcomeImage,
+    required final String url,
+    required final Set<String> sortOptions,
+  }) = _$ExtensionBoardImpl;
 
   @override
   BoardIdentity get identity;
@@ -795,11 +835,15 @@ mixin _$CollectionBoard {
 /// @nodoc
 abstract class $CollectionBoardCopyWith<$Res> {
   factory $CollectionBoardCopyWith(
-          CollectionBoard value, $Res Function(CollectionBoard) then) =
-      _$CollectionBoardCopyWithImpl<$Res, CollectionBoard>;
+    CollectionBoard value,
+    $Res Function(CollectionBoard) then,
+  ) = _$CollectionBoardCopyWithImpl<$Res, CollectionBoard>;
   @useResult
-  $Res call(
-      {BoardIdentity identity, String collectionId, String? selectedSort});
+  $Res call({
+    BoardIdentity identity,
+    String collectionId,
+    String? selectedSort,
+  });
 
   $BoardIdentityCopyWith<$Res> get identity;
 }
@@ -823,20 +867,23 @@ class _$CollectionBoardCopyWithImpl<$Res, $Val extends CollectionBoard>
     Object? collectionId = null,
     Object? selectedSort = freezed,
   }) {
-    return _then(_value.copyWith(
-      identity: null == identity
-          ? _value.identity
-          : identity // ignore: cast_nullable_to_non_nullable
-              as BoardIdentity,
-      collectionId: null == collectionId
-          ? _value.collectionId
-          : collectionId // ignore: cast_nullable_to_non_nullable
-              as String,
-      selectedSort: freezed == selectedSort
-          ? _value.selectedSort
-          : selectedSort // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            identity: null == identity
+                ? _value.identity
+                : identity // ignore: cast_nullable_to_non_nullable
+                      as BoardIdentity,
+            collectionId: null == collectionId
+                ? _value.collectionId
+                : collectionId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            selectedSort: freezed == selectedSort
+                ? _value.selectedSort
+                : selectedSort // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of CollectionBoard
@@ -853,13 +900,17 @@ class _$CollectionBoardCopyWithImpl<$Res, $Val extends CollectionBoard>
 /// @nodoc
 abstract class _$$CollectionBoardImplCopyWith<$Res>
     implements $CollectionBoardCopyWith<$Res> {
-  factory _$$CollectionBoardImplCopyWith(_$CollectionBoardImpl value,
-          $Res Function(_$CollectionBoardImpl) then) =
-      __$$CollectionBoardImplCopyWithImpl<$Res>;
+  factory _$$CollectionBoardImplCopyWith(
+    _$CollectionBoardImpl value,
+    $Res Function(_$CollectionBoardImpl) then,
+  ) = __$$CollectionBoardImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {BoardIdentity identity, String collectionId, String? selectedSort});
+  $Res call({
+    BoardIdentity identity,
+    String collectionId,
+    String? selectedSort,
+  });
 
   @override
   $BoardIdentityCopyWith<$Res> get identity;
@@ -870,8 +921,9 @@ class __$$CollectionBoardImplCopyWithImpl<$Res>
     extends _$CollectionBoardCopyWithImpl<$Res, _$CollectionBoardImpl>
     implements _$$CollectionBoardImplCopyWith<$Res> {
   __$$CollectionBoardImplCopyWithImpl(
-      _$CollectionBoardImpl _value, $Res Function(_$CollectionBoardImpl) _then)
-      : super(_value, _then);
+    _$CollectionBoardImpl _value,
+    $Res Function(_$CollectionBoardImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CollectionBoard
   /// with the given fields replaced by the non-null parameter values.
@@ -882,20 +934,22 @@ class __$$CollectionBoardImplCopyWithImpl<$Res>
     Object? collectionId = null,
     Object? selectedSort = freezed,
   }) {
-    return _then(_$CollectionBoardImpl(
-      identity: null == identity
-          ? _value.identity
-          : identity // ignore: cast_nullable_to_non_nullable
-              as BoardIdentity,
-      collectionId: null == collectionId
-          ? _value.collectionId
-          : collectionId // ignore: cast_nullable_to_non_nullable
-              as String,
-      selectedSort: freezed == selectedSort
-          ? _value.selectedSort
-          : selectedSort // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$CollectionBoardImpl(
+        identity: null == identity
+            ? _value.identity
+            : identity // ignore: cast_nullable_to_non_nullable
+                  as BoardIdentity,
+        collectionId: null == collectionId
+            ? _value.collectionId
+            : collectionId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        selectedSort: freezed == selectedSort
+            ? _value.selectedSort
+            : selectedSort // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
@@ -904,8 +958,11 @@ class __$$CollectionBoardImplCopyWithImpl<$Res>
 class _$CollectionBoardImpl
     with DiagnosticableTreeMixin
     implements _CollectionBoard {
-  const _$CollectionBoardImpl(
-      {required this.identity, required this.collectionId, this.selectedSort});
+  const _$CollectionBoardImpl({
+    required this.identity,
+    required this.collectionId,
+    this.selectedSort,
+  });
 
   @override
   final BoardIdentity identity;
@@ -953,14 +1010,17 @@ class _$CollectionBoardImpl
   @pragma('vm:prefer-inline')
   _$$CollectionBoardImplCopyWith<_$CollectionBoardImpl> get copyWith =>
       __$$CollectionBoardImplCopyWithImpl<_$CollectionBoardImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _CollectionBoard implements CollectionBoard {
-  const factory _CollectionBoard(
-      {required final BoardIdentity identity,
-      required final String collectionId,
-      final String? selectedSort}) = _$CollectionBoardImpl;
+  const factory _CollectionBoard({
+    required final BoardIdentity identity,
+    required final String collectionId,
+    final String? selectedSort,
+  }) = _$CollectionBoardImpl;
 
   @override
   BoardIdentity get identity;
@@ -995,8 +1055,9 @@ mixin _$ThreadsFilter {
 /// @nodoc
 abstract class $ThreadsFilterCopyWith<$Res> {
   factory $ThreadsFilterCopyWith(
-          ThreadsFilter value, $Res Function(ThreadsFilter) then) =
-      _$ThreadsFilterCopyWithImpl<$Res, ThreadsFilter>;
+    ThreadsFilter value,
+    $Res Function(ThreadsFilter) then,
+  ) = _$ThreadsFilterCopyWithImpl<$Res, ThreadsFilter>;
   @useResult
   $Res call({Map<String, String> boardSorts, String keywords});
 }
@@ -1015,20 +1076,20 @@ class _$ThreadsFilterCopyWithImpl<$Res, $Val extends ThreadsFilter>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? boardSorts = null,
-    Object? keywords = null,
-  }) {
-    return _then(_value.copyWith(
-      boardSorts: null == boardSorts
-          ? _value.boardSorts
-          : boardSorts // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>,
-      keywords: null == keywords
-          ? _value.keywords
-          : keywords // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
+  $Res call({Object? boardSorts = null, Object? keywords = null}) {
+    return _then(
+      _value.copyWith(
+            boardSorts: null == boardSorts
+                ? _value.boardSorts
+                : boardSorts // ignore: cast_nullable_to_non_nullable
+                      as Map<String, String>,
+            keywords: null == keywords
+                ? _value.keywords
+                : keywords // ignore: cast_nullable_to_non_nullable
+                      as String,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -1036,8 +1097,9 @@ class _$ThreadsFilterCopyWithImpl<$Res, $Val extends ThreadsFilter>
 abstract class _$$ThreadsFilterImplCopyWith<$Res>
     implements $ThreadsFilterCopyWith<$Res> {
   factory _$$ThreadsFilterImplCopyWith(
-          _$ThreadsFilterImpl value, $Res Function(_$ThreadsFilterImpl) then) =
-      __$$ThreadsFilterImplCopyWithImpl<$Res>;
+    _$ThreadsFilterImpl value,
+    $Res Function(_$ThreadsFilterImpl) then,
+  ) = __$$ThreadsFilterImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Map<String, String> boardSorts, String keywords});
@@ -1048,27 +1110,27 @@ class __$$ThreadsFilterImplCopyWithImpl<$Res>
     extends _$ThreadsFilterCopyWithImpl<$Res, _$ThreadsFilterImpl>
     implements _$$ThreadsFilterImplCopyWith<$Res> {
   __$$ThreadsFilterImplCopyWithImpl(
-      _$ThreadsFilterImpl _value, $Res Function(_$ThreadsFilterImpl) _then)
-      : super(_value, _then);
+    _$ThreadsFilterImpl _value,
+    $Res Function(_$ThreadsFilterImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ThreadsFilter
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? boardSorts = null,
-    Object? keywords = null,
-  }) {
-    return _then(_$ThreadsFilterImpl(
-      boardSorts: null == boardSorts
-          ? _value._boardSorts
-          : boardSorts // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>,
-      keywords: null == keywords
-          ? _value.keywords
-          : keywords // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
+  $Res call({Object? boardSorts = null, Object? keywords = null}) {
+    return _then(
+      _$ThreadsFilterImpl(
+        boardSorts: null == boardSorts
+            ? _value._boardSorts
+            : boardSorts // ignore: cast_nullable_to_non_nullable
+                  as Map<String, String>,
+        keywords: null == keywords
+            ? _value.keywords
+            : keywords // ignore: cast_nullable_to_non_nullable
+                  as String,
+      ),
+    );
   }
 }
 
@@ -1077,9 +1139,10 @@ class __$$ThreadsFilterImplCopyWithImpl<$Res>
 class _$ThreadsFilterImpl
     with DiagnosticableTreeMixin
     implements _ThreadsFilter {
-  const _$ThreadsFilterImpl(
-      {required final Map<String, String> boardSorts, required this.keywords})
-      : _boardSorts = boardSorts;
+  const _$ThreadsFilterImpl({
+    required final Map<String, String> boardSorts,
+    required this.keywords,
+  }) : _boardSorts = boardSorts;
 
   final Map<String, String> _boardSorts;
   @override
@@ -1111,8 +1174,10 @@ class _$ThreadsFilterImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ThreadsFilterImpl &&
-            const DeepCollectionEquality()
-                .equals(other._boardSorts, _boardSorts) &&
+            const DeepCollectionEquality().equals(
+              other._boardSorts,
+              _boardSorts,
+            ) &&
             (identical(other.keywords, keywords) ||
                 other.keywords == keywords));
   }
@@ -1120,7 +1185,10 @@ class _$ThreadsFilterImpl
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_boardSorts), keywords);
+    runtimeType,
+    const DeepCollectionEquality().hash(_boardSorts),
+    keywords,
+  );
 
   /// Create a copy of ThreadsFilter
   /// with the given fields replaced by the non-null parameter values.
@@ -1132,16 +1200,15 @@ class _$ThreadsFilterImpl
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ThreadsFilterImplToJson(
-      this,
-    );
+    return _$$ThreadsFilterImplToJson(this);
   }
 }
 
 abstract class _ThreadsFilter implements ThreadsFilter {
-  const factory _ThreadsFilter(
-      {required final Map<String, String> boardSorts,
-      required final String keywords}) = _$ThreadsFilterImpl;
+  const factory _ThreadsFilter({
+    required final Map<String, String> boardSorts,
+    required final String keywords,
+  }) = _$ThreadsFilterImpl;
 
   @override
   Map<String, String> get boardSorts;
@@ -1173,8 +1240,9 @@ mixin _$ThreadsSorting {
 /// @nodoc
 abstract class $ThreadsSortingCopyWith<$Res> {
   factory $ThreadsSortingCopyWith(
-          ThreadsSorting value, $Res Function(ThreadsSorting) then) =
-      _$ThreadsSortingCopyWithImpl<$Res, ThreadsSorting>;
+    ThreadsSorting value,
+    $Res Function(ThreadsSorting) then,
+  ) = _$ThreadsSortingCopyWithImpl<$Res, ThreadsSorting>;
   @useResult
   $Res call({List<String> boardsOrder});
 }
@@ -1193,24 +1261,26 @@ class _$ThreadsSortingCopyWithImpl<$Res, $Val extends ThreadsSorting>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? boardsOrder = null,
-  }) {
-    return _then(_value.copyWith(
-      boardsOrder: null == boardsOrder
-          ? _value.boardsOrder
-          : boardsOrder // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-    ) as $Val);
+  $Res call({Object? boardsOrder = null}) {
+    return _then(
+      _value.copyWith(
+            boardsOrder: null == boardsOrder
+                ? _value.boardsOrder
+                : boardsOrder // ignore: cast_nullable_to_non_nullable
+                      as List<String>,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$ThreadsSortingImplCopyWith<$Res>
     implements $ThreadsSortingCopyWith<$Res> {
-  factory _$$ThreadsSortingImplCopyWith(_$ThreadsSortingImpl value,
-          $Res Function(_$ThreadsSortingImpl) then) =
-      __$$ThreadsSortingImplCopyWithImpl<$Res>;
+  factory _$$ThreadsSortingImplCopyWith(
+    _$ThreadsSortingImpl value,
+    $Res Function(_$ThreadsSortingImpl) then,
+  ) = __$$ThreadsSortingImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({List<String> boardsOrder});
@@ -1221,22 +1291,23 @@ class __$$ThreadsSortingImplCopyWithImpl<$Res>
     extends _$ThreadsSortingCopyWithImpl<$Res, _$ThreadsSortingImpl>
     implements _$$ThreadsSortingImplCopyWith<$Res> {
   __$$ThreadsSortingImplCopyWithImpl(
-      _$ThreadsSortingImpl _value, $Res Function(_$ThreadsSortingImpl) _then)
-      : super(_value, _then);
+    _$ThreadsSortingImpl _value,
+    $Res Function(_$ThreadsSortingImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ThreadsSorting
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? boardsOrder = null,
-  }) {
-    return _then(_$ThreadsSortingImpl(
-      boardsOrder: null == boardsOrder
-          ? _value._boardsOrder
-          : boardsOrder // ignore: cast_nullable_to_non_nullable
-              as List<String>,
-    ));
+  $Res call({Object? boardsOrder = null}) {
+    return _then(
+      _$ThreadsSortingImpl(
+        boardsOrder: null == boardsOrder
+            ? _value._boardsOrder
+            : boardsOrder // ignore: cast_nullable_to_non_nullable
+                  as List<String>,
+      ),
+    );
   }
 }
 
@@ -1246,7 +1317,7 @@ class _$ThreadsSortingImpl
     with DiagnosticableTreeMixin
     implements _ThreadsSorting {
   const _$ThreadsSortingImpl({required final List<String> boardsOrder})
-      : _boardsOrder = boardsOrder;
+    : _boardsOrder = boardsOrder;
 
   final List<String> _boardsOrder;
   @override
@@ -1274,14 +1345,18 @@ class _$ThreadsSortingImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ThreadsSortingImpl &&
-            const DeepCollectionEquality()
-                .equals(other._boardsOrder, _boardsOrder));
+            const DeepCollectionEquality().equals(
+              other._boardsOrder,
+              _boardsOrder,
+            ));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
-      runtimeType, const DeepCollectionEquality().hash(_boardsOrder));
+    runtimeType,
+    const DeepCollectionEquality().hash(_boardsOrder),
+  );
 
   /// Create a copy of ThreadsSorting
   /// with the given fields replaced by the non-null parameter values.
@@ -1290,13 +1365,13 @@ class _$ThreadsSortingImpl
   @pragma('vm:prefer-inline')
   _$$ThreadsSortingImplCopyWith<_$ThreadsSortingImpl> get copyWith =>
       __$$ThreadsSortingImplCopyWithImpl<_$ThreadsSortingImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$ThreadsSortingImplToJson(
-      this,
-    );
+    return _$$ThreadsSortingImplToJson(this);
   }
 }
 

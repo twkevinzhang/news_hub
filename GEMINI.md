@@ -8,7 +8,7 @@ News Hub 是一個使用 Flutter(前端)和 Python(後端 sidecar 服務)構建�
 
 **核心技術:**
 
-- Flutter 3.29+ with Dart 3.7+
+- Flutter 3.38+ with Dart 3.10+
 - Python 3.8+ for sidecar service
 - gRPC for client-server communication
 - Protocol Buffers for data serialization

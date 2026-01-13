@@ -12,7 +12,8 @@ part of 'models.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$Pagination {
@@ -35,15 +36,17 @@ mixin _$Pagination {
 /// @nodoc
 abstract class $PaginationCopyWith<$Res> {
   factory $PaginationCopyWith(
-          Pagination value, $Res Function(Pagination) then) =
-      _$PaginationCopyWithImpl<$Res, Pagination>;
+    Pagination value,
+    $Res Function(Pagination) then,
+  ) = _$PaginationCopyWithImpl<$Res, Pagination>;
   @useResult
-  $Res call(
-      {int? page,
-      int? pageSize,
-      int? limit,
-      String? prevCursor,
-      String? nextCursor});
+  $Res call({
+    int? page,
+    int? pageSize,
+    int? limit,
+    String? prevCursor,
+    String? nextCursor,
+  });
 }
 
 /// @nodoc
@@ -67,28 +70,31 @@ class _$PaginationCopyWithImpl<$Res, $Val extends Pagination>
     Object? prevCursor = freezed,
     Object? nextCursor = freezed,
   }) {
-    return _then(_value.copyWith(
-      page: freezed == page
-          ? _value.page
-          : page // ignore: cast_nullable_to_non_nullable
-              as int?,
-      pageSize: freezed == pageSize
-          ? _value.pageSize
-          : pageSize // ignore: cast_nullable_to_non_nullable
-              as int?,
-      limit: freezed == limit
-          ? _value.limit
-          : limit // ignore: cast_nullable_to_non_nullable
-              as int?,
-      prevCursor: freezed == prevCursor
-          ? _value.prevCursor
-          : prevCursor // ignore: cast_nullable_to_non_nullable
-              as String?,
-      nextCursor: freezed == nextCursor
-          ? _value.nextCursor
-          : nextCursor // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            page: freezed == page
+                ? _value.page
+                : page // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            pageSize: freezed == pageSize
+                ? _value.pageSize
+                : pageSize // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            limit: freezed == limit
+                ? _value.limit
+                : limit // ignore: cast_nullable_to_non_nullable
+                      as int?,
+            prevCursor: freezed == prevCursor
+                ? _value.prevCursor
+                : prevCursor // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            nextCursor: freezed == nextCursor
+                ? _value.nextCursor
+                : nextCursor // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -96,16 +102,18 @@ class _$PaginationCopyWithImpl<$Res, $Val extends Pagination>
 abstract class _$$PaginationImplCopyWith<$Res>
     implements $PaginationCopyWith<$Res> {
   factory _$$PaginationImplCopyWith(
-          _$PaginationImpl value, $Res Function(_$PaginationImpl) then) =
-      __$$PaginationImplCopyWithImpl<$Res>;
+    _$PaginationImpl value,
+    $Res Function(_$PaginationImpl) then,
+  ) = __$$PaginationImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {int? page,
-      int? pageSize,
-      int? limit,
-      String? prevCursor,
-      String? nextCursor});
+  $Res call({
+    int? page,
+    int? pageSize,
+    int? limit,
+    String? prevCursor,
+    String? nextCursor,
+  });
 }
 
 /// @nodoc
@@ -113,8 +121,9 @@ class __$$PaginationImplCopyWithImpl<$Res>
     extends _$PaginationCopyWithImpl<$Res, _$PaginationImpl>
     implements _$$PaginationImplCopyWith<$Res> {
   __$$PaginationImplCopyWithImpl(
-      _$PaginationImpl _value, $Res Function(_$PaginationImpl) _then)
-      : super(_value, _then);
+    _$PaginationImpl _value,
+    $Res Function(_$PaginationImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Pagination
   /// with the given fields replaced by the non-null parameter values.
@@ -127,36 +136,43 @@ class __$$PaginationImplCopyWithImpl<$Res>
     Object? prevCursor = freezed,
     Object? nextCursor = freezed,
   }) {
-    return _then(_$PaginationImpl(
-      page: freezed == page
-          ? _value.page
-          : page // ignore: cast_nullable_to_non_nullable
-              as int?,
-      pageSize: freezed == pageSize
-          ? _value.pageSize
-          : pageSize // ignore: cast_nullable_to_non_nullable
-              as int?,
-      limit: freezed == limit
-          ? _value.limit
-          : limit // ignore: cast_nullable_to_non_nullable
-              as int?,
-      prevCursor: freezed == prevCursor
-          ? _value.prevCursor
-          : prevCursor // ignore: cast_nullable_to_non_nullable
-              as String?,
-      nextCursor: freezed == nextCursor
-          ? _value.nextCursor
-          : nextCursor // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$PaginationImpl(
+        page: freezed == page
+            ? _value.page
+            : page // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        pageSize: freezed == pageSize
+            ? _value.pageSize
+            : pageSize // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        limit: freezed == limit
+            ? _value.limit
+            : limit // ignore: cast_nullable_to_non_nullable
+                  as int?,
+        prevCursor: freezed == prevCursor
+            ? _value.prevCursor
+            : prevCursor // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        nextCursor: freezed == nextCursor
+            ? _value.nextCursor
+            : nextCursor // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 @JsonSerializable(createFactory: false)
 class _$PaginationImpl implements _Pagination {
-  const _$PaginationImpl(
-      {this.page, this.pageSize, this.limit, this.prevCursor, this.nextCursor});
+  const _$PaginationImpl({
+    this.page,
+    this.pageSize,
+    this.limit,
+    this.prevCursor,
+    this.nextCursor,
+  });
 
   @override
   final int? page;
@@ -204,19 +220,18 @@ class _$PaginationImpl implements _Pagination {
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$PaginationImplToJson(
-      this,
-    );
+    return _$$PaginationImplToJson(this);
   }
 }
 
 abstract class _Pagination implements Pagination {
-  const factory _Pagination(
-      {final int? page,
-      final int? pageSize,
-      final int? limit,
-      final String? prevCursor,
-      final String? nextCursor}) = _$PaginationImpl;
+  const factory _Pagination({
+    final int? page,
+    final int? pageSize,
+    final int? limit,
+    final String? prevCursor,
+    final String? nextCursor,
+  }) = _$PaginationImpl;
 
   @override
   int? get page;
@@ -245,16 +260,14 @@ mixin _$Result<R> {
     required TResult Function() loading,
     required TResult Function(R data) completed,
     required TResult Function(Exception exception) error,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(R data)? completed,
     TResult? Function(Exception exception)? error,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
@@ -262,24 +275,21 @@ mixin _$Result<R> {
     TResult Function(R data)? completed,
     TResult Function(Exception exception)? error,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
     required TResult Function(ResultInitial<R> value) initial,
     required TResult Function(ResultLoading<R> value) loading,
     required TResult Function(ResultCompleted<R> value) completed,
     required TResult Function(ResultError<R> value) error,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
     TResult? Function(ResultInitial<R> value)? initial,
     TResult? Function(ResultLoading<R> value)? loading,
     TResult? Function(ResultCompleted<R> value)? completed,
     TResult? Function(ResultError<R> value)? error,
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
     TResult Function(ResultInitial<R> value)? initial,
@@ -287,8 +297,7 @@ mixin _$Result<R> {
     TResult Function(ResultCompleted<R> value)? completed,
     TResult Function(ResultError<R> value)? error,
     required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
+  }) => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -313,18 +322,20 @@ class _$ResultCopyWithImpl<R, $Res, $Val extends Result<R>>
 
 /// @nodoc
 abstract class _$$ResultInitialImplCopyWith<R, $Res> {
-  factory _$$ResultInitialImplCopyWith(_$ResultInitialImpl<R> value,
-          $Res Function(_$ResultInitialImpl<R>) then) =
-      __$$ResultInitialImplCopyWithImpl<R, $Res>;
+  factory _$$ResultInitialImplCopyWith(
+    _$ResultInitialImpl<R> value,
+    $Res Function(_$ResultInitialImpl<R>) then,
+  ) = __$$ResultInitialImplCopyWithImpl<R, $Res>;
 }
 
 /// @nodoc
 class __$$ResultInitialImplCopyWithImpl<R, $Res>
     extends _$ResultCopyWithImpl<R, $Res, _$ResultInitialImpl<R>>
     implements _$$ResultInitialImplCopyWith<R, $Res> {
-  __$$ResultInitialImplCopyWithImpl(_$ResultInitialImpl<R> _value,
-      $Res Function(_$ResultInitialImpl<R>) _then)
-      : super(_value, _then);
+  __$$ResultInitialImplCopyWithImpl(
+    _$ResultInitialImpl<R> _value,
+    $Res Function(_$ResultInitialImpl<R>) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Result
   /// with the given fields replaced by the non-null parameter values.
@@ -430,18 +441,20 @@ abstract class ResultInitial<R> implements Result<R> {
 
 /// @nodoc
 abstract class _$$ResultLoadingImplCopyWith<R, $Res> {
-  factory _$$ResultLoadingImplCopyWith(_$ResultLoadingImpl<R> value,
-          $Res Function(_$ResultLoadingImpl<R>) then) =
-      __$$ResultLoadingImplCopyWithImpl<R, $Res>;
+  factory _$$ResultLoadingImplCopyWith(
+    _$ResultLoadingImpl<R> value,
+    $Res Function(_$ResultLoadingImpl<R>) then,
+  ) = __$$ResultLoadingImplCopyWithImpl<R, $Res>;
 }
 
 /// @nodoc
 class __$$ResultLoadingImplCopyWithImpl<R, $Res>
     extends _$ResultCopyWithImpl<R, $Res, _$ResultLoadingImpl<R>>
     implements _$$ResultLoadingImplCopyWith<R, $Res> {
-  __$$ResultLoadingImplCopyWithImpl(_$ResultLoadingImpl<R> _value,
-      $Res Function(_$ResultLoadingImpl<R>) _then)
-      : super(_value, _then);
+  __$$ResultLoadingImplCopyWithImpl(
+    _$ResultLoadingImpl<R> _value,
+    $Res Function(_$ResultLoadingImpl<R>) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Result
   /// with the given fields replaced by the non-null parameter values.
@@ -547,9 +560,10 @@ abstract class ResultLoading<R> implements Result<R> {
 
 /// @nodoc
 abstract class _$$ResultCompletedImplCopyWith<R, $Res> {
-  factory _$$ResultCompletedImplCopyWith(_$ResultCompletedImpl<R> value,
-          $Res Function(_$ResultCompletedImpl<R>) then) =
-      __$$ResultCompletedImplCopyWithImpl<R, $Res>;
+  factory _$$ResultCompletedImplCopyWith(
+    _$ResultCompletedImpl<R> value,
+    $Res Function(_$ResultCompletedImpl<R>) then,
+  ) = __$$ResultCompletedImplCopyWithImpl<R, $Res>;
   @useResult
   $Res call({R data});
 }
@@ -558,23 +572,24 @@ abstract class _$$ResultCompletedImplCopyWith<R, $Res> {
 class __$$ResultCompletedImplCopyWithImpl<R, $Res>
     extends _$ResultCopyWithImpl<R, $Res, _$ResultCompletedImpl<R>>
     implements _$$ResultCompletedImplCopyWith<R, $Res> {
-  __$$ResultCompletedImplCopyWithImpl(_$ResultCompletedImpl<R> _value,
-      $Res Function(_$ResultCompletedImpl<R>) _then)
-      : super(_value, _then);
+  __$$ResultCompletedImplCopyWithImpl(
+    _$ResultCompletedImpl<R> _value,
+    $Res Function(_$ResultCompletedImpl<R>) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Result
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? data = freezed,
-  }) {
-    return _then(_$ResultCompletedImpl<R>(
-      freezed == data
-          ? _value.data
-          : data // ignore: cast_nullable_to_non_nullable
-              as R,
-    ));
+  $Res call({Object? data = freezed}) {
+    return _then(
+      _$ResultCompletedImpl<R>(
+        freezed == data
+            ? _value.data
+            : data // ignore: cast_nullable_to_non_nullable
+                  as R,
+      ),
+    );
   }
 }
 
@@ -610,7 +625,9 @@ class _$ResultCompletedImpl<R> implements ResultCompleted<R> {
   @pragma('vm:prefer-inline')
   _$$ResultCompletedImplCopyWith<R, _$ResultCompletedImpl<R>> get copyWith =>
       __$$ResultCompletedImplCopyWithImpl<R, _$ResultCompletedImpl<R>>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs
@@ -701,9 +718,10 @@ abstract class ResultCompleted<R> implements Result<R> {
 
 /// @nodoc
 abstract class _$$ResultErrorImplCopyWith<R, $Res> {
-  factory _$$ResultErrorImplCopyWith(_$ResultErrorImpl<R> value,
-          $Res Function(_$ResultErrorImpl<R>) then) =
-      __$$ResultErrorImplCopyWithImpl<R, $Res>;
+  factory _$$ResultErrorImplCopyWith(
+    _$ResultErrorImpl<R> value,
+    $Res Function(_$ResultErrorImpl<R>) then,
+  ) = __$$ResultErrorImplCopyWithImpl<R, $Res>;
   @useResult
   $Res call({Exception exception});
 }
@@ -713,22 +731,23 @@ class __$$ResultErrorImplCopyWithImpl<R, $Res>
     extends _$ResultCopyWithImpl<R, $Res, _$ResultErrorImpl<R>>
     implements _$$ResultErrorImplCopyWith<R, $Res> {
   __$$ResultErrorImplCopyWithImpl(
-      _$ResultErrorImpl<R> _value, $Res Function(_$ResultErrorImpl<R>) _then)
-      : super(_value, _then);
+    _$ResultErrorImpl<R> _value,
+    $Res Function(_$ResultErrorImpl<R>) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of Result
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? exception = null,
-  }) {
-    return _then(_$ResultErrorImpl<R>(
-      null == exception
-          ? _value.exception
-          : exception // ignore: cast_nullable_to_non_nullable
-              as Exception,
-    ));
+  $Res call({Object? exception = null}) {
+    return _then(
+      _$ResultErrorImpl<R>(
+        null == exception
+            ? _value.exception
+            : exception // ignore: cast_nullable_to_non_nullable
+                  as Exception,
+      ),
+    );
   }
 }
 
@@ -764,7 +783,9 @@ class _$ResultErrorImpl<R> implements ResultError<R> {
   @pragma('vm:prefer-inline')
   _$$ResultErrorImplCopyWith<R, _$ResultErrorImpl<R>> get copyWith =>
       __$$ResultErrorImplCopyWithImpl<R, _$ResultErrorImpl<R>>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   @optionalTypeArgs

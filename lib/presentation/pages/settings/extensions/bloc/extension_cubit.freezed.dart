@@ -12,7 +12,8 @@ part of 'extension_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ExtensionState {
@@ -31,13 +32,15 @@ mixin _$ExtensionState {
 /// @nodoc
 abstract class $ExtensionStateCopyWith<$Res> {
   factory $ExtensionStateCopyWith(
-          ExtensionState value, $Res Function(ExtensionState) then) =
-      _$ExtensionStateCopyWithImpl<$Res, ExtensionState>;
+    ExtensionState value,
+    $Res Function(ExtensionState) then,
+  ) = _$ExtensionStateCopyWithImpl<$Res, ExtensionState>;
   @useResult
-  $Res call(
-      {String? keyword,
-      Result<Extensions> extensions,
-      Map<String, Pair<InstallStatus, double>> installingExtensions});
+  $Res call({
+    String? keyword,
+    Result<Extensions> extensions,
+    Map<String, Pair<InstallStatus, double>> installingExtensions,
+  });
 
   $ResultCopyWith<Extensions, $Res> get extensions;
 }
@@ -61,20 +64,23 @@ class _$ExtensionStateCopyWithImpl<$Res, $Val extends ExtensionState>
     Object? extensions = null,
     Object? installingExtensions = null,
   }) {
-    return _then(_value.copyWith(
-      keyword: freezed == keyword
-          ? _value.keyword
-          : keyword // ignore: cast_nullable_to_non_nullable
-              as String?,
-      extensions: null == extensions
-          ? _value.extensions
-          : extensions // ignore: cast_nullable_to_non_nullable
-              as Result<Extensions>,
-      installingExtensions: null == installingExtensions
-          ? _value.installingExtensions
-          : installingExtensions // ignore: cast_nullable_to_non_nullable
-              as Map<String, Pair<InstallStatus, double>>,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            keyword: freezed == keyword
+                ? _value.keyword
+                : keyword // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            extensions: null == extensions
+                ? _value.extensions
+                : extensions // ignore: cast_nullable_to_non_nullable
+                      as Result<Extensions>,
+            installingExtensions: null == installingExtensions
+                ? _value.installingExtensions
+                : installingExtensions // ignore: cast_nullable_to_non_nullable
+                      as Map<String, Pair<InstallStatus, double>>,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of ExtensionState
@@ -91,15 +97,17 @@ class _$ExtensionStateCopyWithImpl<$Res, $Val extends ExtensionState>
 /// @nodoc
 abstract class _$$ExtensionsStateImplCopyWith<$Res>
     implements $ExtensionStateCopyWith<$Res> {
-  factory _$$ExtensionsStateImplCopyWith(_$ExtensionsStateImpl value,
-          $Res Function(_$ExtensionsStateImpl) then) =
-      __$$ExtensionsStateImplCopyWithImpl<$Res>;
+  factory _$$ExtensionsStateImplCopyWith(
+    _$ExtensionsStateImpl value,
+    $Res Function(_$ExtensionsStateImpl) then,
+  ) = __$$ExtensionsStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String? keyword,
-      Result<Extensions> extensions,
-      Map<String, Pair<InstallStatus, double>> installingExtensions});
+  $Res call({
+    String? keyword,
+    Result<Extensions> extensions,
+    Map<String, Pair<InstallStatus, double>> installingExtensions,
+  });
 
   @override
   $ResultCopyWith<Extensions, $Res> get extensions;
@@ -110,8 +118,9 @@ class __$$ExtensionsStateImplCopyWithImpl<$Res>
     extends _$ExtensionStateCopyWithImpl<$Res, _$ExtensionsStateImpl>
     implements _$$ExtensionsStateImplCopyWith<$Res> {
   __$$ExtensionsStateImplCopyWithImpl(
-      _$ExtensionsStateImpl _value, $Res Function(_$ExtensionsStateImpl) _then)
-      : super(_value, _then);
+    _$ExtensionsStateImpl _value,
+    $Res Function(_$ExtensionsStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ExtensionState
   /// with the given fields replaced by the non-null parameter values.
@@ -122,32 +131,34 @@ class __$$ExtensionsStateImplCopyWithImpl<$Res>
     Object? extensions = null,
     Object? installingExtensions = null,
   }) {
-    return _then(_$ExtensionsStateImpl(
-      keyword: freezed == keyword
-          ? _value.keyword
-          : keyword // ignore: cast_nullable_to_non_nullable
-              as String?,
-      extensions: null == extensions
-          ? _value.extensions
-          : extensions // ignore: cast_nullable_to_non_nullable
-              as Result<Extensions>,
-      installingExtensions: null == installingExtensions
-          ? _value._installingExtensions
-          : installingExtensions // ignore: cast_nullable_to_non_nullable
-              as Map<String, Pair<InstallStatus, double>>,
-    ));
+    return _then(
+      _$ExtensionsStateImpl(
+        keyword: freezed == keyword
+            ? _value.keyword
+            : keyword // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        extensions: null == extensions
+            ? _value.extensions
+            : extensions // ignore: cast_nullable_to_non_nullable
+                  as Result<Extensions>,
+        installingExtensions: null == installingExtensions
+            ? _value._installingExtensions
+            : installingExtensions // ignore: cast_nullable_to_non_nullable
+                  as Map<String, Pair<InstallStatus, double>>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$ExtensionsStateImpl implements _ExtensionsState {
-  const _$ExtensionsStateImpl(
-      {required this.keyword,
-      required this.extensions,
-      required final Map<String, Pair<InstallStatus, double>>
-          installingExtensions})
-      : _installingExtensions = installingExtensions;
+  const _$ExtensionsStateImpl({
+    required this.keyword,
+    required this.extensions,
+    required final Map<String, Pair<InstallStatus, double>>
+    installingExtensions,
+  }) : _installingExtensions = installingExtensions;
 
   @override
   final String? keyword;
@@ -175,13 +186,19 @@ class _$ExtensionsStateImpl implements _ExtensionsState {
             (identical(other.keyword, keyword) || other.keyword == keyword) &&
             (identical(other.extensions, extensions) ||
                 other.extensions == extensions) &&
-            const DeepCollectionEquality()
-                .equals(other._installingExtensions, _installingExtensions));
+            const DeepCollectionEquality().equals(
+              other._installingExtensions,
+              _installingExtensions,
+            ));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, keyword, extensions,
-      const DeepCollectionEquality().hash(_installingExtensions));
+  int get hashCode => Object.hash(
+    runtimeType,
+    keyword,
+    extensions,
+    const DeepCollectionEquality().hash(_installingExtensions),
+  );
 
   /// Create a copy of ExtensionState
   /// with the given fields replaced by the non-null parameter values.
@@ -190,15 +207,18 @@ class _$ExtensionsStateImpl implements _ExtensionsState {
   @pragma('vm:prefer-inline')
   _$$ExtensionsStateImplCopyWith<_$ExtensionsStateImpl> get copyWith =>
       __$$ExtensionsStateImplCopyWithImpl<_$ExtensionsStateImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _ExtensionsState implements ExtensionState {
-  const factory _ExtensionsState(
-      {required final String? keyword,
-      required final Result<Extensions> extensions,
-      required final Map<String, Pair<InstallStatus, double>>
-          installingExtensions}) = _$ExtensionsStateImpl;
+  const factory _ExtensionsState({
+    required final String? keyword,
+    required final Result<Extensions> extensions,
+    required final Map<String, Pair<InstallStatus, double>>
+    installingExtensions,
+  }) = _$ExtensionsStateImpl;
 
   @override
   String? get keyword;

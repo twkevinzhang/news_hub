@@ -12,7 +12,8 @@ part of 'collection_form_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$CollectionFormState {
@@ -37,18 +38,20 @@ mixin _$CollectionFormState {
 /// @nodoc
 abstract class $CollectionFormStateCopyWith<$Res> {
   factory $CollectionFormStateCopyWith(
-          CollectionFormState value, $Res Function(CollectionFormState) then) =
-      _$CollectionFormStateCopyWithImpl<$Res, CollectionFormState>;
+    CollectionFormState value,
+    $Res Function(CollectionFormState) then,
+  ) = _$CollectionFormStateCopyWithImpl<$Res, CollectionFormState>;
   @useResult
-  $Res call(
-      {String name,
-      List<Board> selectedBoards,
-      Map<String, String> boardSorts,
-      Map<String, List<String>> boardSortOptions,
-      bool isSaving,
-      bool isSuccess,
-      String? errorMessage,
-      String? editingCollectionId});
+  $Res call({
+    String name,
+    List<Board> selectedBoards,
+    Map<String, String> boardSorts,
+    Map<String, List<String>> boardSortOptions,
+    bool isSaving,
+    bool isSuccess,
+    String? errorMessage,
+    String? editingCollectionId,
+  });
 }
 
 /// @nodoc
@@ -75,69 +78,75 @@ class _$CollectionFormStateCopyWithImpl<$Res, $Val extends CollectionFormState>
     Object? errorMessage = freezed,
     Object? editingCollectionId = freezed,
   }) {
-    return _then(_value.copyWith(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      selectedBoards: null == selectedBoards
-          ? _value.selectedBoards
-          : selectedBoards // ignore: cast_nullable_to_non_nullable
-              as List<Board>,
-      boardSorts: null == boardSorts
-          ? _value.boardSorts
-          : boardSorts // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>,
-      boardSortOptions: null == boardSortOptions
-          ? _value.boardSortOptions
-          : boardSortOptions // ignore: cast_nullable_to_non_nullable
-              as Map<String, List<String>>,
-      isSaving: null == isSaving
-          ? _value.isSaving
-          : isSaving // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isSuccess: null == isSuccess
-          ? _value.isSuccess
-          : isSuccess // ignore: cast_nullable_to_non_nullable
-              as bool,
-      errorMessage: freezed == errorMessage
-          ? _value.errorMessage
-          : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      editingCollectionId: freezed == editingCollectionId
-          ? _value.editingCollectionId
-          : editingCollectionId // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            name: null == name
+                ? _value.name
+                : name // ignore: cast_nullable_to_non_nullable
+                      as String,
+            selectedBoards: null == selectedBoards
+                ? _value.selectedBoards
+                : selectedBoards // ignore: cast_nullable_to_non_nullable
+                      as List<Board>,
+            boardSorts: null == boardSorts
+                ? _value.boardSorts
+                : boardSorts // ignore: cast_nullable_to_non_nullable
+                      as Map<String, String>,
+            boardSortOptions: null == boardSortOptions
+                ? _value.boardSortOptions
+                : boardSortOptions // ignore: cast_nullable_to_non_nullable
+                      as Map<String, List<String>>,
+            isSaving: null == isSaving
+                ? _value.isSaving
+                : isSaving // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            isSuccess: null == isSuccess
+                ? _value.isSuccess
+                : isSuccess // ignore: cast_nullable_to_non_nullable
+                      as bool,
+            errorMessage: freezed == errorMessage
+                ? _value.errorMessage
+                : errorMessage // ignore: cast_nullable_to_non_nullable
+                      as String?,
+            editingCollectionId: freezed == editingCollectionId
+                ? _value.editingCollectionId
+                : editingCollectionId // ignore: cast_nullable_to_non_nullable
+                      as String?,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$CollectionFormStateImplCopyWith<$Res>
     implements $CollectionFormStateCopyWith<$Res> {
-  factory _$$CollectionFormStateImplCopyWith(_$CollectionFormStateImpl value,
-          $Res Function(_$CollectionFormStateImpl) then) =
-      __$$CollectionFormStateImplCopyWithImpl<$Res>;
+  factory _$$CollectionFormStateImplCopyWith(
+    _$CollectionFormStateImpl value,
+    $Res Function(_$CollectionFormStateImpl) then,
+  ) = __$$CollectionFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String name,
-      List<Board> selectedBoards,
-      Map<String, String> boardSorts,
-      Map<String, List<String>> boardSortOptions,
-      bool isSaving,
-      bool isSuccess,
-      String? errorMessage,
-      String? editingCollectionId});
+  $Res call({
+    String name,
+    List<Board> selectedBoards,
+    Map<String, String> boardSorts,
+    Map<String, List<String>> boardSortOptions,
+    bool isSaving,
+    bool isSuccess,
+    String? errorMessage,
+    String? editingCollectionId,
+  });
 }
 
 /// @nodoc
 class __$$CollectionFormStateImplCopyWithImpl<$Res>
     extends _$CollectionFormStateCopyWithImpl<$Res, _$CollectionFormStateImpl>
     implements _$$CollectionFormStateImplCopyWith<$Res> {
-  __$$CollectionFormStateImplCopyWithImpl(_$CollectionFormStateImpl _value,
-      $Res Function(_$CollectionFormStateImpl) _then)
-      : super(_value, _then);
+  __$$CollectionFormStateImplCopyWithImpl(
+    _$CollectionFormStateImpl _value,
+    $Res Function(_$CollectionFormStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of CollectionFormState
   /// with the given fields replaced by the non-null parameter values.
@@ -153,58 +162,60 @@ class __$$CollectionFormStateImplCopyWithImpl<$Res>
     Object? errorMessage = freezed,
     Object? editingCollectionId = freezed,
   }) {
-    return _then(_$CollectionFormStateImpl(
-      name: null == name
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String,
-      selectedBoards: null == selectedBoards
-          ? _value._selectedBoards
-          : selectedBoards // ignore: cast_nullable_to_non_nullable
-              as List<Board>,
-      boardSorts: null == boardSorts
-          ? _value._boardSorts
-          : boardSorts // ignore: cast_nullable_to_non_nullable
-              as Map<String, String>,
-      boardSortOptions: null == boardSortOptions
-          ? _value._boardSortOptions
-          : boardSortOptions // ignore: cast_nullable_to_non_nullable
-              as Map<String, List<String>>,
-      isSaving: null == isSaving
-          ? _value.isSaving
-          : isSaving // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isSuccess: null == isSuccess
-          ? _value.isSuccess
-          : isSuccess // ignore: cast_nullable_to_non_nullable
-              as bool,
-      errorMessage: freezed == errorMessage
-          ? _value.errorMessage
-          : errorMessage // ignore: cast_nullable_to_non_nullable
-              as String?,
-      editingCollectionId: freezed == editingCollectionId
-          ? _value.editingCollectionId
-          : editingCollectionId // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$CollectionFormStateImpl(
+        name: null == name
+            ? _value.name
+            : name // ignore: cast_nullable_to_non_nullable
+                  as String,
+        selectedBoards: null == selectedBoards
+            ? _value._selectedBoards
+            : selectedBoards // ignore: cast_nullable_to_non_nullable
+                  as List<Board>,
+        boardSorts: null == boardSorts
+            ? _value._boardSorts
+            : boardSorts // ignore: cast_nullable_to_non_nullable
+                  as Map<String, String>,
+        boardSortOptions: null == boardSortOptions
+            ? _value._boardSortOptions
+            : boardSortOptions // ignore: cast_nullable_to_non_nullable
+                  as Map<String, List<String>>,
+        isSaving: null == isSaving
+            ? _value.isSaving
+            : isSaving // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        isSuccess: null == isSuccess
+            ? _value.isSuccess
+            : isSuccess // ignore: cast_nullable_to_non_nullable
+                  as bool,
+        errorMessage: freezed == errorMessage
+            ? _value.errorMessage
+            : errorMessage // ignore: cast_nullable_to_non_nullable
+                  as String?,
+        editingCollectionId: freezed == editingCollectionId
+            ? _value.editingCollectionId
+            : editingCollectionId // ignore: cast_nullable_to_non_nullable
+                  as String?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$CollectionFormStateImpl implements _CollectionFormState {
-  const _$CollectionFormStateImpl(
-      {this.name = '',
-      final List<Board> selectedBoards = const [],
-      final Map<String, String> boardSorts = const {},
-      final Map<String, List<String>> boardSortOptions = const {},
-      this.isSaving = false,
-      this.isSuccess = false,
-      this.errorMessage,
-      this.editingCollectionId})
-      : _selectedBoards = selectedBoards,
-        _boardSorts = boardSorts,
-        _boardSortOptions = boardSortOptions;
+  const _$CollectionFormStateImpl({
+    this.name = '',
+    final List<Board> selectedBoards = const [],
+    final Map<String, String> boardSorts = const {},
+    final Map<String, List<String>> boardSortOptions = const {},
+    this.isSaving = false,
+    this.isSuccess = false,
+    this.errorMessage,
+    this.editingCollectionId,
+  }) : _selectedBoards = selectedBoards,
+       _boardSorts = boardSorts,
+       _boardSortOptions = boardSortOptions;
 
   @override
   @JsonKey()
@@ -227,9 +238,9 @@ class _$CollectionFormStateImpl implements _CollectionFormState {
     return EqualUnmodifiableMapView(_boardSorts);
   }
 
-// boardId -> selectedSort
+  // boardId -> selectedSort
   final Map<String, List<String>> _boardSortOptions;
-// boardId -> selectedSort
+  // boardId -> selectedSort
   @override
   @JsonKey()
   Map<String, List<String>> get boardSortOptions {
@@ -238,7 +249,7 @@ class _$CollectionFormStateImpl implements _CollectionFormState {
     return EqualUnmodifiableMapView(_boardSortOptions);
   }
 
-// boardId -> options
+  // boardId -> options
   @override
   @JsonKey()
   final bool isSaving;
@@ -261,12 +272,18 @@ class _$CollectionFormStateImpl implements _CollectionFormState {
         (other.runtimeType == runtimeType &&
             other is _$CollectionFormStateImpl &&
             (identical(other.name, name) || other.name == name) &&
-            const DeepCollectionEquality()
-                .equals(other._selectedBoards, _selectedBoards) &&
-            const DeepCollectionEquality()
-                .equals(other._boardSorts, _boardSorts) &&
-            const DeepCollectionEquality()
-                .equals(other._boardSortOptions, _boardSortOptions) &&
+            const DeepCollectionEquality().equals(
+              other._selectedBoards,
+              _selectedBoards,
+            ) &&
+            const DeepCollectionEquality().equals(
+              other._boardSorts,
+              _boardSorts,
+            ) &&
+            const DeepCollectionEquality().equals(
+              other._boardSortOptions,
+              _boardSortOptions,
+            ) &&
             (identical(other.isSaving, isSaving) ||
                 other.isSaving == isSaving) &&
             (identical(other.isSuccess, isSuccess) ||
@@ -279,15 +296,16 @@ class _$CollectionFormStateImpl implements _CollectionFormState {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      name,
-      const DeepCollectionEquality().hash(_selectedBoards),
-      const DeepCollectionEquality().hash(_boardSorts),
-      const DeepCollectionEquality().hash(_boardSortOptions),
-      isSaving,
-      isSuccess,
-      errorMessage,
-      editingCollectionId);
+    runtimeType,
+    name,
+    const DeepCollectionEquality().hash(_selectedBoards),
+    const DeepCollectionEquality().hash(_boardSorts),
+    const DeepCollectionEquality().hash(_boardSortOptions),
+    isSaving,
+    isSuccess,
+    errorMessage,
+    editingCollectionId,
+  );
 
   /// Create a copy of CollectionFormState
   /// with the given fields replaced by the non-null parameter values.
@@ -296,19 +314,22 @@ class _$CollectionFormStateImpl implements _CollectionFormState {
   @pragma('vm:prefer-inline')
   _$$CollectionFormStateImplCopyWith<_$CollectionFormStateImpl> get copyWith =>
       __$$CollectionFormStateImplCopyWithImpl<_$CollectionFormStateImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _CollectionFormState implements CollectionFormState {
-  const factory _CollectionFormState(
-      {final String name,
-      final List<Board> selectedBoards,
-      final Map<String, String> boardSorts,
-      final Map<String, List<String>> boardSortOptions,
-      final bool isSaving,
-      final bool isSuccess,
-      final String? errorMessage,
-      final String? editingCollectionId}) = _$CollectionFormStateImpl;
+  const factory _CollectionFormState({
+    final String name,
+    final List<Board> selectedBoards,
+    final Map<String, String> boardSorts,
+    final Map<String, List<String>> boardSortOptions,
+    final bool isSaving,
+    final bool isSuccess,
+    final String? errorMessage,
+    final String? editingCollectionId,
+  }) = _$CollectionFormStateImpl;
 
   @override
   String get name;

@@ -12,7 +12,8 @@ part of 'thread_detail_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ThreadDetailState {
@@ -36,16 +37,18 @@ mixin _$ThreadDetailState {
 /// @nodoc
 abstract class $ThreadDetailStateCopyWith<$Res> {
   factory $ThreadDetailStateCopyWith(
-          ThreadDetailState value, $Res Function(ThreadDetailState) then) =
-      _$ThreadDetailStateCopyWithImpl<$Res, ThreadDetailState>;
+    ThreadDetailState value,
+    $Res Function(ThreadDetailState) then,
+  ) = _$ThreadDetailStateCopyWithImpl<$Res, ThreadDetailState>;
   @useResult
-  $Res call(
-      {String extensionPkgName,
-      String boardId,
-      String threadId,
-      Map<String, Result<ArticlePost>> threadMap,
-      Map<String, Result<List<ArticlePost>>> repliesMap,
-      Map<String, Result<List<Comment>>> commentsMap});
+  $Res call({
+    String extensionPkgName,
+    String boardId,
+    String threadId,
+    Map<String, Result<ArticlePost>> threadMap,
+    Map<String, Result<List<ArticlePost>>> repliesMap,
+    Map<String, Result<List<Comment>>> commentsMap,
+  });
 }
 
 /// @nodoc
@@ -70,59 +73,65 @@ class _$ThreadDetailStateCopyWithImpl<$Res, $Val extends ThreadDetailState>
     Object? repliesMap = null,
     Object? commentsMap = null,
   }) {
-    return _then(_value.copyWith(
-      extensionPkgName: null == extensionPkgName
-          ? _value.extensionPkgName
-          : extensionPkgName // ignore: cast_nullable_to_non_nullable
-              as String,
-      boardId: null == boardId
-          ? _value.boardId
-          : boardId // ignore: cast_nullable_to_non_nullable
-              as String,
-      threadId: null == threadId
-          ? _value.threadId
-          : threadId // ignore: cast_nullable_to_non_nullable
-              as String,
-      threadMap: null == threadMap
-          ? _value.threadMap
-          : threadMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, Result<ArticlePost>>,
-      repliesMap: null == repliesMap
-          ? _value.repliesMap
-          : repliesMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, Result<List<ArticlePost>>>,
-      commentsMap: null == commentsMap
-          ? _value.commentsMap
-          : commentsMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, Result<List<Comment>>>,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            extensionPkgName: null == extensionPkgName
+                ? _value.extensionPkgName
+                : extensionPkgName // ignore: cast_nullable_to_non_nullable
+                      as String,
+            boardId: null == boardId
+                ? _value.boardId
+                : boardId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            threadId: null == threadId
+                ? _value.threadId
+                : threadId // ignore: cast_nullable_to_non_nullable
+                      as String,
+            threadMap: null == threadMap
+                ? _value.threadMap
+                : threadMap // ignore: cast_nullable_to_non_nullable
+                      as Map<String, Result<ArticlePost>>,
+            repliesMap: null == repliesMap
+                ? _value.repliesMap
+                : repliesMap // ignore: cast_nullable_to_non_nullable
+                      as Map<String, Result<List<ArticlePost>>>,
+            commentsMap: null == commentsMap
+                ? _value.commentsMap
+                : commentsMap // ignore: cast_nullable_to_non_nullable
+                      as Map<String, Result<List<Comment>>>,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$ThreadDetailStateImplCopyWith<$Res>
     implements $ThreadDetailStateCopyWith<$Res> {
-  factory _$$ThreadDetailStateImplCopyWith(_$ThreadDetailStateImpl value,
-          $Res Function(_$ThreadDetailStateImpl) then) =
-      __$$ThreadDetailStateImplCopyWithImpl<$Res>;
+  factory _$$ThreadDetailStateImplCopyWith(
+    _$ThreadDetailStateImpl value,
+    $Res Function(_$ThreadDetailStateImpl) then,
+  ) = __$$ThreadDetailStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String extensionPkgName,
-      String boardId,
-      String threadId,
-      Map<String, Result<ArticlePost>> threadMap,
-      Map<String, Result<List<ArticlePost>>> repliesMap,
-      Map<String, Result<List<Comment>>> commentsMap});
+  $Res call({
+    String extensionPkgName,
+    String boardId,
+    String threadId,
+    Map<String, Result<ArticlePost>> threadMap,
+    Map<String, Result<List<ArticlePost>>> repliesMap,
+    Map<String, Result<List<Comment>>> commentsMap,
+  });
 }
 
 /// @nodoc
 class __$$ThreadDetailStateImplCopyWithImpl<$Res>
     extends _$ThreadDetailStateCopyWithImpl<$Res, _$ThreadDetailStateImpl>
     implements _$$ThreadDetailStateImplCopyWith<$Res> {
-  __$$ThreadDetailStateImplCopyWithImpl(_$ThreadDetailStateImpl _value,
-      $Res Function(_$ThreadDetailStateImpl) _then)
-      : super(_value, _then);
+  __$$ThreadDetailStateImplCopyWithImpl(
+    _$ThreadDetailStateImpl _value,
+    $Res Function(_$ThreadDetailStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of ThreadDetailState
   /// with the given fields replaced by the non-null parameter values.
@@ -136,32 +145,34 @@ class __$$ThreadDetailStateImplCopyWithImpl<$Res>
     Object? repliesMap = null,
     Object? commentsMap = null,
   }) {
-    return _then(_$ThreadDetailStateImpl(
-      extensionPkgName: null == extensionPkgName
-          ? _value.extensionPkgName
-          : extensionPkgName // ignore: cast_nullable_to_non_nullable
-              as String,
-      boardId: null == boardId
-          ? _value.boardId
-          : boardId // ignore: cast_nullable_to_non_nullable
-              as String,
-      threadId: null == threadId
-          ? _value.threadId
-          : threadId // ignore: cast_nullable_to_non_nullable
-              as String,
-      threadMap: null == threadMap
-          ? _value._threadMap
-          : threadMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, Result<ArticlePost>>,
-      repliesMap: null == repliesMap
-          ? _value._repliesMap
-          : repliesMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, Result<List<ArticlePost>>>,
-      commentsMap: null == commentsMap
-          ? _value._commentsMap
-          : commentsMap // ignore: cast_nullable_to_non_nullable
-              as Map<String, Result<List<Comment>>>,
-    ));
+    return _then(
+      _$ThreadDetailStateImpl(
+        extensionPkgName: null == extensionPkgName
+            ? _value.extensionPkgName
+            : extensionPkgName // ignore: cast_nullable_to_non_nullable
+                  as String,
+        boardId: null == boardId
+            ? _value.boardId
+            : boardId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        threadId: null == threadId
+            ? _value.threadId
+            : threadId // ignore: cast_nullable_to_non_nullable
+                  as String,
+        threadMap: null == threadMap
+            ? _value._threadMap
+            : threadMap // ignore: cast_nullable_to_non_nullable
+                  as Map<String, Result<ArticlePost>>,
+        repliesMap: null == repliesMap
+            ? _value._repliesMap
+            : repliesMap // ignore: cast_nullable_to_non_nullable
+                  as Map<String, Result<List<ArticlePost>>>,
+        commentsMap: null == commentsMap
+            ? _value._commentsMap
+            : commentsMap // ignore: cast_nullable_to_non_nullable
+                  as Map<String, Result<List<Comment>>>,
+      ),
+    );
   }
 }
 
@@ -170,16 +181,16 @@ class __$$ThreadDetailStateImplCopyWithImpl<$Res>
 class _$ThreadDetailStateImpl
     with DiagnosticableTreeMixin
     implements _ThreadDetailState {
-  const _$ThreadDetailStateImpl(
-      {required this.extensionPkgName,
-      required this.boardId,
-      required this.threadId,
-      required final Map<String, Result<ArticlePost>> threadMap,
-      required final Map<String, Result<List<ArticlePost>>> repliesMap,
-      final Map<String, Result<List<Comment>>> commentsMap = const {}})
-      : _threadMap = threadMap,
-        _repliesMap = repliesMap,
-        _commentsMap = commentsMap;
+  const _$ThreadDetailStateImpl({
+    required this.extensionPkgName,
+    required this.boardId,
+    required this.threadId,
+    required final Map<String, Result<ArticlePost>> threadMap,
+    required final Map<String, Result<List<ArticlePost>>> repliesMap,
+    final Map<String, Result<List<Comment>>> commentsMap = const {},
+  }) : _threadMap = threadMap,
+       _repliesMap = repliesMap,
+       _commentsMap = commentsMap;
 
   @override
   final String extensionPkgName;
@@ -240,23 +251,30 @@ class _$ThreadDetailStateImpl
             (identical(other.boardId, boardId) || other.boardId == boardId) &&
             (identical(other.threadId, threadId) ||
                 other.threadId == threadId) &&
-            const DeepCollectionEquality()
-                .equals(other._threadMap, _threadMap) &&
-            const DeepCollectionEquality()
-                .equals(other._repliesMap, _repliesMap) &&
-            const DeepCollectionEquality()
-                .equals(other._commentsMap, _commentsMap));
+            const DeepCollectionEquality().equals(
+              other._threadMap,
+              _threadMap,
+            ) &&
+            const DeepCollectionEquality().equals(
+              other._repliesMap,
+              _repliesMap,
+            ) &&
+            const DeepCollectionEquality().equals(
+              other._commentsMap,
+              _commentsMap,
+            ));
   }
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      extensionPkgName,
-      boardId,
-      threadId,
-      const DeepCollectionEquality().hash(_threadMap),
-      const DeepCollectionEquality().hash(_repliesMap),
-      const DeepCollectionEquality().hash(_commentsMap));
+    runtimeType,
+    extensionPkgName,
+    boardId,
+    threadId,
+    const DeepCollectionEquality().hash(_threadMap),
+    const DeepCollectionEquality().hash(_repliesMap),
+    const DeepCollectionEquality().hash(_commentsMap),
+  );
 
   /// Create a copy of ThreadDetailState
   /// with the given fields replaced by the non-null parameter values.
@@ -265,18 +283,20 @@ class _$ThreadDetailStateImpl
   @pragma('vm:prefer-inline')
   _$$ThreadDetailStateImplCopyWith<_$ThreadDetailStateImpl> get copyWith =>
       __$$ThreadDetailStateImplCopyWithImpl<_$ThreadDetailStateImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 }
 
 abstract class _ThreadDetailState implements ThreadDetailState {
-  const factory _ThreadDetailState(
-          {required final String extensionPkgName,
-          required final String boardId,
-          required final String threadId,
-          required final Map<String, Result<ArticlePost>> threadMap,
-          required final Map<String, Result<List<ArticlePost>>> repliesMap,
-          final Map<String, Result<List<Comment>>> commentsMap}) =
-      _$ThreadDetailStateImpl;
+  const factory _ThreadDetailState({
+    required final String extensionPkgName,
+    required final String boardId,
+    required final String threadId,
+    required final Map<String, Result<ArticlePost>> threadMap,
+    required final Map<String, Result<List<ArticlePost>>> repliesMap,
+    final Map<String, Result<List<Comment>>> commentsMap,
+  }) = _$ThreadDetailStateImpl;
 
   @override
   String get extensionPkgName;

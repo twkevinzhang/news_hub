@@ -13,7 +13,5 @@ Map<String, dynamic> _$$ThreadsFilterImplToJson(_$ThreadsFilterImpl instance) =>
     };
 
 Map<String, dynamic> _$$ThreadsSortingImplToJson(
-        _$ThreadsSortingImpl instance) =>
-    <String, dynamic>{
-      'boardsOrder': instance.boardsOrder,
-    };
+  _$ThreadsSortingImpl instance,
+) => <String, dynamic>{'boardsOrder': instance.boardsOrder};

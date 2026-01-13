@@ -12,7 +12,8 @@ part of 'repo_cubit.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$RepoState {
@@ -49,15 +50,16 @@ class _$RepoStateCopyWithImpl<$Res, $Val extends RepoState>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? repos = null,
-  }) {
-    return _then(_value.copyWith(
-      repos: null == repos
-          ? _value.repos
-          : repos // ignore: cast_nullable_to_non_nullable
-              as Result<List<Repo>>,
-    ) as $Val);
+  $Res call({Object? repos = null}) {
+    return _then(
+      _value.copyWith(
+            repos: null == repos
+                ? _value.repos
+                : repos // ignore: cast_nullable_to_non_nullable
+                      as Result<List<Repo>>,
+          )
+          as $Val,
+    );
   }
 
   /// Create a copy of RepoState
@@ -75,8 +77,9 @@ class _$RepoStateCopyWithImpl<$Res, $Val extends RepoState>
 abstract class _$$RepoStateImplCopyWith<$Res>
     implements $RepoStateCopyWith<$Res> {
   factory _$$RepoStateImplCopyWith(
-          _$RepoStateImpl value, $Res Function(_$RepoStateImpl) then) =
-      __$$RepoStateImplCopyWithImpl<$Res>;
+    _$RepoStateImpl value,
+    $Res Function(_$RepoStateImpl) then,
+  ) = __$$RepoStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Result<List<Repo>> repos});
@@ -90,22 +93,23 @@ class __$$RepoStateImplCopyWithImpl<$Res>
     extends _$RepoStateCopyWithImpl<$Res, _$RepoStateImpl>
     implements _$$RepoStateImplCopyWith<$Res> {
   __$$RepoStateImplCopyWithImpl(
-      _$RepoStateImpl _value, $Res Function(_$RepoStateImpl) _then)
-      : super(_value, _then);
+    _$RepoStateImpl _value,
+    $Res Function(_$RepoStateImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of RepoState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? repos = null,
-  }) {
-    return _then(_$RepoStateImpl(
-      repos: null == repos
-          ? _value.repos
-          : repos // ignore: cast_nullable_to_non_nullable
-              as Result<List<Repo>>,
-    ));
+  $Res call({Object? repos = null}) {
+    return _then(
+      _$RepoStateImpl(
+        repos: null == repos
+            ? _value.repos
+            : repos // ignore: cast_nullable_to_non_nullable
+                  as Result<List<Repo>>,
+      ),
+    );
   }
 }
 
