@@ -92,16 +92,19 @@
 ##### 問題描述
 
 **當前狀況**:
+
 ```
 檔案: lib/domain/extension/services/extension_preferences_service.dart
 ```
 
 **問題**:
+
 1. 檔案名稱包含技術術語 "Preferences"（這是基礎設施層的概念）
 2. 違反 DDD 原則：Domain 層應使用業務語言（Ubiquitous Language）
 3. 依賴了 `app/service/preferences/preference.dart`，違反依賴倒置原則
 
 **影響**:
+
 - 違反 CLAUDE.md 的 Domain 層依賴限制
 - Domain 層不應該知道 "Preferences" 這種技術實現細節
 
@@ -110,6 +113,7 @@
 **方案選擇**: 重命名為 `ExtensionSettings`
 
 **理由**:
+
 - "Settings" 是業務概念，表達「使用者對擴展的設定」
 - 不涉及技術實現細節
 - 符合 Ubiquitous Language 原則
@@ -263,11 +267,13 @@ class ExtensionSettingsImpl implements ExtensionSettings { }
 **步驟 1.1.5**: 運行測試和驗證 (15 分鐘)
 
 1. 編譯檢查：
+
    ```bash
    flutter analyze
    ```
 
 2. 如果有相關測試，運行測試：
+
    ```bash
    flutter test test/domain/extension/
    ```
@@ -329,11 +335,13 @@ flutter analyze
 ##### 注意事項
 
 ⚠️ **重要**:
+
 - 這是**重命名 + 重新設計介面**，不只是檔案重命名
 - 如果原本的 `ExtensionPreferencesService` 有依賴 `Preference<T>` 類型，需要在 Task 1.2 中處理
 - 確保所有 git commit 都包含有意義的訊息
 
 📝 **建議的 Commit Message**:
+
 ```
 refactor(domain): rename ExtensionPreferencesService to ExtensionSettings
 
@@ -359,11 +367,13 @@ Ref: REFACTORING_PLAN.md Task 1.1
 ##### 問題描述
 
 **當前狀況**:
+
 ```
 檔案: lib/domain/models/models.dart (估計 500+ 行)
 ```
 
 **問題**:
+
 1. **VSCode IDE 支援不佳**: "Go to Definition" 跳轉到單一大檔案，需要手動搜尋
 2. **單一檔案過於複雜**: 包含 40+ 個類別定義
 3. **Code Review 困難**: 無法精確討論單一 Entity 的變更
@@ -371,6 +381,7 @@ Ref: REFACTORING_PLAN.md Task 1.1
 5. **違反 SRP**: 一個檔案包含過多職責
 
 **影響**:
+
 - 開發效率降低（特別是 VSCode 用戶）
 - 可維護性差
 - 團隊協作困難
@@ -380,6 +391,7 @@ Ref: REFACTORING_PLAN.md Task 1.1
 **方案**: 將 `models.dart` 拆分為獨立檔案，按 Bounded Context 組織
 
 **設計原則**:
+
 - 每個 Entity 一個檔案
 - 按業務領域分組（collection, thread, extension 等）
 - 保留 `models.dart` 作為 Barrel File（統一 export）
@@ -527,6 +539,7 @@ class HealthCheckResult with _$HealthCheckResult {
 ```
 
 **驗證**:
+
 ```bash
 dart analyze lib/domain/models/common/
 ```
@@ -536,6 +549,7 @@ dart analyze lib/domain/models/common/
 **2.2.2 - 提取其他簡單 Entity** (1 小時)
 
 按照相同模式提取：
+
 - `lib/domain/models/sidecar/log_entry.dart`
 - `lib/domain/models/repo/repo.dart`
 - `lib/domain/models/bookmark/bookmark.dart`
@@ -572,6 +586,7 @@ class LogEntry with _$LogEntry {
 **2.2.3 - 提取 Extension 相關 Entity** (30 分鐘)
 
 提取：
+
 - `lib/domain/models/extension/extension.dart`
 - `lib/domain/models/extension/remote_extension.dart`
 - `lib/domain/models/extension/extension_with_boards.dart` （從 Use Case 移過來）
@@ -641,6 +656,7 @@ class RemoteExtension with _$RemoteExtension {
 **2.2.4 - 提取 Collection 相關 Entity** (30 分鐘)
 
 提取：
+
 - `lib/domain/models/collection/board_identity.dart` （Value Object）
 - `lib/domain/models/collection/collection_board.dart`
 - `lib/domain/models/collection/collection.dart`
@@ -676,16 +692,19 @@ class BoardIdentity with _$BoardIdentity {
 **提取順序**:
 
 1. **Base classes 先行**:
+
    - `lib/domain/models/thread/paragraph/paragraph.dart` (base)
    - `lib/domain/models/thread/post/post.dart` (base)
 
 2. **Paragraph 子類別**:
+
    - `text_paragraph.dart`
    - `image_paragraph.dart`
    - `video_paragraph.dart`
    - `youtube_paragraph.dart`
 
 3. **Post 子類別**:
+
    - `single_image_post.dart`
    - `article_post.dart`
    - `single_image_post_with_extension.dart`
@@ -860,6 +879,7 @@ dart run build_runner build --delete-conflicting-outputs
 **策略**: 保持使用 Barrel File，不需要逐一更新
 
 大部分檔案已經使用：
+
 ```dart
 import 'package:news_hub/domain/models/models.dart';
 ```
@@ -867,10 +887,12 @@ import 'package:news_hub/domain/models/models.dart';
 這些檔案**不需要修改**，因為 Barrel File 會 re-export 所有 models。
 
 **需要檢查的情況**:
+
 1. 如果有檔案直接 import 舊的 models.dart 內部定義（應該沒有）
 2. 如果有檔案 import Use Case 檔案來使用其中的 Entity（需要改為 import models）
 
 **驗證方法**:
+
 ```bash
 # 搜尋是否有直接 import Use Case 來使用 Entity 的情況
 grep -r "import.*interactor.*" lib/presentation --include="*.dart" | grep -v "cubit\|bloc"
@@ -881,16 +903,19 @@ grep -r "import.*interactor.*" lib/presentation --include="*.dart" | grep -v "cu
 **步驟 1.2.7**: 驗證和測試 (30 分鐘)
 
 1. **編譯檢查**:
+
    ```bash
    flutter analyze
    ```
 
 2. **運行測試**:
+
    ```bash
    flutter test
    ```
 
 3. **手動測試**:
+
    - 啟動應用
    - 測試所有主要功能流程
    - 確認沒有 runtime 錯誤
@@ -960,15 +985,18 @@ flutter test
 ⚠️ **重要**:
 
 1. **Freezed 繼承問題**:
+
    - Freezed 不支援傳統繼承，使用 Union Types 代替
    - 如 `Paragraph` 應該是 sealed class with union types
    - 參考 [Freezed Union Types](https://pub.dev/packages/freezed#union-types-and-sealed-classes)
 
 2. **循環依賴風險**:
+
    - `SingleImagePostWithExtension` 依賴 `SingleImagePost`, `Extension`, `Board`
    - 確保 import 順序正確，避免循環依賴
 
 3. **Git Commit 策略**:
+
    - 建議分多個 commit：
      - Commit 1: 創建目錄結構
      - Commit 2: 提取 common models
@@ -984,6 +1012,7 @@ flutter test
    ```
 
 📝 **建議的最終 Commit Message**:
+
 ```
 refactor(domain): split models.dart into individual files
 
@@ -1052,6 +1081,7 @@ Domain 層仍有以下依賴違規：
 **檔案**: `lib/domain/repo/interactor/add_repo.dart`
 
 **Before**:
+
 ```dart
 import 'package:flutter/widgets.dart';  // ❌ 未使用
 import 'package:injectable/injectable.dart';
@@ -1064,6 +1094,7 @@ class AddRepo {
 ```
 
 **After**:
+
 ```dart
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/repo/repository.dart';
@@ -1082,6 +1113,7 @@ class AddRepo {
 4. 運行 `flutter analyze lib/domain/repo/interactor/add_repo.dart`
 
 **驗收標準**:
+
 - [ ] ✅ 檔案中無 `flutter/widgets` import
 - [ ] ✅ `flutter analyze` 無警告
 
@@ -1286,6 +1318,7 @@ Stream<Extensions> call(String? keywords) {
 ```
 
 **建議**: 使用 **選項 C**，優點：
+
 - ✅ 符合 DDD（Domain 層的通用工具）
 - ✅ 可重用（其他 Use Case 也可能需要）
 - ✅ 易於測試
@@ -1301,6 +1334,7 @@ Stream<Extensions> call(String? keywords) {
 6. 運行測試驗證
 
 **驗收標準**:
+
 - [ ] ✅ `stream_utils.dart` 已創建並包含 `combineLatest3`
 - [ ] ✅ `list_extensions.dart` 已更新使用新工具
 - [ ] ✅ 無 `rxdart` import
@@ -1316,6 +1350,7 @@ Stream<Extensions> call(String? keywords) {
 **問題**: 使用 `StreamGroup` 合併多個 Stream
 
 **Before**:
+
 ```dart
 import 'package:async/async.dart';  // ❌ 不允許
 
@@ -1327,6 +1362,7 @@ return group.stream;
 ```
 
 **After** (選項 1 - 推薦):
+
 ```dart
 // 使用 Dart 原生 Stream.fromFutures + asyncExpand
 
@@ -1391,6 +1427,7 @@ Stream<BoardDataChunk> call(String collectionId) async* {
 ```
 
 **建議**:
+
 - 如果順序不重要且需要並行，使用**選項 2**
 - 如果順序重要或簡單即可，使用**選項 1**
 
@@ -1402,6 +1439,7 @@ Stream<BoardDataChunk> call(String collectionId) async* {
 4. 測試功能正常
 
 **驗收標準**:
+
 - [ ] ✅ 無 `async` 套件 import
 - [ ] ✅ 功能測試：Collection 貼文列表正常載入
 - [ ] ✅ 效能測試：多看板並行載入速度未降低
@@ -1415,6 +1453,7 @@ Stream<BoardDataChunk> call(String collectionId) async* {
 **問題**: 使用 `firstWhereOrNull`
 
 **Before**:
+
 ```dart
 import 'package:collection/collection.dart';  // ❌ 不允許
 
@@ -1456,6 +1495,7 @@ final board = findBoard(boards, boardId);
 4. 測試功能正常
 
 **驗收標準**:
+
 - [ ] ✅ 無 `collection/collection.dart` import
 - [ ] ✅ 使用 `dartx` 或手動實現
 - [ ] ✅ 功能正常
@@ -1473,7 +1513,88 @@ final board = findBoard(boards, boardId);
 
 ---
 
-### Phase 2: Use Case 簡化與重構
+### Phase 2: BLoC 效能優化
+
+**執行前置條件**:
+
+- ✅ Phase 1 所有任務已完成
+
+---
+
+#### Task 2.1: 優化 HomeScreen BLoC 重建
+
+**優先級**: 🔴 最高
+**預估工時**: 3-4 小時
+**受影響檔案**: `lib/presentation/pages/home/home_screen.dart`
+
+**目標**: 減少 90%+ 重建次數
+
+**問題**:
+
+- `HomeScreen` 使用頂層 `BlocBuilder` 監聽 `HomeCubit`
+- 當 `AppTopBar` 標題改變時，整個 `Scaffold` (包含 `Drawer`, `Router`) 都會重建
+- 導致 `Drawer` 動畫卡頓，路由切換不流暢
+
+**解決方案**:
+
+1. 移除 `HomeScreen` 頂層 `BlocBuilder`
+2. 將 `AppTopBar` 包裹在 `BlocSelector` 中，只監聽 `state.title`
+3. 確保 `Drawer` 內部自行管理狀態監聽
+
+**驗收標準**:
+
+- [ ] ✅ 移除頂層 `BlocBuilder`
+- [ ] ✅ 標題變更時，只重建 `AppTopBar`
+- [ ] ✅ `Drawer` 展開/收起時無掉幀 (`60 FPS`)
+
+---
+
+#### Task 2.2: 優化 SidecarLogsScreen 效能
+
+**優先級**: 🔴 最高
+**預估工時**: 2-3 小時
+**受影響檔案**: `lib/presentation/pages/sidecar_logs/sidecar_logs_screen.dart`
+
+**目標**: 維持 60 FPS
+
+**問題**:
+
+- 日誌列表可能包含數千條記錄
+- 如果使用 `ListView` 未開啟 `itemExtent` 或未優化 `build`，滾動會卡頓
+
+**解決方案**:
+
+1. 使用 `ListView.builder` 搭配 `itemExtent` (如果高度固定)
+2. 確保 Log Item 是 `const` widget
+3. 避免在 build 方法中進行複雜的字串處理或日期格式化（移至 ViewModel 或預處理）
+
+---
+
+#### Task 2.3: 優化 ThreadDetailScreen context.watch
+
+**優先級**: 🟡 高
+**預估工時**: 2-3 小時
+
+**問題**:
+
+- `ThreadDetailScreen` 可能過度使用 `context.watch<ThreadDetailCubit>()`
+- 導致任何細微狀態變更（如載入進度）都觸發整個頁面重建
+
+**解決方案**:
+
+- 使用 `BlocSelector` 或細粒度的 `BlocBuilder`
+
+---
+
+#### Task 2.4-2.8: 其他頁面 BLoC 優化
+
+(保留給後續詳細規劃)
+
+---
+
+### Phase 3: Use Case 重構 (Refactoring)
+
+**說明**: 本階段目標是將 Use Case 拆分為符合單一職責原則 (SRP) 的類別，並清除技術債。
 
 ---
 
@@ -1486,13 +1607,16 @@ final board = findBoard(boards, boardId);
 ##### 問題描述
 
 **當前狀況**:
+
 ```
 檔案: lib/domain/thread/interactor/list_collection_threads.dart
 行數: 126 行
 ```
 
 **問題**:
+
 1. **違反單一職責原則**: 同時負責 5 個職責
+
    - 獲取 Collection 資料
    - 準備看板資料（Extension + Board 組合）
    - 並行請求協調
@@ -1506,19 +1630,49 @@ final board = findBoard(boards, boardId);
 4. **複雜的 Stream 控制邏輯**: 使用 `StreamGroup`, `unawaited` 等
 
 **目標**:
+
 - ✅ 符合單一職責原則
 - ✅ 減少行數至 < 80 行
 - ✅ 提高可讀性和可測試性
 - ✅ 遵循 YAGNI 原則（不過度設計）
 
+---
+
+#### Task 3.2: 簡化 ListExtensions Use Case
+
+**優先級**: � 中
+**預估工時**: 3-4 小時
+**受影響檔案**: 1 個
+
+**目標**:
+
+- 移除 RxDart 依賴 (Task 1.3 已完成)
+- 提取輔助邏輯為 public functions
+- 保持單一職責
+
+---
+
+#### Task 3.3: 簡化 SearchThreads Use Case
+
+**優先級**: � 中
+**預估工時**: 3-4 小時
+**受影響檔案**: 1 個
+
+**目標**:
+
+- 簡化並行搜尋邏輯
+- 提取輔助方法
+
 ##### 解決方案
 
 **原則**:
+
 - 保持輔助邏輯為 **public functions** 在同一檔案
 - 只有在確實需要重用時才提取為獨立 Use Case
 - 添加清晰註釋說明可能的重構路徑
 
 **重構策略**:
+
 1. 將 `BoardDataChunk` 移至 models（Task 1.2 已完成）
 2. 提取輔助方法為 public functions
 3. 移除臨時對象創建，使用真實資料
@@ -1837,16 +1991,19 @@ Stream<BoardDataChunk> call(String collectionId) async* {
 **步驟 3.1.7**: 驗證和測試 (1 小時)
 
 1. **單元測試** (如果存在):
+
    ```bash
    flutter test test/domain/thread/interactor/list_collection_threads_test.dart
    ```
 
 2. **整合測試** (建議新增):
+
    - 測試單一看板
    - 測試多看板
    - 測試錯誤處理
 
 3. **手動功能測試**:
+
    - 啟動應用
    - 導航至 Collection 貼文列表頁面
    - 驗證：
@@ -1912,11 +2069,13 @@ flutter test test/domain/thread/interactor/
 **手動驗證**:
 
 1. Code Review:
+
    - 閱讀重構後的程式碼
    - 確認邏輯清晰易懂
    - 確認文件註釋完整
 
 2. 功能驗證:
+
    - 開啟應用
    - 測試 Collection 貼文列表功能
    - 驗證多看板資料正確
@@ -1939,6 +2098,7 @@ flutter test test/domain/thread/interactor/
 當前方案仍有 `_createMinimalBoard` 填充空值。如需徹底解決：
 
 **選項 A**: 獲取真實 Board 資料
+
 ```dart
 // 在 prepareBoardData 中
 final realBoard = await _boardRepository.getBoard(
@@ -1948,6 +2108,7 @@ final realBoard = await _boardRepository.getBoard(
 ```
 
 **選項 B**: 創建 MinimalBoard DTO
+
 ```dart
 @freezed
 class MinimalBoard with _$MinimalBoard {
@@ -1964,6 +2125,7 @@ class MinimalBoard with _$MinimalBoard {
 **建議**: 當前保持 `_createMinimalBoard`，未來如有需求再優化
 
 📝 **建議的 Commit Message**:
+
 ```
 refactor(domain): simplify ListCollectionThreads Use Case
 
@@ -2003,6 +2165,7 @@ Ref: REFACTORING_PLAN.md Task 3.1
 ### Spec-Driven Development 要素
 
 ✅ 每個任務包含：
+
 - 問題描述（Why）
 - 解決方案（What）
 - Before/After 程式碼範例
@@ -2021,6 +2184,7 @@ Ref: REFACTORING_PLAN.md Task 3.1
 ### 下一步
 
 完整的 REFACTORING_PLAN_V2.md 已創建，包含：
+
 - Phase 1: 架構合規性修復（詳細）
 - Phase 2: BLoC 效能優化（待補充）
 - Phase 3: Use Case 重構（部分完成）

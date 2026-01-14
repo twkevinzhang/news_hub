@@ -1,6 +1,5 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/domain/models/models.dart';
@@ -25,23 +24,6 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
     _cubit.startWatching();
   }
 
-  Color _getLevelColor(LogLevel? level) {
-    switch (level) {
-      case LogLevel.debug:
-        return Colors.grey;
-      case LogLevel.info:
-        return Colors.blue;
-      case LogLevel.warn:
-        return Colors.orange;
-      case LogLevel.error:
-        return Colors.red;
-      case LogLevel.critical:
-        return Colors.purple;
-      default:
-        return Colors.black;
-    }
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
@@ -53,10 +35,7 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
               SnackBar(
                 content: Text('日誌已匯出至：${state.exportPath}'),
                 behavior: SnackBarBehavior.floating,
-                action: SnackBarAction(
-                  label: '確定',
-                  onPressed: () {},
-                ),
+                action: SnackBarAction(label: '確定', onPressed: () {}),
               ),
             );
           }
@@ -127,7 +106,9 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
                                 ),
                                 const SizedBox(height: 16),
                                 Text(
-                                  state.searchQuery.isNotEmpty ? '找不到匹配的日誌' : '目前尚無日誌...',
+                                  state.searchQuery.isNotEmpty
+                                      ? '找不到匹配的日誌'
+                                      : '目前尚無日誌...',
                                   style: Theme.of(context).textTheme.bodyMedium,
                                 ),
                               ],
@@ -137,17 +118,10 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
                             controller: _scrollController,
                             items: state.filteredLogs,
                             autoScroll: state.autoScroll,
-                            onAutoScrollChanged: (enabled) => _cubit.toggleAutoScroll(enabled),
+                            onAutoScrollChanged: (enabled) =>
+                                _cubit.toggleAutoScroll(enabled),
                             itemBuilder: (context, log) {
-                              final time = log.timestamp;
-                              final timeStr =
-                                  '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}:${time.second.toString().padLeft(2, '0')}';
-
-                              return _LogEntryTile(
-                                log: log,
-                                timeStr: timeStr,
-                                color: _getLevelColor(log.level),
-                              );
+                              return _LogEntryTile(log: log);
                             },
                           ),
                   ),
@@ -166,14 +140,24 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
                   const SizedBox(height: 16),
                   FloatingActionButton(
                     heroTag: 'retry_connection',
-                    onPressed: state.isReconnectable ? () => _cubit.retryConnection() : null,
-                    tooltip: state.isReconnectable ? '重試連線' : (state.isConnected ? '連線正常' : '連線中...'),
+                    onPressed: state.isReconnectable
+                        ? () => _cubit.retryConnection()
+                        : null,
+                    tooltip: state.isReconnectable
+                        ? '重試連線'
+                        : (state.isConnected ? '連線正常' : '連線中...'),
                     backgroundColor: state.isConnected
                         ? Theme.of(context).colorScheme.surfaceContainerHighest
-                        : (state.isReconnectable ? Theme.of(context).colorScheme.errorContainer : Theme.of(context).colorScheme.surfaceContainerHighest),
+                        : (state.isReconnectable
+                              ? Theme.of(context).colorScheme.errorContainer
+                              : Theme.of(
+                                  context,
+                                ).colorScheme.surfaceContainerHighest),
                     foregroundColor: state.isConnected
                         ? Theme.of(context).disabledColor
-                        : (state.isReconnectable ? Theme.of(context).colorScheme.onErrorContainer : Theme.of(context).disabledColor),
+                        : (state.isReconnectable
+                              ? Theme.of(context).colorScheme.onErrorContainer
+                              : Theme.of(context).disabledColor),
                     child: const Icon(Icons.refresh),
                   ),
                 ],
@@ -218,20 +202,43 @@ class _SidecarLogsScreenState extends State<SidecarLogsScreen> {
 
 class _LogEntryTile extends StatelessWidget {
   final LogEntry log;
-  final String timeStr;
-  final Color color;
 
-  const _LogEntryTile({
-    required this.log,
-    required this.timeStr,
-    required this.color,
-  });
+  const _LogEntryTile({required this.log});
+
+  Color _getLevelColor(LogLevel level) {
+    switch (level) {
+      case LogLevel.debug:
+        return Colors.grey;
+      case LogLevel.info:
+        return Colors.blue;
+      case LogLevel.warn:
+        return Colors.orange;
+      case LogLevel.error:
+        return Colors.red;
+      case LogLevel.critical:
+        return Colors.purple;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    final time = log.timestamp;
+    // Efficiently format time here, local variables are cheap
+    final timeStr =
+        '${time.hour.toString().padLeft(2, '0')}:${time.minute.toString().padLeft(2, '0')}:${time.second.toString().padLeft(2, '0')}';
+    final color = _getLevelColor(log.level);
+
     return InkWell(
       onTap: () => _showLogDetail(context),
-      child: Padding(
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(
+              color: Theme.of(context).dividerColor,
+              width: 0.5,
+            ),
+          ),
+        ),
         padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 4.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -239,11 +246,14 @@ class _LogEntryTile extends StatelessWidget {
             Row(
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 6,
+                    vertical: 2,
+                  ),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
+                    color: color.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(4),
-                    border: Border.all(color: color.withOpacity(0.5)),
+                    border: Border.all(color: color.withValues(alpha: 0.5)),
                   ),
                   child: Text(
                     log.level.name.toUpperCase(),
@@ -257,18 +267,18 @@ class _LogEntryTile extends StatelessWidget {
                 const SizedBox(width: 8),
                 Text(
                   timeStr,
-                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                        fontFamily: 'monospace',
-                      ),
+                  style: Theme.of(
+                    context,
+                  ).textTheme.bodySmall?.copyWith(fontFamily: 'monospace'),
                 ),
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
                     log.loggerName,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          fontStyle: FontStyle.italic,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                      fontStyle: FontStyle.italic,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                 ),
               ],
@@ -276,10 +286,7 @@ class _LogEntryTile extends StatelessWidget {
             const SizedBox(height: 4),
             Text(
               log.message,
-              style: const TextStyle(
-                fontFamily: 'monospace',
-                fontSize: 13,
-              ),
+              style: const TextStyle(fontFamily: 'monospace', fontSize: 13),
             ),
             if (log.exception.isNotEmpty)
               Padding(
@@ -327,18 +334,33 @@ class _LogEntryTile extends StatelessWidget {
                 color: Theme.of(context).colorScheme.surfaceContainerHighest,
                 borderRadius: BorderRadius.circular(8),
               ),
-              child: SelectableText(log.message, style: const TextStyle(fontFamily: 'monospace')),
+              child: SelectableText(
+                log.message,
+                style: const TextStyle(fontFamily: 'monospace'),
+              ),
             ),
             if (log.exception.isNotEmpty) ...[
               const SizedBox(height: 16),
-              const Text('異常堆棧：', style: TextStyle(fontWeight: FontWeight.bold, color: Colors.red)),
+              const Text(
+                '異常堆棧：',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  color: Colors.red,
+                ),
+              ),
               Container(
                 padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   color: Theme.of(context).colorScheme.errorContainer,
                   borderRadius: BorderRadius.circular(8),
                 ),
-                child: SelectableText(log.exception, style: TextStyle(fontFamily: 'monospace', color: Theme.of(context).colorScheme.onErrorContainer)),
+                child: SelectableText(
+                  log.exception,
+                  style: TextStyle(
+                    fontFamily: 'monospace',
+                    color: Theme.of(context).colorScheme.onErrorContainer,
+                  ),
+                ),
               ),
             ],
           ],
@@ -361,7 +383,13 @@ class _DetailItem extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(width: 80, child: Text('$label:', style: const TextStyle(fontWeight: FontWeight.bold))),
+          SizedBox(
+            width: 80,
+            child: Text(
+              '$label:',
+              style: const TextStyle(fontWeight: FontWeight.bold),
+            ),
+          ),
           Expanded(child: Text(value)),
         ],
       ),
@@ -386,23 +414,16 @@ class _StatusBar extends StatelessWidget {
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       decoration: BoxDecoration(
         color: Theme.of(context).colorScheme.surfaceContainerHigh,
-        border: Border(bottom: BorderSide(color: Theme.of(context).dividerColor)),
+        border: Border(
+          bottom: BorderSide(color: Theme.of(context).dividerColor),
+        ),
       ),
       child: Row(
         children: [
-          Text(
-            '日誌條數: $logCount',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
+          Text('日誌條數: $logCount', style: Theme.of(context).textTheme.bodySmall),
           const Spacer(),
-          Text(
-            '自動滾動',
-            style: Theme.of(context).textTheme.bodySmall,
-          ),
-          Switch.adaptive(
-            value: autoScroll,
-            onChanged: onAutoScrollChanged,
-          ),
+          Text('自動滾動', style: Theme.of(context).textTheme.bodySmall),
+          Switch.adaptive(value: autoScroll, onChanged: onAutoScrollChanged),
         ],
       ),
     );
@@ -486,7 +507,9 @@ class _AutoScrollListViewState<T> extends State<AutoScrollListView<T>> {
         _isUserInteracting = false;
         // If user let go and we are at the bottom, re-enable auto scroll
         // BUT ONLY if we are truly at/near the bottom.
-        if (widget.controller.hasClients && !widget.autoScroll && _isNearBottom(widget.controller.position)) {
+        if (widget.controller.hasClients &&
+            !widget.autoScroll &&
+            _isNearBottom(widget.controller.position)) {
           widget.onAutoScrollChanged(true);
         }
       },
@@ -495,7 +518,10 @@ class _AutoScrollListViewState<T> extends State<AutoScrollListView<T>> {
         onNotification: (notification) {
           if (notification is ScrollUpdateNotification) {
             // User dragging content down (finger moves down, content moves down to show top) -> Offset decreases -> Delta < 0
-            if (_isUserInteracting && notification.scrollDelta != null && notification.scrollDelta! < 0 && !_isNearBottom(notification.metrics)) {
+            if (_isUserInteracting &&
+                notification.scrollDelta != null &&
+                notification.scrollDelta! < 0 &&
+                !_isNearBottom(notification.metrics)) {
               if (widget.autoScroll) {
                 widget.onAutoScrollChanged(false);
               }
@@ -510,12 +536,12 @@ class _AutoScrollListViewState<T> extends State<AutoScrollListView<T>> {
           }
           return false;
         },
-        child: ListView.separated(
+        child: ListView.builder(
           controller: widget.controller,
           padding: const EdgeInsets.all(8),
           itemCount: widget.items.length,
-          separatorBuilder: (context, index) => const Divider(height: 1),
-          itemBuilder: (context, index) => widget.itemBuilder(context, widget.items[index]),
+          itemBuilder: (context, index) =>
+              widget.itemBuilder(context, widget.items[index]),
         ),
       ),
     );
