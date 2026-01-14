@@ -11,8 +11,8 @@ class ListInstalledExtensions {
   ListInstalledExtensions({
     required ExtensionRepository repository,
     required BoardRepository boardRepository,
-  })  : _repository = repository,
-        _boardRepository = boardRepository;
+  }) : _repository = repository,
+       _boardRepository = boardRepository;
 
   Future<List<Extension>> call() {
     return _repository.listInstalled();
@@ -34,17 +34,4 @@ class ListInstalledExtensions {
     });
     return await Future.wait(promises);
   }
-}
-
-class ExtensionWithBoards extends Extension {
-  final Set<Board> boards;
-  ExtensionWithBoards({
-    required super.pkgName,
-    required super.displayName,
-    required super.version,
-    required super.pythonVersion,
-    required super.lang,
-    required super.isNsfw,
-    required this.boards,
-  });
 }

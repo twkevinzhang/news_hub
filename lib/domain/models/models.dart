@@ -18,6 +18,7 @@ export 'repo/repo.dart';
 export 'extension/extension.dart';
 export 'extension/remote_extension.dart';
 export 'extension/extension_board.dart';
+export 'extension/extension_with_boards.dart';
 
 // Collection
 export 'collection/board_identity.dart';
@@ -35,6 +36,7 @@ export 'thread/post/single_image_post_with_extension.dart';
 
 // Thread - Other
 export 'thread/comment.dart';
+export 'thread/board_data_chunk.dart';
 
 // Board
 export 'board/board.dart';

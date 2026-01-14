@@ -1,10 +1,9 @@
 import 'dart:async';
-import 'package:collection/collection.dart';
-import 'package:async/async.dart';
+
 import 'package:injectable/injectable.dart';
-import 'package:news_hub/domain/thread/repository.dart';
 import 'package:news_hub/domain/collection/repository.dart';
 import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/domain/thread/repository.dart';
 import 'package:news_hub/shared/models.dart';
 
 @lazySingleton
@@ -15,8 +14,8 @@ class ListCollectionThreads {
   ListCollectionThreads({
     required ThreadRepository repository,
     required CollectionRepository collectionRepository,
-  })  : _repository = repository,
-        _collectionRepository = collectionRepository;
+  }) : _repository = repository,
+       _collectionRepository = collectionRepository;
 
   Stream<BoardDataChunk> call({
     required String collectionId,
@@ -25,7 +24,9 @@ class ListCollectionThreads {
   }) async* {
     // 1. 找出 Collection 與對應的 Boards
     final collections = await _collectionRepository.list();
-    final collection = collections.firstWhereOrNull((c) => c.id == collectionId);
+    final collection = collections
+        .where((c) => c.id == collectionId)
+        .firstOrNull; // Use native Dart 3 method
 
     if (collection == null || collection.boards.isEmpty) {
       return;
@@ -33,26 +34,29 @@ class ListCollectionThreads {
 
     // 2. 先 Yield 所有 Board 的 Loading 狀態以顯示 Skeleton
     for (final b in collection.boards) {
-      yield BoardDataChunk(
-        boardId: b.identity.boardId,
-        isLoading: true,
-      );
+      yield BoardDataChunk(boardId: b.identity.boardId, isLoading: true);
     }
 
-    // 3. 使用 StreamGroup 合併多個並行的 Request
-    final group = StreamGroup<BoardDataChunk>();
+    // 3. 使用 StreamController 合併多個並行的 Request
+    final controller = StreamController<BoardDataChunk>();
+    int pendingStreams = collection.boards.length;
 
     for (final b in collection.boards) {
       // 每個 Board 建立一個自己的非同步任務
-      final boardStream = _fetchBoardThreads(b, pagination, filter);
-      group.add(boardStream);
+      _fetchBoardThreads(b, pagination, filter).listen(
+        (chunk) => controller.add(chunk),
+        onError: (e) => controller.addError(e),
+        onDone: () {
+          pendingStreams--;
+          if (pendingStreams <= 0) {
+            controller.close();
+          }
+        },
+      );
     }
 
-    // 關閉 group 表示不再有新的 Stream 加入
-    unawaited(group.close());
-
     // 4. 監聽合併後的流，直接將 Chunk 往外送
-    yield* group.stream;
+    yield* controller.stream;
   }
 
   // 封裝單一 Board 的抓取邏輯，轉化為單次發送的 Stream
@@ -109,18 +113,4 @@ class ListCollectionThreads {
       );
     }
   }
-}
-
-class BoardDataChunk {
-  final String boardId;
-  final List<SingleImagePostWithExtension> threads;
-  final bool isLoading;
-  final String? error;
-
-  const BoardDataChunk({
-    required this.boardId,
-    this.threads = const [],
-    this.isLoading = false,
-    this.error,
-  });
 }
