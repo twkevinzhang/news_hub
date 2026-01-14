@@ -78,38 +78,49 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: _homeCubit,
-      child: BlocBuilder<HomeCubit, HomeState>(
-        builder: (context, state) {
-          return Scaffold(
-            key: _scaffoldKey,
-            appBar: AppTopBar(
-              title: state.title,
-              onMenuPressed: () => _scaffoldKey.currentState?.openDrawer(),
-              onSearchPressed: () => context.router.push(SearchRoute()),
-              onSettingsPressed: () => context.router.push(const SettingsRoute()),
-            ),
-            drawer: AppNavigationDrawer(
-              onCollectionSelected: (collection) {
-                _safeNavigate(() => context.router.replace(
-                    CollectionThreadListRoute(collectionId: collection.id)));
-              },
-              onCreateCollectionPressed: () {
-                _safeNavigate(() => context.router.push(CollectionCreateRoute()));
-              },
-              onBoardSelected: (board) {
-                _safeNavigate(() => context.router.replace(
-                    CollectionBoardThreadListRoute(
-                      collectionId: board.collectionId,
-                      boardId: board.identity.boardId,
-                    )));
-              },
-              onStatusPressed: () {
-                _safeNavigate(() => context.router.push(const SidecarLogsRoute()));
-              },
-            ),
-            body: const AutoRouter(),
-          );
-        },
+      child: Scaffold(
+        key: _scaffoldKey,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(kToolbarHeight),
+          child: BlocSelector<HomeCubit, HomeState, String>(
+            selector: (state) => state.title,
+            builder: (context, title) {
+              return AppTopBar(
+                title: title,
+                onMenuPressed: () => _scaffoldKey.currentState?.openDrawer(),
+                onSearchPressed: () => context.router.push(SearchRoute()),
+                onSettingsPressed: () =>
+                    context.router.push(const SettingsRoute()),
+              );
+            },
+          ),
+        ),
+        drawer: AppNavigationDrawer(
+          onCollectionSelected: (collection) {
+            _safeNavigate(
+              () => context.router.replace(
+                CollectionThreadListRoute(collectionId: collection.id),
+              ),
+            );
+          },
+          onCreateCollectionPressed: () {
+            _safeNavigate(() => context.router.push(CollectionCreateRoute()));
+          },
+          onBoardSelected: (board) {
+            _safeNavigate(
+              () => context.router.replace(
+                CollectionBoardThreadListRoute(
+                  collectionId: board.collectionId,
+                  boardId: board.identity.boardId,
+                ),
+              ),
+            );
+          },
+          onStatusPressed: () {
+            _safeNavigate(() => context.router.push(const SidecarLogsRoute()));
+          },
+        ),
+        body: const AutoRouter(),
       ),
     );
   }
