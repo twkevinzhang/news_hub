@@ -23,14 +23,14 @@
 
 ### 🔄 進行中任務
 
-#### Task 4.2: 關鍵 Repository 與 Sidecar API 集成測試
+#### Task 4.3: Widget 測試 (核心 UI 組件)
 
 - **狀態**: 🚀 進行中
-- **目標**: 為核心 Repository (Collection, Sidecar) 與 API Client 編寫整合/單元測試。
+- **目標**: 為核心 UI 組件 (ThreadList, PostItem 等) 編寫 Widget 測試。
 
 ### 📋 下一個任務
 
-#### Task 4.3: Widget 測試 (核心 UI 組件)
+#### Task 4.4: 靜態分析與記憶體洩漏檢查
 
 - **狀態**: ⏳ 待執行
 
@@ -57,6 +57,6 @@
 
 - [x] Task 3.3 (跨 Phase 推動): Use Case 測試已完成
 - [x] Task 4.1: BLoC 測試覆蓋率提升 (HomeCubit, ThreadDetailCubit 已完成)
-- [ ] Task 4.2: 關鍵 Repository 與 Sidecar API 集成測試
+- [x] Task 4.2: 關鍵 Repository 與 Sidecar API 集成測試 (Collection, Sidecar, ApiService)
 - [ ] Task 4.3: Widget 測試 (核心 UI 組件)
 - [ ] Task 4.4: 靜態分析與記憶體洩漏檢查

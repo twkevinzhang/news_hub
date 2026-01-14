@@ -38,38 +38,37 @@ class CollectionBoardRefs extends Table {
 }
 
 @singleton
-@DriftDatabase(tables: [
-  Suggestions,
-  Collections,
-  CollectionBoardRefs,
-])
+@DriftDatabase(tables: [Suggestions, Collections, CollectionBoardRefs])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase() : super(_openConnection());
+  AppDatabase([QueryExecutor? e]) : super(e ?? _openConnection());
 
   @override
   int get schemaVersion => 5;
 
   @override
   MigrationStrategy get migration => MigrationStrategy(
-        onCreate: (m) async {
-          await m.createAll();
-        },
-        onUpgrade: (m, from, to) async {
-          if (from < 2) {
-            await m.createTable(collections);
-            await m.createTable(collectionBoardRefs);
-          }
-          if (from < 3) {
-            // repo_base_url was renamed but now removed
-          }
-          if (from < 4) {
-            await m.addColumn(collections, collections.sortOrder);
-          }
-          if (from < 5) {
-            await m.addColumn(collectionBoardRefs, collectionBoardRefs.selectedSort);
-          }
-        },
-      );
+    onCreate: (m) async {
+      await m.createAll();
+    },
+    onUpgrade: (m, from, to) async {
+      if (from < 2) {
+        await m.createTable(collections);
+        await m.createTable(collectionBoardRefs);
+      }
+      if (from < 3) {
+        // repo_base_url was renamed but now removed
+      }
+      if (from < 4) {
+        await m.addColumn(collections, collections.sortOrder);
+      }
+      if (from < 5) {
+        await m.addColumn(
+          collectionBoardRefs,
+          collectionBoardRefs.selectedSort,
+        );
+      }
+    },
+  );
 }
 
 LazyDatabase _openConnection() {

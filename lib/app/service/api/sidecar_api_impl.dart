@@ -12,24 +12,44 @@ import 'models/sidecar_api.pbgrpc.dart';
 import 'models/sidecar_api.pb.dart' as pb;
 import 'models/domain_models.pb.dart' as domain_pb;
 
+import 'package:grpc/grpc.dart';
+
 @LazySingleton(as: ApiService)
 class SidecarApiImpl implements ApiService {
-  SidecarApiClient get _client => SidecarApiClient(sl<GrpcConnectionManagerImpl>().getChannel());
+  final GrpcConnectionManagerImpl? _injectedConnectionManager;
+  final SidecarApiClient Function(ClientChannel)? _clientFactory;
 
-  SidecarApiImpl();
+  SidecarApiImpl({
+    GrpcConnectionManagerImpl? connectionManager,
+    SidecarApiClient Function(ClientChannel)? clientFactory,
+  }) : _injectedConnectionManager = connectionManager,
+       _clientFactory = clientFactory;
+
+  GrpcConnectionManagerImpl get _connectionManager =>
+      _injectedConnectionManager ?? sl<GrpcConnectionManagerImpl>();
+
+  SidecarApiClient get _client {
+    final channel = _connectionManager.getChannel();
+    if (_clientFactory != null) {
+      return _clientFactory(channel);
+    }
+    return SidecarApiClient(channel);
+  }
 
   @override
   Future<List<domain.Board>> listBoards({
     required String extensionPkgName,
     Pagination? pagination,
   }) async {
-    final res = await _client.getBoards(pb.GetBoardsReq(
-      pkgName: extensionPkgName,
-      page: domain_pb.PaginationReq(
-        page: pagination?.page,
-        pageSize: pagination?.pageSize,
+    final res = await _client.getBoards(
+      pb.GetBoardsReq(
+        pkgName: extensionPkgName,
+        page: domain_pb.PaginationReq(
+          page: pagination?.page,
+          pageSize: pagination?.pageSize,
+        ),
       ),
-    ));
+    );
     return res.boards.map((b) => b.toBoardDomain()).toList();
   }
 
@@ -41,16 +61,18 @@ class SidecarApiImpl implements ApiService {
     Pagination? pagination,
     String? keywords,
   }) async {
-    final res = await _client.getThreads(pb.GetThreadsReq(
-      pkgName: extensionPkgName,
-      boardId: boardId,
-      sort: sort,
-      page: domain_pb.PaginationReq(
-        page: pagination?.page,
-        pageSize: pagination?.pageSize,
+    final res = await _client.getThreads(
+      pb.GetThreadsReq(
+        pkgName: extensionPkgName,
+        boardId: boardId,
+        sort: sort,
+        page: domain_pb.PaginationReq(
+          page: pagination?.page,
+          pageSize: pagination?.pageSize,
+        ),
+        keywords: keywords,
       ),
-      keywords: keywords,
-    ));
+    );
     return res.threads.map((t) => t.toPostDomain()).toList();
   }
 
@@ -61,12 +83,14 @@ class SidecarApiImpl implements ApiService {
     required String threadId,
     String? postId,
   }) async {
-    final res = await _client.getOriginalPost(pb.GetOriginalPostReq(
-      pkgName: extensionPkgName,
-      boardId: boardId,
-      threadId: threadId,
-      postId: postId,
-    ));
+    final res = await _client.getOriginalPost(
+      pb.GetOriginalPostReq(
+        pkgName: extensionPkgName,
+        boardId: boardId,
+        threadId: threadId,
+        postId: postId,
+      ),
+    );
     return res.originalPost.toPostDomain();
   }
 
@@ -78,16 +102,18 @@ class SidecarApiImpl implements ApiService {
     String? parentId,
     Pagination? pagination,
   }) async {
-    final res = await _client.getReplies(pb.GetRepliesReq(
-      pkgName: extensionPkgName,
-      boardId: boardId,
-      threadId: threadId,
-      parentId: parentId,
-      page: domain_pb.PaginationReq(
-        page: pagination?.page,
-        pageSize: pagination?.pageSize,
+    final res = await _client.getReplies(
+      pb.GetRepliesReq(
+        pkgName: extensionPkgName,
+        boardId: boardId,
+        threadId: threadId,
+        parentId: parentId,
+        page: domain_pb.PaginationReq(
+          page: pagination?.page,
+          pageSize: pagination?.pageSize,
+        ),
       ),
-    ));
+    );
     return res.replies.map((p) => p.toPostDomain()).toList();
   }
 
@@ -99,16 +125,18 @@ class SidecarApiImpl implements ApiService {
     required String postId,
     Pagination? pagination,
   }) async {
-    final res = await _client.getComments(pb.GetCommentsReq(
-      pkgName: extensionPkgName,
-      boardId: boardId,
-      threadId: threadId,
-      postId: postId,
-      page: domain_pb.PaginationReq(
-        page: pagination?.page,
-        pageSize: pagination?.pageSize,
+    final res = await _client.getComments(
+      pb.GetCommentsReq(
+        pkgName: extensionPkgName,
+        boardId: boardId,
+        threadId: threadId,
+        postId: postId,
+        page: domain_pb.PaginationReq(
+          page: pagination?.page,
+          pageSize: pagination?.pageSize,
+        ),
       ),
-    ));
+    );
     return res.comments.map((c) => c.toCommentDomain()).toList();
   }
 
@@ -126,10 +154,12 @@ class SidecarApiImpl implements ApiService {
 
     // Parallel calls for each extension
     final futures = groupedBoards.entries.map((entry) async {
-      final res = await _client.getBoardSortOptions(pb.GetBoardSortOptionsReq(
-        pkgName: entry.key,
-        boardIds: entry.value.map((b) => b.id).toList(),
-      ));
+      final res = await _client.getBoardSortOptions(
+        pb.GetBoardSortOptionsReq(
+          pkgName: entry.key,
+          boardIds: entry.value.map((b) => b.id).toList(),
+        ),
+      );
       return res.options;
     });
 
@@ -148,22 +178,32 @@ class SidecarApiImpl implements ApiService {
 
   @override
   Future<int> getInstallProgress({required String extensionPkgName}) async {
-    final res = await _client.getInstallProgress(pb.GetInstallProgressReq(pkgName: extensionPkgName));
+    final res = await _client.getInstallProgress(
+      pb.GetInstallProgressReq(pkgName: extensionPkgName),
+    );
     return res.progress.toInt();
   }
 
   @override
-  Future<domain.Extension> getInstalledExtension({required String extensionPkgName}) async {
-    final res = await _client.getInstalledExtension(pb.GetInstalledExtensionReq(pkgName: extensionPkgName));
+  Future<domain.Extension> getInstalledExtension({
+    required String extensionPkgName,
+  }) async {
+    final res = await _client.getInstalledExtension(
+      pb.GetInstalledExtensionReq(pkgName: extensionPkgName),
+    );
     return res.extension_1.toExtensionDomain();
   }
 
   @override
   Future<void> installExtension({required domain.Extension extension}) async {
-    await _client.installExtension(pb.InstallExtensionReq(
-      pkgName: extension.pkgName,
-      repoUrl: (extension is domain.RemoteExtension) ? extension.repoUrl : null,
-    ));
+    await _client.installExtension(
+      pb.InstallExtensionReq(
+        pkgName: extension.pkgName,
+        repoUrl: (extension is domain.RemoteExtension)
+            ? extension.repoUrl
+            : null,
+      ),
+    );
   }
 
   @override
@@ -174,19 +214,27 @@ class SidecarApiImpl implements ApiService {
 
   @override
   Future<void> uninstallExtension({required domain.Extension extension}) async {
-    await _client.uninstallExtension(pb.UninstallExtensionReq(pkgName: extension.pkgName));
+    await _client.uninstallExtension(
+      pb.UninstallExtensionReq(pkgName: extension.pkgName),
+    );
   }
 
   @override
-  Future<List<domain.RemoteExtension>> listRemoteExtensions({String? keyword}) async {
-    final res = await _client.listRemoteExtensions(pb.ListRemoteExtensionsReq(keyword: keyword));
+  Future<List<domain.RemoteExtension>> listRemoteExtensions({
+    String? keyword,
+  }) async {
+    final res = await _client.listRemoteExtensions(
+      pb.ListRemoteExtensionsReq(keyword: keyword),
+    );
     return res.extensions.map((e) => e.toRemoteExtensionDomain()).toList();
   }
 
   // Health Check
   @override
   Stream<domain.HealthCheckResult> watchHealth() {
-    return _client.watchHealth(pb.HealthCheckReq()).map((res) => res.toHealthCheckResultDomain());
+    return _client
+        .watchHealth(pb.HealthCheckReq())
+        .map((res) => res.toHealthCheckResultDomain());
   }
 
   @override
@@ -197,8 +245,12 @@ class SidecarApiImpl implements ApiService {
 
   // Logs
   @override
-  Stream<domain.LogEntry> watchLogs({domain.LogLevel minLevel = domain.LogLevel.info}) {
-    final res = _client.watchLogs(pb.WatchLogsReq(minLevel: minLevel.toPbLogLevel()));
+  Stream<domain.LogEntry> watchLogs({
+    domain.LogLevel minLevel = domain.LogLevel.info,
+  }) {
+    final res = _client.watchLogs(
+      pb.WatchLogsReq(minLevel: minLevel.toPbLogLevel()),
+    );
     return res.map((l) => l.toLogEntryDomain());
   }
 
