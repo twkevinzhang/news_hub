@@ -72,7 +72,6 @@ class HomeCubit extends Cubit<HomeState> {
     _collectionSubscription?.cancel();
     _collectionSubscription = _collectionRepository.watchList().listen((collections) {
       emit(state.copyWith(collections: collections));
-      // Re-evaluate title when collections update
       if (state.pendingRoute != null) {
         _updateTitleFromRoute(state.pendingRoute!);
       }
@@ -80,18 +79,14 @@ class HomeCubit extends Cubit<HomeState> {
 
     _sidecarSubscription?.cancel();
     _sidecarSubscription = _sidecarRepository.watchHealth().listen(
-      (status) {
-        emit(state.copyWith(
-          sidecarStatus: status,
-          sidecarMessage: null,
-        ));
-      },
-      onError: (error) {
-        emit(state.copyWith(
-          sidecarStatus: SidecarConnectionState.failed,
-          sidecarMessage: 'Connection error: $error',
-        ));
-      },
+      (status) => emit(state.copyWith(
+        sidecarStatus: status,
+        sidecarMessage: null,
+      )),
+      onError: (error) => emit(state.copyWith(
+        sidecarStatus: SidecarConnectionState.failed,
+        sidecarMessage: 'Connection error: $error',
+      )),
     );
   }
 
@@ -108,52 +103,50 @@ class HomeCubit extends Cubit<HomeState> {
   }
 
   void updateTitle(String title) {
-    if (state.title != title) {
-      emit(state.copyWith(title: title));
-    }
+    if (state.title == title) return;
+    emit(state.copyWith(title: title));
   }
 
   void navigateToFirstCollection(StackRouter router) {
-    if (state.collections.isNotEmpty) {
-      final firstCollection = state.collections.first;
-      router.replace(CollectionThreadListRoute(collectionId: firstCollection.id));
-    }
+    if (state.collections.isEmpty) return;
+
+    final firstCollection = state.collections.first;
+    router.replace(CollectionThreadListRoute(collectionId: firstCollection.id));
   }
 
   void _updateTitleFromRoute(RouteData route) {
-    String title = 'NewsHub';
+    final title = switch (route.name) {
+      'CollectionThreadListRoute' => _getTitleForCollectionRoute(route),
+      'CollectionBoardThreadListRoute' => _getTitleForBoardRoute(route),
+      _ => _getTitleFromRouteName(route.name),
+    };
 
-    if (route.name == 'CollectionThreadListRoute') {
-      final collectionId = _getCollectionIdFromRoute(route);
-      final collection = _findCollection(collectionId);
+    if (state.title == title) return;
+    emit(state.copyWith(title: title));
+  }
 
-      if (collection != null) {
-        title = collection.name;
-      } else if (collectionId != null && state.collections.isEmpty) {
-        title = 'Loading...';
-      }
-    } else if (route.name == 'CollectionBoardThreadListRoute') {
-      final collectionId = _getCollectionIdFromRoute(route);
-      final boardId = _getBoardIdFromRoute(route);
-      final collection = _findCollection(collectionId);
+  String _getTitleForCollectionRoute(RouteData route) {
+    final collectionId = _getCollectionIdFromRoute(route);
+    final collection = _findCollection(collectionId);
 
-      if (collection != null && boardId != null) {
-        final board = _findBoard(collection, boardId);
-        if (board != null) {
-          title = board.identity.boardName;
-        } else {
-          title = collection.name;
-        }
-      } else if (collectionId != null && state.collections.isEmpty) {
-        title = 'Loading...';
-      }
-    } else {
-      title = _getTitleFromRouteName(route.name);
+    if (collection != null) return collection.name;
+    if (collectionId != null && state.collections.isEmpty) return 'Loading...';
+    return 'NewsHub';
+  }
+
+  String _getTitleForBoardRoute(RouteData route) {
+    final collectionId = _getCollectionIdFromRoute(route);
+    final boardId = _getBoardIdFromRoute(route);
+    final collection = _findCollection(collectionId);
+
+    if (collection != null && boardId != null) {
+      final board = _findBoard(collection, boardId);
+      if (board != null) return board.identity.boardName;
+      return collection.name;
     }
 
-    if (state.title != title) {
-      emit(state.copyWith(title: title));
-    }
+    if (collectionId != null && state.collections.isEmpty) return 'Loading...';
+    return 'NewsHub';
   }
 
   String? _getCollectionIdFromRoute(RouteData route) {

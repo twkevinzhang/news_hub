@@ -34,7 +34,11 @@ class SidecarLogsState with _$SidecarLogsState {
     if (searchQuery.isEmpty) return logs;
 
     final lowerQuery = searchQuery.toLowerCase();
-    return logs.where((log) => log.message.toLowerCase().contains(lowerQuery) || log.loggerName.toLowerCase().contains(lowerQuery)).toList();
+    return logs
+        .where((log) =>
+            log.message.toLowerCase().contains(lowerQuery) ||
+            log.loggerName.toLowerCase().contains(lowerQuery))
+        .toList();
   }
 
   bool get isConnected => connectionStatus == SidecarConnectionState.connected;
@@ -106,7 +110,6 @@ class SidecarLogsCubit extends Cubit<SidecarLogsState> {
 
   void toggleAutoScroll(bool value) {
     emit(state.copyWith(autoScroll: value));
-    // TODO: Should probably save this via a UseCase if we want it to persist
   }
 
   void setSearchQuery(String query) {
@@ -122,9 +125,9 @@ class SidecarLogsCubit extends Cubit<SidecarLogsState> {
 
   Future<void> exportLogsToJson() async {
     try {
-      if (_needsStoragePermissionOnAndroid()) {
-        final granted = await _requestStoragePermission();
-        if (!granted) {
+      if (Platform.isAndroid) {
+        final status = await Permission.storage.request();
+        if (!status.isGranted) {
           emit(state.copyWith(error: '無法匯出：未獲得存儲權限'));
           return;
         }
@@ -143,15 +146,6 @@ class SidecarLogsCubit extends Cubit<SidecarLogsState> {
     } catch (e) {
       emit(state.copyWith(error: '匯出失敗: $e'));
     }
-  }
-
-  bool _needsStoragePermissionOnAndroid() {
-    return Theme.of(sl<AppRouter>().navigatorKey.currentContext!).platform == TargetPlatform.android;
-  }
-
-  Future<bool> _requestStoragePermission() async {
-    final status = await Permission.storage.request();
-    return status.isGranted;
   }
 
   String _convertLogsToJson() {

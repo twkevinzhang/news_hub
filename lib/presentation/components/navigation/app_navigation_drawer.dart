@@ -33,7 +33,6 @@ class _AppNavigationDrawerState extends State<AppNavigationDrawer> {
             child: ListView(
               padding: EdgeInsets.zero,
               children: [
-                // App Logo
                 Padding(
                   padding: const EdgeInsets.fromLTRB(28, 64, 16, 10),
                   child: Text(
@@ -44,16 +43,9 @@ class _AppNavigationDrawerState extends State<AppNavigationDrawer> {
                         ),
                   ),
                 ),
-                // Collection List
                 BlocBuilder<HomeCubit, HomeState>(
                   buildWhen: (previous, current) => previous.collections != current.collections,
                   builder: (context, state) {
-                    // HomeCubit doesn't expose isLoading explicitly for collections,
-                    // but we can assume empty means loading if we want, or just show empty.
-                    // Actually HomeCubit initializes with empty list.
-                    // Ideally check if collections are empty and maybe we are waiting for first emission?
-                    // But for now let's just render.
-
                     return Column(
                       children: state.collections.map((collection) {
                         final controller = _controllers.putIfAbsent(
@@ -65,12 +57,11 @@ class _AppNavigationDrawerState extends State<AppNavigationDrawer> {
                           key: Key(collection.id),
                           controller: controller,
                           onExpansionChanged: (expanded) {
-                            if (expanded) {
-                              // Collapse others
-                              for (final entry in _controllers.entries) {
-                                if (entry.key != collection.id) {
-                                  entry.value.collapse();
-                                }
+                            if (!expanded) return;
+
+                            for (final entry in _controllers.entries) {
+                              if (entry.key != collection.id) {
+                                entry.value.collapse();
                               }
                             }
                           },
@@ -96,7 +87,6 @@ class _AppNavigationDrawerState extends State<AppNavigationDrawer> {
                     );
                   },
                 ),
-                // Create Collection Button
                 ListTile(
                   contentPadding: const EdgeInsets.fromLTRB(28, 16, 16, 16),
                   leading: const Icon(Icons.add_outlined),
