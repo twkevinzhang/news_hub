@@ -33,23 +33,28 @@ class _AppTopBarState extends State<AppTopBar> {
   }
 
   Widget _buildLeading(BuildContext context) {
-    final canPop = context.router.canPop();
+    final router = context.router;
 
-    if (canPop) {
-      return IconButton(
-        icon: const Icon(Icons.arrow_back),
-        onPressed: () => context.router.maybePop(),
-      );
-    }
+    return ListenableBuilder(
+      listenable: router,
+      builder: (context, _) {
+        if (router.canPop()) {
+          return IconButton(
+            icon: const Icon(Icons.arrow_back),
+            onPressed: () => router.maybePop(),
+          );
+        }
 
-    if (widget.onMenuPressed != null) {
-      return IconButton(
-        icon: const Icon(Icons.menu),
-        onPressed: widget.onMenuPressed,
-      );
-    }
+        if (widget.onMenuPressed != null) {
+          return IconButton(
+            icon: const Icon(Icons.menu),
+            onPressed: widget.onMenuPressed,
+          );
+        }
 
-    return const SizedBox.shrink();
+        return const SizedBox.shrink();
+      },
+    );
   }
 
   List<Widget> _buildActions() {
