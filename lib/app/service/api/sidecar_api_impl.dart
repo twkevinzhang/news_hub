@@ -21,6 +21,11 @@ class SidecarApiImpl implements ApiService {
   final GrpcConnectionManagerImpl? _injectedConnectionManager;
   final SidecarApiClientFactory? _clientFactory;
 
+  @factoryMethod
+  SidecarApiImpl.injectable()
+    : _injectedConnectionManager = null,
+      _clientFactory = null;
+
   SidecarApiImpl({
     GrpcConnectionManagerImpl? connectionManager,
     SidecarApiClientFactory? clientFactory,
