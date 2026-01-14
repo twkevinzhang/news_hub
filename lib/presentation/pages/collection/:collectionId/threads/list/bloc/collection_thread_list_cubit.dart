@@ -24,42 +24,43 @@ class CollectionThreadListCubit extends Cubit<CollectionThreadListState> {
   final GetCollection _getCollection;
   final ListCollectionThreads _listCollectionThreads;
   // Change type to dynamic to support Post + Skeleton
-  final PagingController<int, dynamic> pagingController = PagingController(firstPageKey: 0);
+  final PagingController<int, dynamic> pagingController = PagingController(
+    firstPageKey: 0,
+  );
   StreamSubscription? _subscription;
 
-  CollectionThreadListCubit(
-    this._getCollection,
-    this._listCollectionThreads,
-  ) : super(const CollectionThreadListState());
+  CollectionThreadListCubit(this._getCollection, this._listCollectionThreads)
+    : super(const CollectionThreadListState());
 
   Future<void> init(String collectionId) async {
     _subscription?.cancel();
-    pagingController.value = const PagingState(
-      nextPageKey: null,
-      itemList: [],
+    pagingController.value = const PagingState(nextPageKey: null, itemList: []);
+
+    final collectionRes = await _getCollection(collectionId);
+
+    collectionRes.when(
+      completed: (collection) {
+        emit(state.copyWith(collection: collection));
+
+        // 2. Start streaming chunks
+        _subscription = _listCollectionThreads(collectionId: collectionId)
+            .listen(
+              (chunk) {
+                _handleChunk(chunk);
+              },
+              onError: (e) {
+                emit(state.copyWith(error: e.toString()));
+                pagingController.error = e;
+              },
+            );
+      },
+      error: (e) {
+        emit(state.copyWith(error: e.toString()));
+        pagingController.error = e;
+      },
+      initial: () {},
+      loading: () {},
     );
-
-    try {
-      // 1. Fetch Collection to get board order
-      final collection = await _getCollection(collectionId);
-      emit(state.copyWith(collection: collection));
-
-      // 2. Start streaming chunks
-      _subscription = _listCollectionThreads(
-        collectionId: collectionId,
-      ).listen(
-        (chunk) {
-          _handleChunk(chunk);
-        },
-        onError: (e) {
-          emit(state.copyWith(error: e.toString()));
-          pagingController.error = e;
-        },
-      );
-    } catch (e) {
-      emit(state.copyWith(error: e.toString()));
-      pagingController.error = e;
-    }
   }
 
   void _handleChunk(BoardDataChunk chunk) {
@@ -72,21 +73,16 @@ class CollectionThreadListCubit extends Cubit<CollectionThreadListState> {
     }
 
     // Update data for this board if available
-    final newBoardData = Map<String, List<SingleImagePostWithExtension>>.from(state.boardData);
+    final newBoardData = Map<String, List<SingleImagePostWithExtension>>.from(
+      state.boardData,
+    );
     if (chunk.threads.isNotEmpty) {
       newBoardData[chunk.boardId] = chunk.threads;
     }
 
-    // Determine global loading state (if any board is loading)
-    // Or keep isLoading=true until all done?
-    // User wants partial updates.
-    // Spec: "先回傳的... 直接顯示，讓其他... 維持 loading skeleton"
-    // So we invoke _updateList on every chunk.
-
-    emit(state.copyWith(
-      loadingBoardIds: newLoadingIds,
-      boardData: newBoardData,
-    ));
+    emit(
+      state.copyWith(loadingBoardIds: newLoadingIds, boardData: newBoardData),
+    );
 
     _updateList();
   }
@@ -106,14 +102,13 @@ class CollectionThreadListCubit extends Cubit<CollectionThreadListState> {
         flatList.addAll(threads);
       } else if (isAnyLoading) {
         // Show N skeletons for loading board
-        flatList.addAll(List.generate(3, (_) => CollectionBoardSkeleton(boardId)));
+        flatList.addAll(
+          List.generate(3, (_) => CollectionBoardSkeleton(boardId)),
+        );
       }
     }
 
-    pagingController.value = PagingState(
-      nextPageKey: null,
-      itemList: flatList,
-    );
+    pagingController.value = PagingState(nextPageKey: null, itemList: flatList);
   }
 
   void refresh(String collectionId) {

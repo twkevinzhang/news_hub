@@ -10,7 +10,8 @@ import 'package:news_hub/presentation/components/cards/post/single_image_post_la
 import 'package:news_hub/presentation/pages/home/home_cubit.dart';
 
 @RoutePage()
-class CollectionBoardThreadListScreen extends StatefulWidget implements AutoRouteWrapper {
+class CollectionBoardThreadListScreen extends StatefulWidget
+    implements AutoRouteWrapper {
   final String collectionId;
   final String boardId;
 
@@ -29,75 +30,92 @@ class CollectionBoardThreadListScreen extends StatefulWidget implements AutoRout
   }
 
   @override
-  State<CollectionBoardThreadListScreen> createState() => _CollectionBoardThreadListScreenState();
+  State<CollectionBoardThreadListScreen> createState() =>
+      _CollectionBoardThreadListScreenState();
 }
 
-class _CollectionBoardThreadListScreenState extends State<CollectionBoardThreadListScreen> {
+class _CollectionBoardThreadListScreenState
+    extends State<CollectionBoardThreadListScreen> {
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       context.read<CollectionBoardThreadListCubit>().init(
-            collectionId: widget.collectionId,
-            boardId: widget.boardId,
-          );
+        collectionId: widget.collectionId,
+        boardId: widget.boardId,
+      );
     });
   }
 
   @override
   void didUpdateWidget(CollectionBoardThreadListScreen oldWidget) {
     super.didUpdateWidget(oldWidget);
-    if (oldWidget.collectionId != widget.collectionId || oldWidget.boardId != widget.boardId) {
+    if (oldWidget.collectionId != widget.collectionId ||
+        oldWidget.boardId != widget.boardId) {
       context.read<CollectionBoardThreadListCubit>().init(
-            collectionId: widget.collectionId,
-            boardId: widget.boardId,
-          );
+        collectionId: widget.collectionId,
+        boardId: widget.boardId,
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<CollectionBoardThreadListCubit, CollectionBoardThreadListState>(
+    final cubit = context.read<CollectionBoardThreadListCubit>();
+    return BlocListener<
+      CollectionBoardThreadListCubit,
+      CollectionBoardThreadListState
+    >(
       listenWhen: (previous, current) => previous.board != current.board,
       listener: (context, state) {
         if (state.board != null) {
-          context.read<HomeCubit>().updateTitle(state.board!.identity.boardName);
+          context.read<HomeCubit>().updateTitle(
+            state.board!.identity.boardName,
+          );
         }
       },
-      child: Builder(
-        builder: (context) {
-          final cubit = context.watch<CollectionBoardThreadListCubit>();
-          return PagedListView<int, SingleImagePostWithExtension>(
-            pagingController: cubit.pagingController,
-            builderDelegate: PagedChildBuilderDelegate<SingleImagePostWithExtension>(
+      child: PagedListView<int, SingleImagePostWithExtension>(
+        pagingController: cubit.pagingController,
+        builderDelegate:
+            PagedChildBuilderDelegate<SingleImagePostWithExtension>(
               itemBuilder: (context, thread, index) => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
                 child: SingleImagePostCard(thread: thread),
               ),
-              firstPageErrorIndicatorBuilder: (context) => Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Error: ${cubit.state.error ?? 'Unknown error'}"),
-                    ElevatedButton(
-                      onPressed: () => cubit.refresh(
-                        collectionId: widget.collectionId,
-                        boardId: widget.boardId,
-                      ),
-                      child: const Text("Retry"),
-                    ),
-                  ],
-                ),
-              ),
+              firstPageErrorIndicatorBuilder: (context) =>
+                  BlocSelector<
+                    CollectionBoardThreadListCubit,
+                    CollectionBoardThreadListState,
+                    String?
+                  >(
+                    selector: (state) => state.error,
+                    builder: (context, error) {
+                      return Center(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Error: ${error ?? 'Unknown error'}"),
+                            ElevatedButton(
+                              onPressed: () => cubit.refresh(
+                                collectionId: widget.collectionId,
+                                boardId: widget.boardId,
+                              ),
+                              child: const Text("Retry"),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
               noItemsFoundIndicatorBuilder: (context) => const SizedBox(),
-              firstPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
-              newPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
+              firstPageProgressIndicatorBuilder: (context) =>
+                  const LoadingIndicator(),
+              newPageProgressIndicatorBuilder: (context) =>
+                  const LoadingIndicator(),
               noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
               transitionDuration: const Duration(milliseconds: 500),
               animateTransitions: true,
             ),
-          );
-        },
       ),
     );
   }

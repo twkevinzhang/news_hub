@@ -41,71 +41,105 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
     required GetOriginalPost getOriginalPost,
     required ListReplies listReplies,
     required ListComments listComments,
-  })  : _getOriginalPost = getOriginalPost,
-        _listReplies = listReplies,
-        _listComments = listComments,
-        pagingController = PagingController(firstPageKey: 1),
-        overlayController = StreamController<Widget>.broadcast(),
-        super(const ThreadDetailState(
-          extensionPkgName: '',
-          boardId: '',
-          threadId: '',
-          threadMap: {},
-          repliesMap: {},
-        )) {
+  }) : _getOriginalPost = getOriginalPost,
+       _listReplies = listReplies,
+       _listComments = listComments,
+       pagingController = PagingController(firstPageKey: 1),
+       overlayController = StreamController<Widget>.broadcast(),
+       super(
+         const ThreadDetailState(
+           extensionPkgName: '',
+           boardId: '',
+           threadId: '',
+           threadMap: {},
+           repliesMap: {},
+         ),
+       ) {
     pagingController.addPageRequestListener(_loadPosts);
   }
 
   void _loadPosts(int pageKey) async {
-    final threadF = _getOriginalPost.call(
+    final threadResF = _getOriginalPost.call(
       extensionPkgName: state.extensionPkgName,
       boardId: state.boardId,
       threadId: state.threadId,
     );
-    final repliesF = _listReplies.call(
+    final repliesResF = _listReplies.call(
       extensionPkgName: state.extensionPkgName,
       boardId: state.boardId,
       threadId: state.threadId,
       parentId: null,
-      pagination: Pagination(
-        page: pageKey,
-        pageSize: _pageSize,
-      ),
+      pagination: Pagination(page: pageKey, pageSize: _pageSize),
     );
 
     try {
-      List<ArticlePostWithExtension> newPosts;
-      bool isLastPage = false;
       if (pageKey == 1) {
-        final (thread, replies) = await (threadF, repliesF).wait;
-        newPosts = [thread, ...replies];
-        isLastPage = replies.length < _pageSize;
+        final results = await Future.wait([threadResF, repliesResF]);
+        final threadRes = results[0] as Result<ArticlePostWithExtension>;
+        final repliesRes = results[1] as Result<List<ArticlePostWithExtension>>;
+
+        if (threadRes is ResultError<ArticlePostWithExtension>) {
+          pagingController.error = threadRes.exception;
+          return;
+        }
+        if (repliesRes is ResultError<List<ArticlePostWithExtension>>) {
+          pagingController.error = repliesRes.exception;
+          return;
+        }
+
+        final thread =
+            (threadRes as ResultCompleted<ArticlePostWithExtension>).data;
+        final replies =
+            (repliesRes as ResultCompleted<List<ArticlePostWithExtension>>)
+                .data;
+
+        final newPosts = [thread, ...replies];
+        final isLastPage = replies.length < _pageSize;
+
+        final newMap = Map.of(state.threadMap);
+        final newMap2 = Map.of(state.repliesMap);
+
+        for (final post in newPosts) {
+          newMap[post.id] = Result.completed(post);
+        }
+
+        safeEmit(state.copyWith(threadMap: newMap, repliesMap: newMap2));
+        if (isLastPage) {
+          pagingController.appendLastPage(newPosts);
+        } else {
+          pagingController.appendPage(newPosts, pageKey + 1);
+        }
       } else {
-        newPosts = await _listReplies.call(
+        final repliesRes = await _listReplies.call(
           extensionPkgName: state.extensionPkgName,
           boardId: state.boardId,
           threadId: state.threadId,
           parentId: null,
-          pagination: Pagination(
-            page: pageKey,
-            pageSize: _pageSize,
-          ),
+          pagination: Pagination(page: pageKey, pageSize: _pageSize),
         );
-        isLastPage = newPosts.length < _pageSize;
+
+        repliesRes.when(
+          completed: (replies) {
+            final isLastPage = replies.length < _pageSize;
+            final newMap = Map.of(state.threadMap);
+            for (final post in replies) {
+              newMap[post.id] = Result.completed(post);
+            }
+            safeEmit(state.copyWith(threadMap: newMap));
+            if (isLastPage) {
+              pagingController.appendLastPage(replies);
+            } else {
+              pagingController.appendPage(replies, pageKey + 1);
+            }
+          },
+          error: (e) {
+            pagingController.error = e;
+          },
+          initial: () {},
+          loading: () {},
+        );
       }
-      final newMap = Map.of(state.threadMap);
-      final newMap2 = Map.of(state.repliesMap);
-      final allPosts = newMap.completedResults().toList() + newPosts;
-      for (final post in allPosts) {
-        newMap[post.id] = Result.completed(post);
-      }
-      safeEmit(state.copyWith(threadMap: newMap, repliesMap: newMap2));
-      if (isLastPage) {
-        pagingController.appendLastPage(newPosts);
-      } else {
-        pagingController.appendPage(newPosts, pageKey + 1);
-      }
-    } on Exception catch (e, s) {
+    } catch (e, s) {
       debugPrint('Exception: $e');
       debugPrint('StackTrace: $s');
       pagingController.error = e;
@@ -113,7 +147,8 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
   }
 
   void loadComments(String postId) async {
-    final isLoading = state.commentsMap[postId]?.maybeWhen(
+    final isLoading =
+        state.commentsMap[postId]?.maybeWhen(
           loading: () => true,
           orElse: () => false,
         ) ??
@@ -124,42 +159,50 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
     newCommentsMap[postId] = const Result.loading();
     safeEmit(state.copyWith(commentsMap: newCommentsMap));
 
-    try {
-      final comments = await _listComments.call(
-        extensionPkgName: state.extensionPkgName,
-        boardId: state.boardId,
-        threadId: state.threadId,
-        postId: postId,
-        pagination: const Pagination(page: 1, pageSize: 50),
-      );
+    final commentsRes = await _listComments.call(
+      extensionPkgName: state.extensionPkgName,
+      boardId: state.boardId,
+      threadId: state.threadId,
+      postId: postId,
+      pagination: const Pagination(page: 1, pageSize: 50),
+    );
 
-      final updatedCommentsMap = Map.of(state.commentsMap);
-      updatedCommentsMap[postId] = Result.completed(comments);
-      safeEmit(state.copyWith(commentsMap: updatedCommentsMap));
+    commentsRes.when(
+      completed: (comments) {
+        final updatedCommentsMap = Map.of(state.commentsMap);
+        updatedCommentsMap[postId] = Result.completed(comments);
+        safeEmit(state.copyWith(commentsMap: updatedCommentsMap));
 
-      // Also update the post in threadMap if it exists
-      if (state.threadMap.containsKey(postId)) {
-        final post = state.threadMap[postId]!.maybeWhen(
-          completed: (data) => data,
-          orElse: () => null,
-        );
-        if (post != null) {
-          final updatedPost = post.copyWith(top5Comments: comments.take(5).toList());
-          final updatedThreadMap = Map.of(state.threadMap);
-          updatedThreadMap[postId] = Result.completed(updatedPost);
-          safeEmit(state.copyWith(threadMap: updatedThreadMap));
+        // Also update the post in threadMap if it exists
+        if (state.threadMap.containsKey(postId)) {
+          final post = state.threadMap[postId]!.maybeWhen(
+            completed: (data) => data,
+            orElse: () => null,
+          );
+          if (post != null) {
+            final updatedPost = post.copyWith(
+              top5Comments: comments.take(5).toList(),
+            );
+            final updatedThreadMap = Map.of(state.threadMap);
+            updatedThreadMap[postId] = Result.completed(updatedPost);
+            safeEmit(state.copyWith(threadMap: updatedThreadMap));
+          }
         }
-      }
-    } on Exception catch (e) {
-      debugPrint('Error loading comments: $e');
-      final errorCommentsMap = Map.of(state.commentsMap);
-      errorCommentsMap[postId] = Result.error(e);
-      safeEmit(state.copyWith(commentsMap: errorCommentsMap));
-    }
+      },
+      error: (e) {
+        debugPrint('Error loading comments: $e');
+        final errorCommentsMap = Map.of(state.commentsMap);
+        errorCommentsMap[postId] = Result.error(e);
+        safeEmit(state.copyWith(commentsMap: errorCommentsMap));
+      },
+      initial: () {},
+      loading: () {},
+    );
   }
 
   void loadReplies(String postId) async {
-    final isLoadingOrCompleted = state.repliesMap[postId]?.maybeWhen(
+    final isLoadingOrCompleted =
+        state.repliesMap[postId]?.maybeWhen(
           loading: () => true,
           completed: (_) => true,
           orElse: () => false,
@@ -171,24 +214,29 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
     newRepliesMap[postId] = const Result.loading();
     safeEmit(state.copyWith(repliesMap: newRepliesMap));
 
-    try {
-      final replies = await _listReplies.call(
-        extensionPkgName: state.extensionPkgName,
-        boardId: state.boardId,
-        threadId: state.threadId,
-        parentId: postId,
-        pagination: const Pagination(page: 1, pageSize: 50),
-      );
+    final repliesRes = await _listReplies.call(
+      extensionPkgName: state.extensionPkgName,
+      boardId: state.boardId,
+      threadId: state.threadId,
+      parentId: postId,
+      pagination: const Pagination(page: 1, pageSize: 50),
+    );
 
-      final updatedRepliesMap = Map.of(state.repliesMap);
-      updatedRepliesMap[postId] = Result.completed(replies);
-      safeEmit(state.copyWith(repliesMap: updatedRepliesMap));
-    } on Exception catch (e) {
-      debugPrint('Error loading replies: $e');
-      final errorRepliesMap = Map.of(state.repliesMap);
-      errorRepliesMap[postId] = Result.error(e);
-      safeEmit(state.copyWith(repliesMap: errorRepliesMap));
-    }
+    repliesRes.when(
+      completed: (replies) {
+        final updatedRepliesMap = Map.of(state.repliesMap);
+        updatedRepliesMap[postId] = Result.completed(replies);
+        safeEmit(state.copyWith(repliesMap: updatedRepliesMap));
+      },
+      error: (e) {
+        debugPrint('Error loading replies: $e');
+        final errorRepliesMap = Map.of(state.repliesMap);
+        errorRepliesMap[postId] = Result.error(e);
+        safeEmit(state.copyWith(repliesMap: errorRepliesMap));
+      },
+      initial: () {},
+      loading: () {},
+    );
   }
 
   void init({
@@ -196,13 +244,15 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
     required String boardId,
     required String threadId,
   }) {
-    safeEmit(ThreadDetailState(
-      extensionPkgName: extensionPkgName,
-      boardId: boardId,
-      threadId: threadId,
-      threadMap: {},
-      repliesMap: {},
-    ));
+    safeEmit(
+      ThreadDetailState(
+        extensionPkgName: extensionPkgName,
+        boardId: boardId,
+        threadId: threadId,
+        threadMap: {},
+        repliesMap: {},
+      ),
+    );
   }
 
   void refresh() {

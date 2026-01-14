@@ -13,51 +13,71 @@ class SearchThreads {
   SearchThreads({
     required ThreadRepository repository,
     required ListInstalledExtensions listInstalledExtensions,
-  })  : _repository = repository,
-        _listInstalledExtensions = listInstalledExtensions;
+  }) : _repository = repository,
+       _listInstalledExtensions = listInstalledExtensions;
 
-  Future<List<SingleImagePostWithExtension>> call({
+  Future<Result<List<SingleImagePostWithExtension>>> call({
     Pagination? pagination,
     ThreadsFilter? filter,
     ThreadsSorting? sorting,
   }) async {
-    final extensions = await _listInstalledExtensions.withBoards();
-    final boardSorts = filter?.boardSorts ?? {};
-    final List<Future<List<Post>>> tasks = [];
+    try {
+      final extensionsRes = await _listInstalledExtensions.withBoards();
+      if (extensionsRes is ResultError<List<ExtensionWithBoards>>) {
+        return Result.error(extensionsRes.exception);
+      }
+      final extensions =
+          (extensionsRes as ResultCompleted<List<ExtensionWithBoards>>).data;
 
-    for (final e in extensions) {
-      final extensionBoardIds = e.boards.map((b) => b.id).toSet();
-      final targetBoardSorts = boardSorts.entries.where((entry) => extensionBoardIds.contains(entry.key));
+      final boardSorts = filter?.boardSorts ?? {};
+      final List<Future<List<Post>>> tasks = [];
 
-      if (targetBoardSorts.isEmpty) {
-        // If no specific boards for this extension, but we have keywords, do a general search
-        if (filter?.keywords != null && filter!.keywords.isNotEmpty) {
-          tasks.add(_repository.listThreads(
-            extensionPkgName: e.pkgName,
-            boardId: '',
-            pagination: pagination,
-            keywords: filter.keywords,
-          ));
-        }
-      } else {
-        for (final entry in targetBoardSorts) {
-          tasks.add(_repository.listThreads(
-            extensionPkgName: e.pkgName,
-            boardId: entry.key,
-            sort: entry.value,
-            pagination: pagination,
-            keywords: filter?.keywords,
-          ));
+      for (final e in extensions) {
+        final extensionBoardIds = e.boards.map((b) => b.id).toSet();
+        final targetBoardSorts = boardSorts.entries.where(
+          (entry) => extensionBoardIds.contains(entry.key),
+        );
+
+        if (targetBoardSorts.isEmpty) {
+          if (filter?.keywords != null && filter!.keywords.isNotEmpty) {
+            tasks.add(
+              _repository.listThreads(
+                extensionPkgName: e.pkgName,
+                boardId: '',
+                pagination: pagination,
+                keywords: filter.keywords,
+              ),
+            );
+          }
+        } else {
+          for (final entry in targetBoardSorts) {
+            tasks.add(
+              _repository.listThreads(
+                extensionPkgName: e.pkgName,
+                boardId: entry.key,
+                sort: entry.value,
+                pagination: pagination,
+                keywords: filter?.keywords,
+              ),
+            );
+          }
         }
       }
+
+      final threads = (await Future.wait(tasks)).flatten();
+
+      final data = threads.map((t) {
+        final e = extensions.firstWhere((e) => e.pkgName == t.extensionPkgName);
+        final b = e.boards.firstWhere((b) => b.id == t.boardId);
+        return SingleImagePostWithExtension(
+          post: t as SingleImagePost,
+          board: b,
+          extension: e,
+        );
+      }).toList();
+      return Result.completed(data);
+    } catch (e) {
+      return Result.error(e is Exception ? e : Exception(e.toString()));
     }
-
-    final threads = (await Future.wait(tasks)).flatten();
-
-    return threads.map((t) {
-      final e = extensions.firstWhere((e) => e.pkgName == t.extensionPkgName);
-      final b = e.boards.firstWhere((b) => b.id == t.boardId);
-      return SingleImagePostWithExtension(post: t as SingleImagePost, board: b, extension: e);
-    }).toList();
   }
 }

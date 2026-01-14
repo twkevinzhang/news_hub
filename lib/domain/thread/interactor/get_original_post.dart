@@ -3,6 +3,7 @@ import 'package:news_hub/domain/collection/board_repository.dart';
 import 'package:news_hub/domain/thread/repository.dart';
 import 'package:news_hub/domain/extension/interactor/get_installed_extension.dart';
 import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/shared/models.dart';
 
 @lazySingleton
 class GetOriginalPost {
@@ -14,31 +15,45 @@ class GetOriginalPost {
     required ThreadRepository threadRepository,
     required BoardRepository boardRepository,
     required GetInstalledExtension installedRepository,
-  })  : _threadRepository = threadRepository,
-        _boardRepository = boardRepository,
-        _getInstalledExtension = installedRepository;
+  }) : _threadRepository = threadRepository,
+       _boardRepository = boardRepository,
+       _getInstalledExtension = installedRepository;
 
-  Future<ArticlePostWithExtension> call({
+  Future<Result<ArticlePostWithExtension>> call({
     required String extensionPkgName,
     required String boardId,
     required String threadId,
     String? postId,
   }) async {
-    final extensionF = _getInstalledExtension.get(extensionPkgName);
-    final boardsF = _boardRepository.list(extensionPkgName);
-    final threadF = _threadRepository.getOriginalPost(
-      extensionPkgName: extensionPkgName,
-      boardId: boardId,
-      threadId: threadId,
-      postId: postId,
-    );
-    final (extension, boards, thread) = await (extensionF, boardsF, threadF).wait;
-    final board = boards.firstWhere((b) => b.id == boardId);
-    return ArticlePostWithExtension(
-      post: thread as ArticlePost,
-      board: board,
-      extension: extension,
-    );
+    try {
+      final extensionResF = _getInstalledExtension.get(extensionPkgName);
+      final boardsF = _boardRepository.list(extensionPkgName);
+      final threadF = _threadRepository.getOriginalPost(
+        extensionPkgName: extensionPkgName,
+        boardId: boardId,
+        threadId: threadId,
+        postId: postId,
+      );
+      final results = await Future.wait([extensionResF, boardsF, threadF]);
+
+      final extensionRes = results[0] as Result<Extension>;
+      final boards = results[1] as List<Board>;
+      final post = results[2] as Post;
+
+      if (extensionRes is ResultError<Extension>) {
+        return Result.error(extensionRes.exception);
+      }
+
+      final board = boards.firstWhere((b) => b.id == boardId);
+      final data = ArticlePostWithExtension(
+        post: post as ArticlePost,
+        board: board,
+        extension: (extensionRes as ResultCompleted<Extension>).data,
+      );
+      return Result.completed(data);
+    } catch (e) {
+      return Result.error(e is Exception ? e : Exception(e.toString()));
+    }
   }
 }
 
@@ -51,20 +66,20 @@ class ArticlePostWithExtension extends ArticlePost {
     required this.extension,
     required this.board,
   }) : super(
-          extensionPkgName: post.extensionPkgName,
-          boardId: post.boardId,
-          threadId: post.threadId,
-          id: post.id,
-          title: post.title,
-          url: post.url,
-          createdAt: post.createdAt,
-          authorId: post.authorId,
-          authorName: post.authorName,
-          liked: post.liked,
-          disliked: post.disliked,
-          contents: post.contents,
-          tags: post.tags,
-          latestReplyCreatedAt: post.latestReplyCreatedAt,
-          repliesCount: post.repliesCount,
-        );
+         extensionPkgName: post.extensionPkgName,
+         boardId: post.boardId,
+         threadId: post.threadId,
+         id: post.id,
+         title: post.title,
+         url: post.url,
+         createdAt: post.createdAt,
+         authorId: post.authorId,
+         authorName: post.authorName,
+         liked: post.liked,
+         disliked: post.disliked,
+         contents: post.contents,
+         tags: post.tags,
+         latestReplyCreatedAt: post.latestReplyCreatedAt,
+         repliesCount: post.repliesCount,
+       );
 }

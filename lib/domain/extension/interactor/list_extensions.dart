@@ -4,6 +4,7 @@ import 'package:news_hub/domain/extension/interactor/list_installed_extensions.d
 import 'package:news_hub/domain/extension/services/extension_settings.dart';
 import 'package:news_hub/domain/extension/interactor/list_remote_extensions.dart';
 import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/shared/models.dart';
 
 @lazySingleton
 class ListExtensions {
@@ -18,31 +19,47 @@ class ListExtensions {
        _listInstalledExtensions = listInstalledExtensions,
        _listRemoteExtensions = listRemoteExtensions;
 
-  Stream<Extensions> asStream(String? keyword) async* {
-    // Parallel fetch of extensions snapshots
-    final installedFuture = _listInstalledExtensions.call();
-    final remotesFuture = _listRemoteExtensions.call();
+  Stream<Result<Extensions>> asStream(String? keyword) async* {
+    yield const Result.loading();
+    try {
+      // Parallel fetch of extensions snapshots
+      final results = await Future.wait([
+        _listInstalledExtensions.call(),
+        _listRemoteExtensions.call(),
+        _prefService.enabledLanguages().get(),
+      ]);
 
-    // Fetch initial languages preference
-    final initialLangsFuture = _prefService.enabledLanguages().get();
+      final installedRes = results[0] as Result<List<Extension>>;
+      final remotesRes = results[1] as Result<List<RemoteExtension>>;
+      final currentLangs = results[2] as Set<String>;
 
-    final results = await Future.wait([
-      installedFuture,
-      remotesFuture,
-      initialLangsFuture, // Wait for initial langs too
-    ]);
+      if (installedRes is ResultError<List<Extension>>) {
+        yield Result.error(installedRes.exception);
+        return;
+      }
+      if (remotesRes is ResultError<List<RemoteExtension>>) {
+        yield Result.error(remotesRes.exception);
+        return;
+      }
 
-    final installed = results[0] as List<Extension>;
-    final remotes = results[1] as List<RemoteExtension>;
-    final currentLangs = results[2] as Set<String>;
+      final installed = (installedRes as ResultCompleted<List<Extension>>).data;
+      final remotes =
+          (remotesRes as ResultCompleted<List<RemoteExtension>>).data;
 
-    // Emit initial value
-    yield _createExtensions(currentLangs, installed, remotes, keyword);
+      // Emit initial value
+      yield Result.completed(
+        _createExtensions(currentLangs, installed, remotes, keyword),
+      );
 
-    // Listen for language changes
-    await for (final enabledLanguages
-        in _prefService.enabledLanguages().changes()) {
-      yield _createExtensions(enabledLanguages, installed, remotes, keyword);
+      // Listen for language changes
+      await for (final enabledLanguages
+          in _prefService.enabledLanguages().changes()) {
+        yield Result.completed(
+          _createExtensions(enabledLanguages, installed, remotes, keyword),
+        );
+      }
+    } catch (e) {
+      yield Result.error(e is Exception ? e : Exception(e.toString()));
     }
   }
 
@@ -59,7 +76,7 @@ class ListExtensions {
       ),
     );
     var deprecated = filtered.toSet().difference(remotes.toSet());
-    var notInstalled = remotes.filter(
+    var notInstalled = remotes.toIterable().filter(
       (element) => filtered.none((e) => e.pkgName == element.pkgName),
     );
 
@@ -85,8 +102,8 @@ class ListExtensions {
     );
   }
 
-  Future<Extensions> asFuture(String? keyword) {
-    return asStream(keyword).first;
+  Future<Result<Extensions>> asFuture(String? keyword) async {
+    return asStream(keyword).firstWhere((element) => element is! ResultLoading);
   }
 }
 

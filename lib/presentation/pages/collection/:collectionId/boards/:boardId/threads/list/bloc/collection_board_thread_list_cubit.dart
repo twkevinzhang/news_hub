@@ -7,6 +7,7 @@ import 'package:news_hub/domain/collection/interactor/get_collection_board.dart'
 import 'package:news_hub/domain/collection/interactor/get_collection.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/thread/interactor/list_board_threads.dart';
+import 'package:news_hub/shared/models.dart';
 
 part 'collection_board_thread_list_cubit.freezed.dart';
 
@@ -22,11 +23,13 @@ class CollectionBoardThreadListState with _$CollectionBoardThreadListState {
 }
 
 @injectable
-class CollectionBoardThreadListCubit extends Cubit<CollectionBoardThreadListState> {
+class CollectionBoardThreadListCubit
+    extends Cubit<CollectionBoardThreadListState> {
   final GetCollection _getCollection;
   final GetCollectionBoard _getCollectionBoard;
   final ListBoardThreads _listBoardThreads;
-  final PagingController<int, SingleImagePostWithExtension> pagingController = PagingController(firstPageKey: 0);
+  final PagingController<int, SingleImagePostWithExtension> pagingController =
+      PagingController(firstPageKey: 0);
 
   CollectionBoardThreadListCubit(
     this._getCollection,
@@ -39,28 +42,53 @@ class CollectionBoardThreadListCubit extends Cubit<CollectionBoardThreadListStat
     required String boardId,
     ThreadsFilter? filter,
   }) async {
-    pagingController.value = const PagingState(
-      nextPageKey: null,
-      itemList: [],
-    );
+    pagingController.value = const PagingState(nextPageKey: null, itemList: []);
     emit(state.copyWith(isLoading: true, error: null));
 
-    try {
-      final collection = await _getCollection(collectionId);
-      final board = await _getCollectionBoard(collectionId: collectionId, boardId: boardId);
-      final threads = await _listBoardThreads(
+    final results = await Future.wait([
+      _getCollection(collectionId),
+      _getCollectionBoard(collectionId: collectionId, boardId: boardId),
+      _listBoardThreads(
         collectionId: collectionId,
         boardId: boardId,
         filter: filter,
-      );
+      ),
+    ]);
+
+    final collectionRes = results[0] as Result<Collection>;
+    final boardRes = results[1] as Result<CollectionBoard>;
+    final threadsRes = results[2] as Result<List<SingleImagePostWithExtension>>;
+
+    if (collectionRes is ResultError<Collection> ||
+        boardRes is ResultError<CollectionBoard> ||
+        threadsRes is ResultError<List<SingleImagePostWithExtension>>) {
+      final error =
+          (collectionRes as ResultError<Collection>?)?.exception ??
+          (boardRes as ResultError<CollectionBoard>?)?.exception ??
+          (threadsRes as ResultError<List<SingleImagePostWithExtension>>)
+              .exception;
+
+      emit(state.copyWith(isLoading: false, error: error.toString()));
+      pagingController.error = error;
+      return;
+    }
+
+    if (collectionRes is ResultCompleted<Collection> &&
+        boardRes is ResultCompleted<CollectionBoard> &&
+        threadsRes is ResultCompleted<List<SingleImagePostWithExtension>>) {
+      final threads = threadsRes.data;
       pagingController.value = PagingState(
         nextPageKey: null,
         itemList: threads,
       );
-      emit(state.copyWith(collection: collection, board: board, threads: threads, isLoading: false));
-    } catch (e) {
-      emit(state.copyWith(isLoading: false, error: e.toString()));
-      pagingController.error = e;
+      emit(
+        state.copyWith(
+          collection: collectionRes.data,
+          board: boardRes.data,
+          threads: threads,
+          isLoading: false,
+        ),
+      );
     }
   }
 

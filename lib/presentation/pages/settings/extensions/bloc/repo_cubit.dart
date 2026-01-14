@@ -11,9 +11,7 @@ part 'repo_cubit.freezed.dart';
 
 @freezed
 class RepoState with _$RepoState {
-  const factory RepoState({
-    required Result<List<Repo>> repos,
-  }) = _RepoState;
+  const factory RepoState({required Result<List<Repo>> repos}) = _RepoState;
 }
 
 @injectable
@@ -26,24 +24,18 @@ class RepoCubit extends Cubit<RepoState> {
     required ListRepos listRepos,
     required AddRepo addRepo,
     required RemoveRepo removeRepo,
-  })  : _listRepos = listRepos,
-        _addRepo = addRepo,
-        _removeRepo = removeRepo,
-        super(const RepoState(repos: Result.initial()));
+  }) : _listRepos = listRepos,
+       _addRepo = addRepo,
+       _removeRepo = removeRepo,
+       super(const RepoState(repos: Result.initial()));
 
   Future<void> init() async {
-    try {
-      safeEmit(state.copyWith(repos: const Result.loading()));
-      final repos = await _listRepos();
-      safeEmit(state.copyWith(repos: Result.completed(repos)));
-    } catch (e) {
-      safeEmit(state.copyWith(repos: Result.error(e as Exception)));
-    }
+    safeEmit(state.copyWith(repos: const Result.loading()));
+    final result = await _listRepos();
+    safeEmit(state.copyWith(repos: result));
   }
 
-  Future<void> addRepo({
-    required String url,
-  }) async {
+  Future<void> addRepo({required String url}) async {
     try {
       await _addRepo(url: url);
       // Refresh repos list after adding

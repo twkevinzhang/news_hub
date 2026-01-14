@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:dartx/dartx.dart';
+import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/domain/extension/repository.dart';
 import 'package:news_hub/presentation/pages/settings/extensions/bloc/extension_cubit.dart';
 import 'package:news_hub/presentation/components/rendering/loading_indicator.dart';
 
@@ -8,47 +11,70 @@ class ExtensionBrowseTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.watch<ExtensionCubit>();
-    return cubit.state.extensions.when(
-      completed: (data) {
-        final allExtensions = [...data.installed, ...data.notInstalled];
-        if (allExtensions.isEmpty) {
-          return const Center(child: Text('No extensions found'));
-        }
-        return ListView(
-          children: [
-            ...allExtensions.map((e) {
-              final installing = cubit.state.installingExtensions[e.pkgName];
-              final isInstalled = data.installed.any((i) => i.pkgName == e.pkgName);
-
-              return ListTile(
-                title: Text(e.displayName),
-                subtitle: installing != null ? LinearProgressIndicator(value: installing.second) : Text(e.pkgName),
-                trailing: installing != null
-                    ? const SizedBox(
-                        width: 24,
-                        height: 24,
-                        child: CircularProgressIndicator(strokeWidth: 2),
-                      )
-                    : isInstalled
-                        ? const OutlinedButton(
-                            onPressed: null, // Disabled or click to open?
-                            child: Text('Installed'),
-                          )
-                        : ElevatedButton(
-                            child: const Text('Install'),
-                            onPressed: () {
-                              cubit.installExtension(e);
-                            },
-                          ),
-              );
-            })
-          ],
+    return BlocBuilder<ExtensionCubit, ExtensionState>(
+      buildWhen: (previous, current) =>
+          previous.extensions != current.extensions,
+      builder: (context, state) {
+        return state.extensions.when(
+          completed: (data) {
+            final allExtensions = [...data.installed, ...data.notInstalled];
+            if (allExtensions.isEmpty) {
+              return const Center(child: Text('No extensions found'));
+            }
+            return ListView.builder(
+              itemCount: allExtensions.length,
+              itemBuilder: (context, index) {
+                final extension = allExtensions[index];
+                final isInstalled = data.installed.any(
+                  (i) => i.pkgName == extension.pkgName,
+                );
+                return _ExtensionTile(
+                  extension: extension,
+                  isInstalled: isInstalled,
+                );
+              },
+            );
+          },
+          error: (e) => Center(child: Text(e.toString())),
+          initial: () => const SizedBox(),
+          loading: () => const LoadingIndicator(),
         );
       },
-      error: (e) => Center(child: Text(e.toString())),
-      initial: () => const SizedBox(),
-      loading: () => const LoadingIndicator(),
+    );
+  }
+}
+
+class _ExtensionTile extends StatelessWidget {
+  final Extension extension;
+  final bool isInstalled;
+
+  const _ExtensionTile({required this.extension, required this.isInstalled});
+
+  @override
+  Widget build(BuildContext context) {
+    final installing = context
+        .select<ExtensionCubit, Pair<InstallStatus, double>?>(
+          (c) => c.state.installingExtensions[extension.pkgName],
+        );
+
+    return ListTile(
+      title: Text(extension.displayName),
+      subtitle: installing != null
+          ? LinearProgressIndicator(value: installing.second)
+          : Text(extension.pkgName),
+      trailing: installing != null
+          ? const SizedBox(
+              width: 24,
+              height: 24,
+              child: CircularProgressIndicator(strokeWidth: 2),
+            )
+          : isInstalled
+          ? const OutlinedButton(onPressed: null, child: Text('Installed'))
+          : ElevatedButton(
+              child: const Text('Install'),
+              onPressed: () =>
+                  context.read<ExtensionCubit>().installExtension(extension),
+            ),
     );
   }
 }

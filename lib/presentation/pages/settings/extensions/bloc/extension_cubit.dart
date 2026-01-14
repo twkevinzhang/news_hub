@@ -29,21 +29,24 @@ class ExtensionCubit extends Cubit<ExtensionState> {
   final ListExtensions _listExtensions;
   final InstallExtension _installExtension;
   final UninstallExtension _uninstallExtension;
-  final Map<String, StreamSubscription> _installingStream; // pkgName -> StreamSubscription
+  final Map<String, StreamSubscription>
+  _installingStream; // pkgName -> StreamSubscription
 
   ExtensionCubit({
     required ListExtensions listExtensions,
     required InstallExtension installExtension,
     required UninstallExtension uninstallExtension,
-  })  : _listExtensions = listExtensions,
-        _installExtension = installExtension,
-        _uninstallExtension = uninstallExtension,
-        _installingStream = {},
-        super(const ExtensionState(
-          keyword: null,
-          extensions: Result.initial(),
-          installingExtensions: {},
-        ));
+  }) : _listExtensions = listExtensions,
+       _installExtension = installExtension,
+       _uninstallExtension = uninstallExtension,
+       _installingStream = {},
+       super(
+         const ExtensionState(
+           keyword: null,
+           extensions: Result.initial(),
+           installingExtensions: {},
+         ),
+       );
 
   void init() {
     loadExtensions();
@@ -62,12 +65,8 @@ class ExtensionCubit extends Cubit<ExtensionState> {
   }
 
   Future<void> loadExtensions() async {
-    try {
-      final result = await _listExtensions.asFuture(state.keyword);
-      safeEmit(state.copyWith(extensions: Result.completed(result)));
-    } on Exception catch (e) {
-      safeEmit(state.copyWith(extensions: Result.error(e)));
-    }
+    final result = await _listExtensions.asFuture(state.keyword);
+    safeEmit(state.copyWith(extensions: result));
   }
 
   Future<void> updateExtension(Extension extension) async {
@@ -75,21 +74,42 @@ class ExtensionCubit extends Cubit<ExtensionState> {
   }
 
   Future<void> installExtension(Extension extension) async {
-    final sub = _installExtension.call(extension).listen((pair) {
-      final newInstallingExtensions = Map<String, Pair<InstallStatus, double>>.from(state.installingExtensions)..addAll({extension.pkgName: pair});
-      safeEmit(state.copyWith(installingExtensions: newInstallingExtensions));
-      if (pair.first == InstallStatus.completed || pair.first == InstallStatus.failed) {
-        final newInstallingExtensions = Map<String, Pair<InstallStatus, double>>.from(state.installingExtensions)..remove(extension.pkgName);
-        safeEmit(state.copyWith(installingExtensions: newInstallingExtensions));
-        _installingStream[extension.pkgName]?.cancel();
-        _installingStream.remove(extension.pkgName);
-        loadExtensions();
-      }
-    }, onError: (error) {
-      final newInstallingExtensions = Map<String, Pair<InstallStatus, double>>.from(state.installingExtensions)..remove(extension.pkgName);
-      safeEmit(state.copyWith(installingExtensions: newInstallingExtensions));
-      debugPrint(error.toString());
-    });
+    final sub = _installExtension
+        .call(extension)
+        .listen(
+          (pair) {
+            final newInstallingExtensions =
+                Map<String, Pair<InstallStatus, double>>.from(
+                  state.installingExtensions,
+                )..addAll({extension.pkgName: pair});
+            safeEmit(
+              state.copyWith(installingExtensions: newInstallingExtensions),
+            );
+            if (pair.first == InstallStatus.completed ||
+                pair.first == InstallStatus.failed) {
+              final newInstallingExtensions =
+                  Map<String, Pair<InstallStatus, double>>.from(
+                    state.installingExtensions,
+                  )..remove(extension.pkgName);
+              safeEmit(
+                state.copyWith(installingExtensions: newInstallingExtensions),
+              );
+              _installingStream[extension.pkgName]?.cancel();
+              _installingStream.remove(extension.pkgName);
+              loadExtensions();
+            }
+          },
+          onError: (error) {
+            final newInstallingExtensions =
+                Map<String, Pair<InstallStatus, double>>.from(
+                  state.installingExtensions,
+                )..remove(extension.pkgName);
+            safeEmit(
+              state.copyWith(installingExtensions: newInstallingExtensions),
+            );
+            debugPrint(error.toString());
+          },
+        );
     _installingStream[extension.pkgName] = sub;
   }
 

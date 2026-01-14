@@ -25,8 +25,10 @@ class SearchScreen extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.watch<SearchCubit>();
-    final boardsTotal = cubit.state.filter.boardsTotal();
+    final cubit = context.read<SearchCubit>();
+    final boardsTotal = context.select<SearchCubit, int>(
+      (c) => c.state.filter.boardsTotal(),
+    );
     return Scaffold(
       appBar: AppBar(title: const Text("搜尋")),
       body: Form(

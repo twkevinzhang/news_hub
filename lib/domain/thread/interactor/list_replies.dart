@@ -16,35 +16,52 @@ class ListReplies {
     required ThreadRepository threadRepository,
     required BoardRepository boardRepository,
     required GetInstalledExtension installedRepository,
-  })  : _threadRepository = threadRepository,
-        _boardRepository = boardRepository,
-        _getInstalledExtension = installedRepository;
+  }) : _threadRepository = threadRepository,
+       _boardRepository = boardRepository,
+       _getInstalledExtension = installedRepository;
 
-  Future<List<ArticlePostWithExtension>> call({
+  Future<Result<List<ArticlePostWithExtension>>> call({
     required String extensionPkgName,
     required String boardId,
     required String threadId,
     String? parentId,
     Pagination? pagination,
   }) async {
-    final extensionF = _getInstalledExtension.get(extensionPkgName);
-    final boardsF = _boardRepository.list(extensionPkgName);
-    final repliesF = _threadRepository.listReplies(
-      extensionPkgName: extensionPkgName,
-      boardId: boardId,
-      threadId: threadId,
-      parentId: parentId,
-      pagination: pagination,
-    );
-    final (extension, boards, replies) = await (extensionF, boardsF, repliesF).wait;
-    final board = boards.firstWhere((b) => b.id == boardId);
+    try {
+      final extensionResF = _getInstalledExtension.get(extensionPkgName);
+      final boardsF = _boardRepository.list(extensionPkgName);
+      final repliesF = _threadRepository.listReplies(
+        extensionPkgName: extensionPkgName,
+        boardId: boardId,
+        threadId: threadId,
+        parentId: parentId,
+        pagination: pagination,
+      );
+      final results = await Future.wait([extensionResF, boardsF, repliesF]);
 
-    return replies
-        .map((p) => ArticlePostWithExtension(
+      final extensionRes = results[0] as Result<Extension>;
+      final boards = results[1] as List<Board>;
+      final replies = results[2] as List<Post>;
+
+      if (extensionRes is ResultError<Extension>) {
+        return Result.error(extensionRes.exception);
+      }
+
+      final extension = (extensionRes as ResultCompleted<Extension>).data;
+      final board = boards.firstWhere((b) => b.id == boardId);
+
+      final data = replies
+          .map(
+            (p) => ArticlePostWithExtension(
               post: p as ArticlePost,
               board: board,
               extension: extension,
-            ))
-        .toList();
+            ),
+          )
+          .toList();
+      return Result.completed(data);
+    } catch (e) {
+      return Result.error(e is Exception ? e : Exception(e.toString()));
+    }
   }
 }
