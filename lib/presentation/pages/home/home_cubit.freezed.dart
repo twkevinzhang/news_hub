@@ -17,14 +17,11 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$HomeState {
-  String get title => throw _privateConstructorUsedError;
   List<Collection> get collections => throw _privateConstructorUsedError;
   String? get expandedCollectionId => throw _privateConstructorUsedError;
   SidecarConnectionState get sidecarStatus =>
       throw _privateConstructorUsedError;
   String? get sidecarMessage => throw _privateConstructorUsedError;
-  bool get isSearchMode => throw _privateConstructorUsedError;
-  RouteData? get pendingRoute => throw _privateConstructorUsedError;
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.
@@ -39,13 +36,10 @@ abstract class $HomeStateCopyWith<$Res> {
       _$HomeStateCopyWithImpl<$Res, HomeState>;
   @useResult
   $Res call({
-    String title,
     List<Collection> collections,
     String? expandedCollectionId,
     SidecarConnectionState sidecarStatus,
     String? sidecarMessage,
-    bool isSearchMode,
-    RouteData? pendingRoute,
   });
 }
 
@@ -64,20 +58,13 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = null,
     Object? collections = null,
     Object? expandedCollectionId = freezed,
     Object? sidecarStatus = null,
     Object? sidecarMessage = freezed,
-    Object? isSearchMode = null,
-    Object? pendingRoute = freezed,
   }) {
     return _then(
       _value.copyWith(
-            title: null == title
-                ? _value.title
-                : title // ignore: cast_nullable_to_non_nullable
-                      as String,
             collections: null == collections
                 ? _value.collections
                 : collections // ignore: cast_nullable_to_non_nullable
@@ -94,14 +81,6 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
                 ? _value.sidecarMessage
                 : sidecarMessage // ignore: cast_nullable_to_non_nullable
                       as String?,
-            isSearchMode: null == isSearchMode
-                ? _value.isSearchMode
-                : isSearchMode // ignore: cast_nullable_to_non_nullable
-                      as bool,
-            pendingRoute: freezed == pendingRoute
-                ? _value.pendingRoute
-                : pendingRoute // ignore: cast_nullable_to_non_nullable
-                      as RouteData?,
           )
           as $Val,
     );
@@ -118,13 +97,10 @@ abstract class _$$HomeStateImplCopyWith<$Res>
   @override
   @useResult
   $Res call({
-    String title,
     List<Collection> collections,
     String? expandedCollectionId,
     SidecarConnectionState sidecarStatus,
     String? sidecarMessage,
-    bool isSearchMode,
-    RouteData? pendingRoute,
   });
 }
 
@@ -142,20 +118,13 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? title = null,
     Object? collections = null,
     Object? expandedCollectionId = freezed,
     Object? sidecarStatus = null,
     Object? sidecarMessage = freezed,
-    Object? isSearchMode = null,
-    Object? pendingRoute = freezed,
   }) {
     return _then(
       _$HomeStateImpl(
-        title: null == title
-            ? _value.title
-            : title // ignore: cast_nullable_to_non_nullable
-                  as String,
         collections: null == collections
             ? _value._collections
             : collections // ignore: cast_nullable_to_non_nullable
@@ -172,14 +141,6 @@ class __$$HomeStateImplCopyWithImpl<$Res>
             ? _value.sidecarMessage
             : sidecarMessage // ignore: cast_nullable_to_non_nullable
                   as String?,
-        isSearchMode: null == isSearchMode
-            ? _value.isSearchMode
-            : isSearchMode // ignore: cast_nullable_to_non_nullable
-                  as bool,
-        pendingRoute: freezed == pendingRoute
-            ? _value.pendingRoute
-            : pendingRoute // ignore: cast_nullable_to_non_nullable
-                  as RouteData?,
       ),
     );
   }
@@ -189,19 +150,13 @@ class __$$HomeStateImplCopyWithImpl<$Res>
 
 class _$HomeStateImpl extends _HomeState {
   const _$HomeStateImpl({
-    this.title = 'NewsHub',
     final List<Collection> collections = const [],
     this.expandedCollectionId,
     this.sidecarStatus = SidecarConnectionState.uninitialized,
     this.sidecarMessage,
-    this.isSearchMode = false,
-    this.pendingRoute,
   }) : _collections = collections,
        super._();
 
-  @override
-  @JsonKey()
-  final String title;
   final List<Collection> _collections;
   @override
   @JsonKey()
@@ -218,15 +173,10 @@ class _$HomeStateImpl extends _HomeState {
   final SidecarConnectionState sidecarStatus;
   @override
   final String? sidecarMessage;
-  @override
-  @JsonKey()
-  final bool isSearchMode;
-  @override
-  final RouteData? pendingRoute;
 
   @override
   String toString() {
-    return 'HomeState(title: $title, collections: $collections, expandedCollectionId: $expandedCollectionId, sidecarStatus: $sidecarStatus, sidecarMessage: $sidecarMessage, isSearchMode: $isSearchMode, pendingRoute: $pendingRoute)';
+    return 'HomeState(collections: $collections, expandedCollectionId: $expandedCollectionId, sidecarStatus: $sidecarStatus, sidecarMessage: $sidecarMessage)';
   }
 
   @override
@@ -234,7 +184,6 @@ class _$HomeStateImpl extends _HomeState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$HomeStateImpl &&
-            (identical(other.title, title) || other.title == title) &&
             const DeepCollectionEquality().equals(
               other._collections,
               _collections,
@@ -244,23 +193,16 @@ class _$HomeStateImpl extends _HomeState {
             (identical(other.sidecarStatus, sidecarStatus) ||
                 other.sidecarStatus == sidecarStatus) &&
             (identical(other.sidecarMessage, sidecarMessage) ||
-                other.sidecarMessage == sidecarMessage) &&
-            (identical(other.isSearchMode, isSearchMode) ||
-                other.isSearchMode == isSearchMode) &&
-            (identical(other.pendingRoute, pendingRoute) ||
-                other.pendingRoute == pendingRoute));
+                other.sidecarMessage == sidecarMessage));
   }
 
   @override
   int get hashCode => Object.hash(
     runtimeType,
-    title,
     const DeepCollectionEquality().hash(_collections),
     expandedCollectionId,
     sidecarStatus,
     sidecarMessage,
-    isSearchMode,
-    pendingRoute,
   );
 
   /// Create a copy of HomeState
@@ -274,18 +216,13 @@ class _$HomeStateImpl extends _HomeState {
 
 abstract class _HomeState extends HomeState {
   const factory _HomeState({
-    final String title,
     final List<Collection> collections,
     final String? expandedCollectionId,
     final SidecarConnectionState sidecarStatus,
     final String? sidecarMessage,
-    final bool isSearchMode,
-    final RouteData? pendingRoute,
   }) = _$HomeStateImpl;
   const _HomeState._() : super._();
 
-  @override
-  String get title;
   @override
   List<Collection> get collections;
   @override
@@ -294,10 +231,6 @@ abstract class _HomeState extends HomeState {
   SidecarConnectionState get sidecarStatus;
   @override
   String? get sidecarMessage;
-  @override
-  bool get isSearchMode;
-  @override
-  RouteData? get pendingRoute;
 
   /// Create a copy of HomeState
   /// with the given fields replaced by the non-null parameter values.

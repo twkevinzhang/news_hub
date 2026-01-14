@@ -4,12 +4,15 @@ import 'package:mocktail/mocktail.dart';
 import 'package:news_hub/domain/collection/repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/sidecar/repository.dart';
+import 'package:news_hub/presentation/components/search/search_mode_notifier.dart';
 import 'package:news_hub/presentation/pages/home/home_cubit.dart';
 import 'package:auto_route/auto_route.dart';
 
 class MockCollectionRepository extends Mock implements CollectionRepository {}
 
 class MockSidecarRepository extends Mock implements SidecarRepository {}
+
+class MockSearchModeNotifier extends Mock implements SearchModeNotifier {}
 
 class MockRouteData extends Mock implements RouteData {}
 
@@ -25,10 +28,12 @@ void main() {
   late HomeCubit cubit;
   late MockCollectionRepository mockCollectionRepo;
   late MockSidecarRepository mockSidecarRepo;
+  late MockSearchModeNotifier mockSearchModeNotifier;
 
   setUp(() {
     mockCollectionRepo = MockCollectionRepository();
     mockSidecarRepo = MockSidecarRepository();
+    mockSearchModeNotifier = MockSearchModeNotifier();
 
     // Default mocks
     when(
@@ -36,7 +41,11 @@ void main() {
     ).thenAnswer((_) => Stream.empty());
     when(() => mockSidecarRepo.watchHealth()).thenAnswer((_) => Stream.empty());
 
-    cubit = HomeCubit(mockCollectionRepo, mockSidecarRepo);
+    cubit = HomeCubit(
+      mockCollectionRepo,
+      mockSidecarRepo,
+      mockSearchModeNotifier,
+    );
   });
 
   tearDown(() {
@@ -106,13 +115,6 @@ void main() {
       seed: () => const HomeState(expandedCollectionId: 'col1'),
       act: (cubit) => cubit.toggleCollectionExpansion('col1'),
       expect: () => [const HomeState(expandedCollectionId: null)],
-    );
-
-    blocTest<HomeCubit, HomeState>(
-      'updateTitle emits new title',
-      build: () => cubit,
-      act: (cubit) => cubit.updateTitle('New Title'),
-      expect: () => [const HomeState(title: 'New Title')],
     );
 
     test(

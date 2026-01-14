@@ -13,6 +13,7 @@ class SearchFormOverlay extends StatelessWidget {
   final Function(ThreadsFilter) onSearch;
   final VoidCallback onClose;
   final String title;
+  final bool shouldNavigateToResult;
 
   const SearchFormOverlay({
     super.key,
@@ -21,6 +22,7 @@ class SearchFormOverlay extends StatelessWidget {
     required this.onSearch,
     required this.onClose,
     required this.title,
+    this.shouldNavigateToResult = true,
   });
 
   @override
@@ -32,6 +34,7 @@ class SearchFormOverlay extends StatelessWidget {
         onSearch: onSearch,
         onClose: onClose,
         title: title,
+        shouldNavigateToResult: shouldNavigateToResult,
       ),
     );
   }
@@ -42,23 +45,29 @@ class _SearchFormScaffold extends StatelessWidget {
   final Function(ThreadsFilter) onSearch;
   final VoidCallback onClose;
   final String title;
+  final bool shouldNavigateToResult;
 
   const _SearchFormScaffold({
     required this.collectionId,
     required this.onSearch,
     required this.onClose,
     required this.title,
+    required this.shouldNavigateToResult,
   });
 
   @override
   Widget build(BuildContext context) {
     final cubit = context.read<SearchCubit>();
 
-    void navigateToResult(ThreadsFilter filter) {
-      context.router.push(
-        SearchResultRoute(collectionId: collectionId, filter: filter),
-      );
-      onClose();
+    void handleSearch(ThreadsFilter filter) {
+      if (shouldNavigateToResult) {
+        context.router.push(
+          SearchResultRoute(collectionId: collectionId, filter: filter),
+        );
+        onClose();
+      } else {
+        onSearch(filter);
+      }
     }
 
     return Scaffold(
@@ -86,7 +95,7 @@ class _SearchFormScaffold extends StatelessWidget {
                   onClear: () => cubit.clearKeywords(),
                   onSearch: () {
                     cubit.submit();
-                    navigateToResult(cubit.state.filter);
+                    handleSearch(cubit.state.filter);
                   },
                 ),
               ),
@@ -103,7 +112,7 @@ class _SearchFormScaffold extends StatelessWidget {
                       onTap: () {
                         cubit.clickSuggestion(suggestion);
                         cubit.submit();
-                        navigateToResult(cubit.state.filter);
+                        handleSearch(cubit.state.filter);
                       },
                     );
                   },

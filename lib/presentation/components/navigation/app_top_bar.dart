@@ -1,15 +1,15 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:news_hub/locator.dart';
+import 'package:news_hub/presentation/components/navigation/app_bar_title_notifier.dart';
 
 class AppTopBar extends StatefulWidget implements PreferredSizeWidget {
-  final String? title;
   final VoidCallback? onMenuPressed;
   final VoidCallback? onSearchPressed;
   final VoidCallback? onSettingsPressed;
 
   const AppTopBar({
     super.key,
-    this.title,
     this.onMenuPressed,
     this.onSearchPressed,
     this.onSettingsPressed,
@@ -27,8 +27,17 @@ class _AppTopBarState extends State<AppTopBar> {
   Widget build(BuildContext context) {
     return AppBar(
       leading: _buildLeading(context),
-      title: Text(widget.title ?? 'Untitled'),
+      title: _buildTitle(),
       actions: _buildActions(),
+    );
+  }
+
+  Widget _buildTitle() {
+    final titleNotifier = sl<AppBarTitleNotifier>();
+
+    return ListenableBuilder(
+      listenable: titleNotifier,
+      builder: (context, _) => Text(titleNotifier.title),
     );
   }
 

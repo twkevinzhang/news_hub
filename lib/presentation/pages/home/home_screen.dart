@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/components/navigation/app_navigation_drawer.dart';
 import 'package:news_hub/presentation/components/navigation/app_top_bar.dart';
+import 'package:news_hub/presentation/components/search/search_mode_notifier.dart';
 import 'package:news_hub/presentation/pages/home/home_cubit.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
 
@@ -25,19 +26,6 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _homeCubit = sl<HomeCubit>()..init();
-
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (!mounted) return;
-
-      context.router.addListener(_onRouteChanged);
-      _onRouteChanged();
-    });
-  }
-
-  void _onRouteChanged() {
-    if (!mounted) return;
-
-    _homeCubit.handleRouteChanged(context.router.topRoute);
   }
 
   Future<void> _safeNavigate(VoidCallback navigate) async {
@@ -49,7 +37,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   void dispose() {
-    context.router.removeListener(_onRouteChanged);
     super.dispose();
   }
 
@@ -59,64 +46,77 @@ class _HomeScreenState extends State<HomeScreen> {
       value: _homeCubit,
       child: BlocBuilder<HomeCubit, HomeState>(
         buildWhen: (previous, current) =>
-            previous.isSearchMode != current.isSearchMode ||
-            previous.title != current.title ||
             previous.collections != current.collections ||
             previous.expandedCollectionId != current.expandedCollectionId ||
             previous.sidecarStatus != current.sidecarStatus,
         builder: (context, state) {
-          return Scaffold(
-            key: _scaffoldKey,
-            appBar: state.isSearchMode
-                ? null
-                : PreferredSize(
-                    preferredSize: const Size.fromHeight(kToolbarHeight),
-                    child: AppTopBar(
-                      title: state.title,
-                      onMenuPressed: () =>
-                          _scaffoldKey.currentState?.openDrawer(),
-                      onSearchPressed: () =>
-                          context.read<HomeCubit>().triggerSearch(),
-                      onSettingsPressed: () =>
-                          context.router.push(const SettingsRoute()),
-                    ),
+          return ListenableBuilder(
+            listenable: sl<SearchModeNotifier>(),
+            builder: (context, _) {
+              final isSearchMode = sl<SearchModeNotifier>().isSearchMode;
+              return PopScope(
+                canPop: !isSearchMode,
+                onPopInvokedWithResult: (didPop, result) {
+                  if (didPop) return;
+                  sl<SearchModeNotifier>().exitSearchMode();
+                },
+                child: Scaffold(
+                  key: _scaffoldKey,
+                  appBar: isSearchMode
+                      ? null
+                      : PreferredSize(
+                          preferredSize: const Size.fromHeight(kToolbarHeight),
+                          child: AppTopBar(
+                            onMenuPressed: () =>
+                                _scaffoldKey.currentState?.openDrawer(),
+                            onSearchPressed: () =>
+                                context.read<HomeCubit>().triggerSearch(),
+                            onSettingsPressed: () =>
+                                context.router.push(const SettingsRoute()),
+                          ),
+                        ),
+                  drawer: AppNavigationDrawer(
+                    collections: state.collections,
+                    expandedCollectionId: state.expandedCollectionId,
+                    sidecarLabel: state.sidecarLabel,
+                    sidecarStatusColor: state.sidecarStatusColor,
+                    onToggleExpansion: (id) =>
+                        _homeCubit.toggleCollectionExpansion(id),
+                    onCollectionSelected: (collection) {
+                      _safeNavigate(
+                        () => context.router.replace(
+                          CollectionThreadListRoute(
+                            collectionId: collection.id,
+                          ),
+                        ),
+                      );
+                    },
+                    onCreateCollectionPressed: () {
+                      _safeNavigate(
+                        () =>
+                            context.router.push(const CollectionCreateRoute()),
+                      );
+                    },
+                    onBoardSelected: (board) {
+                      _safeNavigate(
+                        () => context.router.replace(
+                          CollectionBoardThreadListRoute(
+                            collectionId: board.collectionId,
+                            boardId: board.identity.boardId,
+                          ),
+                        ),
+                      );
+                    },
+                    onStatusPressed: () {
+                      _safeNavigate(
+                        () => context.router.push(const SidecarLogsRoute()),
+                      );
+                    },
                   ),
-            drawer: AppNavigationDrawer(
-              collections: state.collections,
-              expandedCollectionId: state.expandedCollectionId,
-              sidecarLabel: state.sidecarLabel,
-              sidecarStatusColor: state.sidecarStatusColor,
-              onToggleExpansion: (id) =>
-                  _homeCubit.toggleCollectionExpansion(id),
-              onCollectionSelected: (collection) {
-                _safeNavigate(
-                  () => context.router.replace(
-                    CollectionThreadListRoute(collectionId: collection.id),
-                  ),
-                );
-              },
-              onCreateCollectionPressed: () {
-                _safeNavigate(
-                  () => context.router.push(const CollectionCreateRoute()),
-                );
-              },
-              onBoardSelected: (board) {
-                _safeNavigate(
-                  () => context.router.replace(
-                    CollectionBoardThreadListRoute(
-                      collectionId: board.collectionId,
-                      boardId: board.identity.boardId,
-                    ),
-                  ),
-                );
-              },
-              onStatusPressed: () {
-                _safeNavigate(
-                  () => context.router.push(const SidecarLogsRoute()),
-                );
-              },
-            ),
-            body: const AutoRouter(),
+                  body: const AutoRouter(),
+                ),
+              );
+            },
           );
         },
       ),

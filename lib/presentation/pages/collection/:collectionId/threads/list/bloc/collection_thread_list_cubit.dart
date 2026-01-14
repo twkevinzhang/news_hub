@@ -6,7 +6,6 @@ import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/collection/interactor/get_collection.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/thread/interactor/list_collection_threads.dart';
-import 'package:news_hub/presentation/pages/home/home_cubit.dart';
 
 part 'collection_thread_list_cubit.freezed.dart';
 
@@ -19,7 +18,6 @@ class CollectionThreadListState with _$CollectionThreadListState {
     String? error,
     @Default(ThreadsFilter(boardSorts: {}, keywords: ''))
     ThreadsFilter activeFilter,
-    @Default(false) bool isSearchOverlayVisible,
   }) = _CollectionThreadListState;
 }
 
@@ -27,18 +25,14 @@ class CollectionThreadListState with _$CollectionThreadListState {
 class CollectionThreadListCubit extends Cubit<CollectionThreadListState> {
   final GetCollection _getCollection;
   final ListCollectionThreads _listCollectionThreads;
-  final HomeCubit _homeCubit;
   // Change type to dynamic to support Post + Skeleton
   final PagingController<int, dynamic> pagingController = PagingController(
     firstPageKey: 0,
   );
   StreamSubscription? _subscription;
 
-  CollectionThreadListCubit(
-    this._getCollection,
-    this._listCollectionThreads,
-    this._homeCubit,
-  ) : super(const CollectionThreadListState());
+  CollectionThreadListCubit(this._getCollection, this._listCollectionThreads)
+    : super(const CollectionThreadListState());
 
   Future<void> init(String collectionId) async {
     _subscription?.cancel();
@@ -86,14 +80,15 @@ class CollectionThreadListCubit extends Cubit<CollectionThreadListState> {
   }
 
   void toggleSearchMode() {
-    final newState = !state.isSearchOverlayVisible;
-    emit(state.copyWith(isSearchOverlayVisible: newState));
-    _homeCubit.setSearchMode(newState);
+    // UI 層會處理搜尋模式的切換
+  }
+
+  void exitSearchMode() {
+    // UI 層會處理搜尋模式的退出
   }
 
   void applyFilter(ThreadsFilter filter) {
-    emit(state.copyWith(activeFilter: filter, isSearchOverlayVisible: false));
-    _homeCubit.setSearchMode(false);
+    emit(state.copyWith(activeFilter: filter));
     // 搜尋現在跳轉到新頁面，這裡不再需要 _loadThreads()
   }
 
@@ -101,10 +96,8 @@ class CollectionThreadListCubit extends Cubit<CollectionThreadListState> {
     emit(
       state.copyWith(
         activeFilter: const ThreadsFilter(boardSorts: {}, keywords: ''),
-        isSearchOverlayVisible: false,
       ),
     );
-    _homeCubit.setSearchMode(false);
     _loadThreads();
   }
 

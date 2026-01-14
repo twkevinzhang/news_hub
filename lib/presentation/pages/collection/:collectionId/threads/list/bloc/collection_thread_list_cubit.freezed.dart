@@ -23,7 +23,6 @@ mixin _$CollectionThreadListState {
   Set<String> get loadingBoardIds => throw _privateConstructorUsedError;
   String? get error => throw _privateConstructorUsedError;
   ThreadsFilter get activeFilter => throw _privateConstructorUsedError;
-  bool get isSearchOverlayVisible => throw _privateConstructorUsedError;
 
   /// Create a copy of CollectionThreadListState
   /// with the given fields replaced by the non-null parameter values.
@@ -45,7 +44,6 @@ abstract class $CollectionThreadListStateCopyWith<$Res> {
     Set<String> loadingBoardIds,
     String? error,
     ThreadsFilter activeFilter,
-    bool isSearchOverlayVisible,
   });
 
   $ThreadsFilterCopyWith<$Res> get activeFilter;
@@ -74,7 +72,6 @@ class _$CollectionThreadListStateCopyWithImpl<
     Object? loadingBoardIds = null,
     Object? error = freezed,
     Object? activeFilter = null,
-    Object? isSearchOverlayVisible = null,
   }) {
     return _then(
       _value.copyWith(
@@ -98,10 +95,6 @@ class _$CollectionThreadListStateCopyWithImpl<
                 ? _value.activeFilter
                 : activeFilter // ignore: cast_nullable_to_non_nullable
                       as ThreadsFilter,
-            isSearchOverlayVisible: null == isSearchOverlayVisible
-                ? _value.isSearchOverlayVisible
-                : isSearchOverlayVisible // ignore: cast_nullable_to_non_nullable
-                      as bool,
           )
           as $Val,
     );
@@ -133,7 +126,6 @@ abstract class _$$CollectionThreadListStateImplCopyWith<$Res>
     Set<String> loadingBoardIds,
     String? error,
     ThreadsFilter activeFilter,
-    bool isSearchOverlayVisible,
   });
 
   @override
@@ -163,7 +155,6 @@ class __$$CollectionThreadListStateImplCopyWithImpl<$Res>
     Object? loadingBoardIds = null,
     Object? error = freezed,
     Object? activeFilter = null,
-    Object? isSearchOverlayVisible = null,
   }) {
     return _then(
       _$CollectionThreadListStateImpl(
@@ -187,10 +178,6 @@ class __$$CollectionThreadListStateImplCopyWithImpl<$Res>
             ? _value.activeFilter
             : activeFilter // ignore: cast_nullable_to_non_nullable
                   as ThreadsFilter,
-        isSearchOverlayVisible: null == isSearchOverlayVisible
-            ? _value.isSearchOverlayVisible
-            : isSearchOverlayVisible // ignore: cast_nullable_to_non_nullable
-                  as bool,
       ),
     );
   }
@@ -205,7 +192,6 @@ class _$CollectionThreadListStateImpl implements _CollectionThreadListState {
     final Set<String> loadingBoardIds = const {},
     this.error,
     this.activeFilter = const ThreadsFilter(boardSorts: {}, keywords: ''),
-    this.isSearchOverlayVisible = false,
   }) : _boardData = boardData,
        _loadingBoardIds = loadingBoardIds;
 
@@ -235,13 +221,10 @@ class _$CollectionThreadListStateImpl implements _CollectionThreadListState {
   @override
   @JsonKey()
   final ThreadsFilter activeFilter;
-  @override
-  @JsonKey()
-  final bool isSearchOverlayVisible;
 
   @override
   String toString() {
-    return 'CollectionThreadListState(collection: $collection, boardData: $boardData, loadingBoardIds: $loadingBoardIds, error: $error, activeFilter: $activeFilter, isSearchOverlayVisible: $isSearchOverlayVisible)';
+    return 'CollectionThreadListState(collection: $collection, boardData: $boardData, loadingBoardIds: $loadingBoardIds, error: $error, activeFilter: $activeFilter)';
   }
 
   @override
@@ -261,9 +244,7 @@ class _$CollectionThreadListStateImpl implements _CollectionThreadListState {
             ) &&
             (identical(other.error, error) || other.error == error) &&
             (identical(other.activeFilter, activeFilter) ||
-                other.activeFilter == activeFilter) &&
-            (identical(other.isSearchOverlayVisible, isSearchOverlayVisible) ||
-                other.isSearchOverlayVisible == isSearchOverlayVisible));
+                other.activeFilter == activeFilter));
   }
 
   @override
@@ -274,7 +255,6 @@ class _$CollectionThreadListStateImpl implements _CollectionThreadListState {
     const DeepCollectionEquality().hash(_loadingBoardIds),
     error,
     activeFilter,
-    isSearchOverlayVisible,
   );
 
   /// Create a copy of CollectionThreadListState
@@ -296,7 +276,6 @@ abstract class _CollectionThreadListState implements CollectionThreadListState {
     final Set<String> loadingBoardIds,
     final String? error,
     final ThreadsFilter activeFilter,
-    final bool isSearchOverlayVisible,
   }) = _$CollectionThreadListStateImpl;
 
   @override
@@ -309,8 +288,6 @@ abstract class _CollectionThreadListState implements CollectionThreadListState {
   String? get error;
   @override
   ThreadsFilter get activeFilter;
-  @override
-  bool get isSearchOverlayVisible;
 
   /// Create a copy of CollectionThreadListState
   /// with the given fields replaced by the non-null parameter values.

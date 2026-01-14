@@ -2,11 +2,13 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mocktail/mocktail.dart';
+import 'package:news_hub/presentation/components/navigation/app_bar_title_notifier.dart';
+import 'package:news_hub/presentation/components/search/search_trigger_notifier.dart';
 import 'package:news_hub/presentation/pages/collection/:collectionId/threads/list/bloc/collection_thread_list_cubit.dart';
 import 'package:news_hub/presentation/pages/collection/:collectionId/threads/list/collection_thread_list_screen.dart';
-import 'package:news_hub/presentation/pages/home/home_cubit.dart';
 import 'package:news_hub/presentation/components/cards/post/single_image_post_layout.dart';
 import 'package:news_hub/presentation/components/cards/post/single_image_post_skeleton.dart';
 import '../../../../../helpers/test_data_factory.dart';
@@ -14,38 +16,49 @@ import '../../../../../helpers/test_data_factory.dart';
 class MockCollectionThreadListCubit extends MockCubit<CollectionThreadListState>
     implements CollectionThreadListCubit {}
 
-class MockHomeCubit extends MockCubit<HomeState> implements HomeCubit {}
+class MockAppBarTitleNotifier extends Mock implements AppBarTitleNotifier {}
+
+class MockSearchTriggerNotifier extends Mock implements SearchTriggerNotifier {}
 
 void main() {
   late MockCollectionThreadListCubit mockCubit;
-  late MockHomeCubit mockHomeCubit;
+  late MockAppBarTitleNotifier mockAppBarTitleNotifier;
+  late MockSearchTriggerNotifier mockSearchTriggerNotifier;
   late PagingController<int, dynamic> pagingController;
-  final tCollectionId = 'col1';
+  const tCollectionId = 'col1';
   final tPost = TestDataFactory.createSingleImagePostWithExtension();
 
   setUp(() {
     mockCubit = MockCollectionThreadListCubit();
-    mockHomeCubit = MockHomeCubit();
+    mockAppBarTitleNotifier = MockAppBarTitleNotifier();
+    mockSearchTriggerNotifier = MockSearchTriggerNotifier();
     pagingController = PagingController<int, dynamic>(firstPageKey: 0);
+
+    // Register mocks in GetIt
+    final sl = GetIt.instance;
+    if (sl.isRegistered<AppBarTitleNotifier>()) {
+      sl.unregister<AppBarTitleNotifier>();
+    }
+    if (sl.isRegistered<SearchTriggerNotifier>()) {
+      sl.unregister<SearchTriggerNotifier>();
+    }
+    sl.registerSingleton<AppBarTitleNotifier>(mockAppBarTitleNotifier);
+    sl.registerSingleton<SearchTriggerNotifier>(mockSearchTriggerNotifier);
 
     when(() => mockCubit.pagingController).thenReturn(pagingController);
     when(() => mockCubit.state).thenReturn(const CollectionThreadListState());
     when(() => mockCubit.init(any())).thenAnswer((_) async {});
-    when(() => mockHomeCubit.state).thenReturn(const HomeState());
-    when(() => mockHomeCubit.updateTitle(any())).thenReturn(null);
   });
 
   tearDown(() {
     pagingController.dispose();
+    GetIt.instance.reset();
   });
 
   Widget createWidgetUnderTest() {
     return MaterialApp(
-      home: MultiBlocProvider(
-        providers: [
-          BlocProvider<CollectionThreadListCubit>.value(value: mockCubit),
-          BlocProvider<HomeCubit>.value(value: mockHomeCubit),
-        ],
+      home: BlocProvider<CollectionThreadListCubit>.value(
+        value: mockCubit,
         child: CollectionThreadListScreen(collectionId: tCollectionId),
       ),
     );
@@ -86,7 +99,7 @@ void main() {
       expect(find.byType(SingleImagePostSkeleton), findsOneWidget);
     });
 
-    testWidgets('updates home title on state change', (tester) async {
+    testWidgets('updates app bar title on state change', (tester) async {
       final tCollection = TestDataFactory.createCollection(name: 'New Name');
 
       whenListen(
@@ -100,7 +113,7 @@ void main() {
       await tester.pumpWidget(createWidgetUnderTest());
       await tester.pump();
 
-      verify(() => mockHomeCubit.updateTitle('New Name')).called(1);
+      verify(() => mockAppBarTitleNotifier.updateTitle('New Name')).called(1);
     });
   });
 }

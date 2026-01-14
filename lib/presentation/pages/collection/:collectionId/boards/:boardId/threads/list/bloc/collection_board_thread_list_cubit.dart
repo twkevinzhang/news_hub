@@ -9,7 +9,6 @@ import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/thread/interactor/list_board_threads.dart';
 import 'package:news_hub/shared/failures.dart';
 import 'package:news_hub/shared/models.dart';
-import 'package:news_hub/presentation/pages/home/home_cubit.dart';
 
 part 'collection_board_thread_list_cubit.freezed.dart';
 
@@ -23,7 +22,6 @@ class CollectionBoardThreadListState with _$CollectionBoardThreadListState {
     Failure? error,
     @Default(ThreadsFilter(boardSorts: {}, keywords: ''))
     ThreadsFilter activeFilter,
-    @Default(false) bool isSearchOverlayVisible,
   }) = _CollectionBoardThreadListState;
 }
 
@@ -33,7 +31,6 @@ class CollectionBoardThreadListCubit
   final GetCollection _getCollection;
   final GetCollectionBoard _getCollectionBoard;
   final ListBoardThreads _listBoardThreads;
-  final HomeCubit _homeCubit;
   final PagingController<int, SingleImagePostWithExtension> pagingController =
       PagingController(firstPageKey: 0);
 
@@ -41,7 +38,6 @@ class CollectionBoardThreadListCubit
     this._getCollection,
     this._getCollectionBoard,
     this._listBoardThreads,
-    this._homeCubit,
   ) : super(const CollectionBoardThreadListState());
 
   Future<void> init({
@@ -110,14 +106,15 @@ class CollectionBoardThreadListCubit
   }
 
   void toggleSearchMode() {
-    final newState = !state.isSearchOverlayVisible;
-    emit(state.copyWith(isSearchOverlayVisible: newState));
-    _homeCubit.setSearchMode(newState);
+    // UI 層會處理搜尋模式的切換
+  }
+
+  void exitSearchMode() {
+    // UI 層會處理搜尋模式的退出
   }
 
   void applyFilter(ThreadsFilter filter) {
-    emit(state.copyWith(activeFilter: filter, isSearchOverlayVisible: false));
-    _homeCubit.setSearchMode(false);
+    emit(state.copyWith(activeFilter: filter));
     // 搜尋現在跳轉到新頁面
   }
 
@@ -125,10 +122,8 @@ class CollectionBoardThreadListCubit
     emit(
       state.copyWith(
         activeFilter: const ThreadsFilter(boardSorts: {}, keywords: ''),
-        isSearchOverlayVisible: false,
       ),
     );
-    _homeCubit.setSearchMode(false);
     final collectionId = state.collection?.id;
     final boardId = state.board?.identity.boardId;
     if (collectionId != null && boardId != null) {
