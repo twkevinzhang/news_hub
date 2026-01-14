@@ -21,24 +21,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
 
       final collectionIds = collections.map((c) => c.id).toList();
       return (_db.select(_db.collectionBoardRefs)..where((tbl) => tbl.collectionId.isIn(collectionIds))).watch().map((refs) {
-        return collections.map((c) {
-          final boardRefs = refs.where((r) => r.collectionId == c.id).toList();
-          return domain.Collection(
-            id: c.id,
-            name: c.name,
-            boards: boardRefs
-                .map((r) => domain.CollectionBoard(
-                      identity: domain.BoardIdentity(
-                        extensionPkgName: r.extensionPkgName,
-                        boardId: r.boardId,
-                        boardName: r.boardName,
-                      ),
-                      collectionId: c.id,
-                      selectedSort: r.selectedSort,
-                    ))
-                .toList(),
-          );
-        }).toList();
+        return collections.map((c) => _mapToCollection(c, refs.where((r) => r.collectionId == c.id).toList())).toList();
       });
     });
   }
@@ -51,28 +34,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
     final collectionIds = collections.map((c) => c.id).toList();
     final refs = await (_db.select(_db.collectionBoardRefs)..where((tbl) => tbl.collectionId.isIn(collectionIds))).get();
 
-    final result = collections.map((c) {
-      final boardRefs = refs.where((r) => r.collectionId == c.id).toList();
-      final boardsWithCollectionId = boardRefs
-          .map((r) => domain.CollectionBoard(
-                identity: domain.BoardIdentity(
-                  extensionPkgName: r.extensionPkgName,
-                  boardId: r.boardId,
-                  boardName: r.boardName,
-                ),
-                collectionId: c.id,
-                selectedSort: r.selectedSort,
-              ))
-          .toList();
-
-      return domain.Collection(
-        id: c.id,
-        name: c.name,
-        boards: boardsWithCollectionId,
-      );
-    }).toList();
-
-    return result;
+    return collections.map((c) => _mapToCollection(c, refs.where((r) => r.collectionId == c.id).toList())).toList();
   }
 
   @override
@@ -80,22 +42,24 @@ class CollectionRepositoryImpl implements CollectionRepository {
     final collection = await (_db.select(_db.collections)..where((tbl) => tbl.id.equals(id))).getSingle();
     final boardRefs = await (_db.select(_db.collectionBoardRefs)..where((tbl) => tbl.collectionId.equals(id))).get();
 
-    final boardsWithCollectionId = boardRefs
-        .map((r) => domain.CollectionBoard(
-              identity: domain.BoardIdentity(
-                extensionPkgName: r.extensionPkgName,
-                boardId: r.boardId,
-                boardName: r.boardName,
-              ),
-              collectionId: id,
-              selectedSort: r.selectedSort,
-            ))
-        .toList();
+    return _mapToCollection(collection, boardRefs);
+  }
 
+  domain.Collection _mapToCollection(CollectionData data, List<CollectionBoardRefData> boardRefs) {
     return domain.Collection(
-      id: collection.id,
-      name: collection.name,
-      boards: boardsWithCollectionId,
+      id: data.id,
+      name: data.name,
+      boards: boardRefs
+          .map((r) => domain.CollectionBoard(
+                identity: domain.BoardIdentity(
+                  extensionPkgName: r.extensionPkgName,
+                  boardId: r.boardId,
+                  boardName: r.boardName,
+                ),
+                collectionId: data.id,
+                selectedSort: r.selectedSort,
+              ))
+          .toList(),
     );
   }
 
@@ -103,7 +67,6 @@ class CollectionRepositoryImpl implements CollectionRepository {
   Future<void> create(String name, List<domain.CollectionBoard> boards) async {
     final id = const Uuid().v4();
     await _db.transaction(() async {
-      // Get max sortOrder to append at the end
       final maxSortOrderFunc = _db.collections.sortOrder.max();
       final query = _db.selectOnly(_db.collections)..addColumns([maxSortOrderFunc]);
       final result = await query.getSingle();
@@ -115,15 +78,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
             sortOrder: Value(maxSortOrder + 1),
           ));
 
-      for (final board in boards) {
-        await _db.into(_db.collectionBoardRefs).insert(CollectionBoardRefsCompanion.insert(
-              collectionId: id,
-              extensionPkgName: board.identity.extensionPkgName,
-              boardId: board.identity.boardId,
-              boardName: Value(board.identity.boardName),
-              selectedSort: Value(board.selectedSort ?? ''),
-            ));
-      }
+      await _insertBoards(id, boards);
     });
   }
 
@@ -143,17 +98,20 @@ class CollectionRepositoryImpl implements CollectionRepository {
       ));
 
       await (_db.delete(_db.collectionBoardRefs)..where((tbl) => tbl.collectionId.equals(collection.id))).go();
-
-      for (final board in collection.boards) {
-        await _db.into(_db.collectionBoardRefs).insert(CollectionBoardRefsCompanion.insert(
-              collectionId: collection.id,
-              extensionPkgName: board.identity.extensionPkgName,
-              boardId: board.identity.boardId,
-              boardName: Value(board.identity.boardName),
-              selectedSort: Value(board.selectedSort ?? ''),
-            ));
-      }
+      await _insertBoards(collection.id, collection.boards);
     });
+  }
+
+  Future<void> _insertBoards(String collectionId, List<domain.CollectionBoard> boards) async {
+    for (final board in boards) {
+      await _db.into(_db.collectionBoardRefs).insert(CollectionBoardRefsCompanion.insert(
+            collectionId: collectionId,
+            extensionPkgName: board.identity.extensionPkgName,
+            boardId: board.identity.boardId,
+            boardName: Value(board.identity.boardName),
+            selectedSort: Value(board.selectedSort ?? ''),
+          ));
+    }
   }
 
   @override
