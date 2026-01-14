@@ -10,7 +10,7 @@ import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/thread/interactor/get_original_post.dart';
 import 'package:news_hub/domain/thread/interactor/list_comments.dart';
 import 'package:news_hub/domain/thread/interactor/list_replies.dart';
-import 'package:news_hub/shared/extensions.dart';
+import 'package:news_hub/shared/failures.dart';
 import 'package:news_hub/shared/models.dart';
 
 part 'thread_detail_cubit.freezed.dart';
@@ -79,11 +79,11 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
         final repliesRes = results[1] as Result<List<ArticlePostWithExtension>>;
 
         if (threadRes is ResultError<ArticlePostWithExtension>) {
-          pagingController.error = threadRes.exception;
+          pagingController.error = threadRes.error;
           return;
         }
         if (repliesRes is ResultError<List<ArticlePostWithExtension>>) {
-          pagingController.error = repliesRes.exception;
+          pagingController.error = repliesRes.error;
           return;
         }
 
@@ -142,7 +142,7 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
     } catch (e, s) {
       debugPrint('Exception: $e');
       debugPrint('StackTrace: $s');
-      pagingController.error = e;
+      pagingController.error = Failure.fromError(e);
     }
   }
 
@@ -257,5 +257,9 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
 
   void refresh() {
     pagingController.refresh();
+  }
+
+  void safeEmit(ThreadDetailState state) {
+    if (!isClosed) emit(state);
   }
 }

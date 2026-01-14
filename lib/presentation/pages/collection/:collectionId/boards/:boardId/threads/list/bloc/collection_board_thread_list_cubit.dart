@@ -7,6 +7,7 @@ import 'package:news_hub/domain/collection/interactor/get_collection_board.dart'
 import 'package:news_hub/domain/collection/interactor/get_collection.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/thread/interactor/list_board_threads.dart';
+import 'package:news_hub/shared/failures.dart';
 import 'package:news_hub/shared/models.dart';
 
 part 'collection_board_thread_list_cubit.freezed.dart';
@@ -18,7 +19,7 @@ class CollectionBoardThreadListState with _$CollectionBoardThreadListState {
     @Default(null) CollectionBoard? board,
     @Default([]) List<SingleImagePostWithExtension> threads,
     @Default(false) bool isLoading,
-    String? error,
+    Failure? error,
   }) = _CollectionBoardThreadListState;
 }
 
@@ -45,50 +46,57 @@ class CollectionBoardThreadListCubit
     pagingController.value = const PagingState(nextPageKey: null, itemList: []);
     emit(state.copyWith(isLoading: true, error: null));
 
-    final results = await Future.wait([
-      _getCollection(collectionId),
-      _getCollectionBoard(collectionId: collectionId, boardId: boardId),
-      _listBoardThreads(
-        collectionId: collectionId,
-        boardId: boardId,
-        filter: filter,
-      ),
-    ]);
-
-    final collectionRes = results[0] as Result<Collection>;
-    final boardRes = results[1] as Result<CollectionBoard>;
-    final threadsRes = results[2] as Result<List<SingleImagePostWithExtension>>;
-
-    if (collectionRes is ResultError<Collection> ||
-        boardRes is ResultError<CollectionBoard> ||
-        threadsRes is ResultError<List<SingleImagePostWithExtension>>) {
-      final error =
-          (collectionRes as ResultError<Collection>?)?.exception ??
-          (boardRes as ResultError<CollectionBoard>?)?.exception ??
-          (threadsRes as ResultError<List<SingleImagePostWithExtension>>)
-              .exception;
-
-      emit(state.copyWith(isLoading: false, error: error.toString()));
-      pagingController.error = error;
-      return;
-    }
-
-    if (collectionRes is ResultCompleted<Collection> &&
-        boardRes is ResultCompleted<CollectionBoard> &&
-        threadsRes is ResultCompleted<List<SingleImagePostWithExtension>>) {
-      final threads = threadsRes.data;
-      pagingController.value = PagingState(
-        nextPageKey: null,
-        itemList: threads,
-      );
-      emit(
-        state.copyWith(
-          collection: collectionRes.data,
-          board: boardRes.data,
-          threads: threads,
-          isLoading: false,
+    try {
+      final results = await Future.wait([
+        _getCollection(collectionId),
+        _getCollectionBoard(collectionId: collectionId, boardId: boardId),
+        _listBoardThreads(
+          collectionId: collectionId,
+          boardId: boardId,
+          filter: filter,
         ),
-      );
+      ]);
+
+      final collectionRes = results[0] as Result<Collection>;
+      final boardRes = results[1] as Result<CollectionBoard>;
+      final threadsRes =
+          results[2] as Result<List<SingleImagePostWithExtension>>;
+
+      if (collectionRes is ResultError<Collection> ||
+          boardRes is ResultError<CollectionBoard> ||
+          threadsRes is ResultError<List<SingleImagePostWithExtension>>) {
+        final error =
+            (collectionRes as ResultError<Collection>?)?.error ??
+            (boardRes as ResultError<CollectionBoard>?)?.error ??
+            (threadsRes as ResultError<List<SingleImagePostWithExtension>>)
+                .error;
+
+        emit(state.copyWith(isLoading: false, error: error as Failure?));
+        pagingController.error = error;
+        return;
+      }
+
+      if (collectionRes is ResultCompleted<Collection> &&
+          boardRes is ResultCompleted<CollectionBoard> &&
+          threadsRes is ResultCompleted<List<SingleImagePostWithExtension>>) {
+        final threads = threadsRes.data;
+        pagingController.value = PagingState(
+          nextPageKey: null,
+          itemList: threads,
+        );
+        emit(
+          state.copyWith(
+            collection: collectionRes.data,
+            board: boardRes.data,
+            threads: threads,
+            isLoading: false,
+          ),
+        );
+      }
+    } catch (e) {
+      final failure = Failure.fromError(e);
+      emit(state.copyWith(isLoading: false, error: failure));
+      pagingController.error = failure;
     }
   }
 

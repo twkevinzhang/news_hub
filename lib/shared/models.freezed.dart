@@ -259,21 +259,21 @@ mixin _$Result<R> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(R data) completed,
-    required TResult Function(Exception exception) error,
+    required TResult Function(Object error) error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(R data)? completed,
-    TResult? Function(Exception exception)? error,
+    TResult? Function(Object error)? error,
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(R data)? completed,
-    TResult Function(Exception exception)? error,
+    TResult Function(Object error)? error,
     required TResult orElse(),
   }) => throw _privateConstructorUsedError;
   @optionalTypeArgs
@@ -366,7 +366,7 @@ class _$ResultInitialImpl<R> implements ResultInitial<R> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(R data) completed,
-    required TResult Function(Exception exception) error,
+    required TResult Function(Object error) error,
   }) {
     return initial();
   }
@@ -377,7 +377,7 @@ class _$ResultInitialImpl<R> implements ResultInitial<R> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(R data)? completed,
-    TResult? Function(Exception exception)? error,
+    TResult? Function(Object error)? error,
   }) {
     return initial?.call();
   }
@@ -388,7 +388,7 @@ class _$ResultInitialImpl<R> implements ResultInitial<R> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(R data)? completed,
-    TResult Function(Exception exception)? error,
+    TResult Function(Object error)? error,
     required TResult orElse(),
   }) {
     if (initial != null) {
@@ -485,7 +485,7 @@ class _$ResultLoadingImpl<R> implements ResultLoading<R> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(R data) completed,
-    required TResult Function(Exception exception) error,
+    required TResult Function(Object error) error,
   }) {
     return loading();
   }
@@ -496,7 +496,7 @@ class _$ResultLoadingImpl<R> implements ResultLoading<R> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(R data)? completed,
-    TResult? Function(Exception exception)? error,
+    TResult? Function(Object error)? error,
   }) {
     return loading?.call();
   }
@@ -507,7 +507,7 @@ class _$ResultLoadingImpl<R> implements ResultLoading<R> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(R data)? completed,
-    TResult Function(Exception exception)? error,
+    TResult Function(Object error)? error,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -635,7 +635,7 @@ class _$ResultCompletedImpl<R> implements ResultCompleted<R> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(R data) completed,
-    required TResult Function(Exception exception) error,
+    required TResult Function(Object error) error,
   }) {
     return completed(data);
   }
@@ -646,7 +646,7 @@ class _$ResultCompletedImpl<R> implements ResultCompleted<R> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(R data)? completed,
-    TResult? Function(Exception exception)? error,
+    TResult? Function(Object error)? error,
   }) {
     return completed?.call(data);
   }
@@ -657,7 +657,7 @@ class _$ResultCompletedImpl<R> implements ResultCompleted<R> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(R data)? completed,
-    TResult Function(Exception exception)? error,
+    TResult Function(Object error)? error,
     required TResult orElse(),
   }) {
     if (completed != null) {
@@ -723,7 +723,7 @@ abstract class _$$ResultErrorImplCopyWith<R, $Res> {
     $Res Function(_$ResultErrorImpl<R>) then,
   ) = __$$ResultErrorImplCopyWithImpl<R, $Res>;
   @useResult
-  $Res call({Exception exception});
+  $Res call({Object error});
 }
 
 /// @nodoc
@@ -739,29 +739,22 @@ class __$$ResultErrorImplCopyWithImpl<R, $Res>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({Object? exception = null}) {
-    return _then(
-      _$ResultErrorImpl<R>(
-        null == exception
-            ? _value.exception
-            : exception // ignore: cast_nullable_to_non_nullable
-                  as Exception,
-      ),
-    );
+  $Res call({Object? error = null}) {
+    return _then(_$ResultErrorImpl<R>(null == error ? _value.error : error));
   }
 }
 
 /// @nodoc
 
 class _$ResultErrorImpl<R> implements ResultError<R> {
-  const _$ResultErrorImpl(this.exception);
+  const _$ResultErrorImpl(this.error);
 
   @override
-  final Exception exception;
+  final Object error;
 
   @override
   String toString() {
-    return 'Result<$R>.error(exception: $exception)';
+    return 'Result<$R>.error(error: $error)';
   }
 
   @override
@@ -769,12 +762,12 @@ class _$ResultErrorImpl<R> implements ResultError<R> {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ResultErrorImpl<R> &&
-            (identical(other.exception, exception) ||
-                other.exception == exception));
+            const DeepCollectionEquality().equals(other.error, error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, exception);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(error));
 
   /// Create a copy of Result
   /// with the given fields replaced by the non-null parameter values.
@@ -793,9 +786,9 @@ class _$ResultErrorImpl<R> implements ResultError<R> {
     required TResult Function() initial,
     required TResult Function() loading,
     required TResult Function(R data) completed,
-    required TResult Function(Exception exception) error,
+    required TResult Function(Object error) error,
   }) {
-    return error(exception);
+    return error(this.error);
   }
 
   @override
@@ -804,9 +797,9 @@ class _$ResultErrorImpl<R> implements ResultError<R> {
     TResult? Function()? initial,
     TResult? Function()? loading,
     TResult? Function(R data)? completed,
-    TResult? Function(Exception exception)? error,
+    TResult? Function(Object error)? error,
   }) {
-    return error?.call(exception);
+    return error?.call(this.error);
   }
 
   @override
@@ -815,11 +808,11 @@ class _$ResultErrorImpl<R> implements ResultError<R> {
     TResult Function()? initial,
     TResult Function()? loading,
     TResult Function(R data)? completed,
-    TResult Function(Exception exception)? error,
+    TResult Function(Object error)? error,
     required TResult orElse(),
   }) {
     if (error != null) {
-      return error(exception);
+      return error(this.error);
     }
     return orElse();
   }
@@ -863,9 +856,9 @@ class _$ResultErrorImpl<R> implements ResultError<R> {
 }
 
 abstract class ResultError<R> implements Result<R> {
-  const factory ResultError(final Exception exception) = _$ResultErrorImpl<R>;
+  const factory ResultError(final Object error) = _$ResultErrorImpl<R>;
 
-  Exception get exception;
+  Object get error;
 
   /// Create a copy of Result
   /// with the given fields replaced by the non-null parameter values.

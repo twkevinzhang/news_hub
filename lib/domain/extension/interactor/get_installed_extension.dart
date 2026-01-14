@@ -2,6 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/extension/repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 
+import 'package:news_hub/shared/failures.dart';
 import 'package:news_hub/shared/models.dart';
 
 @lazySingleton
@@ -16,7 +17,7 @@ class GetInstalledExtension {
       final extension = await _repository.getInstalled(extensionPkgName);
       return Result.completed(extension);
     } catch (e) {
-      return Result.error(e is Exception ? e : Exception(e.toString()));
+      return Result.error(Failure.fromError(e));
     }
   }
 }

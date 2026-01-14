@@ -19,7 +19,7 @@ abstract class Result<R> with _$Result<R> {
   const factory Result.initial() = ResultInitial;
   const factory Result.loading() = ResultLoading;
   const factory Result.completed(R data) = ResultCompleted;
-  const factory Result.error(Exception exception) = ResultError;
+  const factory Result.error(Object error) = ResultError;
 }
 
 extension MapEx<T> on Map<String, Result<T>> {

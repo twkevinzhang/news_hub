@@ -3,6 +3,7 @@ import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/thread/repository.dart';
 import 'package:news_hub/domain/extension/interactor/list_installed_extensions.dart';
 import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/shared/failures.dart';
 import 'package:news_hub/shared/models.dart';
 
 @lazySingleton
@@ -24,7 +25,7 @@ class SearchThreads {
     try {
       final extensionsRes = await _listInstalledExtensions.withBoards();
       if (extensionsRes is ResultError<List<ExtensionWithBoards>>) {
-        return Result.error(extensionsRes.exception);
+        return Result.error(extensionsRes.error);
       }
       final extensions =
           (extensionsRes as ResultCompleted<List<ExtensionWithBoards>>).data;
@@ -77,7 +78,7 @@ class SearchThreads {
       }).toList();
       return Result.completed(data);
     } catch (e) {
-      return Result.error(e is Exception ? e : Exception(e.toString()));
+      return Result.error(Failure.fromError(e));
     }
   }
 }

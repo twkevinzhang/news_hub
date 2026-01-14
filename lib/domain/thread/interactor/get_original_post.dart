@@ -3,6 +3,7 @@ import 'package:news_hub/domain/collection/board_repository.dart';
 import 'package:news_hub/domain/thread/repository.dart';
 import 'package:news_hub/domain/extension/interactor/get_installed_extension.dart';
 import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/shared/failures.dart';
 import 'package:news_hub/shared/models.dart';
 
 @lazySingleton
@@ -41,7 +42,7 @@ class GetOriginalPost {
       final post = results[2] as Post;
 
       if (extensionRes is ResultError<Extension>) {
-        return Result.error(extensionRes.exception);
+        return Result.error(extensionRes.error);
       }
 
       final board = boards.firstWhere((b) => b.id == boardId);
@@ -52,7 +53,7 @@ class GetOriginalPost {
       );
       return Result.completed(data);
     } catch (e) {
-      return Result.error(e is Exception ? e : Exception(e.toString()));
+      return Result.error(Failure.fromError(e));
     }
   }
 }

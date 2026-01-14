@@ -8,6 +8,7 @@ import 'package:news_hub/presentation/components/rendering/loading_indicator.dar
 import 'package:news_hub/presentation/pages/collection/:collectionId/boards/:boardId/threads/list/bloc/collection_board_thread_list_cubit.dart';
 import 'package:news_hub/presentation/components/cards/post/single_image_post_layout.dart';
 import 'package:news_hub/presentation/pages/home/home_cubit.dart';
+import 'package:news_hub/shared/failures.dart';
 
 @RoutePage()
 class CollectionBoardThreadListScreen extends StatefulWidget
@@ -86,7 +87,7 @@ class _CollectionBoardThreadListScreenState
                   BlocSelector<
                     CollectionBoardThreadListCubit,
                     CollectionBoardThreadListState,
-                    String?
+                    Failure?
                   >(
                     selector: (state) => state.error,
                     builder: (context, error) {

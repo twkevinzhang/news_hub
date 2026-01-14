@@ -3,6 +3,7 @@ import 'package:news_hub/domain/collection/board_repository.dart';
 import 'package:news_hub/domain/thread/repository.dart';
 import 'package:news_hub/domain/extension/interactor/get_installed_extension.dart';
 import 'package:news_hub/domain/thread/interactor/get_original_post.dart';
+import 'package:news_hub/shared/failures.dart';
 import 'package:news_hub/shared/models.dart';
 import 'package:news_hub/domain/models/models.dart';
 
@@ -44,7 +45,7 @@ class ListReplies {
       final replies = results[2] as List<Post>;
 
       if (extensionRes is ResultError<Extension>) {
-        return Result.error(extensionRes.exception);
+        return Result.error(extensionRes.error);
       }
 
       final extension = (extensionRes as ResultCompleted<Extension>).data;
@@ -61,7 +62,7 @@ class ListReplies {
           .toList();
       return Result.completed(data);
     } catch (e) {
-      return Result.error(e is Exception ? e : Exception(e.toString()));
+      return Result.error(Failure.fromError(e));
     }
   }
 }

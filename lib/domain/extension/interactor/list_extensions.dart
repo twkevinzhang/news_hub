@@ -4,6 +4,7 @@ import 'package:news_hub/domain/extension/interactor/list_installed_extensions.d
 import 'package:news_hub/domain/extension/services/extension_settings.dart';
 import 'package:news_hub/domain/extension/interactor/list_remote_extensions.dart';
 import 'package:news_hub/domain/models/models.dart';
+import 'package:news_hub/shared/failures.dart';
 import 'package:news_hub/shared/models.dart';
 
 @lazySingleton
@@ -34,11 +35,11 @@ class ListExtensions {
       final currentLangs = results[2] as Set<String>;
 
       if (installedRes is ResultError<List<Extension>>) {
-        yield Result.error(installedRes.exception);
+        yield Result.error(installedRes.error);
         return;
       }
       if (remotesRes is ResultError<List<RemoteExtension>>) {
-        yield Result.error(remotesRes.exception);
+        yield Result.error(remotesRes.error);
         return;
       }
 
@@ -59,7 +60,7 @@ class ListExtensions {
         );
       }
     } catch (e) {
-      yield Result.error(e is Exception ? e : Exception(e.toString()));
+      yield Result.error(Failure.fromError(e));
     }
   }
 

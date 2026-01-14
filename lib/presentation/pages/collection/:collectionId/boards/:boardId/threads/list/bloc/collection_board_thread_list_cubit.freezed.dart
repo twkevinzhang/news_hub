@@ -22,7 +22,7 @@ mixin _$CollectionBoardThreadListState {
   List<SingleImagePostWithExtension> get threads =>
       throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
-  String? get error => throw _privateConstructorUsedError;
+  Failure? get error => throw _privateConstructorUsedError;
 
   /// Create a copy of CollectionBoardThreadListState
   /// with the given fields replaced by the non-null parameter values.
@@ -47,10 +47,11 @@ abstract class $CollectionBoardThreadListStateCopyWith<$Res> {
     CollectionBoard? board,
     List<SingleImagePostWithExtension> threads,
     bool isLoading,
-    String? error,
+    Failure? error,
   });
 
   $CollectionBoardCopyWith<$Res>? get board;
+  $FailureCopyWith<$Res>? get error;
 }
 
 /// @nodoc
@@ -98,7 +99,7 @@ class _$CollectionBoardThreadListStateCopyWithImpl<
             error: freezed == error
                 ? _value.error
                 : error // ignore: cast_nullable_to_non_nullable
-                      as String?,
+                      as Failure?,
           )
           as $Val,
     );
@@ -117,6 +118,20 @@ class _$CollectionBoardThreadListStateCopyWithImpl<
       return _then(_value.copyWith(board: value) as $Val);
     });
   }
+
+  /// Create a copy of CollectionBoardThreadListState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $FailureCopyWith<$Res>? get error {
+    if (_value.error == null) {
+      return null;
+    }
+
+    return $FailureCopyWith<$Res>(_value.error!, (value) {
+      return _then(_value.copyWith(error: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -133,11 +148,13 @@ abstract class _$$CollectionBoardThreadListStateImplCopyWith<$Res>
     CollectionBoard? board,
     List<SingleImagePostWithExtension> threads,
     bool isLoading,
-    String? error,
+    Failure? error,
   });
 
   @override
   $CollectionBoardCopyWith<$Res>? get board;
+  @override
+  $FailureCopyWith<$Res>? get error;
 }
 
 /// @nodoc
@@ -185,7 +202,7 @@ class __$$CollectionBoardThreadListStateImplCopyWithImpl<$Res>
         error: freezed == error
             ? _value.error
             : error // ignore: cast_nullable_to_non_nullable
-                  as String?,
+                  as Failure?,
       ),
     );
   }
@@ -222,7 +239,7 @@ class _$CollectionBoardThreadListStateImpl
   @JsonKey()
   final bool isLoading;
   @override
-  final String? error;
+  final Failure? error;
 
   @override
   String toString() {
@@ -274,7 +291,7 @@ abstract class _CollectionBoardThreadListState
     final CollectionBoard? board,
     final List<SingleImagePostWithExtension> threads,
     final bool isLoading,
-    final String? error,
+    final Failure? error,
   }) = _$CollectionBoardThreadListStateImpl;
 
   @override
@@ -286,7 +303,7 @@ abstract class _CollectionBoardThreadListState
   @override
   bool get isLoading;
   @override
-  String? get error;
+  Failure? get error;
 
   /// Create a copy of CollectionBoardThreadListState
   /// with the given fields replaced by the non-null parameter values.

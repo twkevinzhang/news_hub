@@ -2,7 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/collection/board_repository.dart';
 import 'package:news_hub/domain/extension/repository.dart';
 import 'package:news_hub/domain/models/models.dart';
-
+import 'package:news_hub/shared/failures.dart';
 import 'package:news_hub/shared/models.dart';
 
 @lazySingleton
@@ -21,7 +21,7 @@ class ListInstalledExtensions {
       final list = await _repository.listInstalled();
       return Result.completed(list);
     } catch (e) {
-      return Result.error(e is Exception ? e : Exception(e.toString()));
+      return Result.error(Failure.fromError(e));
     }
   }
 
@@ -29,7 +29,7 @@ class ListInstalledExtensions {
     try {
       final extensionsRes = await call();
       if (extensionsRes is ResultError<List<Extension>>) {
-        return Result.error(extensionsRes.exception);
+        return Result.error(extensionsRes.error);
       }
       final extensions =
           (extensionsRes as ResultCompleted<List<Extension>>).data;
@@ -48,7 +48,7 @@ class ListInstalledExtensions {
       final data = await Future.wait(promises);
       return Result.completed(data);
     } catch (e) {
-      return Result.error(e is Exception ? e : Exception(e.toString()));
+      return Result.error(Failure.fromError(e));
     }
   }
 }

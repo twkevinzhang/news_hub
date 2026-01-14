@@ -2,6 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/collection/board_repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 
+import 'package:news_hub/shared/failures.dart';
 import 'package:news_hub/shared/models.dart';
 
 @injectable
@@ -21,7 +22,7 @@ class GetCollectionBoard {
       );
       return Result.completed(board);
     } catch (e) {
-      return Result.error(e is Exception ? e : Exception(e.toString()));
+      return Result.error(Failure.fromError(e));
     }
   }
 }
