@@ -1,18 +1,18 @@
 import 'package:dartx/dartx.dart';
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/extension/interactor/list_installed_extensions.dart';
-import 'package:news_hub/domain/extension/services/extension_preferences_service.dart';
+import 'package:news_hub/domain/extension/services/extension_settings.dart';
 import 'package:news_hub/domain/extension/interactor/list_remote_extensions.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:rxdart/rxdart.dart';
 
 @lazySingleton
 class ListExtensions {
-  final ExtensionPreferencesService _prefService;
+  final ExtensionSettings _prefService;
   final ListInstalledExtensions _listInstalledExtensions;
   final ListRemoteExtensions _listRemoteExtensions;
   ListExtensions({
-    required ExtensionPreferencesService prefService,
+    required ExtensionSettings prefService,
     required ListInstalledExtensions listInstalledExtensions,
     required ListRemoteExtensions listRemoteExtensions,
   })  : _prefService = prefService,

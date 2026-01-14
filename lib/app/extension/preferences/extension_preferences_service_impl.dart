@@ -1,10 +1,10 @@
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/app/service/preferences/preference.dart';
 import 'package:news_hub/app/service/preferences/store.dart';
-import 'package:news_hub/domain/extension/services/extension_preferences_service.dart';
+import 'package:news_hub/domain/extension/services/extension_settings.dart';
 
-@LazySingleton(as: ExtensionPreferencesService)
-class ExtensionPreferencesServiceImpl implements ExtensionPreferencesService {
+@LazySingleton(as: ExtensionSettings)
+class ExtensionPreferencesServiceImpl implements ExtensionSettings {
   ExtensionPreferencesServiceImpl({
     required PreferenceStore store,
   }) : _store = store;

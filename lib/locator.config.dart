@@ -72,8 +72,8 @@ import 'package:news_hub/domain/extension/interactor/list_remote_extensions.dart
 import 'package:news_hub/domain/extension/interactor/uninstall_extension.dart'
     as _i517;
 import 'package:news_hub/domain/extension/repository.dart' as _i198;
-import 'package:news_hub/domain/extension/services/extension_preferences_service.dart'
-    as _i191;
+import 'package:news_hub/domain/extension/services/extension_settings.dart'
+    as _i866;
 import 'package:news_hub/domain/repo/interactor/add_repo.dart' as _i1048;
 import 'package:news_hub/domain/repo/interactor/list_repos.dart' as _i608;
 import 'package:news_hub/domain/repo/interactor/remove_repo.dart' as _i154;
@@ -190,6 +190,11 @@ extension GetItInjectableX on _i174.GetIt {
         boardRepository: gh<_i1052.BoardRepository>(),
       ),
     );
+    gh.lazySingleton<_i866.ExtensionSettings>(
+      () => _i29.ExtensionPreferencesServiceImpl(
+        store: gh<_i365.PreferenceStore>(),
+      ),
+    );
     gh.lazySingleton<_i643.ListSuggestions>(
       () => _i643.ListSuggestions(
         suggestionRepo: gh<_i678.SuggestionRepository>(),
@@ -254,11 +259,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i757.SidecarRepositoryImpl(
         gh<_i976.SidecarConnectionManager>(),
         gh<_i280.SidecarPreferences>(),
-      ),
-    );
-    gh.lazySingleton<_i191.ExtensionPreferencesService>(
-      () => _i29.ExtensionPreferencesServiceImpl(
-        store: gh<_i365.PreferenceStore>(),
       ),
     );
     gh.factory<_i56.Launcher>(
@@ -354,18 +354,25 @@ extension GetItInjectableX on _i174.GetIt {
         installedRepository: gh<_i266.GetInstalledExtension>(),
       ),
     );
+    gh.lazySingleton<_i214.ListExtensions>(
+      () => _i214.ListExtensions(
+        prefService: gh<_i866.ExtensionSettings>(),
+        listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
+        listRemoteExtensions: gh<_i915.ListRemoteExtensions>(),
+      ),
+    );
+    gh.factory<_i34.ExtensionCubit>(
+      () => _i34.ExtensionCubit(
+        listExtensions: gh<_i214.ListExtensions>(),
+        installExtension: gh<_i783.InstallExtension>(),
+        uninstallExtension: gh<_i517.UninstallExtension>(),
+      ),
+    );
     gh.factory<_i994.ThreadDetailCubit>(
       () => _i994.ThreadDetailCubit(
         getOriginalPost: gh<_i161.GetOriginalPost>(),
         listReplies: gh<_i587.ListReplies>(),
         listComments: gh<_i414.ListComments>(),
-      ),
-    );
-    gh.lazySingleton<_i214.ListExtensions>(
-      () => _i214.ListExtensions(
-        prefService: gh<_i191.ExtensionPreferencesService>(),
-        listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
-        listRemoteExtensions: gh<_i915.ListRemoteExtensions>(),
       ),
     );
     gh.factory<_i91.RepoCubit>(
@@ -381,13 +388,6 @@ extension GetItInjectableX on _i174.GetIt {
         updateSuggestionLatestUsedAt: gh<_i650.UpdateSuggestionLatestUsedAt>(),
         insertSuggestion: gh<_i446.InsertSuggestion>(),
         listThreadList: gh<_i1012.SearchThreads>(),
-      ),
-    );
-    gh.factory<_i34.ExtensionCubit>(
-      () => _i34.ExtensionCubit(
-        listExtensions: gh<_i214.ListExtensions>(),
-        installExtension: gh<_i783.InstallExtension>(),
-        uninstallExtension: gh<_i517.UninstallExtension>(),
       ),
     );
     return this;
