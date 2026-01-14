@@ -45,7 +45,7 @@ class CollectionRepositoryImpl implements CollectionRepository {
     return _mapToCollection(collection, boardRefs);
   }
 
-  domain.Collection _mapToCollection(CollectionData data, List<CollectionBoardRefData> boardRefs) {
+  domain.Collection _mapToCollection(Collection data, List<CollectionBoardRef> boardRefs) {
     return domain.Collection(
       id: data.id,
       name: data.name,
