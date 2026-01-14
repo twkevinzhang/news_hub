@@ -53,12 +53,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onRouteChanged() {
     if (!mounted) return;
 
-    final routes = context.router.currentHierarchy();
-    final target = routes.isNotEmpty
-        ? routes.last as RouteData
-        : context.router.current;
-
-    _homeCubit.handleRouteChanged(target);
+    _homeCubit.handleRouteChanged(context.router.current);
   }
 
   Future<void> _safeNavigate(VoidCallback navigate) async {
@@ -104,7 +99,9 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           },
           onCreateCollectionPressed: () {
-            _safeNavigate(() => context.router.push(const CollectionCreateRoute()));
+            _safeNavigate(
+              () => context.router.push(const CollectionCreateRoute()),
+            );
           },
           onBoardSelected: (board) {
             _safeNavigate(
