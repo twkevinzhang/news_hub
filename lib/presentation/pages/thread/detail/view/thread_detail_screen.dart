@@ -11,6 +11,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:swipe_image_gallery/swipe_image_gallery.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:news_hub/domain/models/models.dart' as domain;
+import 'package:news_hub/shared/models.dart';
 
 @RoutePage()
 class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
@@ -39,62 +40,110 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.watch<ThreadDetailCubit>();
-    final threadResult = cubit.state.threadMap[cubit.state.threadId];
     return Scaffold(
       appBar: AppBar(
-        title: threadResult?.maybeWhen(
-          orElse: () => Text(cubit.state.threadId),
-          completed: (thread) => Text(thread.title ?? thread.id),
-        ),
-        actions: threadResult?.maybeWhen(
-          orElse: () => null,
-          completed: (thread) {
-            return [
-              IconButton(
-                icon: const Icon(Icons.refresh_outlined),
-                onPressed: () => cubit.refresh(),
-              ),
-              PopupMenuButton(
-                itemBuilder: (context) {
-                  return [
-                    const PopupMenuItem(
-                      value: 0,
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [Icon(Icons.open_in_new_outlined), SizedBox(width: 12), Text('在瀏覽器中打開')],
-                      ),
-                    ),
-                  ];
-                },
-                onSelected: (value) async {
-                  if (value == 0) {
-                    final url = thread.url;
-                    if (url != null && !await launchUrl(Uri.parse(url))) {
-                      debugPrint('Could not launch $url');
-                    }
-                  }
-                },
-              ),
-            ];
-          },
-        ),
+        title:
+            BlocSelector<
+              ThreadDetailCubit,
+              ThreadDetailState,
+              Result<domain.ArticlePost>?
+            >(
+              selector: (state) => state.threadMap[state.threadId],
+              builder: (context, threadResult) {
+                final cubit = context.read<ThreadDetailCubit>();
+                return threadResult?.maybeWhen(
+                      orElse: () => Text(cubit.state.threadId),
+                      completed: (thread) => Text(thread.title ?? thread.id),
+                    ) ??
+                    Text(cubit.state.threadId);
+              },
+            ),
+        actions: [
+          BlocSelector<
+            ThreadDetailCubit,
+            ThreadDetailState,
+            Result<domain.ArticlePost>?
+          >(
+            selector: (state) => state.threadMap[state.threadId],
+            builder: (context, threadResult) {
+              return Row(
+                mainAxisSize: MainAxisSize.min,
+                children:
+                    threadResult?.maybeWhen(
+                      orElse: () => [],
+                      completed: (thread) {
+                        final cubit = context.read<ThreadDetailCubit>();
+                        return [
+                          IconButton(
+                            icon: const Icon(Icons.refresh_outlined),
+                            onPressed: () => cubit.refresh(),
+                          ),
+                          PopupMenuButton(
+                            itemBuilder: (context) {
+                              return [
+                                const PopupMenuItem(
+                                  value: 0,
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: [
+                                      Icon(Icons.open_in_new_outlined),
+                                      SizedBox(width: 12),
+                                      Text('在瀏覽器中打開'),
+                                    ],
+                                  ),
+                                ),
+                              ];
+                            },
+                            onSelected: (value) async {
+                              if (value == 0) {
+                                final url = thread.url;
+                                if (url != null &&
+                                    !await launchUrl(Uri.parse(url))) {
+                                  debugPrint('Could not launch $url');
+                                }
+                              }
+                            },
+                          ),
+                        ];
+                      },
+                    ) ??
+                    [],
+              );
+            },
+          ),
+        ],
       ),
       body: PagedListView<int, ArticlePostWithExtension>(
-        pagingController: cubit.pagingController,
+        pagingController: context.read<ThreadDetailCubit>().pagingController,
         builderDelegate: PagedChildBuilderDelegate<ArticlePostWithExtension>(
           itemBuilder: (context, post, index) => ThreadPostItem(
             post: post,
             index: index,
-            onRepliesClick: index == 0 ? null : () => _onRepliesClick(context, cubit, post),
-            onRepliesTreeClick: () => _onRepliesTreeClick(context, cubit, post),
-            onParagraphClick: (paragraph) => _handleParagraphClick(context, cubit, post, paragraph),
+            onRepliesClick: index == 0
+                ? null
+                : () => _onRepliesClick(
+                    context,
+                    context.read<ThreadDetailCubit>(),
+                    post,
+                  ),
+            onRepliesTreeClick: () => _onRepliesTreeClick(
+              context,
+              context.read<ThreadDetailCubit>(),
+              post,
+            ),
+            onParagraphClick: (paragraph) => _handleParagraphClick(
+              context,
+              context.read<ThreadDetailCubit>(),
+              post,
+              paragraph,
+            ),
           ),
-          noItemsFoundIndicatorBuilder: (context) => const Center(
-            child: Text("Empty"),
-          ),
-          firstPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
-          newPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
+          noItemsFoundIndicatorBuilder: (context) =>
+              const Center(child: Text("Empty")),
+          firstPageProgressIndicatorBuilder: (context) =>
+              const LoadingIndicator(),
+          newPageProgressIndicatorBuilder: (context) =>
+              const LoadingIndicator(),
           noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
           transitionDuration: const Duration(milliseconds: 500),
           animateTransitions: true,
@@ -129,7 +178,11 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
     }
   }
 
-  void _onReplyToParagraphClick(BuildContext context, ThreadDetailCubit cubit, domain.ReplyToParagraph paragraph) {
+  void _onReplyToParagraphClick(
+    BuildContext context,
+    ThreadDetailCubit cubit,
+    domain.ReplyToParagraph paragraph,
+  ) {
     showDialog(
       context: context,
       builder: (context) => _buildDialog(
@@ -140,7 +193,8 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
             child: ThreadPostItem(
               post: thread,
               index: -1,
-              onParagraphClick: (p) => _handleParagraphClick(context, cubit, thread, p),
+              onParagraphClick: (p) =>
+                  _handleParagraphClick(context, cubit, thread, p),
             ),
           ),
         ),
@@ -148,13 +202,22 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
     );
   }
 
-  void _onImageParagraphClick(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post, domain.ImageParagraph paragraph) {
+  void _onImageParagraphClick(
+    BuildContext context,
+    ThreadDetailCubit cubit,
+    domain.ArticlePost post,
+    domain.ImageParagraph paragraph,
+  ) {
     final medias = post.contents.medias();
     final index = medias.indexOf(paragraph);
     _buildPostGallery(context, cubit, post, index).show();
   }
 
-  void _onRepliesClick(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post) {
+  void _onRepliesClick(
+    BuildContext context,
+    ThreadDetailCubit cubit,
+    domain.ArticlePost post,
+  ) {
     cubit.loadReplies(post.id);
     // 傳統回覆對話框 (可選，目前保留)
     showModalBottomSheet(
@@ -165,7 +228,11 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
     );
   }
 
-  void _onRepliesTreeClick(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post) {
+  void _onRepliesTreeClick(
+    BuildContext context,
+    ThreadDetailCubit cubit,
+    domain.ArticlePost post,
+  ) {
     cubit.loadReplies(post.id);
     showModalBottomSheet(
       context: context,
@@ -176,7 +243,11 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
     );
   }
 
-  Widget _buildRepliesBottomSheet(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post) {
+  Widget _buildRepliesBottomSheet(
+    BuildContext context,
+    ThreadDetailCubit cubit,
+    domain.ArticlePost post,
+  ) {
     // 實作巴哈風格的回覆樹 Bottom Sheet (使用 DraggableScrollableSheet)
     return DraggableScrollableSheet(
       initialChildSize: 0.9,
@@ -193,51 +264,90 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
                 width: 40,
                 height: 4,
                 decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.onSurfaceVariant.withOpacity(0.4),
+                  color: Theme.of(
+                    context,
+                  ).colorScheme.onSurfaceVariant.withValues(alpha: 0.4),
                   borderRadius: BorderRadius.circular(2),
                 ),
               ),
               Expanded(
-                child: BlocBuilder<ThreadDetailCubit, ThreadDetailState>(
-                  builder: (context, state) {
-                    final repliesResult = state.repliesMap[post.id];
-                    return repliesResult?.maybeWhen(
-                          completed: (replies) => ListView.builder(
-                            controller: scrollController,
-                            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                            itemCount: replies.length + 1,
-                            itemBuilder: (context, index) {
-                              if (index == 0) {
-                                return Column(
-                                  children: [
-                                    ThreadPostItem(
-                                      post: post,
-                                      index: -1,
-                                      onParagraphClick: (paragraph) => _handleParagraphClick(context, cubit, post, paragraph),
-                                      onRepliesTreeClick: () => _onRepliesTreeClick(context, cubit, post),
+                child:
+                    BlocSelector<
+                      ThreadDetailCubit,
+                      ThreadDetailState,
+                      Result<List<domain.ArticlePost>>?
+                    >(
+                      selector: (state) => state.repliesMap[post.id],
+                      builder: (context, repliesResult) {
+                        return repliesResult?.maybeWhen(
+                              completed: (replies) => ListView.builder(
+                                controller: scrollController,
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 8,
+                                ),
+                                itemCount: replies.length + 1,
+                                itemBuilder: (context, index) {
+                                  if (index == 0) {
+                                    return Column(
+                                      children: [
+                                        ThreadPostItem(
+                                          post: post,
+                                          index: -1,
+                                          onParagraphClick: (paragraph) =>
+                                              _handleParagraphClick(
+                                                context,
+                                                cubit,
+                                                post,
+                                                paragraph,
+                                              ),
+                                          onRepliesTreeClick: () =>
+                                              _onRepliesTreeClick(
+                                                context,
+                                                cubit,
+                                                post,
+                                              ),
+                                        ),
+                                        const Padding(
+                                          padding: EdgeInsets.symmetric(
+                                            vertical: 8.0,
+                                          ),
+                                          child: Divider(),
+                                        ),
+                                      ],
+                                    );
+                                  }
+                                  final replyPost = replies[index - 1];
+                                  return ThreadPostItem(
+                                    post: replyPost,
+                                    index: index,
+                                    onParagraphClick: (paragraph) =>
+                                        _handleParagraphClick(
+                                          context,
+                                          cubit,
+                                          replyPost,
+                                          paragraph,
+                                        ),
+                                    onRepliesClick: () => _onRepliesClick(
+                                      context,
+                                      cubit,
+                                      replyPost,
                                     ),
-                                    const Padding(
-                                      padding: EdgeInsets.symmetric(vertical: 8.0),
-                                      child: Divider(),
-                                    ),
-                                  ],
-                                );
-                              }
-                              final replyPost = replies[index - 1];
-                              return ThreadPostItem(
-                                post: replyPost,
-                                index: index,
-                                onParagraphClick: (paragraph) => _handleParagraphClick(context, cubit, replyPost, paragraph),
-                                onRepliesClick: () => _onRepliesClick(context, cubit, replyPost),
-                                onRepliesTreeClick: () => _onRepliesTreeClick(context, cubit, replyPost),
-                              );
-                            },
-                          ),
-                          orElse: () => const Center(child: LoadingIndicator()),
-                        ) ??
-                        const Center(child: LoadingIndicator());
-                  },
-                ),
+                                    onRepliesTreeClick: () =>
+                                        _onRepliesTreeClick(
+                                          context,
+                                          cubit,
+                                          replyPost,
+                                        ),
+                                  );
+                                },
+                              ),
+                              orElse: () =>
+                                  const Center(child: LoadingIndicator()),
+                            ) ??
+                            const Center(child: LoadingIndicator());
+                      },
+                    ),
               ),
             ],
           ),
@@ -248,21 +358,28 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
 
   BlocProvider _buildDialog({
     required ThreadDetailCubit cubit,
-    required Widget Function(BuildContext context, ThreadDetailState state) builder,
+    required Widget Function(BuildContext context, ThreadDetailState state)
+    builder,
   }) {
     return BlocProvider<ThreadDetailCubit>.value(
       value: cubit,
       child: Dialog(
-          child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: BlocBuilder<ThreadDetailCubit, ThreadDetailState>(
-          builder: builder,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: BlocBuilder<ThreadDetailCubit, ThreadDetailState>(
+            builder: builder,
+          ),
         ),
-      )),
+      ),
     );
   }
 
-  SwipeImageGallery _buildPostGallery(BuildContext context, ThreadDetailCubit cubit, domain.ArticlePost post, int initialIndex) {
+  SwipeImageGallery _buildPostGallery(
+    BuildContext context,
+    ThreadDetailCubit cubit,
+    domain.ArticlePost post,
+    int initialIndex,
+  ) {
     final medias = post.contents.medias();
     return SwipeImageGallery(
       overlayController: cubit.overlayController,
@@ -270,10 +387,12 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
       dragEnabled: false,
       children: medias.map((m) => GalleryItem(media: m)).toList(),
       onSwipe: (index) {
-        cubit.overlayController.add(PostGalleryOverlay(
-          title: '${index + 1}/${medias.length}',
-          post: post,
-        ));
+        cubit.overlayController.add(
+          PostGalleryOverlay(
+            title: '${index + 1}/${medias.length}',
+            post: post,
+          ),
+        );
       },
       initialIndex: initialIndex,
       initialOverlay: PostGalleryOverlay(
@@ -302,11 +421,14 @@ class ThreadPostItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final commentsResult = context.select((ThreadDetailCubit c) => c.state.commentsMap[post.id]);
+    final commentsResult = context.select(
+      (ThreadDetailCubit c) => c.state.commentsMap[post.id],
+    );
     final cubit = context.read<ThreadDetailCubit>();
 
     // 從 commentsResult 提取留言資料，如果沒有則使用 post.top5Comments
-    final comments = commentsResult?.maybeWhen(
+    final comments =
+        commentsResult?.maybeWhen(
           completed: (data) => data,
           orElse: () => post.top5Comments,
         ) ??
@@ -318,7 +440,8 @@ class ThreadPostItem extends StatelessWidget {
         post: post,
         floor: index == -1 ? '樓主' : (index == 0 ? '樓主' : '${index + 1} 樓'),
         comments: comments,
-        isCommentsLoading: commentsResult?.maybeWhen(
+        isCommentsLoading:
+            commentsResult?.maybeWhen(
               loading: () => true,
               orElse: () => false,
             ) ??
