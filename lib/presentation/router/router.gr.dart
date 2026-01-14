@@ -16,7 +16,7 @@ import 'package:news_hub/presentation/pages/collection/:collectionId/boards/:boa
     as _i1;
 import 'package:news_hub/presentation/pages/collection/:collectionId/threads/list/collection_thread_list_screen.dart'
     as _i5;
-import 'package:news_hub/presentation/pages/collection/:collectionId/threads/search/view/search_screen.dart'
+import 'package:news_hub/presentation/pages/collection/:collectionId/threads/search/result/search_result_screen.dart'
     as _i9;
 import 'package:news_hub/presentation/pages/collection/create/view/collection_create_screen.dart'
     as _i2;
@@ -278,36 +278,54 @@ class HomeRoute extends _i15.PageRouteInfo<void> {
 }
 
 /// generated route for
-/// [_i9.SearchScreen]
-class SearchRoute extends _i15.PageRouteInfo<SearchRouteArgs> {
-  SearchRoute({_i16.Key? key, List<_i15.PageRouteInfo>? children})
-    : super(
-        SearchRoute.name,
-        args: SearchRouteArgs(key: key),
-        initialChildren: children,
-      );
+/// [_i9.SearchResultScreen]
+class SearchResultRoute extends _i15.PageRouteInfo<SearchResultRouteArgs> {
+  SearchResultRoute({
+    _i16.Key? key,
+    required String collectionId,
+    required _i17.ThreadsFilter filter,
+    List<_i15.PageRouteInfo>? children,
+  }) : super(
+         SearchResultRoute.name,
+         args: SearchResultRouteArgs(
+           key: key,
+           collectionId: collectionId,
+           filter: filter,
+         ),
+         initialChildren: children,
+       );
 
-  static const String name = 'SearchRoute';
+  static const String name = 'SearchResultRoute';
 
   static _i15.PageInfo page = _i15.PageInfo(
     name,
     builder: (data) {
-      final args = data.argsAs<SearchRouteArgs>(
-        orElse: () => const SearchRouteArgs(),
+      final args = data.argsAs<SearchResultRouteArgs>();
+      return _i9.SearchResultScreen(
+        key: args.key,
+        collectionId: args.collectionId,
+        filter: args.filter,
       );
-      return _i15.WrappedRoute(child: _i9.SearchScreen(key: args.key));
     },
   );
 }
 
-class SearchRouteArgs {
-  const SearchRouteArgs({this.key});
+class SearchResultRouteArgs {
+  const SearchResultRouteArgs({
+    this.key,
+    required this.collectionId,
+    required this.filter,
+  });
 
   final _i16.Key? key;
 
+  final String collectionId;
+
+  final _i17.ThreadsFilter filter;
+
   @override
   String toString() {
-    return 'SearchRouteArgs{key: $key}';
+    return 'SearchResultRouteArgs{key: $key, collectionId: $collectionId, filter: $filter}';
   }
 }
 

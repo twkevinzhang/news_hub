@@ -19,9 +19,10 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$SearchState {
   Result<List<Suggestion>> get suggestions =>
       throw _privateConstructorUsedError;
+  List<Suggestion> get resultFilteredSuggestions =>
+      throw _privateConstructorUsedError;
   ThreadsFilter get filter => throw _privateConstructorUsedError;
   ThreadsFilter get submittedFilter => throw _privateConstructorUsedError;
-  ThreadsSorting get sorting => throw _privateConstructorUsedError;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -39,15 +40,14 @@ abstract class $SearchStateCopyWith<$Res> {
   @useResult
   $Res call({
     Result<List<Suggestion>> suggestions,
+    List<Suggestion> resultFilteredSuggestions,
     ThreadsFilter filter,
     ThreadsFilter submittedFilter,
-    ThreadsSorting sorting,
   });
 
   $ResultCopyWith<List<Suggestion>, $Res> get suggestions;
   $ThreadsFilterCopyWith<$Res> get filter;
   $ThreadsFilterCopyWith<$Res> get submittedFilter;
-  $ThreadsSortingCopyWith<$Res> get sorting;
 }
 
 /// @nodoc
@@ -66,9 +66,9 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
   @override
   $Res call({
     Object? suggestions = null,
+    Object? resultFilteredSuggestions = null,
     Object? filter = null,
     Object? submittedFilter = null,
-    Object? sorting = null,
   }) {
     return _then(
       _value.copyWith(
@@ -76,6 +76,10 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
                 ? _value.suggestions
                 : suggestions // ignore: cast_nullable_to_non_nullable
                       as Result<List<Suggestion>>,
+            resultFilteredSuggestions: null == resultFilteredSuggestions
+                ? _value.resultFilteredSuggestions
+                : resultFilteredSuggestions // ignore: cast_nullable_to_non_nullable
+                      as List<Suggestion>,
             filter: null == filter
                 ? _value.filter
                 : filter // ignore: cast_nullable_to_non_nullable
@@ -84,10 +88,6 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
                 ? _value.submittedFilter
                 : submittedFilter // ignore: cast_nullable_to_non_nullable
                       as ThreadsFilter,
-            sorting: null == sorting
-                ? _value.sorting
-                : sorting // ignore: cast_nullable_to_non_nullable
-                      as ThreadsSorting,
           )
           as $Val,
     );
@@ -122,16 +122,6 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
       return _then(_value.copyWith(submittedFilter: value) as $Val);
     });
   }
-
-  /// Create a copy of SearchState
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ThreadsSortingCopyWith<$Res> get sorting {
-    return $ThreadsSortingCopyWith<$Res>(_value.sorting, (value) {
-      return _then(_value.copyWith(sorting: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -145,9 +135,9 @@ abstract class _$$SearchStateImplCopyWith<$Res>
   @useResult
   $Res call({
     Result<List<Suggestion>> suggestions,
+    List<Suggestion> resultFilteredSuggestions,
     ThreadsFilter filter,
     ThreadsFilter submittedFilter,
-    ThreadsSorting sorting,
   });
 
   @override
@@ -156,8 +146,6 @@ abstract class _$$SearchStateImplCopyWith<$Res>
   $ThreadsFilterCopyWith<$Res> get filter;
   @override
   $ThreadsFilterCopyWith<$Res> get submittedFilter;
-  @override
-  $ThreadsSortingCopyWith<$Res> get sorting;
 }
 
 /// @nodoc
@@ -175,9 +163,9 @@ class __$$SearchStateImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? suggestions = null,
+    Object? resultFilteredSuggestions = null,
     Object? filter = null,
     Object? submittedFilter = null,
-    Object? sorting = null,
   }) {
     return _then(
       _$SearchStateImpl(
@@ -185,6 +173,10 @@ class __$$SearchStateImplCopyWithImpl<$Res>
             ? _value.suggestions
             : suggestions // ignore: cast_nullable_to_non_nullable
                   as Result<List<Suggestion>>,
+        resultFilteredSuggestions: null == resultFilteredSuggestions
+            ? _value._resultFilteredSuggestions
+            : resultFilteredSuggestions // ignore: cast_nullable_to_non_nullable
+                  as List<Suggestion>,
         filter: null == filter
             ? _value.filter
             : filter // ignore: cast_nullable_to_non_nullable
@@ -193,10 +185,6 @@ class __$$SearchStateImplCopyWithImpl<$Res>
             ? _value.submittedFilter
             : submittedFilter // ignore: cast_nullable_to_non_nullable
                   as ThreadsFilter,
-        sorting: null == sorting
-            ? _value.sorting
-            : sorting // ignore: cast_nullable_to_non_nullable
-                  as ThreadsSorting,
       ),
     );
   }
@@ -204,37 +192,33 @@ class __$$SearchStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SearchStateImpl with DiagnosticableTreeMixin implements _SearchState {
+class _$SearchStateImpl implements _SearchState {
   const _$SearchStateImpl({
     required this.suggestions,
+    required final List<Suggestion> resultFilteredSuggestions,
     required this.filter,
     required this.submittedFilter,
-    required this.sorting,
-  });
+  }) : _resultFilteredSuggestions = resultFilteredSuggestions;
 
   @override
   final Result<List<Suggestion>> suggestions;
+  final List<Suggestion> _resultFilteredSuggestions;
+  @override
+  List<Suggestion> get resultFilteredSuggestions {
+    if (_resultFilteredSuggestions is EqualUnmodifiableListView)
+      return _resultFilteredSuggestions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_resultFilteredSuggestions);
+  }
+
   @override
   final ThreadsFilter filter;
   @override
   final ThreadsFilter submittedFilter;
-  @override
-  final ThreadsSorting sorting;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'SearchState(suggestions: $suggestions, filter: $filter, submittedFilter: $submittedFilter, sorting: $sorting)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', 'SearchState'))
-      ..add(DiagnosticsProperty('suggestions', suggestions))
-      ..add(DiagnosticsProperty('filter', filter))
-      ..add(DiagnosticsProperty('submittedFilter', submittedFilter))
-      ..add(DiagnosticsProperty('sorting', sorting));
+  String toString() {
+    return 'SearchState(suggestions: $suggestions, resultFilteredSuggestions: $resultFilteredSuggestions, filter: $filter, submittedFilter: $submittedFilter)';
   }
 
   @override
@@ -244,15 +228,23 @@ class _$SearchStateImpl with DiagnosticableTreeMixin implements _SearchState {
             other is _$SearchStateImpl &&
             (identical(other.suggestions, suggestions) ||
                 other.suggestions == suggestions) &&
+            const DeepCollectionEquality().equals(
+              other._resultFilteredSuggestions,
+              _resultFilteredSuggestions,
+            ) &&
             (identical(other.filter, filter) || other.filter == filter) &&
             (identical(other.submittedFilter, submittedFilter) ||
-                other.submittedFilter == submittedFilter) &&
-            (identical(other.sorting, sorting) || other.sorting == sorting));
+                other.submittedFilter == submittedFilter));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, suggestions, filter, submittedFilter, sorting);
+  int get hashCode => Object.hash(
+    runtimeType,
+    suggestions,
+    const DeepCollectionEquality().hash(_resultFilteredSuggestions),
+    filter,
+    submittedFilter,
+  );
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.
@@ -266,19 +258,19 @@ class _$SearchStateImpl with DiagnosticableTreeMixin implements _SearchState {
 abstract class _SearchState implements SearchState {
   const factory _SearchState({
     required final Result<List<Suggestion>> suggestions,
+    required final List<Suggestion> resultFilteredSuggestions,
     required final ThreadsFilter filter,
     required final ThreadsFilter submittedFilter,
-    required final ThreadsSorting sorting,
   }) = _$SearchStateImpl;
 
   @override
   Result<List<Suggestion>> get suggestions;
   @override
+  List<Suggestion> get resultFilteredSuggestions;
+  @override
   ThreadsFilter get filter;
   @override
   ThreadsFilter get submittedFilter;
-  @override
-  ThreadsSorting get sorting;
 
   /// Create a copy of SearchState
   /// with the given fields replaced by the non-null parameter values.

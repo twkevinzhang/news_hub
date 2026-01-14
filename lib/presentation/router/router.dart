@@ -31,12 +31,16 @@ class AppRouter extends RootStackRouter {
         ),
       ],
     ),
+    AutoRoute(
+      path: '/collection/:collectionId/threads/search/result',
+      page: SearchResultRoute.page,
+    ),
+    AutoRoute(
+      path: '/collection/:collectionId/boards/:boardId/threads/search/result',
+      page: SearchResultRoute.page,
+    ),
     AutoRoute(path: '/collection/create', page: CollectionCreateRoute.page),
     AutoRoute(path: '/collection/edit', page: CollectionEditRoute.page),
-    AutoRoute(
-      path: '/collection/:collectionId/threads/search',
-      page: SearchRoute.page,
-    ),
 
     // AutoRoute(path: '/threads/list', page: ThreadListRoute.page),
     AutoRoute(path: '/threads/:threadId', page: ThreadDetailRoute.page),

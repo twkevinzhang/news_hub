@@ -22,6 +22,7 @@ class HomeState with _$HomeState {
     @Default(SidecarConnectionState.uninitialized)
     SidecarConnectionState sidecarStatus,
     String? sidecarMessage,
+    @Default(false) bool isSearchMode,
     RouteData? pendingRoute,
   }) = _HomeState;
 
@@ -65,8 +66,16 @@ class HomeCubit extends Cubit<HomeState> {
   StreamSubscription? _collectionSubscription;
   StreamSubscription? _sidecarSubscription;
 
+  // Search Trigger Stream
+  final _searchController = StreamController<void>.broadcast();
+  Stream<void> get searchStream => _searchController.stream;
+
   HomeCubit(this._collectionRepository, this._sidecarRepository)
     : super(const HomeState());
+
+  void triggerSearch() {
+    _searchController.add(null);
+  }
 
   void init() {
     _collectionSubscription?.cancel();
@@ -96,6 +105,7 @@ class HomeCubit extends Cubit<HomeState> {
   Future<void> close() {
     _collectionSubscription?.cancel();
     _sidecarSubscription?.cancel();
+    _searchController.close();
     return super.close();
   }
 
@@ -107,6 +117,11 @@ class HomeCubit extends Cubit<HomeState> {
   void updateTitle(String title) {
     if (state.title == title) return;
     emit(state.copyWith(title: title));
+  }
+
+  void setSearchMode(bool enabled) {
+    if (state.isSearchMode == enabled) return;
+    emit(state.copyWith(isSearchMode: enabled));
   }
 
   void toggleCollectionExpansion(String collectionId) {

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -5,6 +6,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/components/rendering/loading_indicator.dart';
+import 'package:news_hub/presentation/components/search/search_form_overlay.dart';
 import 'package:news_hub/presentation/pages/collection/:collectionId/boards/:boardId/threads/list/bloc/collection_board_thread_list_cubit.dart';
 import 'package:news_hub/presentation/components/cards/post/single_image_post_layout.dart';
 import 'package:news_hub/presentation/pages/home/home_cubit.dart';
@@ -75,49 +77,132 @@ class _CollectionBoardThreadListScreenState
           );
         }
       },
-      child: PagedListView<int, SingleImagePostWithExtension>(
-        pagingController: cubit.pagingController,
-        builderDelegate:
-            PagedChildBuilderDelegate<SingleImagePostWithExtension>(
-              itemBuilder: (context, thread, index) => Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
-                child: SingleImagePostCard(thread: thread),
-              ),
-              firstPageErrorIndicatorBuilder: (context) =>
-                  BlocSelector<
-                    CollectionBoardThreadListCubit,
-                    CollectionBoardThreadListState,
-                    Failure?
-                  >(
-                    selector: (state) => state.error,
-                    builder: (context, error) {
-                      return Center(
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text("Error: ${error ?? 'Unknown error'}"),
-                            ElevatedButton(
-                              onPressed: () => cubit.refresh(
-                                collectionId: widget.collectionId,
-                                boardId: widget.boardId,
+      child:
+          BlocBuilder<
+            CollectionBoardThreadListCubit,
+            CollectionBoardThreadListState
+          >(
+            buildWhen: (previous, current) =>
+                previous.isSearchOverlayVisible !=
+                current.isSearchOverlayVisible,
+            builder: (context, state) {
+              return _SearchEventListener(
+                onSearchTriggered: () => cubit.toggleSearchMode(),
+                child: PopScope(
+                  canPop: !state.isSearchOverlayVisible,
+                  onPopInvokedWithResult: (didPop, result) {
+                    if (didPop) return;
+                    cubit.toggleSearchMode();
+                  },
+                  child: Stack(
+                    children: [
+                      PagedListView<int, SingleImagePostWithExtension>(
+                        pagingController: cubit.pagingController,
+                        builderDelegate:
+                            PagedChildBuilderDelegate<
+                              SingleImagePostWithExtension
+                            >(
+                              itemBuilder: (context, thread, index) => Padding(
+                                padding: const EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                  vertical: 1,
+                                ),
+                                child: SingleImagePostCard(thread: thread),
                               ),
-                              child: const Text("Retry"),
+                              firstPageErrorIndicatorBuilder: (context) =>
+                                  BlocSelector<
+                                    CollectionBoardThreadListCubit,
+                                    CollectionBoardThreadListState,
+                                    Failure?
+                                  >(
+                                    selector: (state) => state.error,
+                                    builder: (context, error) {
+                                      return Center(
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              "Error: ${error ?? 'Unknown error'}",
+                                            ),
+                                            ElevatedButton(
+                                              onPressed: () => cubit.refresh(
+                                                collectionId:
+                                                    widget.collectionId,
+                                                boardId: widget.boardId,
+                                              ),
+                                              child: const Text("Retry"),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                              noItemsFoundIndicatorBuilder: (context) =>
+                                  const SizedBox(),
+                              firstPageProgressIndicatorBuilder: (context) =>
+                                  const LoadingIndicator(),
+                              newPageProgressIndicatorBuilder: (context) =>
+                                  const LoadingIndicator(),
+                              noMoreItemsIndicatorBuilder: (context) =>
+                                  const SizedBox(),
+                              transitionDuration: const Duration(
+                                milliseconds: 500,
+                              ),
+                              animateTransitions: true,
                             ),
-                          ],
+                      ),
+                      if (state.isSearchOverlayVisible)
+                        SearchFormOverlay(
+                          collectionId: widget.collectionId,
+                          title:
+                              '在 ${state.board?.identity.boardName ?? "..."} 中搜尋',
+                          initialFilter: state.activeFilter,
+                          onSearch: (filter) => cubit.applyFilter(filter),
+                          onClose: () => cubit.toggleSearchMode(),
                         ),
-                      );
-                    },
+                    ],
                   ),
-              noItemsFoundIndicatorBuilder: (context) => const SizedBox(),
-              firstPageProgressIndicatorBuilder: (context) =>
-                  const LoadingIndicator(),
-              newPageProgressIndicatorBuilder: (context) =>
-                  const LoadingIndicator(),
-              noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
-              transitionDuration: const Duration(milliseconds: 500),
-              animateTransitions: true,
-            ),
-      ),
+                ),
+              );
+            },
+          ),
     );
+  }
+}
+
+class _SearchEventListener extends StatefulWidget {
+  final Widget child;
+  final VoidCallback onSearchTriggered;
+
+  const _SearchEventListener({
+    required this.child,
+    required this.onSearchTriggered,
+  });
+
+  @override
+  State<_SearchEventListener> createState() => _SearchEventListenerState();
+}
+
+class _SearchEventListenerState extends State<_SearchEventListener> {
+  StreamSubscription? _subscription;
+
+  @override
+  void initState() {
+    super.initState();
+    _subscription = context.read<HomeCubit>().searchStream.listen((_) {
+      widget.onSearchTriggered();
+    });
+  }
+
+  @override
+  void dispose() {
+    _subscription?.cancel();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return widget.child;
   }
 }

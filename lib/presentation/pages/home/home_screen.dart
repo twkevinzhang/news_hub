@@ -57,27 +57,31 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return BlocProvider.value(
       value: _homeCubit,
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: PreferredSize(
-          preferredSize: const Size.fromHeight(kToolbarHeight),
-          child: BlocSelector<HomeCubit, HomeState, String>(
-            selector: (state) => state.title,
-            builder: (context, title) {
-              return AppTopBar(
-                title: title,
-                onMenuPressed: () => _scaffoldKey.currentState?.openDrawer(),
-                onSearchPressed: () => context.router.push(SearchRoute()),
-                onSettingsPressed: () =>
-                    context.router.push(const SettingsRoute()),
-              );
-            },
-          ),
-        ),
-        drawer: BlocSelector<HomeCubit, HomeState, HomeState>(
-          selector: (state) => state,
-          builder: (context, state) {
-            return AppNavigationDrawer(
+      child: BlocBuilder<HomeCubit, HomeState>(
+        buildWhen: (previous, current) =>
+            previous.isSearchMode != current.isSearchMode ||
+            previous.title != current.title ||
+            previous.collections != current.collections ||
+            previous.expandedCollectionId != current.expandedCollectionId ||
+            previous.sidecarStatus != current.sidecarStatus,
+        builder: (context, state) {
+          return Scaffold(
+            key: _scaffoldKey,
+            appBar: state.isSearchMode
+                ? null
+                : PreferredSize(
+                    preferredSize: const Size.fromHeight(kToolbarHeight),
+                    child: AppTopBar(
+                      title: state.title,
+                      onMenuPressed: () =>
+                          _scaffoldKey.currentState?.openDrawer(),
+                      onSearchPressed: () =>
+                          context.read<HomeCubit>().triggerSearch(),
+                      onSettingsPressed: () =>
+                          context.router.push(const SettingsRoute()),
+                    ),
+                  ),
+            drawer: AppNavigationDrawer(
               collections: state.collections,
               expandedCollectionId: state.expandedCollectionId,
               sidecarLabel: state.sidecarLabel,
@@ -111,10 +115,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   () => context.router.push(const SidecarLogsRoute()),
                 );
               },
-            );
-          },
-        ),
-        body: const AutoRouter(),
+            ),
+            body: const AutoRouter(),
+          );
+        },
       ),
     );
   }

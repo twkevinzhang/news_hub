@@ -23,6 +23,7 @@ mixin _$HomeState {
   SidecarConnectionState get sidecarStatus =>
       throw _privateConstructorUsedError;
   String? get sidecarMessage => throw _privateConstructorUsedError;
+  bool get isSearchMode => throw _privateConstructorUsedError;
   RouteData? get pendingRoute => throw _privateConstructorUsedError;
 
   /// Create a copy of HomeState
@@ -43,6 +44,7 @@ abstract class $HomeStateCopyWith<$Res> {
     String? expandedCollectionId,
     SidecarConnectionState sidecarStatus,
     String? sidecarMessage,
+    bool isSearchMode,
     RouteData? pendingRoute,
   });
 }
@@ -67,6 +69,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
     Object? expandedCollectionId = freezed,
     Object? sidecarStatus = null,
     Object? sidecarMessage = freezed,
+    Object? isSearchMode = null,
     Object? pendingRoute = freezed,
   }) {
     return _then(
@@ -91,6 +94,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
                 ? _value.sidecarMessage
                 : sidecarMessage // ignore: cast_nullable_to_non_nullable
                       as String?,
+            isSearchMode: null == isSearchMode
+                ? _value.isSearchMode
+                : isSearchMode // ignore: cast_nullable_to_non_nullable
+                      as bool,
             pendingRoute: freezed == pendingRoute
                 ? _value.pendingRoute
                 : pendingRoute // ignore: cast_nullable_to_non_nullable
@@ -116,6 +123,7 @@ abstract class _$$HomeStateImplCopyWith<$Res>
     String? expandedCollectionId,
     SidecarConnectionState sidecarStatus,
     String? sidecarMessage,
+    bool isSearchMode,
     RouteData? pendingRoute,
   });
 }
@@ -139,6 +147,7 @@ class __$$HomeStateImplCopyWithImpl<$Res>
     Object? expandedCollectionId = freezed,
     Object? sidecarStatus = null,
     Object? sidecarMessage = freezed,
+    Object? isSearchMode = null,
     Object? pendingRoute = freezed,
   }) {
     return _then(
@@ -163,6 +172,10 @@ class __$$HomeStateImplCopyWithImpl<$Res>
             ? _value.sidecarMessage
             : sidecarMessage // ignore: cast_nullable_to_non_nullable
                   as String?,
+        isSearchMode: null == isSearchMode
+            ? _value.isSearchMode
+            : isSearchMode // ignore: cast_nullable_to_non_nullable
+                  as bool,
         pendingRoute: freezed == pendingRoute
             ? _value.pendingRoute
             : pendingRoute // ignore: cast_nullable_to_non_nullable
@@ -181,6 +194,7 @@ class _$HomeStateImpl extends _HomeState {
     this.expandedCollectionId,
     this.sidecarStatus = SidecarConnectionState.uninitialized,
     this.sidecarMessage,
+    this.isSearchMode = false,
     this.pendingRoute,
   }) : _collections = collections,
        super._();
@@ -205,11 +219,14 @@ class _$HomeStateImpl extends _HomeState {
   @override
   final String? sidecarMessage;
   @override
+  @JsonKey()
+  final bool isSearchMode;
+  @override
   final RouteData? pendingRoute;
 
   @override
   String toString() {
-    return 'HomeState(title: $title, collections: $collections, expandedCollectionId: $expandedCollectionId, sidecarStatus: $sidecarStatus, sidecarMessage: $sidecarMessage, pendingRoute: $pendingRoute)';
+    return 'HomeState(title: $title, collections: $collections, expandedCollectionId: $expandedCollectionId, sidecarStatus: $sidecarStatus, sidecarMessage: $sidecarMessage, isSearchMode: $isSearchMode, pendingRoute: $pendingRoute)';
   }
 
   @override
@@ -228,6 +245,8 @@ class _$HomeStateImpl extends _HomeState {
                 other.sidecarStatus == sidecarStatus) &&
             (identical(other.sidecarMessage, sidecarMessage) ||
                 other.sidecarMessage == sidecarMessage) &&
+            (identical(other.isSearchMode, isSearchMode) ||
+                other.isSearchMode == isSearchMode) &&
             (identical(other.pendingRoute, pendingRoute) ||
                 other.pendingRoute == pendingRoute));
   }
@@ -240,6 +259,7 @@ class _$HomeStateImpl extends _HomeState {
     expandedCollectionId,
     sidecarStatus,
     sidecarMessage,
+    isSearchMode,
     pendingRoute,
   );
 
@@ -259,6 +279,7 @@ abstract class _HomeState extends HomeState {
     final String? expandedCollectionId,
     final SidecarConnectionState sidecarStatus,
     final String? sidecarMessage,
+    final bool isSearchMode,
     final RouteData? pendingRoute,
   }) = _$HomeStateImpl;
   const _HomeState._() : super._();
@@ -273,6 +294,8 @@ abstract class _HomeState extends HomeState {
   SidecarConnectionState get sidecarStatus;
   @override
   String? get sidecarMessage;
+  @override
+  bool get isSearchMode;
   @override
   RouteData? get pendingRoute;
 

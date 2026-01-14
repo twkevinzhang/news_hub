@@ -23,6 +23,8 @@ mixin _$CollectionBoardThreadListState {
       throw _privateConstructorUsedError;
   bool get isLoading => throw _privateConstructorUsedError;
   Failure? get error => throw _privateConstructorUsedError;
+  ThreadsFilter get activeFilter => throw _privateConstructorUsedError;
+  bool get isSearchOverlayVisible => throw _privateConstructorUsedError;
 
   /// Create a copy of CollectionBoardThreadListState
   /// with the given fields replaced by the non-null parameter values.
@@ -48,10 +50,13 @@ abstract class $CollectionBoardThreadListStateCopyWith<$Res> {
     List<SingleImagePostWithExtension> threads,
     bool isLoading,
     Failure? error,
+    ThreadsFilter activeFilter,
+    bool isSearchOverlayVisible,
   });
 
   $CollectionBoardCopyWith<$Res>? get board;
   $FailureCopyWith<$Res>? get error;
+  $ThreadsFilterCopyWith<$Res> get activeFilter;
 }
 
 /// @nodoc
@@ -77,6 +82,8 @@ class _$CollectionBoardThreadListStateCopyWithImpl<
     Object? threads = null,
     Object? isLoading = null,
     Object? error = freezed,
+    Object? activeFilter = null,
+    Object? isSearchOverlayVisible = null,
   }) {
     return _then(
       _value.copyWith(
@@ -100,6 +107,14 @@ class _$CollectionBoardThreadListStateCopyWithImpl<
                 ? _value.error
                 : error // ignore: cast_nullable_to_non_nullable
                       as Failure?,
+            activeFilter: null == activeFilter
+                ? _value.activeFilter
+                : activeFilter // ignore: cast_nullable_to_non_nullable
+                      as ThreadsFilter,
+            isSearchOverlayVisible: null == isSearchOverlayVisible
+                ? _value.isSearchOverlayVisible
+                : isSearchOverlayVisible // ignore: cast_nullable_to_non_nullable
+                      as bool,
           )
           as $Val,
     );
@@ -132,6 +147,16 @@ class _$CollectionBoardThreadListStateCopyWithImpl<
       return _then(_value.copyWith(error: value) as $Val);
     });
   }
+
+  /// Create a copy of CollectionBoardThreadListState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ThreadsFilterCopyWith<$Res> get activeFilter {
+    return $ThreadsFilterCopyWith<$Res>(_value.activeFilter, (value) {
+      return _then(_value.copyWith(activeFilter: value) as $Val);
+    });
+  }
 }
 
 /// @nodoc
@@ -149,12 +174,16 @@ abstract class _$$CollectionBoardThreadListStateImplCopyWith<$Res>
     List<SingleImagePostWithExtension> threads,
     bool isLoading,
     Failure? error,
+    ThreadsFilter activeFilter,
+    bool isSearchOverlayVisible,
   });
 
   @override
   $CollectionBoardCopyWith<$Res>? get board;
   @override
   $FailureCopyWith<$Res>? get error;
+  @override
+  $ThreadsFilterCopyWith<$Res> get activeFilter;
 }
 
 /// @nodoc
@@ -180,6 +209,8 @@ class __$$CollectionBoardThreadListStateImplCopyWithImpl<$Res>
     Object? threads = null,
     Object? isLoading = null,
     Object? error = freezed,
+    Object? activeFilter = null,
+    Object? isSearchOverlayVisible = null,
   }) {
     return _then(
       _$CollectionBoardThreadListStateImpl(
@@ -203,6 +234,14 @@ class __$$CollectionBoardThreadListStateImplCopyWithImpl<$Res>
             ? _value.error
             : error // ignore: cast_nullable_to_non_nullable
                   as Failure?,
+        activeFilter: null == activeFilter
+            ? _value.activeFilter
+            : activeFilter // ignore: cast_nullable_to_non_nullable
+                  as ThreadsFilter,
+        isSearchOverlayVisible: null == isSearchOverlayVisible
+            ? _value.isSearchOverlayVisible
+            : isSearchOverlayVisible // ignore: cast_nullable_to_non_nullable
+                  as bool,
       ),
     );
   }
@@ -218,6 +257,8 @@ class _$CollectionBoardThreadListStateImpl
     final List<SingleImagePostWithExtension> threads = const [],
     this.isLoading = false,
     this.error,
+    this.activeFilter = const ThreadsFilter(boardSorts: {}, keywords: ''),
+    this.isSearchOverlayVisible = false,
   }) : _threads = threads;
 
   @override
@@ -240,10 +281,16 @@ class _$CollectionBoardThreadListStateImpl
   final bool isLoading;
   @override
   final Failure? error;
+  @override
+  @JsonKey()
+  final ThreadsFilter activeFilter;
+  @override
+  @JsonKey()
+  final bool isSearchOverlayVisible;
 
   @override
   String toString() {
-    return 'CollectionBoardThreadListState(collection: $collection, board: $board, threads: $threads, isLoading: $isLoading, error: $error)';
+    return 'CollectionBoardThreadListState(collection: $collection, board: $board, threads: $threads, isLoading: $isLoading, error: $error, activeFilter: $activeFilter, isSearchOverlayVisible: $isSearchOverlayVisible)';
   }
 
   @override
@@ -257,7 +304,11 @@ class _$CollectionBoardThreadListStateImpl
             const DeepCollectionEquality().equals(other._threads, _threads) &&
             (identical(other.isLoading, isLoading) ||
                 other.isLoading == isLoading) &&
-            (identical(other.error, error) || other.error == error));
+            (identical(other.error, error) || other.error == error) &&
+            (identical(other.activeFilter, activeFilter) ||
+                other.activeFilter == activeFilter) &&
+            (identical(other.isSearchOverlayVisible, isSearchOverlayVisible) ||
+                other.isSearchOverlayVisible == isSearchOverlayVisible));
   }
 
   @override
@@ -268,6 +319,8 @@ class _$CollectionBoardThreadListStateImpl
     const DeepCollectionEquality().hash(_threads),
     isLoading,
     error,
+    activeFilter,
+    isSearchOverlayVisible,
   );
 
   /// Create a copy of CollectionBoardThreadListState
@@ -292,6 +345,8 @@ abstract class _CollectionBoardThreadListState
     final List<SingleImagePostWithExtension> threads,
     final bool isLoading,
     final Failure? error,
+    final ThreadsFilter activeFilter,
+    final bool isSearchOverlayVisible,
   }) = _$CollectionBoardThreadListStateImpl;
 
   @override
@@ -304,6 +359,10 @@ abstract class _CollectionBoardThreadListState
   bool get isLoading;
   @override
   Failure? get error;
+  @override
+  ThreadsFilter get activeFilter;
+  @override
+  bool get isSearchOverlayVisible;
 
   /// Create a copy of CollectionBoardThreadListState
   /// with the given fields replaced by the non-null parameter values.

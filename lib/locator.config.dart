@@ -108,6 +108,8 @@ import 'package:news_hub/presentation/pages/collection/:collectionId/threads/lis
     as _i525;
 import 'package:news_hub/presentation/pages/collection/:collectionId/threads/search/bloc/search_cubit.dart'
     as _i470;
+import 'package:news_hub/presentation/pages/collection/:collectionId/threads/search/result/bloc/search_result_cubit.dart'
+    as _i1027;
 import 'package:news_hub/presentation/pages/home/home_cubit.dart' as _i936;
 import 'package:news_hub/presentation/pages/settings/collections/bloc/collection_cubit.dart'
     as _i31;
@@ -237,12 +239,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.factory<_i31.CollectionCubit>(
       () => _i31.CollectionCubit(gh<_i914.CollectionRepository>()),
     );
-    gh.factory<_i492.CollectionBoardThreadListCubit>(
-      () => _i492.CollectionBoardThreadListCubit(
-        gh<_i585.GetCollection>(),
-        gh<_i996.GetCollectionBoard>(),
-        gh<_i152.ListBoardThreads>(),
-      ),
+    gh.factory<_i1027.SearchResultCubit>(
+      () => _i1027.SearchResultCubit(gh<_i861.ListCollectionThreads>()),
     );
     gh.singleton<_i280.SidecarPreferences>(
       () => appProvider.sidecarPreferences(gh<_i365.PreferenceStore>()),
@@ -275,12 +273,6 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i56.RemoteAppLauncher(gh<_i976.SidecarConnectionManager>()),
       registerFor: {_remote},
     );
-    gh.factory<_i525.CollectionThreadListCubit>(
-      () => _i525.CollectionThreadListCubit(
-        gh<_i585.GetCollection>(),
-        gh<_i861.ListCollectionThreads>(),
-      ),
-    );
     gh.lazySingleton<_i198.ExtensionRepository>(
       () => _i657.ExtensionRepositoryImpl(
         gh<_i504.ApiService>(),
@@ -309,6 +301,21 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i351.ListInstalledExtensions(
         repository: gh<_i198.ExtensionRepository>(),
         boardRepository: gh<_i1052.BoardRepository>(),
+      ),
+    );
+    gh.factory<_i525.CollectionThreadListCubit>(
+      () => _i525.CollectionThreadListCubit(
+        gh<_i585.GetCollection>(),
+        gh<_i861.ListCollectionThreads>(),
+        gh<_i936.HomeCubit>(),
+      ),
+    );
+    gh.factory<_i492.CollectionBoardThreadListCubit>(
+      () => _i492.CollectionBoardThreadListCubit(
+        gh<_i585.GetCollection>(),
+        gh<_i996.GetCollectionBoard>(),
+        gh<_i152.ListBoardThreads>(),
+        gh<_i936.HomeCubit>(),
       ),
     );
     gh.lazySingleton<_i608.ListRepos>(
