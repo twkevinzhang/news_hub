@@ -90,31 +90,44 @@ class _HomeScreenState extends State<HomeScreen> {
             },
           ),
         ),
-        drawer: AppNavigationDrawer(
-          onCollectionSelected: (collection) {
-            _safeNavigate(
-              () => context.router.replace(
-                CollectionThreadListRoute(collectionId: collection.id),
-              ),
+        drawer: BlocSelector<HomeCubit, HomeState, HomeState>(
+          selector: (state) => state,
+          builder: (context, state) {
+            return AppNavigationDrawer(
+              collections: state.collections,
+              expandedCollectionId: state.expandedCollectionId,
+              sidecarLabel: state.sidecarLabel,
+              sidecarStatusColor: state.sidecarStatusColor,
+              onToggleExpansion: (id) =>
+                  _homeCubit.toggleCollectionExpansion(id),
+              onCollectionSelected: (collection) {
+                _safeNavigate(
+                  () => context.router.replace(
+                    CollectionThreadListRoute(collectionId: collection.id),
+                  ),
+                );
+              },
+              onCreateCollectionPressed: () {
+                _safeNavigate(
+                  () => context.router.push(const CollectionCreateRoute()),
+                );
+              },
+              onBoardSelected: (board) {
+                _safeNavigate(
+                  () => context.router.replace(
+                    CollectionBoardThreadListRoute(
+                      collectionId: board.collectionId,
+                      boardId: board.identity.boardId,
+                    ),
+                  ),
+                );
+              },
+              onStatusPressed: () {
+                _safeNavigate(
+                  () => context.router.push(const SidecarLogsRoute()),
+                );
+              },
             );
-          },
-          onCreateCollectionPressed: () {
-            _safeNavigate(
-              () => context.router.push(const CollectionCreateRoute()),
-            );
-          },
-          onBoardSelected: (board) {
-            _safeNavigate(
-              () => context.router.replace(
-                CollectionBoardThreadListRoute(
-                  collectionId: board.collectionId,
-                  boardId: board.identity.boardId,
-                ),
-              ),
-            );
-          },
-          onStatusPressed: () {
-            _safeNavigate(() => context.router.push(const SidecarLogsRoute()));
           },
         ),
         body: const AutoRouter(),
