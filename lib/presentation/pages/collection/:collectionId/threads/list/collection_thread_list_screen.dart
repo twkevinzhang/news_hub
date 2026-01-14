@@ -11,7 +11,8 @@ import 'package:news_hub/presentation/components/cards/post/single_image_post_sk
 import 'package:news_hub/presentation/pages/home/home_cubit.dart';
 
 @RoutePage()
-class CollectionThreadListScreen extends StatefulWidget implements AutoRouteWrapper {
+class CollectionThreadListScreen extends StatefulWidget
+    implements AutoRouteWrapper {
   final String collectionId;
 
   const CollectionThreadListScreen({
@@ -28,10 +29,12 @@ class CollectionThreadListScreen extends StatefulWidget implements AutoRouteWrap
   }
 
   @override
-  State<CollectionThreadListScreen> createState() => _CollectionThreadListScreenState();
+  State<CollectionThreadListScreen> createState() =>
+      _CollectionThreadListScreenState();
 }
 
-class _CollectionThreadListScreenState extends State<CollectionThreadListScreen> {
+class _CollectionThreadListScreenState
+    extends State<CollectionThreadListScreen> {
   @override
   void initState() {
     super.initState();
@@ -51,41 +54,41 @@ class _CollectionThreadListScreenState extends State<CollectionThreadListScreen>
   @override
   Widget build(BuildContext context) {
     return BlocListener<CollectionThreadListCubit, CollectionThreadListState>(
-      listenWhen: (previous, current) => previous.collection != current.collection,
+      listenWhen: (previous, current) =>
+          previous.collection != current.collection,
       listener: (context, state) {
         if (state.collection != null) {
           context.read<HomeCubit>().updateTitle(state.collection!.name);
         }
       },
-      child: Builder(
-        builder: (context) {
-          final cubit = context.watch<CollectionThreadListCubit>();
-          return PagedListView<int, dynamic>(
-            pagingController: cubit.pagingController,
-            builderDelegate: PagedChildBuilderDelegate<dynamic>(
-              itemBuilder: (context, item, index) {
-                if (item is SingleImagePostWithExtension) {
-                  return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
-                    child: SingleImagePostCard(thread: item),
-                  );
-                } else if (item is CollectionBoardSkeleton) {
-                  return const Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 1),
-                    child: SingleImagePostSkeleton(),
-                  );
-                }
-                return const SizedBox.shrink();
-              },
-              noItemsFoundIndicatorBuilder: (context) => const SizedBox(),
-              firstPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
-              newPageProgressIndicatorBuilder: (context) => const LoadingIndicator(),
-              noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
-              transitionDuration: const Duration(milliseconds: 500),
-              animateTransitions: true,
-            ),
-          );
-        },
+      child: PagedListView<int, dynamic>(
+        pagingController: context
+            .read<CollectionThreadListCubit>()
+            .pagingController,
+        builderDelegate: PagedChildBuilderDelegate<dynamic>(
+          itemBuilder: (context, item, index) {
+            if (item is SingleImagePostWithExtension) {
+              return Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 1),
+                child: SingleImagePostCard(thread: item),
+              );
+            } else if (item is CollectionBoardSkeleton) {
+              return const Padding(
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 1),
+                child: SingleImagePostSkeleton(),
+              );
+            }
+            return const SizedBox.shrink();
+          },
+          noItemsFoundIndicatorBuilder: (context) => const SizedBox(),
+          firstPageProgressIndicatorBuilder: (context) =>
+              const LoadingIndicator(),
+          newPageProgressIndicatorBuilder: (context) =>
+              const LoadingIndicator(),
+          noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
+          transitionDuration: const Duration(milliseconds: 500),
+          animateTransitions: true,
+        ),
       ),
     );
   }
