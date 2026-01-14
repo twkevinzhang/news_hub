@@ -6,8 +6,8 @@ class CacheService {
   CacheService() {
     CachedQuery.instance.config(
       config: QueryConfig(
-        refetchDuration: Duration(minutes: 5),
-        cacheDuration: Duration(hours: 24),
+        refetchDuration: const Duration(minutes: 5),
+        cacheDuration: const Duration(hours: 24),
       ),
     );
   }

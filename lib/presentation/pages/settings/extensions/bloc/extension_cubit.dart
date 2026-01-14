@@ -39,7 +39,7 @@ class ExtensionCubit extends Cubit<ExtensionState> {
         _installExtension = installExtension,
         _uninstallExtension = uninstallExtension,
         _installingStream = {},
-        super(ExtensionState(
+        super(const ExtensionState(
           keyword: null,
           extensions: Result.initial(),
           installingExtensions: {},

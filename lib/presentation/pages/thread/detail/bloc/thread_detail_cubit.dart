@@ -46,7 +46,7 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
         _listComments = listComments,
         pagingController = PagingController(firstPageKey: 1),
         overlayController = StreamController<Widget>.broadcast(),
-        super(ThreadDetailState(
+        super(const ThreadDetailState(
           extensionPkgName: '',
           boardId: '',
           threadId: '',

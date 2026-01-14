@@ -36,8 +36,8 @@ class _VideoParagraphState extends State<VideoParagraph> {
       normal: AppVideoControlsThemeData(
         visibleOnMount: true,
         bottomButtonBar: [
-          MaterialPositionIndicator(),
-          Spacer(),
+          const MaterialPositionIndicator(),
+          const Spacer(),
           IconButton(
             onPressed: () async {
               controller.player.pause();
@@ -45,10 +45,10 @@ class _VideoParagraphState extends State<VideoParagraph> {
                 debugPrint('Could not launch ${widget.videoUrl}');
               }
             },
-            icon: Icon(Icons.open_in_new_outlined, color: Colors.white),
+            icon: const Icon(Icons.open_in_new_outlined, color: Colors.white),
           ),
         ],
-        padding: EdgeInsets.only(bottom: 16.0),
+        padding: const EdgeInsets.only(bottom: 16.0),
       ),
       fullscreen: const AppVideoControlsThemeData(),
       child: SizedBox(

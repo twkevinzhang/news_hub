@@ -1,18 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:grpc/grpc.dart';
-import 'package:flutter/foundation.dart';
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart' show Environment, InjectableInit, module, preResolve, singleton, Injectable, lazySingleton;
-import 'package:logger/logger.dart';
 import 'package:news_hub/presentation/app.dart';
 import 'package:rx_shared_preferences/rx_shared_preferences.dart';
 import 'package:serious_python/serious_python.dart';
 import 'package:news_hub/shared/constants.dart';
-import 'package:news_hub/app/service/api/api_service.dart';
-import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/domain/sidecar/repository.dart';
-import 'package:news_hub/app/service/api/sidecar_api_impl.dart';
 import 'package:news_hub/app/service/connection/grpc_connection_manager_impl.dart';
 import 'package:news_hub/app/service/connection/interface.dart';
 import 'package:news_hub/app/service/preferences/store.dart';
@@ -80,7 +73,7 @@ class SidecarAppLauncher implements Launcher {
     );
 
     SeriousPython.run(sidecarAsset);
-    runApp(App());
+    runApp(const App());
   }
 }
 
@@ -105,6 +98,6 @@ class RemoteAppLauncher implements Launcher {
       port: envPort,
     );
 
-    runApp(App());
+    runApp(const App());
   }
 }

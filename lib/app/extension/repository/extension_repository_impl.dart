@@ -32,7 +32,7 @@ class ExtensionRepositoryImpl implements ExtensionRepository {
   Stream<Pair<InstallStatus, double>> install(Extension extension) async* {
     await _ensureConnected();
 
-    yield Pair(InstallStatus.installing, 0.0);
+    yield const Pair(InstallStatus.installing, 0.0);
     try {
       bool finished = false;
       String? error;
@@ -63,12 +63,12 @@ class ExtensionRepositoryImpl implements ExtensionRepository {
       await installFuture;
 
       if (error != null) {
-        yield Pair(InstallStatus.failed, 0.0);
+        yield const Pair(InstallStatus.failed, 0.0);
       } else {
-        yield Pair(InstallStatus.completed, 1.0);
+        yield const Pair(InstallStatus.completed, 1.0);
       }
     } catch (e) {
-      yield Pair(InstallStatus.failed, 0.0);
+      yield const Pair(InstallStatus.failed, 0.0);
     }
   }
 

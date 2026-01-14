@@ -9,6 +9,6 @@ class WrapperScreen extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return AutoRouter();
+    return const AutoRouter();
   }
 }

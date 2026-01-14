@@ -45,7 +45,7 @@ class BoardsPickerCubit extends Cubit<BoardsPickerState> {
     ListInstalledExtensions listExtensions,
   )   : _listExtensions = listExtensions,
         super(
-          BoardsPickerState(
+          const BoardsPickerState(
             extensionBoards: Result.initial(),
             chosenBoards: {},
             submittedChosenBoards: {},
@@ -56,7 +56,7 @@ class BoardsPickerCubit extends Cubit<BoardsPickerState> {
     Map<String, String>? chosenBoards,
   }) async {
     safeEmit(state.copyWith(
-      extensionBoards: Result.loading(),
+      extensionBoards: const Result.loading(),
     ));
     try {
       final extensions = await _listExtensions.withBoards();

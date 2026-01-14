@@ -4,10 +4,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class YouTubeParagraph extends StatefulWidget {
   final String clipId;
-  const YouTubeParagraph({
-    super.key,
-    required this.clipId,
-  });
+  const YouTubeParagraph({super.key, required this.clipId});
 
   @override
   State<YouTubeParagraph> createState() => _YouTubeParagraphState();
@@ -16,8 +13,6 @@ class YouTubeParagraph extends StatefulWidget {
 class _YouTubeParagraphState extends State<YouTubeParagraph> {
   late YoutubePlayerController _controller;
 
-  late PlayerState _playerState;
-  late YoutubeMetaData _videoMetaData;
   bool _isPlayerReady = false;
 
   @override
@@ -53,10 +48,7 @@ class _YouTubeParagraphState extends State<YouTubeParagraph> {
 
   void _listener() {
     if (_isPlayerReady && mounted && !_controller.value.isFullScreen) {
-      setState(() {
-        _playerState = _controller.value.playerState;
-        _videoMetaData = _controller.metadata;
-      });
+      setState(() {});
     }
   }
 
@@ -72,19 +64,20 @@ class _YouTubeParagraphState extends State<YouTubeParagraph> {
         debugPrint('Player is ready.');
       },
       bottomActions: [
-        CurrentPosition(),
-        ProgressBar(isExpanded: true),
-        RemainingDuration(),
+        const CurrentPosition(),
+        const ProgressBar(isExpanded: true),
+        const RemainingDuration(),
         IconButton(
           onPressed: () async {
             _controller.pause();
             final seconds = _controller.value.position.inSeconds;
-            final url = "https://www.youtube.com/watch?v=${widget.clipId}&t=$seconds";
+            final url =
+                "https://www.youtube.com/watch?v=${widget.clipId}&t=$seconds";
             if (!await launchUrl(Uri.parse(url))) {
               debugPrint('Could not launch $url');
             }
           },
-          icon: Icon(Icons.open_in_new_outlined, color: Colors.white),
+          icon: const Icon(Icons.open_in_new_outlined, color: Colors.white),
         ),
       ],
     );

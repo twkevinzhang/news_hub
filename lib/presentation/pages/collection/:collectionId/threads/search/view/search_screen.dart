@@ -28,67 +28,64 @@ class SearchScreen extends StatelessWidget implements AutoRouteWrapper {
     final cubit = context.watch<SearchCubit>();
     final boardsTotal = cubit.state.filter.boardsTotal();
     return Scaffold(
-      appBar: AppBar(
-        title: Text("搜尋"),
-      ),
+      appBar: AppBar(title: const Text("搜尋")),
       body: Form(
         key: _formKey,
         child: Column(
           children: [
-            Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                    child: Text('搜尋範圍'),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  child: Text('搜尋範圍'),
+                ),
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 4,
                   ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                    child: Row(
-                      spacing: 8,
-                      children: [
-                        if (boardsTotal > 0)
-                          ActionChip(
-                            avatar: Icon(Icons.filter_alt),
-                            label: Text('Boards ($boardsTotal)'),
-                            onPressed: () => _showBoardsPicker(context, cubit),
-                          )
-                        else
-                          ActionChip(
-                            avatar: Icon(Icons.filter_alt_outlined),
-                            label: Text('Boards'),
-                            onPressed: () => _showBoardsPicker(context, cubit),
-                          )
-                      ],
-                    ),
+                  child: Row(
+                    spacing: 8,
+                    children: [
+                      if (boardsTotal > 0)
+                        ActionChip(
+                          avatar: const Icon(Icons.filter_alt),
+                          label: Text('Boards ($boardsTotal)'),
+                          onPressed: () => _showBoardsPicker(context, cubit),
+                        )
+                      else
+                        ActionChip(
+                          avatar: const Icon(Icons.filter_alt_outlined),
+                          label: const Text('Boards'),
+                          onPressed: () => _showBoardsPicker(context, cubit),
+                        ),
+                    ],
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
-            SizedBox(height: 16),
-            Container(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                    child: Text('關鍵字'),
-                  ),
-                  // Padding(
-                  //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
-                  //   child: AppSearchBar(
-                  //     value: cubit.state.filter.keywords ?? '',
-                  //     boardsTotal: cubit.state.filter.boardsTotal(),
-                  //     onChanged: (value) => cubit.setKeywords(value ?? ''),
-                  //     onSelected: (suggestion) => cubit.clickSuggestion(suggestion),
-                  //     onClear: () => cubit.clearKeywords(),
-                  //   ),
-                  // ),
-                ],
-              ),
+            const SizedBox(height: 16),
+            const Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                  child: Text('關鍵字'),
+                ),
+                // Padding(
+                //   padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                //   child: AppSearchBar(
+                //     value: cubit.state.filter.keywords ?? '',
+                //     boardsTotal: cubit.state.filter.boardsTotal(),
+                //     onChanged: (value) => cubit.setKeywords(value ?? ''),
+                //     onSelected: (suggestion) => cubit.clickSuggestion(suggestion),
+                //     onClear: () => cubit.clearKeywords(),
+                //   ),
+                // ),
+              ],
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Row(
@@ -96,10 +93,10 @@ class SearchScreen extends StatelessWidget implements AutoRouteWrapper {
                   Expanded(
                     child: OutlinedButton(
                       onPressed: () => cubit.reset(),
-                      child: Text("重設"),
+                      child: const Text("重設"),
                     ),
                   ),
-                  SizedBox(width: 16), // 按鈕之間的間距
+                  const SizedBox(width: 16), // 按鈕之間的間距
                   Expanded(
                     child: FilledButton.icon(
                       onPressed: () => _onSubmit(context, cubit),
@@ -122,7 +119,9 @@ class SearchScreen extends StatelessWidget implements AutoRouteWrapper {
       builder: (context) {
         return Dialog.fullscreen(
           child: BlocProvider<BoardsPickerCubit>(
-            create: (context) => sl<BoardsPickerCubit>()..init(chosenBoards: cubit.state.filter.boardSorts),
+            create: (context) =>
+                sl<BoardsPickerCubit>()
+                  ..init(chosenBoards: cubit.state.filter.boardSorts),
             child: const BoardsPickerScreen(),
           ),
         );

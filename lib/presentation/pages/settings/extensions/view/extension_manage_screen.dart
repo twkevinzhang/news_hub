@@ -38,7 +38,7 @@ class ExtensionManageScreen extends StatelessWidget implements AutoRouteWrapper 
             ],
           ),
         ),
-        body: TabBarView(
+        body: const TabBarView(
           children: [
             ReposTab(),
             ExtensionInstalledTab(),

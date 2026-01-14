@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'package:flutter/foundation.dart';
 import 'package:injectable/injectable.dart';
 import 'package:news_hub/app/service/connection/interface.dart';
 import 'package:news_hub/app/sidecar/preferences/sidecar_preferences.dart';

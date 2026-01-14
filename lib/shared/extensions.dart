@@ -75,7 +75,7 @@ extension CubitEx<T> on Cubit<T> {
 }
 
 extension IntEx on int? {
-  get isPositive {
+  bool get isPositive {
     return this != null && this! > 0;
   }
 }

@@ -135,7 +135,7 @@ class CollectionManageScreen extends StatelessWidget implements AutoRouteWrapper
             floatingActionButton: state.isSortingMode
                 ? null
                 : FloatingActionButton(
-                    onPressed: () => context.router.push(CollectionCreateRoute()),
+                    onPressed: () => context.router.push(const CollectionCreateRoute()),
                     child: const Icon(Icons.add),
                   ),
           ),

@@ -69,13 +69,13 @@ class GalleryItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     switch (media) {
-      case domain.ImageParagraph image:
+      case final domain.ImageParagraph image:
         return CachedNetworkImage(
           imageUrl: image.raw,
           placeholder: (context, url) => const LoadingIndicator(),
           errorWidget: (context, url, error) => const Icon(Icons.error),
         );
-      case domain.VideoParagraph video:
+      case final domain.VideoParagraph video:
         return Center(
           child: FittedBox(
             fit: BoxFit.contain, // ✅ 確保比例不變，且寬度最寬

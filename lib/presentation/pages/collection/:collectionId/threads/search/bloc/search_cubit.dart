@@ -37,7 +37,7 @@ class SearchCubit extends Cubit<SearchState> {
   })  : _listSuggestions = listSuggestions,
         _updateSuggestionLatestUsedAt = updateSuggestionLatestUsedAt,
         _insertSuggestion = insertSuggestion,
-        super(SearchState(
+        super(const SearchState(
           suggestions: Result.initial(),
           filter: ThreadsFilter(
             boardSorts: {},
@@ -54,7 +54,7 @@ class SearchCubit extends Cubit<SearchState> {
 
   void init() async {
     safeEmit(state.copyWith(
-      suggestions: Result.loading(),
+      suggestions: const Result.loading(),
     ));
     try {
       final suggestions = await _listSuggestions.call();

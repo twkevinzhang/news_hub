@@ -3,7 +3,7 @@ import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/router/router.dart';
 
 class App extends StatelessWidget {
-  App({super.key});
+  const App({super.key});
 
   // This widget is the root of your application.
   @override

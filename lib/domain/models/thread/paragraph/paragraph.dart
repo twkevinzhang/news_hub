@@ -17,7 +17,7 @@ class ImageParagraph extends MediaParagraph {
     : _thumb = thumb,
       super(ParagraphType.image);
 
-  thumb() {
+  String thumb() {
     return _thumb ?? raw;
   }
 }

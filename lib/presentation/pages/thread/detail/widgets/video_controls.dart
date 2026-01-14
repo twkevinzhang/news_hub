@@ -20,15 +20,16 @@ import 'package:media_kit_video/media_kit_video_controls/src/controls/widgets/vi
 ///
 /// {@endtemplate}
 Widget AppVideoControls(VideoState state) {
-  return const VideoControlsThemeDataInjector(
-    child: _AppVideoControls(),
-  );
+  return const VideoControlsThemeDataInjector(child: _AppVideoControls());
 }
 
 /// [AppVideoControlsThemeData] available in this [context].
-AppVideoControlsThemeData _theme(BuildContext context) => FullscreenInheritedWidget.maybeOf(context) == null
-    ? AppVideoControlsTheme.maybeOf(context)?.normal ?? kDefaultAppVideoControlsThemeData
-    : AppVideoControlsTheme.maybeOf(context)?.fullscreen ?? kDefaultAppVideoControlsThemeDataFullscreen;
+AppVideoControlsThemeData _theme(BuildContext context) =>
+    FullscreenInheritedWidget.maybeOf(context) == null
+    ? AppVideoControlsTheme.maybeOf(context)?.normal ??
+          kDefaultAppVideoControlsThemeData
+    : AppVideoControlsTheme.maybeOf(context)?.fullscreen ??
+          kDefaultAppVideoControlsThemeDataFullscreen;
 
 /// Default [AppVideoControlsThemeData].
 const kDefaultAppVideoControlsThemeData = AppVideoControlsThemeData();
@@ -57,27 +58,17 @@ const kDefaultAppVideoControlsThemeDataFullscreen = AppVideoControlsThemeData(
     Spacer(flex: 2),
   ],
   topButtonBar: [],
-  topButtonBarMargin: EdgeInsets.symmetric(
-    horizontal: 16.0,
-  ),
+  topButtonBarMargin: EdgeInsets.symmetric(horizontal: 16.0),
   bottomButtonBar: [
     MaterialPositionIndicator(),
     Spacer(),
     MaterialFullscreenButton(),
   ],
-  bottomButtonBarMargin: EdgeInsets.only(
-    left: 16.0,
-    right: 8.0,
-    bottom: 42.0,
-  ),
+  bottomButtonBarMargin: EdgeInsets.only(left: 16.0, right: 8.0, bottom: 42.0),
   buttonBarHeight: 56.0,
   buttonBarButtonSize: 24.0,
   buttonBarButtonColor: Color(0xFFFFFFFF),
-  seekBarMargin: EdgeInsets.only(
-    left: 16.0,
-    right: 16.0,
-    bottom: 42.0,
-  ),
+  seekBarMargin: EdgeInsets.only(left: 16.0, right: 16.0, bottom: 42.0),
   seekBarHeight: 2.4,
   seekBarContainerHeight: 36.0,
   seekBarColor: Color(0x3DFFFFFF),
@@ -288,26 +279,36 @@ class AppVideoControlsThemeData {
     return AppVideoControlsThemeData(
       displaySeekBar: displaySeekBar ?? this.displaySeekBar,
       seekGesture: seekGesture ?? this.seekGesture,
-      gesturesEnabledWhileControlsVisible: gesturesEnabledWhileControlsVisible ?? this.gesturesEnabledWhileControlsVisible,
+      gesturesEnabledWhileControlsVisible:
+          gesturesEnabledWhileControlsVisible ??
+          this.gesturesEnabledWhileControlsVisible,
       visibleOnMount: visibleOnMount ?? this.visibleOnMount,
-      controlsHoverDuration: controlsHoverDuration ?? this.controlsHoverDuration,
-      controlsTransitionDuration: controlsTransitionDuration ?? this.controlsTransitionDuration,
-      bufferingIndicatorBuilder: bufferingIndicatorBuilder ?? this.bufferingIndicatorBuilder,
-      volumeIndicatorBuilder: volumeIndicatorBuilder ?? this.volumeIndicatorBuilder,
-      brightnessIndicatorBuilder: brightnessIndicatorBuilder ?? this.brightnessIndicatorBuilder,
+      controlsHoverDuration:
+          controlsHoverDuration ?? this.controlsHoverDuration,
+      controlsTransitionDuration:
+          controlsTransitionDuration ?? this.controlsTransitionDuration,
+      bufferingIndicatorBuilder:
+          bufferingIndicatorBuilder ?? this.bufferingIndicatorBuilder,
+      volumeIndicatorBuilder:
+          volumeIndicatorBuilder ?? this.volumeIndicatorBuilder,
+      brightnessIndicatorBuilder:
+          brightnessIndicatorBuilder ?? this.brightnessIndicatorBuilder,
       seekIndicatorBuilder: seekIndicatorBuilder ?? this.seekIndicatorBuilder,
-      speedUpIndicatorBuilder: speedUpIndicatorBuilder ?? this.speedUpIndicatorBuilder,
+      speedUpIndicatorBuilder:
+          speedUpIndicatorBuilder ?? this.speedUpIndicatorBuilder,
       primaryButtonBar: primaryButtonBar ?? this.primaryButtonBar,
       topButtonBar: topButtonBar ?? this.topButtonBar,
       topButtonBarMargin: topButtonBarMargin ?? this.topButtonBarMargin,
       bottomButtonBar: bottomButtonBar ?? this.bottomButtonBar,
-      bottomButtonBarMargin: bottomButtonBarMargin ?? this.bottomButtonBarMargin,
+      bottomButtonBarMargin:
+          bottomButtonBarMargin ?? this.bottomButtonBarMargin,
       buttonBarHeight: buttonBarHeight ?? this.buttonBarHeight,
       buttonBarButtonSize: buttonBarButtonSize ?? this.buttonBarButtonSize,
       buttonBarButtonColor: buttonBarButtonColor ?? this.buttonBarButtonColor,
       seekBarMargin: seekBarMargin ?? this.seekBarMargin,
       seekBarHeight: seekBarHeight ?? this.seekBarHeight,
-      seekBarContainerHeight: seekBarContainerHeight ?? this.seekBarContainerHeight,
+      seekBarContainerHeight:
+          seekBarContainerHeight ?? this.seekBarContainerHeight,
       seekBarColor: seekBarColor ?? this.seekBarColor,
       seekBarPositionColor: seekBarPositionColor ?? this.seekBarPositionColor,
       seekBarBufferColor: seekBarBufferColor ?? this.seekBarBufferColor,
@@ -339,15 +340,14 @@ class AppVideoControlsTheme extends InheritedWidget {
 
   static AppVideoControlsTheme of(BuildContext context) {
     final AppVideoControlsTheme? result = maybeOf(context);
-    assert(
-      result != null,
-      'No [AppVideoControlsTheme] found in [context]',
-    );
+    assert(result != null, 'No [AppVideoControlsTheme] found in [context]');
     return result!;
   }
 
   @override
-  bool updateShouldNotify(AppVideoControlsTheme oldWidget) => identical(normal, oldWidget.normal) && identical(fullscreen, oldWidget.fullscreen);
+  bool updateShouldNotify(AppVideoControlsTheme oldWidget) =>
+      identical(normal, oldWidget.normal) &&
+      identical(fullscreen, oldWidget.fullscreen);
 }
 
 /// {@macro app_video_controls}
@@ -383,14 +383,17 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
   Timer? _timerSeekBackwardButton;
   Timer? _timerSeekForwardButton;
 
-  final ValueNotifier<Duration> _seekBarDeltaValueNotifier = ValueNotifier<Duration>(Duration.zero);
+  final ValueNotifier<Duration> _seekBarDeltaValueNotifier =
+      ValueNotifier<Duration>(Duration.zero);
 
   final List<StreamSubscription> subscriptions = [];
 
   double get subtitleVerticalShiftOffset =>
       (_theme(context).padding?.bottom ?? 0.0) +
       (_theme(context).bottomButtonBarMargin.vertical) +
-      (_theme(context).bottomButtonBar.isNotEmpty ? _theme(context).buttonBarHeight : 0.0);
+      (_theme(context).bottomButtonBar.isNotEmpty
+          ? _theme(context).buttonBarHeight
+          : 0.0);
 
   @override
   void setState(VoidCallback fn) {
@@ -403,36 +406,27 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (subscriptions.isEmpty) {
-      subscriptions.addAll(
-        [
-          controller(context).player.stream.playlist.listen(
-            (event) {
-              setState(() {
-                playlist = event;
-              });
-            },
-          ),
-          controller(context).player.stream.buffering.listen(
-            (event) {
-              setState(() {
-                buffering = event;
-              });
-            },
-          ),
-        ],
-      );
+      subscriptions.addAll([
+        controller(context).player.stream.playlist.listen((event) {
+          setState(() {
+            playlist = event;
+          });
+        }),
+        controller(context).player.stream.buffering.listen((event) {
+          setState(() {
+            buffering = event;
+          });
+        }),
+      ]);
 
       if (_theme(context).visibleOnMount) {
-        _timer = Timer(
-          _theme(context).controlsHoverDuration,
-          () {
-            if (mounted) {
-              setState(() {
-                visible = false;
-              });
-            }
-          },
-        );
+        _timer = Timer(_theme(context).controlsHoverDuration, () {
+          if (mounted) {
+            setState(() {
+              visible = false;
+            });
+          }
+        });
       }
     }
   }
@@ -446,7 +440,7 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
     // package:screen_brightness
     Future.microtask(() async {
       try {
-        await ScreenBrightness().resetScreenBrightness();
+        await ScreenBrightness().resetApplicationScreenBrightness();
       } catch (_) {}
     });
     // --------------------------------------------------
@@ -479,11 +473,11 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
 
   bool _isInSegment(double localX, int segmentIndex) {
     // Local variable with the list of ratios
-    List<int> segmentRatios = [1, 1, 1];
+    final List<int> segmentRatios = [1, 1, 1];
 
-    int totalRatios = segmentRatios.reduce((a, b) => a + b);
+    final int totalRatios = segmentRatios.reduce((a, b) => a + b);
 
-    double segmentWidthMultiplier = widgetWidth(context) / totalRatios;
+    final double segmentWidthMultiplier = widgetWidth(context) / totalRatios;
     double start = 0;
     double end;
 
@@ -503,16 +497,8 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
     return false;
   }
 
-  bool _isInRightSegment(double localX) {
-    return _isInSegment(localX, 2);
-  }
-
   bool _isInCenterSegment(double localX) {
     return _isInSegment(localX, 1);
-  }
-
-  bool _isInLeftSegment(double localX) {
-    return _isInSegment(localX, 0);
   }
 
   void _handlePointerDown(PointerDownEvent event) {
@@ -554,8 +540,8 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
     // package:screen_brightness
     Future.microtask(() async {
       try {
-        _brightnessValue = await ScreenBrightness().current;
-        ScreenBrightness().onCurrentBrightnessChanged.listen((value) {
+        _brightnessValue = await ScreenBrightness().application;
+        ScreenBrightness().onApplicationScreenBrightnessChanged.listen((value) {
           if (mounted) {
             setState(() {
               _brightnessValue = value;
@@ -594,7 +580,7 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
     // --------------------------------------------------
     // package:screen_brightness
     try {
-      await ScreenBrightness().setScreenBrightness(value);
+      await ScreenBrightness().setApplicationScreenBrightness(value);
     } catch (_) {}
     setState(() {
       _brightnessIndicator = true;
@@ -649,9 +635,7 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
                   alignment: Alignment.center,
                   children: [
                     Positioned.fill(
-                      child: Container(
-                        color: const Color(0x66000000),
-                      ),
+                      child: Container(color: const Color(0x66000000)),
                     ),
                     // We are adding 16.0 boundary around the actual controls (which contain the vertical drag gesture detectors).
                     // This will make the hit-test on edges (e.g. swiping to: show status-bar, show navigation-bar, go back in navigation) not activate the swipe gesture annoyingly.
@@ -664,18 +648,19 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
                         onPointerDown: (event) => _handlePointerDown(event),
                         child: GestureDetector(
                           onTapDown: (details) => _handleTapDown(details),
-                          child: Container(
-                            color: const Color(0x00000000),
-                          ),
+                          child: Container(color: const Color(0x00000000)),
                         ),
                       ),
                     ),
                     if (mount)
                       Padding(
-                        padding: _theme(context).padding ??
+                        padding:
+                            _theme(context).padding ??
                             (
-                                // Add padding in fullscreen!
-                                isFullscreen(context) ? MediaQuery.of(context).padding : EdgeInsets.zero),
+                            // Add padding in fullscreen!
+                            isFullscreen(context)
+                                ? MediaQuery.of(context).padding
+                                : EdgeInsets.zero),
                         child: Column(
                           mainAxisSize: MainAxisSize.min,
                           mainAxisAlignment: MainAxisAlignment.start,
@@ -699,7 +684,8 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
                                   child: Row(
                                     mainAxisSize: MainAxisSize.min,
                                     mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: _theme(context).primaryButtonBar,
                                   ),
                                 ),
@@ -732,7 +718,8 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
                                   child: Row(
                                     mainAxisSize: MainAxisSize.max,
                                     mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     children: _theme(context).bottomButtonBar,
                                   ),
                                 ),
@@ -754,9 +741,7 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
                         alignment: Alignment.bottomCenter,
                         children: [
                           if (_theme(context).displaySeekBar)
-                            MaterialSeekBar(
-                              delta: _seekBarDeltaValueNotifier,
-                            ),
+                            MaterialSeekBar(delta: _seekBarDeltaValueNotifier),
                           Container(
                             height: _theme(context).buttonBarHeight,
                             margin: _theme(context).bottomButtonBarMargin,
@@ -768,10 +753,13 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
               // Buffering Indicator.
               IgnorePointer(
                 child: Padding(
-                  padding: _theme(context).padding ??
+                  padding:
+                      _theme(context).padding ??
                       (
-                          // Add padding in fullscreen!
-                          isFullscreen(context) ? MediaQuery.of(context).padding : EdgeInsets.zero),
+                      // Add padding in fullscreen!
+                      isFullscreen(context)
+                          ? MediaQuery.of(context).padding
+                          : EdgeInsets.zero),
                   child: Column(
                     children: [
                       Container(
@@ -785,14 +773,19 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
                               begin: 0.0,
                               end: buffering ? 1.0 : 0.0,
                             ),
-                            duration: _theme(context).controlsTransitionDuration,
+                            duration: _theme(
+                              context,
+                            ).controlsTransitionDuration,
                             builder: (context, value, child) {
                               // Only mount the buffering indicator if the opacity is greater than 0.0.
                               // This has been done to prevent redundant resource usage in [CircularProgressIndicator].
                               if (value > 0.0) {
                                 return Opacity(
                                   opacity: value,
-                                  child: _theme(context).bufferingIndicatorBuilder?.call(context) ?? child!,
+                                  child:
+                                      _theme(context).bufferingIndicatorBuilder
+                                          ?.call(context) ??
+                                      child!,
                                 );
                               }
                               return const SizedBox.shrink();
@@ -815,9 +808,19 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
               IgnorePointer(
                 child: AnimatedOpacity(
                   curve: Curves.easeInOut,
-                  opacity: (!mount || _theme(context).gesturesEnabledWhileControlsVisible) && _volumeIndicator ? 1.0 : 0.0,
+                  opacity:
+                      (!mount ||
+                              _theme(
+                                context,
+                              ).gesturesEnabledWhileControlsVisible) &&
+                          _volumeIndicator
+                      ? 1.0
+                      : 0.0,
                   duration: _theme(context).controlsTransitionDuration,
-                  child: _theme(context).volumeIndicatorBuilder?.call(context, _volumeValue) ??
+                  child:
+                      _theme(
+                        context,
+                      ).volumeIndicatorBuilder?.call(context, _volumeValue) ??
                       Container(
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
@@ -839,8 +842,8 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
                                 _volumeValue == 0.0
                                     ? Icons.volume_off
                                     : _volumeValue < 0.5
-                                        ? Icons.volume_down
-                                        : Icons.volume_up,
+                                    ? Icons.volume_down
+                                    : Icons.volume_up,
                                 color: const Color(0xFFFFFFFF),
                                 size: 24.0,
                               ),
@@ -866,9 +869,20 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
               IgnorePointer(
                 child: AnimatedOpacity(
                   curve: Curves.easeInOut,
-                  opacity: (!mount || _theme(context).gesturesEnabledWhileControlsVisible) && _brightnessIndicator ? 1.0 : 0.0,
+                  opacity:
+                      (!mount ||
+                              _theme(
+                                context,
+                              ).gesturesEnabledWhileControlsVisible) &&
+                          _brightnessIndicator
+                      ? 1.0
+                      : 0.0,
                   duration: _theme(context).controlsTransitionDuration,
-                  child: _theme(context).brightnessIndicatorBuilder?.call(context, _volumeValue) ??
+                  child:
+                      _theme(context).brightnessIndicatorBuilder?.call(
+                        context,
+                        _volumeValue,
+                      ) ??
                       Container(
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
@@ -890,8 +904,8 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
                                 _brightnessValue < 1.0 / 3.0
                                     ? Icons.brightness_low
                                     : _brightnessValue < 2.0 / 3.0
-                                        ? Icons.brightness_medium
-                                        : Icons.brightness_high,
+                                    ? Icons.brightness_medium
+                                    : Icons.brightness_high,
                                 color: const Color(0xFFFFFFFF),
                                 size: 24.0,
                               ),
@@ -918,7 +932,11 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
                 child: AnimatedOpacity(
                   duration: _theme(context).controlsTransitionDuration,
                   opacity: showSwipeDuration ? 1 : 0,
-                  child: _theme(context).seekIndicatorBuilder?.call(context, Duration(seconds: swipeDuration)) ??
+                  child:
+                      _theme(context).seekIndicatorBuilder?.call(
+                        context,
+                        Duration(seconds: swipeDuration),
+                      ) ??
                       Container(
                         alignment: Alignment.center,
                         decoration: BoxDecoration(
@@ -928,7 +946,9 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
                         height: 52.0,
                         width: 108.0,
                         child: Text(
-                          swipeDuration > 0 ? "+ ${Duration(seconds: swipeDuration).label()}" : "- ${Duration(seconds: swipeDuration).label()}",
+                          swipeDuration > 0
+                              ? "+ ${Duration(seconds: swipeDuration).label()}"
+                              : "- ${Duration(seconds: swipeDuration).label()}",
                           textAlign: TextAlign.center,
                           style: const TextStyle(
                             fontSize: 14.0,
@@ -945,7 +965,8 @@ class _AppVideoControlsState extends State<_AppVideoControls> {
     );
   }
 
-  double widgetWidth(BuildContext context) => (context.findRenderObject() as RenderBox).paintBounds.width;
+  double widgetWidth(BuildContext context) =>
+      (context.findRenderObject() as RenderBox).paintBounds.width;
 }
 
 // SEEK BAR
@@ -1002,37 +1023,35 @@ class MaterialSeekBarState extends State<MaterialSeekBar> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (subscriptions.isEmpty && widget.delta == null) {
-      subscriptions.addAll(
-        [
-          controller(context).player.stream.playing.listen((event) {
-            setState(() {
-              playing = event;
-            });
-          }),
-          controller(context).player.stream.completed.listen((event) {
-            setState(() {
-              position = Duration.zero;
-            });
-          }),
-          controller(context).player.stream.position.listen((event) {
-            setState(() {
-              if (!tapped) {
-                position = event;
-              }
-            });
-          }),
-          controller(context).player.stream.duration.listen((event) {
-            setState(() {
-              duration = event;
-            });
-          }),
-          controller(context).player.stream.buffer.listen((event) {
-            setState(() {
-              buffer = event;
-            });
-          }),
-        ],
-      );
+      subscriptions.addAll([
+        controller(context).player.stream.playing.listen((event) {
+          setState(() {
+            playing = event;
+          });
+        }),
+        controller(context).player.stream.completed.listen((event) {
+          setState(() {
+            position = Duration.zero;
+          });
+        }),
+        controller(context).player.stream.position.listen((event) {
+          setState(() {
+            if (!tapped) {
+              position = event;
+            }
+          });
+        }),
+        controller(context).player.stream.duration.listen((event) {
+          setState(() {
+            duration = event;
+          });
+        }),
+        controller(context).player.stream.buffer.listen((event) {
+          setState(() {
+            buffer = event;
+          });
+        }),
+      ]);
     }
   }
 
@@ -1156,7 +1175,9 @@ class MaterialSeekBarState extends State<MaterialSeekBar> {
                             color: _theme(context).seekBarBufferColor,
                           ),
                           Container(
-                            width: tapped ? constraints.maxWidth * slider : constraints.maxWidth * positionPercent,
+                            width: tapped
+                                ? constraints.maxWidth * slider
+                                : constraints.maxWidth * positionPercent,
                             color: _theme(context).seekBarPositionColor,
                           ),
                         ],
@@ -1164,9 +1185,15 @@ class MaterialSeekBarState extends State<MaterialSeekBar> {
                     ),
                     Positioned(
                       left: tapped
-                          ? (constraints.maxWidth - _theme(context).seekBarThumbSize / 2) * slider
-                          : (constraints.maxWidth - _theme(context).seekBarThumbSize / 2) * positionPercent,
-                      bottom: -1.0 * _theme(context).seekBarThumbSize / 2 + _theme(context).seekBarHeight / 2,
+                          ? (constraints.maxWidth -
+                                    _theme(context).seekBarThumbSize / 2) *
+                                slider
+                          : (constraints.maxWidth -
+                                    _theme(context).seekBarThumbSize / 2) *
+                                positionPercent,
+                      bottom:
+                          -1.0 * _theme(context).seekBarThumbSize / 2 +
+                          _theme(context).seekBarHeight / 2,
                       child: Container(
                         width: _theme(context).seekBarThumbSize,
                         height: _theme(context).seekBarThumbSize,
@@ -1199,17 +1226,15 @@ class MaterialPlayOrPauseButton extends StatefulWidget {
   /// Overriden icon color for [MaterialSkipPreviousButton].
   final Color? iconColor;
 
-  const MaterialPlayOrPauseButton({
-    super.key,
-    this.iconSize,
-    this.iconColor,
-  });
+  const MaterialPlayOrPauseButton({super.key, this.iconSize, this.iconColor});
 
   @override
-  MaterialPlayOrPauseButtonState createState() => MaterialPlayOrPauseButtonState();
+  MaterialPlayOrPauseButtonState createState() =>
+      MaterialPlayOrPauseButtonState();
 }
 
-class MaterialPlayOrPauseButtonState extends State<MaterialPlayOrPauseButton> with SingleTickerProviderStateMixin {
+class MaterialPlayOrPauseButtonState extends State<MaterialPlayOrPauseButton>
+    with SingleTickerProviderStateMixin {
   late final animation = AnimationController(
     vsync: this,
     value: controller(context).player.state.playing ? 1 : 0,
@@ -1286,7 +1311,11 @@ class MaterialFullscreenButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconButton(
       onPressed: () => toggleFullscreen(context),
-      icon: icon ?? (isFullscreen(context) ? const Icon(Icons.fullscreen_exit) : const Icon(Icons.fullscreen)),
+      icon:
+          icon ??
+          (isFullscreen(context)
+              ? const Icon(Icons.fullscreen_exit)
+              : const Icon(Icons.fullscreen)),
       iconSize: iconSize ?? _theme(context).buttonBarButtonSize,
       color: iconColor ?? _theme(context).buttonBarButtonColor,
     );
@@ -1338,7 +1367,8 @@ class MaterialPositionIndicator extends StatefulWidget {
   const MaterialPositionIndicator({super.key, this.style});
 
   @override
-  MaterialPositionIndicatorState createState() => MaterialPositionIndicatorState();
+  MaterialPositionIndicatorState createState() =>
+      MaterialPositionIndicatorState();
 }
 
 class MaterialPositionIndicatorState extends State<MaterialPositionIndicator> {
@@ -1358,20 +1388,18 @@ class MaterialPositionIndicatorState extends State<MaterialPositionIndicator> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     if (subscriptions.isEmpty) {
-      subscriptions.addAll(
-        [
-          controller(context).player.stream.position.listen((event) {
-            setState(() {
-              position = event;
-            });
-          }),
-          controller(context).player.stream.duration.listen((event) {
-            setState(() {
-              duration = event;
-            });
-          }),
-        ],
-      );
+      subscriptions.addAll([
+        controller(context).player.stream.position.listen((event) {
+          setState(() {
+            position = event;
+          });
+        }),
+        controller(context).player.stream.duration.listen((event) {
+          setState(() {
+            duration = event;
+          });
+        }),
+      ]);
     }
   }
 
@@ -1387,7 +1415,8 @@ class MaterialPositionIndicatorState extends State<MaterialPositionIndicator> {
   Widget build(BuildContext context) {
     return Text(
       '${position.label(reference: duration)} / ${duration.label(reference: duration)}',
-      style: widget.style ??
+      style:
+          widget.style ??
           TextStyle(
             height: 1.0,
             fontSize: 12.0,
@@ -1446,10 +1475,7 @@ class _BackwardSeekIndicatorState extends State<_BackwardSeekIndicator> {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            Color(0x88767676),
-            Color(0x00767676),
-          ],
+          colors: [Color(0x88767676), Color(0x00767676)],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),
@@ -1533,10 +1559,7 @@ class _ForwardSeekIndicatorState extends State<_ForwardSeekIndicator> {
     return Container(
       decoration: const BoxDecoration(
         gradient: LinearGradient(
-          colors: [
-            Color(0x00767676),
-            Color(0x88767676),
-          ],
+          colors: [Color(0x00767676), Color(0x88767676)],
           begin: Alignment.centerLeft,
           end: Alignment.centerRight,
         ),

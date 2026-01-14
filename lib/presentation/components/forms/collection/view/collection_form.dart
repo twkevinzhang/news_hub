@@ -96,7 +96,7 @@ class CollectionForm extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                           child: DropdownButtonFormField<String>(
-                            value: currentSort,
+                            initialValue: currentSort,
                             decoration: const InputDecoration(
                               labelText: '預設排序方式',
                               border: OutlineInputBorder(),

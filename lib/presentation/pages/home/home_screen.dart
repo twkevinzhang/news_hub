@@ -104,7 +104,7 @@ class _HomeScreenState extends State<HomeScreen> {
             );
           },
           onCreateCollectionPressed: () {
-            _safeNavigate(() => context.router.push(CollectionCreateRoute()));
+            _safeNavigate(() => context.router.push(const CollectionCreateRoute()));
           },
           onBoardSelected: (board) {
             _safeNavigate(

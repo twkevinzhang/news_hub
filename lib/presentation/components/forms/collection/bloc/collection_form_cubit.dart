@@ -170,7 +170,7 @@ class CollectionFormCubit extends Cubit<CollectionFormState> {
       } else {
         // 創建新 Collection：將 Board 轉換為 CollectionBoard
         // 注意：這裡 collectionId 會在 repository 中設定
-        final tempCollectionId = 'temp'; // 臨時 ID，實際會被 repository 替換
+        const tempCollectionId = 'temp'; // 臨時 ID，實際會被 repository 替換
         final collectionBoards = state.selectedBoards
             .map((b) => CollectionBoard(
                   identity: BoardIdentity(
