@@ -3,52 +3,62 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/presentation/components/rendering/boards-picker/bloc/boards_picker_cubit.dart';
 import 'package:news_hub/presentation/components/rendering/loading_indicator.dart';
+import 'package:news_hub/shared/models.dart';
 
 class BoardsPickerScreen extends StatelessWidget {
   const BoardsPickerScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<BoardsPickerCubit, BoardsPickerState>(
-      builder: (context, state) {
-        return Scaffold(
-          appBar: AppBar(
-            title: const Text('選擇版塊'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop(BoardsPickerResult(
-                    chosenBoards: state.chosenBoards,
-                    boards: state.chosenBoardsList,
-                  ));
-                },
-                child: const Text('完成'),
-              ),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('選擇版塊'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              final state = context.read<BoardsPickerCubit>().state;
+              Navigator.of(context).pop(
+                BoardsPickerResult(
+                  chosenBoards: state.chosenBoards,
+                  boards: state.chosenBoardsList,
+                ),
+              );
+            },
+            child: const Text('完成'),
           ),
-          body: state.extensionBoards.when(
-            initial: () => const SizedBox(),
-            loading: () => const Center(child: LoadingIndicator()),
-            error: (e) => Center(child: Text(' Error: $e')),
-            completed: (data) {
-              if (data.isEmpty) {
-                return const Center(child: Text('沒有安裝任何擴充元件'));
-              }
-              return ListView.builder(
-                itemCount: data.length,
-                itemBuilder: (context, index) {
-                  final ext = data[index];
-                  return _CategorySection(
-                    extensionPkgName: ext.pkgName,
-                    displayName: ext.displayName,
-                    boards: ext.boards.toList(),
+        ],
+      ),
+      body:
+          BlocSelector<
+            BoardsPickerCubit,
+            BoardsPickerState,
+            Result<List<ExtensionWithBoards>>
+          >(
+            selector: (state) => state.extensionBoards,
+            builder: (context, extensionBoards) {
+              return extensionBoards.when(
+                initial: () => const SizedBox(),
+                loading: () => const Center(child: LoadingIndicator()),
+                error: (e) => Center(child: Text(' Error: $e')),
+                completed: (data) {
+                  if (data.isEmpty) {
+                    return const Center(child: Text('沒有安裝任何擴充元件'));
+                  }
+                  return ListView.builder(
+                    itemCount: data.length,
+                    itemBuilder: (context, index) {
+                      final ext = data[index];
+                      return _CategorySection(
+                        extensionPkgName: ext.pkgName,
+                        displayName: ext.displayName,
+                        boards: ext.boards.toList(),
+                      );
+                    },
                   );
                 },
               );
             },
           ),
-        );
-      },
     );
   }
 }
@@ -76,22 +86,25 @@ class _CategorySection extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  BlocBuilder<BoardsPickerCubit, BoardsPickerState>(
-                    builder: (context, state) {
-                      final cubit = context.read<BoardsPickerCubit>();
-                      final value = cubit.getExtensionCheckboxValue(extensionPkgName);
+                  Builder(
+                    builder: (context) {
+                      final value = context.select<BoardsPickerCubit, bool?>(
+                        (c) => c.getExtensionCheckboxValue(extensionPkgName),
+                      );
                       return Checkbox(
                         value: value,
                         tristate: true,
-                        onChanged: (v) => cubit.toggleExtension(extensionPkgName, v),
+                        onChanged: (v) => context
+                            .read<BoardsPickerCubit>()
+                            .toggleExtension(extensionPkgName, v),
                       );
                     },
                   ),
                   Text(
                     displayName,
                     style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                          fontWeight: FontWeight.bold,
-                        ),
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ],
               ),
@@ -128,8 +141,10 @@ class _BoardCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.watch<BoardsPickerCubit>();
-    final isSelected = cubit.getBoardCheckboxValue(board.id);
+    final cubit = context.read<BoardsPickerCubit>();
+    final isSelected = context.select<BoardsPickerCubit, bool>(
+      (c) => c.getBoardCheckboxValue(board.id),
+    );
 
     return GestureDetector(
       onTap: () => cubit.toggleBoard(board.id, !isSelected),
@@ -137,9 +152,14 @@ class _BoardCard extends StatelessWidget {
         width: 140,
         margin: const EdgeInsets.all(4),
         decoration: BoxDecoration(
-          color: Theme.of(context).colorScheme.surfaceVariant,
+          color: Theme.of(context).colorScheme.surfaceContainerHighest,
           borderRadius: BorderRadius.circular(16),
-          border: isSelected ? Border.all(color: Theme.of(context).colorScheme.primary, width: 2) : null,
+          border: isSelected
+              ? Border.all(
+                  color: Theme.of(context).colorScheme.primary,
+                  width: 2,
+                )
+              : null,
         ),
         clipBehavior: Clip.antiAlias,
         child: Stack(
@@ -160,7 +180,11 @@ class _BoardCard extends StatelessWidget {
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: board.icon.isNotEmpty
-                            ? Image.network(board.icon, errorBuilder: (_, __, ___) => const Icon(Icons.dashboard))
+                            ? Image.network(
+                                board.icon,
+                                errorBuilder: (_, __, ___) =>
+                                    const Icon(Icons.dashboard),
+                              )
                             : const Icon(Icons.dashboard),
                       ),
                     ),
@@ -179,9 +203,8 @@ class _BoardCard extends StatelessWidget {
                           board.name,
                           maxLines: 1,
                           overflow: TextOverflow.ellipsis,
-                          style: Theme.of(context).textTheme.titleSmall?.copyWith(
-                                fontWeight: FontWeight.bold,
-                              ),
+                          style: Theme.of(context).textTheme.titleSmall
+                              ?.copyWith(fontWeight: FontWeight.bold),
                         ),
                       ),
                     ],
@@ -191,8 +214,10 @@ class _BoardCard extends StatelessWidget {
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                          color: Theme.of(context).colorScheme.onSurfaceVariant.withOpacity(0.7),
-                        ),
+                      color: Theme.of(
+                        context,
+                      ).colorScheme.onSurfaceVariant.withValues(alpha: 0.7),
+                    ),
                   ),
                 ],
               ),
