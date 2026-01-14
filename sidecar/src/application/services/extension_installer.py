@@ -31,32 +31,32 @@ class ExtensionInstaller:
         """Download a directory from GitHub repository"""
         if not repo_url:
             raise ValueError(f"Repository URL cannot be None for extension {pkg_name}")
-            
-        # 1. Download full repo zip (trying main/master)
+
         self.progress_tracker.set_progress(pkg_name, 10)
-        zip_path = None
+        zip_path = self._download_repo_zip(repo_url)
+
+        if not zip_path:
+            raise ValueError(f"Failed to download repository zip for {repo_url}")
+
+        self.progress_tracker.set_progress(pkg_name, 40)
+        self.file_manager.extract_directory_from_zip(zip_path, pkg_name, pkg_name)
+
+        if zip_path.exists():
+            zip_path.unlink()
+        self.progress_tracker.set_progress(pkg_name, 60)
+
+    def _download_repo_zip(self, repo_url: str) -> Path | None:
+        """Try to download repository zip from main or master branch"""
         for branch in ["main", "master"]:
             try:
                 zip_url = f"{repo_url.rstrip('/')}/archive/refs/heads/{branch}.zip"
                 destination = self.file_manager.download_github_zip(repo_url, branch)
                 self.downloader.download_file_sync(zip_url, destination)
-                zip_path = destination
-                break
+                return destination
             except Exception as e:
                 logger.debug(f"Failed to download zip from {branch}: {e}")
                 continue
-        
-        if not zip_path:
-            raise ValueError(f"Failed to download repository zip for {repo_url}")
-
-        # 2. Extract specific directory
-        self.progress_tracker.set_progress(pkg_name, 40)
-        self.file_manager.extract_directory_from_zip(zip_path, pkg_name, pkg_name)
-        
-        # 3. Cleanup zip
-        if zip_path.exists():
-            zip_path.unlink()
-        self.progress_tracker.set_progress(pkg_name, 60)
+        return None
 
     def extract(self, pkg_name: str) -> None:
         """Extract extension zip file"""

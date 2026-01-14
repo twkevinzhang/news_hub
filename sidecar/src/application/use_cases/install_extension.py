@@ -24,22 +24,15 @@ class InstallExtensionUseCase:
         """Execute the install extension use case"""
         logger.info(f"Installing extension: {metadata.pkg_name}")
 
-        # Check if already installed
         if self.repository.exists(metadata.pkg_name):
             logger.warning(f"Extension {metadata.pkg_name} already installed")
             existing = self.repository.find_by_pkg_name(metadata.pkg_name)
             if existing:
                 return existing
 
-        # Download extension directory from GitHub repo
         self.installer.download_directory(repo_url, metadata.pkg_name)
-
-        # Install requirements
-
-        # Install requirements
         self.installer.install_requirements(metadata.pkg_name)
 
-        # Create and save extension entity
         extension = Extension(
             metadata=metadata,
             installation_path=self.installer.file_manager.get_extension_path(metadata.pkg_name),
