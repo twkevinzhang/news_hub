@@ -37,7 +37,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void _onRouteChanged() {
     if (!mounted) return;
 
-    _homeCubit.handleRouteChanged(context.router.current);
+    _homeCubit.handleRouteChanged(context.router.topRoute);
   }
 
   Future<void> _safeNavigate(VoidCallback navigate) async {
