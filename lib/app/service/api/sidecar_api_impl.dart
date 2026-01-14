@@ -14,14 +14,16 @@ import 'models/domain_models.pb.dart' as domain_pb;
 
 import 'package:grpc/grpc.dart';
 
+typedef SidecarApiClientFactory = SidecarApiClient Function(ClientChannel);
+
 @LazySingleton(as: ApiService)
 class SidecarApiImpl implements ApiService {
   final GrpcConnectionManagerImpl? _injectedConnectionManager;
-  final SidecarApiClient Function(ClientChannel)? _clientFactory;
+  final SidecarApiClientFactory? _clientFactory;
 
   SidecarApiImpl({
     GrpcConnectionManagerImpl? connectionManager,
-    SidecarApiClient Function(ClientChannel)? clientFactory,
+    SidecarApiClientFactory? clientFactory,
   }) : _injectedConnectionManager = connectionManager,
        _clientFactory = clientFactory;
 

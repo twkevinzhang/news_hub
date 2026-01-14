@@ -9,7 +9,7 @@ void main() {
   late CollectionRepositoryImpl repository;
 
   setUp(() {
-    db = AppDatabase(NativeDatabase.memory());
+    db = AppDatabase.forTesting(NativeDatabase.memory());
     repository = CollectionRepositoryImpl(db: db);
   });
 

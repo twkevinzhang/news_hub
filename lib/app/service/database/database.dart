@@ -40,7 +40,9 @@ class CollectionBoardRefs extends Table {
 @singleton
 @DriftDatabase(tables: [Suggestions, Collections, CollectionBoardRefs])
 class AppDatabase extends _$AppDatabase {
-  AppDatabase([QueryExecutor? e]) : super(e ?? _openConnection());
+  AppDatabase() : super(_openConnection());
+
+  AppDatabase.forTesting(QueryExecutor e) : super(e);
 
   @override
   int get schemaVersion => 5;

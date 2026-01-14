@@ -23,20 +23,27 @@ class SingleImagePostCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: InkWell(
-          onTap: () => _toDetail(context),
-          child: Padding(
-            padding: const EdgeInsets.all(8),
-            child: SingleImagePostLayout(post: thread, onParagraphClick: null, disablePlay: true),
-          )),
+        onTap: () => _toDetail(context),
+        child: Padding(
+          padding: const EdgeInsets.all(8),
+          child: SingleImagePostLayout(
+            post: thread,
+            onParagraphClick: null,
+            disablePlay: true,
+          ),
+        ),
+      ),
     );
   }
 
   void _toDetail(BuildContext context) {
-    AutoRouter.of(context).push(ThreadDetailRoute(
-      extensionPkgName: thread.extensionPkgName,
-      boardId: thread.boardId,
-      threadId: thread.id,
-    ));
+    AutoRouter.of(context).push(
+      ThreadDetailRoute(
+        extensionPkgName: thread.extensionPkgName,
+        boardId: thread.boardId,
+        threadId: thread.id,
+      ),
+    );
   }
 }
 
@@ -68,6 +75,16 @@ class SingleImagePostLayout extends StatelessWidget {
           createdAt: post.createdAt,
           // category: null, // Removed in Bahamut style
         ),
+        if (post.title != null && post.title!.isNotEmpty)
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 4.0),
+            child: Text(
+              post.title!,
+              style: Theme.of(
+                context,
+              ).textTheme.titleMedium?.copyWith(fontWeight: FontWeight.bold),
+            ),
+          ),
         post.image != null
             ? Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,7 +106,8 @@ class SingleImagePostLayout extends StatelessWidget {
                         borderRadius: BorderRadius.circular(8),
                         child: CachedNetworkImage(
                           imageUrl: post.image!.thumb(),
-                          placeholder: (context, url) => const LoadingIndicator(),
+                          placeholder: (context, url) =>
+                              const LoadingIndicator(),
                           errorWidget: (context, url, error) {
                             debugPrint("Failed to load image: $url");
                             return const Icon(Icons.error);

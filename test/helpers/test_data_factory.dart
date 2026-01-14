@@ -115,4 +115,48 @@ class TestDataFactory {
   }) {
     return Collection(id: id, name: name, boards: boards);
   }
+
+  static SingleImagePost createSingleImagePost({
+    String extensionPkgName = tExtensionPkgName,
+    String boardId = tBoardId,
+    String threadId = tThreadId,
+    String id = tThreadId,
+    String? title = 'Test Single Image Post',
+    DateTime? createdAt,
+    String authorId = 'author_1',
+    String authorName = 'Author Name',
+    int? liked = 0,
+    int? disliked = 0,
+    List<Paragraph> contents = const [],
+    List<String>? tags = const [],
+    ImageParagraph? image,
+  }) {
+    return SingleImagePost(
+      extensionPkgName: extensionPkgName,
+      boardId: boardId,
+      threadId: threadId,
+      id: id,
+      title: title,
+      createdAt: createdAt ?? DateTime.now(),
+      authorId: authorId,
+      authorName: authorName,
+      liked: liked,
+      disliked: disliked,
+      contents: contents,
+      tags: tags,
+      image: image,
+    );
+  }
+
+  static SingleImagePostWithExtension createSingleImagePostWithExtension({
+    SingleImagePost? post,
+    Extension? extension,
+    Board? board,
+  }) {
+    return SingleImagePostWithExtension(
+      post: post ?? createSingleImagePost(),
+      extension: extension ?? createExtension(),
+      board: board ?? createBoard(),
+    );
+  }
 }
