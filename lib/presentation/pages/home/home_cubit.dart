@@ -18,7 +18,9 @@ class HomeState with _$HomeState {
   const factory HomeState({
     @Default('NewsHub') String title,
     @Default([]) List<Collection> collections,
-    @Default(SidecarConnectionState.uninitialized) SidecarConnectionState sidecarStatus,
+    String? expandedCollectionId,
+    @Default(SidecarConnectionState.uninitialized)
+    SidecarConnectionState sidecarStatus,
     String? sidecarMessage,
     RouteData? pendingRoute,
   }) = _HomeState;
@@ -63,14 +65,14 @@ class HomeCubit extends Cubit<HomeState> {
   StreamSubscription? _collectionSubscription;
   StreamSubscription? _sidecarSubscription;
 
-  HomeCubit(
-    this._collectionRepository,
-    this._sidecarRepository,
-  ) : super(const HomeState());
+  HomeCubit(this._collectionRepository, this._sidecarRepository)
+    : super(const HomeState());
 
   void init() {
     _collectionSubscription?.cancel();
-    _collectionSubscription = _collectionRepository.watchList().listen((collections) {
+    _collectionSubscription = _collectionRepository.watchList().listen((
+      collections,
+    ) {
       emit(state.copyWith(collections: collections));
       if (state.pendingRoute != null) {
         _updateTitleFromRoute(state.pendingRoute!);
@@ -79,14 +81,14 @@ class HomeCubit extends Cubit<HomeState> {
 
     _sidecarSubscription?.cancel();
     _sidecarSubscription = _sidecarRepository.watchHealth().listen(
-      (status) => emit(state.copyWith(
-        sidecarStatus: status,
-        sidecarMessage: null,
-      )),
-      onError: (error) => emit(state.copyWith(
-        sidecarStatus: SidecarConnectionState.failed,
-        sidecarMessage: 'Connection error: $error',
-      )),
+      (status) =>
+          emit(state.copyWith(sidecarStatus: status, sidecarMessage: null)),
+      onError: (error) => emit(
+        state.copyWith(
+          sidecarStatus: SidecarConnectionState.failed,
+          sidecarMessage: 'Connection error: $error',
+        ),
+      ),
     );
   }
 
@@ -105,6 +107,14 @@ class HomeCubit extends Cubit<HomeState> {
   void updateTitle(String title) {
     if (state.title == title) return;
     emit(state.copyWith(title: title));
+  }
+
+  void toggleCollectionExpansion(String collectionId) {
+    if (state.expandedCollectionId == collectionId) {
+      emit(state.copyWith(expandedCollectionId: null));
+    } else {
+      emit(state.copyWith(expandedCollectionId: collectionId));
+    }
   }
 
   void navigateToFirstCollection(StackRouter router) {

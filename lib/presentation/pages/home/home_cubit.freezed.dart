@@ -19,6 +19,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$HomeState {
   String get title => throw _privateConstructorUsedError;
   List<Collection> get collections => throw _privateConstructorUsedError;
+  String? get expandedCollectionId => throw _privateConstructorUsedError;
   SidecarConnectionState get sidecarStatus =>
       throw _privateConstructorUsedError;
   String? get sidecarMessage => throw _privateConstructorUsedError;
@@ -39,6 +40,7 @@ abstract class $HomeStateCopyWith<$Res> {
   $Res call({
     String title,
     List<Collection> collections,
+    String? expandedCollectionId,
     SidecarConnectionState sidecarStatus,
     String? sidecarMessage,
     RouteData? pendingRoute,
@@ -62,6 +64,7 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
   $Res call({
     Object? title = null,
     Object? collections = null,
+    Object? expandedCollectionId = freezed,
     Object? sidecarStatus = null,
     Object? sidecarMessage = freezed,
     Object? pendingRoute = freezed,
@@ -76,6 +79,10 @@ class _$HomeStateCopyWithImpl<$Res, $Val extends HomeState>
                 ? _value.collections
                 : collections // ignore: cast_nullable_to_non_nullable
                       as List<Collection>,
+            expandedCollectionId: freezed == expandedCollectionId
+                ? _value.expandedCollectionId
+                : expandedCollectionId // ignore: cast_nullable_to_non_nullable
+                      as String?,
             sidecarStatus: null == sidecarStatus
                 ? _value.sidecarStatus
                 : sidecarStatus // ignore: cast_nullable_to_non_nullable
@@ -106,6 +113,7 @@ abstract class _$$HomeStateImplCopyWith<$Res>
   $Res call({
     String title,
     List<Collection> collections,
+    String? expandedCollectionId,
     SidecarConnectionState sidecarStatus,
     String? sidecarMessage,
     RouteData? pendingRoute,
@@ -128,6 +136,7 @@ class __$$HomeStateImplCopyWithImpl<$Res>
   $Res call({
     Object? title = null,
     Object? collections = null,
+    Object? expandedCollectionId = freezed,
     Object? sidecarStatus = null,
     Object? sidecarMessage = freezed,
     Object? pendingRoute = freezed,
@@ -142,6 +151,10 @@ class __$$HomeStateImplCopyWithImpl<$Res>
             ? _value._collections
             : collections // ignore: cast_nullable_to_non_nullable
                   as List<Collection>,
+        expandedCollectionId: freezed == expandedCollectionId
+            ? _value.expandedCollectionId
+            : expandedCollectionId // ignore: cast_nullable_to_non_nullable
+                  as String?,
         sidecarStatus: null == sidecarStatus
             ? _value.sidecarStatus
             : sidecarStatus // ignore: cast_nullable_to_non_nullable
@@ -165,6 +178,7 @@ class _$HomeStateImpl extends _HomeState {
   const _$HomeStateImpl({
     this.title = 'NewsHub',
     final List<Collection> collections = const [],
+    this.expandedCollectionId,
     this.sidecarStatus = SidecarConnectionState.uninitialized,
     this.sidecarMessage,
     this.pendingRoute,
@@ -184,6 +198,8 @@ class _$HomeStateImpl extends _HomeState {
   }
 
   @override
+  final String? expandedCollectionId;
+  @override
   @JsonKey()
   final SidecarConnectionState sidecarStatus;
   @override
@@ -193,7 +209,7 @@ class _$HomeStateImpl extends _HomeState {
 
   @override
   String toString() {
-    return 'HomeState(title: $title, collections: $collections, sidecarStatus: $sidecarStatus, sidecarMessage: $sidecarMessage, pendingRoute: $pendingRoute)';
+    return 'HomeState(title: $title, collections: $collections, expandedCollectionId: $expandedCollectionId, sidecarStatus: $sidecarStatus, sidecarMessage: $sidecarMessage, pendingRoute: $pendingRoute)';
   }
 
   @override
@@ -206,6 +222,8 @@ class _$HomeStateImpl extends _HomeState {
               other._collections,
               _collections,
             ) &&
+            (identical(other.expandedCollectionId, expandedCollectionId) ||
+                other.expandedCollectionId == expandedCollectionId) &&
             (identical(other.sidecarStatus, sidecarStatus) ||
                 other.sidecarStatus == sidecarStatus) &&
             (identical(other.sidecarMessage, sidecarMessage) ||
@@ -219,6 +237,7 @@ class _$HomeStateImpl extends _HomeState {
     runtimeType,
     title,
     const DeepCollectionEquality().hash(_collections),
+    expandedCollectionId,
     sidecarStatus,
     sidecarMessage,
     pendingRoute,
@@ -237,6 +256,7 @@ abstract class _HomeState extends HomeState {
   const factory _HomeState({
     final String title,
     final List<Collection> collections,
+    final String? expandedCollectionId,
     final SidecarConnectionState sidecarStatus,
     final String? sidecarMessage,
     final RouteData? pendingRoute,
@@ -247,6 +267,8 @@ abstract class _HomeState extends HomeState {
   String get title;
   @override
   List<Collection> get collections;
+  @override
+  String? get expandedCollectionId;
   @override
   SidecarConnectionState get sidecarStatus;
   @override
