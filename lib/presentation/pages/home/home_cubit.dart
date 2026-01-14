@@ -117,13 +117,6 @@ class HomeCubit extends Cubit<HomeState> {
     }
   }
 
-  void navigateToFirstCollection(StackRouter router) {
-    if (state.collections.isEmpty) return;
-
-    final firstCollection = state.collections.first;
-    router.replace(CollectionThreadListRoute(collectionId: firstCollection.id));
-  }
-
   void _updateTitleFromRoute(RouteData route) {
     final title = switch (route.name) {
       'CollectionThreadListRoute' => _getTitleForCollectionRoute(route),

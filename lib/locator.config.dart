@@ -119,6 +119,7 @@ import 'package:news_hub/presentation/pages/sidecar/logs/sidecar_logs_cubit.dart
     as _i515;
 import 'package:news_hub/presentation/pages/thread/detail/bloc/thread_detail_cubit.dart'
     as _i994;
+import 'package:news_hub/presentation/router/guards/home_guard.dart' as _i326;
 import 'package:news_hub/presentation/router/router.dart' as _i762;
 import 'package:rx_shared_preferences/rx_shared_preferences.dart' as _i579;
 
@@ -140,7 +141,6 @@ extension GetItInjectableX on _i174.GetIt {
     gh.singleton<_i361.Dio>(() => appProvider.dio);
     gh.singleton<_i539.AppDatabase>(() => _i539.AppDatabase());
     gh.singleton<_i158.CacheService>(() => _i158.CacheService());
-    gh.lazySingleton<_i762.AppRouter>(() => _i762.AppRouter());
     gh.lazySingleton<_i960.BookmarkRepository>(
       () => _i495.BookmarkRepositoryImpl(),
     );
@@ -153,6 +153,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i914.CollectionRepository>(
       () => _i815.CollectionRepositoryImpl(db: gh<_i539.AppDatabase>()),
+    );
+    gh.factory<_i326.HomeGuard>(
+      () => _i326.HomeGuard(gh<_i914.CollectionRepository>()),
     );
     gh.lazySingleton<_i1052.BoardRepository>(
       () => _i980.BoardRepositoryImpl(
@@ -168,6 +171,9 @@ extension GetItInjectableX on _i174.GetIt {
     );
     gh.lazySingleton<_i1044.ThreadRepository>(
       () => _i770.ThreadRepositoryImpl(gh<_i504.ApiService>()),
+    );
+    gh.lazySingleton<_i762.AppRouter>(
+      () => _i762.AppRouter(gh<_i326.HomeGuard>()),
     );
     gh.lazySingleton<_i365.PreferenceStore>(
       () => _i842.PreferenceStoreImpl(prefs: gh<_i579.SharedPreferences>()),

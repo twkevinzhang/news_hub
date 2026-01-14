@@ -20,7 +20,6 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final _scaffoldKey = GlobalKey<ScaffoldState>();
   late final HomeCubit _homeCubit;
-  bool _hasNavigatedToFirstCollection = false;
 
   @override
   void initState() {
@@ -32,22 +31,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
       context.router.addListener(_onRouteChanged);
       _onRouteChanged();
-      _navigateToFirstCollectionIfNeeded();
     });
-  }
-
-  void _navigateToFirstCollectionIfNeeded() {
-    if (_hasNavigatedToFirstCollection) return;
-    if (_homeCubit.state.collections.isEmpty) return;
-
-    final currentRoute = context.router.current;
-    final isRootRoute = currentRoute.name == 'HomeRoute';
-    final hasNoChild = context.router.currentChild == null;
-
-    if (!isRootRoute || !hasNoChild) return;
-
-    _hasNavigatedToFirstCollection = true;
-    _homeCubit.navigateToFirstCollection(context.router);
   }
 
   void _onRouteChanged() {
