@@ -15,7 +15,7 @@
 | **Task 7**  | Collection/Repo Use Cases    | **待開始** | v2.0 新增: 補齊 Domain 層測試                                |
 | **Task 8**  | Ext/Suggestion Use Cases     | **已完成** | v2.0 新增: 補齊 Domain 層測試                                |
 | **Task 9**  | Thread Use Cases             | **已完成** | v2.0 新增: 核心功能測試                                      |
-| **Task 10** | 效能基準測試                 | **待開始** | v2.0 新增: 建立 Rebuild 監控                                 |
+| **Task 10** | 效能基準測試                 | **已完成** | v2.0 新增: 建立 Rebuild 監控                                 |
 
 ---
 
@@ -93,9 +93,11 @@
 - [x] `list_replies.dart`
 - [x] `list_comments.dart`
 
-### [Task 10] 效能基準測試 [ ]
+### [Task 10] 效能基準測試 [x]
 
-- [ ] 建立 Widget Rebuild 監控測試
+- [x] 建立 Widget Rebuild 監控測試（使用 BlocSelector rebuild counter）
+- [x] 驗證 HomeScreen AppNavigationDrawer 的 rebuild 優化
+- [x] 創建 RebuildObserver 測試輔助工具
 
 ---
 
