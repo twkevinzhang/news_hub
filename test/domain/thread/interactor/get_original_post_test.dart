@@ -2,10 +2,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:news_hub/domain/collection/board_repository.dart';
 import 'package:news_hub/domain/extension/interactor/get_installed_extension.dart';
+import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/thread/interactor/get_original_post.dart';
 import 'package:news_hub/domain/thread/repository.dart';
-import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/shared/models.dart';
+
+import '../../../helpers/test_data_factory.dart';
 
 class MockThreadRepository extends Mock implements ThreadRepository {}
 
@@ -17,88 +19,74 @@ void main() {
   late GetOriginalPost useCase;
   late MockThreadRepository mockThreadRepo;
   late MockBoardRepository mockBoardRepo;
-  late MockGetInstalledExtension mockGetInstalled;
+  late MockGetInstalledExtension mockGetInstalledExt;
+
+  setUpAll(() {
+    registerFallbackValue(TestDataFactory.createExtension());
+  });
 
   setUp(() {
     mockThreadRepo = MockThreadRepository();
     mockBoardRepo = MockBoardRepository();
-    mockGetInstalled = MockGetInstalledExtension();
+    mockGetInstalledExt = MockGetInstalledExtension();
     useCase = GetOriginalPost(
       threadRepository: mockThreadRepo,
       boardRepository: mockBoardRepo,
-      installedRepository: mockGetInstalled,
+      installedRepository: mockGetInstalledExt,
     );
   });
 
-  const tPkgName = 'test.pkg';
-  const tBoardId = 'board_1';
-  const tExtension = Extension(
-    pkgName: tPkgName,
-    displayName: 'Ext',
-    version: 1,
-    pythonVersion: 3,
-    isNsfw: false,
-  );
-  const tBoard = Board(
+  const tPkgName = 'com.example';
+  const tBoardId = 'board1';
+  const tThreadId = 'thread1';
+
+  final tExtension = TestDataFactory.createExtension(pkgName: tPkgName);
+  final tBoard = TestDataFactory.createBoard(
     id: tBoardId,
-    name: 'Board',
     extensionPkgName: tPkgName,
-    icon: '',
-    largeWelcomeImage: '',
-    url: '',
-    sortOptions: {},
   );
-  final tPost = ArticlePost(
-    id: 'post_1',
+  final tPost = TestDataFactory.createArticlePost(
     extensionPkgName: tPkgName,
     boardId: tBoardId,
-    threadId: 'thread_1',
-    title: 'Title',
-    url: 'url',
-    createdAt: DateTime.now(),
-    authorId: 'a1',
-    authorName: 'Author',
-    liked: 0,
-    disliked: 0,
-    contents: [],
-    tags: [],
+    threadId: tThreadId,
   );
 
-  test('應從多個來源組合資料並回傳 ArticlePostWithExtension', () async {
+  test('應該成功取得所有數據並組合回傳', () async {
     // Arrange
     when(
-      () => mockGetInstalled.get(any()),
-    ).thenAnswer((_) async => const Result.completed(tExtension));
-    when(() => mockBoardRepo.list(any())).thenAnswer((_) async => [tBoard]);
+      () => mockGetInstalledExt.get(tPkgName),
+    ).thenAnswer((_) async => Result.completed(tExtension));
+    when(() => mockBoardRepo.list(tPkgName)).thenAnswer((_) async => [tBoard]);
     when(
       () => mockThreadRepo.getOriginalPost(
-        extensionPkgName: any(named: 'extensionPkgName'),
-        boardId: any(named: 'boardId'),
-        threadId: any(named: 'threadId'),
-        postId: any(named: 'postId'),
+        extensionPkgName: tPkgName,
+        boardId: tBoardId,
+        threadId: tThreadId,
       ),
     ).thenAnswer((_) async => tPost);
 
     // Act
-    final result = await useCase.call(
+    final result = await useCase(
       extensionPkgName: tPkgName,
       boardId: tBoardId,
-      threadId: 'thread_1',
+      threadId: tThreadId,
     );
 
     // Assert
     expect(result, isA<ResultCompleted<ArticlePostWithExtension>>());
-    final data = (result as ResultCompleted).data as ArticlePostWithExtension;
-    expect(data.id, 'post_1');
-    expect(data.extension.pkgName, tPkgName);
-    expect(data.board.id, tBoardId);
+    final data = (result as ResultCompleted<ArticlePostWithExtension>).data;
+    expect(data.post, tPost);
+    expect(data.board, tBoard);
+    expect(data.extension, tExtension);
   });
 
-  test('當擴充功能載入失敗時，應回傳錯誤', () async {
+  test('當 extension 獲取失敗時應該回傳 error', () async {
+    // Arrange
+    final tError = Exception('Ext Error');
     when(
-      () => mockGetInstalled.get(any()),
-    ).thenAnswer((_) async => const Result.error('Fail'));
-    when(() => mockBoardRepo.list(any())).thenAnswer((_) async => [tBoard]);
+      () => mockGetInstalledExt.get(tPkgName),
+    ).thenAnswer((_) async => Result.error(tError));
+    when(() => mockBoardRepo.list(any())).thenAnswer((_) async => []);
     when(
       () => mockThreadRepo.getOriginalPost(
         extensionPkgName: any(named: 'extensionPkgName'),
@@ -107,12 +95,15 @@ void main() {
       ),
     ).thenAnswer((_) async => tPost);
 
-    final result = await useCase.call(
+    // Act
+    final result = await useCase(
       extensionPkgName: tPkgName,
       boardId: tBoardId,
-      threadId: 'thread_1',
+      threadId: tThreadId,
     );
 
-    expect(result, isA<ResultError<ArticlePostWithExtension>>());
+    // Assert
+    expect(result, isA<ResultError>());
+    expect((result as ResultError).error, tError);
   });
 }

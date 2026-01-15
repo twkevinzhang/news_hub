@@ -2,11 +2,12 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:news_hub/domain/collection/board_repository.dart';
 import 'package:news_hub/domain/extension/interactor/get_installed_extension.dart';
-
+import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/thread/interactor/list_replies.dart';
 import 'package:news_hub/domain/thread/repository.dart';
-import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/shared/models.dart';
+
+import '../../../helpers/test_data_factory.dart';
 
 class MockThreadRepository extends Mock implements ThreadRepository {}
 
@@ -18,63 +19,41 @@ void main() {
   late ListReplies useCase;
   late MockThreadRepository mockThreadRepo;
   late MockBoardRepository mockBoardRepo;
-  late MockGetInstalledExtension mockGetInstalled;
-
-  setUpAll(() {
-    registerFallbackValue(const Pagination());
-  });
+  late MockGetInstalledExtension mockGetInstalledExt;
 
   setUp(() {
     mockThreadRepo = MockThreadRepository();
     mockBoardRepo = MockBoardRepository();
-    mockGetInstalled = MockGetInstalledExtension();
+    mockGetInstalledExt = MockGetInstalledExtension();
     useCase = ListReplies(
       threadRepository: mockThreadRepo,
       boardRepository: mockBoardRepo,
-      installedRepository: mockGetInstalled,
+      installedRepository: mockGetInstalledExt,
     );
   });
 
-  const tPkgName = 'test.pkg';
-  const tBoardId = 'board_1';
-  const tExtension = Extension(
-    pkgName: tPkgName,
-    displayName: 'Ext',
-    version: 1,
-    pythonVersion: 3,
-    isNsfw: false,
-  );
-  const tBoard = Board(
+  const tPkgName = 'com.example';
+  const tBoardId = 'board1';
+  const tThreadId = 'thread1';
+
+  final tExtension = TestDataFactory.createExtension(pkgName: tPkgName);
+  final tBoard = TestDataFactory.createBoard(
     id: tBoardId,
-    name: 'Board',
     extensionPkgName: tPkgName,
-    icon: '',
-    largeWelcomeImage: '',
-    url: '',
-    sortOptions: {},
   );
-  final tPost = ArticlePost(
-    id: 'reply_1',
+  final tReply = TestDataFactory.createArticlePost(
     extensionPkgName: tPkgName,
     boardId: tBoardId,
-    threadId: 'thread_1',
-    title: 'Reply',
-    url: 'url',
-    createdAt: DateTime.now(),
-    authorId: 'a1',
-    authorName: 'Author',
-    liked: 0,
-    disliked: 0,
-    contents: [],
-    tags: [],
+    threadId: tThreadId,
+    id: 'reply1',
   );
 
-  test('應回傳回覆列表並轉換為 ArticlePostWithExtension', () async {
+  test('應該成功取得 replies 並組合回傳', () async {
     // Arrange
     when(
-      () => mockGetInstalled.get(any()),
-    ).thenAnswer((_) async => const Result.completed(tExtension));
-    when(() => mockBoardRepo.list(any())).thenAnswer((_) async => [tBoard]);
+      () => mockGetInstalledExt.get(tPkgName),
+    ).thenAnswer((_) async => Result.completed(tExtension));
+    when(() => mockBoardRepo.list(tPkgName)).thenAnswer((_) async => [tBoard]);
     when(
       () => mockThreadRepo.listReplies(
         extensionPkgName: any(named: 'extensionPkgName'),
@@ -83,13 +62,13 @@ void main() {
         parentId: any(named: 'parentId'),
         pagination: any(named: 'pagination'),
       ),
-    ).thenAnswer((_) async => [tPost]);
+    ).thenAnswer((_) async => [tReply]);
 
     // Act
-    final result = await useCase.call(
+    final result = await useCase(
       extensionPkgName: tPkgName,
       boardId: tBoardId,
-      threadId: 'thread_1',
+      threadId: tThreadId,
     );
 
     // Assert
@@ -97,6 +76,8 @@ void main() {
     final data =
         (result as ResultCompleted).data as List<ArticlePostWithExtension>;
     expect(data.length, 1);
-    expect(data.first.id, 'reply_1');
+    expect(data.first.post, tReply);
+    expect(data.first.board, tBoard);
+    expect(data.first.extension, tExtension);
   });
 }

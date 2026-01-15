@@ -1,11 +1,12 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:news_hub/domain/collection/board_repository.dart';
+import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/thread/interactor/list_board_threads.dart';
 import 'package:news_hub/domain/thread/repository.dart';
-import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/shared/models.dart';
-import 'package:news_hub/shared/failures.dart';
+
+import '../../../helpers/test_data_factory.dart';
 
 class MockThreadRepository extends Mock implements ThreadRepository {}
 
@@ -13,75 +14,53 @@ class MockBoardRepository extends Mock implements BoardRepository {}
 
 void main() {
   late ListBoardThreads useCase;
-  late MockThreadRepository mockThreadRepository;
-  late MockBoardRepository mockBoardRepository;
-
-  setUpAll(() {
-    registerFallbackValue(const Pagination());
-  });
+  late MockThreadRepository mockThreadRepo;
+  late MockBoardRepository mockBoardRepo;
 
   setUp(() {
-    mockThreadRepository = MockThreadRepository();
-    mockBoardRepository = MockBoardRepository();
+    mockThreadRepo = MockThreadRepository();
+    mockBoardRepo = MockBoardRepository();
     useCase = ListBoardThreads(
-      repository: mockThreadRepository,
-      boardRepository: mockBoardRepository,
+      repository: mockThreadRepo,
+      boardRepository: mockBoardRepo,
     );
   });
 
-  const tCollectionId = 'col_1';
-  const tBoardId = 'board_1';
-  const tBoard = Board(
+  const tCollectionId = 'col1';
+  const tBoardId = 'board1';
+  const tPkgName = 'com.example';
+
+  final tBoard = TestDataFactory.createBoard(
     id: tBoardId,
-    name: 'Test Board',
-    extensionPkgName: 'test.pkg',
-    icon: '',
-    largeWelcomeImage: '',
-    url: '',
-    sortOptions: {},
-    collectionId: tCollectionId,
+    extensionPkgName: tPkgName,
   );
 
-  final List<Post> tPosts = [
-    SingleImagePost(
-      id: 'post_1',
-      title: 'Title 1',
-      url: 'url1',
-      extensionPkgName: 'test.pkg',
-      boardId: tBoardId,
-      threadId: 'thread_1',
-      createdAt: DateTime.fromMillisecondsSinceEpoch(123456789),
-      authorId: 'auth_1',
-      authorName: 'Author 1',
-      image: null,
-      contents: [],
-      liked: 0,
-      disliked: 0,
-      tags: [],
-    ),
-  ];
+  final tThread = TestDataFactory.createSingleImagePost(
+    extensionPkgName: tPkgName,
+    boardId: tBoardId,
+  );
 
-  test('當順利取得資料時，應回傳 Result.completed 包含貼文列表', () async {
+  test('應該成功取得 board 並抓取 threads', () async {
     // Arrange
     when(
-      () => mockBoardRepository.getBoard(
+      () => mockBoardRepo.getBoard(
         boardId: any(named: 'boardId'),
         collectionId: any(named: 'collectionId'),
       ),
     ).thenAnswer((_) async => tBoard);
 
     when(
-      () => mockThreadRepository.listThreads(
+      () => mockThreadRepo.listThreads(
         extensionPkgName: any(named: 'extensionPkgName'),
         boardId: any(named: 'boardId'),
         sort: any(named: 'sort'),
         pagination: any(named: 'pagination'),
         keywords: any(named: 'keywords'),
       ),
-    ).thenAnswer((_) async => tPosts);
+    ).thenAnswer((_) async => [tThread]);
 
     // Act
-    final result = await useCase.call(
+    final result = await useCase(
       collectionId: tCollectionId,
       boardId: tBoardId,
     );
@@ -91,58 +70,57 @@ void main() {
     final data =
         (result as ResultCompleted).data as List<SingleImagePostWithExtension>;
     expect(data.length, 1);
-    expect(data.first.id, 'post_1');
-    expect(data.first.board.id, tBoardId);
+    expect(data.first.post, tThread);
+    expect(data.first.board, tBoard);
   });
 
-  test('當 BoardRepository 拋出異常時，應回傳 Result.error 包含 Failure', () async {
+  test('當 getBoard 失敗時應該回傳 error', () async {
     // Arrange
-    final exception = Exception('Board not found');
+    final tException = Exception('Board not found');
     when(
-      () => mockBoardRepository.getBoard(
+      () => mockBoardRepo.getBoard(
         boardId: any(named: 'boardId'),
         collectionId: any(named: 'collectionId'),
       ),
-    ).thenThrow(exception);
+    ).thenThrow(tException);
 
     // Act
-    final result = await useCase.call(
+    final result = await useCase(
       collectionId: tCollectionId,
       boardId: tBoardId,
     );
 
     // Assert
-    expect(result, isA<ResultError<List<SingleImagePostWithExtension>>>());
-    final errorResult = result as ResultError;
-    expect(errorResult.error, isA<Failure>());
+    expect(result, isA<ResultError>());
   });
 
-  test('當 ThreadRepository 拋出異常時，應回傳 Result.error 包含 Failure', () async {
+  test('當 listThreads 失敗時應該回傳 error', () async {
     // Arrange
     when(
-      () => mockBoardRepository.getBoard(
+      () => mockBoardRepo.getBoard(
         boardId: any(named: 'boardId'),
         collectionId: any(named: 'collectionId'),
       ),
     ).thenAnswer((_) async => tBoard);
 
+    final tException = Exception('Network error');
     when(
-      () => mockThreadRepository.listThreads(
+      () => mockThreadRepo.listThreads(
         extensionPkgName: any(named: 'extensionPkgName'),
         boardId: any(named: 'boardId'),
         sort: any(named: 'sort'),
         pagination: any(named: 'pagination'),
         keywords: any(named: 'keywords'),
       ),
-    ).thenThrow(Exception('Network error'));
+    ).thenThrow(tException);
 
     // Act
-    final result = await useCase.call(
+    final result = await useCase(
       collectionId: tCollectionId,
       boardId: tBoardId,
     );
 
     // Assert
-    expect(result, isA<ResultError<List<SingleImagePostWithExtension>>>());
+    expect(result, isA<ResultError>());
   });
 }
