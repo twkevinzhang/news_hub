@@ -12,6 +12,10 @@
 | **Task 4**  | BLoC 效能優化 (Rebuilds)     | **已完成** | 優化 Home, CollectionThreadList, ThreadDetail 三大核心頁面   |
 | **Task 5**  | 清理測試程式碼 Warnings      | **已完成** | 全域移除 const 缺失與 void 回傳警告                          |
 | **Task 6**  | 補齊其餘 BLoC 測試 (Phase 2) | **已完成** | 包含 SearchResult, BoardsPicker 等剩餘 7 個 BLoC             |
+| **Task 7**  | Collection/Repo Use Cases    | **待開始** | v2.0 新增: 補齊 Domain 層測試                                |
+| **Task 8**  | Ext/Suggestion Use Cases     | **待開始** | v2.0 新增: 補齊 Domain 層測試                                |
+| **Task 9**  | Thread Use Cases             | **待開始** | v2.0 新增: 核心功能測試                                      |
+| **Task 10** | 效能基準測試                 | **待開始** | v2.0 新增: 建立 Rebuild 監控                                 |
 
 ---
 
@@ -56,9 +60,45 @@
 
 ---
 
+---
+
+## 📋 v2.0 詳細任務狀態 (Domain Layer & Performance)
+
+### [Task 7] Collection & Repo Use Cases 測試 [x]
+
+- [x] `watch_collections.dart`
+- [x] `create_collection.dart`
+- [x] `delete_collection.dart`
+- [x] `update_collection.dart`
+- [x] `add_repo.dart`
+- [x] `remove_repo.dart`
+
+### [Task 8] Extension & Suggestion Use Cases 測試 [ ]
+
+- [ ] `install_extension.dart`
+- [ ] `uninstall_extension.dart`
+- [ ] `list_remote_extensions.dart`
+- [ ] `list_suggestions.dart`
+- [ ] `insert_suggestion.dart`
+- [ ] `delete_suggestion.dart`
+- [ ] `delete_all_suggestions.dart`
+- [ ] `update_suggestion_latest_used_at.dart`
+
+### [Task 9] Thread Use Cases 測試 (核心) [ ]
+
+- [ ] `list_collection_threads.dart` (重點)
+- [ ] `search_threads.dart`
+
+### [Task 10] 效能基準測試 [ ]
+
+- [ ] 建立 Widget Rebuild 監控測試
+
+---
+
 ## 🚀 接下來的路徑 (Next Steps)
 
-1. **重構計劃已完成**: 所有計劃中的任務皆已執行完畢。請確認是否需進入下一階段需求。
+1. **執行 Task 7**: 補齊 Collection/Repo 相關 Use Cases 的測試。
+2. **執行 Task 8**: 補齊 Extension/Suggestion 相關測試。
 
 ## 📝 備註 (給下一個 Agent)
 
