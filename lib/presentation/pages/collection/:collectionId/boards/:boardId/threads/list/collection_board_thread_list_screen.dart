@@ -6,11 +6,11 @@ import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/components/navigation/app_bar_title_notifier.dart';
 import 'package:news_hub/presentation/components/rendering/loading_indicator.dart';
-import 'package:news_hub/presentation/components/search/search_form_overlay.dart';
-import 'package:news_hub/presentation/components/search/searchable_screen_mixin.dart';
+import 'package:news_hub/presentation/components/forms/thread-search/search_form_overlay.dart';
+import 'package:news_hub/presentation/components/forms/thread-search/searchable_screen_mixin.dart';
 import 'package:news_hub/presentation/pages/collection/:collectionId/boards/:boardId/threads/list/bloc/collection_board_thread_list_cubit.dart';
 import 'package:news_hub/presentation/components/cards/post/single_image_post_layout.dart';
-import 'package:news_hub/presentation/components/search/search_mode_notifier.dart';
+import 'package:news_hub/presentation/components/forms/thread-search/search_mode_notifier.dart';
 import 'package:news_hub/shared/failures.dart';
 
 @RoutePage()

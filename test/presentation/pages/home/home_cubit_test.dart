@@ -4,7 +4,7 @@ import 'package:mocktail/mocktail.dart';
 import 'package:news_hub/domain/collection/repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/sidecar/repository.dart';
-import 'package:news_hub/presentation/components/search/search_mode_notifier.dart';
+import 'package:news_hub/presentation/components/forms/thread-search/search_mode_notifier.dart';
 import 'package:news_hub/presentation/pages/home/home_cubit.dart';
 import 'package:auto_route/auto_route.dart';
 

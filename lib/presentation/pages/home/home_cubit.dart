@@ -6,7 +6,7 @@ import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/collection/repository.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/sidecar/repository.dart';
-import 'package:news_hub/presentation/components/search/search_mode_notifier.dart';
+import 'package:news_hub/presentation/components/forms/thread-search/search_mode_notifier.dart';
 
 part 'home_cubit.freezed.dart';
 

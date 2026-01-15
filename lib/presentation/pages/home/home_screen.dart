@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/components/navigation/app_navigation_drawer.dart';
 import 'package:news_hub/presentation/components/navigation/app_top_bar.dart';
-import 'package:news_hub/presentation/components/search/search_mode_notifier.dart';
+import 'package:news_hub/presentation/components/forms/thread-search/search_mode_notifier.dart';
 import 'package:news_hub/presentation/pages/home/home_cubit.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
 

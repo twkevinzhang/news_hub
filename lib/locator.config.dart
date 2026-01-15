@@ -100,18 +100,18 @@ import 'package:news_hub/domain/thread/repository.dart' as _i1044;
 import 'package:news_hub/locator.dart' as _i56;
 import 'package:news_hub/presentation/components/forms/collection/bloc/collection_form_cubit.dart'
     as _i545;
+import 'package:news_hub/presentation/components/forms/thread-search/bloc/search_form_cubit.dart'
+    as _i919;
+import 'package:news_hub/presentation/components/forms/thread-search/search_mode_notifier.dart'
+    as _i196;
 import 'package:news_hub/presentation/components/navigation/app_bar_title_notifier.dart'
     as _i117;
 import 'package:news_hub/presentation/components/rendering/boards-picker/bloc/boards_picker_cubit.dart'
     as _i274;
-import 'package:news_hub/presentation/components/search/search_mode_notifier.dart'
-    as _i895;
 import 'package:news_hub/presentation/pages/collection/:collectionId/boards/:boardId/threads/list/bloc/collection_board_thread_list_cubit.dart'
     as _i492;
 import 'package:news_hub/presentation/pages/collection/:collectionId/threads/list/bloc/collection_thread_list_cubit.dart'
     as _i525;
-import 'package:news_hub/presentation/pages/collection/:collectionId/threads/search/bloc/search_cubit.dart'
-    as _i470;
 import 'package:news_hub/presentation/pages/collection/:collectionId/threads/search/result/bloc/search_result_cubit.dart'
     as _i1027;
 import 'package:news_hub/presentation/pages/home/home_cubit.dart' as _i936;
@@ -150,8 +150,8 @@ extension GetItInjectableX on _i174.GetIt {
     gh.lazySingleton<_i117.AppBarTitleNotifier>(
       () => _i117.AppBarTitleNotifier(),
     );
-    gh.lazySingleton<_i895.SearchModeNotifier>(
-      () => _i895.SearchModeNotifier(),
+    gh.lazySingleton<_i196.SearchModeNotifier>(
+      () => _i196.SearchModeNotifier(),
     );
     gh.lazySingleton<_i960.BookmarkRepository>(
       () => _i495.BookmarkRepositoryImpl(),
@@ -282,13 +282,6 @@ extension GetItInjectableX on _i174.GetIt {
         gh<_i280.SidecarPreferences>(),
       ),
     );
-    gh.lazySingleton<_i936.HomeCubit>(
-      () => _i936.HomeCubit(
-        gh<_i914.CollectionRepository>(),
-        gh<_i611.SidecarRepository>(),
-        gh<_i895.SearchModeNotifier>(),
-      ),
-    );
     gh.factory<_i56.Launcher>(
       () => _i56.SidecarAppLauncher(gh<_i976.SidecarConnectionManager>()),
       registerFor: {_sidecar},
@@ -319,6 +312,13 @@ extension GetItInjectableX on _i174.GetIt {
       () => _i515.SidecarLogsCubit(
         gh<_i611.SidecarRepository>(),
         gh<_i976.SidecarConnectionManager>(),
+      ),
+    );
+    gh.lazySingleton<_i936.HomeCubit>(
+      () => _i936.HomeCubit(
+        gh<_i914.CollectionRepository>(),
+        gh<_i611.SidecarRepository>(),
+        gh<_i196.SearchModeNotifier>(),
       ),
     );
     gh.lazySingleton<_i351.ListInstalledExtensions>(
@@ -404,8 +404,8 @@ extension GetItInjectableX on _i174.GetIt {
         removeRepo: gh<_i154.RemoveRepo>(),
       ),
     );
-    gh.factory<_i470.SearchCubit>(
-      () => _i470.SearchCubit(
+    gh.factory<_i919.SearchFormCubit>(
+      () => _i919.SearchFormCubit(
         listSuggestions: gh<_i643.ListSuggestions>(),
         updateSuggestionLatestUsedAt: gh<_i650.UpdateSuggestionLatestUsedAt>(),
         insertSuggestion: gh<_i446.InsertSuggestion>(),

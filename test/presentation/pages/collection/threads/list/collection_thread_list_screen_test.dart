@@ -6,7 +6,7 @@ import 'package:get_it/get_it.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:news_hub/presentation/components/navigation/app_bar_title_notifier.dart';
-import 'package:news_hub/presentation/components/search/search_trigger_notifier.dart';
+import 'package:news_hub/presentation/components/forms/thread-search/search_mode_notifier.dart';
 import 'package:news_hub/presentation/pages/collection/:collectionId/threads/list/bloc/collection_thread_list_cubit.dart';
 import 'package:news_hub/presentation/pages/collection/:collectionId/threads/list/collection_thread_list_screen.dart';
 import 'package:news_hub/presentation/components/cards/post/single_image_post_layout.dart';
@@ -18,12 +18,12 @@ class MockCollectionThreadListCubit extends MockCubit<CollectionThreadListState>
 
 class MockAppBarTitleNotifier extends Mock implements AppBarTitleNotifier {}
 
-class MockSearchTriggerNotifier extends Mock implements SearchTriggerNotifier {}
+class MockSearchModeNotifier extends Mock implements SearchModeNotifier {}
 
 void main() {
   late MockCollectionThreadListCubit mockCubit;
   late MockAppBarTitleNotifier mockAppBarTitleNotifier;
-  late MockSearchTriggerNotifier mockSearchTriggerNotifier;
+  late MockSearchModeNotifier mockSearchModeNotifier;
   late PagingController<int, dynamic> pagingController;
   const tCollectionId = 'col1';
   final tPost = TestDataFactory.createSingleImagePostWithExtension();
@@ -31,7 +31,7 @@ void main() {
   setUp(() {
     mockCubit = MockCollectionThreadListCubit();
     mockAppBarTitleNotifier = MockAppBarTitleNotifier();
-    mockSearchTriggerNotifier = MockSearchTriggerNotifier();
+    mockSearchModeNotifier = MockSearchModeNotifier();
     pagingController = PagingController<int, dynamic>(firstPageKey: 0);
 
     // Register mocks in GetIt
@@ -39,11 +39,15 @@ void main() {
     if (sl.isRegistered<AppBarTitleNotifier>()) {
       sl.unregister<AppBarTitleNotifier>();
     }
-    if (sl.isRegistered<SearchTriggerNotifier>()) {
-      sl.unregister<SearchTriggerNotifier>();
+    if (sl.isRegistered<SearchModeNotifier>()) {
+      sl.unregister<SearchModeNotifier>();
     }
     sl.registerSingleton<AppBarTitleNotifier>(mockAppBarTitleNotifier);
-    sl.registerSingleton<SearchTriggerNotifier>(mockSearchTriggerNotifier);
+    sl.registerSingleton<SearchModeNotifier>(mockSearchModeNotifier);
+
+    when(() => mockSearchModeNotifier.isSearchMode).thenReturn(false);
+    when(() => mockSearchModeNotifier.addListener(any())).thenReturn(null);
+    when(() => mockSearchModeNotifier.removeListener(any())).thenReturn(null);
 
     when(() => mockCubit.pagingController).thenReturn(pagingController);
     when(() => mockCubit.state).thenReturn(const CollectionThreadListState());

@@ -11,25 +11,25 @@ import 'package:news_hub/domain/thread/interactor/search_threads.dart';
 import 'package:news_hub/shared/extensions.dart';
 import 'package:news_hub/shared/models.dart';
 
-part 'search_cubit.freezed.dart';
+part 'search_form_cubit.freezed.dart';
 
 @freezed
-class SearchState with _$SearchState {
-  const factory SearchState({
+class SearchFormState with _$SearchFormState {
+  const factory SearchFormState({
     required Result<List<Suggestion>> suggestions,
     required List<Suggestion> resultFilteredSuggestions,
     required ThreadsFilter filter,
     required ThreadsFilter submittedFilter,
-  }) = _SearchState;
+  }) = _SearchFormState;
 }
 
 @injectable
-class SearchCubit extends Cubit<SearchState> {
+class SearchFormCubit extends Cubit<SearchFormState> {
   final ListSuggestions _listSuggestions;
   final UpdateSuggestionLatestUsedAt _updateSuggestionLatestUsedAt;
   final InsertSuggestion _insertSuggestion;
 
-  SearchCubit({
+  SearchFormCubit({
     required ListSuggestions listSuggestions,
     required UpdateSuggestionLatestUsedAt updateSuggestionLatestUsedAt,
     required InsertSuggestion insertSuggestion,
@@ -38,7 +38,7 @@ class SearchCubit extends Cubit<SearchState> {
        _updateSuggestionLatestUsedAt = updateSuggestionLatestUsedAt,
        _insertSuggestion = insertSuggestion,
        super(
-         const SearchState(
+         const SearchFormState(
            suggestions: Result.initial(),
            resultFilteredSuggestions: [],
            filter: ThreadsFilter(boardSorts: {}, keywords: ''),

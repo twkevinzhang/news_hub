@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/locator.dart';
+import 'package:news_hub/presentation/components/forms/thread-search/bloc/search_form_cubit.dart';
 import 'package:news_hub/presentation/components/inputs/app_search_bar.dart';
-import 'package:news_hub/presentation/pages/collection/:collectionId/threads/search/bloc/search_cubit.dart';
 import 'package:news_hub/presentation/router/router.gr.dart';
 
 class SearchFormOverlay extends StatelessWidget {
@@ -28,7 +28,7 @@ class SearchFormOverlay extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => sl<SearchCubit>()..init(initialFilter),
+      create: (context) => sl<SearchFormCubit>()..init(initialFilter),
       child: _SearchFormScaffold(
         collectionId: collectionId,
         onSearch: onSearch,
@@ -57,7 +57,7 @@ class _SearchFormScaffold extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<SearchCubit>();
+    final cubit = context.read<SearchFormCubit>();
 
     void handleSearch(ThreadsFilter filter) {
       if (shouldNavigateToResult) {
@@ -80,7 +80,7 @@ class _SearchFormScaffold extends StatelessWidget {
           TextButton(onPressed: () => cubit.reset(), child: const Text('重設')),
         ],
       ),
-      body: BlocBuilder<SearchCubit, SearchState>(
+      body: BlocBuilder<SearchFormCubit, SearchFormState>(
         builder: (context, state) {
           final suggestions = state.resultFilteredSuggestions;
 

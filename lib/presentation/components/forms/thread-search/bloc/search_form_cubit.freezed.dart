@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'search_cubit.dart';
+part of 'search_form_cubit.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 );
 
 /// @nodoc
-mixin _$SearchState {
+mixin _$SearchFormState {
   Result<List<Suggestion>> get suggestions =>
       throw _privateConstructorUsedError;
   List<Suggestion> get resultFilteredSuggestions =>
@@ -24,19 +24,19 @@ mixin _$SearchState {
   ThreadsFilter get filter => throw _privateConstructorUsedError;
   ThreadsFilter get submittedFilter => throw _privateConstructorUsedError;
 
-  /// Create a copy of SearchState
+  /// Create a copy of SearchFormState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $SearchStateCopyWith<SearchState> get copyWith =>
+  $SearchFormStateCopyWith<SearchFormState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $SearchStateCopyWith<$Res> {
-  factory $SearchStateCopyWith(
-    SearchState value,
-    $Res Function(SearchState) then,
-  ) = _$SearchStateCopyWithImpl<$Res, SearchState>;
+abstract class $SearchFormStateCopyWith<$Res> {
+  factory $SearchFormStateCopyWith(
+    SearchFormState value,
+    $Res Function(SearchFormState) then,
+  ) = _$SearchFormStateCopyWithImpl<$Res, SearchFormState>;
   @useResult
   $Res call({
     Result<List<Suggestion>> suggestions,
@@ -51,16 +51,16 @@ abstract class $SearchStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
-    implements $SearchStateCopyWith<$Res> {
-  _$SearchStateCopyWithImpl(this._value, this._then);
+class _$SearchFormStateCopyWithImpl<$Res, $Val extends SearchFormState>
+    implements $SearchFormStateCopyWith<$Res> {
+  _$SearchFormStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of SearchState
+  /// Create a copy of SearchFormState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -93,7 +93,7 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
     );
   }
 
-  /// Create a copy of SearchState
+  /// Create a copy of SearchFormState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -103,7 +103,7 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
     });
   }
 
-  /// Create a copy of SearchState
+  /// Create a copy of SearchFormState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -113,7 +113,7 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
     });
   }
 
-  /// Create a copy of SearchState
+  /// Create a copy of SearchFormState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
@@ -125,12 +125,12 @@ class _$SearchStateCopyWithImpl<$Res, $Val extends SearchState>
 }
 
 /// @nodoc
-abstract class _$$SearchStateImplCopyWith<$Res>
-    implements $SearchStateCopyWith<$Res> {
-  factory _$$SearchStateImplCopyWith(
-    _$SearchStateImpl value,
-    $Res Function(_$SearchStateImpl) then,
-  ) = __$$SearchStateImplCopyWithImpl<$Res>;
+abstract class _$$SearchFormStateImplCopyWith<$Res>
+    implements $SearchFormStateCopyWith<$Res> {
+  factory _$$SearchFormStateImplCopyWith(
+    _$SearchFormStateImpl value,
+    $Res Function(_$SearchFormStateImpl) then,
+  ) = __$$SearchFormStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({
@@ -149,15 +149,15 @@ abstract class _$$SearchStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$SearchStateImplCopyWithImpl<$Res>
-    extends _$SearchStateCopyWithImpl<$Res, _$SearchStateImpl>
-    implements _$$SearchStateImplCopyWith<$Res> {
-  __$$SearchStateImplCopyWithImpl(
-    _$SearchStateImpl _value,
-    $Res Function(_$SearchStateImpl) _then,
+class __$$SearchFormStateImplCopyWithImpl<$Res>
+    extends _$SearchFormStateCopyWithImpl<$Res, _$SearchFormStateImpl>
+    implements _$$SearchFormStateImplCopyWith<$Res> {
+  __$$SearchFormStateImplCopyWithImpl(
+    _$SearchFormStateImpl _value,
+    $Res Function(_$SearchFormStateImpl) _then,
   ) : super(_value, _then);
 
-  /// Create a copy of SearchState
+  /// Create a copy of SearchFormState
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -168,7 +168,7 @@ class __$$SearchStateImplCopyWithImpl<$Res>
     Object? submittedFilter = null,
   }) {
     return _then(
-      _$SearchStateImpl(
+      _$SearchFormStateImpl(
         suggestions: null == suggestions
             ? _value.suggestions
             : suggestions // ignore: cast_nullable_to_non_nullable
@@ -192,8 +192,8 @@ class __$$SearchStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$SearchStateImpl implements _SearchState {
-  const _$SearchStateImpl({
+class _$SearchFormStateImpl implements _SearchFormState {
+  const _$SearchFormStateImpl({
     required this.suggestions,
     required final List<Suggestion> resultFilteredSuggestions,
     required this.filter,
@@ -218,14 +218,14 @@ class _$SearchStateImpl implements _SearchState {
 
   @override
   String toString() {
-    return 'SearchState(suggestions: $suggestions, resultFilteredSuggestions: $resultFilteredSuggestions, filter: $filter, submittedFilter: $submittedFilter)';
+    return 'SearchFormState(suggestions: $suggestions, resultFilteredSuggestions: $resultFilteredSuggestions, filter: $filter, submittedFilter: $submittedFilter)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$SearchStateImpl &&
+            other is _$SearchFormStateImpl &&
             (identical(other.suggestions, suggestions) ||
                 other.suggestions == suggestions) &&
             const DeepCollectionEquality().equals(
@@ -246,22 +246,25 @@ class _$SearchStateImpl implements _SearchState {
     submittedFilter,
   );
 
-  /// Create a copy of SearchState
+  /// Create a copy of SearchFormState
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$SearchStateImplCopyWith<_$SearchStateImpl> get copyWith =>
-      __$$SearchStateImplCopyWithImpl<_$SearchStateImpl>(this, _$identity);
+  _$$SearchFormStateImplCopyWith<_$SearchFormStateImpl> get copyWith =>
+      __$$SearchFormStateImplCopyWithImpl<_$SearchFormStateImpl>(
+        this,
+        _$identity,
+      );
 }
 
-abstract class _SearchState implements SearchState {
-  const factory _SearchState({
+abstract class _SearchFormState implements SearchFormState {
+  const factory _SearchFormState({
     required final Result<List<Suggestion>> suggestions,
     required final List<Suggestion> resultFilteredSuggestions,
     required final ThreadsFilter filter,
     required final ThreadsFilter submittedFilter,
-  }) = _$SearchStateImpl;
+  }) = _$SearchFormStateImpl;
 
   @override
   Result<List<Suggestion>> get suggestions;
@@ -272,10 +275,10 @@ abstract class _SearchState implements SearchState {
   @override
   ThreadsFilter get submittedFilter;
 
-  /// Create a copy of SearchState
+  /// Create a copy of SearchFormState
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$SearchStateImplCopyWith<_$SearchStateImpl> get copyWith =>
+  _$$SearchFormStateImplCopyWith<_$SearchFormStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
