@@ -56,6 +56,30 @@
 - `flutter analyze`: **No issues found!**
 - `flutter test`: 94 業務測試全數通過。
 
+### Phase 5: BLoC Performance Optimization (Completed)
+
+優化 BLoC 重建性能，減少不必要的 widget 重建。
+
+**Key Accomplishments:**
+
+1.  **HomeScreen 優化**:
+    - 移除了包裹整個頁面的 `BlocBuilder`
+    - 使用 `BlocSelector` 為 Drawer 精確訂閱所需狀態
+    - AppTopBar 和 body 不再受 BLoC 狀態變化影響
+2.  **CollectionThreadListScreen 優化**:
+    - 將 `ListenableBuilder` 範圍縮小，僅包裹搜尋遮罩
+    - 在搜尋遮罩中使用 `BlocSelector` 訂閱名稱與篩選條件
+    - `PagedListView` 的重建不再受搜尋模式切換影響
+3.  **ThreadDetailScreen 優化**:
+    - 將 `ReplyTo` 對話框中的 `BlocBuilder` 替換為 `BlocSelector`
+    - 移除冗餘的 `_buildDialog` 方法
+    - (AppBar 標題與 Action 已在先前完成 BlocSelector 化)
+
+**Verification:**
+
+- 手動驗證 UI 交互流暢
+- 代碼通過 `flutter analyze` 與現有業務測試
+
 ---
 
 ## Current Status
@@ -64,12 +88,12 @@
 - [x] Phase 2: Domain Models Migration to Freezed
 - [x] Phase 3: Core BLoC Test Coverage
 - [x] Phase 4: Remove Deprecated APIs & Lint Cleanup
+- [x] Phase 5: BLoC Performance Optimization
 
 ## Next Steps
 
-1. **BLoC 效能優化**: 使用 `BlocSelector` 與 `buildWhen` 減少不必要的 Rebuild，提升 UI 流暢度。
-2. **其餘組件測試**: 擴展測試覆蓋率至其餘 Use Cases 與 Services。
-3. **效能基準測試**: 建立 Rebuild 監控測試案例。
+1. **其餘組件測試**: 擴展測試覆蓋率至其餘 Use Cases 與 Services。
+2. **效能基準測試**: 建立 Rebuild 監控測試案例。
 
 ## 📝 備註事項
 

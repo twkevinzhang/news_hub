@@ -69,59 +69,67 @@ class _CollectionThreadListScreenState extends State<CollectionThreadListScreen>
           sl<AppBarTitleNotifier>().updateTitle(state.collection!.name);
         }
       },
-      child: ListenableBuilder(
-        listenable: sl<SearchModeNotifier>(),
-        builder: (context, _) {
-          final isSearchVisible = sl<SearchModeNotifier>().isSearchMode;
-          final cubit = context.read<CollectionThreadListCubit>();
-          final state = cubit.state;
+      child: Stack(
+        children: [
+          PagedListView<int, dynamic>(
+            pagingController: context
+                .read<CollectionThreadListCubit>()
+                .pagingController,
+            builderDelegate: PagedChildBuilderDelegate<dynamic>(
+              itemBuilder: (context, item, index) {
+                if (item is SingleImagePostWithExtension) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8,
+                      vertical: 1,
+                    ),
+                    child: SingleImagePostCard(thread: item),
+                  );
+                } else if (item is CollectionBoardSkeleton) {
+                  return const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 8, vertical: 1),
+                    child: SingleImagePostSkeleton(),
+                  );
+                }
+                return const SizedBox.shrink();
+              },
+              noItemsFoundIndicatorBuilder: (context) => const SizedBox(),
+              firstPageProgressIndicatorBuilder: (context) =>
+                  const LoadingIndicator(),
+              newPageProgressIndicatorBuilder: (context) =>
+                  const LoadingIndicator(),
+              noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
+              transitionDuration: const Duration(milliseconds: 500),
+              animateTransitions: true,
+            ),
+          ),
+          ListenableBuilder(
+            listenable: sl<SearchModeNotifier>(),
+            builder: (context, _) {
+              final isSearchVisible = sl<SearchModeNotifier>().isSearchMode;
+              if (!isSearchVisible) return const SizedBox.shrink();
 
-          return Stack(
-            children: [
-              PagedListView<int, dynamic>(
-                pagingController: cubit.pagingController,
-                builderDelegate: PagedChildBuilderDelegate<dynamic>(
-                  itemBuilder: (context, item, index) {
-                    if (item is SingleImagePostWithExtension) {
-                      return Padding(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 1,
-                        ),
-                        child: SingleImagePostCard(thread: item),
-                      );
-                    } else if (item is CollectionBoardSkeleton) {
-                      return const Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 8,
-                          vertical: 1,
-                        ),
-                        child: SingleImagePostSkeleton(),
-                      );
-                    }
-                    return const SizedBox.shrink();
-                  },
-                  noItemsFoundIndicatorBuilder: (context) => const SizedBox(),
-                  firstPageProgressIndicatorBuilder: (context) =>
-                      const LoadingIndicator(),
-                  newPageProgressIndicatorBuilder: (context) =>
-                      const LoadingIndicator(),
-                  noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
-                  transitionDuration: const Duration(milliseconds: 500),
-                  animateTransitions: true,
-                ),
-              ),
-              if (isSearchVisible)
-                SearchFormOverlay(
-                  collectionId: widget.collectionId,
-                  title: '在 ${state.collection?.name ?? "..."} 中搜尋',
-                  initialFilter: state.activeFilter,
-                  onSearch: (_) {},
-                  onClose: () => sl<SearchModeNotifier>().exitSearchMode(),
-                ),
-            ],
-          );
-        },
+              return BlocSelector<
+                CollectionThreadListCubit,
+                CollectionThreadListState,
+                (String?, ThreadsFilter)
+              >(
+                selector: (state) =>
+                    (state.collection?.name, state.activeFilter),
+                builder: (context, data) {
+                  final (name, filter) = data;
+                  return SearchFormOverlay(
+                    collectionId: widget.collectionId,
+                    title: '在 ${name ?? "..."} 中搜尋',
+                    initialFilter: filter,
+                    onSearch: (_) {},
+                    onClose: () => sl<SearchModeNotifier>().exitSearchMode(),
+                  );
+                },
+              );
+            },
+          ),
+        ],
       ),
     );
   }

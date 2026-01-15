@@ -185,17 +185,37 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
   ) {
     showDialog(
       context: context,
-      builder: (context) => _buildDialog(
-        cubit: cubit,
-        builder: (context, state) => state.threadMap[paragraph.id]!.maybeWhen(
-          orElse: () => const LoadingIndicator(),
-          completed: (thread) => SingleChildScrollView(
-            child: ThreadPostItem(
-              post: thread,
-              index: -1,
-              onParagraphClick: (p) =>
-                  _handleParagraphClick(context, cubit, thread, p),
-            ),
+      builder: (context) => BlocProvider.value(
+        value: cubit,
+        child: Dialog(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child:
+                BlocSelector<
+                  ThreadDetailCubit,
+                  ThreadDetailState,
+                  Result<domain.ArticlePost>?
+                >(
+                  selector: (state) => state.threadMap[paragraph.id],
+                  builder: (context, result) {
+                    return result?.maybeWhen(
+                          orElse: () => const LoadingIndicator(),
+                          completed: (thread) => SingleChildScrollView(
+                            child: ThreadPostItem(
+                              post: thread,
+                              index: -1,
+                              onParagraphClick: (p) => _handleParagraphClick(
+                                context,
+                                cubit,
+                                thread,
+                                p,
+                              ),
+                            ),
+                          ),
+                        ) ??
+                        const LoadingIndicator();
+                  },
+                ),
           ),
         ),
       ),
@@ -353,24 +373,6 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
           ),
         );
       },
-    );
-  }
-
-  BlocProvider _buildDialog({
-    required ThreadDetailCubit cubit,
-    required Widget Function(BuildContext context, ThreadDetailState state)
-    builder,
-  }) {
-    return BlocProvider<ThreadDetailCubit>.value(
-      value: cubit,
-      child: Dialog(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: BlocBuilder<ThreadDetailCubit, ThreadDetailState>(
-            builder: builder,
-          ),
-        ),
-      ),
     );
   }
 
