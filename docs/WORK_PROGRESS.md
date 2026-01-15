@@ -73,16 +73,16 @@
 - [x] `add_repo.dart`
 - [x] `remove_repo.dart`
 
-### [Task 8] Extension & Suggestion Use Cases 測試 [ ]
+### [Task 8] Extension & Suggestion Use Cases 測試 [x]
 
-- [ ] `install_extension.dart`
-- [ ] `uninstall_extension.dart`
-- [ ] `list_remote_extensions.dart`
-- [ ] `list_suggestions.dart`
-- [ ] `insert_suggestion.dart`
-- [ ] `delete_suggestion.dart`
-- [ ] `delete_all_suggestions.dart`
-- [ ] `update_suggestion_latest_used_at.dart`
+- [x] `install_extension.dart`
+- [x] `uninstall_extension.dart`
+- [x] `list_remote_extensions.dart`
+- [x] `list_suggestions.dart`
+- [x] `insert_suggestion.dart`
+- [x] `delete_suggestion.dart`
+- [x] `delete_all_suggestions.dart`
+- [x] `update_suggestion_latest_used_at.dart`
 
 ### [Task 9] Thread Use Cases 測試 (核心) [ ]
 

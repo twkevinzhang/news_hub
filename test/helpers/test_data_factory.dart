@@ -230,4 +230,24 @@ class TestDataFactory {
       authorName: authorName,
     );
   }
+
+  static RemoteExtension createRemoteExtension({
+    String pkgName = tExtensionPkgName,
+    String displayName = 'Test Extension',
+    int version = 1,
+    int pythonVersion = 3,
+    bool isNsfw = false,
+    String repoUrl = 'http://repo.com',
+    String iconUrl = 'http://icon.com',
+  }) {
+    return RemoteExtension(
+      pkgName: pkgName,
+      displayName: displayName,
+      version: version,
+      pythonVersion: pythonVersion,
+      isNsfw: isNsfw,
+      repoUrl: repoUrl,
+      iconUrl: iconUrl,
+    );
+  }
 }
