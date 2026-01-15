@@ -15,9 +15,17 @@ proto:
 
 .PHONY: lint
 lint:
-	pip install flake8
+	pip install black flake8
+	@echo "Running Black formatter check..."
+	python3 -m black --check src
+	@echo "Running flake8..."
 	python3 -m flake8 src --select=E9,F63,F7,F82 --count
 	python3 -m flake8 build --select=E9,F63,F7,F82 --count
+
+.PHONY: format
+format:
+	pip install black
+	python3 -m black src
 
 REPO_URL =
 EXTENSION =
