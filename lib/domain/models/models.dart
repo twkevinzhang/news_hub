@@ -30,8 +30,7 @@ export 'thread/paragraph/paragraph.dart';
 
 // Thread - Post
 export 'thread/post/post.dart';
-export 'thread/post/single_image_post.dart';
-export 'thread/post/article_post.dart';
+export 'thread/post/article_post_with_extension.dart';
 export 'thread/post/single_image_post_with_extension.dart';
 
 // Thread - Other

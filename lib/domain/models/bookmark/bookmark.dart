@@ -3,12 +3,13 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'bookmark.freezed.dart';
 part 'bookmark.g.dart';
 
-class Bookmark {
-  final String id;
-  final ThreadsFilter filter;
-  final ThreadsSorting sorting;
-
-  Bookmark({required this.id, required this.filter, required this.sorting});
+@freezed
+class Bookmark with _$Bookmark {
+  const factory Bookmark({
+    required String id,
+    required ThreadsFilter filter,
+    required ThreadsSorting sorting,
+  }) = _Bookmark;
 }
 
 @Freezed(toJson: true)

@@ -16,6 +16,208 @@ final _privateConstructorUsedError = UnsupportedError(
 );
 
 /// @nodoc
+mixin _$Bookmark {
+  String get id => throw _privateConstructorUsedError;
+  ThreadsFilter get filter => throw _privateConstructorUsedError;
+  ThreadsSorting get sorting => throw _privateConstructorUsedError;
+
+  /// Create a copy of Bookmark
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $BookmarkCopyWith<Bookmark> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $BookmarkCopyWith<$Res> {
+  factory $BookmarkCopyWith(Bookmark value, $Res Function(Bookmark) then) =
+      _$BookmarkCopyWithImpl<$Res, Bookmark>;
+  @useResult
+  $Res call({String id, ThreadsFilter filter, ThreadsSorting sorting});
+
+  $ThreadsFilterCopyWith<$Res> get filter;
+  $ThreadsSortingCopyWith<$Res> get sorting;
+}
+
+/// @nodoc
+class _$BookmarkCopyWithImpl<$Res, $Val extends Bookmark>
+    implements $BookmarkCopyWith<$Res> {
+  _$BookmarkCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of Bookmark
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? filter = null,
+    Object? sorting = null,
+  }) {
+    return _then(
+      _value.copyWith(
+            id: null == id
+                ? _value.id
+                : id // ignore: cast_nullable_to_non_nullable
+                      as String,
+            filter: null == filter
+                ? _value.filter
+                : filter // ignore: cast_nullable_to_non_nullable
+                      as ThreadsFilter,
+            sorting: null == sorting
+                ? _value.sorting
+                : sorting // ignore: cast_nullable_to_non_nullable
+                      as ThreadsSorting,
+          )
+          as $Val,
+    );
+  }
+
+  /// Create a copy of Bookmark
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ThreadsFilterCopyWith<$Res> get filter {
+    return $ThreadsFilterCopyWith<$Res>(_value.filter, (value) {
+      return _then(_value.copyWith(filter: value) as $Val);
+    });
+  }
+
+  /// Create a copy of Bookmark
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ThreadsSortingCopyWith<$Res> get sorting {
+    return $ThreadsSortingCopyWith<$Res>(_value.sorting, (value) {
+      return _then(_value.copyWith(sorting: value) as $Val);
+    });
+  }
+}
+
+/// @nodoc
+abstract class _$$BookmarkImplCopyWith<$Res>
+    implements $BookmarkCopyWith<$Res> {
+  factory _$$BookmarkImplCopyWith(
+    _$BookmarkImpl value,
+    $Res Function(_$BookmarkImpl) then,
+  ) = __$$BookmarkImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call({String id, ThreadsFilter filter, ThreadsSorting sorting});
+
+  @override
+  $ThreadsFilterCopyWith<$Res> get filter;
+  @override
+  $ThreadsSortingCopyWith<$Res> get sorting;
+}
+
+/// @nodoc
+class __$$BookmarkImplCopyWithImpl<$Res>
+    extends _$BookmarkCopyWithImpl<$Res, _$BookmarkImpl>
+    implements _$$BookmarkImplCopyWith<$Res> {
+  __$$BookmarkImplCopyWithImpl(
+    _$BookmarkImpl _value,
+    $Res Function(_$BookmarkImpl) _then,
+  ) : super(_value, _then);
+
+  /// Create a copy of Bookmark
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? filter = null,
+    Object? sorting = null,
+  }) {
+    return _then(
+      _$BookmarkImpl(
+        id: null == id
+            ? _value.id
+            : id // ignore: cast_nullable_to_non_nullable
+                  as String,
+        filter: null == filter
+            ? _value.filter
+            : filter // ignore: cast_nullable_to_non_nullable
+                  as ThreadsFilter,
+        sorting: null == sorting
+            ? _value.sorting
+            : sorting // ignore: cast_nullable_to_non_nullable
+                  as ThreadsSorting,
+      ),
+    );
+  }
+}
+
+/// @nodoc
+
+class _$BookmarkImpl implements _Bookmark {
+  const _$BookmarkImpl({
+    required this.id,
+    required this.filter,
+    required this.sorting,
+  });
+
+  @override
+  final String id;
+  @override
+  final ThreadsFilter filter;
+  @override
+  final ThreadsSorting sorting;
+
+  @override
+  String toString() {
+    return 'Bookmark(id: $id, filter: $filter, sorting: $sorting)';
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$BookmarkImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.filter, filter) || other.filter == filter) &&
+            (identical(other.sorting, sorting) || other.sorting == sorting));
+  }
+
+  @override
+  int get hashCode => Object.hash(runtimeType, id, filter, sorting);
+
+  /// Create a copy of Bookmark
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$BookmarkImplCopyWith<_$BookmarkImpl> get copyWith =>
+      __$$BookmarkImplCopyWithImpl<_$BookmarkImpl>(this, _$identity);
+}
+
+abstract class _Bookmark implements Bookmark {
+  const factory _Bookmark({
+    required final String id,
+    required final ThreadsFilter filter,
+    required final ThreadsSorting sorting,
+  }) = _$BookmarkImpl;
+
+  @override
+  String get id;
+  @override
+  ThreadsFilter get filter;
+  @override
+  ThreadsSorting get sorting;
+
+  /// Create a copy of Bookmark
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$BookmarkImplCopyWith<_$BookmarkImpl> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
 mixin _$ThreadsFilter {
   Map<String, String> get boardSorts => throw _privateConstructorUsedError;
   String get keywords => throw _privateConstructorUsedError;

@@ -1,25 +1,23 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:news_hub/domain/models/thread/paragraph/paragraph.dart';
 
-class Comment {
-  final String extensionPkgName;
-  final String boardId;
-  final String threadId;
-  final String postId;
-  final String id;
-  final String authorId;
-  final String authorName;
-  final List<Paragraph> contents;
-  final DateTime createdAt;
+part 'comment.freezed.dart';
+part 'comment.g.dart';
 
-  Comment({
-    required this.extensionPkgName,
-    required this.boardId,
-    required this.threadId,
-    required this.postId,
-    required this.id,
-    required this.contents,
-    required this.authorId,
-    required this.authorName,
-    required this.createdAt,
-  });
+@freezed
+class Comment with _$Comment {
+  const factory Comment({
+    required String extensionPkgName,
+    required String boardId,
+    required String threadId,
+    required String postId,
+    required String id,
+    required String authorId,
+    required String authorName,
+    required List<Paragraph> contents,
+    required DateTime createdAt,
+  }) = _Comment;
+
+  factory Comment.fromJson(Map<String, dynamic> json) =>
+      _$CommentFromJson(json);
 }

@@ -1,8 +1,13 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'health_check_result.freezed.dart';
+
 enum ServingStatus { unknown, serving, notServing, serviceUnknown }
 
-class HealthCheckResult {
-  final ServingStatus status;
-  final String? message;
-
-  HealthCheckResult({required this.status, this.message});
+@freezed
+class HealthCheckResult with _$HealthCheckResult {
+  const factory HealthCheckResult({
+    required ServingStatus status,
+    String? message,
+  }) = _HealthCheckResult;
 }

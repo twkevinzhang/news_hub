@@ -1,32 +1,48 @@
+import 'package:freezed_annotation/freezed_annotation.dart';
+
+part 'paragraph.freezed.dart';
+part 'paragraph.g.dart';
+
 enum ParagraphType { quote, replyTo, text, newLine, image, link, video }
 
-abstract class Paragraph {
-  final ParagraphType type;
-  Paragraph(this.type);
+@freezed
+sealed class Paragraph with _$Paragraph {
+  const Paragraph._();
+
+  const factory Paragraph.text({required String content}) = TextParagraph;
+  const factory Paragraph.newLine({required String symbol}) = NewLineParagraph;
+  const factory Paragraph.quote({required String content}) = QuoteParagraph;
+  const factory Paragraph.link({required String content}) = LinkParagraph;
+  const factory Paragraph.replyTo({
+    required String id,
+    required String authorName,
+    required String preview,
+  }) = ReplyToParagraph;
+
+  const factory Paragraph.image({String? thumbUrl, required String raw}) =
+      ImageParagraph;
+
+  const factory Paragraph.video({String? thumb, required String url}) =
+      VideoParagraph;
+
+  factory Paragraph.fromJson(Map<String, dynamic> json) =>
+      _$ParagraphFromJson(json);
+
+  ParagraphType get type => when(
+    text: (_) => ParagraphType.text,
+    newLine: (_) => ParagraphType.newLine,
+    quote: (_) => ParagraphType.quote,
+    link: (_) => ParagraphType.link,
+    replyTo: (_, __, ___) => ParagraphType.replyTo,
+    image: (_, __) => ParagraphType.image,
+    video: (_, __) => ParagraphType.video,
+  );
+
+  bool get isMedia => this is ImageParagraph || this is VideoParagraph;
 }
 
-abstract class MediaParagraph extends Paragraph {
-  MediaParagraph(super.type);
-}
-
-class ImageParagraph extends MediaParagraph {
-  final String? _thumb;
-  final String raw;
-
-  ImageParagraph({String? thumb, required this.raw})
-    : _thumb = thumb,
-      super(ParagraphType.image);
-
-  String thumb() {
-    return _thumb ?? raw;
-  }
-}
-
-class VideoParagraph extends MediaParagraph {
-  final String? thumb;
-  final String url;
-
-  VideoParagraph({this.thumb, required this.url}) : super(ParagraphType.video);
+extension ImageParagraphEx on ImageParagraph {
+  String thumb() => thumbUrl ?? raw;
 }
 
 extension VideoParagraphEx on VideoParagraph {
@@ -36,48 +52,12 @@ extension VideoParagraphEx on VideoParagraph {
   }
 }
 
-class TextParagraph extends Paragraph {
-  final String content;
-
-  TextParagraph({required this.content}) : super(ParagraphType.text);
-}
-
-class NewLineParagraph extends Paragraph {
-  final String symbol;
-
-  NewLineParagraph({required this.symbol}) : super(ParagraphType.newLine);
-}
-
-class QuoteParagraph extends Paragraph {
-  final String content;
-
-  QuoteParagraph({required this.content}) : super(ParagraphType.quote);
-}
-
-class ReplyToParagraph extends Paragraph {
-  final String id;
-  final String authorName;
-  final String preview;
-
-  ReplyToParagraph({
-    required this.id,
-    required this.authorName,
-    required this.preview,
-  }) : super(ParagraphType.replyTo);
-}
-
-class LinkParagraph extends Paragraph {
-  final String content;
-
-  LinkParagraph({required this.content}) : super(ParagraphType.link);
-}
-
 extension ParagraphListEx on List<Paragraph> {
   List<ImageParagraph> images() {
     return whereType<ImageParagraph>().toList();
   }
 
-  List<MediaParagraph> medias() {
-    return whereType<MediaParagraph>().toList();
+  List<Paragraph> medias() {
+    return where((p) => p.isMedia).toList();
   }
 }

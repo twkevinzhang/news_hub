@@ -1,11 +1,12 @@
-class Suggestion {
-  final String id;
-  final String keywords;
-  final DateTime latestUsedAt;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  Suggestion({
-    required this.id,
-    required this.keywords,
-    required this.latestUsedAt,
-  });
+part 'suggestion.freezed.dart';
+
+@freezed
+class Suggestion with _$Suggestion {
+  const factory Suggestion({
+    required String id,
+    required String keywords,
+    required DateTime latestUsedAt,
+  }) = _Suggestion;
 }

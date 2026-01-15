@@ -27,7 +27,7 @@ class SingleImagePostCard extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(8),
           child: SingleImagePostLayout(
-            post: thread,
+            post: thread.post,
             onParagraphClick: null,
             disablePlay: true,
           ),

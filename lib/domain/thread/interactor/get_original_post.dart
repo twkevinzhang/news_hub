@@ -57,30 +57,3 @@ class GetOriginalPost {
     }
   }
 }
-
-class ArticlePostWithExtension extends ArticlePost {
-  final Extension extension;
-  final Board board;
-
-  ArticlePostWithExtension({
-    required ArticlePost post,
-    required this.extension,
-    required this.board,
-  }) : super(
-         extensionPkgName: post.extensionPkgName,
-         boardId: post.boardId,
-         threadId: post.threadId,
-         id: post.id,
-         title: post.title,
-         url: post.url,
-         createdAt: post.createdAt,
-         authorId: post.authorId,
-         authorName: post.authorName,
-         liked: post.liked,
-         disliked: post.disliked,
-         contents: post.contents,
-         tags: post.tags,
-         latestReplyCreatedAt: post.latestReplyCreatedAt,
-         repliesCount: post.repliesCount,
-       );
-}

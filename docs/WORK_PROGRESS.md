@@ -1,102 +1,59 @@
 # News Hub 重構進度追蹤表 (WORK_PROGRESS.md)
 
-本文件紀錄重構任務的詳細進度，供 AI Agents 跨 Session 銜接使用。
+本文件紀錄重構任務的詳細進度，供 AI Agents 跨 Session 銜接使用。本進度表嚴格對應 [REFACTORING_PLAN.md](./REFACTORING_PLAN.md) 定義之任務。
 
-## 📍 目前進度摘要
+## 📍 目前進度摘要 (對照 REFACTORING_PLAN.md)
 
-- **目前階段**: 已完成所有核心 BLoC 測試補充。
-- **最近一筆變更**: 完成階段三：核心 BLoC 測試補充，補齊 41 個測試用例，共完成 5 個 BLoC 測試。
-- **目前的 Context**: 已閱讀 `GEMINI.md`, `CODE_QUALITY_REPORT.md`, `REFACTORING_PLAN.md`，並查看過檔案內容。
-
-## 📋 詳細任務狀態
-
-### 階段一：基礎清理與修復
-
-- [x] 修復 `analysis_options.yaml` (package:flutter_lints/flutter.yaml)
-- [x] 清理測試代碼中的 Warnings (dart fix + 手動清理)
-- [x] 評估 `ExpansionTileController` (確認為 Flutter 標準組件，目前維持原狀)
-
-### 階段二：Domain Models 遷移至 Freezed
-
-- [x] 遷移 `CollectionBoard` (包含 `BoardIdentity`)
-- [x] 遷移 `Collection`
-- [x] 遷移 `ExtensionMetadata` (對應檔案為 `ExtensionBoard`)
-- [x] 遷移 `Extension` (包含 `RemoteExtension` 與 `ExtensionWithBoards`)
-- [x] 執行 `make build` 並修正生成後的代碼引用
-
-### Phase 3: Core BLoC Test Coverage (Completed)
-
-補充核心 BLoC 的單元測試，提升系統穩定性與測試覆蓋率。
-
-**Key Accomplishments:**
-
-1.  **SearchFormCubit**: 補齊 13 個測試案例（關鍵字、建議聯動、搜尋提交）。
-2.  **CollectionThreadListCubit**: 補齊 7 個測試案例（多板塊聚合、骨架屏狀態、PagedListView）。
-3.  **CollectionFormCubit**: 補齊 9 個測試案例（表單驗證、名稱偵測、Sort Options 聯動）。
-4.  **ExtensionCubit**: 補齊 6 個測試案例（安裝進度流監聽、狀態同步、卸載邏輯）。
-5.  **CollectionCubit**: 補齊 6 個測試案例（WatchList 監聽、樂觀更新重排邏輯）。
-
-**Verification:**
-
-- 全域共有 94 個業務測試案例通過 (94/95 total)。
-- 唯一失敗者與重構無關 (`widget_test.dart`)。
-
-### Phase 4: Remove Deprecated APIs & Lint Cleanup (Completed)
-
-移除過時 API 調用並清理全域靜態分析警告。
-
-**Key Accomplishments:**
-
-1. **ExpansionTileController**: 根據 Flutter v3.31+ 規範，確保使用最新推薦的 `ExpansibleController` (在 `app_navigation_drawer.dart`)。
-2. **0 警告目標**: 修復了包括 `implementation_imports`, `deprecated_export_use`, `unintended_html_in_doc_comment` 在內的所有靜態分析問題。
-3. **測試優化**: 自動化與手動清理了 20+ 處測試檔案中的 `const` 與 `void` 回傳值警告。
-
-**Verification:**
-
-- `flutter analyze`: **No issues found!**
-- `flutter test`: 94 業務測試全數通過。
-
-### Phase 5: BLoC Performance Optimization (Completed)
-
-優化 BLoC 重建性能，減少不必要的 widget 重建。
-
-**Key Accomplishments:**
-
-1.  **HomeScreen 優化**:
-    - 移除了包裹整個頁面的 `BlocBuilder`
-    - 使用 `BlocSelector` 為 Drawer 精確訂閱所需狀態
-    - AppTopBar 和 body 不再受 BLoC 狀態變化影響
-2.  **CollectionThreadListScreen 優化**:
-    - 將 `ListenableBuilder` 範圍縮小，僅包裹搜尋遮罩
-    - 在搜尋遮罩中使用 `BlocSelector` 訂閱名稱與篩選條件
-    - `PagedListView` 的重建不再受搜尋模式切換影響
-3.  **ThreadDetailScreen 優化**:
-    - 將 `ReplyTo` 對話框中的 `BlocBuilder` 替換為 `BlocSelector`
-    - 移除冗餘的 `_buildDialog` 方法
-    - (AppBar 標題與 Action 已在先前完成 BlocSelector 化)
-
-**Verification:**
-
-- 手動驗證 UI 交互流暢
-- 代碼通過 `flutter analyze` 與現有業務測試
+| 任務 (Task) | 描述                         | 狀態       | 備註                                                         |
+| :---------- | :--------------------------- | :--------- | :----------------------------------------------------------- |
+| **Task 1**  | Domain Models 遷移至 Freezed | **已完成** | 全部遷移完畢                                                 |
+| **Task 2**  | 核心 BLoC 測試 (Phase 1)     | **已完成** | 補齊 SearchForm, CollectionThreadList 等 5 個核心 Cubit 測試 |
+| **Task 3**  | 移除過時 API                 | **已完成** | 替換 ExpansionTileController 並修復 0 警告                   |
+| **Task 4**  | BLoC 效能優化 (Rebuilds)     | **已完成** | 優化 Home, CollectionThreadList, ThreadDetail 三大核心頁面   |
+| **Task 5**  | 清理測試程式碼 Warnings      | **已完成** | 全域移除 const 缺失與 void 回傳警告                          |
+| **Task 6**  | 補齊其餘 BLoC 測試 (Phase 2) | **待開始** | 包含 SearchResult, BoardsPicker 等剩餘 7 個 BLoC             |
 
 ---
 
-## Current Status
+## 📋 詳細任務狀態
 
-- [x] Phase 1: Infrastructure Cleanup
-- [x] Phase 2: Domain Models Migration to Freezed
-- [x] Phase 3: Core BLoC Test Coverage
-- [x] Phase 4: Remove Deprecated APIs & Lint Cleanup
-- [x] Phase 5: BLoC Performance Optimization
+### [Task 1] Domain Models 遷移至 Freezed [x]
 
-## Next Steps
+- [x] `Collection`, `CollectionBoard`, `BoardIdentity`
+- [x] `Extension`, `RemoteExtension`, `ExtensionWithBoards`, `ExtensionMetadata`
+- [x] `Post`, `ArticlePost`, `SingleImagePost` (繼承重構為 Sealed class)
+- [x] `Paragraph` 體系 (Sealed class 遷移)
+- [x] `Bookmark`, `Board`, `Suggestion`, `HealthCheckResult`, `LogEntry`
 
-1. **其餘組件測試**: 擴展測試覆蓋率至其餘 Use Cases 與 Services。
-2. **效能基準測試**: 建立 Rebuild 監控測試案例。
+### [Task 2] 核心 BLoC 測試 (Phase 1) [x]
 
-## 📝 備註事項
+- [x] **SearchFormCubit**: 搜尋建議、集合聯動邏輯測試。
+- [x] **CollectionThreadListCubit**: 多板塊分頁聚合、骨架屏狀態測試。
+- [x] **CollectionFormCubit**: 表單驗證與名稱偵測測試。
+- [x] **ExtensionCubit**: 安裝流與狀態同步測試。
+- [x] **CollectionCubit**: 列表監聽與樂觀更新測試。
 
-- 遷移時需注意 `freezed` 的繼承限制（子類別需獨立遷移或使用合成）。
-- 遷移 Domain Models 後必須執行 `make build`。
-- `widget_test.dart` 的失敗為預設模板計數器測試，與業務邏輯無關。
+### [Task 3 & 5] 基礎改進與清理 [x]
+
+- [x] 將 `ExpansionTileController` 遷移至 `ExpansibleController` (符合 Flutter 3.31+)。
+- [x] 修正 `analysis_options.yaml` 並達成 **No issues found**。
+- [x] 清理 20+ 處測試檔案中的 `const` 與 `void` 警告。
+
+### [Task 4] BLoC 效能優化 (重構核心) [x]
+
+- [x] **HomeScreen**: 使用 `BlocSelector` 隔離 Drawer 狀態，AppBar/Body 不再無謂重建。
+- [x] **CollectionThreadListScreen**: 縮小 `ListenableBuilder` 範圍，僅針對搜尋遮罩使用 `BlocSelector`。
+- [x] **ThreadDetailScreen**: 對話框重構為 `BlocSelector` 並移除冗餘代碼。
+
+---
+
+## 🚀 接下來的路徑 (Next Steps)
+
+1. **繼續 Task 1 (高優先級)**: 遷移 `Post` 與 `Paragraph` 體系。這涉及將繼承結構改為 Freezed 的聯集類型 (Sealed classes)，改動量大。
+2. **執行 Task 6**: 補齊剩餘 BLoCs 的測試覆蓋。
+
+## 📝 備註 (給下一個 Agent)
+
+- 執行 `make build` 前確保 `freezed` 的繼承關係處理正確。
+- 目前 `flutter analyze` 應為乾淨狀態，提交前必須維持此狀態。
+- 業務測試 94/95 通過 (1 個 widget_test.dart 失敗屬預期)。

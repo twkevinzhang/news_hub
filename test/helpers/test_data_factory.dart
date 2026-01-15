@@ -1,5 +1,4 @@
 import 'package:news_hub/domain/models/models.dart';
-import 'package:news_hub/domain/thread/interactor/get_original_post.dart';
 
 class TestDataFactory {
   static const tExtensionPkgName = 'com.example.ext';

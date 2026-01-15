@@ -20,9 +20,9 @@ mixin _$ThreadDetailState {
   String get extensionPkgName => throw _privateConstructorUsedError;
   String get boardId => throw _privateConstructorUsedError;
   String get threadId => throw _privateConstructorUsedError;
-  Map<String, Result<ArticlePost>> get threadMap =>
+  Map<String, Result<ArticlePostWithExtension>> get threadMap =>
       throw _privateConstructorUsedError;
-  Map<String, Result<List<ArticlePost>>> get repliesMap =>
+  Map<String, Result<List<ArticlePostWithExtension>>> get repliesMap =>
       throw _privateConstructorUsedError;
   Map<String, Result<List<Comment>>> get commentsMap =>
       throw _privateConstructorUsedError;
@@ -45,8 +45,8 @@ abstract class $ThreadDetailStateCopyWith<$Res> {
     String extensionPkgName,
     String boardId,
     String threadId,
-    Map<String, Result<ArticlePost>> threadMap,
-    Map<String, Result<List<ArticlePost>>> repliesMap,
+    Map<String, Result<ArticlePostWithExtension>> threadMap,
+    Map<String, Result<List<ArticlePostWithExtension>>> repliesMap,
     Map<String, Result<List<Comment>>> commentsMap,
   });
 }
@@ -90,11 +90,11 @@ class _$ThreadDetailStateCopyWithImpl<$Res, $Val extends ThreadDetailState>
             threadMap: null == threadMap
                 ? _value.threadMap
                 : threadMap // ignore: cast_nullable_to_non_nullable
-                      as Map<String, Result<ArticlePost>>,
+                      as Map<String, Result<ArticlePostWithExtension>>,
             repliesMap: null == repliesMap
                 ? _value.repliesMap
                 : repliesMap // ignore: cast_nullable_to_non_nullable
-                      as Map<String, Result<List<ArticlePost>>>,
+                      as Map<String, Result<List<ArticlePostWithExtension>>>,
             commentsMap: null == commentsMap
                 ? _value.commentsMap
                 : commentsMap // ignore: cast_nullable_to_non_nullable
@@ -118,8 +118,8 @@ abstract class _$$ThreadDetailStateImplCopyWith<$Res>
     String extensionPkgName,
     String boardId,
     String threadId,
-    Map<String, Result<ArticlePost>> threadMap,
-    Map<String, Result<List<ArticlePost>>> repliesMap,
+    Map<String, Result<ArticlePostWithExtension>> threadMap,
+    Map<String, Result<List<ArticlePostWithExtension>>> repliesMap,
     Map<String, Result<List<Comment>>> commentsMap,
   });
 }
@@ -162,11 +162,11 @@ class __$$ThreadDetailStateImplCopyWithImpl<$Res>
         threadMap: null == threadMap
             ? _value._threadMap
             : threadMap // ignore: cast_nullable_to_non_nullable
-                  as Map<String, Result<ArticlePost>>,
+                  as Map<String, Result<ArticlePostWithExtension>>,
         repliesMap: null == repliesMap
             ? _value._repliesMap
             : repliesMap // ignore: cast_nullable_to_non_nullable
-                  as Map<String, Result<List<ArticlePost>>>,
+                  as Map<String, Result<List<ArticlePostWithExtension>>>,
         commentsMap: null == commentsMap
             ? _value._commentsMap
             : commentsMap // ignore: cast_nullable_to_non_nullable
@@ -185,8 +185,9 @@ class _$ThreadDetailStateImpl
     required this.extensionPkgName,
     required this.boardId,
     required this.threadId,
-    required final Map<String, Result<ArticlePost>> threadMap,
-    required final Map<String, Result<List<ArticlePost>>> repliesMap,
+    required final Map<String, Result<ArticlePostWithExtension>> threadMap,
+    required final Map<String, Result<List<ArticlePostWithExtension>>>
+    repliesMap,
     final Map<String, Result<List<Comment>>> commentsMap = const {},
   }) : _threadMap = threadMap,
        _repliesMap = repliesMap,
@@ -198,17 +199,17 @@ class _$ThreadDetailStateImpl
   final String boardId;
   @override
   final String threadId;
-  final Map<String, Result<ArticlePost>> _threadMap;
+  final Map<String, Result<ArticlePostWithExtension>> _threadMap;
   @override
-  Map<String, Result<ArticlePost>> get threadMap {
+  Map<String, Result<ArticlePostWithExtension>> get threadMap {
     if (_threadMap is EqualUnmodifiableMapView) return _threadMap;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_threadMap);
   }
 
-  final Map<String, Result<List<ArticlePost>>> _repliesMap;
+  final Map<String, Result<List<ArticlePostWithExtension>>> _repliesMap;
   @override
-  Map<String, Result<List<ArticlePost>>> get repliesMap {
+  Map<String, Result<List<ArticlePostWithExtension>>> get repliesMap {
     if (_repliesMap is EqualUnmodifiableMapView) return _repliesMap;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_repliesMap);
@@ -293,8 +294,9 @@ abstract class _ThreadDetailState implements ThreadDetailState {
     required final String extensionPkgName,
     required final String boardId,
     required final String threadId,
-    required final Map<String, Result<ArticlePost>> threadMap,
-    required final Map<String, Result<List<ArticlePost>>> repliesMap,
+    required final Map<String, Result<ArticlePostWithExtension>> threadMap,
+    required final Map<String, Result<List<ArticlePostWithExtension>>>
+    repliesMap,
     final Map<String, Result<List<Comment>>> commentsMap,
   }) = _$ThreadDetailStateImpl;
 
@@ -305,9 +307,9 @@ abstract class _ThreadDetailState implements ThreadDetailState {
   @override
   String get threadId;
   @override
-  Map<String, Result<ArticlePost>> get threadMap;
+  Map<String, Result<ArticlePostWithExtension>> get threadMap;
   @override
-  Map<String, Result<List<ArticlePost>>> get repliesMap;
+  Map<String, Result<List<ArticlePostWithExtension>>> get repliesMap;
   @override
   Map<String, Result<List<Comment>>> get commentsMap;
 

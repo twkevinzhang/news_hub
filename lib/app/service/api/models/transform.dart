@@ -119,43 +119,31 @@ extension ParagraphTransform on domain_pb.Paragraph {
 
 extension ImageParagraphTransform on domain_pb.ImageParagraph {
   domain.ImageParagraph toImageParagraphDomain() {
-    return domain.ImageParagraph(
-      thumb: thumb,
-      raw: raw,
-    );
+    return domain.ImageParagraph(thumbUrl: thumb, raw: raw);
   }
 }
 
 extension VideoParagraphTransform on domain_pb.VideoParagraph {
   domain.VideoParagraph toVideoParagraphDomain() {
-    return domain.VideoParagraph(
-      thumb: thumb,
-      url: url,
-    );
+    return domain.VideoParagraph(thumb: thumb, url: url);
   }
 }
 
 extension TextParagraphTransform on domain_pb.TextParagraph {
   domain.TextParagraph toTextParagraphDomain() {
-    return domain.TextParagraph(
-      content: content,
-    );
+    return domain.TextParagraph(content: content);
   }
 }
 
 extension NewLineParagraphTransform on domain_pb.NewLineParagraph {
   domain.NewLineParagraph toNewLineParagraphDomain() {
-    return domain.NewLineParagraph(
-      symbol: symbol,
-    );
+    return domain.NewLineParagraph(symbol: symbol);
   }
 }
 
 extension QuoteParagraphTransform on domain_pb.QuoteParagraph {
   domain.QuoteParagraph toQuoteParagraphDomain() {
-    return domain.QuoteParagraph(
-      content: content,
-    );
+    return domain.QuoteParagraph(content: content);
   }
 }
 
@@ -171,9 +159,7 @@ extension ReplyToParagraphTransform on domain_pb.ReplyToParagraph {
 
 extension LinkParagraphTransform on domain_pb.LinkParagraph {
   domain.LinkParagraph toLinkParagraphDomain() {
-    return domain.LinkParagraph(
-      content: content,
-    );
+    return domain.LinkParagraph(content: content);
   }
 }
 
@@ -226,10 +212,7 @@ extension HealthCheckResTransform on pb.HealthCheckRes {
       3 => domain.ServingStatus.serviceUnknown,
       _ => throw Exception('Unknown status value: ${status.value}'),
     };
-    return domain.HealthCheckResult(
-      status: _status,
-      message: message,
-    );
+    return domain.HealthCheckResult(status: _status, message: message);
   }
 }
 

@@ -1,7 +1,7 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:news_hub/domain/thread/interactor/get_original_post.dart';
+
 import 'package:news_hub/locator.dart';
 import 'package:news_hub/presentation/pages/thread/detail/bloc/thread_detail_cubit.dart';
 import 'package:news_hub/presentation/components/cards/post/article_post_layout.dart';
@@ -46,7 +46,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
             BlocSelector<
               ThreadDetailCubit,
               ThreadDetailState,
-              Result<domain.ArticlePost>?
+              Result<domain.ArticlePostWithExtension>?
             >(
               selector: (state) => state.threadMap[state.threadId],
               builder: (context, threadResult) {
@@ -62,7 +62,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
           BlocSelector<
             ThreadDetailCubit,
             ThreadDetailState,
-            Result<domain.ArticlePost>?
+            Result<domain.ArticlePostWithExtension>?
           >(
             selector: (state) => state.threadMap[state.threadId],
             builder: (context, threadResult) {
@@ -113,41 +113,42 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
           ),
         ],
       ),
-      body: PagedListView<int, ArticlePostWithExtension>(
+      body: PagedListView<int, domain.ArticlePostWithExtension>(
         pagingController: context.read<ThreadDetailCubit>().pagingController,
-        builderDelegate: PagedChildBuilderDelegate<ArticlePostWithExtension>(
-          itemBuilder: (context, post, index) => ThreadPostItem(
-            post: post,
-            index: index,
-            onRepliesClick: index == 0
-                ? null
-                : () => _onRepliesClick(
-                    context,
-                    context.read<ThreadDetailCubit>(),
-                    post,
-                  ),
-            onRepliesTreeClick: () => _onRepliesTreeClick(
-              context,
-              context.read<ThreadDetailCubit>(),
-              post,
+        builderDelegate:
+            PagedChildBuilderDelegate<domain.ArticlePostWithExtension>(
+              itemBuilder: (context, post, index) => ThreadPostItem(
+                post: post,
+                index: index,
+                onRepliesClick: index == 0
+                    ? null
+                    : () => _onRepliesClick(
+                        context,
+                        context.read<ThreadDetailCubit>(),
+                        post,
+                      ),
+                onRepliesTreeClick: () => _onRepliesTreeClick(
+                  context,
+                  context.read<ThreadDetailCubit>(),
+                  post,
+                ),
+                onParagraphClick: (paragraph) => _handleParagraphClick(
+                  context,
+                  context.read<ThreadDetailCubit>(),
+                  post,
+                  paragraph,
+                ),
+              ),
+              noItemsFoundIndicatorBuilder: (context) =>
+                  const Center(child: Text("Empty")),
+              firstPageProgressIndicatorBuilder: (context) =>
+                  const LoadingIndicator(),
+              newPageProgressIndicatorBuilder: (context) =>
+                  const LoadingIndicator(),
+              noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
+              transitionDuration: const Duration(milliseconds: 500),
+              animateTransitions: true,
             ),
-            onParagraphClick: (paragraph) => _handleParagraphClick(
-              context,
-              context.read<ThreadDetailCubit>(),
-              post,
-              paragraph,
-            ),
-          ),
-          noItemsFoundIndicatorBuilder: (context) =>
-              const Center(child: Text("Empty")),
-          firstPageProgressIndicatorBuilder: (context) =>
-              const LoadingIndicator(),
-          newPageProgressIndicatorBuilder: (context) =>
-              const LoadingIndicator(),
-          noMoreItemsIndicatorBuilder: (context) => const SizedBox(),
-          transitionDuration: const Duration(milliseconds: 500),
-          animateTransitions: true,
-        ),
       ),
     );
   }
@@ -155,7 +156,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
   void _handleParagraphClick(
     BuildContext context,
     ThreadDetailCubit cubit,
-    domain.ArticlePost post,
+    domain.ArticlePostWithExtension post,
     domain.Paragraph paragraph,
   ) {
     if (paragraph is domain.LinkParagraph) {
@@ -194,7 +195,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
                 BlocSelector<
                   ThreadDetailCubit,
                   ThreadDetailState,
-                  Result<domain.ArticlePost>?
+                  Result<domain.ArticlePostWithExtension>?
                 >(
                   selector: (state) => state.threadMap[paragraph.id],
                   builder: (context, result) {
@@ -225,18 +226,18 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
   void _onImageParagraphClick(
     BuildContext context,
     ThreadDetailCubit cubit,
-    domain.ArticlePost post,
+    domain.ArticlePostWithExtension post,
     domain.ImageParagraph paragraph,
   ) {
-    final medias = post.contents.medias();
+    final medias = post.post.contents.medias();
     final index = medias.indexOf(paragraph);
-    _buildPostGallery(context, cubit, post, index).show();
+    _buildPostGallery(context, cubit, post.post, index).show();
   }
 
   void _onRepliesClick(
     BuildContext context,
     ThreadDetailCubit cubit,
-    domain.ArticlePost post,
+    domain.ArticlePostWithExtension post,
   ) {
     cubit.loadReplies(post.id);
     // 傳統回覆對話框 (可選，目前保留)
@@ -251,7 +252,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
   void _onRepliesTreeClick(
     BuildContext context,
     ThreadDetailCubit cubit,
-    domain.ArticlePost post,
+    domain.ArticlePostWithExtension post,
   ) {
     cubit.loadReplies(post.id);
     showModalBottomSheet(
@@ -266,7 +267,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
   Widget _buildRepliesBottomSheet(
     BuildContext context,
     ThreadDetailCubit cubit,
-    domain.ArticlePost post,
+    domain.ArticlePostWithExtension post,
   ) {
     // 實作巴哈風格的回覆樹 Bottom Sheet (使用 DraggableScrollableSheet)
     return DraggableScrollableSheet(
@@ -295,7 +296,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
                     BlocSelector<
                       ThreadDetailCubit,
                       ThreadDetailState,
-                      Result<List<domain.ArticlePost>>?
+                      Result<List<domain.ArticlePostWithExtension>>?
                     >(
                       selector: (state) => state.repliesMap[post.id],
                       builder: (context, repliesResult) {
@@ -406,7 +407,7 @@ class ThreadDetailScreen extends StatelessWidget implements AutoRouteWrapper {
 }
 
 class ThreadPostItem extends StatelessWidget {
-  final domain.ArticlePost post;
+  final domain.ArticlePostWithExtension post;
   final int index;
   final VoidCallback? onRepliesClick;
   final VoidCallback? onRepliesTreeClick;
@@ -432,14 +433,14 @@ class ThreadPostItem extends StatelessWidget {
     final comments =
         commentsResult?.maybeWhen(
           completed: (data) => data,
-          orElse: () => post.top5Comments,
+          orElse: () => post.post.top5Comments,
         ) ??
-        post.top5Comments;
+        post.post.top5Comments;
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: ArticlePostLayout(
-        post: post,
+        post: post.post,
         floor: index == -1 ? '樓主' : (index == 0 ? '樓主' : '${index + 1} 樓'),
         comments: comments,
         isCommentsLoading:

@@ -2,7 +2,7 @@ import 'package:injectable/injectable.dart';
 import 'package:news_hub/domain/collection/board_repository.dart';
 import 'package:news_hub/domain/thread/repository.dart';
 import 'package:news_hub/domain/extension/interactor/get_installed_extension.dart';
-import 'package:news_hub/domain/thread/interactor/get_original_post.dart';
+
 import 'package:news_hub/shared/failures.dart';
 import 'package:news_hub/shared/models.dart';
 import 'package:news_hub/domain/models/models.dart';

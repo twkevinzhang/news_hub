@@ -3,23 +3,24 @@ import 'package:news_hub/domain/models/extension/extension.dart';
 import 'package:news_hub/domain/models/board/board.dart';
 import 'package:news_hub/domain/models/thread/post/post.dart';
 
-part 'single_image_post_with_extension.freezed.dart';
+part 'article_post_with_extension.freezed.dart';
 
 @freezed
-class SingleImagePostWithExtension with _$SingleImagePostWithExtension {
-  const SingleImagePostWithExtension._();
+class ArticlePostWithExtension with _$ArticlePostWithExtension {
+  const ArticlePostWithExtension._();
 
-  const factory SingleImagePostWithExtension({
-    required SingleImagePost post,
+  const factory ArticlePostWithExtension({
+    required ArticlePost post,
     required Extension extension,
     required Board board,
-  }) = _SingleImagePostWithExtension;
+  }) = _ArticlePostWithExtension;
 
-  // Delegate fields of SingleImagePost for convenience
+  // Delegate fields of ArticlePost for convenience
   String get id => post.id;
   String get threadId => post.threadId;
   String get extensionPkgName => post.extensionPkgName;
   String get boardId => post.boardId;
+  String? get url => post.url;
   String? get title => post.title;
   String get authorName => post.authorName;
   DateTime get createdAt => post.createdAt;

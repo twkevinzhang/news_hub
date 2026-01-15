@@ -21,8 +21,8 @@ class ThreadDetailState with _$ThreadDetailState {
     required String extensionPkgName,
     required String boardId,
     required String threadId,
-    required Map<String, Result<ArticlePost>> threadMap,
-    required Map<String, Result<List<ArticlePost>>> repliesMap,
+    required Map<String, Result<ArticlePostWithExtension>> threadMap,
+    required Map<String, Result<List<ArticlePostWithExtension>>> repliesMap,
     @Default({}) Map<String, Result<List<Comment>>> commentsMap,
   }) = _ThreadDetailState;
 }
@@ -181,7 +181,7 @@ class ThreadDetailCubit extends Cubit<ThreadDetailState> {
           );
           if (post != null) {
             final updatedPost = post.copyWith(
-              top5Comments: comments.take(5).toList(),
+              post: post.post.copyWith(top5Comments: comments.take(5).toList()),
             );
             final updatedThreadMap = Map.of(state.threadMap);
             updatedThreadMap[postId] = Result.completed(updatedPost);
