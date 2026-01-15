@@ -82,8 +82,6 @@ class _SearchFormScaffold extends StatelessWidget {
       ),
       body: BlocBuilder<SearchFormCubit, SearchFormState>(
         builder: (context, state) {
-          final suggestions = state.resultFilteredSuggestions;
-
           return Column(
             children: [
               Padding(
@@ -95,27 +93,52 @@ class _SearchFormScaffold extends StatelessWidget {
                   onClear: () => cubit.clearKeywords(),
                   onSearch: () {
                     cubit.submit();
-                    handleSearch(cubit.state.filter);
+                    handleSearch(state.filter);
                   },
                 ),
               ),
               Expanded(
-                child: ListView.separated(
-                  itemCount: suggestions.length,
-                  separatorBuilder: (context, index) =>
-                      const Divider(height: 1, indent: 16, endIndent: 16),
-                  itemBuilder: (context, index) {
-                    final suggestion = suggestions[index];
-                    return ListTile(
-                      leading: const Icon(Icons.history, size: 20),
-                      title: Text(suggestion.keywords),
-                      onTap: () {
-                        cubit.clickSuggestion(suggestion);
-                        cubit.submit();
-                        handleSearch(cubit.state.filter);
-                      },
+                child: state.suggestions.when(
+                  initial: () => const SizedBox.shrink(),
+                  loading: () =>
+                      const Center(child: CircularProgressIndicator()),
+                  completed: (suggestions) {
+                    if (suggestions.isEmpty) return const SizedBox.shrink();
+                    return ListView(
+                      children: [
+                        ...suggestions.map(
+                          (suggestion) => Column(
+                            key: ValueKey(suggestion.id),
+                            children: [
+                              ListTile(
+                                leading: const Icon(Icons.history, size: 20),
+                                title: Text(suggestion.keywords),
+                                trailing: IconButton(
+                                  icon: const Icon(Icons.clear, size: 18),
+                                  onPressed: () =>
+                                      cubit.removeSuggestion(suggestion.id),
+                                ),
+                                onTap: () => cubit.clickSuggestion(suggestion),
+                              ),
+                              const Divider(
+                                height: 1,
+                                indent: 16,
+                                endIndent: 16,
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 8.0),
+                          child: TextButton(
+                            onPressed: () => cubit.clearAllSuggestions(),
+                            child: const Text('清除紀錄'),
+                          ),
+                        ),
+                      ],
                     );
                   },
+                  error: (e) => Center(child: Text(e.toString())),
                 ),
               ),
             ],

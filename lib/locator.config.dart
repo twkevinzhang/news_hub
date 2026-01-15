@@ -79,6 +79,10 @@ import 'package:news_hub/domain/repo/interactor/list_repos.dart' as _i608;
 import 'package:news_hub/domain/repo/interactor/remove_repo.dart' as _i154;
 import 'package:news_hub/domain/repo/repository.dart' as _i989;
 import 'package:news_hub/domain/sidecar/repository.dart' as _i611;
+import 'package:news_hub/domain/suggestion/interactor/delete_all_suggestions.dart'
+    as _i355;
+import 'package:news_hub/domain/suggestion/interactor/delete_suggestion.dart'
+    as _i202;
 import 'package:news_hub/domain/suggestion/interactor/insert_suggestion.dart'
     as _i446;
 import 'package:news_hub/domain/suggestion/interactor/list_suggestions.dart'
@@ -228,6 +232,16 @@ extension GetItInjectableX on _i174.GetIt {
         suggestionRepo: gh<_i678.SuggestionRepository>(),
       ),
     );
+    gh.lazySingleton<_i355.DeleteAllSuggestions>(
+      () => _i355.DeleteAllSuggestions(
+        suggestionRepo: gh<_i678.SuggestionRepository>(),
+      ),
+    );
+    gh.lazySingleton<_i202.DeleteSuggestion>(
+      () => _i202.DeleteSuggestion(
+        suggestionRepo: gh<_i678.SuggestionRepository>(),
+      ),
+    );
     gh.factory<_i74.GetCollections>(
       () => _i74.GetCollections(gh<_i914.CollectionRepository>()),
     );
@@ -359,6 +373,16 @@ extension GetItInjectableX on _i174.GetIt {
         listInstalledExtensions: gh<_i351.ListInstalledExtensions>(),
       ),
     );
+    gh.factory<_i919.SearchFormCubit>(
+      () => _i919.SearchFormCubit(
+        listSuggestions: gh<_i643.ListSuggestions>(),
+        updateSuggestionLatestUsedAt: gh<_i650.UpdateSuggestionLatestUsedAt>(),
+        insertSuggestion: gh<_i446.InsertSuggestion>(),
+        deleteSuggestion: gh<_i202.DeleteSuggestion>(),
+        deleteAllSuggestions: gh<_i355.DeleteAllSuggestions>(),
+        listThreadList: gh<_i1012.SearchThreads>(),
+      ),
+    );
     gh.factory<_i274.BoardsPickerCubit>(
       () => _i274.BoardsPickerCubit(gh<_i351.ListInstalledExtensions>()),
     );
@@ -402,14 +426,6 @@ extension GetItInjectableX on _i174.GetIt {
         listRepos: gh<_i608.ListRepos>(),
         addRepo: gh<_i1048.AddRepo>(),
         removeRepo: gh<_i154.RemoveRepo>(),
-      ),
-    );
-    gh.factory<_i919.SearchFormCubit>(
-      () => _i919.SearchFormCubit(
-        listSuggestions: gh<_i643.ListSuggestions>(),
-        updateSuggestionLatestUsedAt: gh<_i650.UpdateSuggestionLatestUsedAt>(),
-        insertSuggestion: gh<_i446.InsertSuggestion>(),
-        listThreadList: gh<_i1012.SearchThreads>(),
       ),
     );
     return this;

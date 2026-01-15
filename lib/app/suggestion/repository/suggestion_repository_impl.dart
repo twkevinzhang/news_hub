@@ -11,9 +11,7 @@ import 'package:uuid/uuid.dart';
 class SuggestionRepositoryImpl implements SuggestionRepository {
   final AppDatabase _db;
 
-  SuggestionRepositoryImpl({
-    required AppDatabase db,
-  }) : _db = db;
+  SuggestionRepositoryImpl({required AppDatabase db}) : _db = db;
 
   @override
   Stream<int> count() {
@@ -23,6 +21,11 @@ class SuggestionRepositoryImpl implements SuggestionRepository {
   @override
   Future<void> delete(String id) async {
     await (_db.delete(_db.suggestions)..where((tbl) => tbl.id.equals(id))).go();
+  }
+
+  @override
+  Future<void> deleteAll() async {
+    await _db.delete(_db.suggestions).go();
   }
 
   @override
@@ -43,29 +46,23 @@ class SuggestionRepositoryImpl implements SuggestionRepository {
 
   @override
   Stream<List<domain.Suggestion>> watchList() {
-    return _db.select(_db.suggestions).watch().map((l) => l.map((s) => s.toDomain()).toList());
-  }
-
-  @override
-  Future<domain.Suggestion> upsert({required String keywords}) async {
-    final suggestion = SuggestionsCompanion(
-      id: Value(const Uuid().v4()),
-      keywords: Value(keywords),
-    );
-    await _db.into(_db.suggestions).insertOnConflictUpdate(suggestion);
-    return get(suggestion.id.value);
+    return _db
+        .select(_db.suggestions)
+        .watch()
+        .map((l) => l.map((s) => s.toDomain()).toList());
   }
 
   Future<domain.Suggestion> get(String id) async {
-    final suggestion = await (_db.select(_db.suggestions)..where((tbl) => tbl.id.equals(id))).getSingleOrNull();
+    final suggestion = await (_db.select(
+      _db.suggestions,
+    )..where((tbl) => tbl.id.equals(id))).getSingleOrNull();
     if (suggestion == null) throw NotFoundException();
     return suggestion.toDomain();
   }
 
   @override
   Future<void> updateLatestUsedAt(String id) {
-    return (_db.update(_db.suggestions)..where((tbl) => tbl.id.equals(id))).write(SuggestionsCompanion(
-      latestUsedAt: Value(DateTime.now()),
-    ));
+    return (_db.update(_db.suggestions)..where((tbl) => tbl.id.equals(id)))
+        .write(SuggestionsCompanion(latestUsedAt: Value(DateTime.now())));
   }
 }

@@ -7,15 +7,11 @@ abstract class SuggestionRepository {
 
   Stream<int> count();
 
-  Future<void> insert({
-    required String keywords,
-  });
-
-  Future<Suggestion> upsert({
-    required String keywords,
-  });
+  Future<void> insert({required String keywords});
 
   Future<void> updateLatestUsedAt(String id);
 
   Future<void> delete(String id);
+
+  Future<void> deleteAll();
 }
