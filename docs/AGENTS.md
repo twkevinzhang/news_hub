@@ -2,6 +2,33 @@
 
 本文件為 AI Agent 在本 repository 中工作時的指導文件。
 
+## 📚 重要文檔引用
+
+**在開始任何工作前，AI Agent 必須先熟悉以下文檔：**
+
+1. **[CONTRIBUTING.md](../CONTRIBUTING.md)** - 貢獻指南（必讀）
+   - 完整的 coding standards（Flutter/Dart 和 Python）
+   - **Commit message 規範（Angular Convention）**
+   - **Scope 清單**（20+ 個有效 scopes）
+   - Branch naming 規範
+   - PR 流程和 code review 指南
+
+2. **[docs/DEVELOPMENT.md](./DEVELOPMENT.md)** - 開發者指南
+   - 快速上手、架構概覽
+   - 開發工作流程和常用指令
+   - Troubleshooting
+
+3. **本文件 (AGENTS.md)** - AI 特定指令
+   - AI 開發流程規範
+   - 自我審計協議
+   - 效能要求和任務檢查清單
+
+**優先級：** CONTRIBUTING.md > DEVELOPMENT.md > AGENTS.md
+
+當規範有衝突時，以 CONTRIBUTING.md 為準。
+
+---
+
 ## 專案概覽
 
 News Hub 是一個使用 Flutter(前端)和 Python(後端 sidecar 服務)構建的多論壇瀏覽應用。應用允許用戶通過動態安裝的擴展功能瀏覽多個論壇,Flutter 應用與 Python sidecar 之間通過 gRPC 進行通信。
@@ -189,15 +216,40 @@ make run-remote SIDECAR_HOST=my-server.local  # 連接到主機名/mDNS
 
 2. **版本控制**
 
+   **⚠️ CRITICAL: 必須遵循 [CONTRIBUTING.md](../CONTRIBUTING.md) 中的 Commit Message Guidelines**
+
    - 功能開發任務：
 
      - 每完成一個獨立功能或重大修改後，必須執行 git commit。
-     - Commit 時使用指定作者
-       - 如果指定 twkevinzhang, 則使用 `git commit --author="twkevinzhang <twkevinzhang@gmail.com>" -m "commit message"`
-       - 如果指定 Gemini 3 Flash, 則使用 `git commit --author="Gemini 3 Flash <google-bot@users.noreply.github.com>" -m "commit message"`
-       - 如果指定 Sonnet 4.5, 則使用 `git commit --author="Sonnet 4.5 <noreply@anthropic.com>" -m "commit message"`
-     - Commit message 應使用英文清楚描述變更內容，**必須包含標題與詳細的內文說明**（標題與內文間需有空行分隔）。
-     - Commit message 格式應該遵循 Conventional Commits: https://www.conventionalcommits.org/en/v1.0.0-beta.4/，且內容需詳細列出具體改動點。
+
+     - **Commit 格式**（Angular Convention）：
+       ```
+       <type>(<scope>): <subject>
+
+       <body>
+
+       <footer>
+       ```
+
+     - **必須使用有效的 scope**（詳見 CONTRIBUTING.md）：
+       - Flutter: `domain`, `app`, `presentation`, `ui`, `router`, `database`, `api`
+       - Python: `sidecar`, `extension`, `sidecar-domain`, `sidecar-infra`, `grpc`
+       - 通用: `proto`, `docs`, `deps`, `config`, `ci`, `build`
+
+     - **Commit 時使用指定作者**：
+       - twkevinzhang: `git commit --author="twkevinzhang <twkevinzhang@gmail.com>"`
+       - Gemini 3 Flash: `git commit --author="Gemini 3 Flash <google-bot@users.noreply.github.com>"`
+       - Sonnet 4.5: `git commit --author="Sonnet 4.5 <noreply@anthropic.com>"`
+
+     - **Subject 規則**：
+       - 使用祈使句（imperative mood）："add" 而非 "added"
+       - 不要大寫首字母
+       - 不要句點結尾
+       - 最多 72 字元
+
+     - **Body**：必須包含詳細說明（標題與內文間需有空行分隔）
+
+     - **範例**（參考 CONTRIBUTING.md 的 Good Commits 部分）
 
    - Bug 修復任務 (豁免條款)：
 
@@ -235,7 +287,9 @@ make run-remote SIDECAR_HOST=my-server.local  # 連接到主機名/mDNS
 
 ### 代碼品質規範
 
-6. **Clean Code 實踐細則**
+**📖 完整規範請參閱 [CONTRIBUTING.md - Coding Standards](../CONTRIBUTING.md#coding-standards)**
+
+6. **Clean Code 實踐細則**（摘要）
 
    - **命名規範**:
 
@@ -266,6 +320,18 @@ make run-remote SIDECAR_HOST=my-server.local  # 連接到主機名/mDNS
      - 使用 `Either`、`Result` 等類型處理可預期的錯誤
      - 異常只用於真正的異常情況
      - 錯誤信息應該有意義,能指導問題解決
+
+   **Flutter/Dart 特定規範**（詳見 CONTRIBUTING.md）:
+   - BLoC State 必須使用 `freezed`（domain models 可用 plain class）
+   - 使用 `const` constructors
+   - Private 欄位用 `_` 前綴
+   - Domain 層依賴限制
+
+   **Python 特定規範**（詳見 CONTRIBUTING.md）:
+   - 使用 **Black** 自動格式化（line length: 88）
+   - 所有函數必須有 type hints
+   - Google-style docstrings
+   - snake_case 命名
 
 ### 架構設計規範
 
@@ -451,6 +517,8 @@ Dart formatter 使用 160 字符頁寬 (見 `analysis_options.yaml`)。不要在
 
 ## 任務完成檢查清單
 
+**📋 完整檢查清單請參閱 [CONTRIBUTING.md - PR Checklist](../CONTRIBUTING.md#pr-checklist)**
+
 在宣告任務完成前,必須逐項確認:
 
 ### 代碼質量
@@ -482,7 +550,10 @@ Dart formatter 使用 160 字符頁寬 (見 `analysis_options.yaml`)。不要在
 
 - [ ] 已執行 git commit (使用指定 author)
 - [ ] Commit message 清楚描述變更內容
-- [ ] Commit message 遵循 Conventional Commits 格式
+- [ ] Commit message 遵循 Angular Convention（見 CONTRIBUTING.md）
+- [ ] 使用了有效的 scope（見 CONTRIBUTING.md scope 清單）
+- [ ] Subject 使用祈使句、不大寫、不句點
+- [ ] Body 包含詳細說明
 
 ### 關於修復任務的指令，AI 應自我審計：
 
