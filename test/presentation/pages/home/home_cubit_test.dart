@@ -6,7 +6,6 @@ import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/domain/sidecar/repository.dart';
 import 'package:news_hub/presentation/components/forms/thread-search/search_mode_notifier.dart';
 import 'package:news_hub/presentation/pages/home/home_cubit.dart';
-import 'package:auto_route/auto_route.dart';
 
 class MockCollectionRepository extends Mock implements CollectionRepository {}
 
@@ -14,17 +13,7 @@ class MockSidecarRepository extends Mock implements SidecarRepository {}
 
 class MockSearchModeNotifier extends Mock implements SearchModeNotifier {}
 
-class MockRouteData extends Mock implements RouteData {}
-
-class MockStackRouter extends Mock implements StackRouter {}
-
-class FakePageRouteInfo extends Fake implements PageRouteInfo {}
-
 void main() {
-  setUpAll(() {
-    registerFallbackValue(FakePageRouteInfo());
-  });
-
   late HomeCubit cubit;
   late MockCollectionRepository mockCollectionRepo;
   late MockSidecarRepository mockSidecarRepo;
@@ -39,7 +28,9 @@ void main() {
     when(
       () => mockCollectionRepo.watchList(),
     ).thenAnswer((_) => const Stream.empty());
-    when(() => mockSidecarRepo.watchHealth()).thenAnswer((_) => const Stream.empty());
+    when(
+      () => mockSidecarRepo.watchHealth(),
+    ).thenAnswer((_) => const Stream.empty());
 
     cubit = HomeCubit(
       mockCollectionRepo,
@@ -102,6 +93,23 @@ void main() {
     );
 
     blocTest<HomeCubit, HomeState>(
+      'emits sidecar failure when subscription errors',
+      build: () {
+        when(
+          () => mockSidecarRepo.watchHealth(),
+        ).thenAnswer((_) => Stream.error(Exception('fail')));
+        return cubit;
+      },
+      act: (cubit) => cubit.init(),
+      expect: () => [
+        const HomeState(
+          sidecarStatus: SidecarConnectionState.failed,
+          sidecarMessage: 'Connection error: Exception: fail',
+        ),
+      ],
+    );
+
+    blocTest<HomeCubit, HomeState>(
       'toggleCollectionExpansion updates expandedCollectionId',
       build: () => cubit,
       seed: () => const HomeState(expandedCollectionId: null),
@@ -117,17 +125,9 @@ void main() {
       expect: () => [const HomeState(expandedCollectionId: null)],
     );
 
-    test(
-      'navigateToFirstCollection calls router.replace with correct route',
-      () {
-        final mockRouter = MockStackRouter();
-        when(() => mockRouter.replace(any())).thenAnswer((_) async => null);
-
-        when(
-          () => mockCollectionRepo.watchList(),
-        ).thenAnswer((_) => Stream.value([tCollection]));
-        cubit.init();
-      },
-    );
+    test('triggerSearch enters search mode', () {
+      cubit.triggerSearch();
+      verify(() => mockSearchModeNotifier.enterSearchMode()).called(1);
+    });
   });
 }

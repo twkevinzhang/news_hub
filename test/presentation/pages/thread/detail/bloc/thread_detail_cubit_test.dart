@@ -7,6 +7,8 @@ import 'package:news_hub/domain/thread/interactor/list_replies.dart';
 import 'package:news_hub/presentation/pages/thread/detail/bloc/thread_detail_cubit.dart';
 import 'package:news_hub/shared/failures.dart';
 import 'package:news_hub/shared/models.dart';
+import 'package:news_hub/domain/models/models.dart';
+
 import '../../../../../helpers/test_data_factory.dart';
 
 class MockGetOriginalPost extends Mock implements GetOriginalPost {}
@@ -190,5 +192,73 @@ void main() {
       cubit.refresh();
       // Only verifying no crash
     });
+  });
+
+  group('loadComments', () {
+    final tComment = TestDataFactory.createComment(id: 'c1', postId: tThreadId);
+
+    blocTest<ThreadDetailCubit, ThreadDetailState>(
+      'loadComments calls listComments and updates commentsMap and threadMap',
+      build: () {
+        when(
+          () => mockListComments.call(
+            extensionPkgName: any(named: 'extensionPkgName'),
+            boardId: any(named: 'boardId'),
+            threadId: any(named: 'threadId'),
+            postId: tThreadId,
+            pagination: any(named: 'pagination'),
+          ),
+        ).thenAnswer((_) async => Result.completed([tComment]));
+        return cubit;
+      },
+      seed: () => ThreadDetailState(
+        extensionPkgName: tExtPkg,
+        boardId: tBoardId,
+        threadId: tThreadId,
+        threadMap: {tThreadId: Result.completed(tArticlePostWithExt)},
+        repliesMap: {},
+      ),
+      act: (cubit) => cubit.loadComments(tThreadId),
+      expect: () => [
+        isA<ThreadDetailState>().having(
+          (s) => s.commentsMap[tThreadId],
+          'commentsMap loading',
+          isA<ResultLoading>(),
+        ),
+        isA<ThreadDetailState>()
+            .having(
+              (s) => s.commentsMap[tThreadId],
+              'commentsMap completed',
+              isA<ResultCompleted>(),
+            )
+            .having(
+              (s) =>
+                  (s.threadMap[tThreadId]
+                          as ResultCompleted<ArticlePostWithExtension>)
+                      .data
+                      .post
+                      .top5Comments,
+              'top5Comments null',
+              isNull,
+            ),
+        isA<ThreadDetailState>()
+            .having(
+              (s) => s.commentsMap[tThreadId],
+              'commentsMap completed',
+              isA<ResultCompleted>(),
+            )
+            .having(
+              (s) =>
+                  (s.threadMap[tThreadId]
+                          as ResultCompleted<ArticlePostWithExtension>)
+                      .data
+                      .post
+                      .top5Comments
+                      ?.isNotEmpty,
+              'top5Comments updated',
+              true,
+            ),
+      ],
+    );
   });
 }

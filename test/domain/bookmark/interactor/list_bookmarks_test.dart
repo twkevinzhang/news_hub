@@ -18,10 +18,10 @@ void main() {
 
   test('應回傳書籤列表', () async {
     final tBookmarks = [
-      Bookmark(
+      const Bookmark(
         id: '1',
-        filter: const ThreadsFilter(boardSorts: {}, keywords: ''),
-        sorting: const ThreadsSorting(boardsOrder: []),
+        filter: ThreadsFilter(boardSorts: {}, keywords: ''),
+        sorting: ThreadsSorting(boardsOrder: []),
       ),
     ];
     when(() => mockRepo.getAll()).thenAnswer((_) async => tBookmarks);

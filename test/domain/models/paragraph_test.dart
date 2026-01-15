@@ -4,7 +4,7 @@ import 'package:news_hub/domain/models/models.dart';
 void main() {
   group('Paragraph (Freezed)', () {
     test('ImageParagraph 應該正確建立並提供 thumb', () {
-      final p = ImageParagraph(
+      const p = ImageParagraph(
         raw: 'http://raw.jpg',
         thumbUrl: 'http://thumb.jpg',
       );
@@ -15,14 +15,14 @@ void main() {
     });
 
     test('TextParagraph 應該正確建立', () {
-      final p = TextParagraph(content: 'hello');
+      const p = TextParagraph(content: 'hello');
 
       expect(p.content, 'hello');
       expect(p.type, ParagraphType.text);
     });
 
     test('應該支援 JSON 序列化', () {
-      final p = TextParagraph(content: 'hello');
+      const p = TextParagraph(content: 'hello');
       final json = p.toJson();
 
       expect(json['runtimeType'], 'text');
@@ -30,10 +30,10 @@ void main() {
     });
 
     test('VideoParagraph 應該正確判斷 YouTube', () {
-      final p = VideoParagraph(url: 'https://youtube.com/watch?v=123');
+      const p = VideoParagraph(url: 'https://youtube.com/watch?v=123');
       expect(p.isYouTube(), isTrue);
 
-      final p2 = VideoParagraph(url: 'https://example.com');
+      const p2 = VideoParagraph(url: 'https://example.com');
       expect(p2.isYouTube(), isFalse);
     });
   });

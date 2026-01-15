@@ -170,4 +170,64 @@ class TestDataFactory {
       latestUsedAt: latestUsedAt ?? DateTime.now(),
     );
   }
+
+  static ExtensionWithBoards createExtensionWithBoards({
+    String pkgName = tExtensionPkgName,
+    String displayName = 'Test Extension',
+    int version = 1,
+    int pythonVersion = 3,
+    String? lang,
+    bool isNsfw = false,
+    Set<Board> boards = const {},
+  }) {
+    return ExtensionWithBoards(
+      pkgName: pkgName,
+      displayName: displayName,
+      version: version,
+      pythonVersion: pythonVersion,
+      lang: lang,
+      isNsfw: isNsfw,
+      boards: boards,
+    );
+  }
+
+  static LogEntry createLogEntry({
+    DateTime? timestamp,
+    LogLevel level = LogLevel.info,
+    String loggerName = 'test_logger',
+    String message = 'test message',
+    String exception = '',
+  }) {
+    return LogEntry(
+      timestamp: timestamp ?? DateTime.now(),
+      level: level,
+      loggerName: loggerName,
+      message: message,
+      exception: exception,
+    );
+  }
+
+  static Comment createComment({
+    String extensionPkgName = tExtensionPkgName,
+    String boardId = tBoardId,
+    String threadId = tThreadId,
+    String postId = 'post_1',
+    String id = 'c1',
+    List<Paragraph> contents = const [],
+    DateTime? createdAt,
+    String authorId = 'a1',
+    String authorName = 'author',
+  }) {
+    return Comment(
+      extensionPkgName: extensionPkgName,
+      boardId: boardId,
+      threadId: threadId,
+      postId: postId,
+      id: id,
+      contents: contents,
+      createdAt: createdAt ?? DateTime.now(),
+      authorId: authorId,
+      authorName: authorName,
+    );
+  }
 }
