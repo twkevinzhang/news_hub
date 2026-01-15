@@ -46,6 +46,7 @@ abstract class $CollectionThreadListStateCopyWith<$Res> {
     ThreadsFilter activeFilter,
   });
 
+  $CollectionCopyWith<$Res>? get collection;
   $ThreadsFilterCopyWith<$Res> get activeFilter;
 }
 
@@ -104,6 +105,20 @@ class _$CollectionThreadListStateCopyWithImpl<
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
+  $CollectionCopyWith<$Res>? get collection {
+    if (_value.collection == null) {
+      return null;
+    }
+
+    return $CollectionCopyWith<$Res>(_value.collection!, (value) {
+      return _then(_value.copyWith(collection: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CollectionThreadListState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
   $ThreadsFilterCopyWith<$Res> get activeFilter {
     return $ThreadsFilterCopyWith<$Res>(_value.activeFilter, (value) {
       return _then(_value.copyWith(activeFilter: value) as $Val);
@@ -128,6 +143,8 @@ abstract class _$$CollectionThreadListStateImplCopyWith<$Res>
     ThreadsFilter activeFilter,
   });
 
+  @override
+  $CollectionCopyWith<$Res>? get collection;
   @override
   $ThreadsFilterCopyWith<$Res> get activeFilter;
 }

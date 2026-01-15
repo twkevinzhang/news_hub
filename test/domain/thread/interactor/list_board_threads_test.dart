@@ -31,7 +31,7 @@ void main() {
 
   const tCollectionId = 'col_1';
   const tBoardId = 'board_1';
-  final tBoard = Board(
+  const tBoard = Board(
     id: tBoardId,
     name: 'Test Board',
     extensionPkgName: 'test.pkg',

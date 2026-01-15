@@ -44,7 +44,7 @@ void main() {
     pythonVersion: 3,
     isNsfw: false,
   );
-  final tBoard = Board(
+  const tBoard = Board(
     id: tBoardId,
     name: 'Board',
     extensionPkgName: tPkgName,

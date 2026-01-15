@@ -32,7 +32,7 @@ void main() {
       listComments: mockListComments,
     );
 
-    registerFallbackValue(Pagination(page: 1, pageSize: 10));
+    registerFallbackValue(const Pagination(page: 1, pageSize: 10));
   });
 
   tearDown(() {
@@ -158,7 +158,7 @@ void main() {
             boardId: tBoardId,
             threadId: tThreadId,
           ),
-        ).thenAnswer((_) async => Result.error(failure));
+        ).thenAnswer((_) async => const Result.error(failure));
 
         when(
           () => mockListReplies.call(
@@ -168,7 +168,7 @@ void main() {
             parentId: null,
             pagination: any(named: 'pagination'),
           ),
-        ).thenAnswer((_) async => Result.completed([]));
+        ).thenAnswer((_) async => const Result.completed([]));
 
         cubit.pagingController.notifyPageRequestListeners(1);
 

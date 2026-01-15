@@ -17,19 +17,36 @@ class ExtensionBrowseTab extends StatelessWidget {
       builder: (context, state) {
         return state.extensions.when(
           completed: (data) {
-            final allExtensions = [...data.installed, ...data.notInstalled];
+            final List<dynamic> allExtensions = [
+              ...data.installed,
+              ...data.notInstalled,
+            ];
             if (allExtensions.isEmpty) {
               return const Center(child: Text('No extensions found'));
             }
             return ListView.builder(
               itemCount: allExtensions.length,
               itemBuilder: (context, index) {
-                final extension = allExtensions[index];
+                final dynamic extension = allExtensions[index];
+                final String pkgName = extension.pkgName;
+                final String displayName = extension.displayName;
+
                 final isInstalled = data.installed.any(
-                  (i) => i.pkgName == extension.pkgName,
+                  (i) => i.pkgName == pkgName,
                 );
                 return _ExtensionTile(
-                  extension: extension,
+                  pkgName: pkgName,
+                  displayName: displayName,
+                  extension: extension is Extension
+                      ? extension
+                      : Extension(
+                          pkgName: extension.pkgName,
+                          displayName: extension.displayName,
+                          version: extension.version,
+                          pythonVersion: extension.pythonVersion,
+                          lang: extension.lang,
+                          isNsfw: extension.isNsfw,
+                        ),
                   isInstalled: isInstalled,
                 );
               },
@@ -46,22 +63,29 @@ class ExtensionBrowseTab extends StatelessWidget {
 
 class _ExtensionTile extends StatelessWidget {
   final Extension extension;
+  final String pkgName;
+  final String displayName;
   final bool isInstalled;
 
-  const _ExtensionTile({required this.extension, required this.isInstalled});
+  const _ExtensionTile({
+    required this.extension,
+    required this.pkgName,
+    required this.displayName,
+    required this.isInstalled,
+  });
 
   @override
   Widget build(BuildContext context) {
     final installing = context
         .select<ExtensionCubit, Pair<InstallStatus, double>?>(
-          (c) => c.state.installingExtensions[extension.pkgName],
+          (c) => c.state.installingExtensions[pkgName],
         );
 
     return ListTile(
-      title: Text(extension.displayName),
+      title: Text(displayName),
       subtitle: installing != null
           ? LinearProgressIndicator(value: installing.second)
-          : Text(extension.pkgName),
+          : Text(pkgName),
       trailing: installing != null
           ? const SizedBox(
               width: 24,

@@ -15,6 +15,10 @@ final _privateConstructorUsedError = UnsupportedError(
   'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
 );
 
+ExtensionBoard _$ExtensionBoardFromJson(Map<String, dynamic> json) {
+  return _ExtensionBoard.fromJson(json);
+}
+
 /// @nodoc
 mixin _$ExtensionBoard {
   BoardIdentity get identity => throw _privateConstructorUsedError;
@@ -22,6 +26,9 @@ mixin _$ExtensionBoard {
   String get largeWelcomeImage => throw _privateConstructorUsedError;
   String get url => throw _privateConstructorUsedError;
   Set<String> get sortOptions => throw _privateConstructorUsedError;
+
+  /// Serializes this ExtensionBoard to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of ExtensionBoard
   /// with the given fields replaced by the non-null parameter values.
@@ -176,7 +183,7 @@ class __$$ExtensionBoardImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$ExtensionBoardImpl implements _ExtensionBoard {
   const _$ExtensionBoardImpl({
     required this.identity,
@@ -185,6 +192,9 @@ class _$ExtensionBoardImpl implements _ExtensionBoard {
     required this.url,
     required final Set<String> sortOptions,
   }) : _sortOptions = sortOptions;
+
+  factory _$ExtensionBoardImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ExtensionBoardImplFromJson(json);
 
   @override
   final BoardIdentity identity;
@@ -224,6 +234,7 @@ class _$ExtensionBoardImpl implements _ExtensionBoard {
             ));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
     runtimeType,
@@ -244,6 +255,11 @@ class _$ExtensionBoardImpl implements _ExtensionBoard {
         this,
         _$identity,
       );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$ExtensionBoardImplToJson(this);
+  }
 }
 
 abstract class _ExtensionBoard implements ExtensionBoard {
@@ -254,6 +270,9 @@ abstract class _ExtensionBoard implements ExtensionBoard {
     required final String url,
     required final Set<String> sortOptions,
   }) = _$ExtensionBoardImpl;
+
+  factory _ExtensionBoard.fromJson(Map<String, dynamic> json) =
+      _$ExtensionBoardImpl.fromJson;
 
   @override
   BoardIdentity get identity;

@@ -1,17 +1,19 @@
-class Extension {
-  final String pkgName;
-  final String displayName;
-  final int version;
-  final int pythonVersion;
-  final String? lang;
-  final bool isNsfw;
+import 'package:freezed_annotation/freezed_annotation.dart';
 
-  Extension({
-    required this.pkgName,
-    required this.displayName,
-    required this.version,
-    required this.pythonVersion,
-    this.lang,
-    required this.isNsfw,
-  });
+part 'extension.freezed.dart';
+part 'extension.g.dart';
+
+@freezed
+class Extension with _$Extension {
+  const factory Extension({
+    required String pkgName,
+    required String displayName,
+    required int version,
+    required int pythonVersion,
+    String? lang,
+    required bool isNsfw,
+  }) = _Extension;
+
+  factory Extension.fromJson(Map<String, dynamic> json) =>
+      _$ExtensionFromJson(json);
 }

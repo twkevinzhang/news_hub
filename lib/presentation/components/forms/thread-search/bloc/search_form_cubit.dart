@@ -86,7 +86,7 @@ class SearchFormCubit extends Cubit<SearchFormState> {
     if (state.filter.keywords.isEmpty) {
       setKeywords(keywords);
     } else {
-      setKeywords(state.filter.keywords + ' ' + keywords);
+      setKeywords('${state.filter.keywords} $keywords');
     }
   }
 

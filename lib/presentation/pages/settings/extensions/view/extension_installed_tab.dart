@@ -41,16 +41,19 @@ class _ExtensionTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final pkgName = extension.pkgName;
+    final displayName = extension.displayName;
+
     final installing = context
         .select<ExtensionCubit, Pair<InstallStatus, double>?>(
-          (c) => c.state.installingExtensions[extension.pkgName],
+          (c) => c.state.installingExtensions[pkgName],
         );
 
     return ListTile(
-      title: Text(extension.displayName),
+      title: Text(displayName),
       subtitle: installing != null
           ? LinearProgressIndicator(value: installing.second)
-          : Text(extension.pkgName),
+          : Text(pkgName),
       trailing: installing != null
           ? const SizedBox(
               width: 24,

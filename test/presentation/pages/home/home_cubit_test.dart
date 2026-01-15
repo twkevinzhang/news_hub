@@ -38,8 +38,8 @@ void main() {
     // Default mocks
     when(
       () => mockCollectionRepo.watchList(),
-    ).thenAnswer((_) => Stream.empty());
-    when(() => mockSidecarRepo.watchHealth()).thenAnswer((_) => Stream.empty());
+    ).thenAnswer((_) => const Stream.empty());
+    when(() => mockSidecarRepo.watchHealth()).thenAnswer((_) => const Stream.empty());
 
     cubit = HomeCubit(
       mockCollectionRepo,

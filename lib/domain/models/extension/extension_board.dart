@@ -2,6 +2,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:news_hub/domain/models/collection/board_identity.dart';
 
 part 'extension_board.freezed.dart';
+part 'extension_board.g.dart';
 
 /// 從 Extension API 獲取的完整看板資訊
 @freezed
@@ -13,4 +14,7 @@ class ExtensionBoard with _$ExtensionBoard {
     required String url,
     required Set<String> sortOptions,
   }) = _ExtensionBoard;
+
+  factory ExtensionBoard.fromJson(Map<String, dynamic> json) =>
+      _$ExtensionBoardFromJson(json);
 }

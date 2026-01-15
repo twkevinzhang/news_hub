@@ -100,7 +100,7 @@ class GrpcConnectionManagerImpl implements SidecarConnectionManager {
       ),
     );
     _updateState(SidecarConnectionState.connected);
-    debugPrint('[GrpcConnectionManager] Connection ${_host}:${_port} established');
+    debugPrint('[GrpcConnectionManager] Connection $_host:$_port established');
     retryCount = 0;
   }
 

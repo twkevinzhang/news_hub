@@ -18,7 +18,7 @@ void main() {
 
   test('應回傳看板排序選項對照表', () async {
     final tBoards = [
-      Board(
+      const Board(
         id: '1',
         name: 'b1',
         extensionPkgName: 'p1',

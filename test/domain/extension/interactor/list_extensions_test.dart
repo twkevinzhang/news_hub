@@ -106,7 +106,7 @@ void main() {
     when(() => mockLangsPref.get()).thenAnswer((_) async => {'en'});
 
     when(() => mockListInstalled.call()).thenAnswer(
-      (_) async => Result.error(Failure.unexpected(message: 'Fail')),
+      (_) async => const Result.error(Failure.unexpected(message: 'Fail')),
     );
     when(
       () => mockListRemote.call(),

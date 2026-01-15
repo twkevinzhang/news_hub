@@ -15,11 +15,18 @@ final _privateConstructorUsedError = UnsupportedError(
   'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
 );
 
+BoardIdentity _$BoardIdentityFromJson(Map<String, dynamic> json) {
+  return _BoardIdentity.fromJson(json);
+}
+
 /// @nodoc
 mixin _$BoardIdentity {
   String get extensionPkgName => throw _privateConstructorUsedError;
   String get boardId => throw _privateConstructorUsedError;
   String get boardName => throw _privateConstructorUsedError;
+
+  /// Serializes this BoardIdentity to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of BoardIdentity
   /// with the given fields replaced by the non-null parameter values.
@@ -127,13 +134,16 @@ class __$$BoardIdentityImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$BoardIdentityImpl implements _BoardIdentity {
   const _$BoardIdentityImpl({
     required this.extensionPkgName,
     required this.boardId,
     required this.boardName,
   });
+
+  factory _$BoardIdentityImpl.fromJson(Map<String, dynamic> json) =>
+      _$$BoardIdentityImplFromJson(json);
 
   @override
   final String extensionPkgName;
@@ -159,6 +169,7 @@ class _$BoardIdentityImpl implements _BoardIdentity {
                 other.boardName == boardName));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, extensionPkgName, boardId, boardName);
@@ -170,6 +181,11 @@ class _$BoardIdentityImpl implements _BoardIdentity {
   @pragma('vm:prefer-inline')
   _$$BoardIdentityImplCopyWith<_$BoardIdentityImpl> get copyWith =>
       __$$BoardIdentityImplCopyWithImpl<_$BoardIdentityImpl>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$BoardIdentityImplToJson(this);
+  }
 }
 
 abstract class _BoardIdentity implements BoardIdentity {
@@ -178,6 +194,9 @@ abstract class _BoardIdentity implements BoardIdentity {
     required final String boardId,
     required final String boardName,
   }) = _$BoardIdentityImpl;
+
+  factory _BoardIdentity.fromJson(Map<String, dynamic> json) =
+      _$BoardIdentityImpl.fromJson;
 
   @override
   String get extensionPkgName;

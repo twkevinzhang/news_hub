@@ -15,11 +15,18 @@ final _privateConstructorUsedError = UnsupportedError(
   'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
 );
 
+CollectionBoard _$CollectionBoardFromJson(Map<String, dynamic> json) {
+  return _CollectionBoard.fromJson(json);
+}
+
 /// @nodoc
 mixin _$CollectionBoard {
   BoardIdentity get identity => throw _privateConstructorUsedError;
   String get collectionId => throw _privateConstructorUsedError;
   String? get selectedSort => throw _privateConstructorUsedError;
+
+  /// Serializes this CollectionBoard to a JSON map.
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of CollectionBoard
   /// with the given fields replaced by the non-null parameter values.
@@ -150,13 +157,16 @@ class __$$CollectionBoardImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-
+@JsonSerializable()
 class _$CollectionBoardImpl implements _CollectionBoard {
   const _$CollectionBoardImpl({
     required this.identity,
     required this.collectionId,
     this.selectedSort,
   });
+
+  factory _$CollectionBoardImpl.fromJson(Map<String, dynamic> json) =>
+      _$$CollectionBoardImplFromJson(json);
 
   @override
   final BoardIdentity identity;
@@ -183,6 +193,7 @@ class _$CollectionBoardImpl implements _CollectionBoard {
                 other.selectedSort == selectedSort));
   }
 
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, identity, collectionId, selectedSort);
@@ -197,6 +208,11 @@ class _$CollectionBoardImpl implements _CollectionBoard {
         this,
         _$identity,
       );
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$$CollectionBoardImplToJson(this);
+  }
 }
 
 abstract class _CollectionBoard implements CollectionBoard {
@@ -205,6 +221,9 @@ abstract class _CollectionBoard implements CollectionBoard {
     required final String collectionId,
     final String? selectedSort,
   }) = _$CollectionBoardImpl;
+
+  factory _CollectionBoard.fromJson(Map<String, dynamic> json) =
+      _$CollectionBoardImpl.fromJson;
 
   @override
   BoardIdentity get identity;

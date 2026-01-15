@@ -52,6 +52,7 @@ abstract class $CollectionBoardThreadListStateCopyWith<$Res> {
     ThreadsFilter activeFilter,
   });
 
+  $CollectionCopyWith<$Res>? get collection;
   $CollectionBoardCopyWith<$Res>? get board;
   $FailureCopyWith<$Res>? get error;
   $ThreadsFilterCopyWith<$Res> get activeFilter;
@@ -117,6 +118,20 @@ class _$CollectionBoardThreadListStateCopyWithImpl<
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
+  $CollectionCopyWith<$Res>? get collection {
+    if (_value.collection == null) {
+      return null;
+    }
+
+    return $CollectionCopyWith<$Res>(_value.collection!, (value) {
+      return _then(_value.copyWith(collection: value) as $Val);
+    });
+  }
+
+  /// Create a copy of CollectionBoardThreadListState
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
   $CollectionBoardCopyWith<$Res>? get board {
     if (_value.board == null) {
       return null;
@@ -170,6 +185,8 @@ abstract class _$$CollectionBoardThreadListStateImplCopyWith<$Res>
     ThreadsFilter activeFilter,
   });
 
+  @override
+  $CollectionCopyWith<$Res>? get collection;
   @override
   $CollectionBoardCopyWith<$Res>? get board;
   @override

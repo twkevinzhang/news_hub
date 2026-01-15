@@ -109,7 +109,7 @@ class _CollectionSection extends StatefulWidget {
 }
 
 class _CollectionSectionState extends State<_CollectionSection> {
-  final ExpansionTileController _controller = ExpansionTileController();
+  final ExpansibleController _controller = ExpansibleController();
 
   @override
   void didUpdateWidget(_CollectionSection oldWidget) {

@@ -73,7 +73,14 @@ class SearchThreads {
         return SingleImagePostWithExtension(
           post: t as SingleImagePost,
           board: b,
-          extension: e,
+          extension: Extension(
+            pkgName: e.pkgName,
+            displayName: e.displayName,
+            version: e.version,
+            pythonVersion: e.pythonVersion,
+            lang: e.lang,
+            isNsfw: e.isNsfw,
+          ),
         );
       }).toList();
       return Result.completed(data);

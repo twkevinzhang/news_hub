@@ -19,8 +19,8 @@ void main() {
 
   const tCollectionId = 'col_1';
   const tBoardId = 'board_1';
-  final tBoard = CollectionBoard(
-    identity: const BoardIdentity(
+  const tBoard = CollectionBoard(
+    identity: BoardIdentity(
       extensionPkgName: 'test.pkg',
       boardId: tBoardId,
       boardName: 'Test Board',

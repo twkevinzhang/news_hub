@@ -63,7 +63,7 @@ void main() {
     return MaterialApp(
       home: BlocProvider<CollectionThreadListCubit>.value(
         value: mockCubit,
-        child: CollectionThreadListScreen(collectionId: tCollectionId),
+        child: const CollectionThreadListScreen(collectionId: tCollectionId),
       ),
     );
   }
@@ -92,9 +92,9 @@ void main() {
     });
 
     testWidgets('renders loading skeletons', (tester) async {
-      pagingController.value = PagingState(
+      pagingController.value = const PagingState(
         nextPageKey: null,
-        itemList: [const CollectionBoardSkeleton('b1')],
+        itemList: [CollectionBoardSkeleton('b1')],
       );
 
       await tester.pumpWidget(createWidgetUnderTest());

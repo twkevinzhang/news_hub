@@ -6,7 +6,6 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:mocktail/mocktail.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:news_hub/domain/models/models.dart';
 import 'package:news_hub/presentation/pages/thread/detail/bloc/thread_detail_cubit.dart';
 import 'package:news_hub/presentation/pages/thread/detail/view/thread_detail_screen.dart';
 import 'package:news_hub/domain/thread/interactor/get_original_post.dart';
@@ -33,9 +32,9 @@ void main() {
     id: tThreadId,
     title: 'Thread Title',
   );
-  final tPostWithExt = TestDataFactory.createArticlePostWithExtension(
-    post: tPost,
-  );
+  // final tPostWithExt = TestDataFactory.createArticlePostWithExtension(
+  //   post: tPost,
+  // );
 
   setUpAll(() {
     registerFallbackValue(FakePageRouteInfo());
@@ -84,7 +83,7 @@ void main() {
         stateHash: 0,
         child: BlocProvider<ThreadDetailCubit>.value(
           value: mockCubit,
-          child: ThreadDetailScreen(
+          child: const ThreadDetailScreen(
             extensionPkgName: tExtPkg,
             boardId: tBoardId,
             threadId: tThreadId,

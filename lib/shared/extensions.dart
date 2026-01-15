@@ -55,11 +55,11 @@ extension StringEx on String {
   }
 
   Map<String, dynamic> fromBase64Json() {
-    return jsonDecode(utf8.decode(base64Decode(this.remove('\n'))));
+    return jsonDecode(utf8.decode(base64Decode(remove('\n'))));
   }
 
   List<Map<String, dynamic>> fromBase64List() {
-    return jsonDecode(utf8.decode(base64Decode(this.remove('\n'))));
+    return jsonDecode(utf8.decode(base64Decode(remove('\n'))));
   }
 }
 
