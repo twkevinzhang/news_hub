@@ -36,7 +36,7 @@ void main() {
   });
 
   final List<Extension> tInstalled = [
-    Extension(
+    const Extension(
       pkgName: 'ext.a',
       displayName: 'Ext A',
       version: 1,
@@ -46,7 +46,7 @@ void main() {
     ),
   ];
   final List<RemoteExtension> tRemotes = [
-    RemoteExtension(
+    const RemoteExtension(
       pkgName: 'ext.a',
       displayName: 'Ext A',
       version: 2,
@@ -56,7 +56,7 @@ void main() {
       repoUrl: '',
       iconUrl: '',
     ),
-    RemoteExtension(
+    const RemoteExtension(
       pkgName: 'ext.b',
       displayName: 'Ext B',
       version: 1,

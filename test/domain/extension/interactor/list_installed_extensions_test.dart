@@ -25,7 +25,7 @@ void main() {
   });
 
   final tExtensions = [
-    Extension(
+    const Extension(
       pkgName: 'ext.1',
       displayName: 'Ext 1',
       version: 1,

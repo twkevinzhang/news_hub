@@ -33,7 +33,7 @@ void main() {
   // });
 
   group('CollectionThreadListCubit', () {
-    final tCollectionId = 'col_1';
+    const tCollectionId = 'col_1';
     final tBoard = TestDataFactory.createBoard(id: 'b1', name: 'Board 1');
     final tCollection = TestDataFactory.createCollection(
       id: tCollectionId,
@@ -192,7 +192,7 @@ void main() {
     });
 
     group('Filters', () {
-      final tFilter = const ThreadsFilter(boardSorts: {}, keywords: 'search');
+      const tFilter = ThreadsFilter(boardSorts: {}, keywords: 'search');
 
       blocTest<CollectionThreadListCubit, CollectionThreadListState>(
         'applyFilter updates activeFilter',

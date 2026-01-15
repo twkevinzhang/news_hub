@@ -17,8 +17,8 @@ void main() {
   });
 
   final tCollections = [
-    Collection(id: '1', name: 'Col 1', boards: []),
-    Collection(id: '2', name: 'Col 2', boards: []),
+    const Collection(id: '1', name: 'Col 1', boards: []),
+    const Collection(id: '2', name: 'Col 2', boards: []),
   ];
 
   test('當順利取得所有 Collections 時，應回傳 Result.completed', () async {

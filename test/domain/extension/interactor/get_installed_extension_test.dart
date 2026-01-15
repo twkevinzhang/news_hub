@@ -18,7 +18,7 @@ void main() {
   });
 
   const tPkgName = 'test.pkg';
-  final tExtension = Extension(
+  const tExtension = Extension(
     pkgName: tPkgName,
     displayName: 'Test Ext',
     version: 1,

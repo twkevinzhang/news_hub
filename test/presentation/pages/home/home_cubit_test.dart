@@ -67,7 +67,7 @@ void main() {
       },
     );
 
-    final tCollection = Collection(
+    const tCollection = Collection(
       id: 'col1',
       name: 'My Collection',
       boards: [],
@@ -83,7 +83,7 @@ void main() {
       },
       act: (cubit) => cubit.init(),
       expect: () => [
-        HomeState(collections: [tCollection]),
+        const HomeState(collections: [tCollection]),
       ],
     );
 

@@ -191,7 +191,7 @@ void main() {
         build: () {
           when(
             () => mockCollectionRepository.update(any()),
-          ).thenAnswer((_) async => null);
+          ).thenAnswer((_) async {});
           return cubit;
         },
         act: (cubit) => cubit.submit(),

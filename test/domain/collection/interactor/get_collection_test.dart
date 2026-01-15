@@ -18,7 +18,7 @@ void main() {
   });
 
   const tId = 'col_1';
-  final tCollection = Collection(id: tId, name: 'Test Collection', boards: []);
+  const tCollection = Collection(id: tId, name: 'Test Collection', boards: []);
 
   test('當順利取得 Collection 時，應回傳 Result.completed', () async {
     // Arrange

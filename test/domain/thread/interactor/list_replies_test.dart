@@ -37,7 +37,7 @@ void main() {
 
   const tPkgName = 'test.pkg';
   const tBoardId = 'board_1';
-  final tExtension = Extension(
+  const tExtension = Extension(
     pkgName: tPkgName,
     displayName: 'Ext',
     version: 1,
@@ -73,7 +73,7 @@ void main() {
     // Arrange
     when(
       () => mockGetInstalled.get(any()),
-    ).thenAnswer((_) async => Result.completed(tExtension));
+    ).thenAnswer((_) async => const Result.completed(tExtension));
     when(() => mockBoardRepo.list(any())).thenAnswer((_) async => [tBoard]);
     when(
       () => mockThreadRepo.listReplies(

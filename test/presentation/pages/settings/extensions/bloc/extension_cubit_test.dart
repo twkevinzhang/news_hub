@@ -158,7 +158,7 @@ void main() {
         build: () {
           when(
             () => mockUninstallExtension.call(any()),
-          ).thenAnswer((_) async => null);
+          ).thenAnswer((_) async {});
           when(
             () => mockListExtensions.asFuture(any()),
           ).thenAnswer((_) async => Result.completed(tExtensions));

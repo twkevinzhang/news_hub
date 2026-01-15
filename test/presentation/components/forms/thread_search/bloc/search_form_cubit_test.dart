@@ -60,7 +60,7 @@ void main() {
   group('SearchFormCubit', () {
     final tSuggestion = TestDataFactory.createSuggestion();
     final List<Suggestion> tSuggestions = [tSuggestion];
-    final tFilter = const ThreadsFilter(boardSorts: {}, keywords: 'initial');
+    const tFilter = ThreadsFilter(boardSorts: {}, keywords: 'initial');
 
     test('initial state is correct', () {
       expect(
@@ -167,7 +167,7 @@ void main() {
         build: () {
           when(
             () => mockUpdateSuggestionLatestUsedAt.call(any()),
-          ).thenAnswer((_) async => null);
+          ).thenAnswer((_) async {});
           return cubit;
         },
         act: (cubit) => cubit.clickSuggestion(tSuggestion),
@@ -187,7 +187,7 @@ void main() {
         build: () {
           when(
             () => mockInsertSuggestion.call(keywords: any(named: 'keywords')),
-          ).thenAnswer((_) async => null);
+          ).thenAnswer((_) async {});
           return cubit;
         },
         act: (cubit) => cubit.createSuggestion(),
@@ -199,9 +199,7 @@ void main() {
       blocTest<SearchFormCubit, SearchFormState>(
         'removeSuggestion calls delete and reloads',
         build: () {
-          when(
-            () => mockDeleteSuggestion.call(any()),
-          ).thenAnswer((_) async => null);
+          when(() => mockDeleteSuggestion.call(any())).thenAnswer((_) async {});
           when(() => mockListSuggestions.call()).thenAnswer((_) async => []);
           return cubit;
         },
@@ -217,7 +215,7 @@ void main() {
     });
 
     group('form actions', () {
-      final tSubmittedFilter = const ThreadsFilter(
+      const tSubmittedFilter = ThreadsFilter(
         boardSorts: {},
         keywords: 'submitted',
       );
@@ -246,7 +244,7 @@ void main() {
         build: () {
           when(
             () => mockInsertSuggestion.call(keywords: any(named: 'keywords')),
-          ).thenAnswer((_) async => null);
+          ).thenAnswer((_) async {});
           return cubit;
         },
         act: (cubit) => cubit.submit(),

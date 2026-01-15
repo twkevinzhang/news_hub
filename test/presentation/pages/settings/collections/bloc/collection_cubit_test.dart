@@ -86,9 +86,7 @@ void main() {
       blocTest<CollectionCubit, CollectionState>(
         'deleteCollection calls repository delete',
         build: () {
-          when(
-            () => mockRepository.delete(any()),
-          ).thenAnswer((_) async => null);
+          when(() => mockRepository.delete(any())).thenAnswer((_) async {});
           return cubit;
         },
         act: (cubit) => cubit.deleteCollection('col_1'),
@@ -106,9 +104,7 @@ void main() {
           ],
         ),
         build: () {
-          when(
-            () => mockRepository.reorder(any()),
-          ).thenAnswer((_) async => null);
+          when(() => mockRepository.reorder(any())).thenAnswer((_) async {});
           return cubit;
         },
         act: (cubit) => cubit.reorderCollections(0, 2),

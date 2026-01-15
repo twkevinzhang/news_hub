@@ -1,11 +1,9 @@
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:fixnum/fixnum.dart' as $fixnum;
 import 'package:dartx/dartx.dart';
-import 'package:dio/dio.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 extension FileEx on File {
@@ -47,7 +45,7 @@ extension StringEx on String {
     return replaceAll(s, '');
   }
 
-  String truncate(int maxLength, { omission = '...' }) {
+  String truncate(int maxLength, {omission = '...'}) {
     if (maxLength >= length) {
       return this;
     }
@@ -64,7 +62,6 @@ extension StringEx on String {
 }
 
 extension CubitEx<T> on Cubit<T> {
-
   // ref: https://github.com/felangel/bloc/issues/3069#issuecomment-1095547362
   void safeEmit(T state) {
     if (!isClosed) {

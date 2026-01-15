@@ -41,6 +41,21 @@
 - 全域共有 94 個業務測試案例通過 (94/95 total)。
 - 唯一失敗者與重構無關 (`widget_test.dart`)。
 
+### Phase 4: Remove Deprecated APIs & Lint Cleanup (Completed)
+
+移除過時 API 調用並清理全域靜態分析警告。
+
+**Key Accomplishments:**
+
+1. **ExpansionTileController**: 根據 Flutter v3.31+ 規範，確保使用最新推薦的 `ExpansibleController` (在 `app_navigation_drawer.dart`)。
+2. **0 警告目標**: 修復了包括 `implementation_imports`, `deprecated_export_use`, `unintended_html_in_doc_comment` 在內的所有靜態分析問題。
+3. **測試優化**: 自動化與手動清理了 20+ 處測試檔案中的 `const` 與 `void` 回傳值警告。
+
+**Verification:**
+
+- `flutter analyze`: **No issues found!**
+- `flutter test`: 94 業務測試全數通過。
+
 ---
 
 ## Current Status
@@ -48,12 +63,13 @@
 - [x] Phase 1: Infrastructure Cleanup
 - [x] Phase 2: Domain Models Migration to Freezed
 - [x] Phase 3: Core BLoC Test Coverage
+- [x] Phase 4: Remove Deprecated APIs & Lint Cleanup
 
-## 🛠️ 下一步行動建議
+## Next Steps
 
-1.  **移除過時 API**: 替換 `ExpansionTileController` 等被標記為 deprecated 的組件。
-2.  **BLoC 效能優化**: 使用 `BlocSelector` 減少不必要的 Rebuild。
-3.  **其餘組件測試**: 擴大測試覆蓋率至其餘 BLoC 與 Use Cases。
+1. **BLoC 效能優化**: 使用 `BlocSelector` 與 `buildWhen` 減少不必要的 Rebuild，提升 UI 流暢度。
+2. **其餘組件測試**: 擴展測試覆蓋率至其餘 Use Cases 與 Services。
+3. **效能基準測試**: 建立 Rebuild 監控測試案例。
 
 ## 📝 備註事項
 
