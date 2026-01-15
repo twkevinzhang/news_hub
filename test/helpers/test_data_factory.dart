@@ -159,4 +159,16 @@ class TestDataFactory {
       board: board ?? createBoard(),
     );
   }
+
+  static Suggestion createSuggestion({
+    String id = 's_1',
+    String keywords = 'test search',
+    DateTime? latestUsedAt,
+  }) {
+    return Suggestion(
+      id: id,
+      keywords: keywords,
+      latestUsedAt: latestUsedAt ?? DateTime.now(),
+    );
+  }
 }
