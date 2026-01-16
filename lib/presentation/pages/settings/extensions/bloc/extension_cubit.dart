@@ -65,7 +65,7 @@ class ExtensionCubit extends Cubit<ExtensionState> {
   }
 
   Future<void> loadExtensions() async {
-    final result = await _listExtensions.asFuture(state.keyword);
+    final result = await _listExtensions(state.keyword);
     safeEmit(state.copyWith(extensions: result));
   }
 

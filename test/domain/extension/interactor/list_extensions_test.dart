@@ -68,7 +68,7 @@ void main() {
     ),
   ];
 
-  test('asStream 應先發射 Loading 然後發射組合後的 Extensions', () async {
+  test('call 應發射組合後的 Extensions', () async {
     // Arrange
     final mockLangsPref = MockPreference<Set<String>>();
     when(() => mockSettings.enabledLanguages()).thenReturn(mockLangsPref);
@@ -86,20 +86,19 @@ void main() {
       () => mockListRemote.call(),
     ).thenAnswer((_) async => Result.completed(tRemotes));
 
-    // Act & Assert
-    final stream = useCase.asStream(null);
-    final results = await stream.take(2).toList();
+    // Act
+    final resultRes = await useCase.call(null);
 
-    expect(results[0], isA<ResultLoading<Extensions>>());
-    expect(results[1], isA<ResultCompleted<Extensions>>());
+    // Assert
+    expect(resultRes, isA<ResultCompleted<Extensions>>());
 
-    final result = results[1] as ResultCompleted<Extensions>;
+    final result = resultRes as ResultCompleted<Extensions>;
     expect(result.data.installed.length, 1);
     expect(result.data.updates.length, 1); // ext.a v1 < v2
     expect(result.data.notInstalled.length, 1); // ext.b
   });
 
-  test('當其中一個子任務失敗時，應發射 Result.error', () async {
+  test('當其中一個子任務失敗時，call 應返回 Result.error', () async {
     // Arrange
     final mockLangsPref = MockPreference<Set<String>>();
     when(() => mockSettings.enabledLanguages()).thenReturn(mockLangsPref);
@@ -113,15 +112,9 @@ void main() {
     ).thenAnswer((_) async => Result.completed(tRemotes));
 
     // Act
-    final stream = useCase.asStream(null);
+    final resultRes = await useCase.call(null);
 
     // Assert
-    expect(
-      stream,
-      emitsInOrder([
-        isA<ResultLoading<Extensions>>(),
-        isA<ResultError<Extensions>>(),
-      ]),
-    );
+    expect(resultRes, isA<ResultError<Extensions>>());
   });
 }

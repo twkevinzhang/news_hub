@@ -68,7 +68,7 @@ void main() {
         'emits Result.completed with extensions on success',
         build: () {
           when(
-            () => mockListExtensions.asFuture(any()),
+            () => mockListExtensions(any()),
           ).thenAnswer((_) async => Result.completed(tExtensions));
           return cubit;
         },
@@ -97,7 +97,7 @@ void main() {
             () => mockInstallExtension.call(any()),
           ).thenAnswer((_) => streamController.stream);
           when(
-            () => mockListExtensions.asFuture(any()),
+            () => mockListExtensions(any()),
           ).thenAnswer((_) async => Result.completed(tExtensions));
           return cubit;
         },
@@ -160,14 +160,14 @@ void main() {
             () => mockUninstallExtension.call(any()),
           ).thenAnswer((_) async {});
           when(
-            () => mockListExtensions.asFuture(any()),
+            () => mockListExtensions(any()),
           ).thenAnswer((_) async => Result.completed(tExtensions));
           return cubit;
         },
         act: (cubit) => cubit.uninstallExtension(tExtension),
         verify: (_) {
           verify(() => mockUninstallExtension.call(tExtension)).called(1);
-          verify(() => mockListExtensions.asFuture(any())).called(1);
+          verify(() => mockListExtensions(any())).called(1);
         },
       );
 

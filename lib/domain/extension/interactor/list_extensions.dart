@@ -20,7 +20,7 @@ class ListExtensions {
        _listInstalledExtensions = listInstalledExtensions,
        _listRemoteExtensions = listRemoteExtensions;
 
-  Stream<Result<Extensions>> asStream(String? keyword) async* {
+  Stream<Result<Extensions>> _asStream(String? keyword) async* {
     yield const Result.loading();
     try {
       // Parallel fetch of extensions snapshots
@@ -103,8 +103,10 @@ class ListExtensions {
     );
   }
 
-  Future<Result<Extensions>> asFuture(String? keyword) async {
-    return asStream(keyword).firstWhere((element) => element is! ResultLoading);
+  Future<Result<Extensions>> call(String? keyword) async {
+    return _asStream(
+      keyword,
+    ).firstWhere((element) => element is! ResultLoading);
   }
 }
 
